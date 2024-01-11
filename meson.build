@@ -1,10 +1,10 @@
 project('efl', ['c','cpp'],
   version: '2.0.99',
   default_options : [
-    'buildtype=release', 
-    'warning_level=2',
-    # 'optimization=3',
-    'b_sanitize=address,undefined',
+    'buildtype=release', # plain,debug,debugoptimized,release,minsize,custom
+    'warning_level=1',   # 0,1,2,3
+    # 'optimization=g',  # 0,g,1,2,3,s
+    # 'b_sanitize=address,undefined',
     # 'b_coverage=true',
     # 'b_lto=true',
     # 'b_lto_threads=2',
