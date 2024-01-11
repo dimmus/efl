@@ -12,8 +12,6 @@
 #include <errno.h> /* errno */
 #include <sys/time.h>
 
-#undef HAVE_FORK
-
 #ifdef HAVE_FORK
 # ifdef HAVE_SYS_TYPES_H
 #  include <sys/types.h>
