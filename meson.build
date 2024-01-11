@@ -254,6 +254,7 @@ dep_efl_one    = []
 dep_efl_one_eo = []
 inc_efl_one    = []
 sub_efl_one    = []
+dep_efl_tools  = []
 
 # tmp_empty = declare_dependency() # need for static libs
 

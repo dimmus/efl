@@ -1,4 +1,4 @@
-dep_efl_tools = [m, rt, dl, thread_dep]
+dep_efl_tools += [m, rt, dl, thread_dep]
 
 # if sys_windows
 #    eina_pub_deps += [evil]
