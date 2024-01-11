@@ -1326,8 +1326,8 @@ eina_hash_iterator_tuple_new(const Eina_Hash *hash)
 EINA_API int
 eina_hash_superfast(const char *key, int len)
 {
-   int hash = len, tmp;
-   int rem;
+   size_t hash = len, tmp;
+   size_t rem;
 
    rem = len & 3;
    len >>= 2;
