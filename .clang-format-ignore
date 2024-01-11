@@ -1,0 +1,3 @@
+# Vendored code
+src/static/**/*
+*.h

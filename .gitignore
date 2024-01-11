@@ -1,0 +1,48 @@
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# NOTE! Please use 'git ls-files -i --exclude-standard'
+# command after changing this file, to see if there are
+# any tracked files which get ignored after the change.
+#
+*.edj
+*~
+*swp
+*swo
+*.gmo
+.deps
+.libs
+*.trs
+*.log
+*.core
+*.exe
+*.o
+*.lo
+*.a
+*.la
+*.gcno
+*.gcda
+*.dirstamp
+
+*.eo.c
+*.eo.h
+*.eot.h
+*.eo.legacy.h
+*.eo.legacy.c
+*.eo.hh
+*.eo.impl.hh
+*.eo.js.cc
+*.eo.cs
+*.eot.cs
+*.eo.lua
+
+/src/bin/efl_wl/efl_wl_test
+/src/bin/efl_wl/efl_wl_test_stack
+
+*-protocol.h
+*-protocol.c
+
+/build
+.vscode/

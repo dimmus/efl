@@ -1,0 +1,1 @@
+inc_efl_tools += include_directories('.')
