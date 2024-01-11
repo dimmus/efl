@@ -22,13 +22,13 @@ endif
 
 header_checks = [
   'alloca.h',
-  # 'asm/hwcap.h',
-  # 'bsd/string.h',
+  'asm/hwcap.h',
+  'bsd/string.h',
   'dirent.h',
   'execinfo.h',
   'mcheck.h',
   'netinet/in.h',
-  # 'netinet/ssl.h',
+  'netinet/ssl.h',
   'netinet/tcp.h',
   'netinet/udp.h',
   'net/if.h',
@@ -39,7 +39,7 @@ header_checks = [
   'sys/mman.h',
   'sys/types.h',
   'sys/socket.h',
-  # 'sys/filio.h',
+  'sys/filio.h',
   'arpa/inet.h',
   'sys/epoll.h',
   'sys/un.h',
@@ -52,7 +52,7 @@ header_checks = [
   'features.h',
   'langinfo.h',
   'locale.h',
-  # 'crt_externs.h',
+  'crt_externs.h',
   'pthread.h',
 ]
 
@@ -70,7 +70,7 @@ header_checks = [
 #### trying to fix the meson build on freebsd for now
 
 function_checks = [
-# function name | headers that are needed | libraries to include | Defines that are needed
+# | function name    | headers that are needed     | libraries to include | Defines that are needed
   ['alloca',         ['alloca.h'                  ]],
   ['backtrace',      ['execinfo.h'                ]],
   ['backtrace_symbols', ['execinfo.h'             ]],
@@ -94,7 +94,7 @@ function_checks = [
   ['mmap',           ['sys/mman.h'                ]],
   ['mtrace',         ['mcheck.h'                  ]],
   ['prctl',          ['sys/prctl.h'               ]],
-  # ['procctl',        ['sys/procctl.h'             ]],
+  ['procctl',        ['sys/procctl.h'             ]],
   ['realpath',       ['stdlib.h'                  ]],
   ['setxattr',       ['sys/types.h', 'sys/xattr.h']],
   ['siglongjmp',     ['setjmp.h'                  ]],
@@ -103,11 +103,11 @@ function_checks = [
   ['execvp',         ['unistd.h'                  ]],
   ['pause',          ['unistd.h'                  ]],
   ['isfinite',       ['math.h'                    ]],
-  # ['strlcpy',        ['string.h'                  ]],
+  ['strlcpy',        ['string.h'                  ]],
   ['siginfo_t',      ['signal.h'                  ]],
   ['pthread_getcpuclockid', ['pthread.h', 'time.h']],
   ['timerfd_create', ['sys/timerfd.h'             ]],
-  # ['kevent',         ['sys/types.h', 'sys/event.h', 'sys/time.h']],
+  ['kevent',         ['sys/types.h', 'sys/event.h', 'sys/time.h']],
 #from here on we specify the dependencies
   ['dlopen',         ['dlfcn.h'                   ],  ['dl'    ]                    ],
   ['dlsym',          ['dlfcn.h'                   ],  ['dl'    ]                    ],
