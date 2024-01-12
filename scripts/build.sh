@@ -113,7 +113,7 @@ meson_setup_default()
     # add -Dbindings='' [2043]: 22-23 sec
 }
 
-meson_setup_dev()
+meson_setup_dev_all()
 {
     meson setup . $BD \
         -Dcrypto=openssl \
@@ -172,7 +172,7 @@ meson_setup_dev()
         # -Decore-imf-loaders-disabler=ibus,scim,xim \
 }
 
-meson_setup_dev_all()
+meson_setup_dev()
 {
     # -Db_sanitize='address'
     time -p -f "Execution time: %e sec" \
@@ -181,22 +181,7 @@ meson_setup_dev_all()
         -Dbuildtype=debug \
         -Dwarning_level=2 \
         -Dbuild-tests=true \
-        -Davahi=true \
-        -Dfb=true \
-        -Dsdl=true \
-        -Dwl=true \
-        -Dbuffer=true \
-        -Ddrm=true \
-        -Dphysics=true \
-        -Dxpresent=true \
-        -Devas-loaders-disabler=jxl \
-        -Dpixman=true \
-        -Dhyphen=true \
-        -Dvnc-server=true \
-        -Delua=true \
-        -Dbindings=lua,cxx \
-        -Dembedded-lz4=false \
-        -Dbuild-examples=false
+        -Dbuild-examples=true
 }
 
 meson_compile()
@@ -258,7 +243,7 @@ case "$1" in
     c|compile)
         remove_build_dir
         if [ "$2" = "dev" ]; then
-            meson_setup_dev_all
+            meson_setup_dev
         else
             meson_setup_default
         fi

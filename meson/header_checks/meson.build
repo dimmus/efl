@@ -16,7 +16,7 @@ if get_option('native-arch-optimization')
     if not cc.has_header(native_header)
       error('Error, header '+native_header+' is required')
     endif
-    efl_config_h.set10('HAVE_'+native_header.underscorify().to_upper(), true)
+    efl_config.set10('HAVE_'+native_header.underscorify().to_upper(), true)
   endif
 endif
 
@@ -132,7 +132,7 @@ open_cloexec = cc.compiles('''#include <sys/types.h>
                            ''',
                            name : 'open works with O_CLOEXEC')
 if open_cloexec
-  efl_config_h.set10('HAVE_OPEN_CLOEXEC', true)
+  efl_config.set10('HAVE_OPEN_CLOEXEC', true)
 endif
 
 strerror_r_char_p = cc.compiles('''#define _GNU_SOURCE
@@ -148,7 +148,7 @@ strerror_r_char_p = cc.compiles('''#define _GNU_SOURCE
                  name : 'strerror_r() returns char *')
 
 if strerror_r_char_p
-  efl_config_h.set('STRERROR_R_CHAR_P', '1')
+  efl_config.set('STRERROR_R_CHAR_P', '1')
 endif
 
 #for later use, a bunch of librarie findings
@@ -167,7 +167,7 @@ thread_dep = dependency('threads')
 #check for the headers
 foreach header : header_checks
   if cc.has_header(header)
-    efl_config_h.set10('HAVE_'+header.underscorify().to_upper(), true)
+    efl_config.set10('HAVE_'+header.underscorify().to_upper(), true)
   endif
 endforeach
 
@@ -197,21 +197,21 @@ foreach function : function_checks
     if cc.has_header_symbol(header, function_name,
         dependencies : dependencies,
         args : args)
-      efl_config_h.set10('HAVE_'+function_name.to_upper(), true)
+      efl_config.set10('HAVE_'+function_name.to_upper(), true)
     endif
   endforeach
 endforeach
 
 # The next checks are manually for now due to the fact that some names are not within the default pattern
 if cc.has_header_symbol('sys/stat.h', 'fstatat')
-  efl_config_h.set10('HAVE_ATFILE_SOURCE', true)
+  efl_config.set10('HAVE_ATFILE_SOURCE', true)
 endif
 
 if sys_linux and \
-    efl_config_h.has('HAVE_LISTXATTR') and \
-    efl_config_h.has('HAVE_SETXATTR') and \
-    efl_config_h.has('HAVE_GETXATTR')
-  efl_config_h.set10('HAVE_XATTR', true)
+    efl_config.has('HAVE_LISTXATTR') and \
+    efl_config.has('HAVE_SETXATTR') and \
+    efl_config.has('HAVE_GETXATTR')
+  efl_config.set10('HAVE_XATTR', true)
 endif
 
 regexp = []
@@ -228,10 +228,10 @@ else
    endif
 endif
 
-efl_config_h.set('VMAJ', version_major)
-efl_config_h.set('VMIN', version_minor)
-efl_config_h.set('VMIC', version_micro)
-efl_config_h.set('VREV', '0')
+efl_config.set('VMAJ', version_major)
+efl_config.set('VMIN', version_minor)
+efl_config.set('VMIC', version_micro)
+efl_config.set('VREV', '0')
 
 #jpeg detection ... life is a bit more complex there
 
@@ -241,16 +241,16 @@ if jpeg.found()
 endif
 
 if sys_bsd
-  efl_config_h.set('HAVE_NOTIFY_KEVENT', '1')
+  efl_config.set('HAVE_NOTIFY_KEVENT', '1')
 endif
 
 if sys_osx
-  efl_config_h.set('HAVE_NOTIFY_COCOA', '1')
+  efl_config.set('HAVE_NOTIFY_COCOA', '1')
 endif
-efl_config_h.set('SIZEOF_INT', cc.sizeof('int'))
-efl_config_h.set('SIZEOF_LONG', cc.sizeof('long'))
+efl_config.set('SIZEOF_INT', cc.sizeof('int'))
+efl_config.set('SIZEOF_LONG', cc.sizeof('long'))
 
 if sys_windows
-  efl_config_h.set('HAVE_NOTIFY_WIN32', '1')
-  efl_config_h.set10('HAVE_DDRAW_H', true)
+  efl_config.set('HAVE_NOTIFY_WIN32', '1')
+  efl_config.set10('HAVE_DDRAW_H', true)
 endif

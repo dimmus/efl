@@ -48,26 +48,26 @@ subdir('meson/arguments')
 
 # env = find_program('env', native: true)
 
-efl_config_h = configuration_data()
-efl_config_h.set_quoted('EFL_MODULE_ARCH' , version_name)
-efl_config_h.set_quoted('EFL_VERSION'     , version)
-efl_config_h.set_quoted('EFL_LIB_DIR'     , dir_lib)
-efl_config_h.set_quoted('EFL_BUILD_DIR'   , dir_build)
-efl_config_h.set10     ('EFL_HAVE_THREADS', true)
+efl_config = configuration_data()
+efl_config.set_quoted('EFL_MODULE_ARCH' , version_name)
+efl_config.set_quoted('EFL_VERSION'     , version)
+efl_config.set_quoted('EFL_LIB_DIR'     , dir_lib)
+efl_config.set_quoted('EFL_BUILD_DIR'   , dir_build)
+efl_config.set10     ('EFL_HAVE_THREADS', true)
 
-# efl_config_h.set_quoted('PACKAGE'            , name)
-# efl_config_h.set_quoted('VERSION'            , version)
-# efl_config_h.set_quoted('LOCALE_DIR'         , join_paths([dir_prefix, 'share/locale']))
-# efl_config_h.set_quoted('PACKAGE_URL'        , 'https://www.enlightenment.org')
-# efl_config_h.set_quoted('PACKAGE_TARNAME'    , name)
-# efl_config_h.set_quoted('PACKAGE_BUGREPORT'  , 'enlightenment-devel@lists.sourceforge.net')
-# efl_config_h.set_quoted('PACKAGE_STRING'     , name + ' ' + version)
-# efl_config_h.set_quoted('PACKAGE_NAME'       , name)
-# efl_config_h.set_quoted('PACKAGE_BIN_DIR'    , dir_bin)
-# efl_config_h.set_quoted('PACKAGE_SRC_DIR'    , meson.project_source_root())
-# efl_config_h.set_quoted('PACKAGE_SYSCONF_DIR', dir_sysconf)
-# efl_config_h.set_quoted('BINDIR'             , dir_bin)
-# efl_config_h.set10('SLOPPY_SPEC'     , true)
+# efl_config.set_quoted('PACKAGE'            , name)
+# efl_config.set_quoted('VERSION'            , version)
+# efl_config.set_quoted('LOCALE_DIR'         , join_paths([dir_prefix, 'share/locale']))
+# efl_config.set_quoted('PACKAGE_URL'        , 'https://www.enlightenment.org')
+# efl_config.set_quoted('PACKAGE_TARNAME'    , name)
+# efl_config.set_quoted('PACKAGE_BUGREPORT'  , 'enlightenment-devel@lists.sourceforge.net')
+# efl_config.set_quoted('PACKAGE_STRING'     , name + ' ' + version)
+# efl_config.set_quoted('PACKAGE_NAME'       , name)
+# efl_config.set_quoted('PACKAGE_BIN_DIR'    , dir_bin)
+# efl_config.set_quoted('PACKAGE_SRC_DIR'    , meson.project_source_root())
+# efl_config.set_quoted('PACKAGE_SYSCONF_DIR', dir_sysconf)
+# efl_config.set_quoted('BINDIR'             , dir_bin)
+# efl_config.set10('SLOPPY_SPEC'     , true)
 
 ## have to get compiler again for this to work
 # code = '''#define _GNU_SOURCE 1
@@ -79,7 +79,7 @@ efl_config_h.set10     ('EFL_HAVE_THREADS', true)
 # void func(void) { printf("%p\n", environ); }
 # '''
 # if cc.compiles(code, args : '-lc', name : 'environ check')
-#   efl_config_h.set10('HAVE_ENVIRON', true)
+#   efl_config.set10('HAVE_ENVIRON', true)
 # endif
 
 subdir('meson/optimizations')
@@ -99,13 +99,13 @@ elif sys_osx
   sys_lib_extension = 'dylib'
   sys_exe_extension = ''
   sys_mod_extension = 'so'
-  efl_config_h.set('environ', '(*_NSGetEnviron())')
+  efl_config.set('environ', '(*_NSGetEnviron())')
 else
   error('System ' + host_os + ' not known')
 endif
 
 if sys_linux or sys_bsd or sys_sun
-  efl_config_h.set('_STAT_VER_LINUX', '1')
+  efl_config.set('_STAT_VER_LINUX', '1')
 endif
 
 if sys_bsd
@@ -116,23 +116,23 @@ elif get_option('crypto') == 'openssl'
   crypto = dependency('openssl')
 endif
 if crypto.found()
-  efl_config_h.set('HAVE_OPENSSL', '1')
+  efl_config.set('HAVE_OPENSSL', '1')
 endif
 if get_option('crypto') != ''
-  efl_config_h.set('HAVE_CIPHER', '1')
-  efl_config_h.set('HAVE_SIGNATURE', '1')
+  efl_config.set('HAVE_CIPHER', '1')
+  efl_config.set('HAVE_SIGNATURE', '1')
 endif
 
-efl_config_h.set_quoted('SHARED_LIB_SUFFIX', '.' + sys_lib_extension)
-efl_config_h.set_quoted('MOD_SUFFIX', '.' + sys_mod_extension)
+efl_config.set_quoted('SHARED_LIB_SUFFIX', '.' + sys_lib_extension)
+efl_config.set_quoted('MOD_SUFFIX', '.' + sys_mod_extension)
 if sys_exe_extension == ''
-  efl_config_h.set_quoted('EXE_SUFFIX', '')
+  efl_config.set_quoted('EXE_SUFFIX', '')
 else
-  efl_config_h.set_quoted('EXE_SUFFIX', '.' + sys_exe_extension)
+  efl_config.set_quoted('EXE_SUFFIX', '.' + sys_exe_extension)
 endif
 
 # if get_option('tslib')
-#   efl_config_h.set('HAVE_TSLIB', '1')
+#   efl_config.set('HAVE_TSLIB', '1')
 # endif
 
 subdir('meson/header_checks')
@@ -160,7 +160,7 @@ subdir('po')
 # have_elua = get_option('elua')
 
 # if get_option('lua-interpreter') == 'lua'
-#   efl_config_h.set('ENABLE_LUA_OLD', '1')
+#   efl_config.set('ENABLE_LUA_OLD', '1')
 #   foreach l : luaold_interpreters
 #     lua = dependency(l[0], version: l[1], required:false)
 #     lua_pc_name = l[0]
@@ -192,8 +192,8 @@ subdir('po')
 subprojects = [
   # name                |   option             | mod   | lib  | bin | bench | tests | examples | true if build in efl-one | pkg-config options | name of static libs
   # ['evil'             ,[]                    , false,  true, false,  false,  false,     false,  true, [], []],
-  ['efl_tools'          ,[]                    , false,  true, false,  false,   true,  true,   true,  [], []],
-  ['efl_eolian'         ,[]                    , false,  true,  true,  false,  false,  false,  false, ['efl_tools'], []],
+  ['etool'          ,[]                    , false,  true, false,  false,   true,  true,   true,  [], []],
+  ['eolian'         ,[]                    , false,  true,  true,  false,  false,  false,  false, ['etool'], []],
   # ['eo'               ,[]                    , false,  true, false,   true,   true,     false,  true, ['eina'], []],
   # ['efl'              ,[]                    , false,  true, false,  false,   true,     false,  true, ['eo'], []],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
@@ -242,7 +242,7 @@ subprojects = [
 
 #we have to do that first, eina modules are required by eina
 #the other modules require theire package
-subdir(join_paths(local_module,'efl_tools'))
+subdir(join_paths(local_module,'etool'))
 
 # List of dependency objects that might be disabled due to configurations
 # If they are enabled, the object gets overwritten by the library file.
@@ -255,7 +255,7 @@ dep_efl_one    = []
 dep_efl_one_eo = []
 inc_efl_one    = []
 sub_efl_one    = []
-dep_efl_tools  = []
+dep_etool      = []
 
 # tmp_empty = declare_dependency() # need for static libs
 
@@ -264,7 +264,7 @@ foreach package : subprojects
   package_version_name = '-'.join(package_name.split('_')) + '-' + version_major
   automatic_pkgfile = true
   if package[1].length() == 0 or get_option(package[1][0])
-    efl_config_h.set('HAVE_' + package_name.to_upper().underscorify(), '1')
+    efl_config.set('HAVE_' + package_name.to_upper().underscorify(), '1')
 
     dir_package_include = join_paths(dir_include, package_version_name)
     dir_package_modules = join_paths(dir_lib, package_name, 'modules')
@@ -310,7 +310,7 @@ foreach package : subprojects
       set_variable(package_name + '_header_subdirs', package_header_subdirs)
       set_variable(package_name + '_eo_subdirs', package_eo_subdirs)
       if package[8] and get_option('efl-one')
-        src = get_variable(package_name + '_src')
+        src = get_variable('src_' + package_name)
         dep_efl_one = get_variable('dep_' + package_name + '_one')
         inc_efl_one_package = get_variable('inc_' + package_name)
         # inc_efl_one += [include_directories('.'), include_directories(join_paths(local_lib, package_name))]
@@ -402,7 +402,7 @@ if get_option('efl-one')
     name : 'efl-one',
     subdirs : sub_efl_one,
     description: 'Configureation for efl in one big fat .so',
-    libraries : [efl_one] + dep_efl_tools, #eina is a special case here which drags in m dl & threads
+    libraries : [efl_one] + dep_etool, #eina is a special case here which drags in m dl & threads
   )
 
   #overwrite all the dependencies of subprojects with efl-one, in order to link the modules and binaries to the correct .so
@@ -436,7 +436,7 @@ foreach package : subprojects
       '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, package_name)+'"',
       '-DNEED_RUN_IN_TREE=1',
     ]
-    if package[4] and package_name != 'efl_eolian'
+    if package[4] and package_name != 'eolian'
        subdir(join_paths(local_bin, package_name))
     endif
     if package[5]
@@ -513,7 +513,7 @@ endif
 
 configure_file(
   output: 'efl_config.h',
-  configuration: efl_config_h
+  configuration: efl_config
 )
 
 # configure_file(
@@ -526,7 +526,7 @@ configure_file(
 # configure_file(
 #   input: 'elm_intro.h.in',
 #   output: 'elm_intro.h',
-#   configuration: efl_config_h,
+#   configuration: efl_config,
 #   install_dir : join_paths(dir_include,'elementary-'+version_major)
 # )
 

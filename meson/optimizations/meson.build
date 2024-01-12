@@ -4,7 +4,7 @@ cpu_neon_intrinsics = false
 native_arch_opt_c_args = [ ]
 
 if host_machine.endian() == 'big'
-  efl_config_h.set10('WORDS_BIGENDIAN', true)
+  efl_config.set10('WORDS_BIGENDIAN', true)
 endif
 
 cpu_family = host_machine.cpu_family()
@@ -12,8 +12,8 @@ with_optimization = get_option('native-arch-optimization')
 if with_optimization
   if cpu_family.startswith('x86')
     cpu_sse3 = true
-    efl_config_h.set10('BUILD_MMX', true)
-    efl_config_h.set10('BUILD_SSE3', true)
+    efl_config.set10('BUILD_MMX', true)
+    efl_config.set10('BUILD_SSE3', true)
     if cc.get_id() != 'msvc'
       native_arch_opt_c_args = ['-msse4.1', '-mstackrealign']
       add_project_arguments('-DUSE_SSE41', language: langs)
@@ -28,20 +28,20 @@ if with_optimization
     endif
   elif cpu_family == 'arm'
     cpu_neon = true
-    efl_config_h.set10('BUILD_NEON', true)
+    efl_config.set10('BUILD_NEON', true)
     add_project_arguments('-mfpu=neon', language: 'c')
     add_project_arguments('-ftree-vectorize', language: 'c')
     message('ARM build - NEON enabled')
   elif cpu_family == 'aarch64'
     cpu_neon = true
     cpu_neon_intrinsics = true
-    efl_config_h.set10('BUILD_NEON', true)
-    efl_config_h.set10('BUILD_NEON_INTRINSICS', true)
+    efl_config.set10('BUILD_NEON', true)
+    efl_config.set10('BUILD_NEON_INTRINSICS', true)
     add_project_arguments('-ftree-vectorize', language: 'c')
     native_arch_opt_c_args = [ '-ftree-vectorize' ]
     message('ARM64 build - NEON + intrinsics enabled')
   elif cpu_family == 'ppc' or cpu_family == 'ppc64'
-    efl_config_h.set10('BUILD_ALTIVEC', true)
+    efl_config.set10('BUILD_ALTIVEC', true)
     add_project_arguments('-ftree-vectorize', language: 'c')
     add_project_arguments('-maltivec', language: 'c')
     message('PPC/POWER build - ALTIVEC enabled')

@@ -1,9 +1,0 @@
-#ifndef __EO_PARSER_H__
-#define __EO_PARSER_H__
-
-#include "eolian_api.h"
-#include "eo_lexer.h"
-
-Eolian_Unit *eo_parser_database_fill(Eolian_Unit *parent, const char *filename, Efl_Bool eot);
-
-#endif /* __EO_PARSER_H__ */

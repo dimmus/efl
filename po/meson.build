@@ -11,8 +11,8 @@ if get_option('nls')
                 '--from-code=UTF-8',
                 '--foreign-user'
               ])
-  efl_config_h.set('HAVE_GETTEXT', '1')
-  efl_config_h.set('ENABLE_NLS', '1')
+  efl_config.set('HAVE_GETTEXT', '1')
+  efl_config.set('ENABLE_NLS', '1')
   # intl = cc.find_library('intl', required : false)
   intl = dependency('intl', required: false, method: 'auto')
   if cc.compiles('#include <libintl.h>', dependencies : intl) == false
