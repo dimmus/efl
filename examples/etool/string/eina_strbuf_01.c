@@ -14,7 +14,6 @@
  * eina_strbuf_append_length
  * eina_strbuf_replace_all
  * eina_strbuf_manage_read_only_new_length
- * 
  * eina_strbuf_string_get
  * eina_strbuf_substr_get
  * 
