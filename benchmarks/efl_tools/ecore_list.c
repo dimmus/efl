@@ -373,18 +373,18 @@ ecore_list_append_list(Ecore_List *list, Ecore_List *append)
       return TRUE;
 
    if (ecore_list_empty_is(list))
-     {
-        list->first = append->first;
-        list->current = list->first;
-        list->last = append->last;
-        list->nodes = append->nodes;
-     }
+   {
+      list->first = append->first;
+      list->current = list->first;
+      list->last = append->last;
+      list->nodes = append->nodes;
+   }
    else
-     {
-        list->last->next = append->first;
-        list->last = append->last;
-        list->nodes += append->nodes;
-     }
+   {
+      list->last->next = append->first;
+      list->last = append->last;
+      list->nodes += append->nodes;
+   }
 
    ecore_list_init(append);
    return TRUE;

@@ -43,7 +43,7 @@ local_bin       = 'src/bin'
 local_module    = 'src/modules'
 # local_scripts   = 'src/scripts'
 local_tests     = 'tests'
-# local_examples  = 'examples'
+local_examples  = 'examples'
 # local_bindings  = 'bindings'
 local_benchmark = 'benchmarks'
 

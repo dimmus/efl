@@ -1,7 +1,13 @@
 option('build-tests',
-  type : 'boolean',
+  type  : 'boolean',
   value : true,
   description : 'Compile tests'
+)
+
+option('build-examples',
+  type : 'boolean',
+  value : true,
+  description : 'Compile examples'
 )
 
 option('efl-one',
@@ -130,12 +136,6 @@ option('systemd',
 #   type : 'string',
 #   value : 'none',
 #   description : 'The build id string for efl set as the EFL_BUILD_ID define')
-
-# option('build-examples',
-#   type : 'boolean',
-#   value : false,
-#   description : 'Compile examples'
-# )
 
 # option('glib',
 #   type : 'boolean',
