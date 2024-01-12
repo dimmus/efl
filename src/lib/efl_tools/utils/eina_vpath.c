@@ -243,7 +243,7 @@ _eina_vpath_resolve(const char *path, char *str, size_t size)
                   if (*p =='/') break;
                }
              name = alloca(p - path);
-             strncpy(name, path + 1, p - path - 1);
+             eina_strlcpy(name, path + 1, p - path - 1);
              name[p - path - 1] = 0;
 
              if (!_fetch_user_homedir(&home, name, path))
@@ -298,7 +298,7 @@ _eina_vpath_resolve(const char *path, char *str, size_t size)
         if (found)
           {
              name = alloca(end - path);
-             strncpy(name, path + 2, end - path - offset);
+             eina_strlcpy(name, path + 2, end - path - offset);
              name[end - path - 2] = 0;
              meta = _eina_vpath_data_get(name);
              if (meta)

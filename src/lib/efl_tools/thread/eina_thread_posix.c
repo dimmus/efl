@@ -26,6 +26,7 @@
 #include "eina_lock.h" /* it will include pthread.h with proper flags */
 #include "eina_thread.h"
 #include "eina_cpu.h"
+#include "eina_str.h"
 
 /* undefs EINA_ARG_NONULL() so NULL checks are not compiled out! */
 #include "eina_safety_checks.h"
@@ -257,7 +258,7 @@ eina_thread_name_set(Eina_Thread t, const char *name)
    char buf[16];
    if (name)
      {
-        strncpy(buf, name, 15);
+        eina_strlcpy(buf, name, 15);
         buf[15] = 0;
      }
    else buf[0] = 0;

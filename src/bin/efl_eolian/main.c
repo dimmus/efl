@@ -165,7 +165,7 @@ _include_guard(const char *fname, const char *gname, Efl_Strbuf *buf)
      gname = "";
 
    char iname[256] = {0};
-   strncpy(iname, fname, sizeof(iname) - 1);
+   eina_strlcpy(iname, fname, sizeof(iname) - 1);
    char *inamep = iname;
    eina_str_toupper(&inamep);
 

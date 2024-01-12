@@ -20,8 +20,9 @@
 # include "efl_config.h"
 #endif
 
-#include "eina_types.h"
 #include "efl_tools_config.h"
+
+#include "eina_types.h"
 #include "eina_array.h"
 #include "eina_thread.h"
 #include "eina_main.h"
@@ -214,7 +215,7 @@ EINA_API Efl_Bool
 eina_thread_name_set(Eina_Thread t, const char *name)
 {
    Thread_t *thr = (Thread_t *) t;
-   strncpy(thr->name, name, sizeof(thr->name));
+   eina_strlcpy(thr->name, name, sizeof(thr->name));
    thr->name[sizeof(thr->name)-1] = '\0';
    return EFL_TRUE;
 }

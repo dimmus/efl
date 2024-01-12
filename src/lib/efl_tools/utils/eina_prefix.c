@@ -345,7 +345,7 @@ _try_argv(Eina_Prefix *pfx, const char *argv0)
              continue;
           }
 
-        strncpy(buf2, cp, len);
+        eina_strlcpy(buf2, cp, len);
         buf2[len] = EINA_PATH_SEP_C;
         strcpy(buf2 + len + 1, argv0);
         if (realpath(buf2, buf))
@@ -659,7 +659,7 @@ eina_prefix_new(const char *argv0, void *symbol, const char *envprefix,
                        Efl_Bool magic_found = EFL_FALSE;
                        int checks_passed = 0;
 
-                       strncpy(pfx->prefix_path, pfx->exe_path,
+                       eina_strlcpy(pfx->prefix_path, pfx->exe_path,
                                p - pfx->exe_path);
                        pfx->prefix_path[p - pfx->exe_path] = 0;
                        DBG("Have prefix = %s", pfx->prefix_path);
