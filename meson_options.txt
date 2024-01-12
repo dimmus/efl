@@ -1,12 +1,12 @@
 option('build-tests',
   type  : 'boolean',
-  value : true,
+  value : false,
   description : 'Compile tests'
 )
 
 option('build-examples',
   type : 'boolean',
-  value : true,
+  value : false,
   description : 'Compile examples'
 )
 
