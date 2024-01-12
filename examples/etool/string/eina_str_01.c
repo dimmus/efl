@@ -1,10 +1,25 @@
-//Compile with:
-//gcc -Wall -o eina_str_01 eina_str_01.c `pkg-config --cflags --libs eina`
+/* Used:
+ * eina_str_split
+ * eina_str_toupper
+ * eina_str_tolower 
+ * eina_str_has_prefix
+ * eina_str_has_suffix
+ * eina_str_has_extension
+ * eina_str_escape
+ * eina_str_join_len
+ * eina_strlcpy
+ * eina_strlcat
+ * eina_strftime
+ * 
+ * Compile with:
+ * gcc -Wall -o eina_str_01 eina_str_01.c `pkg-config --cflags --libs etool`
+ */
 
 #include <stdio.h>
 #include <Eina.h>
 
-int main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
+int 
+main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    char *names = "Calvin;Leoben;D'anna;Simon;Doral;Six;Daniel;Sharon";
    char *str;
@@ -28,7 +43,7 @@ int main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
    free(arr);
 
    str = malloc(sizeof(char) * 4);
-   strcpy(str, "bsd");
+   eina_strlcpy(str, "bsd", sizeof(str));
 
    eina_str_toupper((char **)&str);
    printf("%s\n", str);

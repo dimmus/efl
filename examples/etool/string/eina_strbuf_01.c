@@ -1,5 +1,26 @@
-//Compile with:
-//gcc -Wall -o eina_strbuf_01 eina_strbuf_01.c `pkg-config --cflags --libs eina`
+/* Used:
+ * eina_strbuf_new
+ * eina_strbuf_remove
+ * eina_strbuf_reset
+ * eina_strbuf_free
+ * eina_strbuf_append_length
+ * eina_strbuf_append_char
+ * eina_strbuf_tolower
+ * eina_strbuf_insert_escaped
+ * eina_strbuf_insert_printf 
+ * eina_strbuf_append_escaped
+ * eina_strbuf_append_printf
+ * eina_strbuf_append_char
+ * eina_strbuf_append_length
+ * eina_strbuf_replace_all
+ * eina_strbuf_manage_read_only_new_length
+ * 
+ * eina_strbuf_string_get
+ * eina_strbuf_substr_get
+ * 
+ * Compile with:
+ * gcc -Wall -o eina_strbuf_01 eina_strbuf_01.c `pkg-config --cflags --libs etool`
+ */
 
 #include <stdio.h>
 #include <Eina.h>
@@ -48,10 +69,11 @@ int main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
    eina_strbuf_append_char(buf, '.');
    printf("%s\n", eina_strbuf_string_get(buf));
 
-   eina_strbuf_append_length(buf, "Another string.", 15);
+   eina_strbuf_append_length(buf, " Another string.", 15);
    printf("%s\n", eina_strbuf_string_get(buf));
 
    eina_strbuf_free(buf);
+   
    eina_shutdown();
 
    return 0;

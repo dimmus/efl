@@ -1,5 +1,5 @@
 //Compile with:
-//gcc -g eina_magic_01.c -o eina_magic_01 `pkg-config --cflags --libs eina`
+//gcc -g -Wall eina_magic_01.c -o eina_magic_01 `pkg-config --cflags --libs etool`
 
 #include <Eina.h>
 

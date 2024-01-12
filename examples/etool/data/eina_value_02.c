@@ -1,5 +1,5 @@
 //Compile with:
-//gcc eina_value_02.c -o eina_value_02 `pkg-config --cflags --libs eina`
+//gcc eina_value_02.c -o eina_value_02 `pkg-config --cflags --libs etool`
 
 #include <Eina.h>
 

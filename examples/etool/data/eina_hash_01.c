@@ -1,5 +1,5 @@
 //Compile with:
-//gcc -g eina_hash_01.c -o eina_hash_01 `pkg-config --cflags --libs eina`
+//gcc -g -Wall eina_hash_01.c -o eina_hash_01 `pkg-config --cflags --libs etool`
 
 #include <stdio.h>
 #include <string.h>

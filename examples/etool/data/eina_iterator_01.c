@@ -1,5 +1,5 @@
 //Compile with:
-//gcc -g eina_iterator_01.c -o eina_iterator_01 `pkg-config --cflags --libs eina`
+//gcc -g -Wall eina_iterator_01.c -o eina_iterator_01 `pkg-config --cflags --libs etool`
 
 #include <stdio.h>
 

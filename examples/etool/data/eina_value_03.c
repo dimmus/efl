@@ -1,5 +1,5 @@
 //Compile with:
-//gcc eina_value_03.c -o eina_value_03 `pkg-config --cflags --libs eina`
+//gcc eina_value_03.c -o eina_value_03 `pkg-config --cflags --libs etool`
 
 #include <Eina.h>
 #include <sys/time.h>

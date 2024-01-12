@@ -1,5 +1,5 @@
 //Compile with:
-//gcc -g eina_error_01.c -o eina_error_01 `pkg-config --cflags --libs eina`
+//gcc -g -Wall eina_error_01.c -o eina_error_01 `pkg-config --cflags --libs etool`
 
 #include <stdlib.h>
 #include <stdio.h>

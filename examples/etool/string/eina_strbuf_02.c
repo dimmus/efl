@@ -1,5 +1,15 @@
-//Compile with:
-//gcc -Wall -o eina_strbuf_02 eina_strbuf_02c `pkg-config --cflags --libs eina`
+/* Used:
+ * eina_strbuf_new
+ * eina_strbuf_free
+ * eina_strbuf_reset
+ * eina_strbuf_append
+ * eina_strbuf_append_strftime
+ * eina_strbuf_insert_strftime
+ * eina_strbuf_string_get
+ * 
+ * Compile with:
+ * gcc -Wall -o eina_strbuf_02 eina_strbuf_02c `pkg-config --cflags --libs etool`
+ */
 
 #include <stdio.h>
 #include <Eina.h>

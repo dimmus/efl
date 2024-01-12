@@ -73,7 +73,7 @@ eina_tmpstr_add_length(const char *str, size_t length)
    if (!s) return NULL;
    s->length = length;
    s->str = ((char *)s) + sizeof(Str);
-   eina_strlcpy(s->str, str, length);
+   eina_strlcpy(s->str, str, length + 1);
    s->str[length] = '\0';
    s->ma = EFL_FALSE;
    eina_lock_take(&_mutex);
