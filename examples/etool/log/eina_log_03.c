@@ -1,5 +1,14 @@
-//Compile with:
-//gcc -Wall -o eina_log_03 eina_log_03.c `pkg-config --cflags --libs etool`
+/* Used:
+ * eina_log_print
+ * eina_log_print_cb_set
+ *
+ * EINA_LOG_INFO
+ * EINA_LOG_DBG
+ * EINA_LOG_ERR
+ *
+ * Compile with:
+ * gcc -Wall -o eina_log_03 eina_log_03.c `pkg-config --cflags --libs etool`
+ */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,14 +25,15 @@ struct _Data
    int to_stderr;
 };
 
-void print_cb(const Eina_Log_Domain *domain,
-              Eina_Log_Level level EFL_UNUSED,
-              const char *file,
-              const char *fnc,
-              int line,
-              const char *fmt,
-              void *data,
-              va_list args)
+void
+print_cb(const Eina_Log_Domain *domain,
+         Eina_Log_Level level EFL_UNUSED,
+         const char *file,
+         const char *fnc,
+         int line,
+         const char *fmt,
+         void *data,
+         va_list args)
 {
    Data *d;
    FILE *output;
@@ -31,15 +41,15 @@ void print_cb(const Eina_Log_Domain *domain,
 
    d = (Data*)data;
    if (d->to_stderr)
-     {
-        output = stderr;
-        str = "stderr";
-    }
+   {
+      output = stderr;
+      str = "stderr";
+   }
    else
-     {
-       output = stdout;
-        str = "stdout";
-     }
+   {
+      output = stdout;
+      str = "stdout";
+   }
 
    fprintf(output, "%s:%s:%s (%d) %s: ",
            domain->domain_str, file, fnc, line, str);
@@ -47,7 +57,8 @@ void print_cb(const Eina_Log_Domain *domain,
    putc('\n', output);
 }
 
-void test(Data *data, int i)
+void
+test(Data *data, int i)
 {
    if (i < 0)
       data->to_stderr = 0;
@@ -57,16 +68,18 @@ void test(Data *data, int i)
    EINA_LOG_INFO("Log message...");
 }
 
-int main(void)
+int
+main(void)
 {
    Data data;
 
    if (!eina_init())
-     {
-        printf("log during the initialization of Eina_Log module\n");
-        return EXIT_FAILURE;
-     }
-
+   {
+      printf("Error during the initialization of Eina_Log module\n");
+      return EXIT_FAILURE;
+   }
+   
+   eina_log_level_set(EINA_LOG_LEVEL_INFO);
    eina_log_print_cb_set(print_cb, &data);
 
    test(&data, -1);
