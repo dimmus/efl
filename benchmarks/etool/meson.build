@@ -1,4 +1,4 @@
-bench_src_efl_tools = files(
+bench_src_etool = files(
   'eina_bench.c',
   'eina_bench_sort.c',
   'eina_bench_crc_hash.c',
@@ -25,14 +25,14 @@ city = shared_library('city',
   sources : ['city.cc','city.h'],
 )
 
-bench_efl_tools = executable('eina_bench',
+bench_etool = executable('eina_bench',
   sources : bench_src_efl_tools,
-  dependencies : efl_tools,
+  dependencies : etool,
   c_args : ['-fPIC','-DCITYHASH_BENCH', '-DEINA_ENABLE_BENCH_E17', '-DEFL_BUILD'],
   include_directories : inc_config,
   link_with : city,
 )
 
-benchmark('bench_efl_tools', bench_efl_tools,
+benchmark('bench_etool', bench_etool,
   args : 'libcity.la',
 )
