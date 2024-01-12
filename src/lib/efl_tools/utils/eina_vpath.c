@@ -298,7 +298,7 @@ _eina_vpath_resolve(const char *path, char *str, size_t size)
         if (found)
           {
              name = alloca(end - path);
-             eina_strlcpy(name, path + 2, end - path - offset);
+             eina_strlcpy(name, path + 2, end - path - offset + 1);
              name[end - path - 2] = 0;
              meta = _eina_vpath_data_get(name);
              if (meta)
