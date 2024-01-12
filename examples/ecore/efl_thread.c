@@ -5,15 +5,15 @@
 #include <Eo.h>
 #include <Efl_Core.h>
 
-static void _th_read_change(void *data EINA_UNUSED, const Efl_Event *ev);
-static void _th_main(void *data EINA_UNUSED, const Efl_Event *ev);
-static void _read_change(void *data EINA_UNUSED, const Efl_Event *ev);
-static void _task_exit(void *data EINA_UNUSED, const Efl_Event *ev);
+static void _th_read_change(void *data EFL_UNUSED, const Efl_Event *ev);
+static void _th_main(void *data EFL_UNUSED, const Efl_Event *ev);
+static void _read_change(void *data EFL_UNUSED, const Efl_Event *ev);
+static void _task_exit(void *data EFL_UNUSED, const Efl_Event *ev);
 
 ////////////////////////////////////////////////////////////////////////////
 //// thread side of code
 static void
-_th_timeout(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
+_th_timeout(void *data EFL_UNUSED, const Efl_Event *ev EFL_UNUSED)
 {
    Eo *obj = data;
 
@@ -23,7 +23,7 @@ _th_timeout(void *data EINA_UNUSED, const Efl_Event *ev EINA_UNUSED)
 }
 
 static void
-_th_read_change(void *data EINA_UNUSED, const Efl_Event *ev)
+_th_read_change(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    // read input from parent thread/loop status chnaged - read what we can
    Eo *obj = ev->object;
@@ -62,7 +62,7 @@ _th_read_change(void *data EINA_UNUSED, const Efl_Event *ev)
 }
 
 static void
-_th_main(void *data EINA_UNUSED, const Efl_Event *ev)
+_th_main(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    // the "main function" of the thread thayt gets called with arguments
    // just like eflm_main for the main loop
@@ -100,7 +100,7 @@ _th_main(void *data EINA_UNUSED, const Efl_Event *ev)
 ////////////////////////////////////////////////////////////////////////////
 //// main loop side of code
 static void
-_read_change(void *data EINA_UNUSED, const Efl_Event *ev)
+_read_change(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    // read output from thread status chnaged - read what we can
    Eo *obj = ev->object;
@@ -119,7 +119,7 @@ _read_change(void *data EINA_UNUSED, const Efl_Event *ev)
 }
 
 static void
-_task_exit(void *data EINA_UNUSED, const Efl_Event *ev)
+_task_exit(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    // called when the task says it has completed and exited.
    // all output to read has stopped
@@ -134,7 +134,7 @@ _task_exit(void *data EINA_UNUSED, const Efl_Event *ev)
 ////////////////////////////////////////////////////////////////////////////
 // just main loop input handling
 static void
-_stdin_read_change(void *data EINA_UNUSED, const Efl_Event *ev)
+_stdin_read_change(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    // read output from thread status chnaged - read what we can
    Eo *obj = ev->object;
@@ -153,7 +153,7 @@ _stdin_read_change(void *data EINA_UNUSED, const Efl_Event *ev)
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
+efl_main(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    Eo *app = ev->object;
    int threads = 2, i;

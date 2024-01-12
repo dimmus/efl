@@ -195,14 +195,14 @@ _eina_file_escape(char *path, size_t len)
 
 
 unsigned int
-eina_file_map_key_length(const void *key EINA_UNUSED)
+eina_file_map_key_length(const void *key EFL_UNUSED)
 {
    return sizeof (unsigned long int) * 2;
 }
 
 int
-eina_file_map_key_cmp(const unsigned long long int *key1, int key1_length EINA_UNUSED,
-                       const unsigned long long int *key2, int key2_length EINA_UNUSED)
+eina_file_map_key_cmp(const unsigned long long int *key1, int key1_length EFL_UNUSED,
+                       const unsigned long long int *key2, int key2_length EFL_UNUSED)
 {
    if (key1[0] == key2[0])
      {
@@ -215,7 +215,7 @@ eina_file_map_key_cmp(const unsigned long long int *key1, int key1_length EINA_U
 }
 
 int
-eina_file_map_key_hash(const unsigned long long int *key, int key_length EINA_UNUSED)
+eina_file_map_key_hash(const unsigned long long int *key, int key_length EFL_UNUSED)
 {
    return eina_hash_int64(&key[0], sizeof (unsigned long long int))
      ^ eina_hash_int64(&key[1], sizeof (unsigned long long int));

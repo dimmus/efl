@@ -90,7 +90,7 @@ _nmsp_iterator_next(Eolian_Namespace_List *it, void **data)
 }
 
 static void *
-_nmsp_container_get(Eina_Iterator *it EINA_UNUSED)
+_nmsp_container_get(Eina_Iterator *it EFL_UNUSED)
 {
    return NULL;
 }
@@ -625,9 +625,9 @@ database_unit_del(Eolian_Unit *unit)
 }
 
 static Efl_Bool
-_hashlist_free_cb(const Eina_Hash *hash EINA_UNUSED,
-                  const void *key EINA_UNUSED,
-                  void *data, void *fdata EINA_UNUSED)
+_hashlist_free_cb(const Eina_Hash *hash EFL_UNUSED,
+                  const void *key EFL_UNUSED,
+                  void *data, void *fdata EFL_UNUSED)
 {
    eina_list_free((Eina_List *)data);
    return EFL_TRUE;
@@ -664,9 +664,9 @@ _state_area_init(Eolian_State *state, Eolian_State_Area *a)
 }
 
 static Efl_Bool
-_ulist_free_cb(const Eina_Hash *hash EINA_UNUSED,
-               const void *key EINA_UNUSED,
-               void *data, void *fdata EINA_UNUSED)
+_ulist_free_cb(const Eina_Hash *hash EFL_UNUSED,
+               const void *key EFL_UNUSED,
+               void *data, void *fdata EFL_UNUSED)
 {
    database_unit_del((Eolian_Unit *)data);
    return EFL_TRUE;
@@ -690,13 +690,13 @@ _state_area_contents_del(Eolian_State_Area *a)
 }
 
 static void
-_default_panic_cb(const Eolian_State *state EINA_UNUSED, const char *msg)
+_default_panic_cb(const Eolian_State *state EFL_UNUSED, const char *msg)
 {
    _eolian_log(msg);
 }
 
 static void
-_default_error_cb(const Eolian_Object *obj, const char *msg, void *data EINA_UNUSED)
+_default_error_cb(const Eolian_Object *obj, const char *msg, void *data EFL_UNUSED)
 {
    if (obj)
      _eolian_log_line(obj->file, obj->line, obj->column, msg);
@@ -942,7 +942,7 @@ typedef struct _Defer_Data
 } Defer_Data;
 
 static Efl_Bool
-_defer_hash_cb(const Eina_Hash *hash EINA_UNUSED, const void *key,
+_defer_hash_cb(const Eina_Hash *hash EFL_UNUSED, const void *key,
                void *data, void *fdata)
 {
    Defer_Data *d = fdata;
@@ -978,7 +978,7 @@ _parse_deferred(Eolian_Unit *parent)
 }
 
 static Efl_Bool
-_merge_unit_cb(const Eina_Hash *hash EINA_UNUSED,
+_merge_unit_cb(const Eina_Hash *hash EFL_UNUSED,
                const void *key, void *data, void *fdata)
 {
    Eina_Hash *dest = fdata;
@@ -991,7 +991,7 @@ _merge_unit_cb(const Eina_Hash *hash EINA_UNUSED,
 }
 
 static Efl_Bool
-_merge_unit_cb_noref(const Eina_Hash *hash EINA_UNUSED,
+_merge_unit_cb_noref(const Eina_Hash *hash EFL_UNUSED,
                const void *key, void *data, void *fdata)
 {
    Eina_Hash *dest = fdata;
@@ -1018,8 +1018,8 @@ typedef struct _Merge_Data
 } Merge_Data;
 
 static Efl_Bool
-_merge_units_cb(const Eina_Hash *hash EINA_UNUSED,
-                const void *key EINA_UNUSED, void *data, void *fdata)
+_merge_units_cb(const Eina_Hash *hash EFL_UNUSED,
+                const void *key EFL_UNUSED, void *data, void *fdata)
 {
    Merge_Data *mdata = fdata;
    Merge_Data imdata = { mdata->cycles, data };
@@ -1042,7 +1042,7 @@ _merge_units(Eolian_Unit *unit)
 }
 
 static Efl_Bool
-_merge_staging_cb(const Eina_Hash *hash EINA_UNUSED,
+_merge_staging_cb(const Eina_Hash *hash EFL_UNUSED,
                   const void *key, void *data, void *fdata)
 {
    eina_hash_add((Eina_Hash *)fdata, key, data);
@@ -1134,7 +1134,7 @@ typedef struct _Parse_Data
    Efl_Bool ret;
 } Parse_Data;
 
-static Efl_Bool _tfile_parse(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED, void *data, void *fdata)
+static Efl_Bool _tfile_parse(const Eina_Hash *hash EFL_UNUSED, const void *key EFL_UNUSED, void *data, void *fdata)
 {
    Parse_Data *pd = fdata;
    Eolian_Unit *unit = NULL;
@@ -1165,7 +1165,7 @@ eolian_state_all_eot_files_parse(Eolian_State *state)
    return pd.ret;
 }
 
-static Efl_Bool _file_parse(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED, void *data, void *fdata)
+static Efl_Bool _file_parse(const Eina_Hash *hash EFL_UNUSED, const void *key EFL_UNUSED, void *data, void *fdata)
 {
    Parse_Data *pd = fdata;
    Eolian_Unit *unit = NULL;

@@ -29,25 +29,25 @@ struct epoll_event
 };
 
 static inline int
-epoll_create(int size EINA_UNUSED)
+epoll_create(int size EFL_UNUSED)
 {
    return -1;
 }
 
 static inline int
-epoll_wait(int                 epfd EINA_UNUSED,
-           struct epoll_event *events EINA_UNUSED,
-           int                 maxevents EINA_UNUSED,
-           int                 timeout EINA_UNUSED)
+epoll_wait(int                 epfd EFL_UNUSED,
+           struct epoll_event *events EFL_UNUSED,
+           int                 maxevents EFL_UNUSED,
+           int                 timeout EFL_UNUSED)
 {
    return -1;
 }
 
 static inline int
-epoll_ctl(int                 epfd EINA_UNUSED,
-          int                 op EINA_UNUSED,
-          int                 fd EINA_UNUSED,
-          struct epoll_event *event EINA_UNUSED)
+epoll_ctl(int                 epfd EFL_UNUSED,
+          int                 op EFL_UNUSED,
+          int                 fd EFL_UNUSED,
+          struct epoll_event *event EFL_UNUSED)
 {
    return -1;
 }
@@ -79,17 +79,17 @@ epoll_ctl(int                 epfd EINA_UNUSED,
 
 #ifndef HAVE_TIMERFD_CREATE
 static inline int
-timerfd_create(int clockid EINA_UNUSED,
-               int flags EINA_UNUSED)
+timerfd_create(int clockid EFL_UNUSED,
+               int flags EFL_UNUSED)
 {
    return -1;
 }
 
 static inline int
-timerfd_settime(int                      fd EINA_UNUSED,
-                int                      flags EINA_UNUSED,
-                const struct itimerspec *new_value EINA_UNUSED,
-                struct itimerspec       *old_value EINA_UNUSED)
+timerfd_settime(int                      fd EFL_UNUSED,
+                int                      flags EFL_UNUSED,
+                const struct itimerspec *new_value EFL_UNUSED,
+                struct itimerspec       *old_value EFL_UNUSED)
 {
    return -1;
 }

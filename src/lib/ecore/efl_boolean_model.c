@@ -40,7 +40,7 @@ struct _Efl_Boolean_Model_Value
 static Eina_Rbtree_Direction
 _storage_range_cmp(const Efl_Boolean_Model_Storage_Range *left,
                    const Efl_Boolean_Model_Storage_Range *right,
-                   void *data EINA_UNUSED)
+                   void *data EFL_UNUSED)
 {
    // We should not have any overlapping range
    if (left->offset < right->offset)
@@ -50,7 +50,7 @@ _storage_range_cmp(const Efl_Boolean_Model_Storage_Range *left,
 
 static int
 _storage_range_key(const Efl_Boolean_Model_Storage_Range *node,
-                   const unsigned int *key, int length EINA_UNUSED, void *data EINA_UNUSED)
+                   const unsigned int *key, int length EFL_UNUSED, void *data EFL_UNUSED)
 {
    if (node->offset > *key) return 1;
    if (node->offset + node->length < *key) return -1;
@@ -59,7 +59,7 @@ _storage_range_key(const Efl_Boolean_Model_Storage_Range *node,
 }
 
 static void
-_storage_range_free(Eina_Rbtree *node, void *data EINA_UNUSED)
+_storage_range_free(Eina_Rbtree *node, void *data EFL_UNUSED)
 {
    free(node);
 }
@@ -365,7 +365,7 @@ _efl_boolean_model_efl_object_destructor(Eo *obj, Efl_Boolean_Model_Data *pd)
 }
 
 static void
-_efl_boolean_model_boolean_add(Eo *obj EINA_UNUSED,
+_efl_boolean_model_boolean_add(Eo *obj EFL_UNUSED,
                                Efl_Boolean_Model_Data *pd,
                                const char *name, Efl_Bool default_value)
 {
@@ -383,7 +383,7 @@ _efl_boolean_model_boolean_add(Eo *obj EINA_UNUSED,
 }
 
 static void
-_efl_boolean_model_boolean_del(Eo *obj EINA_UNUSED,
+_efl_boolean_model_boolean_del(Eo *obj EFL_UNUSED,
                                Efl_Boolean_Model_Data *pd,
                                const char *name)
 {

@@ -71,10 +71,10 @@ _type_exists(const char *tname, Efl_Strbuf *buf)
 
 static void
 _gen_func_pointer_param(const char *name, Eina_Stringshare *c_type,
-                        const Eolian_Typedecl *typedecl EINA_UNUSED,
+                        const Eolian_Typedecl *typedecl EFL_UNUSED,
                         Efl_Strbuf *params, Efl_Strbuf *params_full,
                         Efl_Strbuf *params_full_imp,
-                        Efl_Bool is_empty EINA_UNUSED)
+                        Efl_Bool is_empty EFL_UNUSED)
 {
    Efl_Strbuf *dataname = eina_strbuf_new();
    Efl_Strbuf *freename = eina_strbuf_new();
@@ -614,7 +614,7 @@ _gen_func(const Eolian_Class *cl, const Eolian_Function *fid,
            eina_strbuf_append(params_full, prn);
            eina_strbuf_append(params_full_imp, prn);
            if (is_empty || is_auto)
-             eina_strbuf_append(params_full_imp, " EINA_UNUSED");
+             eina_strbuf_append(params_full_imp, " EFL_UNUSED");
 
            eina_stringshare_del(ptn);
         }
@@ -696,7 +696,7 @@ _gen_func(const Eolian_Class *cl, const Eolian_Function *fid,
              eina_strbuf_append(params_full_imp, add_star);
              eina_strbuf_append(params_full_imp, prn);
              if ((!dfv || ftype == EOLIAN_PROP_SET) && is_empty)
-               eina_strbuf_append(params_full_imp, " EINA_UNUSED");
+               eina_strbuf_append(params_full_imp, " EFL_UNUSED");
              eina_strbuf_append(params, prn);
 
              if (eina_strbuf_length_get(params_full) || !eolian_function_is_static(fid))
@@ -819,12 +819,12 @@ _gen_func(const Eolian_Class *cl, const Eolian_Function *fid,
                eina_strbuf_append(buf, "const ");
              eina_strbuf_append(buf, "Eo *obj");
              if (is_empty || is_auto)
-               eina_strbuf_append(buf, " EINA_UNUSED");
+               eina_strbuf_append(buf, " EFL_UNUSED");
              eina_strbuf_append(buf, ", ");
              eina_strbuf_append(buf, dt);
              eina_strbuf_append(buf, " *pd");
              if (is_empty || (is_auto && !eina_strbuf_length_get(params_init)))
-               eina_strbuf_append(buf, " EINA_UNUSED");
+               eina_strbuf_append(buf, " EFL_UNUSED");
              eina_strbuf_append(buf, eina_strbuf_string_get(params_full_imp));
              eina_strbuf_append(buf, ")\n{\n");
           }
@@ -1401,7 +1401,7 @@ _gen_proto(const Eolian_Class *cl, const Eolian_Function *fid,
    if (strcmp(dtype, "void"))
      eina_strbuf_append_printf(buf, "%s *pd", dtype);
    else
-     eina_strbuf_append(buf, "void *pd EINA_UNUSED");
+     eina_strbuf_append(buf, "void *pd EFL_UNUSED");
 
    /* gen params here */
    Efl_Strbuf *params = eina_strbuf_new();

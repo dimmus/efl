@@ -61,7 +61,7 @@ struct log_ctx {
 //#define SHOW_LOG 1
 
 static void
-_eina_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EINA_UNUSED)
+_eina_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EFL_UNUSED)
 {
    struct log_ctx *ctx = data;
    va_list cp_args;
@@ -487,7 +487,7 @@ EFL_START_TEST(eina_test_file_virtualize)
 EFL_END_TEST
 
 static void *
-_eina_test_file_thread(void *data EINA_UNUSED, Eina_Thread t EINA_UNUSED)
+_eina_test_file_thread(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
 #ifdef _WIN32
    char filename[MAX_PATH];

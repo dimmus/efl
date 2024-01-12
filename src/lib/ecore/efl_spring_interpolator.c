@@ -16,7 +16,7 @@ struct _Efl_Spring_Interpolator_Data
 };
 
 EOLIAN static double
-_efl_spring_interpolator_efl_interpolator_interpolate(Eo *obj EINA_UNUSED,
+_efl_spring_interpolator_efl_interpolator_interpolate(Eo *obj EFL_UNUSED,
                                                       Efl_Spring_Interpolator_Data *pd,
                                                       double progress)
 {
@@ -28,7 +28,7 @@ _efl_spring_interpolator_efl_interpolator_interpolate(Eo *obj EINA_UNUSED,
 }
 
 EOLIAN static void
-_efl_spring_interpolator_decay_set(Eo *eo_obj EINA_UNUSED,
+_efl_spring_interpolator_decay_set(Eo *eo_obj EFL_UNUSED,
                                    Efl_Spring_Interpolator_Data *pd,
                                    double decay)
 {
@@ -36,14 +36,14 @@ _efl_spring_interpolator_decay_set(Eo *eo_obj EINA_UNUSED,
 }
 
 EOLIAN static double
-_efl_spring_interpolator_decay_get(const Eo *eo_obj EINA_UNUSED,
+_efl_spring_interpolator_decay_get(const Eo *eo_obj EFL_UNUSED,
                                      Efl_Spring_Interpolator_Data *pd)
 {
    return pd->decay;
 }
 
 EOLIAN static void
-_efl_spring_interpolator_oscillations_set(Eo *eo_obj EINA_UNUSED,
+_efl_spring_interpolator_oscillations_set(Eo *eo_obj EFL_UNUSED,
                                           Efl_Spring_Interpolator_Data *pd,
                                           int oscillations)
 {
@@ -51,7 +51,7 @@ _efl_spring_interpolator_oscillations_set(Eo *eo_obj EINA_UNUSED,
 }
 
 EOLIAN static int
-_efl_spring_interpolator_oscillations_get(const Eo *eo_obj EINA_UNUSED,
+_efl_spring_interpolator_oscillations_get(const Eo *eo_obj EFL_UNUSED,
                                           Efl_Spring_Interpolator_Data *pd)
 {
    return pd->oscillations;

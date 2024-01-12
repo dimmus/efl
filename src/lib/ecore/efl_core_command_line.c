@@ -181,13 +181,13 @@ _escape(const char *s)
 }
 
 EOLIAN static const char *
-_efl_core_command_line_command_get(const Eo *obj EINA_UNUSED, Efl_Core_Command_Line_Data *pd)
+_efl_core_command_line_command_get(const Eo *obj EFL_UNUSED, Efl_Core_Command_Line_Data *pd)
 {
    return pd->string_command;
 }
 
 EOLIAN static Eina_Accessor *
-_efl_core_command_line_command_access(Eo *obj EINA_UNUSED, Efl_Core_Command_Line_Data *pd)
+_efl_core_command_line_command_access(Eo *obj EFL_UNUSED, Efl_Core_Command_Line_Data *pd)
 {
    return pd->command ? eina_array_accessor_new(pd->command) : NULL;
 }
@@ -214,7 +214,7 @@ _clear_command(Efl_Core_Command_Line_Data *pd)
 }
 
 EOLIAN static Efl_Bool
-_efl_core_command_line_command_array_set(Eo *obj EINA_UNUSED, Efl_Core_Command_Line_Data *pd, Eina_Array *array)
+_efl_core_command_line_command_array_set(Eo *obj EFL_UNUSED, Efl_Core_Command_Line_Data *pd, Eina_Array *array)
 {
    EINA_SAFETY_ON_TRUE_RETURN_VAL(pd->filled, EFL_FALSE);
    Efl_Strbuf *command = eina_strbuf_new();
@@ -265,7 +265,7 @@ _efl_core_command_line_command_array_set(Eo *obj EINA_UNUSED, Efl_Core_Command_L
 }
 
 EOLIAN static Efl_Bool
-_efl_core_command_line_command_string_set(Eo *obj EINA_UNUSED, Efl_Core_Command_Line_Data *pd, const char *str)
+_efl_core_command_line_command_string_set(Eo *obj EFL_UNUSED, Efl_Core_Command_Line_Data *pd, const char *str)
 {
    EINA_SAFETY_ON_TRUE_RETURN_VAL(pd->filled, EFL_FALSE);
 
@@ -287,7 +287,7 @@ _efl_core_command_line_command_string_set(Eo *obj EINA_UNUSED, Efl_Core_Command_
 }
 
 EOLIAN static void
-_efl_core_command_line_efl_object_destructor(Eo *obj EINA_UNUSED, Efl_Core_Command_Line_Data *pd)
+_efl_core_command_line_efl_object_destructor(Eo *obj EFL_UNUSED, Efl_Core_Command_Line_Data *pd)
 {
    free(pd->string_command);
    pd->string_command = NULL;

@@ -43,7 +43,7 @@ static void _ecore_getopt_help_desc_setup_metavar(const Ecore_Getopt_Desc *desc,
 
 static void
 _ecore_getopt_help_print_replace_program(FILE               *fp,
-                                         const Ecore_Getopt *parser EINA_UNUSED,
+                                         const Ecore_Getopt *parser EFL_UNUSED,
                                          const char         *text)
 {
    do
@@ -1093,7 +1093,7 @@ _ecore_getopt_parse_double(const char *str,
 }
 
 static Efl_Bool
-_ecore_getopt_parse_store(const Ecore_Getopt      *parser EINA_UNUSED,
+_ecore_getopt_parse_store(const Ecore_Getopt      *parser EFL_UNUSED,
                           const Ecore_Getopt_Desc *desc,
                           Ecore_Getopt_Value      *value,
                           const char              *arg_val)
@@ -1235,10 +1235,10 @@ use_optional:
 }
 
 static Efl_Bool
-_ecore_getopt_parse_store_const(const Ecore_Getopt      *parser EINA_UNUSED,
+_ecore_getopt_parse_store_const(const Ecore_Getopt      *parser EFL_UNUSED,
                                 const Ecore_Getopt_Desc *desc,
                                 Ecore_Getopt_Value      *val,
-                                const char              *arg_val EINA_UNUSED)
+                                const char              *arg_val EFL_UNUSED)
 {
    if (!val->ptrp)
      {
@@ -1251,10 +1251,10 @@ _ecore_getopt_parse_store_const(const Ecore_Getopt      *parser EINA_UNUSED,
 }
 
 static Efl_Bool
-_ecore_getopt_parse_store_true(const Ecore_Getopt      *parser EINA_UNUSED,
+_ecore_getopt_parse_store_true(const Ecore_Getopt      *parser EFL_UNUSED,
                                const Ecore_Getopt_Desc *desc,
                                Ecore_Getopt_Value      *val,
-                               const char              *arg_val EINA_UNUSED)
+                               const char              *arg_val EFL_UNUSED)
 {
    if (!val->boolp)
      {
@@ -1266,10 +1266,10 @@ _ecore_getopt_parse_store_true(const Ecore_Getopt      *parser EINA_UNUSED,
 }
 
 static Efl_Bool
-_ecore_getopt_parse_store_false(const Ecore_Getopt      *parser EINA_UNUSED,
+_ecore_getopt_parse_store_false(const Ecore_Getopt      *parser EFL_UNUSED,
                                 const Ecore_Getopt_Desc *desc,
                                 Ecore_Getopt_Value      *val,
-                                const char              *arg_val EINA_UNUSED)
+                                const char              *arg_val EFL_UNUSED)
 {
    if (!val->boolp)
      {
@@ -1281,7 +1281,7 @@ _ecore_getopt_parse_store_false(const Ecore_Getopt      *parser EINA_UNUSED,
 }
 
 static Efl_Bool
-_ecore_getopt_parse_choice(const Ecore_Getopt      *parser EINA_UNUSED,
+_ecore_getopt_parse_choice(const Ecore_Getopt      *parser EFL_UNUSED,
                            const Ecore_Getopt_Desc *desc,
                            Ecore_Getopt_Value      *val,
                            const char              *arg_val)
@@ -1321,7 +1321,7 @@ _ecore_getopt_parse_choice(const Ecore_Getopt      *parser EINA_UNUSED,
 }
 
 static Efl_Bool
-_ecore_getopt_parse_append(const Ecore_Getopt      *parser EINA_UNUSED,
+_ecore_getopt_parse_append(const Ecore_Getopt      *parser EFL_UNUSED,
                            const Ecore_Getopt_Desc *desc,
                            Ecore_Getopt_Value      *val,
                            const char              *arg_val)
@@ -1453,10 +1453,10 @@ error:
 }
 
 static Efl_Bool
-_ecore_getopt_parse_count(const Ecore_Getopt      *parser EINA_UNUSED,
+_ecore_getopt_parse_count(const Ecore_Getopt      *parser EFL_UNUSED,
                           const Ecore_Getopt_Desc *desc,
                           Ecore_Getopt_Value      *val,
-                          const char              *arg_val EINA_UNUSED)
+                          const char              *arg_val EFL_UNUSED)
 {
    if (!val->intp)
      {
@@ -1517,7 +1517,7 @@ _ecore_getopt_parse_callback(const Ecore_Getopt      *parser,
 
 static Efl_Bool
 _ecore_getopt_parse_help(const Ecore_Getopt      *parser,
-                         const Ecore_Getopt_Desc *desc EINA_UNUSED,
+                         const Ecore_Getopt_Desc *desc EFL_UNUSED,
                          Ecore_Getopt_Value      *val,
                          const char              *arg_val)
 {
@@ -1533,7 +1533,7 @@ static Efl_Bool
 _ecore_getopt_parse_version(const Ecore_Getopt      *parser,
                             const Ecore_Getopt_Desc *desc,
                             Ecore_Getopt_Value      *val,
-                            const char              *arg_val EINA_UNUSED)
+                            const char              *arg_val EFL_UNUSED)
 {
    if (val->boolp)
      (*val->boolp) = EFL_TRUE;
@@ -1550,7 +1550,7 @@ static Efl_Bool
 _ecore_getopt_parse_copyright(const Ecore_Getopt      *parser,
                               const Ecore_Getopt_Desc *desc,
                               Ecore_Getopt_Value      *val,
-                              const char              *arg_val EINA_UNUSED)
+                              const char              *arg_val EFL_UNUSED)
 {
    if (val->boolp)
      (*val->boolp) = EFL_TRUE;
@@ -1567,7 +1567,7 @@ static Efl_Bool
 _ecore_getopt_parse_license(const Ecore_Getopt      *parser,
                             const Ecore_Getopt_Desc *desc,
                             Ecore_Getopt_Value      *val,
-                            const char              *arg_val EINA_UNUSED)
+                            const char              *arg_val EFL_UNUSED)
 {
    if (val->boolp)
      (*val->boolp) = EFL_TRUE;
@@ -1581,10 +1581,10 @@ _ecore_getopt_parse_license(const Ecore_Getopt      *parser,
 }
 
 static Efl_Bool
-_ecore_getopt_parse_break(const Ecore_Getopt      *parser EINA_UNUSED,
-                          const Ecore_Getopt_Desc *desc EINA_UNUSED,
+_ecore_getopt_parse_break(const Ecore_Getopt      *parser EFL_UNUSED,
+                          const Ecore_Getopt_Desc *desc EFL_UNUSED,
                           Ecore_Getopt_Value      *val,
-                          const char              *arg_val EINA_UNUSED)
+                          const char              *arg_val EFL_UNUSED)
 {
    if (val->boolp)
      (*val->boolp) = EFL_TRUE;
@@ -1647,7 +1647,7 @@ _ecore_getopt_desc_handle(const Ecore_Getopt      *parser,
 static Efl_Bool
 _ecore_getopt_parse_arg_long(const Ecore_Getopt *parser,
                              Ecore_Getopt_Value *values,
-                             int                 argc EINA_UNUSED,
+                             int                 argc EFL_UNUSED,
                              char              **argv,
                              int                *idx,
                              int                *nonargs,
@@ -1724,7 +1724,7 @@ _ecore_getopt_parse_arg_long(const Ecore_Getopt *parser,
 static Efl_Bool
 _ecore_getopt_parse_arg_short(const Ecore_Getopt *parser,
                               Ecore_Getopt_Value *values,
-                              int                 argc EINA_UNUSED,
+                              int                 argc EFL_UNUSED,
                               char              **argv,
                               int                *idx,
                               int                *nonargs,
@@ -2170,10 +2170,10 @@ ecore_getopt_list_free(Eina_List *list)
 }
 
 EAPI Efl_Bool
-ecore_getopt_callback_geometry_parse(const Ecore_Getopt      *parser EINA_UNUSED,
-                                     const Ecore_Getopt_Desc *desc EINA_UNUSED,
+ecore_getopt_callback_geometry_parse(const Ecore_Getopt      *parser EFL_UNUSED,
+                                     const Ecore_Getopt_Desc *desc EFL_UNUSED,
                                      const char              *str,
-                                     void                    *data EINA_UNUSED,
+                                     void                    *data EFL_UNUSED,
                                      Ecore_Getopt_Value      *storage)
 {
    Eina_Rectangle *v = (Eina_Rectangle *)storage->ptrp;
@@ -2188,10 +2188,10 @@ ecore_getopt_callback_geometry_parse(const Ecore_Getopt      *parser EINA_UNUSED
 }
 
 EAPI Efl_Bool
-ecore_getopt_callback_size_parse(const Ecore_Getopt      *parser EINA_UNUSED,
-                                 const Ecore_Getopt_Desc *desc EINA_UNUSED,
+ecore_getopt_callback_size_parse(const Ecore_Getopt      *parser EFL_UNUSED,
+                                 const Ecore_Getopt_Desc *desc EFL_UNUSED,
                                  const char              *str,
-                                 void                    *data EINA_UNUSED,
+                                 void                    *data EFL_UNUSED,
                                  Ecore_Getopt_Value      *storage)
 {
    Eina_Rectangle *v = (Eina_Rectangle *)storage->ptrp;

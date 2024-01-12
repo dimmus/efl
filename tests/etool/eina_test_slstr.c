@@ -153,7 +153,7 @@ EFL_START_TEST(slstr_many)
 EFL_END_TEST
 
 static void *
-_thread_cb(void *data EINA_UNUSED, Eina_Thread th EINA_UNUSED)
+_thread_cb(void *data EFL_UNUSED, Eina_Thread th EFL_UNUSED)
 {
    _many_do(1);
 

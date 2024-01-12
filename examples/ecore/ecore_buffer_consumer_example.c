@@ -56,7 +56,7 @@ err:
 }
 
 static void
-_cb_render_post(void *data, Evas *e EINA_UNUSED, void *event_info EINA_UNUSED)
+_cb_render_post(void *data, Evas *e EFL_UNUSED, void *event_info EFL_UNUSED)
 {
    Consumer_Data *cd = (Consumer_Data *)data;
 
@@ -109,20 +109,20 @@ _consumer_render_queue(Consumer_Data *cd)
 }
 
 static void
-_cb_provider_add(Ecore_Buffer_Consumer *consumer EINA_UNUSED, void *data EINA_UNUSED)
+_cb_provider_add(Ecore_Buffer_Consumer *consumer EFL_UNUSED, void *data EFL_UNUSED)
 {
    LOG("Connected with Provider");
 }
 
 static void
-_cb_provider_del(Ecore_Buffer_Consumer *consumer EINA_UNUSED, void *data EINA_UNUSED)
+_cb_provider_del(Ecore_Buffer_Consumer *consumer EFL_UNUSED, void *data EFL_UNUSED)
 {
    LOG("Disconnected with Provider, Shutdown Consumer now.");
    ecore_main_loop_quit();
 }
 
 static void
-_cb_buffer_enqueued(Ecore_Buffer_Consumer *consumer EINA_UNUSED, void *data)
+_cb_buffer_enqueued(Ecore_Buffer_Consumer *consumer EFL_UNUSED, void *data)
 {
    Consumer_Data *cd = (Consumer_Data *)data;
 

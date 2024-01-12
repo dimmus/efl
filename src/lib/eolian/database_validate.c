@@ -180,7 +180,7 @@ typedef struct _Cb_Ret
 } Cb_Ret;
 
 static Efl_Bool
-_sf_map_cb(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED,
+_sf_map_cb(const Eina_Hash *hash EFL_UNUSED, const void *key EFL_UNUSED,
            const Eolian_Struct_Type_Field *sf, Cb_Ret *sc)
 {
    sc->succ = _validate_type_by_ref(sc->vals, sf->type, sf->by_ref,
@@ -196,7 +196,7 @@ _sf_map_cb(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED,
 }
 
 static Efl_Bool
-_ef_map_cb(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED,
+_ef_map_cb(const Eina_Hash *hash EFL_UNUSED, const void *key EFL_UNUSED,
            const Eolian_Enum_Type_Field *ef, Cb_Ret *sc)
 {
    if (ef->value)
@@ -1666,14 +1666,14 @@ _validate_constant(Validate_State *vals, Eolian_Constant *var)
 }
 
 static Efl_Bool
-_typedecl_map_cb(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED,
+_typedecl_map_cb(const Eina_Hash *hash EFL_UNUSED, const void *key EFL_UNUSED,
                  Eolian_Typedecl *tp, Cb_Ret *sc)
 {
    return (sc->succ = _validate_typedecl(sc->vals, tp));
 }
 
 static Efl_Bool
-_constant_map_cb(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED,
+_constant_map_cb(const Eina_Hash *hash EFL_UNUSED, const void *key EFL_UNUSED,
              Eolian_Constant *var, Cb_Ret *sc)
 {
    return (sc->succ = _validate_constant(sc->vals, var));

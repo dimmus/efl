@@ -37,7 +37,7 @@ _phone_entry_free_cb(void *data)
 }
 
 int
-main(int argc EINA_UNUSED, const char *argv[] EINA_UNUSED)
+main(int argc EFL_UNUSED, const char *argv[] EFL_UNUSED)
 {
    Eina_Hash *phone_book = NULL;
    int i;

@@ -46,7 +46,7 @@ typedef struct _Eina_Strbuf Eina_UStrbuf;
  * @see eina_ustrbuf_append()
  * @see eina_ustrbuf_string_get()
  */
-EINA_API Eina_UStrbuf *eina_ustrbuf_new(void) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_UStrbuf *eina_ustrbuf_new(void) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates a new string buffer using the passed string.
@@ -65,7 +65,7 @@ EINA_API Eina_UStrbuf *eina_ustrbuf_new(void) EINA_MALLOC EINA_WARN_UNUSED_RESUL
  *
  * @since 1.1.0
  */
-EINA_API Eina_UStrbuf *eina_ustrbuf_manage_new(Eina_Unicode *str) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_UStrbuf *eina_ustrbuf_manage_new(Eina_Unicode *str) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates a new string buffer using the passed string.
@@ -83,7 +83,7 @@ EINA_API Eina_UStrbuf *eina_ustrbuf_manage_new(Eina_Unicode *str) EINA_MALLOC EI
  *
  * @since 1.2.0
  */
-EINA_API Eina_UStrbuf *eina_ustrbuf_manage_new_length(Eina_Unicode *str, size_t length) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_UStrbuf *eina_ustrbuf_manage_new_length(Eina_Unicode *str, size_t length) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Frees a string buffer.
@@ -387,7 +387,7 @@ eina_ustrbuf_remove(Eina_UStrbuf *buf, size_t start, size_t end) EINA_ARG_NONNUL
  * @see eina_ustrbuf_string_steal()
  */
 EINA_API const Eina_Unicode *
-eina_ustrbuf_string_get(const Eina_UStrbuf *buf) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+eina_ustrbuf_string_get(const Eina_UStrbuf *buf) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Steals the contents of a string buffer.
@@ -403,7 +403,7 @@ eina_ustrbuf_string_get(const Eina_UStrbuf *buf) EINA_ARG_NONNULL(1) EINA_WARN_U
  * @see eina_ustrbuf_string_get()
  */
 EINA_API Eina_Unicode *
-eina_ustrbuf_string_steal(Eina_UStrbuf *buf) EINA_MALLOC EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+eina_ustrbuf_string_steal(Eina_UStrbuf *buf) EINA_MALLOC EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Frees the contents of a string buffer but not the buffer.
@@ -425,7 +425,7 @@ eina_ustrbuf_string_free(Eina_UStrbuf *buf) EINA_ARG_NONNULL(1);
  * This function returns the length of @p buf.
  */
 EINA_API size_t
-eina_ustrbuf_length_get(const Eina_UStrbuf *buf) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+eina_ustrbuf_length_get(const Eina_UStrbuf *buf) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets a read-only slice of the buffer contents.
@@ -436,7 +436,7 @@ eina_ustrbuf_length_get(const Eina_UStrbuf *buf) EINA_ARG_NONNULL(1) EINA_WARN_U
  *
  * @since 1.19
  */
-EINA_API Eina_Slice eina_ustrbuf_slice_get(const Eina_UStrbuf *buf) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Slice eina_ustrbuf_slice_get(const Eina_UStrbuf *buf) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets a read-write slice of the buffer contents.
@@ -448,7 +448,7 @@ EINA_API Eina_Slice eina_ustrbuf_slice_get(const Eina_UStrbuf *buf) EINA_WARN_UN
  *
  * @since 1.19.0
  */
-EINA_API Eina_Rw_Slice eina_ustrbuf_rw_slice_get(const Eina_UStrbuf *buf) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Rw_Slice eina_ustrbuf_rw_slice_get(const Eina_UStrbuf *buf) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Frees the buffer, returning its old contents.
@@ -459,7 +459,7 @@ EINA_API Eina_Rw_Slice eina_ustrbuf_rw_slice_get(const Eina_UStrbuf *buf) EINA_W
  *
  * @since 1.19
  */
-EINA_API Eina_Unicode* eina_ustrbuf_release(Eina_UStrbuf *buf) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Unicode* eina_ustrbuf_release(Eina_UStrbuf *buf) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @}

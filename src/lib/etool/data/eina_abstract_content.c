@@ -100,7 +100,7 @@ eina_content_converter_convert_can(const char *from, const char *to)
 }
 
 static const void*
-_process_cb(const void *container EINA_UNUSED, void *data, void *fdata EINA_UNUSED)
+_process_cb(const void *container EFL_UNUSED, void *data, void *fdata EFL_UNUSED)
 {
    Eina_Content_Conversion_Node *n = data;
 
@@ -248,15 +248,15 @@ _latin1_to_utf8_converter(Eina_Content *from, const char *to_type)
 }
 
 static Efl_Bool
-_eina_value_type_content_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_content_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_Content*));
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_content_flush(const Eina_Value_Type *type EINA_UNUSED,
-                                 void *mem EINA_UNUSED)
+_eina_value_type_content_flush(const Eina_Value_Type *type EFL_UNUSED,
+                                 void *mem EFL_UNUSED)
 {
    Eina_Content **content = mem;
 
@@ -266,7 +266,7 @@ _eina_value_type_content_flush(const Eina_Value_Type *type EINA_UNUSED,
 }
 
 static Efl_Bool
-_eina_value_type_content_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_content_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    Eina_Content * const *srcc = src;
    Eina_Content **dstc = dst;
@@ -277,7 +277,7 @@ _eina_value_type_content_copy(const Eina_Value_Type *type EINA_UNUSED, const voi
 }
 
 static int
-_eina_value_type_content_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_content_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    Eina_Content * const *ra = a;
    Eina_Content * const *rb = b;
@@ -289,7 +289,7 @@ _eina_value_type_content_compare(const Eina_Value_Type *type EINA_UNUSED, const 
 }
 
 static Efl_Bool
-_eina_value_type_content_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert EINA_UNUSED, const void *type_mem EINA_UNUSED, void *convert_mem EINA_UNUSED)
+_eina_value_type_content_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert EFL_UNUSED, const void *type_mem EFL_UNUSED, void *convert_mem EFL_UNUSED)
 {
    Eina_Content * const *ra = type_mem;
 
@@ -332,13 +332,13 @@ _eina_value_type_content_convert_to(const Eina_Value_Type *type EINA_UNUSED, con
 }
 
 static Efl_Bool
-_eina_value_type_content_convert_from(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert EINA_UNUSED, void *type_mem EINA_UNUSED, const void *convert_mem EINA_UNUSED)
+_eina_value_type_content_convert_from(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert EFL_UNUSED, void *type_mem EFL_UNUSED, const void *convert_mem EFL_UNUSED)
 {
    return EFL_FALSE;
 }
 
 static Efl_Bool
-_eina_value_type_content_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_content_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    Eina_Content * const *srcc = ptr;
    Eina_Content **dstc = mem;
@@ -349,7 +349,7 @@ _eina_value_type_content_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem
 }
 
 static Efl_Bool
-_eina_value_type_content_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_content_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    Eina_Content **dst = mem;
    Eina_Content *content = va_arg(args, Eina_Content*);
@@ -360,7 +360,7 @@ _eina_value_type_content_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem
 }
 
 static Efl_Bool
-_eina_value_type_content_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_content_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    Eina_Content * const *src = mem;
    Eina_Content **dst = ptr;

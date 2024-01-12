@@ -32,7 +32,7 @@ _efl_observable_efl_object_destructor(Eo *obj, Efl_Observable_Data *pd)
 }
 
 EOLIAN static void
-_efl_observable_observer_add(Eo *obj EINA_UNUSED, Efl_Observable_Data *pd, const char *key, Efl_Observer *obs)
+_efl_observable_observer_add(Eo *obj EFL_UNUSED, Efl_Observable_Data *pd, const char *key, Efl_Observer *obs)
 {
    Eina_Hash *observers;
    Efl_Observer_Refcount *or;
@@ -62,7 +62,7 @@ _efl_observable_observer_add(Eo *obj EINA_UNUSED, Efl_Observable_Data *pd, const
 }
 
 EOLIAN static void
-_efl_observable_observer_del(Eo *obj EINA_UNUSED, Efl_Observable_Data *pd, const char *key, Efl_Observer *obs)
+_efl_observable_observer_del(Eo *obj EFL_UNUSED, Efl_Observable_Data *pd, const char *key, Efl_Observer *obs)
 {
    Eina_Hash *observers;
    Efl_Observer_Refcount *or;
@@ -87,7 +87,7 @@ _efl_observable_observer_del(Eo *obj EINA_UNUSED, Efl_Observable_Data *pd, const
 }
 
 EOLIAN static void
-_efl_observable_observer_clean(Eo *obj EINA_UNUSED, Efl_Observable_Data *pd, Efl_Observer *obs)
+_efl_observable_observer_clean(Eo *obj EFL_UNUSED, Efl_Observable_Data *pd, Efl_Observer *obs)
 {
    Eina_Iterator *it;
    Eina_Hash *observers;
@@ -129,7 +129,7 @@ _efl_observable_observers_iterator_next(Eina_Iterator *it, void **data)
 }
 
 static void *
-_efl_observable_observers_iterator_container(Eina_Iterator *it EINA_UNUSED)
+_efl_observable_observers_iterator_container(Eina_Iterator *it EFL_UNUSED)
 {
    return NULL;
 }
@@ -145,7 +145,7 @@ _efl_observable_observers_iterator_free(Eina_Iterator *it)
 }
 
 EOLIAN static Eina_Iterator *
-_efl_observable_observers_iterator_new(Eo *obj EINA_UNUSED, Efl_Observable_Data *pd, const char *key)
+_efl_observable_observers_iterator_new(Eo *obj EFL_UNUSED, Efl_Observable_Data *pd, const char *key)
 {
    Eina_Hash *observers;
    Efl_Observer_Iterator *it;
@@ -168,7 +168,7 @@ _efl_observable_observers_iterator_new(Eo *obj EINA_UNUSED, Efl_Observable_Data 
 }
 
 EOLIAN static void
-_efl_observable_observers_update(Eo *obj, Efl_Observable_Data *pd EINA_UNUSED, const char *key, void *data)
+_efl_observable_observers_update(Eo *obj, Efl_Observable_Data *pd EFL_UNUSED, const char *key, void *data)
 {
    Eina_Iterator *it;
    Efl_Observer *o;
@@ -215,7 +215,7 @@ _efl_observable_iterator_tuple_next(Eina_Iterator *it, void **data)
 }
 
 static void *
-_efl_observable_iterator_tuple_container(Eina_Iterator *it EINA_UNUSED)
+_efl_observable_iterator_tuple_container(Eina_Iterator *it EFL_UNUSED)
 {
    return NULL;
 }

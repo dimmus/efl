@@ -14,14 +14,14 @@
 #include "ecore_con_eet_descriptor_example.h"
 
 Eina_Bool
-_eet_svr_discnct_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply EINA_UNUSED, Ecore_Con_Server *conn EINA_UNUSED)
+_eet_svr_discnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply EFL_UNUSED, Ecore_Con_Server *conn EFL_UNUSED)
 {
    ecore_main_loop_quit();
    return EINA_FALSE;
 }
 
 static Eina_Bool
-_eet_svr_cnct_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply, Ecore_Con_Server *conn EINA_UNUSED)
+_eet_svr_cnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply, Ecore_Con_Server *conn EFL_UNUSED)
 {
    /* Only id and message parameter are sent to server. not_sending, parameter
     * is not sent, as it is not added to the eet descriptor. */
@@ -33,7 +33,7 @@ _eet_svr_cnct_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply, Ecore_Con_Serve
 }
 
 static void
-_eet_raw_data_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply EINA_UNUSED, const char *protocol_name EINA_UNUSED, const char *section, void *value, size_t length EINA_UNUSED)
+_eet_raw_data_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply EFL_UNUSED, const char *protocol_name EFL_UNUSED, const char *section, void *value, size_t length EFL_UNUSED)
 {
    /* Only a perticular parameter's value is sent by Server. */
    printf("Section: %s\n", section);

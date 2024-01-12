@@ -160,12 +160,12 @@ struct _Eina_Iterator
 #define EINA_ITERATOR_VERSION 1
    int                                  version; /**< Version of the Iterator API. */
 
-   Eina_Iterator_Next_Callback          next          EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT; /**< Callback called when a next element is requested. */
-   Eina_Iterator_Get_Container_Callback get_container EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT; /**< Callback called when the container is requested. */
+   Eina_Iterator_Next_Callback          next          EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT; /**< Callback called when a next element is requested. */
+   Eina_Iterator_Get_Container_Callback get_container EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT; /**< Callback called when the container is requested. */
    Eina_Iterator_Free_Callback          free          EINA_ARG_NONNULL(1); /**< Callback called when the container is freed. */
 
-   Eina_Iterator_Lock_Callback          lock          EINA_WARN_UNUSED_RESULT; /**< Callback called when the container is locked. */
-   Eina_Iterator_Lock_Callback          unlock        EINA_WARN_UNUSED_RESULT; /**< Callback called when the container is unlocked. */
+   Eina_Iterator_Lock_Callback          lock          EFL_WARN_UNUSED_RESULT; /**< Callback called when the container is locked. */
+   Eina_Iterator_Lock_Callback          unlock        EFL_WARN_UNUSED_RESULT; /**< Callback called when the container is unlocked. */
 
 #define EINA_MAGIC_ITERATOR 0x98761233
    EINA_MAGIC;
@@ -230,7 +230,7 @@ EINA_API void     *eina_iterator_container_get(Eina_Iterator *iterator) EINA_ARG
  * returned, otherwise #EFL_TRUE is returned.
  */
 EINA_API Efl_Bool eina_iterator_next(Eina_Iterator *iterator,
-                                  void         **data) EINA_ARG_NONNULL(2) EINA_WARN_UNUSED_RESULT;
+                                  void         **data) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 
 /**
@@ -299,7 +299,7 @@ EINA_API Efl_Bool eina_iterator_unlock(Eina_Iterator *iterator) EINA_ARG_NONNULL
  *
  * @since 1.18
  */
-EINA_API Eina_Iterator *eina_carray_iterator_new(void** array) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_carray_iterator_new(void** array) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates an Eina_Iterator that iterates through a
@@ -315,7 +315,7 @@ EINA_API Eina_Iterator *eina_carray_iterator_new(void** array) EINA_ARG_NONNULL(
  *
  * @since 1.22
  */
-EINA_API Eina_Iterator *eina_carray_length_iterator_new(void** array, unsigned int step, unsigned int length) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_carray_length_iterator_new(void** array, unsigned int step, unsigned int length) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @def EINA_C_ARRAY_ITERATOR_NEW
@@ -347,7 +347,7 @@ EINA_API Eina_Iterator *eina_carray_length_iterator_new(void** array, unsigned i
  *
  * @since 1.19
  */
-EINA_API Eina_Iterator* eina_iterator_filter_new(Eina_Iterator *original, Eina_Each_Cb filter, Eina_Free_Cb free_cb, void *data) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator* eina_iterator_filter_new(Eina_Iterator *original, Eina_Each_Cb filter, Eina_Free_Cb free_cb, void *data) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates an Eina_Iterator that iterates through a series
@@ -363,7 +363,7 @@ EINA_API Eina_Iterator* eina_iterator_filter_new(Eina_Iterator *original, Eina_E
  *
  * @since 1.22
  */
-EINA_API Eina_Iterator *eina_multi_iterator_internal_new(Eina_Iterator *it, ...) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_multi_iterator_internal_new(Eina_Iterator *it, ...) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 
 /**
@@ -381,7 +381,7 @@ EINA_API Eina_Iterator *eina_multi_iterator_internal_new(Eina_Iterator *it, ...)
  *
  * @since 1.24
  */
-EINA_API Eina_Iterator* eina_iterator_processed_new(Eina_Iterator *iterator, Eina_Process_Cb process, Eina_Free_Cb free_cb, void *fdata) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator* eina_iterator_processed_new(Eina_Iterator *iterator, Eina_Process_Cb process, Eina_Free_Cb free_cb, void *fdata) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @def eina_multi_iterator_new

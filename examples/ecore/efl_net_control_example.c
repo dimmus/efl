@@ -272,7 +272,7 @@ _access_point_print(Eo *ap)
 }
 
 static void
-_access_point_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_access_point_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *ap = event->object;
    if (!monitoring) return;
@@ -281,7 +281,7 @@ _access_point_changed(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_access_point_add(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_access_point_add(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *ap = event->info;
    if (!monitoring) return;
@@ -291,7 +291,7 @@ _ctl_access_point_add(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_access_point_del(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_access_point_del(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *ap = event->info;
    if (!monitoring) return;
@@ -334,7 +334,7 @@ _access_points_list(Eina_Iterator *it)
 }
 
 static void
-_ctl_access_points_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_access_points_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    if (!monitoring) return;
    _access_points_list(efl_net_control_manager_access_points_get(event->object));
@@ -382,7 +382,7 @@ _technology_print(Eo *tech)
 }
 
 static void
-_technology_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_technology_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *ap = event->object;
    if (!monitoring) return;
@@ -391,7 +391,7 @@ _technology_changed(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_technology_add(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_technology_add(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *tech = event->info;
    if (!monitoring) return;
@@ -401,7 +401,7 @@ _ctl_technology_add(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_technology_del(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_technology_del(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *tech = event->info;
    if (!monitoring) return;
@@ -411,14 +411,14 @@ _ctl_technology_del(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_radios_offline_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_radios_offline_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    if (!monitoring) return;
    printf("INFO: radios_offline=%hhu\n", efl_net_control_manager_radios_offline_get(event->object));
 }
 
 static void
-_ctl_state_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_state_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const char *str = "???";
    Efl_Net_Control_State state = efl_net_control_manager_state_get(event->object);
@@ -433,13 +433,13 @@ _ctl_state_changed(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_agent_released(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+_ctl_agent_released(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    printf("INFO: Agent released\n");
 }
 
 static void
-_ctl_agent_error(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_agent_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Efl_Net_Control_Agent_Error *e = event->info;
    printf("INFO: Agent Error:\n"
@@ -450,7 +450,7 @@ _ctl_agent_error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_agent_browser_url(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_agent_browser_url(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Efl_Net_Control_Agent_Browser_Url *e = event->info;
    printf("INFO: Agent requested to open browser:\n"
@@ -461,7 +461,7 @@ _ctl_agent_browser_url(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ctl_agent_request_input(void *data EINA_UNUSED, const Efl_Event *event)
+_ctl_agent_request_input(void *data EFL_UNUSED, const Efl_Event *event)
 {
    char buf[100];
    Eo *ctl = event->object;
@@ -599,7 +599,7 @@ _ctl_agent_request_input(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_cmd_technologies_list(Eo *ctl, size_t argc EINA_UNUSED, char **argv EINA_UNUSED)
+_cmd_technologies_list(Eo *ctl, size_t argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    Eina_Iterator *it = efl_net_control_manager_technologies_get(ctl);
    Eo *tech;
@@ -687,7 +687,7 @@ _technology_find(Eo *ctl, const char *name)
 }
 
 static void
-_cmd_technology_show(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_technology_show(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *tech = _technology_find(ctl, argv[1]);
    if (!tech) return;
@@ -697,7 +697,7 @@ _cmd_technology_show(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
 
 static Eina_Value
 _technology_scan_done(void *data, const Eina_Value v,
-                      const Eina_Future *dead EINA_UNUSED)
+                      const Eina_Future *dead EFL_UNUSED)
 {
    Eo *tech = data;
 
@@ -720,7 +720,7 @@ _technology_scan_done(void *data, const Eina_Value v,
 }
 
 static void
-_cmd_technology_scan(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_technology_scan(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *tech = _technology_find(ctl, argv[1]);
    if (!tech) return;
@@ -788,7 +788,7 @@ _cmd_technology_tethering(Eo *ctl, size_t argc, char **argv)
 }
 
 static void
-_cmd_access_points_list(Eo *ctl, size_t argc EINA_UNUSED, char **argv EINA_UNUSED)
+_cmd_access_points_list(Eo *ctl, size_t argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    _access_points_list(efl_net_control_manager_access_points_get(ctl));
 }
@@ -841,7 +841,7 @@ _access_point_find(Eo *ctl, const char *name)
 }
 
 static void
-_cmd_access_point_show(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_show(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    if (!ap) return;
@@ -851,7 +851,7 @@ _cmd_access_point_show(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
 
 static Eina_Value
 _access_point_connect(void *data, const Eina_Value v,
-                      const Eina_Future *dead EINA_UNUSED)
+                      const Eina_Future *dead EFL_UNUSED)
 {
    Eo *ap = data;
 
@@ -874,7 +874,7 @@ _access_point_connect(void *data, const Eina_Value v,
 }
 
 static void
-_cmd_access_point_connect(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_connect(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    if (!ap) return;
@@ -884,7 +884,7 @@ _cmd_access_point_connect(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
 }
 
 static void
-_cmd_access_point_disconnect(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_disconnect(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    if (!ap) return;
@@ -893,7 +893,7 @@ _cmd_access_point_disconnect(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
 }
 
 static void
-_cmd_access_point_forget(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_forget(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    if (!ap) return;
@@ -926,7 +926,7 @@ _cmd_access_point_reorder(Eo *ctl, size_t argc, char **argv)
 }
 
 static void
-_cmd_access_point_auto_connect(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_auto_connect(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    const char *name;
@@ -952,7 +952,7 @@ _cmd_access_point_auto_connect(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
 }
 
 static void
-_cmd_access_point_configure_name_servers(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_configure_name_servers(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    Eina_Iterator *it;
@@ -964,7 +964,7 @@ _cmd_access_point_configure_name_servers(Eo *ctl, size_t argc EINA_UNUSED, char 
 }
 
 static void
-_cmd_access_point_configure_time_servers(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_configure_time_servers(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    Eina_Iterator *it;
@@ -976,7 +976,7 @@ _cmd_access_point_configure_time_servers(Eo *ctl, size_t argc EINA_UNUSED, char 
 }
 
 static void
-_cmd_access_point_configure_domains(Eo *ctl, size_t argc EINA_UNUSED, char **argv)
+_cmd_access_point_configure_domains(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    Eina_Iterator *it;
@@ -988,7 +988,7 @@ _cmd_access_point_configure_domains(Eo *ctl, size_t argc EINA_UNUSED, char **arg
 }
 
 static void
-_cmd_monitor_set(Eo *ctl EINA_UNUSED, size_t argc, char **argv)
+_cmd_monitor_set(Eo *ctl EFL_UNUSED, size_t argc, char **argv)
 {
    if (argc == 1)
      {
@@ -1181,14 +1181,14 @@ _cmd_access_point_configure_proxy(Eo *ctl, size_t argc, char **argv)
 }
 
 static void
-_cmd_quit(Eo *ctl, size_t argc EINA_UNUSED, char **argv EINA_UNUSED)
+_cmd_quit(Eo *ctl, size_t argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    printf("INFO: bye!\n");
    efl_loop_quit(efl_loop_get(ctl), EINA_VALUE_EMPTY);
 }
 
 static void
-_cmd_help(Eo *ctl EINA_UNUSED, size_t argc EINA_UNUSED, char **argv EINA_UNUSED)
+_cmd_help(Eo *ctl EFL_UNUSED, size_t argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    puts("HELP:\n"
 "technologies-list                    Show all technologies.\n"
@@ -1413,27 +1413,27 @@ static Eo *copier = NULL;
 
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    efl_del(copier);
    copier = NULL;
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    Eo *ctl;

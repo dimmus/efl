@@ -18,27 +18,27 @@ struct _Efl_Loop_Message_Future_Handler_Data
 //////////////////////////////////////////////////////////////////////////
 
 EOLIAN static Efl_Loop_Message_Future *
-_efl_loop_message_future_handler_message_type_add(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EINA_UNUSED)
+_efl_loop_message_future_handler_message_type_add(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EFL_UNUSED)
 {
    // XXX: implemented event obj cache
    return efl_add(EFL_LOOP_MESSAGE_FUTURE_CLASS, obj);
 }
 
 EOLIAN static Efl_Object *
-_efl_loop_message_future_handler_efl_object_constructor(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EINA_UNUSED)
+_efl_loop_message_future_handler_efl_object_constructor(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EFL_UNUSED)
 {
    obj = efl_constructor(efl_super(obj, MY_CLASS));
    return obj;
 }
 
 EOLIAN static void
-_efl_loop_message_future_handler_efl_object_destructor(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EINA_UNUSED)
+_efl_loop_message_future_handler_efl_object_destructor(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EFL_UNUSED)
 {
    efl_destructor(efl_super(obj, MY_CLASS));
 }
 
 EOLIAN static void
-_efl_loop_message_future_handler_efl_loop_message_handler_message_call(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EINA_UNUSED, Efl_Loop_Message *message)
+_efl_loop_message_future_handler_efl_loop_message_handler_message_call(Eo *obj, Efl_Loop_Message_Future_Handler_Data *pd EFL_UNUSED, Efl_Loop_Message *message)
 {
    efl_event_callback_call
      (obj, EFL_LOOP_MESSAGE_FUTURE_HANDLER_EVENT_MESSAGE_FUTURE, message);

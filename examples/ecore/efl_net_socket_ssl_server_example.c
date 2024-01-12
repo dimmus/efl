@@ -9,7 +9,7 @@ static Eo *ssl_ctx = NULL;
 /* NOTE: client i/o events are only used as debug, you can omit these */
 
 static void
-_ssl_can_read_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_can_read_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: ssl %s can_read=%d\n",
            efl_net_socket_address_remote_get(event->object),
@@ -17,7 +17,7 @@ _ssl_can_read_changed(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ssl_can_write_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_can_write_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: ssl %s can_write=%d\n",
            efl_net_socket_address_remote_get(event->object),
@@ -25,14 +25,14 @@ _ssl_can_write_changed(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ssl_eos(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_eos(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: ssl %s eos.\n",
            efl_net_socket_address_remote_get(event->object));
 }
 
 static void
-_ssl_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: ssl %s closed.\n",
            efl_net_socket_address_remote_get(event->object));
@@ -52,7 +52,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(ssl_cbs,
 /* echo copier is about the same socket, you can close it right away */
 
 static void
-_echo_copier_done(void *data EINA_UNUSED, const Efl_Event *event)
+_echo_copier_done(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *copier = event->object;
    fprintf(stderr, "INFO: echo copier done, close and del %p\n", copier);
@@ -60,7 +60,7 @@ _echo_copier_done(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_echo_copier_error(void *data EINA_UNUSED, const Efl_Event *event)
+_echo_copier_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *copier = event->object;
    const Eina_Error *perr = event->info;
@@ -91,7 +91,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(echo_copier_cbs,
  * "client,add" event.
  */
 static void
-_server_client_add(void *data EINA_UNUSED, const Efl_Event *event)
+_server_client_add(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Efl_Net_Socket *client = event->info;
    Efl_Net_Socket_Ssl *ssl;
@@ -137,7 +137,7 @@ _server_client_add(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_server_error(void *data EINA_UNUSED, const Efl_Event *event)
+_server_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "ERROR: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -145,7 +145,7 @@ _server_error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_server_serving(void *data EINA_UNUSED, const Efl_Event *event)
+_server_serving(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: serving at %s\n",
            efl_net_server_address_get(event->object));
@@ -202,20 +202,20 @@ static Eina_List *crls = NULL;
 static Eina_List *cas = NULL;
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    /* FIXME: For the moment the main loop doesn't get
       properly destroyed on shutdown which disallow
@@ -240,7 +240,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *address = NULL;

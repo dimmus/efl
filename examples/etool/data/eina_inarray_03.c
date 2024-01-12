@@ -9,7 +9,7 @@ cmp(const void *a, const void *b)
    return *(int*)a > *(int*)b;
 }
 
-int main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+int main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    Eina_Inarray *iarr;
    int a, *b;

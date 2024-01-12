@@ -325,7 +325,7 @@ _static_opcode_register(Eina_Debug_Session *session,
  * PTR64 + (opcode id)*
  */
 static Efl_Bool
-_callbacks_register_cb(Eina_Debug_Session *session, int src_id EINA_UNUSED, void *buffer, int size)
+_callbacks_register_cb(Eina_Debug_Session *session, int src_id EFL_UNUSED, void *buffer, int size)
 {
    _opcode_reply_info *info = NULL, *info2;
    Eina_List *itr;

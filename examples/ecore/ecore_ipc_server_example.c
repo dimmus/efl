@@ -9,7 +9,7 @@ static Eina_Bool do_flush = EINA_FALSE;
 static Eina_Bool single_message = EINA_FALSE;
 
 static Eina_Bool
-_client_add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_client_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Client_Add *ev = event;
 
@@ -29,7 +29,7 @@ _client_add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_client_del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_client_del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Client_Del *ev = event;
 
@@ -39,7 +39,7 @@ _client_del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_client_data(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_client_data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Client_Data *ev = event;
 

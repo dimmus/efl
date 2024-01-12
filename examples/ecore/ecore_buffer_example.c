@@ -64,7 +64,7 @@ paint_pixels(void *image, int padding, int width, int height, uint32_t time)
 }
 
 static void
-_cb_post_render(Ecore_Evas *ee EINA_UNUSED)
+_cb_post_render(Ecore_Evas *ee EFL_UNUSED)
 {
    void *data;
 

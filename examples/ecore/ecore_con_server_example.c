@@ -21,7 +21,7 @@ static Eina_Bool single_message = EINA_FALSE;
 static Eina_Bool do_ssl_upgrade = EINA_FALSE;
 
 Eina_Bool
-_add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Add *ev = event;
 
@@ -44,7 +44,7 @@ _add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 Eina_Bool
-_del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Del *ev = event;
 
@@ -54,7 +54,7 @@ _del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 Eina_Bool
-_data(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Data *ev = event;
    const char upgrade_ssl[] = "Upgrade: SSL\n";
@@ -94,7 +94,7 @@ _data(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 
 
 Eina_Bool
-_write_(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_write_(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Write *ev = event;
    printf("Sent %d bytes to client %s\n", ev->size, ecore_con_client_ip_get(ev->client));
@@ -102,7 +102,7 @@ _write_(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 Eina_Bool
-_error(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_error(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Error *ev = event;
    printf("Client %s Error: %s\n", ecore_con_client_ip_get(ev->client), ev->error);
@@ -110,7 +110,7 @@ _error(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 Eina_Bool
-_upgrade(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_upgrade(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Upgrade *ev = event;
    printf("Client %s Upgraded to SSL.\n", ecore_con_client_ip_get(ev->client));

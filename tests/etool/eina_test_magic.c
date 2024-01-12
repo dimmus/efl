@@ -53,7 +53,7 @@ struct log_ctx {
 //#define SHOW_LOG 1
 
 static void
-_eina_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EINA_UNUSED)
+_eina_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EFL_UNUSED)
 {
    struct log_ctx *ctx = data;
    va_list cp_args;
@@ -79,7 +79,7 @@ _eina_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const
 }
 
 static void
-_eina_test_magic_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EINA_UNUSED)
+_eina_test_magic_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EFL_UNUSED)
 {
    struct log_ctx *ctx = data;
 
@@ -193,7 +193,7 @@ EFL_START_TEST(eina_magic_simple)
 EFL_END_TEST
 #endif
 
-void eina_test_magic(TCase *tc EINA_UNUSED)
+void eina_test_magic(TCase *tc EFL_UNUSED)
 {
 #ifdef EINA_MAGIC_DEBUG
    tcase_add_test(tc, eina_magic_simple);

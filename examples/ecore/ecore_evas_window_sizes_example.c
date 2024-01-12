@@ -14,7 +14,7 @@
 
 #include "config.h"
 #else
-#define EINA_UNUSED
+#define EFL_UNUSED
 #endif
 
 #include <Ecore.h>
@@ -55,15 +55,15 @@ _canvas_resize_cb(Ecore_Evas *ee_)
 }
 
 static void
-_on_destroy(Ecore_Evas *ee_ EINA_UNUSED)
+_on_destroy(Ecore_Evas *ee_ EFL_UNUSED)
 {
    ecore_main_loop_quit();
 }
 
 static void
-_on_keydown(void *data EINA_UNUSED,
-            Evas *evas EINA_UNUSED,
-            Evas_Object *o EINA_UNUSED,
+_on_keydown(void *data EFL_UNUSED,
+            Evas *evas EFL_UNUSED,
+            Evas_Object *o EFL_UNUSED,
             void *einfo)
 {
    Evas_Event_Key_Down *ev = einfo;

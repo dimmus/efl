@@ -45,7 +45,7 @@ _is_modifier(const char *key)
 /******* end 1 : Ecore compose stuff *******/
 
 static void
-_key_down_cb(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event)
+_key_down_cb(void *data EFL_UNUSED, Evas *e EFL_UNUSED, Evas_Object *obj EFL_UNUSED, void *event)
 {
     Evas_Event_Key_Down *ev = (Evas_Event_Key_Down *)event;
     int alt;
@@ -62,7 +62,7 @@ _key_down_cb(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_
 }
 
 static void
-_key_up_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event)
+_key_up_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *obj EFL_UNUSED, void *event)
 {
     Evas_Event_Key_Up *ev;
     int alt;
@@ -138,7 +138,7 @@ _key_up_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *
 }
 
 static void
-_del(Ecore_Evas *ee EINA_UNUSED)
+_del(Ecore_Evas *ee EFL_UNUSED)
 {
   ecore_main_loop_quit();
 }

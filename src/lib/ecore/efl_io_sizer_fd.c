@@ -15,19 +15,19 @@ typedef struct _Efl_Io_Sizer_Fd_Data
 } Efl_Io_Sizer_Fd_Data;
 
 EOLIAN static void
-_efl_io_sizer_fd_sizer_fd_set(Eo *o EINA_UNUSED, Efl_Io_Sizer_Fd_Data *pd, int fd)
+_efl_io_sizer_fd_sizer_fd_set(Eo *o EFL_UNUSED, Efl_Io_Sizer_Fd_Data *pd, int fd)
 {
    pd->fd = fd;
 }
 
 EOLIAN static int
-_efl_io_sizer_fd_sizer_fd_get(const Eo *o EINA_UNUSED, Efl_Io_Sizer_Fd_Data *pd)
+_efl_io_sizer_fd_sizer_fd_get(const Eo *o EFL_UNUSED, Efl_Io_Sizer_Fd_Data *pd)
 {
    return pd->fd;
 }
 
 EOLIAN static Eina_Error
-_efl_io_sizer_fd_efl_io_sizer_resize(Eo *o, Efl_Io_Sizer_Fd_Data *pd EINA_UNUSED, uint64_t size)
+_efl_io_sizer_fd_efl_io_sizer_resize(Eo *o, Efl_Io_Sizer_Fd_Data *pd EFL_UNUSED, uint64_t size)
 {
    int fd = efl_io_sizer_fd_get(o);
    if (ftruncate(fd, size) < 0) return errno;
@@ -36,7 +36,7 @@ _efl_io_sizer_fd_efl_io_sizer_resize(Eo *o, Efl_Io_Sizer_Fd_Data *pd EINA_UNUSED
 }
 
 EOLIAN static uint64_t
-_efl_io_sizer_fd_efl_io_sizer_size_get(const Eo *o, Efl_Io_Sizer_Fd_Data *pd EINA_UNUSED)
+_efl_io_sizer_fd_efl_io_sizer_size_get(const Eo *o, Efl_Io_Sizer_Fd_Data *pd EFL_UNUSED)
 {
    int fd = efl_io_sizer_fd_get(o);
    struct stat st;

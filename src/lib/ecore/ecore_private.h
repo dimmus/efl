@@ -361,11 +361,11 @@ static inline void _ecore_signal_shutdown(void) { }
 
 static inline void _ecore_signal_init(void) { }
 
-static inline void _ecore_signal_received_process(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd EINA_UNUSED) { }
+static inline void _ecore_signal_received_process(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED) { }
 
-static inline int _ecore_signal_count_get(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd EINA_UNUSED) { return 0; }
+static inline int _ecore_signal_count_get(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED) { return 0; }
 
-static inline void _ecore_signal_call(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd EINA_UNUSED) { }
+static inline void _ecore_signal_call(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED) { }
 
 #else
 #define ECORE_SIGNALS 1

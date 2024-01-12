@@ -16,7 +16,7 @@
 
 #include "config.h"
 #else
-#define EINA_UNUSED
+#define EFL_UNUSED
 #endif
 
 #include <Ecore_Evas.h>

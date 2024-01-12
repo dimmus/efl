@@ -22,7 +22,7 @@
 static Ecore_File_Download_Job *job = NULL;
 
 void
-completion_cb(void *data EINA_UNUSED, const char *file EINA_UNUSED, int status)
+completion_cb(void *data EFL_UNUSED, const char *file EFL_UNUSED, int status)
 {
    printf("Done (status: %d)\n", status);
    job = NULL;
@@ -30,9 +30,9 @@ completion_cb(void *data EINA_UNUSED, const char *file EINA_UNUSED, int status)
 }
 
 int
-progress_cb(void *data EINA_UNUSED, const char *file EINA_UNUSED,
+progress_cb(void *data EFL_UNUSED, const char *file EFL_UNUSED,
             long int dltotal, long int dlnow,
-            long int ultotal EINA_UNUSED, long int ulnow EINA_UNUSED)
+            long int ultotal EFL_UNUSED, long int ulnow EFL_UNUSED)
 {
    printf("Progress: %ld/%ld\n", dlnow, dltotal);
    return ECORE_FILE_PROGRESS_CONTINUE; //  continue the download

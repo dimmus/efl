@@ -280,7 +280,7 @@ EINA_API Efl_Bool eina_file_dir_list(const char           *dir,
  * @return An array of the parts of the path to split
  *
  */
-EINA_API Eina_Array    *eina_file_split(char *path) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Array    *eina_file_split(char *path) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Gets an iterator to list the content of a directory.
@@ -300,7 +300,7 @@ EINA_API Eina_Array    *eina_file_split(char *path) EINA_WARN_UNUSED_RESULT EINA
  *
  * @see eina_file_direct_ls()
  */
-EINA_API Eina_Iterator *eina_file_ls(const char *dir) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Iterator *eina_file_ls(const char *dir) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Gets an iterator to list the content of a directory, with direct
@@ -327,7 +327,7 @@ EINA_API Eina_Iterator *eina_file_ls(const char *dir) EINA_WARN_UNUSED_RESULT EI
  *
  * @see eina_file_direct_ls()
  */
-EINA_API Eina_Iterator *eina_file_stat_ls(const char *dir) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Iterator *eina_file_stat_ls(const char *dir) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Uses information provided by #Eina_Iterator of eina_file_stat_ls() or eina_file_direct_ls()
@@ -345,7 +345,7 @@ EINA_API Eina_Iterator *eina_file_stat_ls(const char *dir) EINA_WARN_UNUSED_RESU
  *
  * @since 1.2
  */
-EINA_API int eina_file_statat(void *container, Eina_File_Direct_Info *info, Eina_Stat *buf) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1, 2, 3);
+EINA_API int eina_file_statat(void *container, Eina_File_Direct_Info *info, Eina_Stat *buf) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Close all file descriptors that are open at or above the given fd
@@ -446,7 +446,7 @@ EINA_API Efl_Bool eina_file_mkdtemp(const char *templatename, Eina_Tmpstr **path
  *
  * @see eina_file_ls()
  */
-EINA_API Eina_Iterator *eina_file_direct_ls(const char *dir) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Iterator *eina_file_direct_ls(const char *dir) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Sanitizes the file path.
@@ -512,7 +512,7 @@ EINA_API Efl_Bool eina_file_copy(const char *src, const char *dst, Eina_File_Cop
  *
  * @since 1.1
  */
-EINA_API Eina_File *eina_file_open(const char *name, Efl_Bool shared) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_File *eina_file_open(const char *name, Efl_Bool shared) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Creates a virtual file from a memory pointer.
@@ -526,7 +526,7 @@ EINA_API Eina_File *eina_file_open(const char *name, Efl_Bool shared) EINA_WARN_
  * @since 1.8
  */
 EINA_API Eina_File *
-eina_file_virtualize(const char *virtual_name, const void *data, unsigned long long length, Efl_Bool copy) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+eina_file_virtualize(const char *virtual_name, const void *data, unsigned long long length, Efl_Bool copy) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Tells if a file is a real file or only exists in memory.
@@ -537,7 +537,7 @@ eina_file_virtualize(const char *virtual_name, const void *data, unsigned long l
  * @since 1.8
  */
 EINA_API Efl_Bool
-eina_file_virtual(Eina_File *file) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+eina_file_virtual(Eina_File *file) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Refreshes file information.

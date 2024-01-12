@@ -149,7 +149,7 @@ _eina_test_tls_free(void *ptr)
 }
 
 static void *
-_eina_test_tls_thread(void *data EINA_UNUSED, Eina_Thread t EINA_UNUSED)
+_eina_test_tls_thread(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
    int *ptr;
 
@@ -192,7 +192,7 @@ static Eina_Condition cond;
 static Eina_RWLock mutex;
 
 static void *
-_eina_test_rwlock_thread(void *data EINA_UNUSED, Eina_Thread t EINA_UNUSED)
+_eina_test_rwlock_thread(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
    fail_if(!eina_barrier_wait(&barrier));
    fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);

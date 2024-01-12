@@ -150,7 +150,7 @@ _eina_xattr_ls_iterator_next(Eina_Xattr_Iterator *it, void **data)
 }
 
 static void *
-_eina_xattr_ls_iterator_container(Eina_Xattr_Iterator *it EINA_UNUSED)
+_eina_xattr_ls_iterator_container(Eina_Xattr_Iterator *it EFL_UNUSED)
 {
    return NULL;
 }

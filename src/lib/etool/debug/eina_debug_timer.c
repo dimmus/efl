@@ -82,7 +82,7 @@ end:
 }
 
 static void *
-_monitor(void *_data EINA_UNUSED)
+_monitor(void *_data EFL_UNUSED)
 {
 #ifdef HAVE_SYS_EPOLL_H
 #define MAX_EVENTS   4

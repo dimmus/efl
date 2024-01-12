@@ -253,7 +253,7 @@ eina_evlog_stop(void)
 
 // get evlog
 static Efl_Bool
-_get_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *buffer EINA_UNUSED, int size EINA_UNUSED)
+_get_cb(Eina_Debug_Session *session EFL_UNUSED, int cid EFL_UNUSED, void *buffer EFL_UNUSED, int size EFL_UNUSED)
 {
    Eina_Evlog_Buf *evlog = eina_evlog_steal();
    int resp_size = 0;
@@ -276,7 +276,7 @@ _get_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *buff
 
 // enable evlog
 static Efl_Bool
-_start_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *buffer EINA_UNUSED, int size EINA_UNUSED)
+_start_cb(Eina_Debug_Session *session EFL_UNUSED, int cid EFL_UNUSED, void *buffer EFL_UNUSED, int size EFL_UNUSED)
 {
    eina_evlog_start();
    return EFL_TRUE;
@@ -284,7 +284,7 @@ _start_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *bu
 
 // stop evlog
 static Efl_Bool
-_stop_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *buffer EINA_UNUSED, int size EINA_UNUSED)
+_stop_cb(Eina_Debug_Session *session EFL_UNUSED, int cid EFL_UNUSED, void *buffer EFL_UNUSED, int size EFL_UNUSED)
 {
    eina_evlog_stop();
    return EFL_TRUE;

@@ -510,7 +510,7 @@ struct _Eina_Future_Desc {
  * #include <Ecore.h>
  *
  * static void
- * _promise_cancel(void *data, Eina_Promise *p EINA_UNUSED)
+ * _promise_cancel(void *data, Eina_Promise *p EFL_UNUSED)
  * {
  *   Ctx *ctx = data;
  *   // In case the promise is canceled we must stop the timer!
@@ -598,7 +598,7 @@ EINA_API extern const Eina_Value_Type EINA_VALUE_TYPE_PROMISE;
  * @see Eina_Future_Schedule_Entry
  * @see Eina_Future_Scheduler_Cb
  */
-EINA_API Eina_Promise *eina_promise_new(Eina_Future_Scheduler *scheduler, Eina_Promise_Cancel_Cb cancel_cb, const void *data) EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Promise *eina_promise_new(Eina_Future_Scheduler *scheduler, Eina_Promise_Cancel_Cb cancel_cb, const void *data) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates a new promise from a dead_future.
@@ -664,7 +664,7 @@ EINA_API Eina_Promise *eina_promise_new(Eina_Future_Scheduler *scheduler, Eina_P
  * @see Eina_Future_Schedule_Entry
  * @see Eina_Future_Scheduler_Cb
  */
-EINA_API Eina_Promise *eina_promise_continue_new(const Eina_Future *dead_future, Eina_Promise_Cancel_Cb cancel_cb, const void *data) EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Promise *eina_promise_continue_new(const Eina_Future *dead_future, Eina_Promise_Cancel_Cb cancel_cb, const void *data) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Resolves a promise.
@@ -759,7 +759,7 @@ EINA_API void eina_future_cb_easy_desc_flush(Eina_Future_Cb_Easy_Desc *desc);
  *
  * @code
  * static Eina_Value
- * _file_data_ready(const *data EINA_UNUSED, const Eina_Value v, const Eina_Future *dead EINA_UNUSED)
+ * _file_data_ready(const *data EFL_UNUSED, const Eina_Value v, const Eina_Future *dead EFL_UNUSED)
  * {
  *    const char *file_data;
  *    Eina_Promise *p;
@@ -786,7 +786,7 @@ EINA_API void eina_future_cb_easy_desc_flush(Eina_Future_Cb_Easy_Desc *desc);
  * }
  *
  * static Eina_Value
- * _word_count_ready(const *data EINA_UNUSED, const Eina_Value v, const Eina_Future *dead EINA_UNUSED)
+ * _word_count_ready(const *data EFL_UNUSED, const Eina_Value v, const Eina_Future *dead EFL_UNUSED)
  * {
  *    // The _word_count_ready will only be called once count_words() resolves/rejects the promise returned by _file_data_ready()
  *    int count;
@@ -826,7 +826,7 @@ EINA_API void eina_future_cb_easy_desc_flush(Eina_Future_Cb_Easy_Desc *desc);
  * @see eina_promise_reject()
  * @see eina_promise_resolve()
  */
-EINA_API Eina_Value eina_promise_as_value(Eina_Promise *p) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Value eina_promise_as_value(Eina_Promise *p) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates an #Eina_Value from a future.
@@ -839,7 +839,7 @@ EINA_API Eina_Value eina_promise_as_value(Eina_Promise *p) EINA_ARG_NONNULL(1) E
  * @note If an error happens the future @p f will be CANCELED
  * @see eina_promise_as_value()
  */
-EINA_API Eina_Value eina_future_as_value(Eina_Future *f)EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Value eina_future_as_value(Eina_Future *f)EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates a new future.
@@ -864,7 +864,7 @@ EINA_API Eina_Value eina_future_as_value(Eina_Future *f)EINA_ARG_NONNULL(1) EINA
  * @see eina_promise_resolve()
  * @see eina_future_cancel()
  */
-EINA_API Eina_Future *eina_future_new(Eina_Promise *p) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Future *eina_future_new(Eina_Promise *p) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates a new future that is already resolved to a value.
@@ -942,7 +942,7 @@ EINA_API Eina_Future *eina_future_rejected(Eina_Future_Scheduler *scheduler, Ein
  *
  * @code
  * static Eina_Value
- * _file_ready(const *data, const Eina_Value v, const Eina_Future *dead EINA_UNUSED)
+ * _file_ready(const *data, const Eina_Value v, const Eina_Future *dead EFL_UNUSED)
  * {
  *    Ctx *ctx = data;
  *    // It was not possible to fetch the file size.
@@ -990,7 +990,7 @@ EINA_API Eina_Future *eina_future_rejected(Eina_Future_Scheduler *scheduler, Ein
  *
  * @code
  * static Eina_Value
- * _future_cb1(const *data EINA_UNUSED, const Eina_Value v)
+ * _future_cb1(const *data EFL_UNUSED, const Eina_Value v)
  * {
  *    Eina_Value new_v;
  *    int i;
@@ -1005,7 +1005,7 @@ EINA_API Eina_Future *eina_future_rejected(Eina_Future_Scheduler *scheduler, Ein
  * }
  *
  * static Eina_Value
- * _future_cb2(const *data EINA_UNUSED, const Eina_Value v)
+ * _future_cb2(const *data EFL_UNUSED, const Eina_Value v)
  * {
  *    Eina_Value new_v;
  *    const char *file_size_str;
@@ -1019,7 +1019,7 @@ EINA_API Eina_Future *eina_future_rejected(Eina_Future_Scheduler *scheduler, Ein
  * }
  *
  * static Eina_Value
- * _future_cb3(const *data EINA_UNUSED, const Eina_Value v)
+ * _future_cb3(const *data EFL_UNUSED, const Eina_Value v)
  * {
  *    double d;
  *
@@ -1030,7 +1030,7 @@ EINA_API Eina_Future *eina_future_rejected(Eina_Future_Scheduler *scheduler, Ein
  * }
  *
  * static Eina_Value
- * _future_err(void *data EINA_UNUSED, Eina_Error err)
+ * _future_err(void *data EFL_UNUSED, Eina_Error err)
  * {
  *    // This function is called if future result type does not match or another error occurred
  *    Eina_Value new_v;
@@ -1109,7 +1109,7 @@ EINA_API Eina_Future *eina_future_then_from_desc(Eina_Future *prev, const Eina_F
  * @see eina_future_cb_log_warn()
  * @see eina_future_cb_console_from_desc()
  */
-EINA_API Eina_Future_Desc eina_future_cb_log_from_desc(const Eina_Future_Cb_Log_Desc desc) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Future_Desc eina_future_cb_log_from_desc(const Eina_Future_Cb_Log_Desc desc) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates a future chain.
@@ -1224,7 +1224,7 @@ EINA_API Eina_Future *eina_future_chain_easy_array(Eina_Future *prev, const Eina
  * @see eina_future_cb_ignore_error()
  * @see eina_future_cb_log_from_desc()
  */
-EINA_API Eina_Future_Desc eina_future_cb_console_from_desc(const Eina_Future_Cb_Console_Desc desc) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Future_Desc eina_future_cb_console_from_desc(const Eina_Future_Cb_Console_Desc desc) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Returns an #Eina_Future_Desc that ignores an error.
@@ -1326,7 +1326,7 @@ EINA_API Eina_Future_Desc eina_future_cb_convert_to(const Eina_Value_Type *type)
  * @see eina_future_then()
  * @see eina_future_cb_easy()
  */
-EINA_API Eina_Future_Desc eina_future_cb_easy_from_desc(const Eina_Future_Cb_Easy_Desc desc) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Future_Desc eina_future_cb_easy_from_desc(const Eina_Future_Cb_Easy_Desc desc) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates an all promise.
@@ -1350,7 +1350,7 @@ EINA_API Eina_Future_Desc eina_future_cb_easy_from_desc(const Eina_Future_Cb_Eas
  * }
  *
  * static Eina_Value
- * _all_cb(const void *data EINA_UNUSED, const Eina_Value array, const Eina_Future *dead EINA_UNUSED)
+ * _all_cb(const void *data EFL_UNUSED, const Eina_Value array, const Eina_Future *dead EFL_UNUSED)
  * {
  *    Eina_Error err;
  *    unsigned int i, len;
@@ -1427,7 +1427,7 @@ EINA_API Eina_Future_Desc eina_future_cb_easy_from_desc(const Eina_Future_Cb_Eas
  * @note On error all the futures will be CANCELED.
  * @see eina_future_all_array()
  */
-EINA_API Eina_Promise *eina_promise_all_array(Eina_Future *array[]) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Promise *eina_promise_all_array(Eina_Future *array[]) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates an all promise from an iterator.
@@ -1443,7 +1443,7 @@ EINA_API Eina_Promise *eina_promise_all_array(Eina_Future *array[]) EINA_ARG_NON
  * @note On error all the futures will be CANCELED.
  * @see eina_future_all_iterator()
  */
-EINA_API Eina_Promise *eina_promise_all_iterator(Eina_Iterator *iterator) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Promise *eina_promise_all_iterator(Eina_Iterator *iterator) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Creates a race promise.
@@ -1473,7 +1473,7 @@ EINA_API Eina_Promise *eina_promise_all_iterator(Eina_Iterator *iterator) EINA_A
  * }
  *
  * static Eina_Value
- * _race_cb(const void *data EINA_UNUSED, const Eina_Value v)
+ * _race_cb(const void *data EFL_UNUSED, const Eina_Value v)
  * {
  *    unsigned int i;
  *    Eina_Value result;
@@ -1555,7 +1555,7 @@ EINA_API Eina_Promise *eina_promise_all_iterator(Eina_Iterator *iterator) EINA_A
  * @see eina_future_race_array()
  * @see _Eina_Future_Race_Result
  */
-EINA_API Eina_Promise *eina_promise_race_array(Eina_Future *array[]) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Promise *eina_promise_race_array(Eina_Future *array[]) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @struct _Eina_Future_Race_Result
@@ -1568,7 +1568,7 @@ EINA_API Eina_Promise *eina_promise_race_array(Eina_Future *array[]) EINA_ARG_NO
  *
  * @code
  * static Eina_Value
- * _race_cb(const void *data EINA_UNUSED, const Eina_Value v)
+ * _race_cb(const void *data EFL_UNUSED, const Eina_Value v)
  * {
  *    //code...
  *    Eina_Value_Struct st;

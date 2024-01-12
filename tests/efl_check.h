@@ -24,15 +24,15 @@
 
 #include <Eina.h>
 
-#ifndef EINA_UNUSED
+#ifndef EFL_UNUSED
 # ifdef __GNUC__
 #  if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-#   define EINA_UNUSED __attribute__ ((__unused__))
+#   define EFL_UNUSED __attribute__ ((__unused__))
 #  else
-#   define EINA_UNUSED
+#   define EFL_UNUSED
 #  endif
 # else
-#  define EINA_UNUSED
+#  define EFL_UNUSED
 # endif
 #endif
 
@@ -82,8 +82,8 @@ struct _Efl_Test_Case
 static int timeout_pid = 0;
 #endif
 
-EINA_UNUSED static void
-_efl_test_expect_error(const Eina_Log_Domain *d EINA_UNUSED, Eina_Log_Level level, const char *file EINA_UNUSED, const char *fnc, int line EINA_UNUSED, const char *fmt EINA_UNUSED, void *data, va_list args EINA_UNUSED)
+EFL_UNUSED static void
+_efl_test_expect_error(const Eina_Log_Domain *d EFL_UNUSED, Eina_Log_Level level, const char *file EFL_UNUSED, const char *fnc, int line EFL_UNUSED, const char *fmt EFL_UNUSED, void *data, va_list args EFL_UNUSED)
 {
    Efl_Bool *error = (Efl_Bool*) data;
    if (level == EINA_LOG_LEVEL_ERR) *error = EFL_TRUE;
@@ -103,7 +103,7 @@ _efl_tests_list(const Efl_Test_Case *etc)
       fprintf(stderr, "\t%s\n", itr->test_case);
 }
 
-EINA_UNUSED static int
+EFL_UNUSED static int
 _efl_test_option_disp(int argc, char **argv, const Efl_Test_Case *etc)
 {
    int i;
@@ -186,7 +186,7 @@ _efl_test_fork_has(SRunner *sr)
 #endif
 
 #ifdef ENABLE_TIMING_INFO
-EINA_UNUSED static double _timing_start_time;
+EFL_UNUSED static double _timing_start_time;
 
 static int
 _timing_enabled(void)
@@ -204,14 +204,14 @@ _timing_time_get(void)
    return (double)timev.tv_sec + (((double)timev.tv_usec) / 1000000);
 }
 
-EINA_UNUSED static void
+EFL_UNUSED static void
 _timing_start(void)
 {
    if (_timing_enabled())
      _timing_start_time = _timing_time_get();
 }
 
-EINA_UNUSED static void
+EFL_UNUSED static void
 _timing_end(void)
 {
    double diff;
@@ -292,9 +292,9 @@ _efl_suite_run_end(SRunner *sr, const char *name)
 }
 
 #ifdef HAVE_FORK
-static EINA_UNUSED Eina_Hash *fork_map;
+static EFL_UNUSED Eina_Hash *fork_map;
 
-EINA_UNUSED static int
+EFL_UNUSED static int
 _efl_suite_wait_on_fork(int *num_forks, Efl_Bool *timeout)
 {
    int status = 0, ret, pid;
@@ -314,7 +314,7 @@ _efl_suite_wait_on_fork(int *num_forks, Efl_Bool *timeout)
 }
 #endif
 
-EINA_UNUSED static int
+EFL_UNUSED static int
 _efl_suite_build_and_run(int argc, const char **argv, const char *suite_name, const Efl_Test_Case *etc, SFun init, SFun shutdown)
 {
    Suite *s;

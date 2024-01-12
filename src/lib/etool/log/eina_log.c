@@ -403,9 +403,9 @@ static void
 eina_log_print_prefix_NOthreads_NOcolor_NOfile_func(FILE *fp,
                                                     const Eina_Log_Domain *d,
                                                     Eina_Log_Level level,
-                                                    const char *file EINA_UNUSED,
+                                                    const char *file EFL_UNUSED,
                                                     const char *fnc,
-                                                    int line EINA_UNUSED)
+                                                    int line EFL_UNUSED)
 {
    DECLARE_LEVEL_NAME(level);
    fprintf(fp, "%s<%u>:%s %s() ", name, eina_log_pid_get(), d->domain_str,
@@ -417,7 +417,7 @@ eina_log_print_prefix_NOthreads_NOcolor_file_NOfunc(FILE *fp,
                                                     const Eina_Log_Domain *d,
                                                     Eina_Log_Level level,
                                                     const char *file,
-                                                    const char *fnc EINA_UNUSED,
+                                                    const char *fnc EFL_UNUSED,
                                                     int line)
 {
    DECLARE_LEVEL_NAME(level);
@@ -539,9 +539,9 @@ static void
 eina_log_print_prefix_NOthreads_color_NOfile_func(FILE *fp,
                                                   const Eina_Log_Domain *d,
                                                   Eina_Log_Level level,
-                                                  const char *file EINA_UNUSED,
+                                                  const char *file EFL_UNUSED,
                                                   const char *fnc,
-                                                  int line EINA_UNUSED)
+                                                  int line EFL_UNUSED)
 {
 #ifdef _WIN32
    if (_eina_log_win32_is_console)
@@ -599,7 +599,7 @@ eina_log_print_prefix_NOthreads_color_file_NOfunc(FILE *fp,
                                                   const Eina_Log_Domain *d,
                                                   Eina_Log_Level level,
                                                   const char *file,
-                                                  const char *fnc EINA_UNUSED,
+                                                  const char *fnc EFL_UNUSED,
                                                   int line)
 {
 #ifdef _WIN32
@@ -646,9 +646,9 @@ static void
 eina_log_print_prefix_threads_NOcolor_NOfile_func(FILE *fp,
                                                   const Eina_Log_Domain *d,
                                                   Eina_Log_Level level,
-                                                  const char *file EINA_UNUSED,
+                                                  const char *file EFL_UNUSED,
                                                   const char *fnc,
-                                                  int line EINA_UNUSED)
+                                                  int line EFL_UNUSED)
 {
    Eina_Thread cur;
 
@@ -670,7 +670,7 @@ eina_log_print_prefix_threads_NOcolor_file_NOfunc(FILE *fp,
                                                   const Eina_Log_Domain *d,
                                                   Eina_Log_Level level,
                                                   const char *file,
-                                                  const char *fnc EINA_UNUSED,
+                                                  const char *fnc EFL_UNUSED,
                                                   int line)
 {
    Eina_Thread cur;
@@ -849,9 +849,9 @@ static void
 eina_log_print_prefix_threads_color_NOfile_func(FILE *fp,
                                                 const Eina_Log_Domain *d,
                                                 Eina_Log_Level level,
-                                                const char *file EINA_UNUSED,
+                                                const char *file EFL_UNUSED,
                                                 const char *fnc,
-                                                int line EINA_UNUSED)
+                                                int line EFL_UNUSED)
 {
    Eina_Thread cur;
 
@@ -937,7 +937,7 @@ eina_log_print_prefix_threads_color_file_NOfunc(FILE *fp,
                                                 const Eina_Log_Domain *d,
                                                 Eina_Log_Level level,
                                                 const char *file,
-                                                const char *fnc EINA_UNUSED,
+                                                const char *fnc EFL_UNUSED,
                                                 int line)
 {
    Eina_Thread cur;
@@ -2044,7 +2044,7 @@ eina_log_print_cb_stderr(const Eina_Log_Domain *d,
                          const char *fnc,
                          int line,
                          const char *fmt,
-                         EINA_UNUSED void *data,
+                         EFL_UNUSED void *data,
                          va_list args)
 {
 #ifdef EINA_ENABLE_LOG
@@ -2079,7 +2079,7 @@ eina_log_print_cb_stdout(const Eina_Log_Domain *d,
                          const char *fnc,
                          int line,
                          const char *fmt,
-                         EINA_UNUSED void *data,
+                         EFL_UNUSED void *data,
                          va_list args)
 {
 #ifdef EINA_ENABLE_LOG
@@ -2143,7 +2143,7 @@ eina_log_print_cb_journald(const Eina_Log_Domain *d,
                            const char *fnc,
                            int line,
                            const char *fmt,
-                           void *data EINA_UNUSED,
+                           void *data EFL_UNUSED,
                            va_list args)
 {
 #ifdef HAVE_SYSTEMD
@@ -2232,7 +2232,7 @@ nosystemd:
 
 EINA_API void
 eina_log_print_cb_file(const Eina_Log_Domain *d,
-                       EINA_UNUSED Eina_Log_Level level,
+                       EFL_UNUSED Eina_Log_Level level,
                        const char *file,
                        const char *fnc,
                        int line,

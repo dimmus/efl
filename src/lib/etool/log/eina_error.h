@@ -131,7 +131,7 @@ EINA_API extern Eina_Error EINA_ERROR_OUT_OF_MEMORY EINA_DEPRECATED; /* use ENOM
  *
  * @see eina_error_msg_static_register()
  */
-EINA_API Eina_Error  eina_error_msg_register(const char *msg) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Error  eina_error_msg_register(const char *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Registers a new error type, statically allocated message.
@@ -150,7 +150,7 @@ EINA_API Eina_Error  eina_error_msg_register(const char *msg) EINA_ARG_NONNULL(1
  *
  * @see eina_error_msg_register()
  */
-EINA_API Eina_Error  eina_error_msg_static_register(const char *msg) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Error  eina_error_msg_static_register(const char *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Changes the message of an already registered message.

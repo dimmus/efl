@@ -73,7 +73,7 @@ EFL_END_TEST
 static Eina_Barrier b;
 
 static void *
-_thread1(void *data EINA_UNUSED, Eina_Thread t EINA_UNUSED)
+_thread1(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
    unsigned int i;
 
@@ -91,7 +91,7 @@ _thread1(void *data EINA_UNUSED, Eina_Thread t EINA_UNUSED)
 }
 
 static void *
-_thread2(void *data EINA_UNUSED, Eina_Thread t EINA_UNUSED)
+_thread2(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
    unsigned int i;
 

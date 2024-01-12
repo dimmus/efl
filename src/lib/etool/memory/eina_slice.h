@@ -143,7 +143,7 @@ static inline Eina_Slice eina_rw_slice_slice_get(const Eina_Rw_Slice rw_slice);
  *
  * @since 1.19
  */
-static inline Eina_Rw_Slice eina_slice_dup(const Eina_Slice slice) EINA_WARN_UNUSED_RESULT;
+static inline Eina_Rw_Slice eina_slice_dup(const Eina_Slice slice) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates a duplicate of slice's memory.
@@ -158,7 +158,7 @@ static inline Eina_Rw_Slice eina_slice_dup(const Eina_Slice slice) EINA_WARN_UNU
  *
  * @since 1.19
  */
-static inline Eina_Rw_Slice eina_rw_slice_dup(const Eina_Rw_Slice rw_slice) EINA_WARN_UNUSED_RESULT;
+static inline Eina_Rw_Slice eina_rw_slice_dup(const Eina_Rw_Slice rw_slice) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Compare two slices, similar to memcmp()

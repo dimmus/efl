@@ -11,7 +11,7 @@ struct _Client
 };
 
 Eina_Bool
-_add(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Client_Add *ev)
+_add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Add *ev)
 {
    char welcome[] = "hello! - sent from the server";
    Ecore_Con_Server *srv;
@@ -43,7 +43,7 @@ _add(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Client_Add *e
 }
 
 Eina_Bool
-_del(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Client_Del *ev)
+_del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Del *ev)
 {
    struct _Client *client;
 
@@ -67,7 +67,7 @@ _del(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Client_Del *e
 }
 
 Eina_Bool
-_data(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Client_Data *ev)
+_data(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Data *ev)
 {
    char fmt[128];
    struct _Client *client = ecore_con_client_data_get(ev->client);

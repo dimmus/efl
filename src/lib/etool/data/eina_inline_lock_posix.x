@@ -735,7 +735,7 @@ err:
 }
 
 static inline Efl_Bool
-eina_semaphore_release(Eina_Semaphore *sem, int count_release EINA_UNUSED)
+eina_semaphore_release(Eina_Semaphore *sem, int count_release EFL_UNUSED)
 {
    if (sem)
 #if defined(EINA_HAVE_OSX_SEMAPHORE)

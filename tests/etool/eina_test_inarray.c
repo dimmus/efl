@@ -275,7 +275,7 @@ EFL_START_TEST(eina_inarray_test_reverse)
 EFL_END_TEST
 
 static Efl_Bool
-array_foreach(const void *array EINA_UNUSED, void *p, void *user_data EINA_UNUSED)
+array_foreach(const void *array EFL_UNUSED, void *p, void *user_data EFL_UNUSED)
 {
    short *member = p;
    int *i = user_data;
@@ -285,7 +285,7 @@ array_foreach(const void *array EINA_UNUSED, void *p, void *user_data EINA_UNUSE
 }
 
 static Efl_Bool
-array_foreach_stop_2nd(const void *array EINA_UNUSED, void *p, void *user_data EINA_UNUSED)
+array_foreach_stop_2nd(const void *array EFL_UNUSED, void *p, void *user_data EFL_UNUSED)
 {
    short *member = p;
    int *i = user_data;
@@ -385,7 +385,7 @@ compare(const void *a, const void *b)
 }
 
 static Efl_Bool
-match_cb(const void *array EINA_UNUSED, void *p, void *user_data)
+match_cb(const void *array EFL_UNUSED, void *p, void *user_data)
 {
    int *member = p;
    int *i = user_data;

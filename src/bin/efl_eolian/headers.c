@@ -174,7 +174,7 @@ _gen_func(const Eolian_State *state, const Eolian_Function *fid,
      {
         if (!flagbuf)
           flagbuf = eina_strbuf_new();
-        eina_strbuf_prepend(flagbuf, " EINA_WARN_UNUSED_RESULT");
+        eina_strbuf_prepend(flagbuf, " EFL_WARN_UNUSED_RESULT");
      }
    if (return_move)
      eina_strbuf_append(buf, " EFL_TRANSFER_OWNERSHIP");

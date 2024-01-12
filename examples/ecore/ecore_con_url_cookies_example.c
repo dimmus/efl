@@ -9,7 +9,7 @@
 #define COOKIEJAR "cookies.jar"
 
 static Eina_Bool
-_url_data_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event_info)
+_url_data_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Data *url_data = event_info;
    int i;
@@ -23,7 +23,7 @@ _url_data_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event_info)
 }
 
 static Eina_Bool
-_url_complete_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event_info)
+_url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Complete *url_complete = event_info;
    const Eina_List *headers, *l;

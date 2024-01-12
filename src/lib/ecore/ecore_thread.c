@@ -261,7 +261,7 @@ _ecore_thread_handler(void *data)
 
 #if 0
 static void
-_ecore_nothing_handler(void *data EINA_UNUSED, void *buffer EINA_UNUSED, unsigned int nbyte EINA_UNUSED)
+_ecore_nothing_handler(void *data EFL_UNUSED, void *buffer EFL_UNUSED, unsigned int nbyte EFL_UNUSED)
 {
 }
 
@@ -469,7 +469,7 @@ _ecore_direct_worker_cleanup(void *data)
 }
 
 static void *
-_ecore_direct_worker(void *data, Eina_Thread t EINA_UNUSED)
+_ecore_direct_worker(void *data, Eina_Thread t EFL_UNUSED)
 {
    Ecore_Pthread_Worker *work = data;
    eina_thread_cancellable_set(EFL_FALSE, NULL);
@@ -488,7 +488,7 @@ _ecore_direct_worker(void *data, Eina_Thread t EINA_UNUSED)
 }
 
 static void
-_ecore_thread_worker_cleanup(void *data EINA_UNUSED)
+_ecore_thread_worker_cleanup(void *data EFL_UNUSED)
 {
    DBG("cleanup thread=%" PRIuPTR " (should join)", PHS());
    SLKL(_ecore_pending_job_threads_mutex);
@@ -499,7 +499,7 @@ _ecore_thread_worker_cleanup(void *data EINA_UNUSED)
 }
 
 static void *
-_ecore_thread_worker(void *data EINA_UNUSED, Eina_Thread t EINA_UNUSED)
+_ecore_thread_worker(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
    eina_thread_cancellable_set(EFL_FALSE, NULL);
    EINA_THREAD_CLEANUP_PUSH(_ecore_thread_worker_cleanup, NULL);
@@ -827,7 +827,7 @@ _ecore_thread_wait_reset(Ecore_Thread_Waiter *waiter,
 }
 
 static void
-_ecore_thread_wait_cancel(void *data EINA_UNUSED, Ecore_Thread *thread)
+_ecore_thread_wait_cancel(void *data EFL_UNUSED, Ecore_Thread *thread)
 {
    Ecore_Pthread_Worker *worker = (Ecore_Pthread_Worker *)thread;
    Ecore_Thread_Waiter *waiter = worker->waiter;
@@ -837,7 +837,7 @@ _ecore_thread_wait_cancel(void *data EINA_UNUSED, Ecore_Thread *thread)
 }
 
 static void
-_ecore_thread_wait_end(void *data EINA_UNUSED, Ecore_Thread *thread)
+_ecore_thread_wait_end(void *data EFL_UNUSED, Ecore_Thread *thread)
 {
    Ecore_Pthread_Worker *worker = (Ecore_Pthread_Worker *)thread;
    Ecore_Thread_Waiter *waiter = worker->waiter;

@@ -82,8 +82,8 @@ static int _ecore_exe_check_errno(int         result,
 
 static int
 _ecore_exe_check_errno(int         result,
-                       const char *file EINA_UNUSED,
-                       int         line EINA_UNUSED)
+                       const char *file EFL_UNUSED,
+                       int         line EFL_UNUSED)
 {
    int saved_errno = errno;
 
@@ -627,7 +627,7 @@ _impl_ecore_exe_efl_object_finalize(Eo *obj, Ecore_Exe_Data *exe)
 }
 
 Efl_Bool
-_impl_ecore_exe_send(Ecore_Exe  *obj EINA_UNUSED,
+_impl_ecore_exe_send(Ecore_Exe  *obj EFL_UNUSED,
                Ecore_Exe_Data *exe,
                const void *data,
                int         size)
@@ -656,7 +656,7 @@ _impl_ecore_exe_send(Ecore_Exe  *obj EINA_UNUSED,
 }
 
 void
-_impl_ecore_exe_auto_limits_set(Ecore_Exe *obj EINA_UNUSED,
+_impl_ecore_exe_auto_limits_set(Ecore_Exe *obj EFL_UNUSED,
                           Ecore_Exe_Data *exe,
                           int        start_bytes,
                           int        end_bytes,
@@ -890,13 +890,13 @@ _impl_ecore_exe_efl_object_destructor(Eo *obj, Ecore_Exe_Data *exe)
 }
 
 void
-_impl_ecore_exe_pause(Eo *obj EINA_UNUSED, Ecore_Exe_Data *exe)
+_impl_ecore_exe_pause(Eo *obj EFL_UNUSED, Ecore_Exe_Data *exe)
 {
    kill(exe->pid, SIGSTOP);
 }
 
 void
-_impl_ecore_exe_continue(Eo *obj EINA_UNUSED, Ecore_Exe_Data *exe)
+_impl_ecore_exe_continue(Eo *obj EFL_UNUSED, Ecore_Exe_Data *exe)
 {
    kill(exe->pid, SIGCONT);
 }
@@ -924,7 +924,7 @@ _impl_ecore_exe_terminate(Ecore_Exe *obj, Ecore_Exe_Data *exe)
 }
 
 void
-_impl_ecore_exe_kill(Ecore_Exe *obj EINA_UNUSED, Ecore_Exe_Data *exe)
+_impl_ecore_exe_kill(Ecore_Exe *obj EFL_UNUSED, Ecore_Exe_Data *exe)
 {
    efl_del(exe->doomsday_clock);
    exe->doomsday_clock = efl_add(EFL_LOOP_TIMER_CLASS, obj,
@@ -938,7 +938,7 @@ _impl_ecore_exe_kill(Ecore_Exe *obj EINA_UNUSED, Ecore_Exe_Data *exe)
 }
 
 void
-_impl_ecore_exe_signal(Ecore_Exe *obj EINA_UNUSED,
+_impl_ecore_exe_signal(Ecore_Exe *obj EFL_UNUSED,
                  Ecore_Exe_Data *exe,
                  int        num)
 {
@@ -949,7 +949,7 @@ _impl_ecore_exe_signal(Ecore_Exe *obj EINA_UNUSED,
 }
 
 void
-_impl_ecore_exe_hup(Ecore_Exe *obj EINA_UNUSED, Ecore_Exe_Data *exe)
+_impl_ecore_exe_hup(Ecore_Exe *obj EFL_UNUSED, Ecore_Exe_Data *exe)
 {
    kill(exe->pid, SIGHUP);
 }
@@ -1291,7 +1291,7 @@ _ecore_exe_data_read_handler(void             *data,
 
 static Efl_Bool
 _ecore_exe_data_write_handler(void             *data,
-                              Ecore_Fd_Handler *fd_handler EINA_UNUSED)
+                              Ecore_Fd_Handler *fd_handler EFL_UNUSED)
 {
    Ecore_Exe *obj = data;
    Ecore_Exe_Data *exe = efl_data_scope_get(obj, MY_CLASS);

@@ -154,17 +154,17 @@ struct _Eina_Accessor
 #define EINA_ACCESSOR_VERSION 2
    int                                  version; /**< Version of the Accessor API */
 
-   Eina_Accessor_Get_At_Callback        get_at        EINA_ARG_NONNULL(1, 3) EINA_WARN_UNUSED_RESULT; /**< Callback called when a data element is requested */
-   Eina_Accessor_Get_Container_Callback get_container EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT; /**< Callback called when the container is requested */
+   Eina_Accessor_Get_At_Callback        get_at        EINA_ARG_NONNULL(1, 3) EFL_WARN_UNUSED_RESULT; /**< Callback called when a data element is requested */
+   Eina_Accessor_Get_Container_Callback get_container EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT; /**< Callback called when the container is requested */
    Eina_Accessor_Free_Callback          free          EINA_ARG_NONNULL(1); /**< Callback called when the container is freed */
 
-   Eina_Accessor_Lock_Callback          lock          EINA_WARN_UNUSED_RESULT; /**< Callback called when the container is locked */
-   Eina_Accessor_Lock_Callback          unlock        EINA_WARN_UNUSED_RESULT; /**< Callback called when the container is unlocked */
+   Eina_Accessor_Lock_Callback          lock          EFL_WARN_UNUSED_RESULT; /**< Callback called when the container is locked */
+   Eina_Accessor_Lock_Callback          unlock        EFL_WARN_UNUSED_RESULT; /**< Callback called when the container is unlocked */
 
 #define EINA_MAGIC_ACCESSOR 0x98761232
    EINA_MAGIC;
 
-   Eina_Accessor_Clone_Callback         clone         EINA_WARN_UNUSED_RESULT; /**< Callback called when the container is to be cloned. @since 1.10 */
+   Eina_Accessor_Clone_Callback         clone         EFL_WARN_UNUSED_RESULT; /**< Callback called when the container is to be cloned. @since 1.10 */
 };
 
 /**

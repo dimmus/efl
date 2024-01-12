@@ -72,7 +72,7 @@ static void _efl_io_copier_read(Eo *o, Efl_Io_Copier_Data *pd);
   while (0)
 
 static Eina_Value
-_efl_io_copier_timeout_inactivity_cb(Eo *o, void *data EINA_UNUSED, const Eina_Value v)
+_efl_io_copier_timeout_inactivity_cb(Eo *o, void *data EFL_UNUSED, const Eina_Value v)
 {
    Eina_Error err = ETIMEDOUT;
    efl_event_callback_call(o, EFL_IO_COPIER_EVENT_ERROR, &err);
@@ -91,7 +91,7 @@ _efl_io_copier_timeout_inactivity_reschedule(Eo *o, Efl_Io_Copier_Data *pd)
 }
 
 static Eina_Value
-_efl_io_copier_job(Eo *o, void *data EINA_UNUSED, const Eina_Value v)
+_efl_io_copier_job(Eo *o, void *data EFL_UNUSED, const Eina_Value v)
 {
    Efl_Io_Copier_Data *pd = efl_data_scope_get(o, MY_CLASS);
    uint64_t old_read = pd->progress.read;
@@ -337,7 +337,7 @@ _efl_io_copier_write(Eo *o, Efl_Io_Copier_Data *pd)
 }
 
 static void
-_efl_io_copier_source_can_read_changed(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_copier_source_can_read_changed(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    Efl_Io_Copier_Data *pd = efl_data_scope_get(o, MY_CLASS);
@@ -350,7 +350,7 @@ _efl_io_copier_source_can_read_changed(void *data, const Efl_Event *event EINA_U
 }
 
 static void
-_efl_io_copier_source_eos(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_copier_source_eos(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    Efl_Io_Copier_Data *pd = efl_data_scope_get(o, MY_CLASS);
@@ -376,7 +376,7 @@ _efl_io_copier_source_size_apply(Eo *o, Efl_Io_Copier_Data *pd)
 }
 
 static void
-_efl_io_copier_source_resized(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_copier_source_resized(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    Efl_Io_Copier_Data *pd = efl_data_scope_get(o, MY_CLASS);
@@ -384,7 +384,7 @@ _efl_io_copier_source_resized(void *data, const Efl_Event *event EINA_UNUSED)
 }
 
 static void
-_efl_io_copier_source_closed(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_copier_source_closed(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    Efl_Io_Copier_Data *pd = efl_data_scope_get(o, MY_CLASS);
@@ -400,7 +400,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(source_cbs,
                           { EFL_IO_READER_EVENT_EOS, _efl_io_copier_source_eos });
 
 EOLIAN static Efl_Io_Reader *
-_efl_io_copier_source_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_source_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->source;
 }
@@ -452,7 +452,7 @@ _efl_io_copier_source_set(Eo *o, Efl_Io_Copier_Data *pd, Efl_Io_Reader *source)
 }
 
 static void
-_efl_io_copier_destination_can_write_changed(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_copier_destination_can_write_changed(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    Efl_Io_Copier_Data *pd = efl_data_scope_get(o, MY_CLASS);
@@ -465,7 +465,7 @@ _efl_io_copier_destination_can_write_changed(void *data, const Efl_Event *event 
 }
 
 static void
-_efl_io_copier_destination_closed(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_copier_destination_closed(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    Efl_Io_Copier_Data *pd = efl_data_scope_get(o, MY_CLASS);
@@ -492,7 +492,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(destination_cbs,
                           { EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED, _efl_io_copier_destination_can_write_changed });
 
 EOLIAN static Efl_Io_Writer *
-_efl_io_copier_destination_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_destination_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->destination;
 }
@@ -552,13 +552,13 @@ _efl_io_copier_buffer_limit_set(Eo *o, Efl_Io_Copier_Data *pd, size_t size)
 }
 
 EOLIAN static size_t
-_efl_io_copier_buffer_limit_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_buffer_limit_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->buffer_limit;
 }
 
 EOLIAN static void
-_efl_io_copier_line_delimiter_set(Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, Eina_Slice slice)
+_efl_io_copier_line_delimiter_set(Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd, Eina_Slice slice)
 {
    if (pd->line_delimiter.mem == slice.mem)
      {
@@ -580,14 +580,14 @@ _efl_io_copier_line_delimiter_set(Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, Ein
 }
 
 EOLIAN static Eina_Slice
-_efl_io_copier_line_delimiter_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_line_delimiter_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->line_delimiter;
 }
 
 
 EOLIAN static void
-_efl_io_copier_read_chunk_size_set(Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, size_t size)
+_efl_io_copier_read_chunk_size_set(Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd, size_t size)
 {
    EINA_SAFETY_ON_TRUE_RETURN(pd->closed);
 
@@ -596,7 +596,7 @@ _efl_io_copier_read_chunk_size_set(Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, si
 }
 
 EOLIAN static size_t
-_efl_io_copier_read_chunk_size_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_read_chunk_size_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->read_chunk_size > 0 ? pd->read_chunk_size : DEF_READ_CHUNK_SIZE;
 }
@@ -691,13 +691,13 @@ _efl_io_copier_efl_io_closer_close(Eo *o, Efl_Io_Copier_Data *pd)
 }
 
 EOLIAN static Efl_Bool
-_efl_io_copier_efl_io_closer_closed_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_efl_io_closer_closed_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->closed;
 }
 
 EOLIAN static void
-_efl_io_copier_progress_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, uint64_t *read, uint64_t *written, uint64_t *total)
+_efl_io_copier_progress_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd, uint64_t *read, uint64_t *written, uint64_t *total)
 {
    if (read) *read = pd->progress.read;
    if (written) *written = pd->progress.written;
@@ -705,7 +705,7 @@ _efl_io_copier_progress_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, uin
 }
 
 EOLIAN static Eina_Binbuf *
-_efl_io_copier_binbuf_steal(Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_binbuf_steal(Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    Eina_Binbuf *ret = pd->buf;
    pd->buf = eina_binbuf_new();
@@ -720,7 +720,7 @@ _efl_io_copier_timeout_inactivity_set(Eo *o, Efl_Io_Copier_Data *pd, double seco
 }
 
 EOLIAN static double
-_efl_io_copier_timeout_inactivity_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_timeout_inactivity_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->timeout_inactivity;
 }
@@ -779,7 +779,7 @@ _efl_io_copier_flush(Eo *o, Efl_Io_Copier_Data *pd, Efl_Bool may_block, Efl_Bool
 }
 
 EOLIAN static size_t
-_efl_io_copier_pending_size_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_pending_size_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->buf ? eina_binbuf_length_get(pd->buf) : 0;
 }
@@ -847,7 +847,7 @@ _efl_io_copier_efl_object_finalize(Eo *o, Efl_Io_Copier_Data *pd)
 }
 
 EOLIAN static void
-_efl_io_copier_efl_object_invalidate(Eo *o, Efl_Io_Copier_Data *pd EINA_UNUSED)
+_efl_io_copier_efl_object_invalidate(Eo *o, Efl_Io_Copier_Data *pd EFL_UNUSED)
 {
    if (efl_io_closer_close_on_invalidate_get(o) &&
        (!efl_io_closer_closed_get(o)))
@@ -891,7 +891,7 @@ _efl_io_copier_efl_object_destructor(Eo *o, Efl_Io_Copier_Data *pd)
 }
 
 EOLIAN static Efl_Bool
-_efl_io_copier_efl_io_closer_close_on_exec_set(Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, Efl_Bool close_on_exec)
+_efl_io_copier_efl_io_closer_close_on_exec_set(Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd, Efl_Bool close_on_exec)
 {
    if (pd->close_on_exec == close_on_exec) return EFL_TRUE;
    pd->close_on_exec = close_on_exec;
@@ -906,13 +906,13 @@ _efl_io_copier_efl_io_closer_close_on_exec_set(Eo *o EINA_UNUSED, Efl_Io_Copier_
 }
 
 EOLIAN static Efl_Bool
-_efl_io_copier_efl_io_closer_close_on_exec_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_efl_io_closer_close_on_exec_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->close_on_exec;
 }
 
 EOLIAN static void
-_efl_io_copier_efl_io_closer_close_on_invalidate_set(Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd, Efl_Bool close_on_invalidate)
+_efl_io_copier_efl_io_closer_close_on_invalidate_set(Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd, Efl_Bool close_on_invalidate)
 {
    if (pd->close_on_invalidate == close_on_invalidate) return;
    pd->close_on_invalidate = close_on_invalidate;
@@ -925,7 +925,7 @@ _efl_io_copier_efl_io_closer_close_on_invalidate_set(Eo *o EINA_UNUSED, Efl_Io_C
 }
 
 EOLIAN static Efl_Bool
-_efl_io_copier_efl_io_closer_close_on_invalidate_get(const Eo *o EINA_UNUSED, Efl_Io_Copier_Data *pd)
+_efl_io_copier_efl_io_closer_close_on_invalidate_get(const Eo *o EFL_UNUSED, Efl_Io_Copier_Data *pd)
 {
    return pd->close_on_invalidate;
 }

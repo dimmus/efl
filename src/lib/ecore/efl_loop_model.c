@@ -67,13 +67,13 @@ _propagate_future(void *data, const Efl_Event *event)
 }
 
 static void
-_event_cancel(void *data, const Eina_Promise *dead_ptr EINA_UNUSED)
+_event_cancel(void *data, const Eina_Promise *dead_ptr EFL_UNUSED)
 {
    _efl_loop_model_wathcer_free(data);
 }
 
 static Eina_Future *
-_efl_loop_model_efl_model_property_ready_get(Eo *obj, void *pd EINA_UNUSED, const char *property)
+_efl_loop_model_efl_model_property_ready_get(Eo *obj, void *pd EFL_UNUSED, const char *property)
 {
    Eina_Value *value = efl_model_property_get(obj, property);
    Eina_Future *f;
@@ -109,7 +109,7 @@ _efl_loop_model_efl_model_property_ready_get(Eo *obj, void *pd EINA_UNUSED, cons
 }
 
 static Eina_Value
-_unpack_from_array(void *data EINA_UNUSED, Eina_Value v, const Eina_Future *f EINA_UNUSED)
+_unpack_from_array(void *data EFL_UNUSED, Eina_Value v, const Eina_Future *f EFL_UNUSED)
 {
    Eo *object = NULL;
 
@@ -123,7 +123,7 @@ _unpack_from_array(void *data EINA_UNUSED, Eina_Value v, const Eina_Future *f EI
 }
 
 static Eina_Future *
-_efl_loop_model_efl_model_children_index_get(Eo *obj, void *pd EINA_UNUSED, Eina_Iterator *indexes)
+_efl_loop_model_efl_model_children_index_get(Eo *obj, void *pd EFL_UNUSED, Eina_Iterator *indexes)
 {
    Eina_Future *r;
    Eina_Array futures;
@@ -145,7 +145,7 @@ _efl_loop_model_efl_model_children_index_get(Eo *obj, void *pd EINA_UNUSED, Eina
 }
 
 static void
-_noref_death(void *data EINA_UNUSED, const Efl_Event *event)
+_noref_death(void *data EFL_UNUSED, const Efl_Event *event)
 {
    efl_event_callback_del(event->object, EFL_EVENT_NOREF, _noref_death, NULL);
    // For safety reason and in case multiple call to volatile has been made
@@ -154,7 +154,7 @@ _noref_death(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_efl_loop_model_volatile_make(Eo *obj, void *pd EINA_UNUSED)
+_efl_loop_model_volatile_make(Eo *obj, void *pd EFL_UNUSED)
 {
    // Just to make sure we do not double register this callback, we first remove
    // any potentially previous one.
@@ -163,7 +163,7 @@ _efl_loop_model_volatile_make(Eo *obj, void *pd EINA_UNUSED)
 }
 
 static Eina_Future *
-_efl_loop_model_efl_model_property_set(Eo *obj, void *pd EINA_UNUSED,
+_efl_loop_model_efl_model_property_set(Eo *obj, void *pd EFL_UNUSED,
                                        const char *property, Eina_Value *value)
 {
    Eina_Error err;
@@ -176,7 +176,7 @@ _efl_loop_model_efl_model_property_set(Eo *obj, void *pd EINA_UNUSED,
 }
 
 static Eina_Value *
-_efl_loop_model_efl_model_property_get(const Eo *obj, void *pd EINA_UNUSED,
+_efl_loop_model_efl_model_property_get(const Eo *obj, void *pd EFL_UNUSED,
                                        const char *property)
 {
    Eina_Value *r;
@@ -190,7 +190,7 @@ _efl_loop_model_efl_model_property_get(const Eo *obj, void *pd EINA_UNUSED,
 }
 
 static void
-_efl_loop_model_efl_object_invalidate(Eo *obj, void *pd EINA_UNUSED)
+_efl_loop_model_efl_object_invalidate(Eo *obj, void *pd EFL_UNUSED)
 {
    efl_event_callback_del(obj, EFL_EVENT_NOREF, _noref_death, NULL);
 

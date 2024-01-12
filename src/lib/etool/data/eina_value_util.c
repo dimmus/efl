@@ -38,7 +38,7 @@ typedef struct _Eina_Value_Util_Struct_Desc
 } Eina_Value_Util_Struct_Desc;
 
 static void *
-_ops_malloc(const Eina_Value_Struct_Operations *ops EINA_UNUSED, const Eina_Value_Struct_Desc *desc)
+_ops_malloc(const Eina_Value_Struct_Operations *ops EFL_UNUSED, const Eina_Value_Struct_Desc *desc)
 {
    Eina_Value_Util_Struct_Desc *edesc = (Eina_Value_Util_Struct_Desc*)desc;
    edesc->refcount++;
@@ -47,7 +47,7 @@ _ops_malloc(const Eina_Value_Struct_Operations *ops EINA_UNUSED, const Eina_Valu
 }
 
 static void
-_ops_free(const Eina_Value_Struct_Operations *ops EINA_UNUSED, const Eina_Value_Struct_Desc *desc, void *memory)
+_ops_free(const Eina_Value_Struct_Operations *ops EFL_UNUSED, const Eina_Value_Struct_Desc *desc, void *memory)
 {
    Eina_Value_Util_Struct_Desc *edesc = (Eina_Value_Util_Struct_Desc*) desc;
    edesc->refcount--;

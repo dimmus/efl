@@ -8,14 +8,14 @@ static int retval = EXIT_SUCCESS;
 /* NOTE: input events are only used as debug, you can omit these */
 
 static void
-_input_can_read_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_input_can_read_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: input can_read=%d\n",
            efl_io_reader_can_read_get(event->object));
 }
 
 static void
-_input_eos(void *data EINA_UNUSED, const Efl_Event *event)
+_input_eos(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: input eos=%d\n",
            efl_io_reader_eos_get(event->object));
@@ -29,7 +29,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(input_cbs,
 /* NOTE: output events are only used as debug, you can omit these */
 
 static void
-_output_can_write_changed(void *data EINA_UNUSED, const Efl_Event *event)
+_output_can_write_changed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: output can_write=%d\n",
            efl_io_writer_can_write_get(event->object));
@@ -39,7 +39,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(output_cbs,
                            { EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED, _output_can_write_changed });
 
 static void
-_output_buffer_reallocated(void *data EINA_UNUSED, const Efl_Event *event)
+_output_buffer_reallocated(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Slice slice = efl_io_buffer_slice_get(event->object);
 
@@ -52,7 +52,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(output_buffer_cbs,
 
 
 static void
-_dialer_resolved(void *data EINA_UNUSED, const Efl_Event *event)
+_dialer_resolved(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: dialer resolved '%s' to '%s'\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -60,7 +60,7 @@ _dialer_resolved(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_dialer_error(void *data EINA_UNUSED, const Efl_Event *event)
+_dialer_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: error: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -69,7 +69,7 @@ _dialer_error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_dialer_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_dialer_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: dialer connected to '%s' (%s)\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -82,7 +82,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(dialer_cbs,
                            { EFL_NET_DIALER_EVENT_DIALER_CONNECTED, _dialer_connected });
 
 static void
-_http_headers_done(void *data EINA_UNUSED, const Efl_Event *event)
+_http_headers_done(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Iterator *itr;
    Efl_Net_Http_Header *h;
@@ -122,7 +122,7 @@ _http_headers_done(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_http_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_http_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    uint64_t dn, dt, un, ut;
 
@@ -143,7 +143,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(http_cbs,
  */
 
 static void
-_copier_done(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_done(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *destination = efl_io_copier_destination_get(event->object);
 
@@ -202,7 +202,7 @@ _copier_done(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_copier_error(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: error: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -211,7 +211,7 @@ _copier_error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_copier_progress(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_progress(void *data EFL_UNUSED, const Efl_Event *event)
 {
    uint64_t r, w, t;
 
@@ -234,7 +234,7 @@ _copier_progress(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_copier_data(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_data(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Slice *slice = event->info;
    /* a piece of data was processed, it's ready-only and will only be
@@ -256,7 +256,7 @@ _copier_data(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_copier_line(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_line(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Slice *slice = event->info;
 
@@ -363,20 +363,20 @@ static const Ecore_Getopt options = {
 static Eo *copier = NULL;
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    /* FIXME: For the moment the main loop doesn't get
       properly destroyed on shutdown which disallow
@@ -390,7 +390,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *input_fname = NULL;

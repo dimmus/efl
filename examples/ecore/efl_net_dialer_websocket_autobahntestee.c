@@ -135,7 +135,7 @@ _utf8_check(const char *text)
 }
 
 static void
-_ws_pong(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_pong(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    const char *text = event->info;
@@ -145,7 +145,7 @@ _ws_pong(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ws_closed_reason(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_closed_reason(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    Efl_Net_Dialer_Websocket_Closed_Reason *reason = event->info;
@@ -162,7 +162,7 @@ _ws_closed_reason(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ws_message_text(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_message_text(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    const char *text = event->info;
@@ -173,7 +173,7 @@ _ws_message_text(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ws_message_binary(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_message_binary(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    const Eina_Slice *slice = event->info;
@@ -196,7 +196,7 @@ _ws_message_binary(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
 
@@ -205,7 +205,7 @@ _closed(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_eos(void *data EINA_UNUSED, const Efl_Event *event)
+_eos(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
 
@@ -214,7 +214,7 @@ _eos(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
 
@@ -225,7 +225,7 @@ _connected(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_error(void *data EINA_UNUSED, const Efl_Event *event)
+_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    const Eina_Error *perr = event->info;
@@ -235,7 +235,7 @@ _error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_del(void *data EINA_UNUSED, const Efl_Event *event)
+_del(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    if (pending == dialer)
@@ -274,7 +274,7 @@ _websocket_new(const char *name, Eo *loop)
 }
 
 static void
-_closed_quit(void *data EINA_UNUSED, const Efl_Event *event)
+_closed_quit(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    efl_del(dialer);
@@ -342,7 +342,7 @@ _tests_finished(Eo *loop)
 }
 
 static void
-_echo_text(void *data EINA_UNUSED, const Efl_Event *event)
+_echo_text(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    const char *text = event->info;
@@ -358,7 +358,7 @@ _echo_text(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_echo_binary(void *data EINA_UNUSED, const Efl_Event *event)
+_echo_binary(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    const Eina_Slice *slice = event->info;
@@ -368,7 +368,7 @@ _echo_binary(void *data EINA_UNUSED, const Efl_Event *event)
 static Eina_Bool _websocket_test_next_case_tuple(Eo *loop);
 
 static void
-_test_next_case_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_test_next_case_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    efl_del(dialer);
@@ -442,7 +442,7 @@ _websocket_test_next_case_tuple(Eo *loop)
 static Eina_Bool _websocket_test_index(unsigned int idx, Eo *loop);
 
 static void
-_test_index_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_test_index_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    efl_del(dialer);
@@ -510,7 +510,7 @@ _websocket_test_index(unsigned int idx, Eo *loop)
 }
 
 static void
-_load_tests_text(void *data EINA_UNUSED, const Efl_Event *event)
+_load_tests_text(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const char *text = event->info;
    unsigned int n = strtoul(text, NULL, 10);
@@ -529,7 +529,7 @@ _load_tests_text(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_load_tests_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_load_tests_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    efl_del(dialer);
@@ -617,20 +617,20 @@ static const Ecore_Getopt options = {
 };
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    /* FIXME: For the moment the main loop doesn't get
       properly destroyed on shutdown which disallow
@@ -644,7 +644,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    Eina_Bool quit_option = EINA_FALSE;

@@ -29,7 +29,7 @@ struct _Efl_Composite_Model_Data
 static Eina_Rbtree_Direction
 _children_indexed_cmp(const Efl_Composite_Model_Data *left,
                       const Efl_Composite_Model_Data *right,
-                      void *data EINA_UNUSED)
+                      void *data EFL_UNUSED)
 {
    if (left->index < right->index)
      return EINA_RBTREE_LEFT;
@@ -38,7 +38,7 @@ _children_indexed_cmp(const Efl_Composite_Model_Data *left,
 
 static int
 _children_indexed_key(const Efl_Composite_Model_Data *node,
-                      const int *key, int length EINA_UNUSED, void *data EINA_UNUSED)
+                      const int *key, int length EFL_UNUSED, void *data EFL_UNUSED)
 {
    if (node->index > (unsigned int) *key) return 1;
    if (node->index < (unsigned int) *key) return -1;
@@ -128,7 +128,7 @@ _efl_composite_model_efl_object_finalize(Eo *obj, Efl_Composite_Model_Data *pd)
 }
 
 static void
-_efl_composite_model_index_set(Eo *obj EINA_UNUSED, Efl_Composite_Model_Data *pd, unsigned int index)
+_efl_composite_model_index_set(Eo *obj EFL_UNUSED, Efl_Composite_Model_Data *pd, unsigned int index)
 {
    if (pd->set_index || !pd->source)
      return ;
@@ -240,7 +240,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(composite_callbacks,
                            { EFL_MODEL_EVENT_CHILD_REMOVED, _efl_composite_model_child_removed });
 
 static void
-_efl_composite_model_efl_ui_view_model_set(Eo *obj EINA_UNUSED, Efl_Composite_Model_Data *pd, Efl_Model *model)
+_efl_composite_model_efl_ui_view_model_set(Eo *obj EFL_UNUSED, Efl_Composite_Model_Data *pd, Efl_Model *model)
 {
    Eina_Iterator *properties;
    const char *property;
@@ -271,7 +271,7 @@ _efl_composite_model_efl_ui_view_model_set(Eo *obj EINA_UNUSED, Efl_Composite_Mo
 }
 
 static Efl_Model *
-_efl_composite_model_efl_ui_view_model_get(const Eo *obj EINA_UNUSED, Efl_Composite_Model_Data *pd)
+_efl_composite_model_efl_ui_view_model_get(const Eo *obj EFL_UNUSED, Efl_Composite_Model_Data *pd)
 {
    return pd->source;
 }
@@ -293,7 +293,7 @@ _efl_composite_model_efl_model_property_set(Eo *obj, Efl_Composite_Model_Data *p
 }
 
 static Eina_Value *
-_efl_composite_model_efl_model_property_get(const Eo *obj EINA_UNUSED, Efl_Composite_Model_Data *pd,
+_efl_composite_model_efl_model_property_get(const Eo *obj EFL_UNUSED, Efl_Composite_Model_Data *pd,
                                             const char *property)
 {
    Eina_Value *try;
@@ -318,7 +318,7 @@ _efl_composite_model_efl_model_property_get(const Eo *obj EINA_UNUSED, Efl_Compo
 }
 
 static Eina_Iterator *
-_efl_composite_model_efl_model_properties_get(const Eo *obj EINA_UNUSED, Efl_Composite_Model_Data *pd)
+_efl_composite_model_efl_model_properties_get(const Eo *obj EFL_UNUSED, Efl_Composite_Model_Data *pd)
 {
    if (pd->need_index)
      {
@@ -333,7 +333,7 @@ _efl_composite_model_efl_model_properties_get(const Eo *obj EINA_UNUSED, Efl_Com
 }
 
 static unsigned int
-_efl_composite_model_efl_model_children_count_get(const Eo *obj EINA_UNUSED, Efl_Composite_Model_Data *pd)
+_efl_composite_model_efl_model_children_count_get(const Eo *obj EFL_UNUSED, Efl_Composite_Model_Data *pd)
 {
    return efl_model_children_count_get(pd->source);
 }
@@ -348,7 +348,7 @@ struct _Efl_Composite_Model_Slice_Request
 };
 
 static Eina_Value
-_efl_composite_model_then(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
+_efl_composite_model_then(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
 {
    Efl_Composite_Model_Slice_Request *req = data;
    unsigned int i, len;
@@ -393,7 +393,7 @@ _efl_composite_model_then(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
 }
 
 static void
-_efl_composite_model_clean(Eo *o EINA_UNUSED, void *data, const Eina_Future *dead_future EINA_UNUSED)
+_efl_composite_model_clean(Eo *o EFL_UNUSED, void *data, const Eina_Future *dead_future EFL_UNUSED)
 {
    Efl_Composite_Model_Slice_Request *req = data;
 
@@ -470,14 +470,14 @@ _efl_composite_model_efl_model_children_slice_get(Eo *obj,
 }
 
 static Efl_Object *
-_efl_composite_model_efl_model_child_add(Eo *obj EINA_UNUSED,
+_efl_composite_model_efl_model_child_add(Eo *obj EFL_UNUSED,
                                          Efl_Composite_Model_Data *pd)
 {
    return efl_model_child_add(pd->source);
 }
 
 static void
-_efl_composite_model_efl_model_child_del(Eo *obj EINA_UNUSED,
+_efl_composite_model_efl_model_child_del(Eo *obj EFL_UNUSED,
                                          Efl_Composite_Model_Data *pd,
                                          Efl_Object *child)
 {

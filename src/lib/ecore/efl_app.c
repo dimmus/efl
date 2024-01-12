@@ -27,13 +27,13 @@ _efl_app_app_main_get(void)
 }
 
 EOLIAN static const Efl_Version *
-_efl_app_build_efl_version_get(const Eo *obj EINA_UNUSED, void *pd EINA_UNUSED)
+_efl_app_build_efl_version_get(const Eo *obj EFL_UNUSED, void *pd EFL_UNUSED)
 {
    return &_app_efl_version;
 }
 
 EOLIAN static const Efl_Version *
-_efl_app_efl_version_get(const Eo *obj EINA_UNUSED, void *pd EINA_UNUSED)
+_efl_app_efl_version_get(const Eo *obj EFL_UNUSED, void *pd EFL_UNUSED)
 {
    /* vanilla EFL: flavor = NULL */
    static const Efl_Version version = {
@@ -60,7 +60,7 @@ static const signed char primap[EFL_TASK_PRIORITY_ULTRA + 1] =
 #endif
 
 EOLIAN static void
-_efl_app_efl_task_priority_set(Eo *obj, void *pd EINA_UNUSED, Efl_Task_Priority priority)
+_efl_app_efl_task_priority_set(Eo *obj, void *pd EFL_UNUSED, Efl_Task_Priority priority)
 {
    efl_task_priority_set(efl_super(obj, MY_CLASS), priority);
 #ifdef _WIN32
@@ -76,7 +76,7 @@ _efl_app_efl_task_priority_set(Eo *obj, void *pd EINA_UNUSED, Efl_Task_Priority 
 }
 
 EOLIAN static Efl_Task_Priority
-_efl_app_efl_task_priority_get(const Eo *obj, void *pd EINA_UNUSED)
+_efl_app_efl_task_priority_get(const Eo *obj, void *pd EFL_UNUSED)
 {
    Efl_Task_Priority pri = EFL_TASK_PRIORITY_NORMAL;
 #ifdef _WIN32

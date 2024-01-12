@@ -133,8 +133,8 @@ static Efl_Bool
 eina_simple_xml_parser_parse_with_custom_callback_tag_cb(void *data,
                                                          Eina_Simple_XML_Type type,
                                                          const char *content,
-                                                         unsigned offset EINA_UNUSED,
-                                                         unsigned length EINA_UNUSED)
+                                                         unsigned offset EFL_UNUSED,
+                                                         unsigned length EFL_UNUSED)
 {
     int* parse_current_state = (int*) data;
 

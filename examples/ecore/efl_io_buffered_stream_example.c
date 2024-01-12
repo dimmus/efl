@@ -34,7 +34,7 @@ _command_next(void)
 }
 
 static void
-_receiver_data(void *data EINA_UNUSED, const Efl_Event *event)
+_receiver_data(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Slice slice = efl_io_buffered_stream_slice_get(event->object);
 
@@ -68,7 +68,7 @@ _receiver_data(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_dialer_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_dialer_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: connected to %s (%s)\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -78,13 +78,13 @@ _dialer_connected(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_stream_write_finished(void *data EINA_UNUSED, const Efl_Event *event)
+_stream_write_finished(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: %s done sending\n", efl_name_get(event->object));
 }
 
 static void
-_stream_error(void *data EINA_UNUSED, const Efl_Event *event)
+_stream_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: %s error: #%d '%s'\n",
@@ -94,7 +94,7 @@ _stream_error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_stream_eos(void *data EINA_UNUSED, const Efl_Event *event)
+_stream_eos(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: %s eos, quit\n", efl_name_get(event->object));
    efl_loop_quit(efl_loop_get(event->object), EINA_VALUE_EMPTY);
@@ -173,7 +173,7 @@ static const Ecore_Getopt options = {
 };
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *address = NULL;

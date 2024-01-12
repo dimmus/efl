@@ -31,7 +31,7 @@ struct Number{
 };
 
 static Efl_Bool
-_filter(const void *it EINA_UNUSED, void *data, void *fdata)
+_filter(const void *it EFL_UNUSED, void *data, void *fdata)
 {
    struct Number *numb = data;
 
@@ -91,7 +91,7 @@ struct Free_test {
 };
 
 static Efl_Bool
-_filter_free(const void *it EINA_UNUSED, void *data EINA_UNUSED, void *fdata EINA_UNUSED)
+_filter_free(const void *it EFL_UNUSED, void *data EFL_UNUSED, void *fdata EFL_UNUSED)
 {
    return EFL_TRUE;
 }
@@ -126,7 +126,7 @@ EFL_START_TEST(eina_iterator_filter_free)
 }
 EFL_END_TEST
 static Efl_Bool
-eina_iterator_array_check(EINA_UNUSED const Eina_Array *array,
+eina_iterator_array_check(EFL_UNUSED const Eina_Array *array,
                           int *data,  int *fdata)
 {
    fail_if(*fdata > *data);
@@ -174,7 +174,7 @@ EFL_END_TEST
 static Efl_Bool
 eina_iterator_hash_key_check(const Eina_Hash *hash,
                              const char *key,
-                             EINA_UNUSED void *fdata)
+                             EFL_UNUSED void *fdata)
 {
    fail_if(eina_hash_find(hash, key) == NULL);
 
@@ -183,7 +183,7 @@ eina_iterator_hash_key_check(const Eina_Hash *hash,
 static Efl_Bool
 eina_iterator_hash_data_check(const Eina_Hash *hash,
                               int *data,
-                              EINA_UNUSED void *fdata)
+                              EFL_UNUSED void *fdata)
 {
    char tmp[10];
 
@@ -193,9 +193,9 @@ eina_iterator_hash_data_check(const Eina_Hash *hash,
    return EFL_TRUE;
 }
 static Efl_Bool
-eina_iterator_hash_tuple_check(EINA_UNUSED const Eina_Hash *hash,
+eina_iterator_hash_tuple_check(EFL_UNUSED const Eina_Hash *hash,
                                Eina_Hash_Tuple *tuple,
-                               EINA_UNUSED void *fdata)
+                               EFL_UNUSED void *fdata)
 {
    fail_if(atoi((char *)tuple->key) != *((int *)tuple->data));
 
@@ -255,7 +255,7 @@ _eina_test_inlist_build(int i)
 }
 
 static Efl_Bool
-eina_iterator_inlist_data_check(EINA_UNUSED const Eina_Inlist *in_list,
+eina_iterator_inlist_data_check(EFL_UNUSED const Eina_Inlist *in_list,
                                 Eina_Test_Inlist *data,
                                 int *fdata)
 {
@@ -318,7 +318,7 @@ EFL_START_TEST(eina_iterator_inlist_simple)
 EFL_END_TEST
 
 static Efl_Bool
-eina_iterator_list_data_check(EINA_UNUSED const Eina_List *list,
+eina_iterator_list_data_check(EFL_UNUSED const Eina_List *list,
                               int *data,
                               int *fdata)
 {
@@ -382,7 +382,7 @@ EFL_START_TEST(eina_iterator_list_simple)
 EFL_END_TEST
 
 static Efl_Bool
-eina_reverse_iterator_list_data_check(EINA_UNUSED const Eina_List *list,
+eina_reverse_iterator_list_data_check(EFL_UNUSED const Eina_List *list,
                               int *data,
                               int *fdata)
 {
@@ -453,7 +453,7 @@ struct _Eina_Rbtree_Int
 };
 
 static Eina_Rbtree_Direction
-eina_rbtree_int_cmp(const Eina_Rbtree_Int *left, const Eina_Rbtree_Int *right, void *data EINA_UNUSED)
+eina_rbtree_int_cmp(const Eina_Rbtree_Int *left, const Eina_Rbtree_Int *right, void *data EFL_UNUSED)
 {
    fail_if(!left);
    fail_if(!right);
@@ -478,7 +478,7 @@ _eina_rbtree_int_new(int value)
 }
 
 static Efl_Bool
-eina_iterator_rbtree_data_check_sorted(EINA_UNUSED const Eina_List *list,
+eina_iterator_rbtree_data_check_sorted(EFL_UNUSED const Eina_List *list,
                                        Eina_Rbtree_Int *data,
                                        int *fdata)
 {
@@ -501,7 +501,7 @@ eina_iterator_rbtree_data_check_sorted(EINA_UNUSED const Eina_List *list,
 }
 
 static Efl_Bool
-eina_iterator_rbtree_data_check_prefix(EINA_UNUSED const Eina_List *list,
+eina_iterator_rbtree_data_check_prefix(EFL_UNUSED const Eina_List *list,
                                        Eina_Rbtree_Int *data,
                                        int *fdata)
 {
@@ -524,7 +524,7 @@ eina_iterator_rbtree_data_check_prefix(EINA_UNUSED const Eina_List *list,
 }
 
 static Efl_Bool
-eina_iterator_rbtree_data_check_postfix(EINA_UNUSED const Eina_List *list,
+eina_iterator_rbtree_data_check_postfix(EFL_UNUSED const Eina_List *list,
                                         Eina_Rbtree_Int *data,
                                         int *fdata)
 {
@@ -655,7 +655,7 @@ EFL_START_TEST(eina_iterator_multi)
 EFL_END_TEST
 
 static void*
-_return_x(const void *container EINA_UNUSED, void *data, void *fdata)
+_return_x(const void *container EFL_UNUSED, void *data, void *fdata)
 {
    Eina_Rectangle *rect = data;
    ck_assert_int_eq(*((int*)fdata), 1337);

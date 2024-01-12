@@ -23,7 +23,7 @@ _item_value_free_cb(void *data)
 }
 
 static Efl_Bool
-_stringshared_keys_free(const Eina_Hash *hash EINA_UNUSED, const void *key, void *data EINA_UNUSED, void *fdata EINA_UNUSED)
+_stringshared_keys_free(const Eina_Hash *hash EFL_UNUSED, const void *key, void *data EFL_UNUSED, void *fdata EFL_UNUSED)
 {
    eina_stringshare_del(key);
    return EFL_TRUE;
@@ -52,7 +52,7 @@ _efl_generic_model_efl_object_destructor(Eo *obj, Efl_Generic_Model_Data *sd)
 }
 
 static Eina_Iterator *
-_efl_generic_model_efl_model_properties_get(const Eo *obj EINA_UNUSED, Efl_Generic_Model_Data *pd)
+_efl_generic_model_efl_model_properties_get(const Eo *obj EFL_UNUSED, Efl_Generic_Model_Data *pd)
 {
    return eina_hash_iterator_key_new(pd->properties);
 }
@@ -109,7 +109,7 @@ _efl_generic_model_efl_model_property_set(Eo *obj, Efl_Generic_Model_Data *pd, c
 }
 
 static Eina_Value *
-_efl_generic_model_efl_model_property_get(const Eo *obj EINA_UNUSED,
+_efl_generic_model_efl_model_property_get(const Eo *obj EFL_UNUSED,
                                           Efl_Generic_Model_Data *pd,
                                           const char *property)
 {
@@ -136,7 +136,7 @@ _efl_generic_model_efl_model_children_slice_get(Eo *obj, Efl_Generic_Model_Data 
 }
 
 static unsigned int
-_efl_generic_model_efl_model_children_count_get(const Eo *obj EINA_UNUSED, Efl_Generic_Model_Data *pd)
+_efl_generic_model_efl_model_children_count_get(const Eo *obj EFL_UNUSED, Efl_Generic_Model_Data *pd)
 {
    return eina_list_count(pd->childrens);
 }

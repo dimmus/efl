@@ -7,15 +7,15 @@
 
 
 static Efl_Bool
-_xml_attribute_parse_cb(void *data EINA_UNUSED, const char *key, const char *value)
+_xml_attribute_parse_cb(void *data EFL_UNUSED, const char *key, const char *value)
 {
    printf("attributes, key = %s, value = %s\n", key, value);
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_xml_tag_parse_cb(void *data EINA_UNUSED, Eina_Simple_XML_Type type, const char *content,
-                  unsigned offset EINA_UNUSED, unsigned int length)
+_xml_tag_parse_cb(void *data EFL_UNUSED, Eina_Simple_XML_Type type, const char *content,
+                  unsigned offset EFL_UNUSED, unsigned int length)
 {
    if (length == 0) return EFL_FALSE;
 

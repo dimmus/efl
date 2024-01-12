@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 static Eina_Bool
-_timer_cb(void *data EINA_UNUSED)
+_timer_cb(void *data EFL_UNUSED)
 {
    printf("ecore time: %0.3f\n", ecore_time_get());
    printf("loop time: %0.3f\n", ecore_loop_time_get());

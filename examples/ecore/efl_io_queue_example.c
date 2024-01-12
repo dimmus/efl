@@ -34,7 +34,7 @@ _command_next(void)
 }
 
 static void
-_receiver_data(void *data EINA_UNUSED, const Efl_Event *event)
+_receiver_data(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Slice slice = efl_io_queue_slice_get(event->object);
 
@@ -68,7 +68,7 @@ _receiver_data(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_dialer_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_dialer_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: connected to %s (%s)\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -78,7 +78,7 @@ _dialer_connected(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_copier_done(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_done(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: %s done\n", efl_name_get(event->object));
 
@@ -88,7 +88,7 @@ _copier_done(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_copier_error(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: %s error: #%d '%s'\n",
@@ -169,20 +169,20 @@ static const Ecore_Getopt options = {
 };
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
   if (waiting)
     {
@@ -194,7 +194,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *address = NULL;

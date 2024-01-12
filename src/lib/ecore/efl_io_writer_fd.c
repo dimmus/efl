@@ -17,19 +17,19 @@ typedef struct _Efl_Io_Writer_Fd_Data
 } Efl_Io_Writer_Fd_Data;
 
 EOLIAN static void
-_efl_io_writer_fd_writer_fd_set(Eo *o EINA_UNUSED, Efl_Io_Writer_Fd_Data *pd, int fd)
+_efl_io_writer_fd_writer_fd_set(Eo *o EFL_UNUSED, Efl_Io_Writer_Fd_Data *pd, int fd)
 {
    pd->fd = fd;
 }
 
 EOLIAN static int
-_efl_io_writer_fd_writer_fd_get(const Eo *o EINA_UNUSED, Efl_Io_Writer_Fd_Data *pd)
+_efl_io_writer_fd_writer_fd_get(const Eo *o EFL_UNUSED, Efl_Io_Writer_Fd_Data *pd)
 {
    return pd->fd;
 }
 
 EOLIAN static Eina_Error
-_efl_io_writer_fd_efl_io_writer_write(Eo *o, Efl_Io_Writer_Fd_Data *pd EINA_UNUSED, Eina_Slice *ro_slice, Eina_Slice *remaining)
+_efl_io_writer_fd_efl_io_writer_write(Eo *o, Efl_Io_Writer_Fd_Data *pd EFL_UNUSED, Eina_Slice *ro_slice, Eina_Slice *remaining)
 {
    int fd = efl_io_writer_fd_get(o);
    ssize_t r;
@@ -72,7 +72,7 @@ _efl_io_writer_fd_efl_io_writer_write(Eo *o, Efl_Io_Writer_Fd_Data *pd EINA_UNUS
 }
 
 EOLIAN static Efl_Bool
-_efl_io_writer_fd_efl_io_writer_can_write_get(const Eo *o EINA_UNUSED, Efl_Io_Writer_Fd_Data *pd)
+_efl_io_writer_fd_efl_io_writer_can_write_get(const Eo *o EFL_UNUSED, Efl_Io_Writer_Fd_Data *pd)
 {
    return pd->can_write;
 }

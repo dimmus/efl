@@ -85,8 +85,8 @@ ecore_job_del(Ecore_Job *job)
 }
 
 static Efl_Bool
-_ecore_job_event_handler(void *data EINA_UNUSED,
-                         int   type EINA_UNUSED,
+_ecore_job_event_handler(void *data EFL_UNUSED,
+                         int   type EFL_UNUSED,
                          void *ev)
 {
    Ecore_Job *job;
@@ -98,7 +98,7 @@ _ecore_job_event_handler(void *data EINA_UNUSED,
 
 static void
 _ecore_job_event_free(void *data,
-                      void *job EINA_UNUSED)
+                      void *job EFL_UNUSED)
 {
    free(data);
 }

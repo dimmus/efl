@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 static Eina_Bool
-_stdin_cb(void *data EINA_UNUSED, Ecore_Fd_Handler *handler EINA_UNUSED)
+_stdin_cb(void *data EFL_UNUSED, Ecore_Fd_Handler *handler EFL_UNUSED)
 {
    Eina_List *l;
    Ecore_Evas *ee;

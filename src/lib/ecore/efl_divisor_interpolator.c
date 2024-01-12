@@ -16,8 +16,8 @@ struct _Efl_Divisor_Interpolator_Data
 };
 
 EOLIAN static double
-_efl_divisor_interpolator_efl_interpolator_interpolate(Eo *eo_obj EINA_UNUSED,
-                                                       Efl_Divisor_Interpolator_Data *pd EINA_UNUSED,
+_efl_divisor_interpolator_efl_interpolator_interpolate(Eo *eo_obj EFL_UNUSED,
+                                                       Efl_Divisor_Interpolator_Data *pd EFL_UNUSED,
                                                        double progress)
 {
    if ((progress < 0.0) || (progress > 1.0))
@@ -28,7 +28,7 @@ _efl_divisor_interpolator_efl_interpolator_interpolate(Eo *eo_obj EINA_UNUSED,
 }
 
 EOLIAN static void
-_efl_divisor_interpolator_divisor_set(Eo *eo_obj EINA_UNUSED,
+_efl_divisor_interpolator_divisor_set(Eo *eo_obj EFL_UNUSED,
                                       Efl_Divisor_Interpolator_Data *pd,
                                       double divisor)
 {
@@ -36,13 +36,13 @@ _efl_divisor_interpolator_divisor_set(Eo *eo_obj EINA_UNUSED,
 }
 
 EOLIAN static double
-_efl_divisor_interpolator_divisor_get(const Eo *eo_obj EINA_UNUSED,
+_efl_divisor_interpolator_divisor_get(const Eo *eo_obj EFL_UNUSED,
                                       Efl_Divisor_Interpolator_Data *pd)
 {
    return pd->divisor;
 }
 EOLIAN static void
-_efl_divisor_interpolator_power_set(Eo *eo_obj EINA_UNUSED,
+_efl_divisor_interpolator_power_set(Eo *eo_obj EFL_UNUSED,
                                     Efl_Divisor_Interpolator_Data *pd,
                                     int power)
 {
@@ -50,7 +50,7 @@ _efl_divisor_interpolator_power_set(Eo *eo_obj EINA_UNUSED,
 }
 
 EOLIAN static int
-_efl_divisor_interpolator_power_get(const Eo *eo_obj EINA_UNUSED,
+_efl_divisor_interpolator_power_get(const Eo *eo_obj EFL_UNUSED,
                                     Efl_Divisor_Interpolator_Data *pd)
 {
    return pd->power;

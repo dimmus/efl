@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <Eina.h>
 
-int main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+int main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    char *names = "Calvin;Leoben;D'anna;Simon;Doral;Six;Daniel;Sharon";
    char *str;

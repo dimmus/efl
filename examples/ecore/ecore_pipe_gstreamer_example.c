@@ -15,7 +15,7 @@ static void        new_decoded_pad_cb(GstElement *demuxer,
                                       gpointer user_data);
 
 static void
-handler(void *data, void *buf, unsigned int len EINA_UNUSED)
+handler(void *data, void *buf, unsigned int len EFL_UNUSED)
 {
    GstBuffer *buffer = *((GstBuffer **)buf);
 
@@ -25,9 +25,9 @@ handler(void *data, void *buf, unsigned int len EINA_UNUSED)
 }
 
 static void
-handoff(GstElement *object EINA_UNUSED,
+handoff(GstElement *object EFL_UNUSED,
         GstBuffer *arg0,
-        GstPad *arg1 EINA_UNUSED,
+        GstPad *arg1 EFL_UNUSED,
         gpointer user_data)
 {
    Ecore_Pipe *pipe;
@@ -93,7 +93,7 @@ main(int argc, char *argv[])
 }
 
 static void
-new_decoded_pad_cb(GstElement *demuxer EINA_UNUSED,
+new_decoded_pad_cb(GstElement *demuxer EFL_UNUSED,
                    GstPad *new_pad,
                    gpointer user_data)
 {

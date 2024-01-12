@@ -9,13 +9,13 @@ static size_t pending_send_offset = 0;
 static Eo *ssl_ctx = NULL;
 
 static void
-_ssl_ready(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+_ssl_ready(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    fprintf(stderr, "INFO: SSL ready!\n");
 }
 
 static void
-_ssl_error(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: SSL error: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -23,7 +23,7 @@ _ssl_error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ssl_can_read(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_can_read(void *data EFL_UNUSED, const Efl_Event *event)
 {
    char buf[63]; /* INFO: SSL read '...' will fit in 80 columns */
    Eina_Error err;
@@ -58,14 +58,14 @@ _ssl_can_read(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ssl_eos(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+_ssl_eos(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    fprintf(stderr, "INFO: SSL eos\n");
    efl_loop_quit(efl_loop_get(event->object), EINA_VALUE_EMPTY);
 }
 
 static void
-_ssl_can_write(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_can_write(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Bool can_write = efl_io_writer_can_write_get(event->object);
    size_t len;
@@ -111,7 +111,7 @@ _ssl_can_write(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ssl_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_ssl_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: SSL closed\n");
    efl_del(event->object);
@@ -126,7 +126,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(ssl_cbs,
                            { EFL_IO_CLOSER_EVENT_CLOSED, _ssl_closed });
 
 static void
-_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *ssl;
    const char *hostname;
@@ -161,7 +161,7 @@ _connected(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_resolved(void *data EINA_UNUSED, const Efl_Event *event)
+_resolved(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: resolved %s => %s\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -169,7 +169,7 @@ _resolved(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_error(void *data EINA_UNUSED, const Efl_Event *event)
+_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: error: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -286,20 +286,20 @@ static Eina_List *cas = NULL;
 #endif
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    if (dialer || ssl_ctx)
      {
@@ -328,7 +328,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *address = NULL;

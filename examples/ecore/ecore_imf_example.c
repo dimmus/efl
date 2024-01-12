@@ -33,7 +33,7 @@ struct _Entry
 static void _imf_cursor_info_set(Entry *en);
 
 static void
-_mouse_down_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *event_info)
+_mouse_down_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *event_info)
 {
    Entry *en = data;
    Evas_Event_Mouse_Down *ev = event_info;
@@ -56,7 +56,7 @@ _mouse_down_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void
 }
 
 static void
-_mouse_up_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *event_info)
+_mouse_up_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *event_info)
 {
    Entry *en = data;
    Evas_Event_Mouse_Up *ev = event_info;
@@ -91,7 +91,7 @@ _mouse_up_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *
 }
 
 static void
-_entry_focus_in_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *event_info EINA_UNUSED)
+_entry_focus_in_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *event_info EFL_UNUSED)
 {
    Entry *en = data;
    if (!en) return;
@@ -104,7 +104,7 @@ _entry_focus_in_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, 
 }
 
 static void
-_entry_focus_out_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *event_info EINA_UNUSED)
+_entry_focus_out_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *event_info EFL_UNUSED)
 {
    Entry *en = data;
    if (!en) return;
@@ -118,7 +118,7 @@ _entry_focus_out_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED,
 }
 
 static void
-_canvas_focus_in_cb(void *data EINA_UNUSED, Evas *e, void *event_info EINA_UNUSED)
+_canvas_focus_in_cb(void *data EFL_UNUSED, Evas *e, void *event_info EFL_UNUSED)
 {
    Entry *en;
    Evas_Object *obj = evas_focus_get(e);
@@ -130,7 +130,7 @@ _canvas_focus_in_cb(void *data EINA_UNUSED, Evas *e, void *event_info EINA_UNUSE
 }
 
 static void
-_canvas_focus_out_cb(void *data EINA_UNUSED, Evas *e, void *event_info EINA_UNUSED)
+_canvas_focus_out_cb(void *data EFL_UNUSED, Evas *e, void *event_info EFL_UNUSED)
 {
    Entry *en;
    Evas_Object *obj = evas_focus_get(e);
@@ -198,7 +198,7 @@ _preedit_clear(Entry *en)
 }
 
 static Eina_Bool
-_ecore_imf_retrieve_surrounding_cb(void *data, Ecore_IMF_Context *ctx EINA_UNUSED, char **text, int *cursor_pos)
+_ecore_imf_retrieve_surrounding_cb(void *data, Ecore_IMF_Context *ctx EFL_UNUSED, char **text, int *cursor_pos)
 {
    // This callback will be called when the Input Method Context module requests the surrounding context.
    Entry *en = data;
@@ -219,7 +219,7 @@ _ecore_imf_retrieve_surrounding_cb(void *data, Ecore_IMF_Context *ctx EINA_UNUSE
 }
 
 static void
-_ecore_imf_event_delete_surrounding_cb(void *data, Ecore_IMF_Context *ctx EINA_UNUSED, void *event_info)
+_ecore_imf_event_delete_surrounding_cb(void *data, Ecore_IMF_Context *ctx EFL_UNUSED, void *event_info)
 {
    // called when the input method needs to delete all or part of the context surrounding the cursor
    Entry *en = data;
@@ -248,7 +248,7 @@ _ecore_imf_event_delete_surrounding_cb(void *data, Ecore_IMF_Context *ctx EINA_U
 }
 
 static void
-_ecore_imf_event_commit_cb(void *data, Ecore_IMF_Context *ctx EINA_UNUSED, void *event_info)
+_ecore_imf_event_commit_cb(void *data, Ecore_IMF_Context *ctx EFL_UNUSED, void *event_info)
 {
    Entry *en = data;
    char *commit_str = (char *)event_info;
@@ -271,7 +271,7 @@ _ecore_imf_event_commit_cb(void *data, Ecore_IMF_Context *ctx EINA_UNUSED, void 
 }
 
 static void
-_ecore_imf_event_preedit_changed_cb(void *data, Ecore_IMF_Context *ctx, void *event_info EINA_UNUSED)
+_ecore_imf_event_preedit_changed_cb(void *data, Ecore_IMF_Context *ctx, void *event_info EFL_UNUSED)
 {
    // example how to get preedit string
    Entry *en = data;
@@ -356,7 +356,7 @@ _ecore_imf_event_preedit_changed_cb(void *data, Ecore_IMF_Context *ctx, void *ev
 }
 
 static void
-_key_down_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *event_info)
+_key_down_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *event_info)
 {
    Entry *en = data;
    Evas_Event_Key_Down *ev = event_info;
@@ -447,7 +447,7 @@ _key_down_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *
 }
 
 static void
-_key_up_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *o EINA_UNUSED, void *event_info)
+_key_up_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *event_info)
 {
    Entry *en = data;
    Evas_Event_Key_Up *ev = event_info;

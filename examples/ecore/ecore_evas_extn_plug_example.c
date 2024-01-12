@@ -11,7 +11,7 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #else
-#define EINA_UNUSED
+#define EFL_UNUSED
 #endif
 
 #include <Ecore.h>
@@ -43,7 +43,7 @@ _on_delete(Ecore_Evas *ee)
 }
 
 static void
-_button_1_up(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+_button_1_up(void *data, Evas *e EFL_UNUSED, Evas_Object *obj EFL_UNUSED, void *event_info EFL_UNUSED)
 {
    Ecore_Evas *ee;
    Msg_Color *color = NULL;

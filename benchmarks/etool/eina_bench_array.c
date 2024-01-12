@@ -47,7 +47,7 @@ struct _Eina_Bench_Object
    Efl_Bool keep;
 };
 
-static Efl_Bool keep(void *data, EINA_UNUSED void *gdata)
+static Efl_Bool keep(void *data, EFL_UNUSED void *gdata)
 {
    Eina_Bench_Object *bo = data;
 
@@ -107,16 +107,16 @@ eina_bench_array_4evas_render_inline(int request)
 }
 
 static Efl_Bool
-eina_iterator_ebo_free(EINA_UNUSED const Eina_Array *array,
-                       Eina_Bench_Object *ebo,  EINA_UNUSED void *fdata)
+eina_iterator_ebo_free(EFL_UNUSED const Eina_Array *array,
+                       Eina_Bench_Object *ebo,  EFL_UNUSED void *fdata)
 {
    free(ebo);
    return EFL_TRUE;
 }
 
 static Efl_Bool
-eina_iterator_ebo_rand(EINA_UNUSED const void *container,
-                       Eina_Bench_Object *ebo,  EINA_UNUSED void *fdata)
+eina_iterator_ebo_rand(EFL_UNUSED const void *container,
+                       Eina_Bench_Object *ebo,  EFL_UNUSED void *fdata)
 {
    ebo->keep = rand() < (RAND_MAX / 2) ? ebo->keep : EFL_FALSE;
    return EFL_TRUE;
@@ -607,7 +607,7 @@ _eina_ecore_for_each_remove(void *value, void *user_data)
 }
 
 static void
-_eina_ecore_for_each_rand(void *value, EINA_UNUSED void *user_data)
+_eina_ecore_for_each_rand(void *value, EFL_UNUSED void *user_data)
 {
    Eina_Bench_Object *ebo = value;
 

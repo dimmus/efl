@@ -58,20 +58,20 @@ _anim(void *data)
 }
 
 static Eina_Bool
-_accept_cb(void *data EINA_UNUSED, Ecore_Evas *ee EINA_UNUSED, const char *client_host)
+_accept_cb(void *data EFL_UNUSED, Ecore_Evas *ee EFL_UNUSED, const char *client_host)
 {
    printf("Client %s trying to connect\n", client_host);
    return EINA_TRUE;
 }
 
 static void
-_disc_cb(void *data EINA_UNUSED, Ecore_Evas *ee EINA_UNUSED, const char *client_host)
+_disc_cb(void *data EFL_UNUSED, Ecore_Evas *ee EFL_UNUSED, const char *client_host)
 {
    printf("Client %s disconnected\n", client_host);
 }
 
 static Eina_Bool
-_keyboard_event(void *data EINA_UNUSED, int type, void *event)
+_keyboard_event(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Key *e = event;
    Efl_Input_Device *seat = NULL;
@@ -88,7 +88,7 @@ _keyboard_event(void *data EINA_UNUSED, int type, void *event)
 }
 
 static Eina_Bool
-_mouse_move(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_mouse_move(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Move *e = event;
    Efl_Input_Device *seat = NULL;
@@ -102,7 +102,7 @@ _mouse_move(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_mouse_button(void *data EINA_UNUSED, int type, void *event)
+_mouse_button(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Mouse_Button *e = event;
    Efl_Input_Device *seat = NULL;
@@ -118,7 +118,7 @@ _mouse_button(void *data EINA_UNUSED, int type, void *event)
 }
 
 static Eina_Bool
-_mouse_wheel(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_mouse_wheel(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Wheel *e = event;
    Efl_Input_Device *seat = NULL;
@@ -179,7 +179,7 @@ _seat_children_print(Efl_Input_Device *seat)
 }
 
 static void
-_dev_added_or_removed(void *data EINA_UNUSED, const Efl_Event *event)
+_dev_added_or_removed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Efl_Input_Device *dev = event->info;
 

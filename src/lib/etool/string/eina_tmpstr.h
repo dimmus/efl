@@ -162,7 +162,7 @@ typedef const char Eina_Tmpstr;
  *
  * @since 1.8.0
  */
-EINA_API Eina_Tmpstr *eina_tmpstr_add(const char *str) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Tmpstr *eina_tmpstr_add(const char *str) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new temporary string based on the input string and length.
@@ -250,7 +250,7 @@ EINA_API void eina_tmpstr_del(Eina_Tmpstr *tmpstr) EINA_ARG_NONNULL(1);
  * @see eina_tmpstr_del()
  * @since 1.17.0
  */
-EINA_API Eina_Tmpstr *eina_tmpstr_manage_new(char *str) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Tmpstr *eina_tmpstr_manage_new(char *str) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new temporary string using the passed string. The passed

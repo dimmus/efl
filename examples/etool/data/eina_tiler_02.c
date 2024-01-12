@@ -74,7 +74,7 @@ static const char commands[] = \
 
 
 static Evas_Object *
-add_text(const char *text, int x, int y, int w EINA_UNUSED)
+add_text(const char *text, int x, int y, int w EFL_UNUSED)
 {
    Evas_Object *o = evas_object_text_add(evas);
    evas_object_color_set(o, 0, 0, 0, 255);
@@ -214,9 +214,9 @@ void rect_update()
 }
 
 static void
-_on_key_down(void *data EINA_UNUSED,
-             Evas *evas EINA_UNUSED,
-             Evas_Object *o EINA_UNUSED,
+_on_key_down(void *data EFL_UNUSED,
+             Evas *evas EFL_UNUSED,
+             Evas_Object *o EFL_UNUSED,
              void *einfo)
 {
   Evas_Event_Key_Down *ev;
@@ -276,7 +276,7 @@ _on_key_down(void *data EINA_UNUSED,
 }
 
 int
-main(int argc EINA_UNUSED, char *argv[] EINA_UNUSED)
+main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
 {
    Ecore_Evas *ee;
    Evas_Object *o;

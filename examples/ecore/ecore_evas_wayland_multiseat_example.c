@@ -9,7 +9,7 @@
 #include <Ecore_Input.h>
 
 static Eina_Bool
-_keyboard_event(void *data EINA_UNUSED, int type, void *event)
+_keyboard_event(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Key *e = event;
    Efl_Input_Device *seat = NULL;
@@ -26,7 +26,7 @@ _keyboard_event(void *data EINA_UNUSED, int type, void *event)
 }
 
 static Eina_Bool
-_mouse_move(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_mouse_move(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Move *e = event;
    Efl_Input_Device *seat = NULL;
@@ -40,7 +40,7 @@ _mouse_move(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_mouse_button(void *data EINA_UNUSED, int type, void *event)
+_mouse_button(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Mouse_Button *e = event;
    Efl_Input_Device *seat = NULL;
@@ -56,7 +56,7 @@ _mouse_button(void *data EINA_UNUSED, int type, void *event)
 }
 
 static Eina_Bool
-_mouse_wheel(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_mouse_wheel(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Wheel *e = event;
    Efl_Input_Device *seat = NULL;
@@ -120,7 +120,7 @@ _dev_changed(void *data, const Efl_Event *event)
 }
 
 int
-main(int argc EINA_UNUSED, char *argv[] EINA_UNUSED)
+main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
 {
    Ecore_Evas *ee1, *ee2;
    Evas *evas1, *evas2;

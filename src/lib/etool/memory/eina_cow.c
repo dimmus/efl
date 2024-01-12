@@ -183,7 +183,7 @@ _eina_cow_hash32(const void *key, int key_length)
 static int current_cow_size = 0;
 
 static unsigned int
-_eina_cow_length(const void *key EINA_UNUSED)
+_eina_cow_length(const void *key EFL_UNUSED)
 {
    /* nasty hack, since only gc needs to access the hash, it will be in charge
       of that global. access to the hash should be considered global.
@@ -193,7 +193,7 @@ _eina_cow_length(const void *key EINA_UNUSED)
 
 static int
 _eina_cow_cmp(const void *key1, int key1_length,
-              const void *key2, int key2_length EINA_UNUSED)
+              const void *key2, int key2_length EFL_UNUSED)
 {
    return memcmp(key1, key2, key1_length);
 }

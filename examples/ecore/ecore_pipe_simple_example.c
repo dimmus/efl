@@ -22,7 +22,7 @@ do_lengthy_task(Ecore_Pipe *pipe)
 }
 
 static void
-handler(void *data EINA_UNUSED, void *buf, unsigned int len)
+handler(void *data EFL_UNUSED, void *buf, unsigned int len)
 {
    char *str = malloc(sizeof(char) * len + 1);
    memcpy(str, buf, len);

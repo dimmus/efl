@@ -37,7 +37,7 @@ struct _Efl_Filter_Model_Data
 };
 
 static Eina_Rbtree_Direction
-_filter_mapping_cmp_cb(const Eina_Rbtree *left, const Eina_Rbtree *right, void *data EINA_UNUSED)
+_filter_mapping_cmp_cb(const Eina_Rbtree *left, const Eina_Rbtree *right, void *data EFL_UNUSED)
 {
    const Efl_Filter_Model_Mapping *l, *r;
 
@@ -51,7 +51,7 @@ _filter_mapping_cmp_cb(const Eina_Rbtree *left, const Eina_Rbtree *right, void *
 
 static int
 _filter_mapping_looking_cb(const Eina_Rbtree *node, const void *key,
-                           int length EINA_UNUSED, void *data EINA_UNUSED)
+                           int length EFL_UNUSED, void *data EFL_UNUSED)
 {
    const Efl_Filter_Model_Mapping *n = (const Efl_Filter_Model_Mapping *) node;
    const unsigned int *k = key;
@@ -60,7 +60,7 @@ _filter_mapping_looking_cb(const Eina_Rbtree *node, const void *key,
 }
 
 static void
-_efl_filter_model_filter_set(Eo *obj EINA_UNUSED, Efl_Filter_Model_Data *pd,
+_efl_filter_model_filter_set(Eo *obj EFL_UNUSED, Efl_Filter_Model_Data *pd,
                              void *filter_data, EflFilterModel filter, Eina_Free_Cb filter_free_cb)
 {
    if (pd->filter.cb)
@@ -71,7 +71,7 @@ _efl_filter_model_filter_set(Eo *obj EINA_UNUSED, Efl_Filter_Model_Data *pd,
 }
 
 static void
-_rbtree_free_cb(Eina_Rbtree *node, void *data EINA_UNUSED)
+_rbtree_free_cb(Eina_Rbtree *node, void *data EFL_UNUSED)
 {
    Efl_Filter_Model_Mapping *m = (Efl_Filter_Model_Mapping*) node;
 
@@ -108,7 +108,7 @@ _efl_filter_lookup(const Efl_Class *klass,
 }
 
 static Eina_Value
-_efl_filter_model_filter(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
+_efl_filter_model_filter(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
 {
    Efl_Filter_Model_Mapping *mapping;
    Efl_Filter_Model *child;
@@ -152,7 +152,7 @@ _efl_filter_model_filter(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
 }
 
 static void
-_efl_filter_model_filter_clean(Eo *o EINA_UNUSED, void *data, const Eina_Future *dead_future EINA_UNUSED)
+_efl_filter_model_filter_clean(Eo *o EFL_UNUSED, void *data, const Eina_Future *dead_future EFL_UNUSED)
 {
    Efl_Filter_Request *r = data;
 
@@ -162,7 +162,7 @@ _efl_filter_model_filter_clean(Eo *o EINA_UNUSED, void *data, const Eina_Future 
 }
 
 static Eina_Value
-_efl_filter_model_child_fetch(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
+_efl_filter_model_child_fetch(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
 {
    Efl_Filter_Request *r = data;
    unsigned int i, len;
@@ -294,7 +294,7 @@ _efl_filter_model_efl_object_destructor(Eo *obj, Efl_Filter_Model_Data *pd)
 }
 
 static Eina_Value
-_filter_remove_array(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
+_filter_remove_array(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
 {
    Efl_Filter_Model_Mapping *mapping = data;
    unsigned int i, len;
@@ -383,7 +383,7 @@ struct _Efl_Filter_Model_Result
 
 // This future receive an array of boolean that indicate if a fetched object is to be kept
 static Eina_Value
-_efl_filter_model_array_result_request(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
+_efl_filter_model_array_result_request(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
 {
    Efl_Filter_Model_Result *req = data;
    Efl_Filter_Model_Data *pd = req->pd;
@@ -429,7 +429,7 @@ _efl_filter_model_array_result_request(Eo *o EINA_UNUSED, void *data, const Eina
 }
 
 static void
-_efl_filter_model_array_result_free(Eo *o EINA_UNUSED, void *data, const Eina_Future *dead_future EINA_UNUSED)
+_efl_filter_model_array_result_free(Eo *o EFL_UNUSED, void *data, const Eina_Future *dead_future EFL_UNUSED)
 {
    Efl_Filter_Model_Result *req = data;
    unsigned int i;

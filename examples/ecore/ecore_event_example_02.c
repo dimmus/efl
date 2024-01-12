@@ -14,7 +14,7 @@ struct context   // helper struct to give some context to the callbacks
 static int _event_type = 0; // a new type of event will be defined and stored here
 
 static Eina_Bool
-_event_handler1_cb(void *data, int type EINA_UNUSED, void *event)
+_event_handler1_cb(void *data, int type EFL_UNUSED, void *event)
 {
    int *number = event;
    const char *str = data;
@@ -28,7 +28,7 @@ _event_handler1_cb(void *data, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_event_handler2_cb(void *data, int type EINA_UNUSED, void *event) // event callback
+_event_handler2_cb(void *data, int type EFL_UNUSED, void *event) // event callback
 {
    struct context *ctxt = data;
    int *number = event;

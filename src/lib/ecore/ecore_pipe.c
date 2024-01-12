@@ -597,7 +597,7 @@ _ecore_pipe_handler_call(Ecore_Pipe *p,
 
 static Efl_Bool
 _ecore_pipe_read(void             *data,
-                 Ecore_Fd_Handler *fd_handler EINA_UNUSED)
+                 Ecore_Fd_Handler *fd_handler EFL_UNUSED)
 {
    Ecore_Pipe *p = (Ecore_Pipe *)data;
    int i;

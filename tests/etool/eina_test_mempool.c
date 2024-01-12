@@ -116,7 +116,7 @@ EFL_END_TEST
 #endif
 
 void
-eina_test_mempool(TCase *tc EINA_UNUSED)
+eina_test_mempool(TCase *tc EFL_UNUSED)
 {
 #ifdef EINA_BUILD_CHAINED_POOL
    tcase_add_test(tc, eina_mempool_chained_mempool);

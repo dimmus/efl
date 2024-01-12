@@ -15,7 +15,7 @@
 #endif
 
 static Eina_Bool
-_fd_handler_cb(void *data EINA_UNUSED, HANDLER_TYPE *fd_handler EINA_UNUSED)
+_fd_handler_cb(void *data EFL_UNUSED, HANDLER_TYPE *fd_handler EFL_UNUSED)
 {
    static int numberOfMessages = 0;
    char message[BUFFER_SIZE];

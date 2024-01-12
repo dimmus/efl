@@ -124,7 +124,7 @@ extern EINA_API Eina_Error EINA_ERROR_MODULE_INIT_FAILED;
  * @see eina_module_load
  */
 EINA_API Eina_Module *
- eina_module_new(const char *file) EINA_MALLOC EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+ eina_module_new(const char *file) EINA_MALLOC EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Deletes a module.
@@ -191,7 +191,7 @@ EINA_API Efl_Bool
  * function returns immediately @c NULL.
  */
 EINA_API void *
- eina_module_symbol_get(const Eina_Module *module, const char *symbol) EINA_PURE EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT;
+ eina_module_symbol_get(const Eina_Module *module, const char *symbol) EINA_PURE EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns the file name associated with the module.
@@ -204,7 +204,7 @@ EINA_API void *
  * returned value must no be freed.
  */
 EINA_API const char *
- eina_module_file_get(const Eina_Module *module) EINA_PURE EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+ eina_module_file_get(const Eina_Module *module) EINA_PURE EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Defines if on module load we should expose all symbol
@@ -287,7 +287,7 @@ EINA_API Eina_Array *
  * elements. @p cb can be @c NULL.
  */
 EINA_API Eina_Array *
- eina_module_list_get(Eina_Array *array, const char *path, Efl_Bool recursive, Eina_Module_Cb cb, void *data) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+ eina_module_list_get(Eina_Array *array, const char *path, Efl_Bool recursive, Eina_Module_Cb cb, void *data) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Loads every module on the list of modules.

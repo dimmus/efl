@@ -21,7 +21,7 @@
 static Eo *realtime_obj = NULL;
 
 static void
-_cb_read(void *data EINA_UNUSED, const Efl_Event *event)
+_cb_read(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *loop = efl_provider_find(event->object, EFL_LOOP_CLASS);
    int fd = efl_loop_handler_fd_get(event->object);
@@ -36,7 +36,7 @@ _cb_read(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_cb_del(void *data EINA_UNUSED, const Efl_Event *event)
+_cb_del(void *data EFL_UNUSED, const Efl_Event *event)
 {
    int fd = efl_loop_handler_fd_get(event->object);
    if (event->object == realtime_obj) realtime_obj = NULL;
@@ -78,7 +78,7 @@ _ecore_main_timechanges_start(Eo *obj)
 }
 
 void
-_ecore_main_timechanges_stop(Eo *obj EINA_UNUSED)
+_ecore_main_timechanges_stop(Eo *obj EFL_UNUSED)
 {
 #ifdef HAVE_SYS_TIMERFD_H
    Eo *o = realtime_obj;

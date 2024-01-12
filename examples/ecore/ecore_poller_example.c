@@ -18,7 +18,7 @@ _poller_print_cb(void *data)
 }
 
 static Eina_Bool
-_poller_quit_cb(void *data EINA_UNUSED)
+_poller_quit_cb(void *data EFL_UNUSED)
 {
 
    ecore_main_loop_quit();

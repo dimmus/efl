@@ -36,7 +36,7 @@ _get_current_time(void)
 }
 
 static Eina_Bool
-_timer1_cb(void *data EINA_UNUSED)
+_timer1_cb(void *data EFL_UNUSED)
 {
    printf("Timer1 expired after %0.3f seconds.\n", _get_current_time());
    return ECORE_CALLBACK_RENEW;

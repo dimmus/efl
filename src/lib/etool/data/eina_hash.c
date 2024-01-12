@@ -147,8 +147,8 @@ struct _Eina_Hash_Each
 static inline int
 _eina_hash_hash_rbtree_cmp_hash(const Eina_Hash_Head *hash_head,
                                 const int *hash,
-                                EINA_UNUSED int key_length,
-                                EINA_UNUSED void *data)
+                                EFL_UNUSED int key_length,
+                                EFL_UNUSED void *data)
 {
    return hash_head->hash - *hash;
 }
@@ -156,7 +156,7 @@ _eina_hash_hash_rbtree_cmp_hash(const Eina_Hash_Head *hash_head,
 static Eina_Rbtree_Direction
 _eina_hash_hash_rbtree_cmp_node(const Eina_Hash_Head *left,
                                 const Eina_Hash_Head *right,
-                                EINA_UNUSED void *data)
+                                EFL_UNUSED void *data)
 {
    int hash_diff = left->hash - right->hash;
    if (hash_diff < 0)
@@ -168,7 +168,7 @@ _eina_hash_hash_rbtree_cmp_node(const Eina_Hash_Head *left,
 static inline int
 _eina_hash_key_rbtree_cmp_key_data(const Eina_Hash_Element *hash_element,
                                    const Eina_Hash_Tuple *tuple,
-                                   EINA_UNUSED unsigned int key_length,
+                                   EFL_UNUSED unsigned int key_length,
                                    Eina_Key_Cmp cmp)
 {
    int result;
@@ -287,7 +287,7 @@ on_error:
 }
 
 static Efl_Bool
-_eina_hash_rbtree_each(EINA_UNUSED const Eina_Rbtree *container,
+_eina_hash_rbtree_each(EFL_UNUSED const Eina_Rbtree *container,
                        const Eina_Hash_Head *hash_head,
                        Eina_Hash_Each *data)
 {
@@ -485,7 +485,7 @@ _eina_hash_del_by_key(Eina_Hash *hash, const void *key, const void *data)
 }
 
 static int
-_eina_stringshared_hash(const void *key, int key_length EINA_UNUSED)
+_eina_stringshared_hash(const void *key, int key_length EFL_UNUSED)
 {
    return eina_hash_superfast((const void*) &key, sizeof (void*));
 }
@@ -511,8 +511,8 @@ _eina_string_key_cmp(const char *key1, int key1_length,
 }
 
 static int
-_eina_stringshared_key_cmp(const char *key1, EINA_UNUSED int key1_length,
-                           const char *key2, EINA_UNUSED int key2_length)
+_eina_stringshared_key_cmp(const char *key1, EFL_UNUSED int key1_length,
+                           const char *key2, EFL_UNUSED int key2_length)
 {
 // logically we want to do this:
 //   return key1 - key2;
@@ -533,14 +533,14 @@ _eina_stringshared_key_cmp(const char *key1, EINA_UNUSED int key1_length,
 }
 
 static unsigned int
-_eina_int32_key_length(EINA_UNUSED const uint32_t *key)
+_eina_int32_key_length(EFL_UNUSED const uint32_t *key)
 {
    return 4;
 }
 
 static int
-_eina_int32_key_cmp(const uint32_t *key1, EINA_UNUSED int key1_length,
-                    const uint32_t *key2, EINA_UNUSED int key2_length)
+_eina_int32_key_cmp(const uint32_t *key1, EFL_UNUSED int key1_length,
+                    const uint32_t *key2, EFL_UNUSED int key2_length)
 {
    if (*key1 == *key2) return 0;
    if (*key1 > *key2) return 1;
@@ -548,14 +548,14 @@ _eina_int32_key_cmp(const uint32_t *key1, EINA_UNUSED int key1_length,
 }
 
 static unsigned int
-_eina_int64_key_length(EINA_UNUSED const uint64_t *key)
+_eina_int64_key_length(EFL_UNUSED const uint64_t *key)
 {
    return sizeof(int64_t);
 }
 
 static int
-_eina_int64_key_cmp(const uint64_t *key1, EINA_UNUSED int key1_length,
-                    const uint64_t *key2, EINA_UNUSED int key2_length)
+_eina_int64_key_cmp(const uint64_t *key1, EFL_UNUSED int key1_length,
+                    const uint64_t *key2, EFL_UNUSED int key2_length)
 {
    if (*key1 == *key2) return 0;
    if (*key1 > *key2) return 1;

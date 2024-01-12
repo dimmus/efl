@@ -2,7 +2,7 @@
 #include <Efl_Core.h>
 
 static void
-_copier_done(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+_copier_done(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    fprintf(stderr, "INFO: done\n");
 
@@ -10,7 +10,7 @@ _copier_done(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
 }
 
 static void
-_copier_error(void *data EINA_UNUSED, const Efl_Event *event)
+_copier_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: error: #%d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -25,20 +25,20 @@ EFL_CALLBACKS_ARRAY_DEFINE(copier_cbs,
 static Eo *copier = NULL;
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    /* FIXME: For the moment the main loop doesn't get
       properly destroyed on shutdown which disallow
@@ -52,7 +52,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    Eo *input, *output, *loop;

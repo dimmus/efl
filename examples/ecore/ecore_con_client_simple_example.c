@@ -11,7 +11,7 @@ struct _Server
 };
 
 Eina_Bool
-_add(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Add *ev)
+_add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Add *ev)
 {
    char welcome[] = "hello! - sent from the client";
    struct _Server *server = malloc(sizeof(*server));
@@ -30,7 +30,7 @@ _add(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Add *e
 }
 
 Eina_Bool
-_del(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Del *ev)
+_del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Del *ev)
 {
    if (!ev->server)
      {
@@ -56,7 +56,7 @@ _del(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Del *e
 }
 
 Eina_Bool
-_data(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Data *ev)
+_data(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Data *ev)
 {
    char fmt[128];
    struct _Server *server = ecore_con_server_data_get(ev->server);

@@ -686,7 +686,7 @@ struct _Eina_Value
  *
  * @since 1.2
  */
-EINA_API Eina_Value *eina_value_new(const Eina_Value_Type *type) EINA_ARG_NONNULL(1) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Value *eina_value_new(const Eina_Value_Type *type) EINA_ARG_NONNULL(1) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Frees value and its data.
@@ -1151,7 +1151,7 @@ EINA_API char *eina_value_to_string(const Eina_Value *value) EINA_ARG_NONNULL(1)
  *
  * @since 1.2
  */
-static inline const Eina_Value_Type *eina_value_type_get(const Eina_Value *value) EINA_PURE EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline const Eina_Value_Type *eina_value_type_get(const Eina_Value *value) EINA_PURE EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @}
@@ -3260,7 +3260,7 @@ static inline Efl_Bool eina_value_struct_setup(Eina_Value *value,
  *
  * @since 1.21
  */
-static inline const Eina_Value_Struct_Desc *eina_value_struct_desc_get(const Eina_Value *value) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline const Eina_Value_Struct_Desc *eina_value_struct_desc_get(const Eina_Value *value) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets the generic value in a struct member.
@@ -3698,7 +3698,7 @@ struct _Eina_Value_Type
  *
  * @since 1.2
  */
-EINA_API const char *eina_value_type_name_get(const Eina_Value_Type *type) EINA_PURE EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API const char *eina_value_type_name_get(const Eina_Value_Type *type) EINA_PURE EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Checks if type is valid.
@@ -3711,7 +3711,7 @@ EINA_API const char *eina_value_type_name_get(const Eina_Value_Type *type) EINA_
  *
  * @since 1.2
  */
-EINA_API Efl_Bool eina_value_type_check(const Eina_Value_Type *type) EINA_PURE EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_value_type_check(const Eina_Value_Type *type) EINA_PURE EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Initializes memory using type descriptor.

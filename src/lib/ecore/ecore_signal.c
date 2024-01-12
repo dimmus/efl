@@ -150,13 +150,13 @@ _ecore_signal_pipe_read(Eo *obj)
 }
 
 static void
-_ecore_signal_cb_read(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+_ecore_signal_cb_read(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    _ecore_signal_pipe_read(event->object);
 }
 
 static void
-_ecore_signal_callback(int sig, siginfo_t *si, void *foo EINA_UNUSED)
+_ecore_signal_callback(int sig, siginfo_t *si, void *foo EFL_UNUSED)
 {
    Signal_Data sdata;
 
@@ -299,7 +299,7 @@ _ecore_signal_pipe_shutdown(void)
 }
 
 static void
-_ecore_signal_cb_fork(void *data EINA_UNUSED)
+_ecore_signal_cb_fork(void *data EFL_UNUSED)
 {
    _ecore_signal_pipe_shutdown();
    _ecore_signal_pipe_init();
@@ -344,13 +344,13 @@ _ecore_signal_shutdown(void)
 }
 
 void
-_ecore_signal_received_process(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd EINA_UNUSED)
+_ecore_signal_received_process(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED)
 {
    // do nothing - the efl loop handler read event will handle it
 }
 
 int
-_ecore_signal_count_get(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd EINA_UNUSED)
+_ecore_signal_count_get(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED)
 {
    // we will always have 0 signals be3cause they will instead be read from
    // a pipe fd and placed in a queue/list that
@@ -518,7 +518,7 @@ _ecore_signal_waitpid(Efl_Bool once, siginfo_t info)
 }
 
 static void
-_ecore_signal_generic_free(void *data EINA_UNUSED, void *event)
+_ecore_signal_generic_free(void *data EFL_UNUSED, void *event)
 {
    free(event);
 }

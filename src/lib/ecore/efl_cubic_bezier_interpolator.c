@@ -15,8 +15,8 @@ struct _Efl_Cubic_Bezier_Interpolator_Data
 };
 
 EOLIAN static double
-_efl_cubic_bezier_interpolator_efl_interpolator_interpolate(Eo *eo_obj EINA_UNUSED,
-                                                            Efl_Cubic_Bezier_Interpolator_Data *pd EINA_UNUSED,
+_efl_cubic_bezier_interpolator_efl_interpolator_interpolate(Eo *eo_obj EFL_UNUSED,
+                                                            Efl_Cubic_Bezier_Interpolator_Data *pd EFL_UNUSED,
                                                             double progress)
 {
    if ((progress < 0.0) || (progress > 1.0))
@@ -27,7 +27,7 @@ _efl_cubic_bezier_interpolator_efl_interpolator_interpolate(Eo *eo_obj EINA_UNUS
 }
 
 EOLIAN static void
-_efl_cubic_bezier_interpolator_control_points_set(Eo *eo_obj EINA_UNUSED,
+_efl_cubic_bezier_interpolator_control_points_set(Eo *eo_obj EFL_UNUSED,
                                            Efl_Cubic_Bezier_Interpolator_Data *pd,
                                            Eina_Vector2 p1, Eina_Vector2 p2)
 {
@@ -38,7 +38,7 @@ _efl_cubic_bezier_interpolator_control_points_set(Eo *eo_obj EINA_UNUSED,
 }
 
 EOLIAN static void
-_efl_cubic_bezier_interpolator_control_points_get(const Eo *eo_obj EINA_UNUSED,
+_efl_cubic_bezier_interpolator_control_points_get(const Eo *eo_obj EFL_UNUSED,
                                            Efl_Cubic_Bezier_Interpolator_Data *pd,
                                            Eina_Vector2 *p1, Eina_Vector2 *p2)
 {

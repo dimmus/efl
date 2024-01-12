@@ -19,7 +19,7 @@ double volume = 1;
 Eina_List *inputs = NULL;
 
 static void 
-_play_finished(void *data EINA_UNUSED, const Efl_Event *event)
+_play_finished(void *data EFL_UNUSED, const Efl_Event *event)
 {
   const char *name;
   Eo *out;

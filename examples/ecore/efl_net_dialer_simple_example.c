@@ -9,7 +9,7 @@ static Eina_Bool do_discard = EINA_FALSE;
 static Eina_Slice line_delm_slice;
 
 static void
-_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr,
            "INFO: connected to '%s' (%s)\n"
@@ -23,7 +23,7 @@ _connected(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_eos(void *data EINA_UNUSED, const Efl_Event *event)
+_eos(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: end of stream.\n");
 
@@ -39,7 +39,7 @@ _eos(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_can_read(void *data EINA_UNUSED, const Efl_Event *event)
+_can_read(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Bool can_read = efl_io_reader_can_read_get(event->object);
 
@@ -85,7 +85,7 @@ _can_read(void *data EINA_UNUSED, const Efl_Event *event)
 
 
 static void
-_line(void *data EINA_UNUSED, const Efl_Event *event)
+_line(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Slice slice = *(const Eina_Slice *)event->info;
 
@@ -135,7 +135,7 @@ _line(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_resolved(void *data EINA_UNUSED, const Efl_Event *event)
+_resolved(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: resolved %s => %s\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -143,7 +143,7 @@ _resolved(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_error(void *data EINA_UNUSED, const Efl_Event *event)
+_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: error: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -154,7 +154,7 @@ _error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_done_sending(void *data EINA_UNUSED, const Efl_Event *event)
+_done_sending(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: done sending\n");
    if (!do_read)
@@ -162,13 +162,13 @@ _done_sending(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_done_receiving(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+_done_receiving(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    fprintf(stderr, "INFO: done receiving\n");
 }
 
 static void
-_done(void *data EINA_UNUSED, const Efl_Event *event)
+_done(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: done sending and receiving\n");
 
@@ -270,20 +270,20 @@ static const Ecore_Getopt options = {
 static Eo *dialer = NULL;
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    /* FIXME: For the moment the main loop doesn't get
       properly destroyed on shutdown which disallow
@@ -298,7 +298,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    const Efl_Class *cls;

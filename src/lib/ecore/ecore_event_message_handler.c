@@ -120,14 +120,14 @@ _ecore_event_filters_call(Eo *obj, Efl_Loop_Data *pd)
 //////////////////////////////////////////////////////////////////////////
 
 EOLIAN static Ecore_Event_Message *
-_ecore_event_message_handler_message_type_add(Eo *obj, Ecore_Event_Message_Handler_Data *pd EINA_UNUSED)
+_ecore_event_message_handler_message_type_add(Eo *obj, Ecore_Event_Message_Handler_Data *pd EFL_UNUSED)
 {
    // XXX: implemented event obj cache
    return efl_add(ECORE_EVENT_MESSAGE_CLASS, obj);
 }
 
 EOLIAN static int
-_ecore_event_message_handler_type_new(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd)
+_ecore_event_message_handler_type_new(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd)
 {
    Eina_Inlist **tmp;
    int evnum;
@@ -143,7 +143,7 @@ _ecore_event_message_handler_type_new(Eo *obj EINA_UNUSED, Ecore_Event_Message_H
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_handler_add(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd, int type, void *func, void *data)
+_ecore_event_message_handler_handler_add(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd, int type, void *func, void *data)
 {
    Handler *h;
 
@@ -165,7 +165,7 @@ _ecore_event_message_handler_handler_add(Eo *obj EINA_UNUSED, Ecore_Event_Messag
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_handler_prepend(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd, int type, void *func, void *data)
+_ecore_event_message_handler_handler_prepend(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd, int type, void *func, void *data)
 {
    Handler *h;
 
@@ -188,7 +188,7 @@ _ecore_event_message_handler_handler_prepend(Eo *obj EINA_UNUSED, Ecore_Event_Me
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_handler_del(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd, void *handler)
+_ecore_event_message_handler_handler_del(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd, void *handler)
 {
    Handler *h = handler;
    void *data;
@@ -220,7 +220,7 @@ _ecore_event_message_handler_handler_del(Eo *obj EINA_UNUSED, Ecore_Event_Messag
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_handler_data_get(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd EINA_UNUSED, void *handler)
+_ecore_event_message_handler_handler_data_get(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd EFL_UNUSED, void *handler)
 {
    Handler *h = handler;
 
@@ -229,7 +229,7 @@ _ecore_event_message_handler_handler_data_get(Eo *obj EINA_UNUSED, Ecore_Event_M
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_handler_data_set(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd EINA_UNUSED, void *handler, void *data)
+_ecore_event_message_handler_handler_data_set(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd EFL_UNUSED, void *handler, void *data)
 {
    Handler *h = handler;
    void *prev_data;
@@ -241,7 +241,7 @@ _ecore_event_message_handler_handler_data_set(Eo *obj EINA_UNUSED, Ecore_Event_M
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_filter_add(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd, void *func_start, void *func_filter, void *func_end, void *data)
+_ecore_event_message_handler_filter_add(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd, void *func_start, void *func_filter, void *func_end, void *data)
 {
    Filter *f;
 
@@ -257,7 +257,7 @@ _ecore_event_message_handler_filter_add(Eo *obj EINA_UNUSED, Ecore_Event_Message
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_filter_del(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd, void *filter)
+_ecore_event_message_handler_filter_del(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd, void *filter)
 {
    Filter *f = filter;
    void *data;
@@ -278,13 +278,13 @@ _ecore_event_message_handler_filter_del(Eo *obj EINA_UNUSED, Ecore_Event_Message
 }
 
 EOLIAN static int
-_ecore_event_message_handler_current_type_get(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd)
+_ecore_event_message_handler_current_type_get(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd)
 {
    return pd->current_event_type;
 }
 
 EOLIAN static void *
-_ecore_event_message_handler_current_event_get(Eo *obj EINA_UNUSED, Ecore_Event_Message_Handler_Data *pd)
+_ecore_event_message_handler_current_event_get(Eo *obj EFL_UNUSED, Ecore_Event_Message_Handler_Data *pd)
 {
    return pd->current_event_data;
 }
@@ -412,7 +412,7 @@ _ecore_event_message_handler_efl_loop_message_handler_message_call(Eo *obj, Ecor
 }
 
 static Efl_Bool
-_flush_cb(void *data, void *handler EINA_UNUSED, void *message)
+_flush_cb(void *data, void *handler EFL_UNUSED, void *message)
 {
    int *type = data;
    int evtype = -1;
@@ -423,7 +423,7 @@ _flush_cb(void *data, void *handler EINA_UNUSED, void *message)
 }
 
 EOLIAN static void
-_ecore_event_message_handler_type_flush(Eo *obj, Ecore_Event_Message_Handler_Data *pd EINA_UNUSED, int type)
+_ecore_event_message_handler_type_flush(Eo *obj, Ecore_Event_Message_Handler_Data *pd EFL_UNUSED, int type)
 {
    Eo *loop = efl_provider_find(obj, EFL_LOOP_CLASS);
    Efl_Loop_Data *loop_data = efl_data_scope_get(loop, EFL_LOOP_CLASS);

@@ -4,7 +4,7 @@
 #include <Eina.h>
 #include <time.h>
 
-int main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+int main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    Eina_Value tm_val;
    time_t rawtime;

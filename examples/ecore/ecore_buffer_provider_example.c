@@ -202,7 +202,7 @@ _provider_render_queue(Provider_Data *pd)
 }
 
 static void
-_cb_consumer_add(Ecore_Buffer_Provider *provider EINA_UNUSED, int queue_size EINA_UNUSED, int w, int h, void *data)
+_cb_consumer_add(Ecore_Buffer_Provider *provider EFL_UNUSED, int queue_size EFL_UNUSED, int w, int h, void *data)
 {
    Provider_Data *pd = (Provider_Data *)data;
 
@@ -216,7 +216,7 @@ _cb_consumer_add(Ecore_Buffer_Provider *provider EINA_UNUSED, int queue_size EIN
 }
 
 static void
-_cb_consumer_del(Ecore_Buffer_Provider *provider EINA_UNUSED, void *data EINA_UNUSED)
+_cb_consumer_del(Ecore_Buffer_Provider *provider EFL_UNUSED, void *data EFL_UNUSED)
 {
    LOG("Disconnected with Consumer, Shutdown Provider now.");
 
@@ -224,7 +224,7 @@ _cb_consumer_del(Ecore_Buffer_Provider *provider EINA_UNUSED, void *data EINA_UN
 }
 
 static void
-_cb_buffer_released(Ecore_Buffer_Provider *provider EINA_UNUSED, void *data)
+_cb_buffer_released(Ecore_Buffer_Provider *provider EFL_UNUSED, void *data)
 {
    Provider_Data *pd = (Provider_Data *)data;
 

@@ -52,7 +52,7 @@ _ecore_exe_threads_terminate(Ecore_Exe *obj)
 
 static Efl_Bool
 _ecore_exe_close_cb(void *data,
-                    Ecore_Win32_Handler *wh EINA_UNUSED)
+                    Ecore_Win32_Handler *wh EFL_UNUSED)
 {
    Ecore_Exe_Event_Del *e;
    Ecore_Exe *obj = data;
@@ -177,8 +177,8 @@ _ecore_exe_win32_io_poll_thread(void *data, Ecore_Thread *th)
 }
 
 static void
-_ecore_exe_win32_io_poll_notify(void *data EINA_UNUSED,
-                                Ecore_Thread *th EINA_UNUSED, void *msg)
+_ecore_exe_win32_io_poll_notify(void *data EFL_UNUSED,
+                                Ecore_Thread *th EFL_UNUSED, void *msg)
 {
    Threadreply *trep = msg;
    Ecore_Exe *obj = trep->obj;
@@ -255,7 +255,7 @@ _ecore_exe_win32_io_poll_notify(void *data EINA_UNUSED,
 }
 
 static DWORD WINAPI
-_ecore_exe_thread_procedure(LPVOID data EINA_UNUSED)
+_ecore_exe_thread_procedure(LPVOID data EFL_UNUSED)
 {
    GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
    GenerateConsoleCtrlEvent(CTRL_BREAK_EVENT, 0);
@@ -739,14 +739,14 @@ _impl_ecore_exe_efl_object_destructor(Eo *obj, Ecore_Exe_Data *exe)
 }
 
 void
-_impl_ecore_exe_pause(Ecore_Exe *obj EINA_UNUSED, Ecore_Exe_Data *exe)
+_impl_ecore_exe_pause(Ecore_Exe *obj EFL_UNUSED, Ecore_Exe_Data *exe)
 {
    if (exe->is_suspended) return;
    if (SuspendThread(exe->process_thread) != (DWORD)-1) exe->is_suspended = 1;
 }
 
 void
-_impl_ecore_exe_continue(Ecore_Exe *obj EINA_UNUSED, Ecore_Exe_Data *exe)
+_impl_ecore_exe_continue(Ecore_Exe *obj EFL_UNUSED, Ecore_Exe_Data *exe)
 {
    if (!exe->is_suspended) return;
    if (ResumeThread(exe->process_thread) != (DWORD)-1) exe->is_suspended = 0;
@@ -796,27 +796,27 @@ _impl_ecore_exe_kill(Ecore_Exe *obj, Ecore_Exe_Data *exe)
 }
 
 void
-_impl_ecore_exe_auto_limits_set(Ecore_Exe *obj EINA_UNUSED,
-                                Ecore_Exe_Data *exe EINA_UNUSED,
-                                int        start_bytes EINA_UNUSED,
-                                int        end_bytes EINA_UNUSED,
-                                int        start_lines EINA_UNUSED,
-                                int        end_lines EINA_UNUSED)
+_impl_ecore_exe_auto_limits_set(Ecore_Exe *obj EFL_UNUSED,
+                                Ecore_Exe_Data *exe EFL_UNUSED,
+                                int        start_bytes EFL_UNUSED,
+                                int        end_bytes EFL_UNUSED,
+                                int        start_lines EFL_UNUSED,
+                                int        end_lines EFL_UNUSED)
 {
    ERR("Not implemented on windows!");
 }
 
 void
-_impl_ecore_exe_signal(Ecore_Exe *obj EINA_UNUSED,
-                       Ecore_Exe_Data *exe EINA_UNUSED,
-                       int num EINA_UNUSED)
+_impl_ecore_exe_signal(Ecore_Exe *obj EFL_UNUSED,
+                       Ecore_Exe_Data *exe EFL_UNUSED,
+                       int num EFL_UNUSED)
 {
    ERR("Not implemented on windows!");
 }
 
 void
-_impl_ecore_exe_hup(Ecore_Exe *obj EINA_UNUSED,
-                    Ecore_Exe_Data *exe EINA_UNUSED)
+_impl_ecore_exe_hup(Ecore_Exe *obj EFL_UNUSED,
+                    Ecore_Exe_Data *exe EFL_UNUSED)
 {
    ERR("Not implemented on windows!");
 }

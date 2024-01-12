@@ -27,7 +27,7 @@ _efl_model_provider_efl_ui_view_model_set(Eo *obj, Efl_Model_Provider_Data *pd,
 }
 
 static Efl_Model *
-_efl_model_provider_efl_ui_view_model_get(const Eo *obj EINA_UNUSED,
+_efl_model_provider_efl_ui_view_model_get(const Eo *obj EFL_UNUSED,
                                           Efl_Model_Provider_Data *pd)
 {
    return pd->model;

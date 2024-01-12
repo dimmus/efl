@@ -6,7 +6,7 @@
 
 #include <Eina.h>
 
-Efl_Bool keep(void *data, void *gdata EINA_UNUSED)
+Efl_Bool keep(void *data, void *gdata EFL_UNUSED)
 {
    if (strlen((const char*)data) <= 5)
       return EFL_TRUE;
@@ -14,7 +14,7 @@ Efl_Bool keep(void *data, void *gdata EINA_UNUSED)
 }
 
 int
-main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    const char* strs[] = {
       "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",

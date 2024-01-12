@@ -86,13 +86,13 @@ _efl_loop_quit(Eo *obj, Efl_Loop_Data *pd, Eina_Value exit_code)
 }
 
 EOLIAN static void
-_efl_loop_time_set(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd, double t)
+_efl_loop_time_set(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd, double t)
 {
    pd->loop_time = t;
 }
 
 EOLIAN static double
-_efl_loop_time_get(const Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_efl_loop_time_get(const Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    return pd->loop_time;
 }
@@ -334,7 +334,7 @@ _efl_loop_efl_object_destructor(Eo *obj, Efl_Loop_Data *pd)
 }
 
 static Eina_Value
-_efl_loop_arguments_send(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
+_efl_loop_arguments_send(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
 
 {
    static Efl_Bool initialization = EFL_TRUE;
@@ -351,7 +351,7 @@ _efl_loop_arguments_send(Eo *o EINA_UNUSED, void *data, const Eina_Value v)
 }
 
 static void
-_efl_loop_arguments_cleanup(Eo *o EINA_UNUSED, void *data, const Eina_Future *dead_future EINA_UNUSED)
+_efl_loop_arguments_cleanup(Eo *o EFL_UNUSED, void *data, const Eina_Future *dead_future EFL_UNUSED)
 {
    Eina_Array *arga = data;
    Eina_Stringshare *s;
@@ -389,7 +389,7 @@ ecore_loop_arguments_send(int argc, const char **argv)
 }
 
 static Eina_Future *
-_efl_loop_job(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED)
+_efl_loop_job(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED)
 {
    // NOTE: Eolian should do efl_future_then() to bind future to object.
    return efl_future_then(obj,
@@ -397,19 +397,19 @@ _efl_loop_job(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED)
 }
 
 EOLIAN static void
-_efl_loop_throttle_set(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd, double amount)
+_efl_loop_throttle_set(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd, double amount)
 {
    pd->throttle = ((double)amount) * 1000000.0;
 }
 
 EOLIAN static double
-_efl_loop_throttle_get(const Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_efl_loop_throttle_get(const Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    return (double)(pd->throttle) / 1000000.0;
 }
 
 static void
-_efl_loop_idle_cancel(void *data, const Eina_Promise *dead_ptr EINA_UNUSED)
+_efl_loop_idle_cancel(void *data, const Eina_Promise *dead_ptr EFL_UNUSED)
 {
    Efl_Loop_Promise_Simple_Data *d = data;
 
@@ -431,7 +431,7 @@ _efl_loop_idle_done(void *data)
 }
 
 static Eina_Future *
-_efl_loop_idle(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED)
+_efl_loop_idle(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED)
 {
    Efl_Loop_Promise_Simple_Data *d;
    Eina_Promise *p;
@@ -459,7 +459,7 @@ idler_error:
 }
 
 static void
-_efl_loop_timeout_cancel(void *data, const Eina_Promise *dead_ptr EINA_UNUSED)
+_efl_loop_timeout_cancel(void *data, const Eina_Promise *dead_ptr EFL_UNUSED)
 {
    Efl_Loop_Promise_Simple_Data *d = data;
 
@@ -478,7 +478,7 @@ _efl_loop_timeout_done(void *data, const Efl_Event *event)
 }
 
 static void
-_efl_loop_timeout_del(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_loop_timeout_del(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Efl_Loop_Promise_Simple_Data *d = data;
 
@@ -488,7 +488,7 @@ _efl_loop_timeout_del(void *data, const Efl_Event *event EINA_UNUSED)
 }
 
 static Eina_Future *
-_efl_loop_timeout(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED, double tim)
+_efl_loop_timeout(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED, double tim)
 {
    Efl_Loop_Promise_Simple_Data *d;
    Eina_Promise *p;
@@ -524,7 +524,7 @@ timer_error:
 }
 
 static Efl_Bool
-_efl_loop_register(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED,
+_efl_loop_register(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED,
                    const Efl_Class *klass, const Efl_Object *provider)
 {
    return efl_provider_register(obj, klass, provider);
@@ -533,7 +533,7 @@ _efl_loop_register(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED,
 EFL_FUNC_BODYV(efl_loop_register, Efl_Bool, EFL_FALSE, EFL_FUNC_CALL(klass, provider), const Efl_Class *klass, const Efl_Object *provider);
 
 static Efl_Bool
-_efl_loop_unregister(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED,
+_efl_loop_unregister(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED,
                      const Efl_Class *klass, const Efl_Object *provider)
 {
    return efl_provider_unregister(obj, klass, provider);
@@ -542,7 +542,7 @@ _efl_loop_unregister(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED,
 EFL_FUNC_BODYV(efl_loop_unregister, Efl_Bool, EFL_FALSE, EFL_FUNC_CALL(klass, provider), const Efl_Class *klass, const Efl_Object *provider);
 
 void
-_efl_loop_messages_filter(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd, void *handler_pd)
+_efl_loop_messages_filter(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd, void *handler_pd)
 {
    Message *msg;
 
@@ -565,7 +565,7 @@ _efl_loop_messages_filter(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd, void *handler_
 }
 
 void
-_efl_loop_messages_call(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd, void *func, void *data)
+_efl_loop_messages_call(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd, void *func, void *data)
 {
    Message *msg;
 
@@ -655,14 +655,14 @@ efl_build_version_set(int vmaj, int vmin, int vmic, int revision,
 }
 
 EOLIAN static Efl_Bool
-_efl_loop_efl_task_run(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED)
+_efl_loop_efl_task_run(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED)
 {
    efl_loop_exit_code_process(efl_loop_begin(obj));
    return EFL_TRUE;
 }
 
 EOLIAN static void
-_efl_loop_efl_task_end(Eo *obj, Efl_Loop_Data *pd EINA_UNUSED)
+_efl_loop_efl_task_end(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED)
 {
    efl_loop_quit(obj, eina_value_int_init(0));
 }

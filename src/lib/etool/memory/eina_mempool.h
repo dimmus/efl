@@ -84,7 +84,7 @@ EINA_API extern Eina_Error EINA_ERROR_NOT_MEMPOOL_MODULE;
  * @param[in] ... Additional options to pass to the allocator; depends entirely on the type of mempool ("int pool size" for chained and "int item_size" for one_big.
  * @return Newly allocated mempool instance, NULL otherwise.
  */
-EINA_API Eina_Mempool  *eina_mempool_add(const char *name, const char *context, const char *options, ...) EINA_MALLOC EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Mempool  *eina_mempool_add(const char *name, const char *context, const char *options, ...) EINA_MALLOC EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Deletes the given mempool.
@@ -107,7 +107,7 @@ EINA_API void eina_mempool_del(Eina_Mempool *mp) EINA_ARG_NONNULL(1);
  *
  * @see eina_mempool_free()
  */
-static inline void *eina_mempool_realloc(Eina_Mempool *mp, void *element, unsigned int size) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline void *eina_mempool_realloc(Eina_Mempool *mp, void *element, unsigned int size) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Allocates memory using the given mempool.
@@ -122,7 +122,7 @@ static inline void *eina_mempool_realloc(Eina_Mempool *mp, void *element, unsign
  *
  * @see eina_mempool_free()
  */
-static inline void *eina_mempool_malloc(Eina_Mempool *mp, unsigned int size) EINA_MALLOC EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline void *eina_mempool_malloc(Eina_Mempool *mp, unsigned int size) EINA_MALLOC EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Allocates memory in the given mempool using locality hint to improve future memory access use.
@@ -145,7 +145,7 @@ static inline void *eina_mempool_malloc(Eina_Mempool *mp, unsigned int size) EIN
  *
  * @see eina_mempool_free()
  */
-static inline void *eina_mempool_malloc_near(Eina_Mempool *mp, void *after, void *before, unsigned int size) EINA_WARN_UNUSED_RESULT;
+static inline void *eina_mempool_malloc_near(Eina_Mempool *mp, void *after, void *before, unsigned int size) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Allocates and zeros memory using the given mempool.
@@ -162,7 +162,7 @@ static inline void *eina_mempool_malloc_near(Eina_Mempool *mp, void *after, void
  *
  * @see eina_mempool_free()
  */
-static inline void *eina_mempool_calloc(Eina_Mempool *mp, unsigned int size) EINA_MALLOC EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline void *eina_mempool_calloc(Eina_Mempool *mp, unsigned int size) EINA_MALLOC EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Frees resources previously allocated by the given mempool.

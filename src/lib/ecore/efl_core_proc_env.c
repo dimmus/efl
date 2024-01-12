@@ -150,7 +150,7 @@ _efl_core_proc_env_efl_core_env_content_get(const Eo *obj, Efl_Core_Proc_Env_Dat
 }
 
 EOLIAN static Efl_Object*
-_efl_core_proc_env_efl_object_constructor(Eo *obj, Efl_Core_Proc_Env_Data *pd EINA_UNUSED)
+_efl_core_proc_env_efl_object_constructor(Eo *obj, Efl_Core_Proc_Env_Data *pd EFL_UNUSED)
 {
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!!env, NULL);
 

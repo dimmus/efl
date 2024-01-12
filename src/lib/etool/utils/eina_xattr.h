@@ -68,7 +68,7 @@ struct _Eina_Xattr
  *
  * @since 1.1
  */
-EINA_API Eina_Iterator *eina_xattr_ls(const char *file) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_xattr_ls(const char *file) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets an iterator that list all extended attribute value related to a fd.
@@ -81,7 +81,7 @@ EINA_API Eina_Iterator *eina_xattr_ls(const char *file) EINA_ARG_NONNULL(1) EINA
  *
  * @since 1.2
  */
-EINA_API Eina_Iterator *eina_xattr_value_ls(const char *file) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_xattr_value_ls(const char *file) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets an iterator that list all extended attribute related to a fd.
@@ -94,7 +94,7 @@ EINA_API Eina_Iterator *eina_xattr_value_ls(const char *file) EINA_ARG_NONNULL(1
  *
  * @since 1.2
  */
-EINA_API Eina_Iterator *eina_xattr_fd_ls(int fd) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_xattr_fd_ls(int fd) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets an iterator that list all extended attribute value related to a fd.
@@ -107,7 +107,7 @@ EINA_API Eina_Iterator *eina_xattr_fd_ls(int fd) EINA_WARN_UNUSED_RESULT;
  *
  * @since 1.2
  */
-EINA_API Eina_Iterator *eina_xattr_value_fd_ls(int fd) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_xattr_value_fd_ls(int fd) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Copies the extended attribute from one file to another.
@@ -147,7 +147,7 @@ EINA_API Efl_Bool eina_xattr_fd_copy(int src, int dst);
  *
  * @since 1.1
  */
-EINA_API void *eina_xattr_get(const char *file, const char *attribute, ssize_t *size) EINA_ARG_NONNULL(1, 2, 3) EINA_WARN_UNUSED_RESULT;
+EINA_API void *eina_xattr_get(const char *file, const char *attribute, ssize_t *size) EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Retrieves an extended attribute from a file descriptor.
@@ -161,7 +161,7 @@ EINA_API void *eina_xattr_get(const char *file, const char *attribute, ssize_t *
  *
  * @since 1.8
  */
-EINA_API void *eina_xattr_fd_get(int fd, const char *attribute, ssize_t *size) EINA_ARG_NONNULL(2, 3) EINA_WARN_UNUSED_RESULT;
+EINA_API void *eina_xattr_fd_get(int fd, const char *attribute, ssize_t *size) EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets an extended attribute on a file.

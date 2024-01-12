@@ -37,8 +37,8 @@ _phone_entry_free_cb(void *data)
 }
 
 static Efl_Bool
-_phone_book_foreach_cb(const Eina_Hash *phone_book EINA_UNUSED, const void *key,
-		       void *data, void *fdata EINA_UNUSED)
+_phone_book_foreach_cb(const Eina_Hash *phone_book EFL_UNUSED, const void *key,
+		       void *data, void *fdata EFL_UNUSED)
 {
    const char *name = key;
    const char *number = data;

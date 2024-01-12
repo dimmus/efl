@@ -6,7 +6,7 @@
 #include <Ecore_Con.h>
 
 static void
-_lookup_done_cb(const char *canonname, const char *ip, struct sockaddr *addr, int addrlen EINA_UNUSED, void *data EINA_UNUSED)
+_lookup_done_cb(const char *canonname, const char *ip, struct sockaddr *addr, int addrlen EFL_UNUSED, void *data EFL_UNUSED)
 {
    printf("canonname = %s\n", canonname);
    printf("ip = %s\n", ip);

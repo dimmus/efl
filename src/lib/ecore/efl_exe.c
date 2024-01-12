@@ -192,7 +192,7 @@ _exe_exit_eval(Eo *obj, Efl_Exe_Data *pd)
 }
 
 static void
-_cb_exe_exit_read(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_exe_exit_read(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    Efl_Exe_Data *pd = efl_data_scope_get(obj, MY_CLASS);
@@ -225,14 +225,14 @@ _cb_exe_exit_read(void *data, const Efl_Event *event EINA_UNUSED)
 }
 
 static void
-_cb_exe_out(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_exe_out(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    efl_io_reader_can_read_set(obj, EFL_TRUE);
 }
 
 static void
-_cb_exe_in(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_exe_in(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    efl_io_writer_can_write_set(obj, EFL_TRUE);
@@ -243,7 +243,7 @@ _cb_exe_in(void *data, const Efl_Event *event EINA_UNUSED)
 
 
 EOLIAN static void
-_efl_exe_env_set(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd, Efl_Core_Env *env)
+_efl_exe_env_set(Eo *obj EFL_UNUSED, Efl_Exe_Data *pd, Efl_Core_Env *env)
 {
    if (pd->env == env) return;
 
@@ -255,13 +255,13 @@ _efl_exe_env_set(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd, Efl_Core_Env *env)
 }
 
 EOLIAN static Efl_Core_Env*
-_efl_exe_env_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_env_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
    return pd->env;
 }
 
 EOLIAN static void
-_efl_exe_signal(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd, Efl_Exe_Signal sig)
+_efl_exe_signal(Eo *obj EFL_UNUSED, Efl_Exe_Data *pd, Efl_Exe_Signal sig)
 {
 #ifdef _WIN32
 #else
@@ -286,19 +286,19 @@ _efl_exe_signal(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd, Efl_Exe_Signal sig)
 }
 
 EOLIAN static void
-_efl_exe_exe_flags_set(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd, Efl_Exe_Flags flags)
+_efl_exe_exe_flags_set(Eo *obj EFL_UNUSED, Efl_Exe_Data *pd, Efl_Exe_Flags flags)
 {
    pd->flags = flags;
 }
 
 EOLIAN static Efl_Exe_Flags
-_efl_exe_exe_flags_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_exe_flags_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
    return pd->flags;
 }
 
 EOLIAN static void
-_efl_exe_efl_task_priority_set(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd, Efl_Task_Priority priority)
+_efl_exe_efl_task_priority_set(Eo *obj EFL_UNUSED, Efl_Exe_Data *pd, Efl_Task_Priority priority)
 {
    efl_task_priority_set(efl_super(obj, MY_CLASS), priority);
 #ifdef _WIN32
@@ -316,7 +316,7 @@ _efl_exe_efl_task_priority_set(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd, Efl_Task_P
 }
 
 EOLIAN static Efl_Task_Priority
-_efl_exe_efl_task_priority_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_efl_task_priority_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
    Efl_Task_Priority pri = EFL_TASK_PRIORITY_NORMAL;
 
@@ -657,7 +657,7 @@ _efl_exe_efl_task_run(Eo *obj, Efl_Exe_Data *pd)
 }
 
 EOLIAN static void
-_efl_exe_efl_task_end(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_efl_task_end(Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
 #ifdef _WIN32
 #else
@@ -668,13 +668,13 @@ _efl_exe_efl_task_end(Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
 }
 
 EOLIAN static int
-_efl_exe_exit_signal_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_exit_signal_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
    return pd->exit_signal;
 }
 
 EOLIAN static int
-_efl_exe_pid_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_pid_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
 #ifndef _WIN32
    if (pd->pid != -1)
@@ -750,7 +750,7 @@ _efl_exe_efl_io_closer_close(Eo *obj, Efl_Exe_Data *pd)
 }
 
 EOLIAN static Efl_Bool
-_efl_exe_efl_io_closer_closed_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_efl_io_closer_closed_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
 #ifdef _WIN32
    return EFL_FALSE;
@@ -828,7 +828,7 @@ _efl_exe_efl_io_reader_can_read_set(Eo *obj, Efl_Exe_Data *pd, Efl_Bool can_read
 }
 
 EOLIAN static Efl_Bool
-_efl_exe_efl_io_reader_can_read_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_efl_io_reader_can_read_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
    return pd->fd.can_read;
 }
@@ -847,7 +847,7 @@ _efl_exe_efl_io_reader_eos_set(Eo *obj, Efl_Exe_Data *pd, Efl_Bool is_eos)
 }
 
 EOLIAN static Efl_Bool
-_efl_exe_efl_io_reader_eos_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_efl_io_reader_eos_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
    return pd->fd.eos_read;
 }
@@ -927,7 +927,7 @@ _efl_exe_efl_io_writer_can_write_set(Eo *obj, Efl_Exe_Data *pd, Efl_Bool can_wri
 }
 
 EOLIAN static Efl_Bool
-_efl_exe_efl_io_writer_can_write_get(const Eo *obj EINA_UNUSED, Efl_Exe_Data *pd)
+_efl_exe_efl_io_writer_can_write_get(const Eo *obj EFL_UNUSED, Efl_Exe_Data *pd)
 {
    return pd->fd.can_write;
 }

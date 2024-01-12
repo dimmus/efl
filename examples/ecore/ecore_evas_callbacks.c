@@ -13,81 +13,81 @@
 #include <Ecore_Evas.h>
 
 static void
-_destroy(Ecore_Evas *ee EINA_UNUSED)
+_destroy(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("destroy\n");
    ecore_main_loop_quit();
 }
 
 static void
-_delete(Ecore_Evas *ee EINA_UNUSED)
+_delete(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("delete\n");
    ecore_main_loop_quit();
 }
 
 static void
-_focus_in(Ecore_Evas *ee EINA_UNUSED)
+_focus_in(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("focus_in\n");
 }
 
 static void
-_focus_out(Ecore_Evas *ee EINA_UNUSED)
+_focus_out(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("focus_out\n");
 }
 
 static void
-_hide(Ecore_Evas *ee EINA_UNUSED)
+_hide(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("hide\n");
 }
 
 static void
-_mouse_in(Ecore_Evas *ee EINA_UNUSED)
+_mouse_in(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("mouse_in\n");
 }
 
 static void
-_show(Ecore_Evas *ee EINA_UNUSED)
+_show(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("show\n");
 }
 
 static void
-_mouse_out(Ecore_Evas *ee EINA_UNUSED)
+_mouse_out(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("mouse_out\n");
 }
 
 static void
-_move(Ecore_Evas *ee EINA_UNUSED)
+_move(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("move\n");
 }
 
 static void
-_post_render(Ecore_Evas *ee EINA_UNUSED)
+_post_render(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("post_render\n");
 }
 
 static void
-_pre_free(Ecore_Evas *ee EINA_UNUSED)
+_pre_free(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("pre_free\n");
 }
 
 static void
-_pre_render(Ecore_Evas *ee EINA_UNUSED)
+_pre_render(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("pre_render\n");
 }
 
 static void
-_resize(Ecore_Evas *ee EINA_UNUSED)
+_resize(Ecore_Evas *ee EFL_UNUSED)
 {
    printf("resize\n");
 }

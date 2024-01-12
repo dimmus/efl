@@ -124,7 +124,7 @@ typedef struct _Eina_Counter Eina_Counter;
  * @note When the new counter is not needed anymore, use eina_counter_free() to
  *       free the allocated memory.
  */
-EINA_API Eina_Counter *eina_counter_new(const char *name) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Counter *eina_counter_new(const char *name) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Deletes a counter.

@@ -11,26 +11,26 @@
 #define MY_CLASS EFL_IO_STDOUT_CLASS
 
 static void
-_efl_io_stdout_event_write(void *data EINA_UNUSED, const Efl_Event *event)
+_efl_io_stdout_event_write(void *data EFL_UNUSED, const Efl_Event *event)
 {
    efl_io_writer_can_write_set(event->object, EFL_TRUE);
 }
 
 static void
-_efl_io_stdout_event_error(void *data EINA_UNUSED, const Efl_Event *event)
+_efl_io_stdout_event_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    efl_io_writer_can_write_set(event->object, EFL_FALSE);
 }
 
 EOLIAN static void
-_efl_io_stdout_efl_loop_fd_fd_set(Eo *o, void *pd EINA_UNUSED, int fd)
+_efl_io_stdout_efl_loop_fd_fd_set(Eo *o, void *pd EFL_UNUSED, int fd)
 {
    efl_loop_fd_file_set(efl_super(o, MY_CLASS), fd);
    efl_io_writer_fd_set(o, fd);
 }
 
 EOLIAN static Efl_Object *
-_efl_io_stdout_efl_object_finalize(Eo *o, void *pd EINA_UNUSED)
+_efl_io_stdout_efl_object_finalize(Eo *o, void *pd EFL_UNUSED)
 {
    int fd = efl_loop_fd_get(o);
    if (fd < 0) efl_loop_fd_set(o, STDOUT_FILENO);
@@ -44,7 +44,7 @@ _efl_io_stdout_efl_object_finalize(Eo *o, void *pd EINA_UNUSED)
 }
 
 EOLIAN static Eina_Error
-_efl_io_stdout_efl_io_writer_write(Eo *o, void *pd EINA_UNUSED, Eina_Slice *ro_slice, Eina_Slice *remaining)
+_efl_io_stdout_efl_io_writer_write(Eo *o, void *pd EFL_UNUSED, Eina_Slice *ro_slice, Eina_Slice *remaining)
 {
    Eina_Error ret;
 
@@ -56,7 +56,7 @@ _efl_io_stdout_efl_io_writer_write(Eo *o, void *pd EINA_UNUSED, Eina_Slice *ro_s
 }
 
 EOLIAN static void
-_efl_io_stdout_efl_io_writer_can_write_set(Eo *o, void *pd EINA_UNUSED, Efl_Bool value)
+_efl_io_stdout_efl_io_writer_can_write_set(Eo *o, void *pd EFL_UNUSED, Efl_Bool value)
 {
    Efl_Bool old = efl_io_writer_can_write_get(o);
    if (old == value) return;

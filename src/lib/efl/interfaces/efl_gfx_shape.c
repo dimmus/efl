@@ -133,20 +133,20 @@ _efl_gfx_shape_efl_gfx_path_interpolate(Eo *obj, Efl_Gfx_Shape_Data *pd,
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_scale_set(Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd,
+_efl_gfx_shape_stroke_scale_set(Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd,
                                 double s)
 {
    pd->public.stroke.scale = s;
 }
 
 EOLIAN static double
-_efl_gfx_shape_stroke_scale_get(const Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd)
+_efl_gfx_shape_stroke_scale_get(const Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd)
 {
    return pd->public.stroke.scale;
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_color_set(Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd,
+_efl_gfx_shape_stroke_color_set(Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd,
                                 int r, int g, int b, int a)
 {
    Efl_Bool err = EFL_FALSE;
@@ -167,7 +167,7 @@ _efl_gfx_shape_stroke_color_set(Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd,
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_color_get(const Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd,
+_efl_gfx_shape_stroke_color_get(const Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd,
                                 int *r, int *g, int *b, int *a)
 {
    if (r) *r = pd->public.stroke.color.r;
@@ -177,33 +177,33 @@ _efl_gfx_shape_stroke_color_get(const Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *p
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_width_set(Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd, double w)
+_efl_gfx_shape_stroke_width_set(Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd, double w)
 {
    pd->public.stroke.width = w;
 }
 
 EOLIAN static double
-_efl_gfx_shape_stroke_width_get(const Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_width_get(const Eo *obj EFL_UNUSED,
                                 Efl_Gfx_Shape_Data *pd)
 {
    return pd->public.stroke.width;
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_location_set(Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd,
+_efl_gfx_shape_stroke_location_set(Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd,
                                    double centered)
 {
    pd->public.stroke.centered = centered;
 }
 
 EOLIAN static double
-_efl_gfx_shape_stroke_location_get(const Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd)
+_efl_gfx_shape_stroke_location_get(const Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd)
 {
    return pd->public.stroke.centered;
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_dash_set(Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd,
+_efl_gfx_shape_stroke_dash_set(Eo *obj EFL_UNUSED, Efl_Gfx_Shape_Data *pd,
                                const Efl_Gfx_Dash *dash, unsigned int length)
 {
    Efl_Gfx_Dash *tmp;
@@ -225,7 +225,7 @@ _efl_gfx_shape_stroke_dash_set(Eo *obj EINA_UNUSED, Efl_Gfx_Shape_Data *pd,
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_dash_get(const Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_dash_get(const Eo *obj EFL_UNUSED,
                                Efl_Gfx_Shape_Data *pd,
                                const Efl_Gfx_Dash **dash, unsigned int *length)
 {
@@ -234,7 +234,7 @@ _efl_gfx_shape_stroke_dash_get(const Eo *obj EINA_UNUSED,
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_cap_set(Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_cap_set(Eo *obj EFL_UNUSED,
                               Efl_Gfx_Shape_Data *pd,
                               Efl_Gfx_Cap c)
 {
@@ -242,14 +242,14 @@ _efl_gfx_shape_stroke_cap_set(Eo *obj EINA_UNUSED,
 }
 
 EOLIAN static Efl_Gfx_Cap
-_efl_gfx_shape_stroke_cap_get(const Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_cap_get(const Eo *obj EFL_UNUSED,
                               Efl_Gfx_Shape_Data *pd)
 {
    return pd->public.stroke.cap;
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_join_set(Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_join_set(Eo *obj EFL_UNUSED,
                                Efl_Gfx_Shape_Data *pd,
                                Efl_Gfx_Join j)
 {
@@ -257,14 +257,14 @@ _efl_gfx_shape_stroke_join_set(Eo *obj EINA_UNUSED,
 }
 
 EOLIAN static Efl_Gfx_Join
-_efl_gfx_shape_stroke_join_get(const Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_join_get(const Eo *obj EFL_UNUSED,
                                Efl_Gfx_Shape_Data *pd)
 {
    return pd->public.stroke.join;
 }
 
 EOLIAN static void
-_efl_gfx_shape_fill_rule_set(Eo *obj EINA_UNUSED,
+_efl_gfx_shape_fill_rule_set(Eo *obj EFL_UNUSED,
                              Efl_Gfx_Shape_Data *pd,
                              Efl_Gfx_Fill_Rule fill_rule)
 {
@@ -272,7 +272,7 @@ _efl_gfx_shape_fill_rule_set(Eo *obj EINA_UNUSED,
 }
 
 EOLIAN static Efl_Gfx_Fill_Rule
-_efl_gfx_shape_fill_rule_get(const Eo *obj EINA_UNUSED,
+_efl_gfx_shape_fill_rule_get(const Eo *obj EFL_UNUSED,
                              Efl_Gfx_Shape_Data *pd)
 {
    return pd->fill_rule;
@@ -308,7 +308,7 @@ _efl_gfx_shape_efl_gfx_path_copy_from(Eo *obj, Efl_Gfx_Shape_Data *pd,
 }
 
 EOLIAN static void
-_efl_gfx_shape_stroke_miterlimit_set(Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_miterlimit_set(Eo *obj EFL_UNUSED,
                                      Efl_Gfx_Shape_Data *pd,
                                      double miterlimit)
 {
@@ -316,7 +316,7 @@ _efl_gfx_shape_stroke_miterlimit_set(Eo *obj EINA_UNUSED,
 }
 
 EOLIAN static double
-_efl_gfx_shape_stroke_miterlimit_get(const Eo *obj EINA_UNUSED,
+_efl_gfx_shape_stroke_miterlimit_get(const Eo *obj EFL_UNUSED,
                                      Efl_Gfx_Shape_Data *pd)
 {
    return pd->public.stroke.miterlimit;

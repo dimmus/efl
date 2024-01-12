@@ -28,40 +28,40 @@
 #include "eina_private.h"
 
 static void *
-eina_pass_through_malloc(EINA_UNUSED void *data, unsigned int size)
+eina_pass_through_malloc(EFL_UNUSED void *data, unsigned int size)
 {
    return malloc(size);
 }
 
 static void
-eina_pass_through_free(EINA_UNUSED void *data, void *ptr)
+eina_pass_through_free(EFL_UNUSED void *data, void *ptr)
 {
    free(ptr);
 }
 
 static Efl_Bool
-eina_pass_through_from(EINA_UNUSED void *data, void *ptr EINA_UNUSED)
+eina_pass_through_from(EFL_UNUSED void *data, void *ptr EFL_UNUSED)
 {
    // Good luck
    return EFL_TRUE;
 }
 
 static void *
-eina_pass_through_realloc(EINA_UNUSED void *data, void *ptr, unsigned int size)
+eina_pass_through_realloc(EFL_UNUSED void *data, void *ptr, unsigned int size)
 {
    return realloc(ptr, size);
 }
 
 static void *
-eina_pass_through_init(EINA_UNUSED const char *context,
-                       EINA_UNUSED const char *option,
-                       EINA_UNUSED va_list args)
+eina_pass_through_init(EFL_UNUSED const char *context,
+                       EFL_UNUSED const char *option,
+                       EFL_UNUSED va_list args)
 {
    return (void *)0x1;
 }
 
 static void
-eina_pass_through_shutdown(EINA_UNUSED void *data)
+eina_pass_through_shutdown(EFL_UNUSED void *data)
 {
 }
 

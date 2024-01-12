@@ -33,9 +33,9 @@ struct _Eina_Cow_Test
 };
 
 static void
-_eina_test_log(const Eina_Log_Domain *d EINA_UNUSED,
-               Eina_Log_Level level EINA_UNUSED, const char *file EINA_UNUSED, const char *fnc EINA_UNUSED, int line EINA_UNUSED,
-               const char *fmt EINA_UNUSED, void *data, va_list args EINA_UNUSED)
+_eina_test_log(const Eina_Log_Domain *d EFL_UNUSED,
+               Eina_Log_Level level EFL_UNUSED, const char *file EFL_UNUSED, const char *fnc EFL_UNUSED, int line EFL_UNUSED,
+               const char *fmt EFL_UNUSED, void *data, va_list args EFL_UNUSED)
 {
    Efl_Bool *bol = data;
 

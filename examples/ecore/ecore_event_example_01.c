@@ -4,7 +4,7 @@
 #include <Ecore.h>
 
 static Eina_Bool
-_quitter(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event EINA_UNUSED)
+_quitter(void *data EFL_UNUSED, int ev_type EFL_UNUSED, void *event EFL_UNUSED)
 {
    printf("Leaving already?\n");
    ecore_main_loop_quit();

@@ -37,7 +37,7 @@
  */
 
 static void *
-_thread_run(void *arg EINA_UNUSED, Eina_Thread tid EINA_UNUSED)
+_thread_run(void *arg EFL_UNUSED, Eina_Thread tid EFL_UNUSED)
 {
     int niceval = getpriority(PRIO_PROCESS, 0);
     int niceval2;

@@ -13,7 +13,7 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #else
-#define EINA_UNUSED
+#define EFL_UNUSED
 #endif
 
 #include <Ecore.h>
@@ -79,7 +79,7 @@ _ecore_evas_msg_parent_handle(Ecore_Evas *ee, int msg_domain, int msg_id, void *
 }
 
 static void
-_mouse_up(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+_mouse_up(void *data, Evas *e EFL_UNUSED, Evas_Object *obj EFL_UNUSED, void *event_info EFL_UNUSED)
 {
    Ecore_Evas *ee = data;
    size_t len = 0;

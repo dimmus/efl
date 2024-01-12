@@ -85,7 +85,7 @@ _efl_io_file_flags_set(Eo *o, Efl_Io_File_Data *pd, uint32_t flags)
 }
 
 EOLIAN static uint32_t
-_efl_io_file_flags_get(const Eo *o EINA_UNUSED, Efl_Io_File_Data *pd)
+_efl_io_file_flags_get(const Eo *o EFL_UNUSED, Efl_Io_File_Data *pd)
 {
    return pd->flags; // TODO: query from fd?
 }
@@ -98,7 +98,7 @@ _efl_io_file_mode_set(Eo *o, Efl_Io_File_Data *pd, uint32_t mode)
 }
 
 EOLIAN static uint32_t
-_efl_io_file_mode_get(const Eo *o EINA_UNUSED, Efl_Io_File_Data *pd)
+_efl_io_file_mode_get(const Eo *o EFL_UNUSED, Efl_Io_File_Data *pd)
 {
    return pd->mode;
 }
@@ -122,7 +122,7 @@ _efl_io_file_efl_object_constructor(Eo *o, Efl_Io_File_Data *pd)
 }
 
 EOLIAN static void
-_efl_io_file_efl_object_destructor(Eo *o, Efl_Io_File_Data *pd EINA_UNUSED)
+_efl_io_file_efl_object_destructor(Eo *o, Efl_Io_File_Data *pd EFL_UNUSED)
 {
    if (efl_io_closer_close_on_invalidate_get(o) &&
        (!efl_io_closer_closed_get(o)))
@@ -181,7 +181,7 @@ _efl_io_file_efl_io_writer_write(Eo *o, Efl_Io_File_Data *pd, Eina_Slice *slice,
 }
 
 EOLIAN static Eina_Error
-_efl_io_file_efl_io_closer_close(Eo *o, Efl_Io_File_Data *pd EINA_UNUSED)
+_efl_io_file_efl_io_closer_close(Eo *o, Efl_Io_File_Data *pd EFL_UNUSED)
 {
    Eina_Error ret;
    efl_io_reader_can_read_set(o, EFL_FALSE);

@@ -39,7 +39,7 @@ thread_cleanup_fn(void *arg)
 }
 
 static void *
-thread_fn_execute(void *arg, Eina_Thread t EINA_UNUSED)
+thread_fn_execute(void *arg, Eina_Thread t EFL_UNUSED)
 {
    EINA_THREAD_CLEANUP_PUSH(thread_cleanup_fn, arg);
    EINA_THREAD_CLEANUP_POP(1);
@@ -47,7 +47,7 @@ thread_fn_execute(void *arg, Eina_Thread t EINA_UNUSED)
 }
 
 static void *
-thread_fn_skip(void *arg, Eina_Thread t EINA_UNUSED)
+thread_fn_skip(void *arg, Eina_Thread t EFL_UNUSED)
 {
    EINA_THREAD_CLEANUP_PUSH(thread_cleanup_fn, arg);
    EINA_THREAD_CLEANUP_POP(0);
@@ -55,7 +55,7 @@ thread_fn_skip(void *arg, Eina_Thread t EINA_UNUSED)
 }
 
 static void *
-thread_fn_cancel(void *arg, Eina_Thread t EINA_UNUSED)
+thread_fn_cancel(void *arg, Eina_Thread t EFL_UNUSED)
 {
    Eina_Condition *cond = arg;
 

@@ -34,7 +34,7 @@ key_valid(const char *key)
 }
 
 EOLIAN static void
-_efl_core_env_env_set(Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd, const char *var, const char *value)
+_efl_core_env_env_set(Eo *obj EFL_UNUSED, Efl_Core_Env_Data *pd, const char *var, const char *value)
 {
    EINA_SAFETY_ON_FALSE_RETURN(key_valid(var));
    if (str_valid(value))
@@ -48,7 +48,7 @@ _efl_core_env_env_set(Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd, const char *va
 }
 
 EOLIAN static const char*
-_efl_core_env_env_get(const Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd, const char *var)
+_efl_core_env_env_get(const Eo *obj EFL_UNUSED, Efl_Core_Env_Data *pd, const char *var)
 {
    EINA_SAFETY_ON_FALSE_RETURN_VAL(key_valid(var), NULL);
 
@@ -56,20 +56,20 @@ _efl_core_env_env_get(const Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd, const ch
 }
 
 EOLIAN static void
-_efl_core_env_unset(Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd, const char *var)
+_efl_core_env_unset(Eo *obj EFL_UNUSED, Efl_Core_Env_Data *pd, const char *var)
 {
    EINA_SAFETY_ON_FALSE_RETURN(key_valid(var));
    eina_hash_del_by_key(pd->env, var);
 }
 
 EOLIAN static void
-_efl_core_env_clear(Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd)
+_efl_core_env_clear(Eo *obj EFL_UNUSED, Efl_Core_Env_Data *pd)
 {
    eina_hash_free_buckets(pd->env);
 }
 
 EOLIAN static Efl_Core_Env*
-_efl_core_env_efl_duplicate_duplicate(const Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd)
+_efl_core_env_efl_duplicate_duplicate(const Eo *obj EFL_UNUSED, Efl_Core_Env_Data *pd)
 {
    Efl_Core_Env *fork = efl_add_ref(MY_CLASS, NULL);
    Eina_Iterator *iter;
@@ -95,7 +95,7 @@ _efl_core_env_efl_object_constructor(Eo *obj, Efl_Core_Env_Data *pd)
 }
 
 EOLIAN static Eina_Iterator*
-_efl_core_env_content_get(const Eo *obj EINA_UNUSED, Efl_Core_Env_Data *pd)
+_efl_core_env_content_get(const Eo *obj EFL_UNUSED, Efl_Core_Env_Data *pd)
 {
    Eina_Iterator *iter = eina_hash_iterator_key_new(pd->env);
    return iter;

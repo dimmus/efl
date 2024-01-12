@@ -86,7 +86,7 @@ ecore_exe_pipe_run(const char      *exe_cmd,
 }
 
 EOLIAN static void
-_ecore_exe_command_set(Eo *obj EINA_UNUSED, Ecore_Exe_Data *pd, const char *cmd, Ecore_Exe_Flags flags)
+_ecore_exe_command_set(Eo *obj EFL_UNUSED, Ecore_Exe_Data *pd, const char *cmd, Ecore_Exe_Flags flags)
 {
    if (!cmd) return;
    pd->cmd = strdup(cmd);
@@ -94,7 +94,7 @@ _ecore_exe_command_set(Eo *obj EINA_UNUSED, Ecore_Exe_Data *pd, const char *cmd,
 }
 
 EOLIAN static void
-_ecore_exe_command_get(const Eo *obj EINA_UNUSED, Ecore_Exe_Data *pd, const char **cmd, Ecore_Exe_Flags *flags)
+_ecore_exe_command_get(const Eo *obj EFL_UNUSED, Ecore_Exe_Data *pd, const char **cmd, Ecore_Exe_Flags *flags)
 {
    if (cmd) *cmd = pd->cmd;
    if (flags) *flags = pd->flags;
@@ -281,7 +281,7 @@ ecore_exe_continue(Ecore_Exe *obj)
 }
 
 EOLIAN static void
-_ecore_exe_efl_control_suspend_set(Eo *obj EINA_UNUSED, Ecore_Exe_Data *exe, Efl_Bool suspend)
+_ecore_exe_efl_control_suspend_set(Eo *obj EFL_UNUSED, Ecore_Exe_Data *exe, Efl_Bool suspend)
 {
    EINA_MAIN_LOOP_CHECK_RETURN;
    if (suspend) _impl_ecore_exe_pause(obj, exe);
@@ -411,7 +411,7 @@ _ecore_exe_event_del_new(void)
 }
 
 void
-_ecore_exe_event_del_free(void *data EINA_UNUSED,
+_ecore_exe_event_del_free(void *data EFL_UNUSED,
                           void *ev)
 {
    Ecore_Exe_Event_Del *e = ev;
@@ -420,7 +420,7 @@ _ecore_exe_event_del_free(void *data EINA_UNUSED,
 }
 
 void
-_ecore_exe_event_exe_data_free(void *data EINA_UNUSED,
+_ecore_exe_event_exe_data_free(void *data EFL_UNUSED,
                                void *ev)
 {
    Ecore_Exe_Event_Data *e = ev;
@@ -435,7 +435,7 @@ _ecore_exe_event_add_new(void)
 }
 
 void
-_ecore_exe_event_add_free(void *data EINA_UNUSED,
+_ecore_exe_event_add_free(void *data EFL_UNUSED,
                           void *ev)
 {
    Ecore_Exe_Event_Add *e = ev;

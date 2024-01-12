@@ -4,7 +4,7 @@
 #include <Eina.h>
 
 int
-main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    const char* strings[] = {
       "helo", "hera", "starbuck", "kat", "boomer",

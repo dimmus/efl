@@ -8,7 +8,7 @@ static Eina_Bool do_flush = EINA_FALSE;
 static Eina_Bool single_message = EINA_FALSE;
 
 static Eina_Bool
-_server_add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_server_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Add *ev = event;
 
@@ -20,7 +20,7 @@ _server_add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_server_del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_server_del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Del *ev = event;
 
@@ -33,7 +33,7 @@ _server_del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_server_data(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_server_data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Data *ev = event;
 
@@ -54,7 +54,7 @@ _server_data(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_on_stdin(void *data EINA_UNUSED, Ecore_Fd_Handler *fdh EINA_UNUSED)
+_on_stdin(void *data EFL_UNUSED, Ecore_Fd_Handler *fdh EFL_UNUSED)
 {
    char *line = NULL;
 #ifdef _WIN32

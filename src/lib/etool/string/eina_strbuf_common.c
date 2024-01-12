@@ -99,7 +99,7 @@ _eina_strbuf_common_init(size_t csize, Efl_Strbuf *buf)
  * @return #EFL_TRUE on success, #EFL_FALSE on failure.
  */
 static Efl_Bool
-_eina_strbuf_common_manage_init(size_t csize EINA_UNUSED,
+_eina_strbuf_common_manage_init(size_t csize EFL_UNUSED,
                                  Efl_Strbuf *buf,
                                  void *str,
                                  size_t len)

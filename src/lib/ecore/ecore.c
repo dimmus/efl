@@ -775,8 +775,8 @@ ecore_thread_main_loop_end(void)
 }
 
 EAPI void
-ecore_print_warning(const char *function EINA_UNUSED,
-                    const char *sparam EINA_UNUSED)
+ecore_print_warning(const char *function EFL_UNUSED,
+                    const char *sparam EFL_UNUSED)
 {
    WRN("***** Developer Warning ***** :\n"
        "\tThis program is calling:\n\n"
@@ -791,7 +791,7 @@ EAPI void
 _ecore_magic_fail(const void *d,
                   Ecore_Magic m,
                   Ecore_Magic req_m,
-                  const char *fname EINA_UNUSED)
+                  const char *fname EFL_UNUSED)
 {
    ERR("*** ECORE ERROR: Ecore Magic Check Failed!!! in: %s()", fname);
    if (!d)
@@ -964,7 +964,7 @@ _ecore_fps_debug_runtime_add(double t)
 
 #ifdef HAVE_SYSTEMD
 static void
-_systemd_watchdog_cb(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
+_systemd_watchdog_cb(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    if (getenv("NOTIFY_SOCKET"))
      {
@@ -976,7 +976,7 @@ _systemd_watchdog_cb(void *data EINA_UNUSED, const Efl_Event *event EINA_UNUSED)
 
 #if defined(HAVE_MALLINFO) || defined(HAVE_MALLOC_INFO) || defined(HAVE_MALLINFO2)
 static Efl_Bool
-_ecore_memory_statistic(EINA_UNUSED void *data)
+_ecore_memory_statistic(EFL_UNUSED void *data)
 {
 #ifdef HAVE_MALLOC_INFO
    static int frame = 0;
@@ -1116,9 +1116,9 @@ _ecore_main_call_flush(void)
 }
 
 static void
-_thread_callback(void        *data EINA_UNUSED,
-                 void        *buffer EINA_UNUSED,
-                 unsigned int nbyte EINA_UNUSED)
+_thread_callback(void        *data EFL_UNUSED,
+                 void        *buffer EFL_UNUSED,
+                 unsigned int nbyte EFL_UNUSED)
 {
    _ecore_main_call_flush();
 }

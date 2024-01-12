@@ -434,7 +434,7 @@ struct _Eina_Inlist
  * @return The new list head. Use it and not @a in_list anymore.
  */
 EINA_API Eina_Inlist *eina_inlist_append(Eina_Inlist *in_list,
-                                     Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EINA_WARN_UNUSED_RESULT;
+                                     Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new node to beginning of list.
@@ -453,7 +453,7 @@ EINA_API Eina_Inlist *eina_inlist_append(Eina_Inlist *in_list,
  * @return The new list head. Use it and not @a in_list anymore.
  */
 EINA_API Eina_Inlist *eina_inlist_prepend(Eina_Inlist *in_list,
-                                      Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EINA_WARN_UNUSED_RESULT;
+                                      Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new node after the given relative item in list.
@@ -479,7 +479,7 @@ EINA_API Eina_Inlist *eina_inlist_prepend(Eina_Inlist *in_list,
  */
 EINA_API Eina_Inlist *eina_inlist_append_relative(Eina_Inlist *in_list,
                                               Eina_Inlist *in_item,
-                                              Eina_Inlist *in_relative) EINA_ARG_NONNULL(2) EINA_WARN_UNUSED_RESULT;
+                                              Eina_Inlist *in_relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new node before the given relative item in list.
@@ -505,7 +505,7 @@ EINA_API Eina_Inlist *eina_inlist_append_relative(Eina_Inlist *in_list,
  */
 EINA_API Eina_Inlist *eina_inlist_prepend_relative(Eina_Inlist *in_list,
                                                Eina_Inlist *in_item,
-                                               Eina_Inlist *in_relative) EINA_ARG_NONNULL(2) EINA_WARN_UNUSED_RESULT;
+                                               Eina_Inlist *in_relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Removes node from list.
@@ -525,7 +525,7 @@ EINA_API Eina_Inlist *eina_inlist_prepend_relative(Eina_Inlist *in_list,
  * @return The new list head. Use it and not @a list anymore.
  */
 EINA_API Eina_Inlist   *eina_inlist_remove(Eina_Inlist *in_list,
-                                       Eina_Inlist *in_item) EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT;
+                                       Eina_Inlist *in_item) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Finds given node in list, returns itself if found, NULL if not.
@@ -539,7 +539,7 @@ EINA_API Eina_Inlist   *eina_inlist_remove(Eina_Inlist *in_list,
  * @return @a in_item if found, @c NULL if not.
  */
 EINA_API Eina_Inlist   *eina_inlist_find(Eina_Inlist *in_list,
-                                     Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EINA_WARN_UNUSED_RESULT;
+                                     Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves existing node to beginning of list.
@@ -557,7 +557,7 @@ EINA_API Eina_Inlist   *eina_inlist_find(Eina_Inlist *in_list,
  * @return The new list head. Use it and not @a list anymore.
  */
 EINA_API Eina_Inlist   *eina_inlist_promote(Eina_Inlist *list,
-                                        Eina_Inlist *item) EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT;
+                                        Eina_Inlist *item) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves existing node to end of list.
@@ -575,7 +575,7 @@ EINA_API Eina_Inlist   *eina_inlist_promote(Eina_Inlist *list,
  * @return The new list head. Use it and not @a list anymore.
  */
 EINA_API Eina_Inlist   *eina_inlist_demote(Eina_Inlist *list,
-                                       Eina_Inlist *item) EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT;
+                                       Eina_Inlist *item) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the first list node in the list.
@@ -591,7 +591,7 @@ EINA_API Eina_Inlist   *eina_inlist_demote(Eina_Inlist *list,
  *
  * @since 1.8
  */
-static inline Eina_Inlist *eina_inlist_first(const Eina_Inlist *list) EINA_PURE EINA_WARN_UNUSED_RESULT;
+static inline Eina_Inlist *eina_inlist_first(const Eina_Inlist *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the last list node in the list.
@@ -607,7 +607,7 @@ static inline Eina_Inlist *eina_inlist_first(const Eina_Inlist *list) EINA_PURE 
  *
  * @since 1.8
  */
-static inline Eina_Inlist *eina_inlist_last(const Eina_Inlist *list) EINA_PURE EINA_WARN_UNUSED_RESULT;
+static inline Eina_Inlist *eina_inlist_last(const Eina_Inlist *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the count of the number of items in a list.
@@ -622,7 +622,7 @@ static inline Eina_Inlist *eina_inlist_last(const Eina_Inlist *list) EINA_PURE E
  *    on the number of elements on the list, so, it might become
  *    slow for big lists!
  */
-EINA_API unsigned int   eina_inlist_count(const Eina_Inlist *list) EINA_WARN_UNUSED_RESULT;
+EINA_API unsigned int   eina_inlist_count(const Eina_Inlist *list) EFL_WARN_UNUSED_RESULT;
 
 
 /**
@@ -644,7 +644,7 @@ EINA_API unsigned int   eina_inlist_count(const Eina_Inlist *list) EINA_WARN_UNU
  *    invalid, and if you add or remove nodes iterator
  *    behavior is undefined, and your program may crash!
  */
-EINA_API Eina_Iterator *eina_inlist_iterator_new(const Eina_Inlist *in_list) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_inlist_iterator_new(const Eina_Inlist *in_list) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new accessor associated to a list.
@@ -658,7 +658,7 @@ EINA_API Eina_Iterator *eina_inlist_iterator_new(const Eina_Inlist *in_list) EIN
  * not be allocated, @c NULL is returned and Otherwise, a valid accessor is
  * returned.
  */
-EINA_API Eina_Accessor *eina_inlist_accessor_new(const Eina_Inlist *in_list) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Accessor *eina_inlist_accessor_new(const Eina_Inlist *in_list) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Inserts a new node into a sorted list.
@@ -682,7 +682,7 @@ EINA_API Eina_Accessor *eina_inlist_accessor_new(const Eina_Inlist *in_list) EIN
  *
  * @since 1.1.0
  */
-EINA_API Eina_Inlist *eina_inlist_sorted_insert(Eina_Inlist *list, Eina_Inlist *item, Eina_Compare_Cb func) EINA_ARG_NONNULL(2, 3) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Inlist *eina_inlist_sorted_insert(Eina_Inlist *list, Eina_Inlist *item, Eina_Compare_Cb func) EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates state with valid data in it.

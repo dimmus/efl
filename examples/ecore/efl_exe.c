@@ -5,11 +5,11 @@
 #include <Eo.h>
 #include <Efl_Core.h>
 
-static void _read_change(void *data EINA_UNUSED, const Efl_Event *ev);
-static void _task_exit(void *data EINA_UNUSED, const Efl_Event *ev);
+static void _read_change(void *data EFL_UNUSED, const Efl_Event *ev);
+static void _task_exit(void *data EFL_UNUSED, const Efl_Event *ev);
 
 static void
-_read_change(void *data EINA_UNUSED, const Efl_Event *ev)
+_read_change(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    // read output from exe status changed - read what we can
    Eo *obj = ev->object;
@@ -28,7 +28,7 @@ _read_change(void *data EINA_UNUSED, const Efl_Event *ev)
 }
 
 static void
-_task_exit(void *data EINA_UNUSED, const Efl_Event *ev)
+_task_exit(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    // called when the task says it has completed and exited.
    // all output to read has stopped
@@ -43,7 +43,7 @@ _task_exit(void *data EINA_UNUSED, const Efl_Event *ev)
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED, const Efl_Event *ev)
+efl_main(void *data EFL_UNUSED, const Efl_Event *ev)
 {
    Eo *app = ev->object;
 

@@ -116,7 +116,7 @@ EFL_END_TEST
 static Efl_Bool getting_called = EFL_FALSE;
 
 static Eina_Content*
-_test_cb(Eina_Content *content EINA_UNUSED, const char *type EINA_UNUSED)
+_test_cb(Eina_Content *content EFL_UNUSED, const char *type EFL_UNUSED)
 {
    getting_called = EFL_TRUE;
    return eina_content_new(eina_content_data_get(content), type);

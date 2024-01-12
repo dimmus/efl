@@ -46,10 +46,10 @@ _phone_book_stringshared_free_cb(void *data)
 }
 
 static Efl_Bool
-_phone_book_stringshared_foreach_cb(const Eina_Hash *phone_book EINA_UNUSED,
-                                    const void *key EINA_UNUSED,
+_phone_book_stringshared_foreach_cb(const Eina_Hash *phone_book EFL_UNUSED,
+                                    const void *key EFL_UNUSED,
                                     void *data,
-                                    void *fdata EINA_UNUSED)
+                                    void *fdata EFL_UNUSED)
 {
    Phone_Entry *e = data;
    const char *name = e->name; // e->name == key
@@ -99,8 +99,8 @@ _phone_book_string_key_length(const char *key)
 }
 
 static int
-_phone_book_string_key_cmp(const char *key1, int key1_length EINA_UNUSED,
-                     const char *key2, int key2_length EINA_UNUSED)
+_phone_book_string_key_cmp(const char *key1, int key1_length EFL_UNUSED,
+                     const char *key2, int key2_length EFL_UNUSED)
 {
    return strcmp(key1, key2);
 }

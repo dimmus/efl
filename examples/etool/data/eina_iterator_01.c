@@ -6,7 +6,7 @@
 #include <Eina.h>
 
 static Efl_Bool
-print_one(const void *container EINA_UNUSED, void *data, void *fdata EINA_UNUSED)
+print_one(const void *container EFL_UNUSED, void *data, void *fdata EFL_UNUSED)
 {
    printf("%s\n", (char*)data);
    return EFL_TRUE;
@@ -20,7 +20,7 @@ print_eina_container(Eina_Iterator *it)
 }
 
 int
-main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
+main(int argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    const char *strings[] = {
       "unintersting string", "husker", "starbuck", "husker"

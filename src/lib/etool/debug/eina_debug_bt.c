@@ -194,8 +194,8 @@ get_time(void)
 
 #ifndef _WIN32
 static void
-_signal_handler(int sig EINA_UNUSED,
-      siginfo_t *si EINA_UNUSED, void *foo EINA_UNUSED)
+_signal_handler(int sig EFL_UNUSED,
+      siginfo_t *si EFL_UNUSED, void *foo EFL_UNUSED)
 {
    int i, slot = 0;
    pthread_t self = pthread_self();
@@ -305,7 +305,7 @@ _collect_bt(Eina_Thread th)
 }
 
 static Efl_Bool
-_trace_cb(void *data EINA_UNUSED)
+_trace_cb(void *data EFL_UNUSED)
 {
    static int bts = 0;
    int i;
@@ -369,7 +369,7 @@ err:
 
 // profiling on with poll time gap as uint payload
 static Efl_Bool
-_prof_on_cb(Eina_Debug_Session *session, int cid EINA_UNUSED, void *buffer, int size)
+_prof_on_cb(Eina_Debug_Session *session, int cid EFL_UNUSED, void *buffer, int size)
 {
    unsigned int time;
 
@@ -385,7 +385,7 @@ _prof_on_cb(Eina_Debug_Session *session, int cid EINA_UNUSED, void *buffer, int 
 }
 
 static Efl_Bool
-_prof_off_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *buffer EINA_UNUSED, int size EINA_UNUSED)
+_prof_off_cb(Eina_Debug_Session *session EFL_UNUSED, int cid EFL_UNUSED, void *buffer EFL_UNUSED, int size EFL_UNUSED)
 {
    eina_debug_timer_del(_timer);
    _timer = NULL;

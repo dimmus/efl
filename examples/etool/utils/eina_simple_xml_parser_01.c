@@ -68,7 +68,7 @@ main(void)
 
 static Efl_Bool
 _xml_tag_cb(void *data, Eina_Simple_XML_Type type, const char *content,
-            unsigned offset EINA_UNUSED, unsigned length)
+            unsigned offset EFL_UNUSED, unsigned length)
 {
    char buffer[length+1];
    Eina_Array *array = data;
@@ -128,7 +128,7 @@ _xml_attr_cb(void *data, const char *key, const char *value)
 }
 
 static Efl_Bool
-_print(const void *container EINA_UNUSED, void *data, void *fdata EINA_UNUSED)
+_print(const void *container EFL_UNUSED, void *data, void *fdata EFL_UNUSED)
 {
    printf("%s\n", (char *)data);
 

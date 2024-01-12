@@ -1410,7 +1410,7 @@ eina_value_hash_pget(const Eina_Value *value, const char *key, void *ptr)
  * @since 1.2
  * @internal
  */
-EINA_API const Eina_Value_Struct_Member *eina_value_struct_member_find(const Eina_Value_Struct *st, const char *name) EINA_ARG_NONNULL(1, 2) EINA_WARN_UNUSED_RESULT;
+EINA_API const Eina_Value_Struct_Member *eina_value_struct_member_find(const Eina_Value_Struct *st, const char *name) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 static inline Efl_Bool
 eina_value_struct_setup(Eina_Value *value, const Eina_Value_Struct_Desc *sdesc)

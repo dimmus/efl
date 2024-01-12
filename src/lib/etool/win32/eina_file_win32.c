@@ -936,24 +936,24 @@ eina_file_unlink(const char *pathname)
 }
 
 
-EINA_API Eina_Iterator *eina_file_xattr_get(Eina_File *file EINA_UNUSED)
+EINA_API Eina_Iterator *eina_file_xattr_get(Eina_File *file EFL_UNUSED)
 {
    return NULL;
 }
 
-EINA_API Eina_Iterator *eina_file_xattr_value_get(Eina_File *file EINA_UNUSED)
+EINA_API Eina_Iterator *eina_file_xattr_value_get(Eina_File *file EFL_UNUSED)
 {
    return NULL;
 }
 
 EINA_API void
-eina_file_map_populate(Eina_File *file EINA_UNUSED, Eina_File_Populate rule EINA_UNUSED, const void *map EINA_UNUSED,
-                       unsigned long int offset EINA_UNUSED, unsigned long int length EINA_UNUSED)
+eina_file_map_populate(Eina_File *file EFL_UNUSED, Eina_File_Populate rule EFL_UNUSED, const void *map EFL_UNUSED,
+                       unsigned long int offset EFL_UNUSED, unsigned long int length EFL_UNUSED)
 {
 }
 
 EINA_API void *
-eina_file_map_all(Eina_File *file, Eina_File_Populate rule EINA_UNUSED)
+eina_file_map_all(Eina_File *file, Eina_File_Populate rule EFL_UNUSED)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(file, NULL);
 
@@ -1122,7 +1122,7 @@ eina_file_map_free(Eina_File *file, void *map)
 }
 
 EINA_API Efl_Bool
-eina_file_map_faulted(Eina_File *file, void *map EINA_UNUSED)
+eina_file_map_faulted(Eina_File *file, void *map EFL_UNUSED)
 {
 #warning "We need to handle access to corrupted memory mapped file."
   if (file->virtual) return EFL_FALSE;
@@ -1160,7 +1160,7 @@ eina_file_map_faulted(Eina_File *file, void *map EINA_UNUSED)
 }
 
 EINA_API int
-eina_file_statat(void *container EINA_UNUSED, Eina_File_Direct_Info *info, Eina_Stat *st)
+eina_file_statat(void *container EFL_UNUSED, Eina_File_Direct_Info *info, Eina_Stat *st)
 {
    struct __stat64 buf;
 

@@ -150,7 +150,7 @@ typedef unsigned int Eina_Magic;
  *
  * @warning The returned value must not be freed.
  */
-EINA_API const char *eina_magic_string_get(Eina_Magic magic) EINA_WARN_UNUSED_RESULT;
+EINA_API const char *eina_magic_string_get(Eina_Magic magic) EFL_WARN_UNUSED_RESULT;
 /**
  * @brief Sets the string associated with the given magic identifier.
  * @details This function sets the string @p magic_name to @p magic. It is not

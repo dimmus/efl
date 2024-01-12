@@ -144,16 +144,16 @@ EAPI extern int ECORE_EXE_EVENT_ERROR;
 
 Ecore_Exe *_ecore_exe_find(pid_t pid);
 void *_ecore_exe_event_del_new(void);
-void _ecore_exe_event_del_free(void *data EINA_UNUSED, void *ev);
-void _ecore_exe_event_exe_data_free(void *data EINA_UNUSED, void *ev);
+void _ecore_exe_event_del_free(void *data EFL_UNUSED, void *ev);
+void _ecore_exe_event_exe_data_free(void *data EFL_UNUSED, void *ev);
 Ecore_Exe_Event_Add * _ecore_exe_event_add_new(void);
-void _ecore_exe_event_add_free(void *data EINA_UNUSED, void *ev);
+void _ecore_exe_event_add_free(void *data EFL_UNUSED, void *ev);
 
 void _impl_ecore_exe_run_priority_set(int pri);
 int _impl_ecore_exe_run_priority_get(void);
 void _impl_ecore_exe_auto_limits_set(Ecore_Exe *obj, Ecore_Exe_Data *exe, int start_bytes, int end_bytes, int start_lines, int end_lines);
 Eo *_impl_ecore_exe_efl_object_finalize(Eo *obj, Ecore_Exe_Data *exe);
-void _impl_ecore_exe_efl_control_suspend_set(Eo *obj EINA_UNUSED, Ecore_Exe_Data *exe, Efl_Bool suspend);
+void _impl_ecore_exe_efl_control_suspend_set(Eo *obj EFL_UNUSED, Ecore_Exe_Data *exe, Efl_Bool suspend);
 Efl_Bool _impl_ecore_exe_send(Ecore_Exe *obj, Ecore_Exe_Data *exe, const void *data, int size);
 Ecore_Exe_Event_Data *_impl_ecore_exe_event_data_get(Ecore_Exe *obj, Ecore_Exe_Data *exe, Ecore_Exe_Flags flags);
 void _impl_ecore_exe_efl_object_destructor(Eo *obj, Ecore_Exe_Data *exe);
@@ -164,4 +164,4 @@ void _impl_ecore_exe_quit(Ecore_Exe *obj, Ecore_Exe_Data *exe);
 void _impl_ecore_exe_terminate(Ecore_Exe *obj, Ecore_Exe_Data *exe);
 void _impl_ecore_exe_kill(Ecore_Exe *obj, Ecore_Exe_Data *exe);
 void _impl_ecore_exe_signal(Ecore_Exe *obj, Ecore_Exe_Data *exe, int num);
-void _impl_ecore_exe_hup(Ecore_Exe *obj EINA_UNUSED, Ecore_Exe_Data *exe);
+void _impl_ecore_exe_hup(Ecore_Exe *obj EFL_UNUSED, Ecore_Exe_Data *exe);

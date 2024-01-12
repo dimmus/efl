@@ -7,28 +7,28 @@
 static int waiting;
 
 static void
-_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: closed %s\n",
            efl_name_get(event->object));
 }
 
 static void
-_eos(void *data EINA_UNUSED, const Efl_Event *event)
+_eos(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: eos %s\n",
            efl_name_get(event->object));
 }
 
 static void
-_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: connected %s\n",
            efl_net_dialer_address_dial_get(event->object));
 }
 
 static void
-_resolved(void *data EINA_UNUSED, const Efl_Event *event)
+_resolved(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: resolved %s => %s\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -36,7 +36,7 @@ _resolved(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_error(void *data EINA_UNUSED, const Efl_Event *event)
+_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: error: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -44,7 +44,7 @@ _error(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_http_headers_done(void *data EINA_UNUSED, const Efl_Event *event)
+_http_headers_done(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *o = event->object;
    Efl_Net_Http_Version ver = efl_net_dialer_http_version_get(o);
@@ -78,7 +78,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(dialer_cbs,
                            { EFL_IO_READER_EVENT_EOS, _eos });
 
 static void
-_done(void *data EINA_UNUSED, const Efl_Event *event)
+_done(void *data EFL_UNUSED, const Efl_Event *event)
 {
    waiting--;
    fprintf(stderr, "INFO: done %s, waiting=%d\n",
@@ -201,20 +201,20 @@ static Eo *sender = NULL;
 static Eo *receiver = NULL;
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    /* FIXME: For the moment the main loop doesn't get
       properly destroyed on shutdown which disallow
@@ -237,7 +237,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *method = "GET";

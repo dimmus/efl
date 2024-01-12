@@ -81,21 +81,21 @@ struct _Efl_Thread_Data
 //////////////////////////////////////////////////////////////////////////
 
 static void
-_cb_thread_out(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_thread_out(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    efl_io_reader_can_read_set(obj, EFL_TRUE);
 }
 
 static void
-_cb_thread_in(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_thread_in(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    efl_io_writer_can_write_set(obj, EFL_TRUE);
 }
 
 static void
-_cb_thread_ctrl_out(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_thread_ctrl_out(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    Control_Data cmd;
@@ -144,7 +144,7 @@ _cb_thread_ctrl_out(void *data, const Efl_Event *event EINA_UNUSED)
 }
 
 static Eina_Value
-_efl_loop_arguments_send(Eo *obj, void *data EINA_UNUSED, const Eina_Value v)
+_efl_loop_arguments_send(Eo *obj, void *data EFL_UNUSED, const Eina_Value v)
 
 {
    Efl_Loop_Arguments arge;
@@ -368,21 +368,21 @@ _thread_exit_eval(Eo *obj, Efl_Thread_Data *pd)
 }
 
 static void
-_cb_thread_parent_out(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_thread_parent_out(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    efl_io_reader_can_read_set(obj, EFL_TRUE);
 }
 
 static void
-_cb_thread_parent_in(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_thread_parent_in(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    efl_io_writer_can_write_set(obj, EFL_TRUE);
 }
 
 static void
-_cb_thread_parent_ctrl_out(void *data, const Efl_Event *event EINA_UNUSED)
+_cb_thread_parent_ctrl_out(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *obj = data;
    Control_Data cmd;
@@ -569,7 +569,7 @@ _efl_thread_child_remove(Eo *loop, Efl_Loop_Data *pd, Eo *child)
 }
 
 EOLIAN static Efl_Object *
-_efl_thread_efl_object_finalize(Eo *obj, Efl_Thread_Data *pd EINA_UNUSED)
+_efl_thread_efl_object_finalize(Eo *obj, Efl_Thread_Data *pd EFL_UNUSED)
 {
    Eo *loop = efl_provider_find(obj, EFL_LOOP_CLASS);
    if (loop != obj)
@@ -847,7 +847,7 @@ _efl_thread_efl_task_run(Eo *obj, Efl_Thread_Data *pd)
 }
 
 EOLIAN static void
-_efl_thread_efl_task_end(Eo *obj EINA_UNUSED, Efl_Thread_Data *pd)
+_efl_thread_efl_task_end(Eo *obj EFL_UNUSED, Efl_Thread_Data *pd)
 {
    if (pd->end_sent) return;
    if ((pd->thdat) && (!pd->exit_called))
@@ -881,7 +881,7 @@ _efl_thread_efl_io_closer_close(Eo *obj, Efl_Thread_Data *pd)
 }
 
 EOLIAN static Efl_Bool
-_efl_thread_efl_io_closer_closed_get(const Eo *obj EINA_UNUSED, Efl_Thread_Data *pd)
+_efl_thread_efl_io_closer_closed_get(const Eo *obj EFL_UNUSED, Efl_Thread_Data *pd)
 {
    if ((pd->fd.in == -1) && (pd->fd.out == -1)) return EFL_TRUE;
    return EFL_FALSE;
@@ -952,7 +952,7 @@ _efl_thread_efl_io_reader_can_read_set(Eo *obj, Efl_Thread_Data *pd, Efl_Bool ca
 }
 
 EOLIAN static Efl_Bool
-_efl_thread_efl_io_reader_can_read_get(const Eo *obj EINA_UNUSED, Efl_Thread_Data *pd)
+_efl_thread_efl_io_reader_can_read_get(const Eo *obj EFL_UNUSED, Efl_Thread_Data *pd)
 {
    return pd->fd.can_read;
 }
@@ -971,7 +971,7 @@ _efl_thread_efl_io_reader_eos_set(Eo *obj, Efl_Thread_Data *pd, Efl_Bool is_eos)
 }
 
 EOLIAN static Efl_Bool
-_efl_thread_efl_io_reader_eos_get(const Eo *obj EINA_UNUSED, Efl_Thread_Data *pd)
+_efl_thread_efl_io_reader_eos_get(const Eo *obj EFL_UNUSED, Efl_Thread_Data *pd)
 {
    return pd->fd.eos_read;
 }
@@ -1048,7 +1048,7 @@ _efl_thread_efl_io_writer_can_write_set(Eo *obj, Efl_Thread_Data *pd, Efl_Bool c
 }
 
 EOLIAN static Efl_Bool
-_efl_thread_efl_io_writer_can_write_get(const Eo *obj EINA_UNUSED, Efl_Thread_Data *pd)
+_efl_thread_efl_io_writer_can_write_get(const Eo *obj EFL_UNUSED, Efl_Thread_Data *pd)
 {
    return pd->fd.can_write;
 }
@@ -1067,7 +1067,7 @@ _threadio_call(int fd, void *func_data, EflThreadIOCall func, Eina_Free_Cb func_
 }
 
 void
-_appthread_threadio_call(Eo *obj EINA_UNUSED, Efl_Appthread_Data *pd,
+_appthread_threadio_call(Eo *obj EFL_UNUSED, Efl_Appthread_Data *pd,
                          void *func_data, EflThreadIOCall func, Eina_Free_Cb func_free_cb)
 {
    Thread_Data *thdat = pd->thdat;
@@ -1075,7 +1075,7 @@ _appthread_threadio_call(Eo *obj EINA_UNUSED, Efl_Appthread_Data *pd,
 }
 
 EOLIAN static void
-_efl_thread_efl_threadio_call(Eo *obj EINA_UNUSED, Efl_Thread_Data *pd,
+_efl_thread_efl_threadio_call(Eo *obj EFL_UNUSED, Efl_Thread_Data *pd,
                               void *func_data, EflThreadIOCall func, Eina_Free_Cb func_free_cb)
 {
    _threadio_call(pd->ctrl.in, func_data, func, func_free_cb);
@@ -1101,7 +1101,7 @@ _threadio_call_sync(int fd, void *func_data, EflThreadIOCallSync func, Eina_Free
 }
 
 void *
-_appthread_threadio_call_sync(Eo *obj EINA_UNUSED, Efl_Appthread_Data *pd,
+_appthread_threadio_call_sync(Eo *obj EFL_UNUSED, Efl_Appthread_Data *pd,
                               void *func_data, EflThreadIOCallSync func, Eina_Free_Cb func_free_cb)
 {
    Thread_Data *thdat = pd->thdat;
@@ -1109,7 +1109,7 @@ _appthread_threadio_call_sync(Eo *obj EINA_UNUSED, Efl_Appthread_Data *pd,
 }
 
 EOLIAN static void *
-_efl_thread_efl_threadio_call_sync(Eo *obj EINA_UNUSED, Efl_Thread_Data *pd,
+_efl_thread_efl_threadio_call_sync(Eo *obj EFL_UNUSED, Efl_Thread_Data *pd,
                                    void *func_data, EflThreadIOCallSync func, Eina_Free_Cb func_free_cb)
 {
    return _threadio_call_sync(pd->ctrl.in, func_data, func, func_free_cb);

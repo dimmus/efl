@@ -81,7 +81,7 @@ _efl_file_mmap_set(Eo *obj, Efl_File_Data *pd, const Eina_File *f)
 }
 
 EOLIAN static const Eina_File *
-_efl_file_mmap_get(const Eo *obj EINA_UNUSED, Efl_File_Data *pd)
+_efl_file_mmap_get(const Eo *obj EFL_UNUSED, Efl_File_Data *pd)
 {
    return pd->file;
 }
@@ -120,26 +120,26 @@ _efl_file_file_set(Eo *obj, Efl_File_Data *pd, const char *file)
 }
 
 EOLIAN static Eina_Stringshare *
-_efl_file_file_get(const Eo *obj EINA_UNUSED, Efl_File_Data *pd)
+_efl_file_file_get(const Eo *obj EFL_UNUSED, Efl_File_Data *pd)
 {
    return pd->vpath;
 }
 
 EOLIAN static void
-_efl_file_key_set(Eo *obj EINA_UNUSED, Efl_File_Data *pd, const char *key)
+_efl_file_key_set(Eo *obj EFL_UNUSED, Efl_File_Data *pd, const char *key)
 {
    if (eina_stringshare_replace(&pd->key, key))
      pd->loaded = 0;
 }
 
 EOLIAN static Eina_Stringshare *
-_efl_file_key_get(const Eo *obj EINA_UNUSED, Efl_File_Data *pd)
+_efl_file_key_get(const Eo *obj EFL_UNUSED, Efl_File_Data *pd)
 {
    return pd->key;
 }
 
 EOLIAN static Efl_Bool
-_efl_file_loaded_get(const Eo *obj EINA_UNUSED, Efl_File_Data *pd)
+_efl_file_loaded_get(const Eo *obj EFL_UNUSED, Efl_File_Data *pd)
 {
    return pd->loaded;
 }

@@ -173,7 +173,7 @@ __eina_promise_value_dbg(const char *msg,
 }
 
 static Efl_Bool
-_promise_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_promise_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_Promise **tmem = mem;
    *tmem = NULL;
@@ -181,7 +181,7 @@ _promise_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_promise_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_promise_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_Promise **tmem = mem;
    if (*tmem)
@@ -201,7 +201,7 @@ _promise_replace(Eina_Promise **dst, Eina_Promise * const *src)
 }
 
 static Efl_Bool
-_promise_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_promise_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    Eina_Promise **dst = mem;
    Eina_Promise **src = va_arg(args, Eina_Promise **);
@@ -210,7 +210,7 @@ _promise_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
 }
 
 static Efl_Bool
-_promise_pset(const Eina_Value_Type *type EINA_UNUSED,
+_promise_pset(const Eina_Value_Type *type EFL_UNUSED,
               void *mem, const void *ptr)
 {
    Eina_Promise **dst = mem;
@@ -220,7 +220,7 @@ _promise_pset(const Eina_Value_Type *type EINA_UNUSED,
 }
 
 static Efl_Bool
-_promise_pget(const Eina_Value_Type *type EINA_UNUSED,
+_promise_pget(const Eina_Value_Type *type EFL_UNUSED,
               const void *mem, void *ptr)
 {
    Eina_Promise * const *src = mem;
@@ -230,7 +230,7 @@ _promise_pget(const Eina_Value_Type *type EINA_UNUSED,
 }
 
 static Efl_Bool
-_promise_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_promise_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    Eina_Promise * const *p = type_mem;
 
@@ -662,7 +662,7 @@ _eina_promise_clean_dispatch(Eina_Promise *p, Eina_Value v)
 
 static Eina_Value
 _future_proxy(void *data, const Eina_Value v,
-              const Eina_Future *dead_future EINA_UNUSED)
+              const Eina_Future *dead_future EFL_UNUSED)
 {
    Eina_Value copy = EINA_VALUE_EMPTY;
 
@@ -680,7 +680,7 @@ _future_proxy(void *data, const Eina_Value v,
 }
 
 static void
-_dummy_cancel(void *data EINA_UNUSED, const Eina_Promise *dead_ptr EINA_UNUSED)
+_dummy_cancel(void *data EFL_UNUSED, const Eina_Promise *dead_ptr EFL_UNUSED)
 {
 }
 
@@ -1034,7 +1034,7 @@ eina_future_chain_easy_array(Eina_Future *prev, const Eina_Future_Cb_Easy_Desc d
 static Eina_Value
 _eina_future_cb_console(void *data,
                         const Eina_Value value,
-                        const Eina_Future *dead_future EINA_UNUSED)
+                        const Eina_Future *dead_future EFL_UNUSED)
 {
    Eina_Future_Cb_Console_Desc *c = data;
    const char *prefix = c ? c->prefix : NULL;
@@ -1081,7 +1081,7 @@ eina_future_cb_console_from_desc(const Eina_Future_Cb_Console_Desc desc)
 
 static Eina_Value
 _eina_future_cb_convert_to(void *data, const Eina_Value src,
-                           const Eina_Future *dead_future EINA_UNUSED)
+                           const Eina_Future *dead_future EFL_UNUSED)
 {
     const Eina_Value_Type *type = data;
     Eina_Value dst = EINA_VALUE_EMPTY;
@@ -1181,7 +1181,7 @@ _all_promise_ctx_free(All_Promise_Ctx *ctx)
 }
 
 static void
-_all_promise_cancel(void *data, const Eina_Promise *dead EINA_UNUSED)
+_all_promise_cancel(void *data, const Eina_Promise *dead EFL_UNUSED)
 {
    All_Promise_Ctx *ctx = data;
 
@@ -1198,7 +1198,7 @@ _race_promise_ctx_free(Race_Promise_Ctx *ctx)
 }
 
 static void
-_race_promise_cancel(void *data, const Eina_Promise *dead EINA_UNUSED)
+_race_promise_cancel(void *data, const Eina_Promise *dead EFL_UNUSED)
 {
    Race_Promise_Ctx *ctx = data;
 
@@ -1472,7 +1472,7 @@ eina_promise_race_array(Eina_Future *array[])
 
 static Eina_Value
 _eina_future_cb_ignore_error(void *data, const Eina_Value value,
-                             const Eina_Future *dead_future EINA_UNUSED)
+                             const Eina_Future *dead_future EFL_UNUSED)
 {
    Eina_Error expected_err = (Eina_Error)(intptr_t)data;
 
@@ -1524,7 +1524,7 @@ eina_future_cb_easy_desc_flush(Eina_Future_Cb_Easy_Desc *desc)
 
 static Eina_Value
 _future_cb_log(void *data, const Eina_Value value,
-               const Eina_Future *dead EINA_UNUSED)
+               const Eina_Future *dead EFL_UNUSED)
 {
    Eina_Future_Cb_Log_Desc *ctx = data;
    const char *content = "no value";

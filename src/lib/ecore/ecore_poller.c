@@ -124,7 +124,7 @@ _ecore_poller_next_tick_eval(void)
 }
 
 static Efl_Bool
-_ecore_poller_cb_timer(void *data EINA_UNUSED)
+_ecore_poller_cb_timer(void *data EFL_UNUSED)
 {
    Ecore_Poller *poller;
    int i;
@@ -212,7 +212,7 @@ _ecore_poller_cb_timer(void *data EINA_UNUSED)
 }
 
 EAPI void
-ecore_poller_poll_interval_set(Ecore_Poller_Type type EINA_UNUSED,
+ecore_poller_poll_interval_set(Ecore_Poller_Type type EFL_UNUSED,
                                double            poll_time)
 {
    EINA_MAIN_LOOP_CHECK_RETURN;
@@ -228,14 +228,14 @@ ecore_poller_poll_interval_set(Ecore_Poller_Type type EINA_UNUSED,
 }
 
 EAPI double
-ecore_poller_poll_interval_get(Ecore_Poller_Type type EINA_UNUSED)
+ecore_poller_poll_interval_get(Ecore_Poller_Type type EFL_UNUSED)
 {
    EINA_MAIN_LOOP_CHECK_RETURN_VAL(0.0);
    return poll_interval;
 }
 
 EAPI Ecore_Poller *
-ecore_poller_add(Ecore_Poller_Type type EINA_UNUSED,
+ecore_poller_add(Ecore_Poller_Type type EFL_UNUSED,
                  int               interval,
                  Ecore_Task_Cb     func,
                  const void       *data)

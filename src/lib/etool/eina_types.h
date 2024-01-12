@@ -127,11 +127,11 @@
 # define EFL64
 #endif
 
-#ifdef EINA_UNUSED
-# undef EINA_UNUSED
+#ifdef EFL_UNUSED
+# undef EFL_UNUSED
 #endif
-#ifdef EINA_WARN_UNUSED_RESULT
-# undef EINA_WARN_UNUSED_RESULT
+#ifdef EFL_WARN_UNUSED_RESULT
+# undef EFL_WARN_UNUSED_RESULT
 #endif
 #ifdef EINA_ARG_NONNULL
 # undef EINA_ARG_NONNULL
@@ -188,15 +188,15 @@
 #ifdef __GNUC__
 
 # if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-#  define EINA_UNUSED __attribute__ ((__unused__))
+#  define EFL_UNUSED __attribute__ ((__unused__))
 # else
-#  define EINA_UNUSED
+#  define EFL_UNUSED
 # endif
 
 # if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-#  define EINA_WARN_UNUSED_RESULT __attribute__ ((__warn_unused_result__))
+#  define EFL_WARN_UNUSED_RESULT __attribute__ ((__warn_unused_result__))
 # else
-#  define EINA_WARN_UNUSED_RESULT
+#  define EFL_WARN_UNUSED_RESULT
 # endif
 
 # if (!defined(EINA_SAFETY_CHECKS)) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
@@ -275,8 +275,8 @@
 # endif
 
 #elif defined(_MSC_VER)
-# define EINA_UNUSED
-# define EINA_WARN_UNUSED_RESULT
+# define EFL_UNUSED
+# define EFL_WARN_UNUSED_RESULT
 # define EINA_ARG_NONNULL(...)
 # if _MSC_VER >= 1300
 #  define EINA_DEPRECATED __declspec(deprecated)
@@ -300,8 +300,8 @@
 # define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
 
 #elif defined(__SUNPRO_C)
-# define EINA_UNUSED
-# define EINA_WARN_UNUSED_RESULT
+# define EFL_UNUSED
+# define EFL_WARN_UNUSED_RESULT
 # define EINA_ARG_NONNULL(...)
 # define EINA_DEPRECATED
 # if __SUNPRO_C >= 0x590
@@ -332,17 +332,17 @@
 #else /* ! __GNUC__ && ! _MSC_VER && ! __SUNPRO_C */
 
 /**
- * @def EINA_UNUSED
+ * @def EFL_UNUSED
  * Used to indicate that a function parameter is purposely unused.
  * This silences some compiler's warning about unused parameters.
  */
-# define EINA_UNUSED
+# define EFL_UNUSED
 
 /**
- * @def EINA_WARN_UNUSED_RESULT
+ * @def EFL_WARN_UNUSED_RESULT
  * Used to warn when the returned value of the function is not used.
  */
-# define EINA_WARN_UNUSED_RESULT
+# define EFL_WARN_UNUSED_RESULT
 
 /**
  * @def EINA_ARG_NONNULL

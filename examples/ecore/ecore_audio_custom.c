@@ -19,7 +19,7 @@ Eo *out = NULL;
 unsigned char volume = 255;
 
 
-int read_cb(void *data EINA_UNUSED, Eo *eo_obj, void *buf, int len)
+int read_cb(void *data EFL_UNUSED, Eo *eo_obj, void *buf, int len)
 {
   static long int phase1 = 0, phase2 = 0;
   static int modulation = 0;

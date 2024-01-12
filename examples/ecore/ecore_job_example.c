@@ -13,7 +13,7 @@ _job_print_cb(void *data)
 }
 
 static void
-_job_quit_cb(void *data EINA_UNUSED)
+_job_quit_cb(void *data EFL_UNUSED)
 {
    ecore_main_loop_quit();
 }

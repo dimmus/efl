@@ -18,19 +18,19 @@ typedef struct _Efl_Io_Reader_Fd_Data
 } Efl_Io_Reader_Fd_Data;
 
 EOLIAN static void
-_efl_io_reader_fd_reader_fd_set(Eo *o EINA_UNUSED, Efl_Io_Reader_Fd_Data *pd, int fd)
+_efl_io_reader_fd_reader_fd_set(Eo *o EFL_UNUSED, Efl_Io_Reader_Fd_Data *pd, int fd)
 {
    pd->fd = fd;
 }
 
 EOLIAN static int
-_efl_io_reader_fd_reader_fd_get(const Eo *o EINA_UNUSED, Efl_Io_Reader_Fd_Data *pd)
+_efl_io_reader_fd_reader_fd_get(const Eo *o EFL_UNUSED, Efl_Io_Reader_Fd_Data *pd)
 {
    return pd->fd;
 }
 
 EOLIAN static Eina_Error
-_efl_io_reader_fd_efl_io_reader_read(Eo *o, Efl_Io_Reader_Fd_Data *pd EINA_UNUSED, Eina_Rw_Slice *rw_slice)
+_efl_io_reader_fd_efl_io_reader_read(Eo *o, Efl_Io_Reader_Fd_Data *pd EFL_UNUSED, Eina_Rw_Slice *rw_slice)
 {
    int fd = efl_io_reader_fd_get(o);
    ssize_t r;
@@ -68,7 +68,7 @@ _efl_io_reader_fd_efl_io_reader_read(Eo *o, Efl_Io_Reader_Fd_Data *pd EINA_UNUSE
 }
 
 EOLIAN static Efl_Bool
-_efl_io_reader_fd_efl_io_reader_can_read_get(const Eo *o EINA_UNUSED, Efl_Io_Reader_Fd_Data *pd)
+_efl_io_reader_fd_efl_io_reader_can_read_get(const Eo *o EFL_UNUSED, Efl_Io_Reader_Fd_Data *pd)
 {
    return pd->can_read;
 }
@@ -83,7 +83,7 @@ _efl_io_reader_fd_efl_io_reader_can_read_set(Eo *o, Efl_Io_Reader_Fd_Data *pd, E
 }
 
 EOLIAN static Efl_Bool
-_efl_io_reader_fd_efl_io_reader_eos_get(const Eo *o EINA_UNUSED, Efl_Io_Reader_Fd_Data *pd)
+_efl_io_reader_fd_efl_io_reader_eos_get(const Eo *o EFL_UNUSED, Efl_Io_Reader_Fd_Data *pd)
 {
    return pd->eos;
 }

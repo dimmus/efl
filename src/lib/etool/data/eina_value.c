@@ -94,7 +94,7 @@ static const long eina_value_long_min = -2147483647 - 1;
 
 
 static Efl_Bool
-_eina_value_type_uchar_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_uchar_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    unsigned char *tmem = mem;
    *tmem = 0;
@@ -102,13 +102,13 @@ _eina_value_type_uchar_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_uchar_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_uchar_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_uchar_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_uchar_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const unsigned char *s = src;
    unsigned char *d = dst;
@@ -117,7 +117,7 @@ _eina_value_type_uchar_copy(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static int
-_eina_value_type_uchar_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_uchar_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const unsigned char *ta = a, *tb = b;
    if (*ta < *tb)
@@ -128,7 +128,7 @@ _eina_value_type_uchar_compare(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static Efl_Bool
-_eina_value_type_uchar_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_uchar_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const unsigned char v = *(const unsigned char *)type_mem;
 
@@ -212,7 +212,7 @@ _eina_value_type_uchar_convert_to(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_uchar_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_uchar_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    unsigned char *tmem = mem;
    *tmem = va_arg(args, unsigned int); /* char is promoted to int for va_arg */
@@ -220,7 +220,7 @@ _eina_value_type_uchar_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_uchar_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_uchar_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    unsigned char *tmem = mem;
    const unsigned char *p = ptr;
@@ -229,7 +229,7 @@ _eina_value_type_uchar_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_uchar_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_uchar_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const unsigned char *tmem = mem;
    unsigned char *p = ptr;
@@ -238,7 +238,7 @@ _eina_value_type_uchar_pget(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static Efl_Bool
-_eina_value_type_ushort_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_ushort_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    unsigned short *tmem = mem;
    *tmem = 0;
@@ -246,13 +246,13 @@ _eina_value_type_ushort_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem
 }
 
 static Efl_Bool
-_eina_value_type_ushort_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_ushort_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_ushort_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_ushort_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const unsigned short *s = src;
    unsigned short *d = dst;
@@ -261,7 +261,7 @@ _eina_value_type_ushort_copy(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static int
-_eina_value_type_ushort_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_ushort_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const unsigned short *ta = a, *tb = b;
    if (*ta < *tb)
@@ -272,7 +272,7 @@ _eina_value_type_ushort_compare(const Eina_Value_Type *type EINA_UNUSED, const v
 }
 
 static Efl_Bool
-_eina_value_type_ushort_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_ushort_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const unsigned short v = *(const unsigned short *)type_mem;
 
@@ -360,7 +360,7 @@ _eina_value_type_ushort_convert_to(const Eina_Value_Type *type EINA_UNUSED, cons
 }
 
 static Efl_Bool
-_eina_value_type_ushort_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_ushort_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    unsigned short *tmem = mem;
    *tmem = va_arg(args, unsigned int); /* short is promoted to int for va_arg */
@@ -368,7 +368,7 @@ _eina_value_type_ushort_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_ushort_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_ushort_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    unsigned short *tmem = mem;
    const unsigned short *p = ptr;
@@ -377,7 +377,7 @@ _eina_value_type_ushort_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_ushort_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_ushort_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const unsigned short *tmem = mem;
    unsigned short *p = ptr;
@@ -386,7 +386,7 @@ _eina_value_type_ushort_pget(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static Efl_Bool
-_eina_value_type_uint_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_uint_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    unsigned int *tmem = mem;
    *tmem = 0;
@@ -394,13 +394,13 @@ _eina_value_type_uint_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_uint_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_uint_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_uint_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_uint_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const unsigned int *s = src;
    unsigned int *d = dst;
@@ -409,7 +409,7 @@ _eina_value_type_uint_copy(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static int
-_eina_value_type_uint_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_uint_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const unsigned int *ta = a, *tb = b;
    if (*ta < *tb)
@@ -420,7 +420,7 @@ _eina_value_type_uint_compare(const Eina_Value_Type *type EINA_UNUSED, const voi
 }
 
 static Efl_Bool
-_eina_value_type_uint_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_uint_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const unsigned int v = *(const unsigned int *)type_mem;
 
@@ -512,7 +512,7 @@ _eina_value_type_uint_convert_to(const Eina_Value_Type *type EINA_UNUSED, const 
 }
 
 static Efl_Bool
-_eina_value_type_uint_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_uint_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    unsigned int *tmem = mem;
    *tmem = va_arg(args, unsigned int);
@@ -520,7 +520,7 @@ _eina_value_type_uint_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, v
 }
 
 static Efl_Bool
-_eina_value_type_uint_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_uint_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    unsigned int *tmem = mem;
    const unsigned int *p = ptr;
@@ -529,7 +529,7 @@ _eina_value_type_uint_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, c
 }
 
 static Efl_Bool
-_eina_value_type_uint_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_uint_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const unsigned int *tmem = mem;
    unsigned int *p = ptr;
@@ -538,7 +538,7 @@ _eina_value_type_uint_pget(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static Efl_Bool
-_eina_value_type_ulong_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_ulong_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    unsigned long *tmem = mem;
    *tmem = 0;
@@ -546,13 +546,13 @@ _eina_value_type_ulong_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_ulong_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_ulong_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_ulong_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_ulong_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const unsigned long *s = src;
    unsigned long *d = dst;
@@ -561,7 +561,7 @@ _eina_value_type_ulong_copy(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static int
-_eina_value_type_ulong_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_ulong_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const unsigned long *ta = a, *tb = b;
    if (*ta < *tb)
@@ -572,7 +572,7 @@ _eina_value_type_ulong_compare(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static Efl_Bool
-_eina_value_type_ulong_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_ulong_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const unsigned long v = *(const unsigned long *)type_mem;
 
@@ -668,7 +668,7 @@ _eina_value_type_ulong_convert_to(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_ulong_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_ulong_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    unsigned long *tmem = mem;
    *tmem = va_arg(args, unsigned long);
@@ -676,7 +676,7 @@ _eina_value_type_ulong_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_ulong_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_ulong_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    unsigned long *tmem = mem;
    const unsigned long *p = ptr;
@@ -685,7 +685,7 @@ _eina_value_type_ulong_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_ulong_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_ulong_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const unsigned long *tmem = mem;
    unsigned long *p = ptr;
@@ -694,7 +694,7 @@ _eina_value_type_ulong_pget(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static Efl_Bool
-_eina_value_type_uint64_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_uint64_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    uint64_t *tmem = mem;
    *tmem = 0;
@@ -702,13 +702,13 @@ _eina_value_type_uint64_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem
 }
 
 static Efl_Bool
-_eina_value_type_uint64_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_uint64_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_uint64_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_uint64_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const uint64_t *s = src;
    uint64_t *d = dst;
@@ -717,7 +717,7 @@ _eina_value_type_uint64_copy(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static int
-_eina_value_type_uint64_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_uint64_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const uint64_t *ta = a, *tb = b;
    if (*ta < *tb)
@@ -728,7 +728,7 @@ _eina_value_type_uint64_compare(const Eina_Value_Type *type EINA_UNUSED, const v
 }
 
 static Efl_Bool
-_eina_value_type_uint64_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_uint64_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const uint64_t v = *(const uint64_t *)type_mem;
 
@@ -829,7 +829,7 @@ _eina_value_type_uint64_convert_to(const Eina_Value_Type *type EINA_UNUSED, cons
 }
 
 static Efl_Bool
-_eina_value_type_uint64_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_uint64_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    uint64_t *tmem = mem;
    *tmem = va_arg(args, uint64_t);
@@ -837,7 +837,7 @@ _eina_value_type_uint64_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_uint64_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_uint64_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    uint64_t *tmem = mem;
    const uint64_t *p = ptr;
@@ -846,7 +846,7 @@ _eina_value_type_uint64_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_uint64_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_uint64_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const uint64_t *tmem = mem;
    uint64_t *p = ptr;
@@ -855,7 +855,7 @@ _eina_value_type_uint64_pget(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static Efl_Bool
-_eina_value_type_char_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_char_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    char *tmem = mem;
    *tmem = 0;
@@ -863,13 +863,13 @@ _eina_value_type_char_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_char_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_char_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_char_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_char_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const char *s = src;
    char *d = dst;
@@ -878,7 +878,7 @@ _eina_value_type_char_copy(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static int
-_eina_value_type_char_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_char_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const char *ta = a, *tb = b;
    if (*ta < *tb)
@@ -889,7 +889,7 @@ _eina_value_type_char_compare(const Eina_Value_Type *type EINA_UNUSED, const voi
 }
 
 static Efl_Bool
-_eina_value_type_char_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_char_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const signed char v = *(const signed char *)type_mem;
 
@@ -981,7 +981,7 @@ _eina_value_type_char_convert_to(const Eina_Value_Type *type EINA_UNUSED, const 
 }
 
 static Efl_Bool
-_eina_value_type_char_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_char_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    char *tmem = mem;
    *tmem = va_arg(args, int); /* char is promoted to int for va_arg */
@@ -989,7 +989,7 @@ _eina_value_type_char_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, v
 }
 
 static Efl_Bool
-_eina_value_type_char_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_char_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    char *tmem = mem;
    const char *p = ptr;
@@ -998,7 +998,7 @@ _eina_value_type_char_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, c
 }
 
 static Efl_Bool
-_eina_value_type_char_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_char_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const char *tmem = mem;
    char *p = ptr;
@@ -1007,7 +1007,7 @@ _eina_value_type_char_pget(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static Efl_Bool
-_eina_value_type_short_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_short_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    short *tmem = mem;
    *tmem = 0;
@@ -1015,13 +1015,13 @@ _eina_value_type_short_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_short_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_short_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_short_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_short_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const short *s = src;
    short *d = dst;
@@ -1030,7 +1030,7 @@ _eina_value_type_short_copy(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static int
-_eina_value_type_short_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_short_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const short *ta = a, *tb = b;
    if (*ta < *tb)
@@ -1041,7 +1041,7 @@ _eina_value_type_short_compare(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static Efl_Bool
-_eina_value_type_short_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_short_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const short v = *(const short *)type_mem;
 
@@ -1139,7 +1139,7 @@ _eina_value_type_short_convert_to(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_short_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_short_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    short *tmem = mem;
    *tmem = va_arg(args, int); /* short int is promoted to int for va_arg */
@@ -1147,7 +1147,7 @@ _eina_value_type_short_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_short_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_short_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    short *tmem = mem;
    const short *p = ptr;
@@ -1156,7 +1156,7 @@ _eina_value_type_short_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_short_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_short_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const short *tmem = mem;
    short *p = ptr;
@@ -1165,7 +1165,7 @@ _eina_value_type_short_pget(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static Efl_Bool
-_eina_value_type_int_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_int_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    int *tmem = mem;
    *tmem = 0;
@@ -1173,13 +1173,13 @@ _eina_value_type_int_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_int_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_int_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_int_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_int_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const int *s = src;
    int *d = dst;
@@ -1188,7 +1188,7 @@ _eina_value_type_int_copy(const Eina_Value_Type *type EINA_UNUSED, const void *s
 }
 
 static int
-_eina_value_type_int_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_int_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const int *ta = a, *tb = b;
    if (*ta < *tb)
@@ -1199,7 +1199,7 @@ _eina_value_type_int_compare(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static Efl_Bool
-_eina_value_type_int_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_int_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const int v = *(const int *)type_mem;
 
@@ -1303,7 +1303,7 @@ _eina_value_type_int_convert_to(const Eina_Value_Type *type EINA_UNUSED, const E
 }
 
 static Efl_Bool
-_eina_value_type_int_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_int_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    int *tmem = mem;
    *tmem = va_arg(args, int);
@@ -1311,7 +1311,7 @@ _eina_value_type_int_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va
 }
 
 static Efl_Bool
-_eina_value_type_int_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_int_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    int *tmem = mem;
    const int *p = ptr;
@@ -1320,7 +1320,7 @@ _eina_value_type_int_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, co
 }
 
 static Efl_Bool
-_eina_value_type_int_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_int_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const int *tmem = mem;
    int *p = ptr;
@@ -1329,7 +1329,7 @@ _eina_value_type_int_pget(const Eina_Value_Type *type EINA_UNUSED, const void *m
 }
 
 static Efl_Bool
-_eina_value_type_long_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_long_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    long *tmem = mem;
    *tmem = 0;
@@ -1337,13 +1337,13 @@ _eina_value_type_long_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_long_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_long_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_long_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_long_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const long *s = src;
    long *d = dst;
@@ -1352,7 +1352,7 @@ _eina_value_type_long_copy(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static int
-_eina_value_type_long_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_long_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const long *ta = a, *tb = b;
    if (*ta < *tb)
@@ -1363,7 +1363,7 @@ _eina_value_type_long_compare(const Eina_Value_Type *type EINA_UNUSED, const voi
 }
 
 static Efl_Bool
-_eina_value_type_long_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_long_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const long v = *(const long *)type_mem;
 
@@ -1473,7 +1473,7 @@ _eina_value_type_long_convert_to(const Eina_Value_Type *type EINA_UNUSED, const 
 }
 
 static Efl_Bool
-_eina_value_type_long_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_long_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    long *tmem = mem;
    *tmem = va_arg(args, long);
@@ -1481,7 +1481,7 @@ _eina_value_type_long_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, v
 }
 
 static Efl_Bool
-_eina_value_type_long_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_long_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    long *tmem = mem;
    const long *p = ptr;
@@ -1490,7 +1490,7 @@ _eina_value_type_long_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, c
 }
 
 static Efl_Bool
-_eina_value_type_long_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_long_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const long *tmem = mem;
    long *p = ptr;
@@ -1499,7 +1499,7 @@ _eina_value_type_long_pget(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static Efl_Bool
-_eina_value_type_int64_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_int64_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    int64_t *tmem = mem;
    *tmem = 0;
@@ -1507,13 +1507,13 @@ _eina_value_type_int64_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_int64_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_int64_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_int64_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_int64_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const int64_t *s = src;
    int64_t *d = dst;
@@ -1522,7 +1522,7 @@ _eina_value_type_int64_copy(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static int
-_eina_value_type_int64_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_int64_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const int64_t *ta = a, *tb = b;
    if (*ta < *tb)
@@ -1533,7 +1533,7 @@ _eina_value_type_int64_compare(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static Efl_Bool
-_eina_value_type_int64_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_int64_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const int64_t v = *(const int64_t *)type_mem;
 
@@ -1650,7 +1650,7 @@ _eina_value_type_int64_convert_to(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_int64_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_int64_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    int64_t *tmem = mem;
    *tmem = va_arg(args, int64_t);
@@ -1658,7 +1658,7 @@ _eina_value_type_int64_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_int64_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_int64_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    int64_t *tmem = mem;
    const int64_t *p = ptr;
@@ -1667,7 +1667,7 @@ _eina_value_type_int64_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_int64_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_int64_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const int64_t *tmem = mem;
    int64_t *p = ptr;
@@ -1676,7 +1676,7 @@ _eina_value_type_int64_pget(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static Efl_Bool
-_eina_value_type_float_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_float_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    float *tmem = mem;
    *tmem = 0;
@@ -1684,13 +1684,13 @@ _eina_value_type_float_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_float_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_float_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_float_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_float_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const float *s = src;
    float *d = dst;
@@ -1699,7 +1699,7 @@ _eina_value_type_float_copy(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static int
-_eina_value_type_float_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_float_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const float *ta = a, *tb = b;
    if (*ta < *tb)
@@ -1710,7 +1710,7 @@ _eina_value_type_float_compare(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static Efl_Bool
-_eina_value_type_float_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_float_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const float v = *(const float *)type_mem;
 
@@ -1833,7 +1833,7 @@ _eina_value_type_float_convert_to(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_float_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_float_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    float *tmem = mem;
    *tmem = va_arg(args, double); /* float is promoted to double for va_args */
@@ -1841,7 +1841,7 @@ _eina_value_type_float_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_float_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_float_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    float *tmem = mem;
    const float *p = ptr;
@@ -1850,7 +1850,7 @@ _eina_value_type_float_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_float_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_float_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const float *tmem = mem;
    float *p = ptr;
@@ -1859,7 +1859,7 @@ _eina_value_type_float_pget(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static Efl_Bool
-_eina_value_type_double_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_double_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    double *tmem = mem;
    *tmem = 0;
@@ -1867,13 +1867,13 @@ _eina_value_type_double_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem
 }
 
 static Efl_Bool
-_eina_value_type_double_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_double_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_double_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_double_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const double *s = src;
    double *d = dst;
@@ -1882,7 +1882,7 @@ _eina_value_type_double_copy(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static int
-_eina_value_type_double_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_double_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const double *ta = a, *tb = b;
    if (*ta < *tb)
@@ -1893,7 +1893,7 @@ _eina_value_type_double_compare(const Eina_Value_Type *type EINA_UNUSED, const v
 }
 
 static Efl_Bool
-_eina_value_type_double_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_double_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const double v = *(const double *)type_mem;
 
@@ -2010,7 +2010,7 @@ _eina_value_type_double_convert_to(const Eina_Value_Type *type EINA_UNUSED, cons
 }
 
 static Efl_Bool
-_eina_value_type_double_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_double_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    double *tmem = mem;
    *tmem = va_arg(args, double);
@@ -2018,7 +2018,7 @@ _eina_value_type_double_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_double_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_double_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    double *tmem = mem;
    const double *p = ptr;
@@ -2027,7 +2027,7 @@ _eina_value_type_double_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_double_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_double_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const double *tmem = mem;
    double *p = ptr;
@@ -2036,7 +2036,7 @@ _eina_value_type_double_pget(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static Efl_Bool
-_eina_value_type_string_common_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_string_common_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    const char **tmem = mem;
    *tmem = NULL;
@@ -2044,7 +2044,7 @@ _eina_value_type_string_common_setup(const Eina_Value_Type *type EINA_UNUSED, vo
 }
 
 static int
-_eina_value_type_string_common_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_string_common_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const char *sa = *(const char **)a;
    const char *sb = *(const char **)b;
@@ -2058,7 +2058,7 @@ _eina_value_type_string_common_compare(const Eina_Value_Type *type EINA_UNUSED, 
 }
 
 static Efl_Bool
-_eina_value_type_string_common_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_string_common_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const char *v = *(const char **)type_mem;
 
@@ -2180,14 +2180,14 @@ _eina_value_type_string_common_convert_to(const Eina_Value_Type *type EINA_UNUSE
 }
 
 static Efl_Bool
-_eina_value_type_string_common_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_string_common_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(const char *));
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_stringshare_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_stringshare_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    const char **tmem = mem;
    if (*tmem)
@@ -2199,7 +2199,7 @@ _eina_value_type_stringshare_flush(const Eina_Value_Type *type EINA_UNUSED, void
 }
 
 static Efl_Bool
-_eina_value_type_stringshare_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_stringshare_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const char * const*s = src;
    const char **d = dst;
@@ -2208,21 +2208,21 @@ _eina_value_type_stringshare_copy(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_stringshare_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_stringshare_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    const char *str = va_arg(args, const char *);
    return eina_stringshare_replace((const char **)mem, str);
 }
 
 static Efl_Bool
-_eina_value_type_stringshare_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_stringshare_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    const char * const *str = ptr;
    return eina_stringshare_replace((const char **)mem, *str);
 }
 
 static Efl_Bool
-_eina_value_type_stringshare_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_stringshare_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const Eina_Stringshare * const *src = mem;
    Eina_Stringshare **dst = ptr;
@@ -2232,7 +2232,7 @@ _eina_value_type_stringshare_pget(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_string_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_string_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    char **tmem = mem;
    if (*tmem)
@@ -2244,7 +2244,7 @@ _eina_value_type_string_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem
 }
 
 static Efl_Bool
-_eina_value_type_string_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_string_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const char * const *s = src;
    char **d = dst;
@@ -2262,7 +2262,7 @@ _eina_value_type_string_copy(const Eina_Value_Type *type EINA_UNUSED, const void
 }
 
 static Efl_Bool
-_eina_value_type_string_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_string_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    char **tmem = mem;
    const char *str = va_arg(args, const char *);
@@ -2287,7 +2287,7 @@ _eina_value_type_string_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_string_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_string_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    char **tmem = mem;
    const char * const *str = ptr;
@@ -2312,7 +2312,7 @@ _eina_value_type_string_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem,
 }
 
 static Efl_Bool
-_eina_value_type_array_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_array_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_Value_Array));
    return EFL_TRUE;
@@ -2340,7 +2340,7 @@ _eina_value_type_array_flush_elements(Eina_Value_Array *tmem)
 }
 
 static Efl_Bool
-_eina_value_type_array_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_array_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_Value_Array *tmem = mem;
    Efl_Bool ret =_eina_value_type_array_flush_elements(tmem);
@@ -2352,7 +2352,7 @@ _eina_value_type_array_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_array_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_array_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const Eina_Value_Type *subtype;
    const Eina_Value_Array *s = src;
@@ -2404,7 +2404,7 @@ _eina_value_type_array_copy(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static int
-_eina_value_type_array_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_array_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_Value_Type *subtype;
    const Eina_Value_Array *eva_a = a, *eva_b = b;
@@ -2460,7 +2460,7 @@ _eina_value_type_array_compare(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static Efl_Bool
-_eina_value_type_array_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_array_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_Value_Array *tmem = type_mem;
    Efl_Bool ret = EFL_FALSE;
@@ -2626,7 +2626,7 @@ _eina_value_type_array_vset(const Eina_Value_Type *type, void *mem, va_list args
 }
 
 static Efl_Bool
-_eina_value_type_array_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_array_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(Eina_Value_Array));
    return EFL_TRUE;
@@ -2648,7 +2648,7 @@ static const Eina_Value_Type _EINA_VALUE_TYPE_ARRAY = {
 };
 
 static Efl_Bool
-_eina_value_type_list_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_list_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_Value_List));
    return EFL_TRUE;
@@ -2674,7 +2674,7 @@ _eina_value_type_list_flush_elements(Eina_Value_List *tmem)
 }
 
 static Efl_Bool
-_eina_value_type_list_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_list_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_Value_List *tmem = mem;
    Efl_Bool ret =_eina_value_type_list_flush_elements(tmem);
@@ -2686,7 +2686,7 @@ _eina_value_type_list_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_list_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_list_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const Eina_Value_Type *subtype;
    const Eina_Value_List *s = src;
@@ -2733,7 +2733,7 @@ _eina_value_type_list_copy(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static int
-_eina_value_type_list_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_list_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_Value_Type *subtype;
    const Eina_Value_List *eva_a = a, *eva_b = b;
@@ -2780,7 +2780,7 @@ _eina_value_type_list_compare(const Eina_Value_Type *type EINA_UNUSED, const voi
 }
 
 static Efl_Bool
-_eina_value_type_list_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_list_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_Value_List *tmem = type_mem;
    Efl_Bool ret = EFL_FALSE;
@@ -2940,7 +2940,7 @@ _eina_value_type_list_vset(const Eina_Value_Type *type, void *mem, va_list args)
 }
 
 static Efl_Bool
-_eina_value_type_list_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_list_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(Eina_Value_List));
    return EFL_TRUE;
@@ -2962,7 +2962,7 @@ static const Eina_Value_Type _EINA_VALUE_TYPE_LIST = {
 };
 
 static Efl_Bool
-_eina_value_type_hash_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_hash_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_Value_Hash));
    return EFL_TRUE;
@@ -2975,7 +2975,7 @@ struct _eina_value_type_hash_flush_each_ctx
 };
 
 static Efl_Bool
-_eina_value_type_hash_flush_each(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED, void *mem, void *user_data)
+_eina_value_type_hash_flush_each(const Eina_Hash *hash EFL_UNUSED, const void *key EFL_UNUSED, void *mem, void *user_data)
 {
    struct _eina_value_type_hash_flush_each_ctx *ctx = user_data;
    ctx->ret &= eina_value_type_flush(ctx->subtype, mem);
@@ -3000,7 +3000,7 @@ _eina_value_type_hash_flush_elements(Eina_Value_Hash *tmem)
 }
 
 static Efl_Bool
-_eina_value_type_hash_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_hash_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_Value_Hash *tmem = mem;
    Efl_Bool ret =_eina_value_type_hash_flush_elements(tmem);
@@ -3046,7 +3046,7 @@ struct _eina_value_type_hash_copy_each_ctx
 };
 
 static Efl_Bool
-_eina_value_type_hash_copy_each(const Eina_Hash *hash EINA_UNUSED, const void *key, void *_ptr, void *user_data)
+_eina_value_type_hash_copy_each(const Eina_Hash *hash EFL_UNUSED, const void *key, void *_ptr, void *user_data)
 {
    struct _eina_value_type_hash_copy_each_ctx *ctx = user_data;
    const void *ptr = _ptr;
@@ -3073,7 +3073,7 @@ _eina_value_type_hash_copy_each(const Eina_Hash *hash EINA_UNUSED, const void *k
 }
 
 static Efl_Bool
-_eina_value_type_hash_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_hash_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const Eina_Value_Hash *s = src;
    Eina_Value_Hash *d = dst;
@@ -3113,7 +3113,7 @@ struct _eina_value_type_hash_compare_each_ctx
 };
 
 static Efl_Bool
-_eina_value_type_hash_compare_each(const Eina_Hash *hash EINA_UNUSED, const void *key, void *_ptr, void *user_data)
+_eina_value_type_hash_compare_each(const Eina_Hash *hash EFL_UNUSED, const void *key, void *_ptr, void *user_data)
 {
    struct _eina_value_type_hash_compare_each_ctx *ctx = user_data;
    const void *self_ptr = _ptr;
@@ -3124,7 +3124,7 @@ _eina_value_type_hash_compare_each(const Eina_Hash *hash EINA_UNUSED, const void
 }
 
 static int
-_eina_value_type_hash_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_hash_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_Value_Hash *eva_a = a, *eva_b = b;
    struct _eina_value_type_hash_compare_each_ctx ctx = {
@@ -3172,7 +3172,7 @@ struct _eina_value_type_hash_convert_to_string_each_ctx
 };
 
 static Efl_Bool
-_eina_value_type_hash_convert_to_string_each(const Eina_Hash *hash EINA_UNUSED, const void *_key, void *_ptr, void *user_data)
+_eina_value_type_hash_convert_to_string_each(const Eina_Hash *hash EFL_UNUSED, const void *_key, void *_ptr, void *user_data)
 {
    struct _eina_value_type_hash_convert_to_string_each_ctx *ctx = user_data;
    const char *key = _key;
@@ -3204,7 +3204,7 @@ _eina_value_type_hash_convert_to_string_each(const Eina_Hash *hash EINA_UNUSED, 
 }
 
 static Efl_Bool
-_eina_value_type_hash_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_hash_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_Value_Hash *tmem = type_mem;
    Efl_Bool ret = EFL_FALSE;
@@ -3310,7 +3310,7 @@ _eina_value_type_hash_vset(const Eina_Value_Type *type, void *mem, va_list args)
 }
 
 static Efl_Bool
-_eina_value_type_hash_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_hash_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(Eina_Value_Hash));
    return EFL_TRUE;
@@ -3332,20 +3332,20 @@ static const Eina_Value_Type _EINA_VALUE_TYPE_HASH = {
 };
 
 static Efl_Bool
-_eina_value_type_timeval_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_timeval_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(struct timeval));
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_timeval_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_timeval_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_timeval_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_timeval_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const struct timeval *s = src;
    struct timeval *d = dst;
@@ -3365,7 +3365,7 @@ static inline struct timeval _eina_value_type_timeval_fix(const struct timeval *
 }
 
 static int
-_eina_value_type_timeval_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_timeval_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    struct timeval va = _eina_value_type_timeval_fix(a);
    struct timeval vb = _eina_value_type_timeval_fix(b);
@@ -3384,7 +3384,7 @@ _eina_value_type_timeval_compare(const Eina_Value_Type *type EINA_UNUSED, const 
 }
 
 static Efl_Bool
-_eina_value_type_timeval_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_timeval_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    struct timeval v = _eina_value_type_timeval_fix(type_mem);
 
@@ -3502,7 +3502,7 @@ _eina_value_type_timeval_convert_to(const Eina_Value_Type *type EINA_UNUSED, con
 }
 
 static Efl_Bool
-_eina_value_type_timeval_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_timeval_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    struct timeval *tmem = mem;
    *tmem = _eina_value_type_timeval_fix(ptr);
@@ -3518,7 +3518,7 @@ _eina_value_type_timeval_vset(const Eina_Value_Type *type, void *mem, va_list ar
 }
 
 static Efl_Bool
-_eina_value_type_timeval_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_timeval_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(struct timeval));
    return EFL_TRUE;
@@ -3547,13 +3547,13 @@ _eina_value_type_tm_setup(const Eina_Value_Type *type, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_tm_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_tm_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_tm_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void * dst)
+_eina_value_type_tm_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void * dst)
 {
    struct tm *tmsrc = (struct tm *)src;
    struct tm *tmdst = dst;
@@ -3578,7 +3578,7 @@ _eina_value_type_tm_compare(const Eina_Value_Type *type, const void *a, const vo
 }
 
 static Efl_Bool
-_eina_value_type_tm_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_tm_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    *(struct tm*)mem = *(struct tm*)ptr;
    return EFL_TRUE;
@@ -3635,7 +3635,7 @@ static const Eina_Value_Type _EINA_VALUE_TYPE_TM = {
 };
 
 static Efl_Bool
-_eina_value_type_blob_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_blob_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_Value_Blob));
    return EFL_TRUE;
@@ -3652,7 +3652,7 @@ _eina_value_type_blob_ops_get(const Eina_Value_Blob *blob)
 }
 
 static Efl_Bool
-_eina_value_type_blob_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_blob_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    const Eina_Value_Blob_Operations *ops = _eina_value_type_blob_ops_get(mem);
    Eina_Value_Blob *tmem = mem;
@@ -3664,7 +3664,7 @@ _eina_value_type_blob_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_blob_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_blob_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const Eina_Value_Blob_Operations *ops = _eina_value_type_blob_ops_get(src);
    const Eina_Value_Blob *s = src;
@@ -3683,7 +3683,7 @@ _eina_value_type_blob_copy(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static int
-_eina_value_type_blob_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_blob_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_Value_Blob_Operations *ops = _eina_value_type_blob_ops_get(a);
    const Eina_Value_Blob *ta = a, *tb = b;
@@ -3704,7 +3704,7 @@ _eina_value_type_blob_compare(const Eina_Value_Type *type EINA_UNUSED, const voi
 }
 
 static Efl_Bool
-_eina_value_type_blob_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_blob_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_Value_Blob *tmem = type_mem;
 
@@ -3853,7 +3853,7 @@ _eina_value_type_blob_convert_from(const Eina_Value_Type *type, const Eina_Value
 }
 
 static Efl_Bool
-_eina_value_type_blob_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_blob_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    const Eina_Value_Blob_Operations *ops = _eina_value_type_blob_ops_get(mem);
    Eina_Value_Blob *tmem = mem;
@@ -3882,7 +3882,7 @@ _eina_value_type_blob_vset(const Eina_Value_Type *type, void *mem, va_list args)
 }
 
 static Efl_Bool
-_eina_value_type_blob_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_blob_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(Eina_Value_Blob));
    return EFL_TRUE;
@@ -3904,7 +3904,7 @@ static const Eina_Value_Type _EINA_VALUE_TYPE_BLOB = {
 };
 
 static Efl_Bool
-_eina_value_type_value_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_value_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_Value *v = mem;
    memset(v, 0, sizeof(Eina_Value));
@@ -3912,7 +3912,7 @@ _eina_value_type_value_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_value_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_value_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_Value *v = mem;
    eina_value_flush(v);
@@ -3920,7 +3920,7 @@ _eina_value_type_value_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_value_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_value_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const Eina_Value *v_src = src;
    Eina_Value *v_dst = dst;
@@ -3928,7 +3928,7 @@ _eina_value_type_value_copy(const Eina_Value_Type *type EINA_UNUSED, const void 
 }
 
 static int
-_eina_value_type_value_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_value_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_Value *v1 = a;
    const Eina_Value *v2 = b;
@@ -3936,21 +3936,21 @@ _eina_value_type_value_compare(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static Efl_Bool
-_eina_value_type_value_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_value_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_Value *v = type_mem;
    return eina_value_type_convert_to(v->type, convert, eina_value_memory_get(v), convert_mem);
 }
 
 static Efl_Bool
-_eina_value_type_value_convert_from(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem)
+_eina_value_type_value_convert_from(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem)
 {
    Eina_Value *v = type_mem;
    return eina_value_type_convert_from(v->type, convert, eina_value_memory_get(v), convert_mem);
 }
 
 static Efl_Bool
-_eina_value_type_value_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, va_list args)
+_eina_value_type_value_vset(const Eina_Value_Type *type EFL_UNUSED, void *mem, va_list args)
 {
    Eina_Value *dst = mem;
    Eina_Value src = va_arg(args, Eina_Value);
@@ -3959,7 +3959,7 @@ _eina_value_type_value_vset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_value_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_value_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    Eina_Value *dst = mem;
    const Eina_Value *src = ptr;
@@ -3968,7 +3968,7 @@ _eina_value_type_value_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, 
 }
 
 static Efl_Bool
-_eina_value_type_value_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_value_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const Eina_Value *src = mem;
    Eina_Value *dst = ptr;
@@ -3998,7 +3998,7 @@ _eina_value_struct_operations_binsearch_cmp(const void *pa, const void *pb)
 }
 
 static const Eina_Value_Struct_Member *
-_eina_value_struct_operations_binsearch_find_member(const Eina_Value_Struct_Operations *ops EINA_UNUSED, const Eina_Value_Struct_Desc *desc, const char *name)
+_eina_value_struct_operations_binsearch_find_member(const Eina_Value_Struct_Operations *ops EFL_UNUSED, const Eina_Value_Struct_Desc *desc, const char *name)
 {
    unsigned int count = desc->member_count;
    Eina_Value_Struct_Member search;
@@ -4025,7 +4025,7 @@ static Eina_Value_Struct_Operations _EINA_VALUE_STRUCT_OPERATIONS_BINSEARCH = {
 };
 
 static const Eina_Value_Struct_Member *
-_eina_value_struct_operations_stringshare_find_member(const Eina_Value_Struct_Operations *ops EINA_UNUSED, const Eina_Value_Struct_Desc *desc, const char *name)
+_eina_value_struct_operations_stringshare_find_member(const Eina_Value_Struct_Operations *ops EFL_UNUSED, const Eina_Value_Struct_Desc *desc, const char *name)
 {
    const Eina_Value_Struct_Member *itr = desc->members;
 
@@ -4126,7 +4126,7 @@ eina_value_struct_member_find(const Eina_Value_Struct *st, const char *name)
 }
 
 static Efl_Bool
-_eina_value_type_struct_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_struct_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_Value_Struct));
    return EFL_TRUE;
@@ -4147,7 +4147,7 @@ _eina_value_type_struct_flush_member(const Eina_Value_Struct_Member *member, Ein
 }
 
 static Efl_Bool
-_eina_value_type_struct_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_struct_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    const Eina_Value_Struct_Operations *ops;
    const Eina_Value_Struct_Member *itr;
@@ -4194,7 +4194,7 @@ _eina_value_type_struct_copy_member(const Eina_Value_Struct_Member *member, cons
 }
 
 static Efl_Bool
-_eina_value_type_struct_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_struct_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const Eina_Value_Struct_Operations *ops;
    const Eina_Value_Struct_Member *itr;
@@ -4264,7 +4264,7 @@ _eina_value_type_struct_compare_member(const Eina_Value_Struct_Member *member, c
 }
 
 static int
-_eina_value_type_struct_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_struct_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_Value_Struct_Operations *ops = _eina_value_type_struct_ops_get(a);
    const Eina_Value_Struct *ta = a, *tb = b;
@@ -4335,7 +4335,7 @@ _eina_value_type_struct_convert_to_string_member(const Eina_Value_Struct *st, co
 }
 
 static Efl_Bool
-_eina_value_type_struct_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_struct_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_Value_Struct *tmem = type_mem;
 
@@ -4519,7 +4519,7 @@ _eina_value_type_struct_vset(const Eina_Value_Type *type, void *mem, va_list arg
 }
 
 static Efl_Bool
-_eina_value_type_struct_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_struct_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(Eina_Value_Struct));
    return EFL_TRUE;
@@ -4541,14 +4541,14 @@ static const Eina_Value_Type _EINA_VALUE_TYPE_STRUCT = {
 };
 
 static Efl_Bool
-_eina_value_type_optional_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_optional_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, type->value_size);
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_optional_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem EINA_UNUSED)
+_eina_value_type_optional_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem EFL_UNUSED)
 {
    if(sizeof(Eina_Value_Optional_Outer) <= sizeof(Eina_Value_Union))
      {
@@ -4672,7 +4672,7 @@ eina_value_optional_pget(Eina_Value *value, void *subvalue) EINA_ARG_NONNULL(1, 
 }
 
 static Efl_Bool
-_eina_value_type_optional_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src_raw, void *dst_raw)
+_eina_value_type_optional_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src_raw, void *dst_raw)
 {
    if(sizeof(Eina_Value_Optional_Outer) <= sizeof(Eina_Value_Union))
      {
@@ -4702,7 +4702,7 @@ _eina_value_type_optional_copy(const Eina_Value_Type *type EINA_UNUSED, const vo
 }
 
 static int
-_eina_value_type_optional_compare(const Eina_Value_Type *type EINA_UNUSED, const void *lhs_raw, const void *rhs_raw)
+_eina_value_type_optional_compare(const Eina_Value_Type *type EFL_UNUSED, const void *lhs_raw, const void *rhs_raw)
 {
    if(sizeof(Eina_Value_Optional_Outer) <= sizeof(Eina_Value_Union))
      {
@@ -4734,7 +4734,7 @@ _eina_value_type_optional_compare(const Eina_Value_Type *type EINA_UNUSED, const
 }
 
 static Efl_Bool
-_eina_value_type_optional_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_optional_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    _eina_value_type_optional_flush(type, mem);
    _eina_value_type_optional_copy(type, ptr, mem);
@@ -4742,7 +4742,7 @@ _eina_value_type_optional_pset(const Eina_Value_Type *type EINA_UNUSED, void *me
 }
 
 static Efl_Bool
-_eina_value_type_optional_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_optional_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof(Eina_Value_Union));
    return EFL_TRUE;
@@ -4778,14 +4778,14 @@ EINA_API const Eina_Value_Type _EINA_VALUE_TYPE_OPTIONAL = {
 };
 
 static Efl_Bool
-_eina_value_type_file_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_file_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_File *));
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_file_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_file_flush(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    Eina_File *f = *(Eina_File **)mem;
 
@@ -4794,7 +4794,7 @@ _eina_value_type_file_flush(const Eina_Value_Type *type EINA_UNUSED, void *mem)
 }
 
 static Efl_Bool
-_eina_value_type_file_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_file_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    const Eina_File *f = *(const Eina_File **)src;
    Eina_File **d = dst;
@@ -4804,7 +4804,7 @@ _eina_value_type_file_copy(const Eina_Value_Type *type EINA_UNUSED, const void *
 }
 
 static int
-_eina_value_type_file_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_file_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_File *ta = *(const Eina_File **)a;
    const Eina_File *tb = *(const Eina_File **)b;
@@ -4816,7 +4816,7 @@ _eina_value_type_file_compare(const Eina_Value_Type *type EINA_UNUSED, const voi
 }
 
 static Efl_Bool
-_eina_value_type_file_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_file_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_File *f = *(const Eina_File **) type_mem;
    Efl_Bool ret = EFL_FALSE;
@@ -4852,7 +4852,7 @@ _eina_value_type_file_convert_to(const Eina_Value_Type *type EINA_UNUSED, const 
 }
 
 static Efl_Bool
-_eina_value_type_file_convert_from(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem)
+_eina_value_type_file_convert_from(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem)
 {
    Eina_File **f = type_mem;
 
@@ -4870,7 +4870,7 @@ _eina_value_type_file_convert_from(const Eina_Value_Type *type EINA_UNUSED, cons
 }
 
 static Efl_Bool
-_eina_value_type_file_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_file_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    Eina_File **d = mem;
    const Eina_File *s = ptr;
@@ -4887,7 +4887,7 @@ _eina_value_type_file_vset(const Eina_Value_Type *type, void *mem, va_list args)
 }
 
 static Efl_Bool
-_eina_value_type_file_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_file_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    memcpy(ptr, mem, sizeof (Eina_File*));
    return EFL_TRUE;
@@ -4909,21 +4909,21 @@ EINA_API const Eina_Value_Type _EINA_VALUE_TYPE_FILE = {
 };
 
 static Efl_Bool
-_eina_value_type_rectangle_setup(const Eina_Value_Type *type EINA_UNUSED, void *mem)
+_eina_value_type_rectangle_setup(const Eina_Value_Type *type EFL_UNUSED, void *mem)
 {
    memset(mem, 0, sizeof(Eina_Rectangle));
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_rectangle_flush(const Eina_Value_Type *type EINA_UNUSED,
-                                 void *mem EINA_UNUSED)
+_eina_value_type_rectangle_flush(const Eina_Value_Type *type EFL_UNUSED,
+                                 void *mem EFL_UNUSED)
 {
    return EFL_TRUE;
 }
 
 static Efl_Bool
-_eina_value_type_rectangle_copy(const Eina_Value_Type *type EINA_UNUSED, const void *src, void *dst)
+_eina_value_type_rectangle_copy(const Eina_Value_Type *type EFL_UNUSED, const void *src, void *dst)
 {
    memcpy(dst, src, sizeof (Eina_Rectangle));
 
@@ -4931,7 +4931,7 @@ _eina_value_type_rectangle_copy(const Eina_Value_Type *type EINA_UNUSED, const v
 }
 
 static int
-_eina_value_type_rectangle_compare(const Eina_Value_Type *type EINA_UNUSED, const void *a, const void *b)
+_eina_value_type_rectangle_compare(const Eina_Value_Type *type EFL_UNUSED, const void *a, const void *b)
 {
    const Eina_Rectangle *ra = a;
    const Eina_Rectangle *rb = b;
@@ -4941,7 +4941,7 @@ _eina_value_type_rectangle_compare(const Eina_Value_Type *type EINA_UNUSED, cons
 }
 
 static Efl_Bool
-_eina_value_type_rectangle_convert_to(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
+_eina_value_type_rectangle_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem)
 {
    const Eina_Rectangle *tr = type_mem;
    Efl_Bool ret = EFL_FALSE;
@@ -4960,7 +4960,7 @@ _eina_value_type_rectangle_convert_to(const Eina_Value_Type *type EINA_UNUSED, c
 }
 
 static Efl_Bool
-_eina_value_type_rectangle_convert_from(const Eina_Value_Type *type EINA_UNUSED, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem)
+_eina_value_type_rectangle_convert_from(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem)
 {
    Eina_Rectangle *r = type_mem;
 
@@ -4981,7 +4981,7 @@ _eina_value_type_rectangle_convert_from(const Eina_Value_Type *type EINA_UNUSED,
 }
 
 static Efl_Bool
-_eina_value_type_rectangle_pset(const Eina_Value_Type *type EINA_UNUSED, void *mem, const void *ptr)
+_eina_value_type_rectangle_pset(const Eina_Value_Type *type EFL_UNUSED, void *mem, const void *ptr)
 {
    const Eina_Rectangle *r = ptr;
    Eina_Rectangle *tr = mem;
@@ -4998,7 +4998,7 @@ _eina_value_type_rectangle_vset(const Eina_Value_Type *type, void *mem, va_list 
 }
 
 static Efl_Bool
-_eina_value_type_rectangle_pget(const Eina_Value_Type *type EINA_UNUSED, const void *mem, void *ptr)
+_eina_value_type_rectangle_pget(const Eina_Value_Type *type EFL_UNUSED, const void *mem, void *ptr)
 {
    const Eina_Rectangle *tr = mem;
    Eina_Rectangle *r = ptr;
@@ -5256,13 +5256,13 @@ static const Eina_Value_Type _EINA_VALUE_TYPE_BASICS[] = {
 };
 
 static void
-_eina_value_blob_operations_malloc_free(const Eina_Value_Blob_Operations *ops EINA_UNUSED, void *memory, size_t size EINA_UNUSED)
+_eina_value_blob_operations_malloc_free(const Eina_Value_Blob_Operations *ops EFL_UNUSED, void *memory, size_t size EFL_UNUSED)
 {
    free(memory);
 }
 
 static void *
-_eina_value_blob_operations_malloc_copy(const Eina_Value_Blob_Operations *ops EINA_UNUSED, const void *memory, size_t size)
+_eina_value_blob_operations_malloc_copy(const Eina_Value_Blob_Operations *ops EFL_UNUSED, const void *memory, size_t size)
 {
    void *ret = malloc(size);
    if (!ret) return NULL;

@@ -505,7 +505,7 @@ eina_thread_queue_wait(Eina_Thread_Queue *thq, void **allocref)
 }
 
 EINA_API void
-eina_thread_queue_wait_done(Eina_Thread_Queue *thq EINA_UNUSED, void *allocref)
+eina_thread_queue_wait_done(Eina_Thread_Queue *thq EFL_UNUSED, void *allocref)
 {
    _eina_thread_queue_msg_fetch_done(allocref);
 }

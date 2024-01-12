@@ -564,9 +564,9 @@ eina_str_convert(const char *enc_from, const char *enc_to, const char *text)
 }
 #else
 EINA_API char *
-eina_str_convert(const char *enc_from EINA_UNUSED,
-                 const char *enc_to EINA_UNUSED,
-                 const char *text EINA_UNUSED)
+eina_str_convert(const char *enc_from EFL_UNUSED,
+                 const char *enc_to EFL_UNUSED,
+                 const char *text EFL_UNUSED)
 {
    return NULL;
 }
@@ -637,7 +637,7 @@ eina_str_convert_len(const char *enc_from, const char *enc_to, const char *text,
 }
 #else
 EINA_API char *
-eina_str_convert_len(const char *enc_from EINA_UNUSED, const char *enc_to EINA_UNUSED, const char *text EINA_UNUSED, size_t len EINA_UNUSED, size_t *retlen)
+eina_str_convert_len(const char *enc_from EFL_UNUSED, const char *enc_to EFL_UNUSED, const char *text EFL_UNUSED, size_t len EFL_UNUSED, size_t *retlen)
 {
    if (retlen) *retlen = 0;
    return NULL;

@@ -24,7 +24,7 @@ struct _Efl_Loop_Message_Handler_Data
 };
 
 EOLIAN static Efl_Loop_Message *
-_efl_loop_message_handler_message_add(Eo *obj, Efl_Loop_Message_Handler_Data *pd EINA_UNUSED)
+_efl_loop_message_handler_message_add(Eo *obj, Efl_Loop_Message_Handler_Data *pd EFL_UNUSED)
 {
    // XXX: implement message object cache
    Efl_Loop_Message *message = efl_add(EFL_LOOP_MESSAGE_CLASS, obj);
@@ -140,14 +140,14 @@ _efl_loop_message_handler_message_clear(Eo *obj, Efl_Loop_Message_Handler_Data *
 }
 
 EOLIAN static Efl_Object *
-_efl_loop_message_handler_efl_object_constructor(Eo *obj, Efl_Loop_Message_Handler_Data *pd EINA_UNUSED)
+_efl_loop_message_handler_efl_object_constructor(Eo *obj, Efl_Loop_Message_Handler_Data *pd EFL_UNUSED)
 {
    obj = efl_constructor(efl_super(obj, MY_CLASS));
    return obj;
 }
 
 EOLIAN static void
-_efl_loop_message_handler_efl_object_destructor(Eo *obj, Efl_Loop_Message_Handler_Data *pd EINA_UNUSED)
+_efl_loop_message_handler_efl_object_destructor(Eo *obj, Efl_Loop_Message_Handler_Data *pd EFL_UNUSED)
 {
    efl_destructor(efl_super(obj, MY_CLASS));
 }

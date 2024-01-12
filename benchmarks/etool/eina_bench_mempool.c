@@ -109,7 +109,7 @@ eina_mempool_glib(int request)
 #endif
 
 void
-eina_bench_mempool(Eina_Benchmark *bench EINA_UNUSED)
+eina_bench_mempool(Eina_Benchmark *bench EFL_UNUSED)
 {
    #ifdef EINA_BUILD_CHAINED_POOL
       eina_benchmark_register(bench, "chained mempool",

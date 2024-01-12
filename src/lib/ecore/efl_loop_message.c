@@ -50,7 +50,7 @@ _efl_loop_message_unsend(Eo *obj)
 /////////////////////////////////////////////////////////////////////////////
 
 EOLIAN static Efl_Object *
-_efl_loop_message_efl_object_constructor(Eo *obj, Efl_Loop_Message_Data *pd EINA_UNUSED)
+_efl_loop_message_efl_object_constructor(Eo *obj, Efl_Loop_Message_Data *pd EFL_UNUSED)
 {
    obj = efl_constructor(efl_super(obj, MY_CLASS));
    return obj;

@@ -253,7 +253,7 @@ struct _Eina_Inarray
  * @since 1.2
  */
 EINA_API Eina_Inarray *eina_inarray_new(unsigned int member_size,
-                                    unsigned int step) EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+                                    unsigned int step) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Frees an array and its members.
@@ -423,7 +423,7 @@ EINA_API void *eina_inarray_pop(Eina_Inarray *array) EINA_ARG_NONNULL(1);
  * @since 1.2
  */
 EINA_API void *eina_inarray_nth(const Eina_Inarray *array,
-                            unsigned int position) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+                            unsigned int position) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Copies the data at the given position in the array.
@@ -479,7 +479,7 @@ EINA_API Efl_Bool eina_inarray_insert_at(Eina_Inarray *array,
  */
 EINA_API void *eina_inarray_alloc_at(Eina_Inarray *array,
                                  unsigned int position,
-                                 unsigned int member_count) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+                                 unsigned int member_count) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Copies the data to the given position.
@@ -646,7 +646,7 @@ EINA_API Efl_Bool eina_inarray_resize(Eina_Inarray *array, unsigned int new_size
  *
  * @since 1.2
  */
-EINA_API unsigned int eina_inarray_count(const Eina_Inarray *array) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API unsigned int eina_inarray_count(const Eina_Inarray *array) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new iterator associated to an array.
@@ -665,7 +665,7 @@ EINA_API unsigned int eina_inarray_count(const Eina_Inarray *array) EINA_ARG_NON
  *
  * @since 1.2
  */
-EINA_API Eina_Iterator *eina_inarray_iterator_new(const Eina_Inarray *array) EINA_MALLOC EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Iterator *eina_inarray_iterator_new(const Eina_Inarray *array) EINA_MALLOC EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Returns a new reversed iterator associated to an array.
@@ -686,7 +686,7 @@ EINA_API Eina_Iterator *eina_inarray_iterator_new(const Eina_Inarray *array) EIN
  *
  * @since 1.2
  */
-EINA_API Eina_Iterator *eina_inarray_iterator_reversed_new(const Eina_Inarray *array) EINA_MALLOC EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Iterator *eina_inarray_iterator_reversed_new(const Eina_Inarray *array) EINA_MALLOC EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Returns a new accessor associated to an array.
@@ -701,7 +701,7 @@ EINA_API Eina_Iterator *eina_inarray_iterator_reversed_new(const Eina_Inarray *a
  *
  * @since 1.2
  */
-EINA_API Eina_Accessor *eina_inarray_accessor_new(const Eina_Inarray *array) EINA_MALLOC EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_Accessor *eina_inarray_accessor_new(const Eina_Inarray *array) EINA_MALLOC EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @def EINA_INARRAY_FOREACH

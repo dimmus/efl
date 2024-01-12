@@ -67,7 +67,7 @@ _efl_container_model_efl_object_constructor(Eo *obj,
 }
 
 static Efl_Object *
-_efl_container_model_efl_object_finalize(Eo *obj, Efl_Container_Model_Data *sd EINA_UNUSED)
+_efl_container_model_efl_object_finalize(Eo *obj, Efl_Container_Model_Data *sd EFL_UNUSED)
 {
    if (!efl_ui_view_model_get(obj))
      {
@@ -87,7 +87,7 @@ _efl_container_model_efl_object_destructor(Eo *obj,
 }
 
 static const Eina_Value_Type *
-_efl_container_model_child_property_value_type_get(Eo *obj EINA_UNUSED,
+_efl_container_model_child_property_value_type_get(Eo *obj EFL_UNUSED,
                                                    Efl_Container_Model_Data *sd,
                                                    const char *property)
 {
@@ -200,7 +200,7 @@ _efl_container_model_child_property_add(Eo *obj,
 }
 
 static Eina_Iterator *
-_efl_container_model_efl_model_properties_get(const Eo *obj EINA_UNUSED,
+_efl_container_model_efl_model_properties_get(const Eo *obj EFL_UNUSED,
                                               Efl_Container_Model_Data *sd)
 {
    EFL_COMPOSITE_MODEL_PROPERTIES_SUPER(props,
@@ -300,7 +300,7 @@ _efl_container_model_efl_model_property_get(const Eo *obj,
 }
 
 static unsigned int
-_efl_container_model_efl_model_children_count_get(const Eo *obj EINA_UNUSED, Efl_Container_Model_Data *sd)
+_efl_container_model_efl_model_children_count_get(const Eo *obj EFL_UNUSED, Efl_Container_Model_Data *sd)
 {
    unsigned int pcount;
 

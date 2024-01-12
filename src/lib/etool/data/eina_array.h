@@ -251,7 +251,7 @@ struct _Eina_Array
  * This function return a valid array on success, or @c NULL if memory
  * allocation fails.
  */
-EINA_API Eina_Array *eina_array_new(unsigned int step) EINA_WARN_UNUSED_RESULT EINA_MALLOC EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Array *eina_array_new(unsigned int step) EFL_WARN_UNUSED_RESULT EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Frees an array.
@@ -397,7 +397,7 @@ static inline void      eina_array_data_set(const Eina_Array *array,
  * @c NULL or invalid, the program may crash.
  *
  */
-static inline unsigned int eina_array_count_get(const Eina_Array *array) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline unsigned int eina_array_count_get(const Eina_Array *array) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns the number of elements in an array.
@@ -409,7 +409,7 @@ static inline unsigned int eina_array_count_get(const Eina_Array *array) EINA_AR
  * performance reasons, there is no check of @p array, so if it is
  * @c NULL or invalid, the program may crash.
  */
-static inline unsigned int eina_array_count(const Eina_Array *array) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline unsigned int eina_array_count(const Eina_Array *array) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Search for the given data in an array.
@@ -427,7 +427,7 @@ static inline unsigned int eina_array_count(const Eina_Array *array) EINA_ARG_NO
  */
 static inline Efl_Bool  eina_array_find(const Eina_Array *array,
                                          const void       *data,
-                                         unsigned int     *out_idx) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+                                         unsigned int     *out_idx) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 /**
  * @brief Gets a new iterator associated with an array.
  *
@@ -441,7 +441,7 @@ static inline Efl_Bool  eina_array_find(const Eina_Array *array,
  *
  * @see Eina_Iterator_Group
  */
-EINA_API Eina_Iterator        *eina_array_iterator_new(const Eina_Array *array) EINA_MALLOC EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator        *eina_array_iterator_new(const Eina_Array *array) EINA_MALLOC EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets a new accessor associated with an array.
@@ -456,7 +456,7 @@ EINA_API Eina_Iterator        *eina_array_iterator_new(const Eina_Array *array) 
  *
  * @see Eina_Accessor_Group
  */
-EINA_API Eina_Accessor        *eina_array_accessor_new(const Eina_Array *array) EINA_MALLOC EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Accessor        *eina_array_accessor_new(const Eina_Array *array) EINA_MALLOC EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Iterates over an array using a callback function.

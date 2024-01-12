@@ -528,7 +528,7 @@ EINA_API void eina_log_level_set(int level);
  *
  * @see eina_log_level_set()
  */
-EINA_API int  eina_log_level_get(void) EINA_WARN_UNUSED_RESULT;
+EINA_API int  eina_log_level_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Determines if a given @p level should be logged.
@@ -553,7 +553,7 @@ static inline Efl_Bool eina_log_level_check(int level);
  * @return #EFL_TRUE if the current thread is the one that called
  * eina_log_threads_init(), otherwise #EFL_FALSE.
  */
-EINA_API Efl_Bool          eina_log_main_thread_check(void) EINA_CONST EINA_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool          eina_log_main_thread_check(void) EINA_CONST EFL_WARN_UNUSED_RESULT;
 
 
 /**
@@ -574,7 +574,7 @@ EINA_API void               eina_log_color_disable_set(Efl_Bool disabled);
  *
  * @see eina_log_color_disable_set()
  */
-EINA_API Efl_Bool          eina_log_color_disable_get(void) EINA_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool          eina_log_color_disable_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets if originating file name logging should be disabled.
@@ -594,7 +594,7 @@ EINA_API void               eina_log_file_disable_set(Efl_Bool disabled);
  *
  * @see eina_log_file_disable_set()
  */
-EINA_API Efl_Bool          eina_log_file_disable_get(void) EINA_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool          eina_log_file_disable_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets if originating function name logging should be disabled.
@@ -615,7 +615,7 @@ EINA_API void               eina_log_function_disable_set(Efl_Bool disabled);
  *
  * @see eina_log_function_disable_set()
  */
-EINA_API Efl_Bool          eina_log_function_disable_get(void) EINA_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool          eina_log_function_disable_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets if critical messages should abort the program.
@@ -642,7 +642,7 @@ EINA_API void               eina_log_abort_on_critical_set(Efl_Bool abort_on_cri
  * @see eina_log_abort_on_critical_set()
  * @see eina_log_abort_on_critical_level_set()
  */
-EINA_API Efl_Bool          eina_log_abort_on_critical_get(void) EINA_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool          eina_log_abort_on_critical_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets level that triggers abort if abort-on-critical is set.
@@ -669,7 +669,7 @@ EINA_API void               eina_log_abort_on_critical_level_set(int critical_le
  * @see eina_log_abort_on_critical_level_set()
  * @see eina_log_abort_on_critical_get()
  */
-EINA_API int                eina_log_abort_on_critical_level_get(void) EINA_WARN_UNUSED_RESULT;
+EINA_API int                eina_log_abort_on_critical_level_get(void) EFL_WARN_UNUSED_RESULT;
 
 
 /**
@@ -704,7 +704,7 @@ EINA_API void               eina_log_domain_level_set(const char *domain_name, i
  * @see eina_log_domain_level_set()
  * @see eina_log_domain_registered_level_get()
  */
-EINA_API int                eina_log_domain_level_get(const char *domain_name) EINA_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API int                eina_log_domain_level_get(const char *domain_name) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the domain level given its identifier.
@@ -717,7 +717,7 @@ EINA_API int                eina_log_domain_level_get(const char *domain_name) E
  * @return #EFL_TRUE if level should be printed, #EFL_FALSE if not.
  *         (domain's level is greater or equal @a level).
  */
-EINA_API int                eina_log_domain_registered_level_get(int domain) EINA_WARN_UNUSED_RESULT;
+EINA_API int                eina_log_domain_registered_level_get(int domain) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets the domain level given its identifier.

@@ -37,7 +37,7 @@ _efl_io_buffered_stream_error(void *data, const Efl_Event *event)
 }
 
 static void
-_efl_io_buffered_stream_copier_progress(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_buffered_stream_copier_progress(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    efl_event_callback_call(o, EFL_IO_BUFFERED_STREAM_EVENT_PROGRESS, NULL);
@@ -52,7 +52,7 @@ _efl_io_buffered_stream_incoming_can_read_changed(void *data, const Efl_Event *e
 }
 
 static void
-_efl_io_buffered_stream_incoming_slice_changed(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_buffered_stream_incoming_slice_changed(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    efl_event_callback_call(o, EFL_IO_BUFFERED_STREAM_EVENT_SLICE_CHANGED, NULL);
@@ -70,7 +70,7 @@ _efl_io_buffered_stream_receiver_line(void *data, const Efl_Event *event)
 }
 
 static void
-_efl_io_buffered_stream_receiver_done(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_buffered_stream_receiver_done(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    if (efl_io_closer_closed_get(o)) return; /* already closed (or closing) */
@@ -96,7 +96,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(_efl_io_buffered_stream_outgoing_cbs,
                            { EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED, _efl_io_buffered_stream_outgoing_can_write_changed });
 
 static void
-_efl_io_buffered_stream_sender_done(void *data, const Efl_Event *event EINA_UNUSED)
+_efl_io_buffered_stream_sender_done(void *data, const Efl_Event *event EFL_UNUSED)
 {
    Eo *o = data;
    Efl_Io_Buffered_Stream_Data *pd = efl_data_scope_get(o, MY_CLASS);
@@ -214,31 +214,31 @@ _efl_io_buffered_stream_efl_io_closer_close(Eo *o, Efl_Io_Buffered_Stream_Data *
 }
 
 EOLIAN static Efl_Bool
-_efl_io_buffered_stream_efl_io_closer_closed_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_efl_io_closer_closed_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    return pd->closed || efl_io_closer_closed_get(pd->inner_io);
 }
 
 EOLIAN static Efl_Bool
-_efl_io_buffered_stream_efl_io_closer_close_on_exec_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_efl_io_closer_close_on_exec_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    return efl_io_closer_close_on_exec_get(pd->inner_io);
 }
 
 EOLIAN static Efl_Bool
-_efl_io_buffered_stream_efl_io_closer_close_on_exec_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, Efl_Bool value)
+_efl_io_buffered_stream_efl_io_closer_close_on_exec_set(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, Efl_Bool value)
 {
    return efl_io_closer_close_on_exec_set(pd->inner_io, value);
 }
 
 EOLIAN static Efl_Bool
-_efl_io_buffered_stream_efl_io_closer_close_on_invalidate_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_efl_io_closer_close_on_invalidate_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    return efl_io_closer_close_on_invalidate_get(pd->inner_io);
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_efl_io_closer_close_on_invalidate_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, Efl_Bool value)
+_efl_io_buffered_stream_efl_io_closer_close_on_invalidate_set(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, Efl_Bool value)
 {
    efl_io_closer_close_on_invalidate_set(pd->inner_io, value);
 }
@@ -262,13 +262,13 @@ _efl_io_buffered_stream_efl_io_reader_read(Eo *o, Efl_Io_Buffered_Stream_Data *p
 }
 
 EOLIAN static Efl_Bool
-_efl_io_buffered_stream_efl_io_reader_can_read_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_efl_io_reader_can_read_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    return pd->can_read;
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_efl_io_reader_can_read_set(Eo *o, Efl_Io_Buffered_Stream_Data *pd EINA_UNUSED, Efl_Bool can_read)
+_efl_io_buffered_stream_efl_io_reader_can_read_set(Eo *o, Efl_Io_Buffered_Stream_Data *pd EFL_UNUSED, Efl_Bool can_read)
 {
    EINA_SAFETY_ON_TRUE_RETURN(efl_io_closer_closed_get(o));
    if (pd->can_read == can_read) return;
@@ -277,7 +277,7 @@ _efl_io_buffered_stream_efl_io_reader_can_read_set(Eo *o, Efl_Io_Buffered_Stream
 }
 
 EOLIAN static Efl_Bool
-_efl_io_buffered_stream_efl_io_reader_eos_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_efl_io_reader_eos_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    return pd->eos;
 }
@@ -328,13 +328,13 @@ _efl_io_buffered_stream_efl_io_writer_write(Eo *o, Efl_Io_Buffered_Stream_Data *
 }
 
 EOLIAN static Efl_Bool
-_efl_io_buffered_stream_efl_io_writer_can_write_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_efl_io_writer_can_write_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    return pd->can_write;
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_efl_io_writer_can_write_set(Eo *o, Efl_Io_Buffered_Stream_Data *pd EINA_UNUSED, Efl_Bool can_write)
+_efl_io_buffered_stream_efl_io_writer_can_write_set(Eo *o, Efl_Io_Buffered_Stream_Data *pd EFL_UNUSED, Efl_Bool can_write)
 {
    EINA_SAFETY_ON_TRUE_RETURN(efl_io_closer_closed_get(o));
    if (pd->can_write == can_write) return;
@@ -408,13 +408,13 @@ _efl_io_buffered_stream_inner_io_set(Eo *o, Efl_Io_Buffered_Stream_Data *pd, Efl
 }
 
 EOLIAN static Efl_Object *
-_efl_io_buffered_stream_inner_io_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_inner_io_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    return pd->inner_io;
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_max_queue_size_input_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t max_queue_size_input)
+_efl_io_buffered_stream_max_queue_size_input_set(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t max_queue_size_input)
 {
    if (!pd->incoming)
      {
@@ -425,14 +425,14 @@ _efl_io_buffered_stream_max_queue_size_input_set(Eo *o EINA_UNUSED, Efl_Io_Buffe
 }
 
 EOLIAN static size_t
-_efl_io_buffered_stream_max_queue_size_input_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_max_queue_size_input_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (!pd->incoming) return 0;
    return efl_io_queue_limit_get(pd->incoming);
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_max_queue_size_output_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t max_queue_size_output)
+_efl_io_buffered_stream_max_queue_size_output_set(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t max_queue_size_output)
 {
    if (!pd->outgoing)
      {
@@ -443,14 +443,14 @@ _efl_io_buffered_stream_max_queue_size_output_set(Eo *o EINA_UNUSED, Efl_Io_Buff
 }
 
 EOLIAN static size_t
-_efl_io_buffered_stream_max_queue_size_output_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_max_queue_size_output_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (!pd->outgoing) return 0;
    return efl_io_queue_limit_get(pd->outgoing);
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_line_delimiter_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, Eina_Slice slice)
+_efl_io_buffered_stream_line_delimiter_set(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, Eina_Slice slice)
 {
    if (!pd->receiver)
      {
@@ -461,14 +461,14 @@ _efl_io_buffered_stream_line_delimiter_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_St
 }
 
 EOLIAN static Eina_Slice
-_efl_io_buffered_stream_line_delimiter_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_line_delimiter_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (!pd->receiver) return (Eina_Slice){};
    return efl_io_copier_line_delimiter_get(pd->receiver);
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_timeout_inactivity_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, double seconds)
+_efl_io_buffered_stream_timeout_inactivity_set(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, double seconds)
 {
    if (pd->receiver)
      efl_io_copier_timeout_inactivity_set(pd->receiver, seconds);
@@ -477,7 +477,7 @@ _efl_io_buffered_stream_timeout_inactivity_set(Eo *o EINA_UNUSED, Efl_Io_Buffere
 }
 
 EOLIAN static double
-_efl_io_buffered_stream_timeout_inactivity_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_timeout_inactivity_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (pd->receiver)
      return efl_io_copier_timeout_inactivity_get(pd->receiver);
@@ -487,7 +487,7 @@ _efl_io_buffered_stream_timeout_inactivity_get(const Eo *o EINA_UNUSED, Efl_Io_B
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_read_chunk_size_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t size)
+_efl_io_buffered_stream_read_chunk_size_set(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t size)
 {
    if (pd->sender)
      {
@@ -503,28 +503,28 @@ _efl_io_buffered_stream_read_chunk_size_set(Eo *o EINA_UNUSED, Efl_Io_Buffered_S
 }
 
 EOLIAN static size_t
-_efl_io_buffered_stream_read_chunk_size_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_read_chunk_size_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (!pd->receiver) return 0;
    return efl_io_copier_read_chunk_size_get(pd->receiver);
 }
 
 EOLIAN static size_t
-_efl_io_buffered_stream_pending_write_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_pending_write_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (!pd->outgoing) return 0;
    return efl_io_queue_usage_get(pd->outgoing);
 }
 
 EOLIAN static size_t
-_efl_io_buffered_stream_pending_read_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_pending_read_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (!pd->incoming) return 0;
    return efl_io_queue_usage_get(pd->incoming);
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_progress_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t *pr, size_t *pw)
+_efl_io_buffered_stream_progress_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t *pr, size_t *pw)
 {
    uint64_t r = 0, w = 0;
 
@@ -536,7 +536,7 @@ _efl_io_buffered_stream_progress_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_St
 }
 
 EOLIAN static Eina_Slice
-_efl_io_buffered_stream_slice_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_slice_get(const Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    Eina_Slice slice = { };
 
@@ -547,14 +547,14 @@ _efl_io_buffered_stream_slice_get(const Eo *o EINA_UNUSED, Efl_Io_Buffered_Strea
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_discard(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t amount)
+_efl_io_buffered_stream_discard(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd, size_t amount)
 {
    if (!pd->incoming) return;
    efl_io_queue_discard(pd->incoming, amount);
 }
 
 EOLIAN static void
-_efl_io_buffered_stream_clear(Eo *o EINA_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
+_efl_io_buffered_stream_clear(Eo *o EFL_UNUSED, Efl_Io_Buffered_Stream_Data *pd)
 {
    if (!pd->incoming) return;
    efl_io_queue_clear(pd->incoming);

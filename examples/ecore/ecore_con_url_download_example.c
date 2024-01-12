@@ -20,7 +20,7 @@ struct _request
 };
 
 static Eina_Bool
-_url_progress_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event_info)
+_url_progress_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Progress *url_progress = event_info;
    float percent;
@@ -41,7 +41,7 @@ _url_progress_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event_info)
 }
 
 static Eina_Bool
-_url_complete_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event_info)
+_url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Complete *url_complete = event_info;
 

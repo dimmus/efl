@@ -74,7 +74,7 @@ typedef enum _Eina_Thread_Priority
  * @return identifier of current thread.
  * @since 1.8
  */
-EINA_API Eina_Thread eina_thread_self(void) EINA_WARN_UNUSED_RESULT;
+EINA_API Eina_Thread eina_thread_self(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Checks if two thread identifiers are the same.
@@ -83,7 +83,7 @@ EINA_API Eina_Thread eina_thread_self(void) EINA_WARN_UNUSED_RESULT;
  * @return #EFL_TRUE if they are equal, #EFL_FALSE otherwise.
  * @since 1.8
  */
-EINA_API Efl_Bool eina_thread_equal(Eina_Thread t1, Eina_Thread t2) EINA_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_thread_equal(Eina_Thread t1, Eina_Thread t2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates a new thread, setting its priority and affinity.
@@ -98,7 +98,7 @@ EINA_API Efl_Bool eina_thread_equal(Eina_Thread t1, Eina_Thread t2) EINA_WARN_UN
  */
 EINA_API Efl_Bool eina_thread_create(Eina_Thread *t,
                                   Eina_Thread_Priority prio, int affinity,
-                                  Eina_Thread_Cb func, const void *data) EINA_ARG_NONNULL(1, 4) EINA_WARN_UNUSED_RESULT;
+                                  Eina_Thread_Cb func, const void *data) EINA_ARG_NONNULL(1, 4) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief The return value of eina_thread_join() if it was canceled with

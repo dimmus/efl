@@ -40,7 +40,7 @@ _dummy_send(Eo *dialer, Eina_Bool text, size_t lines)
 }
 
 static void
-_ws_pong(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_pong(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: got PONG: %s\n", (const char *)event->info);
 
@@ -50,7 +50,7 @@ _ws_pong(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ws_closed_reason(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_closed_reason(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Efl_Net_Dialer_Websocket_Closed_Reason *reason = event->info;
    fprintf(stderr, "INFO: got CLOSE: %4d '%s'\n",
@@ -58,7 +58,7 @@ _ws_closed_reason(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ws_message_text(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_message_text(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: got TEXT:\n%s\n", (const char *)event->info);
 
@@ -69,7 +69,7 @@ _ws_message_text(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_ws_message_binary(void *data EINA_UNUSED, const Efl_Event *event)
+_ws_message_binary(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Slice *slice = event->info;
    size_t i;
@@ -94,7 +94,7 @@ _ws_message_binary(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_closed(void *data EINA_UNUSED, const Efl_Event *event)
+_closed(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: closed %s\n",
            efl_name_get(event->object));
@@ -102,14 +102,14 @@ _closed(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_eos(void *data EINA_UNUSED, const Efl_Event *event)
+_eos(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: eos %s\n",
            efl_name_get(event->object));
 }
 
 static void
-_connected(void *data EINA_UNUSED, const Efl_Event *event)
+_connected(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Stringshare *protocol;
    Eina_Iterator *itr;
@@ -125,7 +125,7 @@ _connected(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_resolved(void *data EINA_UNUSED, const Efl_Event *event)
+_resolved(void *data EFL_UNUSED, const Efl_Event *event)
 {
    fprintf(stderr, "INFO: resolved %s => %s\n",
            efl_net_dialer_address_dial_get(event->object),
@@ -133,7 +133,7 @@ _resolved(void *data EINA_UNUSED, const Efl_Event *event)
 }
 
 static void
-_error(void *data EINA_UNUSED, const Efl_Event *event)
+_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
    const Eina_Error *perr = event->info;
    fprintf(stderr, "INFO: error: %d '%s'\n", *perr, eina_error_msg_get(*perr));
@@ -224,20 +224,20 @@ static const Ecore_Getopt options = {
 static Eo *dialer = NULL;
 
 EAPI_MAIN void
-efl_pause(void *data EINA_UNUSED,
-          const Efl_Event *ev EINA_UNUSED)
+efl_pause(void *data EFL_UNUSED,
+          const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_resume(void *data EINA_UNUSED,
-           const Efl_Event *ev EINA_UNUSED)
+efl_resume(void *data EFL_UNUSED,
+           const Efl_Event *ev EFL_UNUSED)
 {
 }
 
 EAPI_MAIN void
-efl_terminate(void *data EINA_UNUSED,
-              const Efl_Event *ev EINA_UNUSED)
+efl_terminate(void *data EFL_UNUSED,
+              const Efl_Event *ev EFL_UNUSED)
 {
    /* FIXME: For the moment the main loop doesn't get
       properly destroyed on shutdown which disallow
@@ -252,7 +252,7 @@ efl_terminate(void *data EINA_UNUSED,
 }
 
 EAPI_MAIN void
-efl_main(void *data EINA_UNUSED,
+efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *address = NULL;

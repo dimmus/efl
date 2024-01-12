@@ -23,7 +23,7 @@ struct _Ecore_Event_Message_Data
 //////////////////////////////////////////////////////////////////////////
 
 EOLIAN static void
-_ecore_event_message_data_set(Eo *obj EINA_UNUSED, Ecore_Event_Message_Data *pd, int type, void *data, void *free_func, void *free_data)
+_ecore_event_message_data_set(Eo *obj EFL_UNUSED, Ecore_Event_Message_Data *pd, int type, void *data, void *free_func, void *free_data)
 {
    pd->type = type;
    pd->ev = data;
@@ -32,7 +32,7 @@ _ecore_event_message_data_set(Eo *obj EINA_UNUSED, Ecore_Event_Message_Data *pd,
 }
 
 EOLIAN static void
-_ecore_event_message_data_get(const Eo *obj EINA_UNUSED, Ecore_Event_Message_Data *pd, int *type, void **data, void **free_func, void **free_data)
+_ecore_event_message_data_get(const Eo *obj EFL_UNUSED, Ecore_Event_Message_Data *pd, int *type, void **data, void **free_func, void **free_data)
 {
    if (type) *type = pd->type;
    if (data) *data = pd->ev;
@@ -41,7 +41,7 @@ _ecore_event_message_data_get(const Eo *obj EINA_UNUSED, Ecore_Event_Message_Dat
 }
 
 EOLIAN static void
-_ecore_event_message_data_steal(Eo *obj EINA_UNUSED, Ecore_Event_Message_Data *pd, int *type, void **data, void **free_func, void **free_data)
+_ecore_event_message_data_steal(Eo *obj EFL_UNUSED, Ecore_Event_Message_Data *pd, int *type, void **data, void **free_func, void **free_data)
 {
    if (type) *type = pd->type;
    if (data) *data = pd->ev;
@@ -54,7 +54,7 @@ _ecore_event_message_data_steal(Eo *obj EINA_UNUSED, Ecore_Event_Message_Data *p
 }
 
 EOLIAN static Efl_Object *
-_ecore_event_message_efl_object_constructor(Eo *obj, Ecore_Event_Message_Data *pd EINA_UNUSED)
+_ecore_event_message_efl_object_constructor(Eo *obj, Ecore_Event_Message_Data *pd EFL_UNUSED)
 {
    obj = efl_constructor(efl_super(obj, MY_CLASS));
    pd->type = -1;
@@ -62,7 +62,7 @@ _ecore_event_message_efl_object_constructor(Eo *obj, Ecore_Event_Message_Data *p
 }
 
 EOLIAN static void
-_ecore_event_message_efl_object_destructor(Eo *obj EINA_UNUSED, Ecore_Event_Message_Data *pd EINA_UNUSED)
+_ecore_event_message_efl_object_destructor(Eo *obj EFL_UNUSED, Ecore_Event_Message_Data *pd EFL_UNUSED)
 {
    if (pd->ev)
      {

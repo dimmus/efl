@@ -41,7 +41,7 @@ static Eina_Thread       _sysmon_thread;
 // right now that means iterating through cpu's and getting their cpu
 // frequency to match up with event logs.
 static void *
-_sysmon(void *data EINA_UNUSED, Eina_Thread thr EINA_UNUSED)
+_sysmon(void *data EFL_UNUSED, Eina_Thread thr EFL_UNUSED)
 {
    static int cpufreqs[64] = { 0 };
    int i, fd, freq;
@@ -242,7 +242,7 @@ _sysmon(void *data EINA_UNUSED, Eina_Thread thr EINA_UNUSED)
 }
 
 static Efl_Bool
-_cpufreq_on_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *buffer EINA_UNUSED, int size EINA_UNUSED)
+_cpufreq_on_cb(Eina_Debug_Session *session EFL_UNUSED, int cid EFL_UNUSED, void *buffer EFL_UNUSED, int size EFL_UNUSED)
 {
    Efl_Bool err;
    if (!_eina_debug_evlog_active)
@@ -292,7 +292,7 @@ _stop_cpu_thread(void)
 }
 
 static Efl_Bool
-_cpufreq_off_cb(Eina_Debug_Session *session EINA_UNUSED, int cid EINA_UNUSED, void *buffer EINA_UNUSED, int size EINA_UNUSED)
+_cpufreq_off_cb(Eina_Debug_Session *session EFL_UNUSED, int cid EFL_UNUSED, void *buffer EFL_UNUSED, int size EFL_UNUSED)
 {
    if (!_eina_debug_sysmon_active) return EFL_TRUE;
    _stop_cpu_thread();

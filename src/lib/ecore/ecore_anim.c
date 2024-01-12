@@ -126,7 +126,7 @@ _timer_send_time(double t, Ecore_Thread *thread)
 }
 
 static void
-_timer_tick_core(void *data EINA_UNUSED, Ecore_Thread *thread)
+_timer_tick_core(void *data EFL_UNUSED, Ecore_Thread *thread)
 {
 #ifdef HAVE_EPOLL
    int pollfd = -1, timerfd = -1;
@@ -339,7 +339,7 @@ done:
 }
 
 static void
-_timer_tick_notify(void *data EINA_UNUSED, Ecore_Thread *thread EINA_UNUSED, void *msg)
+_timer_tick_notify(void *data EFL_UNUSED, Ecore_Thread *thread EFL_UNUSED, void *msg)
 {
    int tick_queued;
 
@@ -369,7 +369,7 @@ _timer_tick_notify(void *data EINA_UNUSED, Ecore_Thread *thread EINA_UNUSED, voi
 }
 
 static void
-_timer_tick_finished(void *data EINA_UNUSED, Ecore_Thread *thread EINA_UNUSED)
+_timer_tick_finished(void *data EFL_UNUSED, Ecore_Thread *thread EFL_UNUSED)
 {
    eina_spinlock_free(&tick_queue_lock);
    timer_thread = NULL;

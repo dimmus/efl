@@ -82,7 +82,7 @@ static inline void  eina_trash_push(Eina_Trash **trash, void *data) EINA_ARG_NON
  *       the region pointed by pointer inside the trash, so it's your duty
  *       to manage the size of the returned pointer.
  */
-static inline void *eina_trash_pop(Eina_Trash **trash) EINA_ARG_NONNULL(1) EINA_WARN_UNUSED_RESULT;
+static inline void *eina_trash_pop(Eina_Trash **trash) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @def EINA_TRASH_CLEAN

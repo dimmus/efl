@@ -22,7 +22,7 @@
 #define TIMEOUT (1.0)
 
 static void
-_delete_request_cb(Ecore_Evas *ee EINA_UNUSED)
+_delete_request_cb(Ecore_Evas *ee EFL_UNUSED)
 {
    ecore_main_loop_quit();
 }
@@ -144,7 +144,7 @@ _device_added(void *data, const Efl_Event *event)
 }
 
 int
-main(int argc EINA_UNUSED, char *argv[] EINA_UNUSED)
+main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
 {
    const Eina_List *devs, *l;
    Efl_Input_Device *dev;

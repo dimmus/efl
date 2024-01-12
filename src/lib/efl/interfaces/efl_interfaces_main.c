@@ -79,7 +79,7 @@
 #include "interfaces/efl_cached_item.eo.c"
 
 static void
-_noref_death(void *data EINA_UNUSED, const Efl_Event *event)
+_noref_death(void *data EFL_UNUSED, const Efl_Event *event)
 {
    efl_event_callback_del(event->object, EFL_EVENT_NOREF, _noref_death, NULL);
    efl_del(event->object);
@@ -112,7 +112,7 @@ __efl_internal_init(void)
 }
 
 static Eina_Value
-_efl_ui_view_factory_item_created(Eo *factory, void *data EINA_UNUSED, const Eina_Value v)
+_efl_ui_view_factory_item_created(Eo *factory, void *data EFL_UNUSED, const Eina_Value v)
 {
    Efl_Gfx_Entity *item;
    int len, i;

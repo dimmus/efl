@@ -157,7 +157,7 @@ _efl_loop_timer_efl_object_finalize(Eo *obj, Efl_Loop_Timer_Data *pd)
 }
 
 static void
-_ecore_timer_legacy_del(void *data, const Efl_Event *event EINA_UNUSED)
+_ecore_timer_legacy_del(void *data, const Efl_Event *event EFL_UNUSED)
 {
    free(data);
 }
@@ -259,26 +259,26 @@ ecore_timer_del(Ecore_Timer *timer)
 }
 
 EOLIAN static void
-_efl_loop_timer_timer_interval_set(Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer, double in)
+_efl_loop_timer_timer_interval_set(Eo *obj EFL_UNUSED, Efl_Loop_Timer_Data *timer, double in)
 {
    if (in < 0.0) in = 0.0;
    timer->in = in;
 }
 
 EOLIAN static double
-_efl_loop_timer_timer_interval_get(const Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer)
+_efl_loop_timer_timer_interval_get(const Eo *obj EFL_UNUSED, Efl_Loop_Timer_Data *timer)
 {
    return timer->in;
 }
 
 EOLIAN static void
-_efl_loop_timer_timer_delay(Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *pd, double add)
+_efl_loop_timer_timer_delay(Eo *obj EFL_UNUSED, Efl_Loop_Timer_Data *pd, double add)
 {
    _efl_loop_timer_util_delay(pd, add);
 }
 
 EOLIAN static void
-_efl_loop_timer_timer_reset(Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer)
+_efl_loop_timer_timer_reset(Eo *obj EFL_UNUSED, Efl_Loop_Timer_Data *timer)
 {
    double now, add;
 
@@ -299,7 +299,7 @@ _efl_loop_timer_timer_reset(Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer)
 }
 
 EOLIAN static void
-_efl_loop_timer_timer_loop_reset(Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer)
+_efl_loop_timer_timer_loop_reset(Eo *obj EFL_UNUSED, Efl_Loop_Timer_Data *timer)
 {
    double now, add;
 
@@ -320,7 +320,7 @@ _efl_loop_timer_timer_loop_reset(Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer
 }
 
 EOLIAN static double
-_efl_loop_timer_time_pending_get(const Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer)
+_efl_loop_timer_time_pending_get(const Eo *obj EFL_UNUSED, Efl_Loop_Timer_Data *timer)
 {
    double now, ret = 0.0;
 
@@ -368,7 +368,7 @@ ecore_timer_freeze_get(Ecore_Timer *timer)
 }
 
 EOLIAN static int
-_efl_loop_timer_efl_object_event_freeze_count_get(const Eo *obj EINA_UNUSED, Efl_Loop_Timer_Data *timer)
+_efl_loop_timer_efl_object_event_freeze_count_get(const Eo *obj EFL_UNUSED, Efl_Loop_Timer_Data *timer)
 {
    return timer->frozen;
 }
@@ -524,7 +524,7 @@ _efl_loop_timer_efl_object_destructor(Eo *obj, Efl_Loop_Timer_Data *pd)
 }
 
 void
-_efl_loop_timer_enable_new(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_efl_loop_timer_enable_new(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    Efl_Loop_Timer_Data *timer;
 
@@ -534,13 +534,13 @@ _efl_loop_timer_enable_new(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
 }
 
 int
-_efl_loop_timers_exists(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_efl_loop_timers_exists(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    return !!pd->timers;
 }
 
 static inline Ecore_Timer *
-_efl_loop_timer_first_get(Eo *ob EINA_UNUSED, Efl_Loop_Data *pd)
+_efl_loop_timer_first_get(Eo *ob EFL_UNUSED, Efl_Loop_Data *pd)
 {
    Efl_Loop_Timer_Data *timer;
 
@@ -622,7 +622,7 @@ _efl_loop_timer_expired_timers_call(Eo *obj, Efl_Loop_Data *pd, double when)
 }
 
 int
-_efl_loop_timer_expired_call(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd, double when)
+_efl_loop_timer_expired_call(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd, double when)
 {
    if (!pd->timers) return 0;
    if (pd->last_check > when)

@@ -9,7 +9,7 @@
 #define BUFFER_SIZE 1024
 
 static Eina_Bool
-_msg_from_child_handler(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_msg_from_child_handler(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Exe_Event_Data *dataFromProcess = (Ecore_Exe_Event_Data *)event;
    char msg[BUFFER_SIZE];

@@ -30,28 +30,28 @@ static Eina_Thread wk1, wk2, wk3, wk4, wk5;
 static Eina_Barrier barrier;
 
 static void *
-wk_func(void *data EINA_UNUSED, Eina_Thread thread EINA_UNUSED)
+wk_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
     eina_barrier_wait(&barrier);
     return NULL;
 }
 
 static void *
-wk1_func(void *data EINA_UNUSED, Eina_Thread thread EINA_UNUSED)
+wk1_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
     eina_barrier_wait(&barrier);
     return NULL;
 }
 
 static void *
-wk2_func(void *data EINA_UNUSED, Eina_Thread thread EINA_UNUSED)
+wk2_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
     eina_barrier_wait(&barrier);
     return NULL;
 }
 
 static void *
-wk3_func(void *data EINA_UNUSED, Eina_Thread thread EINA_UNUSED)
+wk3_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
     eina_barrier_wait(&barrier);
     return NULL;

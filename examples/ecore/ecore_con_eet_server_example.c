@@ -21,7 +21,7 @@
 static int _client_count = 0;
 
 Eina_Bool
-_eet_client_discnct_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply EINA_UNUSED, Ecore_Con_Client *conn EINA_UNUSED)
+_eet_client_discnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply EFL_UNUSED, Ecore_Con_Client *conn EFL_UNUSED)
 {
    _client_count--;
    if (!_client_count)
@@ -31,14 +31,14 @@ _eet_client_discnct_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply EINA_UNUSE
 }
 
 Eina_Bool
-_eet_client_cnct_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply EINA_UNUSED, Ecore_Con_Client *conn EINA_UNUSED)
+_eet_client_cnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply EFL_UNUSED, Ecore_Con_Client *conn EFL_UNUSED)
 {
    _client_count++;
    return EINA_TRUE;
 }
 
 static void
-_eet_data_cb(void *data EINA_UNUSED, Ecore_Con_Reply *reply, const char *protocol_name, void *value)
+_eet_data_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply, const char *protocol_name, void *value)
 {
    char toSend[] = "Received your message.";// The message to send to client.
    ECE_Example *received = value;// The message received from client.

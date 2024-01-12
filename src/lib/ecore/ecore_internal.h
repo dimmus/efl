@@ -134,7 +134,7 @@ _efl_composite_lookup(const Efl_Class *self, Eo *parent, Efl_Model *view, unsign
    contain Eo Model directly.
 */
 static inline Eina_Value
-_efl_future_all_repack(Eo *o EINA_UNUSED, void *data EINA_UNUSED, const Eina_Value v)
+_efl_future_all_repack(Eo *o EFL_UNUSED, void *data EFL_UNUSED, const Eina_Value v)
 {
    unsigned int i, len;
    Eina_Value created = EINA_VALUE_EMPTY;

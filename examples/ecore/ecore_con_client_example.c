@@ -55,7 +55,7 @@ _setup_ssl(void)
 }
 
 static Eina_Bool
-_on_stdin(void *data EINA_UNUSED, Ecore_Fd_Handler *fdh EINA_UNUSED)
+_on_stdin(void *data EFL_UNUSED, Ecore_Fd_Handler *fdh EFL_UNUSED)
 {
    char *line = NULL;
 #ifdef _WIN32
@@ -133,7 +133,7 @@ _on_stdin(void *data EINA_UNUSED, Ecore_Fd_Handler *fdh EINA_UNUSED)
 }
 
 Eina_Bool
-_add(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Add *ev)
+_add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Add *ev)
 {
    printf("Server with ip %s connected!\n", ecore_con_server_ip_get(ev->server));
    if (do_ssl_upgrade)
@@ -146,7 +146,7 @@ _add(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Add *e
 }
 
 Eina_Bool
-_del(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Del *ev)
+_del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Del *ev)
 {
    printf("Lost server with ip %s!\n", ecore_con_server_ip_get(ev->server));
    ecore_con_server_del(svr);
@@ -156,7 +156,7 @@ _del(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Del *e
 }
 
 Eina_Bool
-_data(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Data *ev)
+_data(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Data *ev)
 {
    printf("Received %i bytes from server:\n"
           ">>>>>\n"
@@ -169,21 +169,21 @@ _data(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Data 
 }
 
 Eina_Bool
-_write_(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Write *ev)
+_write_(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Write *ev)
 {
    printf("Sent %d bytes to server\n", ev->size);
    return ECORE_CALLBACK_RENEW;
 }
 
 Eina_Bool
-_error(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Error *ev)
+_error(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Error *ev)
 {
    printf("Server Error: %s\n", ev->error);
    return ECORE_CALLBACK_RENEW;
 }
 
 Eina_Bool
-_upgrade(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Con_Event_Server_Upgrade *ev)
+_upgrade(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Upgrade *ev)
 {
    printf("Server upgraded to SSL %p %s\n", ev->server, ecore_con_server_ip_get(ev->server));
    svr = ev->server;

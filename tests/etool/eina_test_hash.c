@@ -52,10 +52,10 @@ _eina_string_key_cmp(const char *key1, int key1_length,
 }
 
 static Efl_Bool
-eina_foreach_check(EINA_UNUSED const Eina_Hash *hash,
+eina_foreach_check(EFL_UNUSED const Eina_Hash *hash,
                    const void *key,
                    void *data,
-                   EINA_UNUSED void *fdata)
+                   EFL_UNUSED void *fdata)
 {
    int *j = data;
    int i;

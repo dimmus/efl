@@ -158,7 +158,7 @@ add_output_rect(const Eina_Rectangle *r)
 }
 
 static Efl_Bool
-process_input(void *data EINA_UNUSED)
+process_input(void *data EFL_UNUSED)
 {
    Eina_Iterator *itr;
    Eina_Rectangle r, *r1;

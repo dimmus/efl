@@ -170,7 +170,7 @@ handle_cmd(char *cmd, size_t bread)
 }
 
 Eina_Bool
-handle_input(void *data EINA_UNUSED, Ecore_Fd_Handler *handler)
+handle_input(void *data EFL_UNUSED, Ecore_Fd_Handler *handler)
 {
    size_t bread;
    char buf[20];
@@ -196,7 +196,7 @@ handle_input(void *data EINA_UNUSED, Ecore_Fd_Handler *handler)
 }
 
 static void 
-_play_finished(void *data EINA_UNUSED, const Efl_Event *event)
+_play_finished(void *data EFL_UNUSED, const Efl_Event *event)
 {
   const char *name;
   Eina_Bool ret;

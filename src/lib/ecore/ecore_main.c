@@ -238,7 +238,7 @@ _update_loop_time(Efl_Loop_Data *pd)
 
 #ifdef EFL_EXTRA_SANITY_CHECKS
 static inline void
-_ecore_fd_valid(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd EINA_UNUSED)
+_ecore_fd_valid(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED)
 {
 # ifdef HAVE_SYS_EPOLL_H
    if ((pd->epoll_fd >= 0) &&
@@ -256,7 +256,7 @@ _ecore_fd_valid(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd EINA_UNUSED)
 #endif
 
 static inline void
-_ecore_try_add_to_call_list(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd, Ecore_Fd_Handler *fdh)
+_ecore_try_add_to_call_list(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd, Ecore_Fd_Handler *fdh)
 {
    // check if this fdh is already in the list
    if (fdh->next_ready)
@@ -396,7 +396,7 @@ _ecore_main_uv_events_from_fdh(Ecore_Fd_Handler *fdh)
 #endif
 
 static inline int
-_ecore_main_fdh_poll_add(Efl_Loop_Data *pd EINA_UNUSED, Ecore_Fd_Handler *fdh)
+_ecore_main_fdh_poll_add(Efl_Loop_Data *pd EFL_UNUSED, Ecore_Fd_Handler *fdh)
 {
    DBG("_ecore_main_fdh_poll_add");
    int r = 0;
@@ -514,7 +514,7 @@ _ecore_main_fdh_poll_del(Efl_Loop_Data *pd, Ecore_Fd_Handler *fdh)
 }
 
 static inline int
-_ecore_main_fdh_poll_modify(Efl_Loop_Data *pd EINA_UNUSED, Ecore_Fd_Handler *fdh)
+_ecore_main_fdh_poll_modify(Efl_Loop_Data *pd EFL_UNUSED, Ecore_Fd_Handler *fdh)
 {
    DBG("_ecore_main_fdh_poll_modify %p", fdh);
    int r = 0;
@@ -656,7 +656,7 @@ _ecore_main_fdh_glib_mark_active(Eo *obj, Efl_Loop_Data *pd)
 
 // like we are about to enter main_loop_select in  _ecore_main_select
 static gboolean
-_ecore_main_gsource_prepare(GSource *source EINA_UNUSED,
+_ecore_main_gsource_prepare(GSource *source EFL_UNUSED,
                             gint    *next_time)
 {
    Eo *obj = ML_OBJ;
@@ -746,7 +746,7 @@ _ecore_main_gsource_prepare(GSource *source EINA_UNUSED,
 }
 
 static gboolean
-_ecore_main_gsource_check(GSource *source EINA_UNUSED)
+_ecore_main_gsource_check(GSource *source EFL_UNUSED)
 {
    Eo *obj = ML_OBJ;
    Efl_Loop_Data *pd = ML_DAT;
@@ -798,9 +798,9 @@ _ecore_main_gsource_check(GSource *source EINA_UNUSED)
 
 // like we just came out of main_loop_select in  _ecore_main_select
 static gboolean
-_ecore_main_gsource_dispatch(GSource    *source EINA_UNUSED,
-                             GSourceFunc callback EINA_UNUSED,
-                             gpointer    user_data EINA_UNUSED)
+_ecore_main_gsource_dispatch(GSource    *source EFL_UNUSED,
+                             GSourceFunc callback EFL_UNUSED,
+                             gpointer    user_data EFL_UNUSED)
 {
    Eo *obj = ML_OBJ;
    Efl_Loop_Data *pd = ML_DAT;
@@ -875,7 +875,7 @@ _ecore_main_gsource_dispatch(GSource    *source EINA_UNUSED,
 }
 
 static void
-_ecore_main_gsource_finalize(GSource *source EINA_UNUSED)
+_ecore_main_gsource_finalize(GSource *source EFL_UNUSED)
 {
 }
 
@@ -893,7 +893,7 @@ static inline void _ecore_main_loop_uv_check(uv_check_t *handle);
 static void _ecore_main_loop_uv_prepare(uv_prepare_t *handle);
 
 static void
-_ecore_main_loop_timer_run(uv_timer_t *timer EINA_UNUSED)
+_ecore_main_loop_timer_run(uv_timer_t *timer EFL_UNUSED)
 {
    Eo *obj = ML_OBJ;
    Efl_Loop_Data *pd = ML_DAT;
@@ -912,7 +912,7 @@ _ecore_main_loop_timer_run(uv_timer_t *timer EINA_UNUSED)
 }
 
 static inline void
-_ecore_main_loop_uv_check(uv_check_t *handle EINA_UNUSED)
+_ecore_main_loop_uv_check(uv_check_t *handle EFL_UNUSED)
 {
    Eo *obj = ML_OBJ;
    Efl_Loop_Data *pd = ML_DAT;
@@ -1414,7 +1414,7 @@ _ecore_main_fd_handler_add(Eo                    *obj,
 }
 
 void *
-_ecore_main_fd_handler_del(Eo *obj EINA_UNUSED,
+_ecore_main_fd_handler_del(Eo *obj EFL_UNUSED,
                            Efl_Loop_Data *pd,
                            Ecore_Fd_Handler *fd_handler)
 {
@@ -1526,7 +1526,7 @@ _ecore_main_win32_handler_add(Eo                    *obj,
 }
 
 void *
-_ecore_main_win32_handler_del(Eo *obj EINA_UNUSED,
+_ecore_main_win32_handler_del(Eo *obj EFL_UNUSED,
                               Efl_Loop_Data *pd,
                               Ecore_Win32_Handler *win32_handler)
 {
@@ -1570,34 +1570,34 @@ ecore_main_win32_handler_del(Ecore_Win32_Handler *win32_handler)
 }
 #else
 EAPI Ecore_Win32_Handler *
-_ecore_main_win32_handler_add(Eo                    *obj EINA_UNUSED,
-                              Efl_Loop_Data         *pd EINA_UNUSED,
-                              Eo                    *handler EINA_UNUSED,
-                              void                  *h EINA_UNUSED,
-                              Ecore_Win32_Handle_Cb  func EINA_UNUSED,
-                              const void            *data EINA_UNUSED)
+_ecore_main_win32_handler_add(Eo                    *obj EFL_UNUSED,
+                              Efl_Loop_Data         *pd EFL_UNUSED,
+                              Eo                    *handler EFL_UNUSED,
+                              void                  *h EFL_UNUSED,
+                              Ecore_Win32_Handle_Cb  func EFL_UNUSED,
+                              const void            *data EFL_UNUSED)
 {
    return NULL;
 }
 
 void *
-_ecore_main_win32_handler_del(Eo *obj EINA_UNUSED,
-                              Efl_Loop_Data *pd EINA_UNUSED,
-                              Ecore_Win32_Handler *win32_handler EINA_UNUSED)
+_ecore_main_win32_handler_del(Eo *obj EFL_UNUSED,
+                              Efl_Loop_Data *pd EFL_UNUSED,
+                              Ecore_Win32_Handler *win32_handler EFL_UNUSED)
 {
    return NULL;
 }
 
 EAPI Ecore_Win32_Handler *
-ecore_main_win32_handler_add(void                  *h EINA_UNUSED,
-                             Ecore_Win32_Handle_Cb  func EINA_UNUSED,
-                             const void            *data EINA_UNUSED)
+ecore_main_win32_handler_add(void                  *h EFL_UNUSED,
+                             Ecore_Win32_Handle_Cb  func EFL_UNUSED,
+                             const void            *data EFL_UNUSED)
 {
    return NULL;
 }
 
 EAPI void *
-ecore_main_win32_handler_del(Ecore_Win32_Handler *win32_handler EINA_UNUSED)
+ecore_main_win32_handler_del(Ecore_Win32_Handler *win32_handler EFL_UNUSED)
 {
    return NULL;
 }
@@ -1760,7 +1760,7 @@ _ecore_main_shutdown(void)
 }
 
 static void
-_ecore_main_prepare_handlers(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_ecore_main_prepare_handlers(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    Ecore_Fd_Handler *fdh;
    Eina_List *l, *l2;
@@ -2057,7 +2057,7 @@ _ecore_main_fd_handlers_bads_rem(Eo *obj, Efl_Loop_Data *pd)
 #endif
 
 static void
-_ecore_main_fd_handlers_cleanup(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_ecore_main_fd_handlers_cleanup(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    Ecore_Fd_Handler *fdh, *last;
    Eina_List *l, *l2;
@@ -2116,7 +2116,7 @@ _ecore_main_fd_handlers_cleanup(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
 
 #ifdef _WIN32
 static void
-_ecore_main_win32_handlers_cleanup(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_ecore_main_win32_handlers_cleanup(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    Ecore_Win32_Handler *wh;
    Eina_List *l, *l2;
@@ -2144,7 +2144,7 @@ _ecore_main_win32_handlers_cleanup(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
 #endif
 
 static void
-_ecore_main_fd_handlers_call(Eo *obj EINA_UNUSED, Efl_Loop_Data *pd)
+_ecore_main_fd_handlers_call(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
    // grab a new list
    if (!pd->fd_handlers_to_call_current)
@@ -2241,7 +2241,7 @@ _ecore_main_fd_handlers_buf_call(Eo *obj, Efl_Loop_Data *pd)
 
 #ifdef HAVE_LIBUV
 static void
-_ecore_main_loop_uv_prepare(uv_prepare_t *handle EINA_UNUSED)
+_ecore_main_loop_uv_prepare(uv_prepare_t *handle EFL_UNUSED)
 {
    Eo *obj = ML_OBJ;
    Efl_Loop_Data *pd = ML_DAT;
@@ -2714,7 +2714,7 @@ free_threads_handles:
 }
 
 static unsigned int
-_stdin_wait_thread(void *data EINA_UNUSED)
+_stdin_wait_thread(void *data EFL_UNUSED)
 {
    int c = getc(stdin);
    ungetc(c, stdin);
@@ -2722,7 +2722,7 @@ _stdin_wait_thread(void *data EINA_UNUSED)
 }
 
 static int
-_ecore_main_win32_select(int             nfds EINA_UNUSED,
+_ecore_main_win32_select(int             nfds EFL_UNUSED,
                          fd_set         *readfds,
                          fd_set         *writefds,
                          fd_set         *exceptfds,

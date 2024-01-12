@@ -27,7 +27,7 @@
 #include "eina_suite.h"
 
 static Efl_Bool
-eina_accessor_check(EINA_UNUSED const Eina_Array *array,
+eina_accessor_check(EFL_UNUSED const Eina_Array *array,
                     int *data,  int *fdata)
 {
    fail_if(*fdata > *data);
@@ -95,7 +95,7 @@ _eina_test_inlist_build(int i)
 }
 
 static Efl_Bool
-eina_accessor_inlist_data_check(EINA_UNUSED const Eina_Inlist *in_list,
+eina_accessor_inlist_data_check(EFL_UNUSED const Eina_Inlist *in_list,
                                 Eina_Test_Inlist *data,
                                 int *fdata)
 {
@@ -165,7 +165,7 @@ EFL_START_TEST(eina_accessor_inlist_simple)
 EFL_END_TEST
 
 static Efl_Bool
-eina_iterator_list_data_check(EINA_UNUSED const Eina_List *list,
+eina_iterator_list_data_check(EFL_UNUSED const Eina_List *list,
                               int *data,
                               int *fdata)
 {
