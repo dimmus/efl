@@ -43,16 +43,17 @@ dev_cflags_try = [
 
 dev_cflags = cc.get_supported_arguments(dev_cflags_try)
 langs = ['c', 'objc', 'cpp']
+
 subdir('meson/arguments')
 
 # env = find_program('env', native: true)
 
 efl_config_h = configuration_data()
-efl_config_h.set_quoted('EFL_MODULE_ARCH', version_name)
-efl_config_h.set_quoted('EFL_VERSION'    , version)
-efl_config_h.set_quoted('EFL_LIB_DIR'    , dir_lib)
-efl_config_h.set_quoted('EFL_BUILD_DIR'  , dir_build)
-efl_config_h.set10('EFL_HAVE_THREADS', true)
+efl_config_h.set_quoted('EFL_MODULE_ARCH' , version_name)
+efl_config_h.set_quoted('EFL_VERSION'     , version)
+efl_config_h.set_quoted('EFL_LIB_DIR'     , dir_lib)
+efl_config_h.set_quoted('EFL_BUILD_DIR'   , dir_build)
+efl_config_h.set10     ('EFL_HAVE_THREADS', true)
 
 # efl_config_h.set_quoted('PACKAGE'            , name)
 # efl_config_h.set_quoted('VERSION'            , version)
@@ -189,10 +190,10 @@ subdir('po')
 # endif
 
 subprojects = [
-  # name              |   option             | mod  | lib  | bin  | bench | tests | examples | true if build in efl-one | pkg-config options | name of static libs
+  # name                |   option             | mod   | lib  | bin | bench | tests | examples | true if build in efl-one | pkg-config options | name of static libs
   # ['evil'             ,[]                    , false,  true, false,  false,  false,     false,  true, [], []],
-  ['efl_tools'             ,[]                    , false,  true,  false,   true,   true,  false,   true,  [], []],
-  ['efl_eolian'            ,[]                    , false,  true,   true,  false,  false,  false,  false, ['efl_tools'], []],
+  ['efl_tools'          ,[]                    , false,  true, false,  false,   true,  true,   true,  [], []],
+  ['efl_eolian'         ,[]                    , false,  true,  true,  false,  false,  false,  false, ['efl_tools'], []],
   # ['eo'               ,[]                    , false,  true, false,   true,   true,     false,  true, ['eina'], []],
   # ['efl'              ,[]                    , false,  true, false,  false,   true,     false,  true, ['eo'], []],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
@@ -473,15 +474,15 @@ if get_option('build-tests')
   endforeach
 endif
 
-# if get_option('build-examples')
-#   foreach example : dir_example
-#     package_c_args = [
-#       '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, example)+'"',
-#       '-DNEED_RUN_IN_TREE=1',
-#     ]
-#     subdir(join_paths(local_examples, example))
-#   endforeach
-# endif
+if get_option('build-examples')
+  foreach example : dir_example
+    package_c_args = [
+      '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, example)+'"',
+      '-DNEED_RUN_IN_TREE=1',
+    ]
+    subdir(join_paths(local_examples, example))
+  endforeach
+endif
 
 # foreach evas_loader_map_inst : evas_loader_map
 #   evas_loader_original = evas_loader_map_inst[0]
