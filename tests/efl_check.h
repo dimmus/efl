@@ -372,7 +372,7 @@ _efl_suite_build_and_run(int argc, const char **argv, const char *suite_name, co
                {
                   timeout_pid = fork();
                   if (!timeout_pid)
-                    execl("/bin/sh", "/bin/sh", "-c", EFL_BUILD_DIR "/src/tests/timeout", (char *)NULL);
+                    execl("/bin/sh", "/bin/sh", "-c", EFL_BUILD_DIR "/tests/timeout", (char *)NULL);
                }
              if (num_forks == eina_cpu_count())
                failed_count += _efl_suite_wait_on_fork(&num_forks, &timeout_reached);
