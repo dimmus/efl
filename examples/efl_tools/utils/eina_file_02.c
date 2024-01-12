@@ -18,10 +18,10 @@ main(int argc, char **argv)
    Efl_Bool ret;
 
    if (argc != 3)
-     {
-        fprintf(stderr, "Usage: %s <src> <dst>\n", argv[0]);
-        return EXIT_FAILURE;
-     }
+   {
+      fprintf(stderr, "Usage: %s <src_file> <dst_file>\n", argv[0]);
+      return EXIT_FAILURE;
+   }
 
    eina_init();
 
