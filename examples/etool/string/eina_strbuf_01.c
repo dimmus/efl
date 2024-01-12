@@ -7,7 +7,7 @@
  * eina_strbuf_append_char
  * eina_strbuf_tolower
  * eina_strbuf_insert_escaped
- * eina_strbuf_insert_printf 
+ * eina_strbuf_insert_printf
  * eina_strbuf_append_escaped
  * eina_strbuf_append_printf
  * eina_strbuf_append_char
