@@ -29,7 +29,8 @@
 
 #include "eina_suite.h"
 
-Eina_Tmpstr*
+#ifdef XATTR_TEST_DIR
+static Eina_Tmpstr*
 get_file_path(const char* tmpdirname, const char* filename)
 {
     char file_path[PATH_MAX] = "";
@@ -37,7 +38,6 @@ get_file_path(const char* tmpdirname, const char* filename)
     return eina_tmpstr_add(file_path);
 }
 
-#ifdef XATTR_TEST_DIR
 EFL_START_TEST(eina_test_xattr_set)
 {
    char *filename = "tmpfile";

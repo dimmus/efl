@@ -152,7 +152,7 @@ EFL_START_TEST(eina_file_split_simple)
 }
 EFL_END_TEST
 
-Eina_Tmpstr*
+static Eina_Tmpstr*
 get_full_path(const char* tmpdirname, const char* filename)
 {
     char full_path[PATH_MAX] = "";
@@ -160,8 +160,8 @@ get_full_path(const char* tmpdirname, const char* filename)
     return eina_tmpstr_add(full_path);
 }
 
-Eina_Tmpstr*
-get_eina_test_file_tmp_dir()
+static Eina_Tmpstr*
+get_eina_test_file_tmp_dir(void)
 {
    Eina_Tmpstr *tmp_dir;
 
@@ -854,7 +854,8 @@ EFL_START_TEST(eina_test_file_mktemp)
 }
 EFL_END_TEST
 
-int  create_file_not_empty(const char *file_name, Eina_Tmpstr **test_file_path, Efl_Bool close_file)
+static int
+create_file_not_empty(const char *file_name, Eina_Tmpstr **test_file_path, Efl_Bool close_file)
 {
    const char *data = "abcdefghijklmnopqrstuvwxyz";
    int data_size = strlen(data);

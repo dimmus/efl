@@ -525,6 +525,7 @@ EFL_START_TEST(eina_test_strbuf_substr_get)
    fail_unless(buf != NULL);
 
    eina_strbuf_append(buf, "string");
+   
    substr = eina_strbuf_substr_get(buf, 2, 3);
    str = eina_strbuf_string_get(substr);
    fail_unless(str && !strcmp(str, "rin"));

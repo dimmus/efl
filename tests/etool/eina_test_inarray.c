@@ -372,13 +372,13 @@ EFL_START_TEST(eina_inarray_test_itr)
 }
 EFL_END_TEST
 
-int
+static int
 cmp(const void *a, const void *b)
 {
    return *(int *)a - *(int *)b;
 }
 
-int
+static int
 compare(const void *a, const void *b)
 {
    return *(int *)a > *(int *)b;

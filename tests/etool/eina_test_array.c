@@ -102,7 +102,7 @@ EFL_START_TEST(eina_array_static)
 }
 EFL_END_TEST
 
-Efl_Bool
+static Efl_Bool
 keep_int(void *data, void *gdata)
 {
    int *tmp = data;
