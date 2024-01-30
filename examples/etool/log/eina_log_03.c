@@ -25,7 +25,7 @@ struct _Data
    int to_stderr;
 };
 
-void
+static void
 print_cb(const Eina_Log_Domain *domain,
          Eina_Log_Level level EFL_UNUSED,
          const char *file,
@@ -57,7 +57,7 @@ print_cb(const Eina_Log_Domain *domain,
    putc('\n', output);
 }
 
-void
+static void
 test(Data *data, int i)
 {
    if (i < 0)

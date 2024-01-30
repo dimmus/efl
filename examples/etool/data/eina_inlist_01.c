@@ -9,7 +9,7 @@ struct my_struct {
      int a, b;
 };
 
-int
+static int
 sort_cb(const void *d1, const void *d2)
 {
    const Eina_Inlist *l1, *l2;

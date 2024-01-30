@@ -20,7 +20,7 @@ struct _pilot
 };
 typedef struct _pilot pilot;
 
-person *
+static person *
 person_new(const char *name)
 {
    person *ptr = malloc(sizeof(person));
@@ -30,7 +30,8 @@ person_new(const char *name)
    return ptr;
 }
 
-void
+/*
+static void
 person_free(person *ptr) {
    if (!EINA_MAGIC_CHECK(ptr, BASETYPE_MAGIC))
    {
@@ -41,8 +42,9 @@ person_free(person *ptr) {
    free(ptr->name);
    free(ptr);
 }
+*/
 
-pilot *
+static pilot *
 pilot_new(const char *name, const char *callsign)
 {
    pilot *ptr = malloc(sizeof(pilot));
@@ -54,7 +56,8 @@ pilot_new(const char *name, const char *callsign)
    return ptr;
 }
 
-void
+/*
+static void
 pilot_free(pilot *ptr) {
    if (!EINA_MAGIC_CHECK(ptr, SUBTYPE_MAGIC))
    {
@@ -67,8 +70,9 @@ pilot_free(pilot *ptr) {
    free(ptr->callsign);
    free(ptr);
 }
+*/
 
-void
+static void
 print_person(person *ptr)
 {
    if (!EINA_MAGIC_CHECK(ptr, BASETYPE_MAGIC))
@@ -79,7 +83,7 @@ print_person(person *ptr)
    printf("name: %s\n", ptr->name);
 }
 
-void
+static void
 print_pilot(pilot *ptr)
 {
    if (!EINA_MAGIC_CHECK(ptr, SUBTYPE_MAGIC)) 

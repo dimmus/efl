@@ -6,7 +6,8 @@
 static Eina_Value_Struct_Desc *V1_DESC = NULL;
 static Eina_Value_Struct_Desc *V2_DESC = NULL;
 
-void value_init(void)
+static void 
+value_init(void)
 {
    typedef struct _My_Struct_V1 {
      int param1;
@@ -54,7 +55,8 @@ void value_init(void)
    V2_DESC = &v2_desc;
 }
 
-void rand_init(Eina_Value *v)
+static void
+rand_init(Eina_Value *v)
 {
    if (v->type != EINA_VALUE_TYPE_STRUCT)
      return;
@@ -64,7 +66,8 @@ void rand_init(Eina_Value *v)
    eina_value_struct_set(v, "param3", rand());
 }
 
-void my_struct_use(Eina_Value *params)
+static void
+my_struct_use(Eina_Value *params)
 {
    int p1, p3;
    char p2;

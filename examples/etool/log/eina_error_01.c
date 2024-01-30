@@ -17,8 +17,8 @@
 Eina_Error MY_ERROR_NEGATIVE;
 Eina_Error MY_ERROR_NULL;
 
-void *
-data_new()
+static void *
+data_new(void)
 {
    eina_error_set(0);
 
@@ -26,7 +26,7 @@ data_new()
    return NULL;
 }
 
-int
+static int
 test(int n)
 {
    eina_error_set(0);

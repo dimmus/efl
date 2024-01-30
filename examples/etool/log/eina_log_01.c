@@ -12,7 +12,7 @@
 
 #include <Eina.h>
 
-void
+static void
 test_warn(void)
 {
    EINA_LOG_WARN("Here is a warning message");

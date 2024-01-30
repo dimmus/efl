@@ -6,7 +6,8 @@
 
 #include <Eina.h>
 
-Efl_Bool keep(void *data, void *gdata EFL_UNUSED)
+static Efl_Bool
+keep(void *data, void *gdata EFL_UNUSED)
 {
    if (strlen((const char*)data) <= 5)
       return EFL_TRUE;

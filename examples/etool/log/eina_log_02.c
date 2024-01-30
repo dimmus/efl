@@ -14,7 +14,7 @@
 
 #include <Eina.h>
 
-void
+static void
 test(int i)
 {
   EINA_LOG_DBG("Entering test");
