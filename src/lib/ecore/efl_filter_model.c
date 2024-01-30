@@ -365,9 +365,8 @@ _efl_filter_model_efl_model_children_slice_get(Eo *obj, Efl_Filter_Model_Data *p
  on_error:
    free(mapping);
 
-   if (r)
-     for (i = 0; i < count; i ++)
-       if (r[i]) eina_future_cancel(r[i]);
+   for (i = 0; i < count; i ++)
+      if (r[i]) eina_future_cancel(r[i]);
    free(r);
 
    return efl_loop_future_rejected(obj, err);
