@@ -2,7 +2,7 @@ project('efl', ['c','cpp'],
   version: '2.0.99',
   default_options : [
     'buildtype=release', # plain,debug,debugoptimized,release,minsize,custom
-    'warning_level=1',   # 0,1,2,3
+    # 'warning_level=1',   # 0,1,2,3
     # 'optimization=g',  # 0,g,1,2,3,s
     # 'b_sanitize=address,undefined',
     # 'b_coverage=true',
@@ -16,34 +16,8 @@ project('efl', ['c','cpp'],
 )
 
 subdir('meson/constants')
-
-#prepare a special linker args flag for binaries on macos (bin/edje and bin/elua)
-# bin_linker_args = []
-# if sys_osx
-#   add_languages('objc')
-#   bin_linker_args = ['-pagezero_size', '10000', '-image_base', '100000000']
-# endif
-
-# module_files = []
-# evas_loader_map = []
-
-# dev_cflags = []
-dev_cflags_try = [
-  # '-g3',
-  # '-fvisibility=hidden',
-  # '-fsanitize-trap', # undefined reference to `__ubsan_handle*`
-  # '-Wfloat-compare',
-  '--param=min-pagesize=0',
-  '-Wpointer-arith',
-  '-Wunused-parameter',
-  # '-Wsign-compare',
-  # '-Wconversion',
-  # '-Wdouble-promotion',
-]
-
-dev_cflags = cc.get_supported_arguments(dev_cflags_try)
-langs = ['c', 'objc', 'cpp']
-
+subdir('meson/arrays')
+subdir('meson/cflags')
 subdir('meson/arguments')
 
 # env = find_program('env', native: true)
@@ -85,7 +59,6 @@ efl_config.set10     ('EFL_HAVE_THREADS', true)
 subdir('meson/optimizations')
 
 inc_config = [include_directories('.')]
-eolian_include_directories = []
 
 if sys_linux or sys_bsd or sys_sun
   sys_lib_extension = 'so'
@@ -138,62 +111,21 @@ endif
 subdir('meson/header_checks')
 subdir('po')
 
-# if get_option('wl')s
+# if get_option('wl')
 #   subdir('src/wayland_protocol')
 # endif
 
-# ecore_evas_wayland_engine_include_dir = []
+subdir('meson/lua')
 
-# evas_static_list = []
-
-# luaold_interpreters = [
-#   ['lua',     ['>=5.1.0', '<5.3.0']],
-#   ['lua51',   ['>=5.1.0', '<5.2.0']],
-#   ['lua-5.1', ['>=5.1.0', '<5.2.0']],
-#   ['lua5.1',  ['>=5.1.0', '<5.2.0']],
-#   ['lua52',   ['>=5.2.0', '<5.3.0']],
-#   ['lua-5.2', ['>=5.2.0', '<5.3.0']],
-#   ['lua5.2',  ['>=5.2.0', '<5.3.0']],
-# ]
-
-# lua_pc_name = ''
-# have_elua = get_option('elua')
-
-# if get_option('lua-interpreter') == 'lua'
-#   efl_config.set('ENABLE_LUA_OLD', '1')
-#   foreach l : luaold_interpreters
-#     lua = dependency(l[0], version: l[1], required:false)
-#     lua_pc_name = l[0]
-#     if lua.found()
-#       break
-#     endif
-#   endforeach
-#   if not lua.found()
-#     error('Lua not found')
-#   endif
-#   if have_elua
-#     message('Using experimental Elua with interpreter support...')
-#   endif
-# else
-#   lua = dependency(get_option('lua-interpreter'))
-#   lua_pc_name = 'luajit'
-# endif
-
-# if sys_osx and get_option('lua-interpreter') == 'luajit'
-#   # luajit on macro is broken, this means we need to generate our own
-#   # dependency with our arguments, a library later still needs to link to
-#   # luajit for the pagesize argument thingy
-#   lua = declare_dependency(
-#     include_directories: include_directories(lua.get_pkgconfig_variable('includedir')),
-#     link_args: ['-L' + lua.get_pkgconfig_variable('libdir'), '-l' + lua.get_pkgconfig_variable('libname')]
-#   )
-# endif
+#we have to do that first, eina modules are required by eina
+#the other modules require theire package
+subdir(join_paths(local_module,'etool'))
 
 subprojects = [
   # name                |   option             | mod   | lib  | bin | bench | tests | examples | true if build in efl-one | pkg-config options | name of static libs
   # ['evil'             ,[]                    , false,  true, false,  false,  false,     false,  true, [], []],
   ['etool'          ,[]                    , false,  true, false,  false,   true,  true,   true,  [], []],
-  ['eolian'         ,[]                    , false,  true,  true,  false,  false,  false,  false, ['etool'], []],
+  # ['eolian'         ,[]                    , false,  true,  true,  false,  false,  false,  false, ['etool'], []],
   # ['eo'               ,[]                    , false,  true, false,   true,   true,     false,  true, ['eina'], []],
   # ['efl'              ,[]                    , false,  true, false,  false,   true,     false,  true, ['eo'], []],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
@@ -239,23 +171,6 @@ subprojects = [
   # ['ecore_drm'        ,['drm-deprecated']    , false,  true, false,  false,  false,     false, false, ['eina'], []],
   # ['exactness'        ,[]                    , false,  false,  true, false,  false,     false, false, ['eina, evas, eet'], []],
 ]
-
-#we have to do that first, eina modules are required by eina
-#the other modules require theire package
-subdir(join_paths(local_module,'etool'))
-
-# List of dependency objects that might be disabled due to configurations
-# If they are enabled, the object gets overwritten by the library file.
-# ecore_audio = declare_dependency()
-
-dir_test       = []
-dir_example    = []
-efl_one_parts  = []
-dep_efl_one    = []
-dep_efl_one_eo = []
-inc_efl_one    = []
-sub_efl_one    = []
-dep_etool      = []
 
 # tmp_empty = declare_dependency() # need for static libs
 
@@ -384,40 +299,6 @@ foreach package : subprojects
   endif
 endforeach
 
-if get_option('efl-one')
-  lib_efl_one = shared_library('efl-one',
-    link_whole : efl_one_parts,
-    install : true,
-    version : version,
-  )
-
-  efl_one = declare_dependency(
-    link_with: lib_efl_one,
-    include_directories : inc_efl_one,
-    dependencies : [thread_dep, intl] + dep_efl_one_eo,
-    version: version
-  )
-
-  pkgconfig.generate(
-    name : 'efl-one',
-    subdirs : sub_efl_one,
-    description: 'Configureation for efl in one big fat .so',
-    libraries : [efl_one] + dep_etool, #eina is a special case here which drags in m dl & threads
-  )
-
-  #overwrite all the dependencies of subprojects with efl-one, in order to link the modules and binaries to the correct .so
-  foreach package : subprojects
-    package_name = package[0]
-    if package[1].length() == 0 or get_option(package[1][0])
-      if package[3]
-        if package[8] and get_option('efl-one')
-          set_variable(package_name, efl_one)
-        endif
-      endif
-    endif
-  endforeach
-endif
-
 #delayed build of bin, modules, and benchmarks
 foreach package : subprojects
   package_name = package[0]
@@ -445,44 +326,20 @@ foreach package : subprojects
   endif
 endforeach
 
-#build this later, as the debug services are depending on ecore
-# subdir('src/bin/efl')
+# List of dependency objects that might be disabled due to configurations
+# If they are enabled, the object gets overwritten by the library file.
+# ecore_audio = declare_dependency()
 
+subdir('meson/efl-one')
+
+# subdir('src/bin/efl') #build this later, as the debug services are depending on ecore
 # subdir('src/generic/evas')
 # subdir('cmakeconfig')
 # subdir('src/bindings')
 # subdir('src/edje_external')
 # subdir('data')
 
-if get_option('build-tests')
-  check = dependency('check', version: '!= 0.15.1')
-
-  test_env = environment()
-  test_env.set('EFL_RUN_IN_TREE', '1')
-
-  if get_option('b_sanitize') == 'address'
-    test_env.set('ASAN_OPTIONS', 'detect_leaks=0:detect_odr_violation=0')
-  endif
-
-  subdir('tests')
-  foreach test : dir_test
-    package_c_args = [
-      '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, test)+'"',
-      '-DNEED_RUN_IN_TREE=1',
-    ]
-    subdir(join_paths(local_tests, test))
-  endforeach
-endif
-
-if get_option('build-examples')
-  foreach example : dir_example
-    package_c_args = [
-      '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, example)+'"',
-      '-DNEED_RUN_IN_TREE=1',
-    ]
-    subdir(join_paths(local_examples, example))
-  endforeach
-endif
+subdir('meson/tests')
 
 # foreach evas_loader_map_inst : evas_loader_map
 #   evas_loader_original = evas_loader_map_inst[0]
@@ -491,11 +348,7 @@ endif
 #   meson.add_install_script('meson/evas_loader_conf.sh', evas_loader_original, evas_loader_link_types)
 # endforeach
 
-# doxygen = find_program('doxygen', required : false)
-
-# if doxygen.found()
-#   subdir('doc')
-# endif
+subdir('meson/doc')
 
 #
 # Configure files

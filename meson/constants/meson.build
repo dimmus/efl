@@ -1,5 +1,5 @@
 dir_source = meson.project_source_root()
-dir_build = meson.project_build_root()
+dir_build  = meson.project_build_root()
 
 pkgconfig = import('pkgconfig')
 
@@ -14,6 +14,8 @@ version_name  = 'v-' + version_major + '.' + version_minor
 
 cc = meson.get_compiler('c')
 host_os = host_machine.system()
+
+langs = ['c', 'cpp']
 
 sys_linux   = ['linux'].contains(host_os)
 sys_bsd     = ['bsd', 'freebsd', 'dragonfly', 'netbsd', 'openbsd'].contains(host_os)
@@ -49,7 +51,9 @@ local_benchmark = 'benchmarks'
 
 summary(
   {
+    'os': host_os,
     'prefix': dir_prefix,
+    'bindir': dir_bin,
     'libdir': dir_lib,
     'includedir': dir_include,
   },
