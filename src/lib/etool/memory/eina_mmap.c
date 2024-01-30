@@ -43,8 +43,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#if HAVE_SIGINFO_H
-# include <siginfo.h>
+#if defined (__sun)
+# include <sys/siginfo.h>
 #endif
 
 #endif

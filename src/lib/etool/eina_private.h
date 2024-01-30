@@ -161,6 +161,113 @@ void eina_log_threads_init(void);
 void eina_log_threads_shutdown(void);
 #endif
 
+Efl_Bool eina_prefix_init(void);
+Efl_Bool eina_prefix_shutdown(void);
+Efl_Bool eina_magic_string_init(void);
+Efl_Bool eina_magic_string_shutdown(void);
+Efl_Bool eina_simple_xml_init(void);
+Efl_Bool eina_simple_xml_shutdown(void);
+Efl_Bool pass_through_init(void);
+void pass_through_shutdown(void);
+Efl_Bool eina_vpath_init(void);
+Efl_Bool eina_vpath_shutdown(void);
+Efl_Bool eina_module_init(void);
+Efl_Bool eina_module_shutdown(void);
+Efl_Bool eina_file_init(void);
+Efl_Bool eina_file_shutdown(void);
+Efl_Bool eina_convert_init(void);
+Efl_Bool eina_convert_shutdown(void);
+Efl_Bool eina_thread_queue_init(void);
+Efl_Bool eina_thread_queue_shutdown(void);
+Efl_Bool eina_benchmark_init(void);
+Efl_Bool eina_benchmark_shutdown(void);
+Efl_Bool eina_ustringshare_init(void);
+Efl_Bool eina_ustringshare_shutdown(void);
+Efl_Bool eina_tmpstr_init(void);
+Efl_Bool eina_tmpstr_shutdown(void);
+Efl_Bool eina_stringshare_init(void);
+Efl_Bool eina_stringshare_shutdown(void);
+Efl_Bool eina_ustringshare_init(void);
+Efl_Bool eina_ustringshare_shutdown(void);
+Efl_Bool eina_slstr_init(void);
+Efl_Bool eina_slstr_shutdown(void);
+Efl_Bool eina_safety_checks_init(void);
+Efl_Bool eina_safety_checks_shutdown(void);
+Efl_Bool eina_safepointer_init(void);
+Efl_Bool eina_safepointer_shutdown(void);
+Efl_Bool eina_mempool_init(void);
+Efl_Bool eina_mempool_shutdown(void);
+Efl_Bool eina_value_init(void);
+Efl_Bool eina_value_shutdown(void);
+Efl_Bool eina_cow_init(void);
+Efl_Bool eina_cow_shutdown(void);
+Efl_Bool eina_binshare_init(void);
+Efl_Bool eina_binshare_shutdown(void);
+Efl_Bool eina_evlog_init(void);
+Efl_Bool eina_evlog_shutdown(void);
+Efl_Bool eina_debug_init(void);
+Efl_Bool eina_debug_shutdown(void);
+Efl_Bool eina_error_init(void);
+Efl_Bool eina_error_shutdown(void);
+Efl_Bool eina_array_init(void);
+Efl_Bool eina_array_shutdown(void);
+Efl_Bool eina_abstract_content_init(void);
+Efl_Bool eina_abstract_content_shutdown(void);
+Efl_Bool eina_debug_init(void);
+Efl_Bool eina_debug_shutdown(void);
+Efl_Bool eina_rbtree_init(void);
+Efl_Bool eina_rbtree_shutdown(void);
+Efl_Bool eina_rectangle_init(void);
+Efl_Bool eina_rectangle_shutdown(void);
+Efl_Bool eina_promise_init(void);
+Efl_Bool eina_promise_shutdown(void);
+Efl_Bool eina_quadtree_init(void);
+Efl_Bool eina_quadtree_shutdown(void);
+Efl_Bool eina_matrixsparse_init(void);
+Efl_Bool eina_matrixsparse_shutdown(void);
+Efl_Bool eina_list_init(void);
+Efl_Bool eina_list_shutdown(void);
+Efl_Bool eina_iterator_init(void);
+Efl_Bool eina_iterator_shutdown(void);
+Efl_Bool eina_inarray_init(void);
+Efl_Bool eina_inarray_shutdown(void);
+Efl_Bool eina_abstract_content_init(void);
+Efl_Bool eina_abstract_content_shutdown(void);
+Efl_Bool eina_accessor_init(void);
+Efl_Bool eina_accessor_shutdown(void);
+// Efl_Bool eina__init(void);
+// Efl_Bool eina__shutdown(void);
+// Efl_Bool eina__init(void);
+// Efl_Bool eina__shutdown(void);
+// Efl_Bool eina__init(void);
+// Efl_Bool eina__shutdown(void);
+// Efl_Bool eina__init(void);
+// Efl_Bool eina__shutdown(void);
+
+
+char * _eina_debug_chunk_strdup(const char *str);
+void * _eina_debug_chunk_push(int size);
+void * _eina_debug_chunk_realloc(int size);
+void * _eina_debug_chunk_tmp_push(int size);
+void   _eina_debug_chunk_tmp_reset(void);
+
+#ifdef EINA_STATIC_BUILD_CHAINED_POOL
+  Efl_Bool chained_init(void);
+  void     chained_shutdown(void);
+#endif
+
+#ifdef EINA_STATIC_BUILD_ONE_BIG
+  Efl_Bool one_big_init(void);
+  void     one_big_shutdown(void);
+#endif
+
+#ifdef EINA_STATIC_BUILD_PASS_THROUGH
+  Efl_Bool pass_through_init(void);
+  void     pass_through_shutdown(void);
+#endif
+
+Efl_Bool eina_cpu_init(void);
+Efl_Bool eina_cpu_shutdown(void);
 void eina_cpu_count_internal(void);
 
 Efl_Bool eina_file_mmap_faulty(void *addr, long page_size);

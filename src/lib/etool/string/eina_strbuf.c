@@ -211,7 +211,7 @@ eina_strbuf_substr_get(Efl_Strbuf *buf, size_t pos, size_t len)
 
    str = calloc(1, len + 1);
 
-   eina_strlcpy(str,((char *)(buf->buf)) + pos, len);
+   eina_strlcpy(str,((char *)(buf->buf)) + pos, len + 1);
 
    return eina_strbuf_manage_new(str);
 }

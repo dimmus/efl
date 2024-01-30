@@ -122,7 +122,7 @@ _fallback_runtime_dir(const char *home)
 }
 
 static char *
-_fallback_home_dir()
+_fallback_home_dir(void)
 {
    char buf[PATH_MAX];
    /* Windows does not have getuid(), but home can't be NULL */
@@ -243,7 +243,7 @@ _eina_vpath_resolve(const char *path, char *str, size_t size)
                   if (*p =='/') break;
                }
              name = alloca(p - path);
-             eina_strlcpy(name, path + 1, p - path - 1);
+             eina_strlcpy(name, path + 1, p - path);
              name[p - path - 1] = 0;
 
              if (!_fetch_user_homedir(&home, name, path))
@@ -295,22 +295,19 @@ _eina_vpath_resolve(const char *path, char *str, size_t size)
              return 0;
           }
 
-        if (found)
-          {
-             name = alloca(end - path);
-             eina_strlcpy(name, path + 2, end - path - offset + 1);
-             name[end - path - 2] = 0;
-             meta = _eina_vpath_data_get(name);
-             if (meta)
-               {
-                  return snprintf(str, size, "%s%s", meta, end + offset);
-               }
-             else
-               {
-                  ERR("Meta key '%s' was not registered!\nThe string was: %s", name, path);
-                  return 0;
-               }
-          }
+         name = alloca(end - path);
+         eina_strlcpy(name, path + 2, end - path - offset + 1);
+         name[end - path - 2] = 0;
+         meta = _eina_vpath_data_get(name);
+         if (meta)
+         {
+            return snprintf(str, size, "%s%s", meta, end + offset);
+         }
+         else
+         {
+            ERR("Meta key '%s' was not registered!\nThe string was: %s", name, path);
+            return 0;
+         }
      }
    //just return the path, since we assume that this is a normal path
    else
@@ -345,7 +342,7 @@ eina_vpath_resolve_snprintf(char *str, size_t size, const char *format, ...)
    // "do" on object to get the result inside fetched or failed callback.
    // if it's a url then we need a new classs that overrides the do and
    // begins a fetch and on finish calls the event cb or when wait is called
-   /* FIXME: not working for WIndows */
+   /* FIXME: not working for Windows */
    // /* <- full path
 
    path = alloca(size + 1);

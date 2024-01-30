@@ -33,25 +33,12 @@
 #include "etool_config.h"
 #include "eina_private.h"
 #include "eina_tmpstr.h"
+#include "eina_util.h"
 
-/*============================================================================*
- *                                  Local                                     *
- *============================================================================*/
-
-
-/*============================================================================*
- *                                 Global                                     *
- *============================================================================*/
-
-
-/*============================================================================*
- *                                   API                                      *
- *============================================================================*/
-
-EINA_API const char *
+EINA_API char *
 eina_environment_home_get(void)
 {
-   static char *home = NULL;
+   char *home = NULL;
 
    if (home) return home;
 #ifdef _WIN32
@@ -97,10 +84,10 @@ eina_environment_home_get(void)
    return home;
 }
 
-EINA_API const char *
+EINA_API char *
 eina_environment_tmp_get(void)
 {
-   static char *tmp = NULL;
+   char *tmp = NULL;
 
    if (tmp) return tmp;
 #ifdef _WIN32

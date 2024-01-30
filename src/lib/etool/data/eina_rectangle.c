@@ -848,6 +848,9 @@ eina_rectangle_pool_packing_set(Eina_Rectangle_Pool *pool, Eina_Rectangle_Packin
       case Eina_Packing_Descending:
          pool->eina_rectangle_compare_func = _eina_rectangle_cmp;
          break;
+      case Eina_Packing_Bottom_Left:
+      case Eina_Packing_Bottom_Left_Skyline:
+      case Eina_Packing_Bottom_Left_Skyline_Improved:   
       default:
          pool->eina_rectangle_compare_func = _eina_rectangle_cmp_bl;
      }

@@ -700,7 +700,7 @@ eina_simple_xml_node_tag_new(Eina_Simple_XML_Node_Tag *parent, const char *name)
    return n;
 }
 
-void
+static void
 _eina_simple_xml_node_tag_free(Eina_Simple_XML_Node_Tag *tag)
 {
    while (tag->children)

@@ -28,6 +28,7 @@
 
 #include "eina_safety_checks.h"
 #include "eina_value.h"
+#include "eina_value_util.h"
 #include "eina_stringshare.h"
 
 

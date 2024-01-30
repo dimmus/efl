@@ -181,13 +181,11 @@ eina_thread_create(Eina_Thread *t, Eina_Thread_Priority prio,
 cs_fail:
    DeleteCriticalSection(&thr->cancel_lock);
 fail:
-   if (thr)
-     {
-        if (thr->handle) CloseHandle(thr->handle);
-        if (thr->cleanup_fn) eina_array_free(thr->cleanup_fn);
-        if (thr->cleanup_arg) eina_array_free(thr->cleanup_arg);
-        free(thr);
-     }
+   if (thr->handle) CloseHandle(thr->handle);
+   if (thr->cleanup_fn) eina_array_free(thr->cleanup_fn);
+   if (thr->cleanup_arg) eina_array_free(thr->cleanup_arg);
+   free(thr);
+
    return EFL_FALSE;
 }
 

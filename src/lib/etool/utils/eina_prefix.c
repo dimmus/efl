@@ -280,7 +280,7 @@ static int
 _try_argv(Eina_Prefix *pfx, const char *argv0)
 {
    char *path, *p, *cp;
-   int len, lenexe;
+   size_t len, lenexe;
    char buf[PATH_MAX], buf2[PATH_MAX];
 
    /* 1. is argv0 abs path? */
@@ -301,7 +301,7 @@ _try_argv(Eina_Prefix *pfx, const char *argv0)
      {
         if (getcwd(buf2, sizeof(buf2)))
           {
-             size_t len = strlen(buf2) + 1 + strlen(argv0) + 1;
+             len = strlen(buf2) + 1 + strlen(argv0) + 1;
              char *joined = alloca(len);
              eina_file_path_join(joined, len, buf2, argv0);
              if (realpath(joined, buf))
@@ -360,7 +360,7 @@ _try_argv(Eina_Prefix *pfx, const char *argv0)
                DBG("Path not executable %s", buf);
           }
         else
-          DBG("No realpath for argv0=%s in %.*s", argv0, len, cp);
+          DBG("No realpath for argv0=%s in %.*s", argv0, (unsigned int)len, cp);
         cp = p + 1;
      }
    /* 4. big problems. arg[0] != executable - weird execution */

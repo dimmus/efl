@@ -273,6 +273,9 @@ EINA_API void eina_quaternion_transform(Eina_Quaternion *out, const Eina_Quatern
  */
 EINA_API double eina_quaternion_angle_plains(Eina_Quaternion *a, Eina_Quaternion *b);
 
+EINA_API void eina_quaternion_f16p16_normalized(Eina_Quaternion_F16p16 *out,
+                                  const Eina_Quaternion_F16p16 *in);
+
 /**
  * @}
  */

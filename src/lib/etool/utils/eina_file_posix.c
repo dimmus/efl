@@ -1325,7 +1325,7 @@ eina_file_close_from(int fd, int *except_fd)
    Dirent *d;
    char buf[4096 + 128];
    int *closes = NULL;
-   int num_closes = 0, i, j, clo, num;
+   int num_closes = 0, i, j, clo, num, max;
    const char *fname;
    ssize_t pos, ret;
    Efl_Bool do_read;
@@ -1485,7 +1485,7 @@ skip2:
      }
 # endif
 #endif
-   int max = 1024;
+   max = 1024;
 
 #ifdef HAVE_SYS_RESOURCE_H
    struct rlimit lim;
@@ -1496,8 +1496,6 @@ skip2:
      {
         if (except_fd)
           {
-             int j;
-
              for (j = 0; except_fd[j] >= 0; j++)
                {
                   if (except_fd[j] == i) goto skip3;

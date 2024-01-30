@@ -26,6 +26,7 @@
 #endif
 
 #include "Eina.h"
+#include "eina_private.h"
 #include "eina_evlog.h"
 #include "eina_debug.h"
 

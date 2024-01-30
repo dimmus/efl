@@ -50,7 +50,7 @@ typedef struct _Eina_Cow_GC Eina_Cow_GC;
 
 #ifdef HAVE_BACKTRACE
 #define EINA_DEBUG_BT_NUM 64
-typedef void (*Eina_Bt_Func) ();
+typedef void (*Eina_Bt_Func) (void);
 #endif
 
 struct _Eina_Cow_Ptr

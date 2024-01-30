@@ -3,6 +3,7 @@
 #endif
 
 #include <Eina.h>
+#include "eina_private.h"
 #include "eina_abstract_content.h"
 
 struct _Eina_Content
@@ -292,12 +293,13 @@ static Efl_Bool
 _eina_value_type_content_convert_to(const Eina_Value_Type *type EFL_UNUSED, const Eina_Value_Type *convert EFL_UNUSED, const void *type_mem EFL_UNUSED, void *convert_mem EFL_UNUSED)
 {
    Eina_Content * const *ra = type_mem;
+   const char *content_type = NULL;
 
    if (convert == EINA_VALUE_TYPE_STRINGSHARE ||
        convert == EINA_VALUE_TYPE_STRING)
      {
-        const char *type = eina_content_type_get(*ra);
-        if (eina_streq(type, "text/plain;charset=utf-8"))
+        content_type = eina_content_type_get(*ra);
+        if (eina_streq(content_type, "text/plain;charset=utf-8"))
           {
              Eina_Slice data = eina_content_data_get(*ra);
              return eina_value_type_pset(convert, convert_mem, &data.mem);
@@ -305,13 +307,13 @@ _eina_value_type_content_convert_to(const Eina_Value_Type *type EFL_UNUSED, cons
         else
           {
              Eina_Iterator *iter = eina_content_possible_conversions(*ra);
-             const char *type;
+             content_type = NULL;  
 
-             EINA_ITERATOR_FOREACH(iter, type)
+             EINA_ITERATOR_FOREACH(iter, content_type)
                {
-                  if (eina_streq(type, "text/plain;charset=utf-8"))
+                  if (eina_streq(content_type, "text/plain;charset=utf-8"))
                     {
-                       Eina_Content *conv_result = eina_content_convert(*ra, type);
+                       Eina_Content *conv_result = eina_content_convert(*ra, content_type);
 
                        Eina_Slice data = eina_content_data_get(conv_result);
                        Efl_Bool success = eina_value_type_pset(convert, convert_mem, &data.mem);

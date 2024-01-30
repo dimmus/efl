@@ -83,7 +83,7 @@ static const char EINA_MAGIC_BINSHARE_NODE_STR[] = "Eina Binshare Node";
  *
  * @see eina_init()
  */
-EINA_API Efl_Bool
+Efl_Bool
 eina_binshare_init(void)
 {
    Efl_Bool ret;
@@ -124,7 +124,7 @@ eina_binshare_init(void)
  *
  * @see eina_shutdown()
  */
-EINA_API Efl_Bool
+Efl_Bool
 eina_binshare_shutdown(void)
 {
    Efl_Bool ret;

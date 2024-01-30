@@ -369,6 +369,10 @@ EINA_API void *eina_thread_cancellable_run(Eina_Thread_Cancellable_Run_Cb cb, Ei
  */
 EINA_API void eina_sched_prio_drop(void);
 
+
+EINA_API Efl_Bool eina_thread_init(void);
+EINA_API Efl_Bool eina_thread_shutdown(void);
+
 /**
  * @}
  */

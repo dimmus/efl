@@ -18,6 +18,7 @@
 
 #include <string.h>
 
+#include "eina_private.h"
 #include "eina_debug.h"
 
 # ifdef HAVE_CONFIG_H

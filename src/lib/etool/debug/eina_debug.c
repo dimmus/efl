@@ -59,6 +59,7 @@
 # include <evil_private.h> /* fcntl */
 #endif
 
+#include "eina_private.h"
 #include "eina_alloca.h"
 #include "eina_debug.h"
 #include "eina_cpu.h"
@@ -263,7 +264,7 @@ end:
 #endif
 
 EINA_API void
-eina_debug_disable()
+eina_debug_disable(void)
 {
    _debug_disabled = EFL_TRUE;
 }
@@ -659,7 +660,7 @@ eina_debug_opcodes_register(Eina_Debug_Session *session, const Eina_Debug_Opcode
 
    /* Send only if session's fd connected.
     * Otherwise, it will be sent when connected */
-   if(session && session->fd!= -1)
+   if(session->fd != -1)
       _opcodes_registration_send(session, info);
 }
 

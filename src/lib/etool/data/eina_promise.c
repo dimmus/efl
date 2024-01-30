@@ -438,8 +438,8 @@ _scheduled_entry_cb(Eina_Future *f, Eina_Value value)
    _eina_future_dispatch(scheduler, f, value);
 }
 
-void
-eina_future_schedule_entry_recall(Eina_Future_Schedule_Entry *entry)
+static void
+_eina_future_schedule_entry_recall(Eina_Future_Schedule_Entry *entry)
 {
    entry->scheduler->recall(entry);
 }
@@ -460,7 +460,7 @@ _eina_future_cancel(Eina_Future *f, int err)
 
    if (f->scheduled_entry)
      {
-        eina_future_schedule_entry_recall(f->scheduled_entry);
+        _eina_future_schedule_entry_recall(f->scheduled_entry);
         f->scheduled_entry = NULL;
         eina_lock_take(&_pending_futures_lock);
         _pending_futures = eina_list_remove(_pending_futures, f);

@@ -119,23 +119,6 @@ on_error:
    return NULL;
 }
 
-/* Built-in backend's prototypes */
-
-#ifdef EINA_STATIC_BUILD_CHAINED_POOL
-Efl_Bool chained_init(void);
-void      chained_shutdown(void);
-#endif
-
-#ifdef EINA_STATIC_BUILD_ONE_BIG
-Efl_Bool one_big_init(void);
-void      one_big_shutdown(void);
-#endif
-
-#ifdef EINA_STATIC_BUILD_PASS_THROUGH
-Efl_Bool pass_through_init(void);
-void      pass_through_shutdown(void);
-#endif
-
 /**
  * @endcond
  */

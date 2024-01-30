@@ -46,6 +46,8 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include "eina_private.h"
+
 #include "eina_log.h"
 #include "eina_cpu.h"
 

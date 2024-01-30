@@ -166,12 +166,14 @@ static size_t _log_domains_allocated = 0;
 static Eina_Log_Print_Cb _print_cb = eina_log_print_cb_stderr;
 static void *_print_cb_data = NULL;
 
-#ifdef DEBUG
-static Eina_Log_Level _log_level = EINA_LOG_LEVEL_DBG;
-#elif DEBUG_CRITICAL
-static Eina_Log_Level _log_level = EINA_LOG_LEVEL_CRITICAL;
+#ifdef DEBUG 
+   static Eina_Log_Level _log_level = EINA_LOG_LEVEL_DBG;
 #else
-static Eina_Log_Level _log_level = EINA_LOG_LEVEL_ERR;
+   static Eina_Log_Level _log_level = EINA_LOG_LEVEL_ERR;
+#endif
+
+#ifdef DEBUG_CRITICAL 
+   static Eina_Log_Level _log_level = EINA_LOG_LEVEL_CRITICAL;
 #endif
 
 /* NOTE: if you change this, also change:
@@ -185,6 +187,9 @@ static const char *_names[] = {
    "INF",
    "DBG",
 };
+
+Efl_Bool eina_log_init(void);
+Efl_Bool eina_log_shutdown(void);
 
 #ifdef _WIN32
 
