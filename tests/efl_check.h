@@ -294,7 +294,7 @@ _efl_suite_run_end(SRunner *sr, const char *name)
 #ifdef HAVE_FORK
 static EFL_UNUSED Eina_Hash *fork_map;
 
-EFL_UNUSED static int
+static int
 _efl_suite_wait_on_fork(int *num_forks, Efl_Bool *timeout)
 {
    int status = 0, ret, pid;
@@ -371,8 +371,26 @@ _efl_suite_build_and_run(int argc, const char **argv, const char *suite_name, co
              if (!timeout_pid)
                {
                   timeout_pid = fork();
-                  if (!timeout_pid)
-                    execl("/bin/sh", "/bin/sh", "-c", EFL_BUILD_DIR "/tests/timeout", (char *)NULL);
+                  if (timeout_pid == 0)
+                    {
+                       int ret = execl(EFL_BUILD_DIR "/tests/timeout",
+                                       EFL_BUILD_DIR "/tests/timeout",
+                                       (char *)NULL);
+                       if (ret != 0)
+                         {
+                            fprintf(stderr, "EXECL %s TO RUN TIMEOUT!!!\n", EFL_BUILD_DIR "/tests/timeout");
+                            perror("EXECL");
+                            fflush(stderr);
+                            abort();
+                         }
+                    }
+                  else if (timeout_pid < 0)
+                    {
+                       fprintf(stderr, "FORK TO RUN TIMEOUT TOOL FAILED!!!\n");
+                       perror("FORK");
+                       fflush(stderr);
+                       abort();
+                    }
                }
              if (num_forks == eina_cpu_count())
                failed_count += _efl_suite_wait_on_fork(&num_forks, &timeout_reached);
@@ -389,6 +407,13 @@ _efl_suite_build_and_run(int argc, const char **argv, const char *suite_name, co
 # endif
                   continue;
                }
+            else if (pid < 0)
+              {
+                fprintf(stderr, "FORK TO RUN TIMEOUT TOOL FAILED!!!\n");
+                perror("FORK");
+                fflush(stderr);
+                abort();
+              }
           }
 #endif
 
