@@ -1,0 +1,19 @@
+class @beta Owning {
+   methods {
+     test1 {
+       params {
+         test1 : list<string> @move;
+         test2 : iterator<string> @move;
+         test3 : hash<string, string> @move;
+         test4 : accessor<string> @move;
+       }
+     }
+     test2 {
+       params {
+         test1 : list<array<int> @move> @move;
+         test2 : hash<string, array<int> @move> @move;
+       }
+     }
+
+   }
+}

@@ -1,0 +1,6 @@
+class Unimpl composites Iface {
+    [[Docs for clss Unimpl. @since 1.66]]
+    implements {
+        Iface.foo;
+    }
+}

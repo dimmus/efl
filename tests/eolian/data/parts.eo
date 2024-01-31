@@ -1,0 +1,10 @@
+class Parts extends Override {
+   parts {
+      part1: Override; [[Part 1]]
+      part2 @beta: Parts; [[Part 2]]
+   }
+   implements {
+      Override.a { set; }
+      Override.foo;
+   }
+}

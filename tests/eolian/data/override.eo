@@ -1,0 +1,57 @@
+abstract Override extends Base {
+   [[Docs for abstract class Override. @since 1.66]]
+   methods {
+      @property a {
+         set @pure_virtual {
+         }
+         get {
+         }
+      }
+      @property b {
+         set {
+         }
+         get {
+         }
+         keys {
+              idx: int;
+         }
+         values {
+              a: float;
+              b: char;
+              c: int;
+         }
+      }
+      @property c {
+         set {
+         }
+         get {
+         }
+         keys {
+              idx: int;
+         }
+         values {
+              c: int(50);
+         }
+      }
+      foo @pure_virtual {
+      }
+      bar {
+           params {
+                @in idx: int;
+                @out a: int (250);
+                @out str: mstring (null);
+           }
+      }
+   }
+   implements {
+      Base.constructor; [[overridden docs for constructor]]
+      @auto .b { set; }
+      @empty .bar;
+      @auto .c { get; }
+      @auto Base.z {
+         [[overridden general property docs]]
+         get; [[overridden get docs]]
+         set; [[overridden set docs]]
+      }
+   }
+}

@@ -1,0 +1,28 @@
+class Ctor_Dtor extends Base {
+   [[Docs for class Ctor_Dtor. @since 1.66]]
+   methods {
+      custom_constructor_1 {
+         params {
+            @in a: int;
+            @in b: char;
+         }
+      }
+      custom_constructor_2 {
+      }
+      custom_constructor_3 {
+         params {
+            @in z: int;
+         }
+      }
+   }
+   implements {
+      class.constructor;
+      class.destructor;
+      Base.constructor;
+      Base.destructor;
+   }
+   constructors {
+      .custom_constructor_1;
+      .custom_constructor_2 @optional;
+   }
+}

@@ -1,0 +1,7 @@
+interface Iface {
+    [[Docs for interface Iface. @since 1.66]]
+    methods {
+        foo {}
+        bar {}
+    }
+}

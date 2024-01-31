@@ -1,0 +1,33 @@
+#version 1
+
+const Foo: int = 5; [[doc for constant @since 1.66]]
+
+class Class_Simple {
+   [[Class Desc Simple @since 1.66]]
+   c_prefix: efl_canvas_object_simple;
+   data: Evas_Simple_Data;
+   methods {
+      @property a @beta {
+         [[Common desc for a]]
+         set {
+            [[comment a.set]]
+            return: bool (true); [[comment for property set return]]
+         }
+         get {
+         }
+         values {
+            value: int (100); [[Value description]]
+         }
+      }
+      foo @beta {
+         [[comment foo]]
+         params {
+            @in a: int; [[a]]
+            @inout b: char;
+            @out c: double (1337.6);
+            @in d: int @by_ref;
+         }
+         return: mstring (null); [[comment for method return]]
+      }
+   }
+}
