@@ -41,10 +41,10 @@ if get_option('buildtype').startswith('debug')
     '-Wwrite-strings',
     '-Wnested-externs',
     '-Wpacked',
-    '-Wswitch-enum',
     '-Winline',
     '-Wshadow',
     '-Wattributes',
+    '-Wno-switch-enum', # too many in eolian
     '-Wno-conversion', # a lot here !!!
     '-Wno-double-promotion', # a lot here !!!
     '-Wno-discarded-qualifiers',
