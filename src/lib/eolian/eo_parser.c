@@ -148,12 +148,27 @@ _eolian_decl_name_get(Eolian_Object *obj)
              return "struct";
            case EOLIAN_TYPEDECL_ENUM:
              return "enum";
+           case EOLIAN_TYPEDECL_FUNCTION_POINTER:
+           case EOLIAN_TYPEDECL_UNKNOWN: 
            default:
              break;
           }
         goto end;
       case EOLIAN_OBJECT_CONSTANT:
         return "constant";
+      case EOLIAN_OBJECT_STRUCT_FIELD:
+      case EOLIAN_OBJECT_ENUM_FIELD:
+      case EOLIAN_OBJECT_TYPE:
+      case EOLIAN_OBJECT_EXPRESSION:
+      case EOLIAN_OBJECT_FUNCTION:
+      case EOLIAN_OBJECT_FUNCTION_PARAMETER:
+      case EOLIAN_OBJECT_EVENT:
+      case EOLIAN_OBJECT_PART:
+      case EOLIAN_OBJECT_IMPLEMENT:
+      case EOLIAN_OBJECT_CONSTRUCTOR:
+      case EOLIAN_OBJECT_DOCUMENTATION:
+      case EOLIAN_OBJECT_ERROR:
+      case EOLIAN_OBJECT_UNKNOWN:
       default:
         break;
      }

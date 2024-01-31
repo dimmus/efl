@@ -276,6 +276,7 @@ _validate_typedecl(Validate_State *vals, Eolian_Typedecl *tp)
         _reset_stable(vals, was_stable, EFL_TRUE);
         vals->since_ver = old_since;
         return _validate(&tp->base);
+      case EOLIAN_TYPEDECL_UNKNOWN:  
       default:
         return _reset_stable(vals, was_stable, EFL_FALSE);
      }
@@ -518,6 +519,7 @@ _validate_type(Validate_State *vals, Eolian_Type *tp, Efl_Bool by_ref,
              return EFL_FALSE;
            return _validate(&tp->base);
         }
+      case EOLIAN_TYPE_UNKNOWN_TYPE:  
       default:
         break;
      }
@@ -1513,7 +1515,8 @@ _validate_class(Validate_State *vals, Eolian_Class *cl,
    if (cl->parent)
      {
         /* first inherit needs some checking done on it */
-        if (!valid) switch (cl->type)
+        if (!valid) 
+          switch (cl->type)
           {
            case EOLIAN_CLASS_REGULAR:
            case EOLIAN_CLASS_ABSTRACT:
@@ -1524,6 +1527,9 @@ _validate_class(Validate_State *vals, Eolian_Class *cl,
                   return EFL_FALSE;
                }
              break;
+           case EOLIAN_CLASS_MIXIN:
+           case EOLIAN_CLASS_INTERFACE:
+           case EOLIAN_CLASS_UNKNOWN_TYPE:  
            default:
              break;
           }
@@ -1549,7 +1555,8 @@ _validate_class(Validate_State *vals, Eolian_Class *cl,
                    required_classes = eina_list_append(required_classes, required_class);
                }
           }
-        if (!valid) switch (icl->type)
+        if (!valid) 
+          switch (icl->type)
           {
            case EOLIAN_CLASS_REGULAR:
            case EOLIAN_CLASS_ABSTRACT:
@@ -1560,6 +1567,8 @@ _validate_class(Validate_State *vals, Eolian_Class *cl,
                 vals->warned = EFL_TRUE;
                 break;
              }
+           case EOLIAN_CLASS_MIXIN:
+           case EOLIAN_CLASS_INTERFACE:
            default:
              /* it's ok, interfaces are allowed */
              break;

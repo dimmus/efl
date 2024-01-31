@@ -222,6 +222,16 @@ eval_unary(const Eolian_Unit *unit, Eolian_Expression *expr,
               case EOLIAN_EXPR_INT   : exp.value.i  = -(exp.value.i ); break;
               case EOLIAN_EXPR_FLOAT : exp.value.f  = -(exp.value.f ); break;
               case EOLIAN_EXPR_DOUBLE: exp.value.d  = -(exp.value.d ); break;
+              case EOLIAN_EXPR_UINT:
+              case EOLIAN_EXPR_ULONG:
+              case EOLIAN_EXPR_ULLONG:
+              case EOLIAN_EXPR_STRING:
+              case EOLIAN_EXPR_CHAR:
+              case EOLIAN_EXPR_NULL:
+              case EOLIAN_EXPR_BOOL:
+              case EOLIAN_EXPR_NAME:
+              case EOLIAN_EXPR_UNARY:
+              case EOLIAN_EXPR_BINARY:
               default: return EFL_FALSE;
              }
 
@@ -262,13 +272,23 @@ eval_unary(const Eolian_Unit *unit, Eolian_Expression *expr,
               case EOLIAN_EXPR_LONG  : exp.value.l    = ~(exp.value.l  ); break;
               case EOLIAN_EXPR_UINT  : exp.value.u    = ~(exp.value.u  ); break;
               case EOLIAN_EXPR_INT   : exp.value.i    = ~(exp.value.i  ); break;
+              case EOLIAN_EXPR_FLOAT:
+              case EOLIAN_EXPR_DOUBLE:
+              case EOLIAN_EXPR_STRING:
+              case EOLIAN_EXPR_CHAR:
+              case EOLIAN_EXPR_NULL:
+              case EOLIAN_EXPR_BOOL:
+              case EOLIAN_EXPR_NAME:
+              case EOLIAN_EXPR_UNARY:
+              case EOLIAN_EXPR_BINARY:
+              case EOLIAN_EXPR_UNKNOWN:
               default: return EFL_FALSE;
              }
 
            *out = exp;
            return EFL_TRUE;
         }
-
+      case EOLIAN_UNOP_INVALID:
       default:
         assert(EFL_FALSE);
         return EFL_FALSE;
@@ -410,6 +430,7 @@ eval_binary(const Eolian_Unit *unit, Eolian_Expression *expr,
       CASE_ARITH_INT(LSH , <<)
       CASE_ARITH_INT(RSH , >>)
 
+      case EOLIAN_BINOP_INVALID:
       default:
         assert(EFL_FALSE);
         return EFL_FALSE;
@@ -578,6 +599,7 @@ eval_exp(const Eolian_Unit *unit, Eolian_Expression *expr,
         return eval_unary(unit, expr, mask, out, cb, data);
       case EOLIAN_EXPR_BINARY:
         return eval_binary(unit, expr, mask, out, cb, data);
+      case EOLIAN_EXPR_UNKNOWN:
       default:
         assert(EFL_FALSE);
         return EFL_FALSE;
@@ -671,6 +693,10 @@ database_expr_eval_type(const Eolian_Unit *unit, Eolian_Expression *expr,
                      return err;
                  }
           }
+        case EOLIAN_TYPE_VOID:
+        case EOLIAN_TYPE_ERROR:
+        case EOLIAN_TYPE_UNDEFINED:
+        case EOLIAN_TYPE_UNKNOWN_TYPE:
         default:
           return err;
       }
