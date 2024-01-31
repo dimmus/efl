@@ -124,9 +124,9 @@ subdir(join_paths(local_module,'etool'))
 subprojects = [
   # name                |   option             | mod   | lib  | bin | bench | tests | examples | true if build in efl-one | pkg-config options | name of static libs
   # ['evil'             ,[]                    , false,  true, false,  false,  false,     false,  true, [], []],
-  ['etool'          ,[]                    , false,  true, false,  false,   true,  true,   true,  [], []],
-  # ['eolian'         ,[]                    , false,  true,  true,  false,  false,  false,  false, ['etool'], []],
-  # ['eo'               ,[]                    , false,  true, false,   true,   true,     false,  true, ['eina'], []],
+  ['etool'              ,[]                    , false,  true, false,   true,   true,      true,   true,  [], []],
+  ['eolian'             ,[]                    , false,  true,  true,  false,   true,     false,  false, ['etool'], []],
+  ['eo'                 ,[]                    , false,  true, false,   true,   true,     false,   true, ['etool'], []],
   # ['efl'              ,[]                    , false,  true, false,  false,   true,     false,  true, ['eo'], []],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
   # ['eet'              ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'emile', 'efl'], []],
@@ -250,7 +250,7 @@ foreach package : subprojects
     endif
     
     #special case for eolian, this is never efl-one, but will be required in the library
-    if package_name == 'efl_eolian'
+    if package_name == 'eolian'
       package_c_args = [
         '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, package_name)+'"',
         '-DNEED_RUN_IN_TREE=1',
