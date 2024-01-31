@@ -333,7 +333,7 @@ endif
 
 if use_valgrind
    valgrind = dependency('valgrind', required: false)
-   if valgrind.found()
+   if not valgrind.found()
      efl_config.set('NVALGRIND', 1)
    else
      efl_config.set('HAVE_VALGRIND', 1)
