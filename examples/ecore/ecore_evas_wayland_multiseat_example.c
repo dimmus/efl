@@ -8,7 +8,7 @@
 #include <Ecore_Evas.h>
 #include <Ecore_Input.h>
 
-static Eina_Bool
+static Efl_Bool
 _keyboard_event(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Key *e = event;
@@ -25,7 +25,7 @@ _keyboard_event(void *data EFL_UNUSED, int type, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
+static Efl_Bool
 _mouse_move(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Move *e = event;
@@ -39,7 +39,7 @@ _mouse_move(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
+static Efl_Bool
 _mouse_button(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Mouse_Button *e = event;
@@ -55,7 +55,7 @@ _mouse_button(void *data EFL_UNUSED, int type, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
+static Efl_Bool
 _mouse_wheel(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Wheel *e = event;

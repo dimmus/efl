@@ -175,8 +175,8 @@ _build_pipeline(gchar *filename, Ecore_Pipe *pipe)
         printf("no sink");
         goto failure;
      }
-   g_object_set(G_OBJECT(sink), "sync", EINA_TRUE, NULL);
-   g_object_set(G_OBJECT(sink), "signal-handoffs", EINA_TRUE, NULL);
+   g_object_set(G_OBJECT(sink), "sync", EFL_TRUE, NULL);
+   g_object_set(G_OBJECT(sink), "signal-handoffs", EFL_TRUE, NULL);
    g_signal_connect(sink, "handoff",
                     G_CALLBACK(handoff), pipe);
 

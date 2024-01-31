@@ -4,12 +4,12 @@
 #include <Ecore.h>
 #include <Ecore_Evas.h>
 
-static Eina_Bool _advance_frame(void *data, double pos);
-static Eina_Bool _advance_frame2(void *data, double pos);
-static Eina_Bool _advance_frame3(void *data);
-static Eina_Bool _start_second_anim(void *data);
-static Eina_Bool _freeze_third_anim(void *data);
-static Eina_Bool _thaw_third_anim(void *data);
+static Efl_Bool _advance_frame(void *data, double pos);
+static Efl_Bool _advance_frame2(void *data, double pos);
+static Efl_Bool _advance_frame3(void *data);
+static Efl_Bool _start_second_anim(void *data);
+static Efl_Bool _freeze_third_anim(void *data);
+static Efl_Bool _thaw_third_anim(void *data);
 
 int
 main(void)
@@ -57,7 +57,7 @@ main(void)
    return 0;
 }
 
-static Eina_Bool
+static Efl_Bool
 _advance_frame(void *data, double pos)
 {
    double frame = pos;
@@ -69,7 +69,7 @@ _advance_frame(void *data, double pos)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _start_second_anim(void *data)
 {
    ecore_animator_frametime_set(1. / 10);
@@ -77,7 +77,7 @@ _start_second_anim(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _advance_frame2(void *data, double pos)
 {
    double frame = pos;
@@ -89,7 +89,7 @@ _advance_frame2(void *data, double pos)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _advance_frame3(void *data)
 {
    static int x = 0;
@@ -101,14 +101,14 @@ _advance_frame3(void *data)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _freeze_third_anim(void *data)
 {
    ecore_animator_freeze(data);
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _thaw_third_anim(void *data)
 {
    ecore_animator_thaw(data);

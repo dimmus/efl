@@ -129,7 +129,7 @@ _server_client_add(void *data EFL_UNUSED, const Efl_Event *event)
                          efl_io_copier_destination_set(efl_added, ssl),
                          efl_io_copier_timeout_inactivity_set(efl_added, timeout),
                          efl_event_callback_array_add(efl_added, echo_copier_cbs(), ssl),
-                         efl_io_closer_close_on_invalidate_set(efl_added, EINA_TRUE) /* we want to auto-close as we have a single copier */
+                         efl_io_closer_close_on_invalidate_set(efl_added, EFL_TRUE) /* we want to auto-close as we have a single copier */
                          );
 
    fprintf(stderr, "INFO: using an echo copier=%p for ssl %s\n",
@@ -172,7 +172,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of 'upgrading' a regular Efl.Net.Socket received from an Efl.Net.Server.Tcp to a SSL socket, then serving as 'echo' server.",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_CHOICE('c', "cipher", "Cipher to use, defaults to 'auto'", ciphers_strs),
 
@@ -247,7 +247,7 @@ efl_main(void *data EFL_UNUSED,
    char *cipher_choice = "auto";
    char *str;
    Efl_Net_Ssl_Cipher cipher = EFL_NET_SSL_CIPHER_AUTO;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(cipher_choice),
 
@@ -304,7 +304,7 @@ efl_main(void *data EFL_UNUSED,
                      efl_net_ssl_context_private_keys_set(efl_added, eina_list_iterator_new(private_keys)),
                      efl_net_ssl_context_certificate_revocation_lists_set(efl_added, eina_list_iterator_new(crls)),
                      efl_net_ssl_context_certificate_authorities_set(efl_added, eina_list_iterator_new(cas)),
-                     efl_net_ssl_context_setup(efl_added, cipher, EINA_FALSE /* a server! */));
+                     efl_net_ssl_context_setup(efl_added, cipher, EFL_FALSE /* a server! */));
 
    if (!ssl_ctx)
      {
@@ -337,9 +337,9 @@ efl_main(void *data EFL_UNUSED,
    eina_iterator_free(it);
 
    server = efl_add(EFL_NET_SERVER_TCP_CLASS, ev->object, /* it's mandatory to use a main loop provider as the server parent */
-                    efl_net_server_ip_ipv6_only_set(efl_added, EINA_FALSE), /* optional, but helps testing IPv4 on IPv6 servers */
-                    efl_net_server_fd_reuse_address_set(efl_added, EINA_TRUE), /* optional, but nice for testing */
-                    efl_net_server_fd_reuse_port_set(efl_added, EINA_TRUE), /* optional, but nice for testing... not secure unless you know what you're doing */
+                    efl_net_server_ip_ipv6_only_set(efl_added, EFL_FALSE), /* optional, but helps testing IPv4 on IPv6 servers */
+                    efl_net_server_fd_reuse_address_set(efl_added, EFL_TRUE), /* optional, but nice for testing */
+                    efl_net_server_fd_reuse_port_set(efl_added, EFL_TRUE), /* optional, but nice for testing... not secure unless you know what you're doing */
                     efl_event_callback_array_add(efl_added, server_cbs(), NULL)); /* mandatory to have "client,add" in order to be useful */
    if (!server)
      {

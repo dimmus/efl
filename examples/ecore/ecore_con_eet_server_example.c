@@ -20,21 +20,21 @@
 
 static int _client_count = 0;
 
-Eina_Bool
+Efl_Bool
 _eet_client_discnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply EFL_UNUSED, Ecore_Con_Client *conn EFL_UNUSED)
 {
    _client_count--;
    if (!_client_count)
      ecore_main_loop_quit();
 
-   return EINA_FALSE;
+   return EFL_FALSE;
 }
 
-Eina_Bool
+Efl_Bool
 _eet_client_cnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply EFL_UNUSED, Ecore_Con_Client *conn EFL_UNUSED)
 {
    _client_count++;
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void

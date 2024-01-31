@@ -27,7 +27,7 @@ _ssl_can_read(void *data EFL_UNUSED, const Efl_Event *event)
 {
    char buf[63]; /* INFO: SSL read '...' will fit in 80 columns */
    Eina_Error err;
-   Eina_Bool can_read = efl_io_reader_can_read_get(event->object);
+   Efl_Bool can_read = efl_io_reader_can_read_get(event->object);
 
    /* NOTE: this message may appear with can read=0 BEFORE
     * "read '...'" because efl_io_readr_read() will change the status
@@ -67,7 +67,7 @@ _ssl_eos(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 static void
 _ssl_can_write(void *data EFL_UNUSED, const Efl_Event *event)
 {
-   Eina_Bool can_write = efl_io_writer_can_write_get(event->object);
+   Efl_Bool can_write = efl_io_writer_can_write_get(event->object);
    size_t len;
 
    /* NOTE: this message may appear with can write=0 BEFORE
@@ -187,13 +187,13 @@ _unescape(const char *str)
 {
    char *ret = strdup(str);
    char *c, *w;
-   Eina_Bool escaped = EINA_FALSE;
+   Efl_Bool escaped = EFL_FALSE;
 
    for (c = ret, w = ret; *c != '\0'; c++)
      {
         if (escaped)
           {
-             escaped = EINA_FALSE;
+             escaped = EFL_FALSE;
              switch (*c)
                {
                 case 'n': *w = '\n'; break;
@@ -206,7 +206,7 @@ _unescape(const char *str)
         else
           {
              if (*c == '\\')
-               escaped = EINA_TRUE;
+               escaped = EFL_TRUE;
              else
                w++;
           }
@@ -247,7 +247,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of 'upgrading' a regular Efl.Net.Dialer.Tcp to a SSL socket.",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_STR('d', "line-delimiter",
                            "Changes the line delimiter to be used in both send and receive. Defaults to \\r\\n"),
@@ -339,13 +339,13 @@ efl_main(void *data EFL_UNUSED,
    Eina_Iterator *it;
    char *verify_mode_choice = "required";
    char *cipher_choice = "auto";
-   Eina_Bool default_paths_load = EINA_TRUE;
+   Efl_Bool default_paths_load = EFL_TRUE;
    Efl_Net_Ssl_Verify_Mode verify_mode = EFL_NET_SSL_VERIFY_MODE_OPTIONAL;
    Efl_Net_Ssl_Cipher cipher = EFL_NET_SSL_CIPHER_AUTO;
-   Eina_Bool hostname_verify = EINA_TRUE;
+   Efl_Bool hostname_verify = EFL_TRUE;
    char *hostname_override = NULL;
 #endif
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    double timeout_dial = 30.0;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(line_delimiter_str),
@@ -463,7 +463,7 @@ efl_main(void *data EFL_UNUSED,
                      efl_net_ssl_context_verify_mode_set(efl_added, verify_mode),
                      efl_net_ssl_context_hostname_verify_set(efl_added, hostname_verify),
                      efl_net_ssl_context_hostname_set(efl_added, hostname_override),
-                     efl_net_ssl_context_setup(efl_added, cipher, EINA_TRUE));
+                     efl_net_ssl_context_setup(efl_added, cipher, EFL_TRUE));
 #else
    ssl_ctx = efl_net_ssl_context_default_dialer_get();
    fprintf(stderr, "INFO: using default context for dialers.\n");

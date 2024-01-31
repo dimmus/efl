@@ -13,14 +13,14 @@
 #include <Eina.h>
 #include "ecore_con_eet_descriptor_example.h"
 
-Eina_Bool
+Efl_Bool
 _eet_svr_discnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply EFL_UNUSED, Ecore_Con_Server *conn EFL_UNUSED)
 {
    ecore_main_loop_quit();
-   return EINA_FALSE;
+   return EFL_FALSE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _eet_svr_cnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply, Ecore_Con_Server *conn EFL_UNUSED)
 {
    /* Only id and message parameter are sent to server. not_sending, parameter
@@ -29,7 +29,7 @@ _eet_svr_cnct_cb(void *data EFL_UNUSED, Ecore_Con_Reply *reply, Ecore_Con_Server
                          "This is not sent to server"};
 
    ecore_con_eet_send(reply, EXAMPLE_STREAM, &toSend);
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void

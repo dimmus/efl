@@ -9,14 +9,14 @@ static char *agent = "efl_net_dialer_websocket";
 static unsigned int start_index = 0;
 static unsigned int end_index = UINT32_MAX;
 static unsigned int current_index = 0;
-static Eina_Bool no_report_update = EINA_FALSE;
+static Efl_Bool no_report_update = EFL_FALSE;
 static Eina_List *case_tuples = NULL;
-static Eina_Bool verbose = 0;
+static Efl_Bool verbose = 0;
 
 static Eo *pending = NULL;
 
 /* https://www.w3.org/International/questions/qa-forms-utf-8 */
-static Eina_Bool
+static Efl_Bool
 _utf8_check(const char *text)
 {
    const unsigned char * bytes = (const unsigned char *)text;
@@ -128,10 +128,10 @@ _utf8_check(const char *text)
           }
 
         if (verbose) fprintf(stderr, "INFO: failed unicode byte #%zd '%s'\n", (const char*)bytes - text, text);
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void
@@ -365,7 +365,7 @@ _echo_binary(void *data EFL_UNUSED, const Efl_Event *event)
    efl_net_dialer_websocket_binary_send(dialer, *slice);
 }
 
-static Eina_Bool _websocket_test_next_case_tuple(Eo *loop);
+static Efl_Bool _websocket_test_next_case_tuple(Eo *loop);
 
 static void
 _test_next_case_closed(void *data EFL_UNUSED, const Efl_Event *event)
@@ -382,7 +382,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(_test_next_case_tuple_cbs,
                            { EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_BINARY, _echo_binary },
                            { EFL_IO_CLOSER_EVENT_CLOSED, _test_next_case_closed });
 
-static Eina_Bool
+static Efl_Bool
 _websocket_test_next_case_tuple(Eo *loop)
 {
    Eo *dialer;
@@ -393,7 +393,7 @@ _websocket_test_next_case_tuple(Eo *loop)
    Eina_Error err;
 
    if (!case_tuples)
-     return EINA_FALSE;
+     return EFL_FALSE;
 
    str = case_tuples->data;
    case_tuples = eina_list_remove_list(case_tuples, case_tuples);
@@ -405,7 +405,7 @@ _websocket_test_next_case_tuple(Eo *loop)
                 "'%s/runCase?casetuple=%s&agent=%s': %s",
                 address, str, agent, strerror(errno));
         free(str);
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
    else if ((size_t)len > sizeof(url))
      {
@@ -413,14 +413,14 @@ _websocket_test_next_case_tuple(Eo *loop)
                 "'%s/runCase?casetuple=%s&agent=%s': no space.",
                 address, str, agent);
         free(str);
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    snprintf(name, sizeof(name), "test_case=%s", str);
    free(str);
 
    dialer = _websocket_new(name, loop);
-   if (!dialer) return EINA_FALSE;
+   if (!dialer) return EFL_FALSE;
 
    efl_event_callback_array_add(dialer, _test_next_case_tuple_cbs(), NULL);
 
@@ -431,15 +431,15 @@ _websocket_test_next_case_tuple(Eo *loop)
                 url, eina_error_msg_get(err));
         efl_del(dialer);
         efl_loop_quit(loop, eina_value_int_init(EXIT_FAILURE));
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    fprintf(stderr, "TEST: %s '%s'\n", efl_name_get(dialer), efl_net_dialer_address_dial_get(dialer));
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
-static Eina_Bool _websocket_test_index(unsigned int idx, Eo *loop);
+static Efl_Bool _websocket_test_index(unsigned int idx, Eo *loop);
 
 static void
 _test_index_closed(void *data EFL_UNUSED, const Efl_Event *event)
@@ -456,7 +456,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(_test_index_cbs,
                            { EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_BINARY, _echo_binary },
                            { EFL_IO_CLOSER_EVENT_CLOSED, _test_index_closed });
 
-static Eina_Bool
+static Efl_Bool
 _websocket_test_index(unsigned int idx, Eo *loop)
 {
    Eo *dialer;
@@ -466,7 +466,7 @@ _websocket_test_index(unsigned int idx, Eo *loop)
    Eina_Error err;
 
    if (idx > end_index)
-     return EINA_FALSE;
+     return EFL_FALSE;
 
    len = snprintf(url, sizeof(url), "%s/runCase?case=%u&agent=%s",
                   address, idx, agent);
@@ -475,20 +475,20 @@ _websocket_test_index(unsigned int idx, Eo *loop)
         fprintf(stderr, "ERROR: could not create URL "
                 "'%s/runCase?case=%u&agent=%s': %s",
                 address, idx, agent, strerror(errno));
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
    else if ((size_t)len > sizeof(url))
      {
         fprintf(stderr, "ERROR: could not create URL "
                 "'%s/runCase?case=%u&agent=%s': no space.",
                 address, idx, agent);
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    snprintf(name, sizeof(name), "test_case=%u", idx);
 
    dialer = _websocket_new(name, loop);
-   if (!dialer) return EINA_FALSE;
+   if (!dialer) return EFL_FALSE;
 
    efl_event_callback_array_add(dialer, _test_index_cbs(), NULL);
 
@@ -499,14 +499,14 @@ _websocket_test_index(unsigned int idx, Eo *loop)
                 url, eina_error_msg_get(err));
         efl_del(dialer);
         efl_loop_quit(loop, eina_value_int_init(EXIT_FAILURE));
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    current_index = idx;
 
    fprintf(stderr, "TEST: %s '%s'\n", efl_name_get(dialer), efl_net_dialer_address_dial_get(dialer));
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void
@@ -542,7 +542,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(_load_tests_cbs,
                            { EFL_NET_DIALER_WEBSOCKET_EVENT_MESSAGE_TEXT, _load_tests_text },
                            { EFL_IO_CLOSER_EVENT_CLOSED, _load_tests_closed });
 
-static Eina_Bool
+static Efl_Bool
 _websocket_load_tests(Eo *loop)
 {
    Eo *dialer;
@@ -555,17 +555,17 @@ _websocket_load_tests(Eo *loop)
      {
         fprintf(stderr, "ERROR: could not create URL '%s/getCaseCount': %s",
                 address, strerror(errno));
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
    else if ((size_t)len > sizeof(url))
      {
         fprintf(stderr, "ERROR: could not create URL '%s/getCaseCount': no space.",
                 address);
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    dialer = _websocket_new("get-case-count", loop);
-   if (!dialer) return EINA_FALSE;
+   if (!dialer) return EFL_FALSE;
 
    efl_event_callback_array_add(dialer, _load_tests_cbs(), NULL);
 
@@ -576,12 +576,12 @@ _websocket_load_tests(Eo *loop)
                 url, eina_error_msg_get(err));
         efl_del(dialer);
         efl_loop_quit(loop, eina_value_int_init(EXIT_FAILURE));
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    if (verbose) fprintf(stderr, "INFO: %s '%s'\n", efl_name_get(dialer), efl_net_dialer_address_dial_get(dialer));
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static const Ecore_Getopt options = {
@@ -598,7 +598,7 @@ static const Ecore_Getopt options = {
   "This is a client to talk to their test server, that should be executed as:\n"
   "   wstest -m fuzzingserver\n"
   "\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_UINT('s', "start-index", "when running batch, specifies the start (first) index"),
     ECORE_GETOPT_STORE_UINT('e', "end-index", "when running batch, specifies the end (last) index"),
@@ -647,7 +647,7 @@ EAPI_MAIN void
 efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_UINT(start_index),
      ECORE_GETOPT_VALUE_UINT(end_index),
@@ -668,7 +668,7 @@ efl_main(void *data EFL_UNUSED,
      ECORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
-   Eina_Bool r;
+   Efl_Bool r;
 
    args = ecore_getopt_parse(&options, values, 0, NULL);
    if (args < 0)

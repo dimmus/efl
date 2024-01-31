@@ -14,7 +14,7 @@
 #define HANDLER_TYPE Ecore_Fd_Handler
 #endif
 
-static Eina_Bool
+static Efl_Bool
 _fd_handler_cb(void *data EFL_UNUSED, HANDLER_TYPE *fd_handler EFL_UNUSED)
 {
    static int numberOfMessages = 0;

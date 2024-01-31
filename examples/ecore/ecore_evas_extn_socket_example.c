@@ -171,7 +171,7 @@ main(void)
         return 0;
      }
 
-   if(!ecore_evas_extn_socket_listen(ee_socket, "socket_exam_service", 0, EINA_FALSE))
+   if(!ecore_evas_extn_socket_listen(ee_socket, "socket_exam_service", 0, EFL_FALSE))
      {
         printf("Fail to listen socket_exam_service!\n");
 		return 0;
@@ -193,7 +193,7 @@ main(void)
    evas_object_show(sock_bg);
    ecore_evas_data_set(ee_socket, "bg", sock_bg);
 
-   ecore_evas_extn_socket_events_block_set(ee_socket, EINA_FALSE);
+   ecore_evas_extn_socket_events_block_set(ee_socket, EFL_FALSE);
 
    ecore_main_loop_begin();
 

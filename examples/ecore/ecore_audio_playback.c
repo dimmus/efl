@@ -27,7 +27,7 @@ handle_cmd(char *cmd, size_t bread)
    const char *name;
    Eina_List *out_inputs, *input;
    Eo *in;
-   Eina_Bool paused, ret;
+   Efl_Bool paused, ret;
    double pos, length;
    int min;
 
@@ -101,7 +101,7 @@ handle_cmd(char *cmd, size_t bread)
      {
         EINA_LIST_FOREACH(out_inputs, input, in)
           {
-             Eina_Bool loop;
+             Efl_Bool loop;
              loop = ecore_audio_obj_in_looped_get(in);
              name = ecore_audio_obj_name_get(in);
 
@@ -169,7 +169,7 @@ handle_cmd(char *cmd, size_t bread)
 
 }
 
-Eina_Bool
+Efl_Bool
 handle_input(void *data EFL_UNUSED, Ecore_Fd_Handler *handler)
 {
    size_t bread;
@@ -177,7 +177,7 @@ handle_input(void *data EFL_UNUSED, Ecore_Fd_Handler *handler)
    int fd;
 
    if (!ecore_main_fd_handler_active_get(handler, ECORE_FD_READ))
-     return EINA_TRUE;
+     return EFL_TRUE;
 
    fd = ecore_main_fd_handler_fd_get(handler);
 
@@ -187,19 +187,19 @@ handle_input(void *data EFL_UNUSED, Ecore_Fd_Handler *handler)
         printf("Ctrl-D?\n");
         ecore_main_loop_quit();
 
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    handle_cmd(buf, bread);
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void 
 _play_finished(void *data EFL_UNUSED, const Efl_Event *event)
 {
   const char *name;
-  Eina_Bool ret;
+  Efl_Bool ret;
 
   name = ecore_audio_obj_name_get(event->object);
   printf("Done: %s\n", name);
@@ -235,7 +235,7 @@ main(int argc, const char *argv[])
 {
    int i, freq;
 
-   Eina_Bool ret;
+   Efl_Bool ret;
    struct termios tcorig, tcnew;
    Eo *in;
    char *tmp, *tmp2, *val;

@@ -3,7 +3,7 @@
 
 #include <Ecore.h>
 
-static Eina_Bool
+static Efl_Bool
 _quitter(void *data EFL_UNUSED, int ev_type EFL_UNUSED, void *event EFL_UNUSED)
 {
    printf("Leaving already?\n");

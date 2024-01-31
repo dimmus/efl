@@ -6,7 +6,7 @@
 #include <Ecore_Getopt.h>
 #include <ctype.h>
 
-static Eina_Bool monitoring = EINA_TRUE;
+static Efl_Bool monitoring = EFL_TRUE;
 
 static const char *
 _access_point_state_to_str(Efl_Net_Control_Access_Point_State state)
@@ -64,7 +64,7 @@ _access_point_security_to_str(Efl_Net_Control_Access_Point_Security security)
 static void
 _str_iterator_print(const char *header, const char *footer, Eina_Iterator *it)
 {
-   Eina_Bool first = EINA_TRUE;
+   Efl_Bool first = EFL_TRUE;
    const char *str;
 
    fputs(header, stdout);
@@ -73,7 +73,7 @@ _str_iterator_print(const char *header, const char *footer, Eina_Iterator *it)
         if (first)
           {
              putc('[', stdout);
-             first = EINA_FALSE;
+             first = EFL_FALSE;
           }
         else fputs(", ", stdout);
         printf("'%s'", str);
@@ -304,7 +304,7 @@ static void
 _access_points_list(Eina_Iterator *it)
 {
    Eo *ap;
-   Eina_Bool first = EINA_TRUE;
+   Efl_Bool first = EFL_TRUE;
 
    EINA_ITERATOR_FOREACH(it, ap)
      {
@@ -312,7 +312,7 @@ _access_points_list(Eina_Iterator *it)
           {
              printf("INFO: PRIO | NAME               | FLAGS | STATE         | TECH\n"
                     "INFO: -----+--------------------+-------+---------------+---------------\n");
-             first = EINA_FALSE;
+             first = EFL_FALSE;
           }
 
         printf("INFO: %4u | %-18.18s | %c%c%c   | %-13.13s | %s\n",
@@ -363,7 +363,7 @@ _technology_type_str(Efl_Net_Control_Technology_Type type)
 static void
 _technology_print(Eo *tech)
 {
-   Eina_Bool tethering;
+   Efl_Bool tethering;
    const char *teth_id, *teth_pass;
 
    efl_net_control_technology_tethering_get(tech, &tethering, &teth_id, &teth_pass);
@@ -603,7 +603,7 @@ _cmd_technologies_list(Eo *ctl, size_t argc EFL_UNUSED, char **argv EFL_UNUSED)
 {
    Eina_Iterator *it = efl_net_control_manager_technologies_get(ctl);
    Eo *tech;
-   Eina_Bool first = EINA_TRUE;
+   Efl_Bool first = EFL_TRUE;
 
    EINA_ITERATOR_FOREACH(it, tech)
      {
@@ -611,7 +611,7 @@ _cmd_technologies_list(Eo *ctl, size_t argc EFL_UNUSED, char **argv EFL_UNUSED)
           {
              printf("INFO:  NAME               | ON | CONN | TYPE\n"
                     "INFO: --------------------+----+------+---------------\n");
-             first = EINA_FALSE;
+             first = EFL_FALSE;
           }
 
         printf("INFO:  %-18.18s | %c  | %c    | %s\n",
@@ -628,33 +628,33 @@ _cmd_technologies_list(Eo *ctl, size_t argc EFL_UNUSED, char **argv EFL_UNUSED)
    eina_iterator_free(it);
 }
 
-static Eina_Bool
-_parse_bool(const char *header, const char *str, Eina_Bool *ret)
+static Efl_Bool
+_parse_bool(const char *header, const char *str, Efl_Bool *ret)
 {
    if (str == NULL)
      {
         fprintf(stderr, "ERROR: %s requires a boolean.\n", header);
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
    if (strcmp(str, "on") == 0)
      {
-        *ret = EINA_TRUE;
-        return EINA_TRUE;
+        *ret = EFL_TRUE;
+        return EFL_TRUE;
      }
    else if (strcmp(str, "off") == 0)
      {
-        *ret = EINA_FALSE;
-        return EINA_TRUE;
+        *ret = EFL_FALSE;
+        return EFL_TRUE;
      }
    else
      {
         fprintf(stderr, "ERROR: %s required boolean 'on' or 'off', got '%s'\n", header, str);
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 }
 
 static const char *
-_fmt_bool(Eina_Bool val)
+_fmt_bool(Efl_Bool val)
 {
    return val ? "on" : "off";
 }
@@ -734,7 +734,7 @@ _cmd_technology_powered(Eo *ctl, size_t argc, char **argv)
 {
    Eo *tech = _technology_find(ctl, argv[1]);
    const char *name;
-   Eina_Bool powered;
+   Efl_Bool powered;
 
    if (!tech) return;
 
@@ -760,7 +760,7 @@ _cmd_technology_tethering(Eo *ctl, size_t argc, char **argv)
 {
    Eo *tech = _technology_find(ctl, argv[1]);
    const char *name;
-   Eina_Bool enabled;
+   Efl_Bool enabled;
    const char *id = NULL, *pass = NULL;
 
    if (!tech) return;
@@ -930,7 +930,7 @@ _cmd_access_point_auto_connect(Eo *ctl, size_t argc EFL_UNUSED, char **argv)
 {
    Eo *ap = _access_point_find(ctl, argv[1]);
    const char *name;
-   Eina_Bool auto_connect;
+   Efl_Bool auto_connect;
 
    if (!ap) return;
 
@@ -1005,7 +1005,7 @@ _cmd_monitor_set(Eo *ctl EFL_UNUSED, size_t argc, char **argv)
 static void
 _cmd_agent_set(Eo *ctl, size_t argc, char **argv)
 {
-   Eina_Bool enabled;
+   Efl_Bool enabled;
 
    if (argc == 1)
      {
@@ -1238,7 +1238,7 @@ _cmd_split(Eina_Rw_Slice arguments, size_t *argc)
    char *buf = arguments.mem;
    size_t len = arguments.len, src, dst, item = 0;
    char quote = 0;
-   Eina_Bool is_escaped = EINA_FALSE;
+   Efl_Bool is_escaped = EFL_FALSE;
 
    for (src = 0, dst = 0; src < len; src++)
      {
@@ -1246,7 +1246,7 @@ _cmd_split(Eina_Rw_Slice arguments, size_t *argc)
 
         if (is_escaped)
           {
-             is_escaped = EINA_FALSE;
+             is_escaped = EFL_FALSE;
              switch (c) {
               case 'n': buf[dst++] = '\n'; break;
               case 't': buf[dst++] = '\t'; break;
@@ -1264,7 +1264,7 @@ _cmd_split(Eina_Rw_Slice arguments, size_t *argc)
           {
              if (c == '\\')
                {
-                  is_escaped = EINA_TRUE;
+                  is_escaped = EFL_TRUE;
 
                   if (!array[item])
                     array[item] = buf + dst;

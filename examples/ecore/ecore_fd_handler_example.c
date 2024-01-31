@@ -17,7 +17,7 @@ _fd_prepare_cb(void *data EFL_UNUSED, Ecore_Fd_Handler *handler EFL_UNUSED)
    printf("prepare_cb called.\n");
 }
 
-static Eina_Bool
+static Efl_Bool
 _fd_handler_cb(void *data, Ecore_Fd_Handler *handler)
 {
    struct context *ctxt = data;
@@ -49,7 +49,7 @@ _fd_handler_cb(void *data, Ecore_Fd_Handler *handler)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer_cb(void *data EFL_UNUSED)
 {
    printf("Timer expired after 5 seconds...\n");

@@ -77,7 +77,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of Efl_Net_Session to request or monitor a network session for an application.\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_TRUE('c', "connect", "Require a connection to the internet (See -o/--require-online)."),
     ECORE_GETOPT_STORE_TRUE('o', "require-online", "When connecting (-c/--connect), require connection to the internet. Otherwise a local network connection is enough"),
@@ -127,9 +127,9 @@ efl_main(void *data EFL_UNUSED,
 {
    char *str;
    Eina_List *techs = NULL;
-   Eina_Bool do_connect = EINA_FALSE;
-   Eina_Bool require_online = EINA_FALSE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool do_connect = EFL_FALSE;
+   Efl_Bool require_online = EFL_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Efl_Net_Session_Technology technologies = EFL_NET_SESSION_TECHNOLOGY_ALL;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_BOOL(do_connect),

@@ -15,7 +15,7 @@ static Eina_Counter *counter;
 static int add = 0;
 static int del = 0;
 
-Eina_Bool
+Efl_Bool
 _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Add *ev EFL_UNUSED)
 {
    ++add;
@@ -26,7 +26,7 @@ _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Add *ev 
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Add *ev EFL_UNUSED)
 {
    ++del;

@@ -45,7 +45,7 @@ _can_read(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eina_Rw_Slice rw_slice;
    Eina_Error err;
-   Eina_Bool can_read = efl_io_reader_can_read_get(event->object);
+   Efl_Bool can_read = efl_io_reader_can_read_get(event->object);
 
    /* NOTE: this message may appear with can read=0 BEFORE
     * "read '...'" because efl_io_readr_read() will change the status
@@ -84,7 +84,7 @@ _can_write(void *data EFL_UNUSED, const Efl_Event *event)
    static int needed_writes = 2;
    Eina_Slice slice;
    Eina_Error err;
-   Eina_Bool can_write = efl_io_writer_can_write_get(event->object);
+   Efl_Bool can_write = efl_io_writer_can_write_get(event->object);
 
    /* NOTE: this message may appear with can write=0 BEFORE
     * "wrote '...'" because efl_io_writer_write() will change the status
@@ -121,7 +121,7 @@ _can_write(void *data EFL_UNUSED, const Efl_Event *event)
         fprintf(stderr, "INFO: wrote '" EINA_SLICE_STR_FMT "'\n", EINA_SLICE_STR_PRINT(slice));
 
         /* if CORK was used, then say we're done to generate the single final datagram */
-        efl_net_socket_udp_cork_set(event->object, EINA_FALSE);
+        efl_net_socket_udp_cork_set(event->object, EFL_FALSE);
      }
    else if (needed_writes == 0)
      {
@@ -171,7 +171,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of Efl_Net_Dialer_Udp usage, sending a message and receiving a reply\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_STR('b', "bind", "Bind to a particular address in the format IP:PORT."),
     ECORE_GETOPT_STORE_TRUE('r', "read-after-write", "Do a read after writes are done."),
@@ -231,12 +231,12 @@ efl_main(void *data EFL_UNUSED,
    char *bind_address = NULL;
    Eina_List *mcast_groups = NULL, *lst;
    char *str;
-   Eina_Bool cork = EINA_FALSE;
-   Eina_Bool do_read = EINA_FALSE;
-   Eina_Bool dont_route = EINA_FALSE;
+   Efl_Bool cork = EFL_FALSE;
+   Efl_Bool do_read = EFL_FALSE;
+   Efl_Bool dont_route = EFL_FALSE;
    unsigned mcast_ttl = 1;
-   Eina_Bool mcast_loopback = EINA_TRUE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool mcast_loopback = EFL_TRUE;
+   Efl_Bool quit_option = EFL_FALSE;
    double timeout_dial = 30.0;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(bind_address),
@@ -286,8 +286,8 @@ efl_main(void *data EFL_UNUSED,
                     efl_net_socket_udp_bind_set(efl_added, bind_address),
                     efl_net_socket_udp_cork_set(efl_added, cork),
                     efl_net_socket_udp_dont_route_set(efl_added, dont_route),
-                    efl_net_socket_udp_reuse_address_set(efl_added, EINA_TRUE), /* optional, but nice for testing */
-                    efl_net_socket_udp_reuse_port_set(efl_added, EINA_TRUE), /* optional, but nice for testing... not secure unless you know what you're doing */
+                    efl_net_socket_udp_reuse_address_set(efl_added, EFL_TRUE), /* optional, but nice for testing */
+                    efl_net_socket_udp_reuse_port_set(efl_added, EFL_TRUE), /* optional, but nice for testing... not secure unless you know what you're doing */
                     efl_net_socket_udp_multicast_time_to_live_set(efl_added, mcast_ttl),
                     efl_net_socket_udp_multicast_loopback_set(efl_added, mcast_loopback),
                     efl_net_dialer_timeout_dial_set(efl_added, timeout_dial),

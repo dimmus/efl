@@ -4,7 +4,7 @@
 #include <fcntl.h>
 #include <ctype.h>
 
-static Eina_Bool do_read = EINA_FALSE;
+static Efl_Bool do_read = EFL_FALSE;
 
 static void
 _connected(void *data EFL_UNUSED, const Efl_Event *event)
@@ -31,7 +31,7 @@ _can_read(void *data EFL_UNUSED, const Efl_Event *event)
 {
    char buf[4];
    Eina_Error err;
-   Eina_Bool can_read = efl_io_reader_can_read_get(event->object);
+   Efl_Bool can_read = efl_io_reader_can_read_get(event->object);
 
    /* NOTE: this message may appear with can read=0 BEFORE
     * "read '...'" because efl_io_readr_read() will change the status
@@ -65,7 +65,7 @@ _can_write(void *data EFL_UNUSED, const Efl_Event *event)
    static Eina_Slice slice = EINA_SLICE_STR_LITERAL("Hello World!");
    Eina_Slice to_write;
    Eina_Error err;
-   Eina_Bool can_write = efl_io_writer_can_write_get(event->object);
+   Efl_Bool can_write = efl_io_writer_can_write_get(event->object);
 
    /* NOTE: this message may appear with can write=0 BEFORE
     * "wrote '...'" because efl_io_writer_write() will change the status
@@ -124,7 +124,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of Efl_Net_Dialer_Unix usage, sending a message and receiving a reply\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_TRUE('r', "read-after-write", "Do a read after writes are done."),
     ECORE_GETOPT_VERSION('V', "version"),
@@ -172,7 +172,7 @@ efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    char *address = NULL;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_BOOL(do_read),
 

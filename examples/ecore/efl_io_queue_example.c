@@ -106,13 +106,13 @@ _unescape(const char *str)
 {
    char *ret = strdup(str);
    char *c, *w;
-   Eina_Bool escaped = EINA_FALSE;
+   Efl_Bool escaped = EFL_FALSE;
 
    for (c = ret, w = ret; *c != '\0'; c++)
      {
         if (escaped)
           {
-             escaped = EINA_FALSE;
+             escaped = EFL_FALSE;
              switch (*c)
                {
                 case 'n': *w = '\n'; break;
@@ -125,7 +125,7 @@ _unescape(const char *str)
         else
           {
              if (*c == '\\')
-               escaped = EINA_TRUE;
+               escaped = EFL_TRUE;
              else
                w++;
           }
@@ -145,7 +145,7 @@ static const Ecore_Getopt options = {
   "\n"
   "This uses Efl_Io_Queue to easily interface with Efl_Io_Copier in order to "
   "send commands to a TCP server.",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_STR('d', "line-delimiter",
                            "Changes the line delimiter to be used in both send and receive. Defaults to \\r\\n"),
@@ -201,7 +201,7 @@ efl_main(void *data EFL_UNUSED,
    char *line_delimiter_str = NULL;
    char *cmd;
    unsigned long buffer_limit = 0;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(line_delimiter_str),
      ECORE_GETOPT_VALUE_ULONG(buffer_limit),

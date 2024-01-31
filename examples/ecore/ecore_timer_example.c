@@ -35,14 +35,14 @@ _get_current_time(void)
    return ecore_time_get() - _initial_time;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer1_cb(void *data EFL_UNUSED)
 {
    printf("Timer1 expired after %0.3f seconds.\n", _get_current_time());
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer2_cb(void *data)
 {
    struct context *ctxt = data;
@@ -56,7 +56,7 @@ _timer2_cb(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer3_cb(void *data)
 {
    struct context *ctxt = data;
@@ -69,7 +69,7 @@ _timer3_cb(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer4_cb(void *data)
 {
    struct context *ctxt = data;
@@ -83,7 +83,7 @@ _timer4_cb(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer5_cb(void *data)
 {
    struct context *ctxt = data;
@@ -99,7 +99,7 @@ _timer5_cb(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer7_cb(void *data)
 {
    struct context *ctxt = data;
@@ -109,7 +109,7 @@ _timer7_cb(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer8_cb(void *data)
 {
    struct context *ctxt = data;
@@ -119,7 +119,7 @@ _timer8_cb(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer6_cb(void *data)
 {
    struct context *ctxt = data;

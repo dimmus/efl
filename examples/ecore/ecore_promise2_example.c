@@ -5,7 +5,7 @@
 
 typedef struct _Ctx {
    Eina_Promise *p;
-   Eina_Bool should_fail;
+   Efl_Bool should_fail;
    Eina_Future *timer;
    Eina_Value *value;
 } Ctx;
@@ -92,7 +92,7 @@ _fail_future_get(Efl_Loop *loop)
 {
    Ctx *ctx = _promise_ctx_new(loop, NULL);
    EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, NULL);
-   ctx->should_fail = EINA_TRUE;
+   ctx->should_fail = EFL_TRUE;
    return _future_get(ctx, loop);
 }
 
@@ -126,19 +126,19 @@ _simple_ok(void *data EFL_UNUSED, const Eina_Value v, const Eina_Future *dead_fu
 static Eina_Value
 _alternate_error_cb(void *data, const Eina_Value v, const Eina_Future *dead_future EFL_UNUSED)
 {
-   Eina_Bool *should_fail = data;
+   Efl_Bool *should_fail = data;
    Eina_Value new_v = EINA_VALUE_EMPTY;
 
    if (*should_fail)
      {
-        *should_fail = EINA_FALSE;
+        *should_fail = EFL_FALSE;
         eina_value_setup(&new_v, EINA_VALUE_TYPE_ERROR);
         eina_value_set(&new_v, ENETDOWN);
         printf("Received succes from the previous future - Generating error for the next future...\n");
      }
    else
      {
-        *should_fail = EINA_TRUE;
+        *should_fail = EFL_TRUE;
         Eina_Error err;
         VALUE_TYPE_CHECK(v, EINA_VALUE_TYPE_ERROR);
         eina_value_get(&v, &err);
@@ -151,7 +151,7 @@ _alternate_error_cb(void *data, const Eina_Value v, const Eina_Future *dead_futu
 static void
 _alternate_error(Efl_Loop *loop)
 {
-   static Eina_Bool should_fail = EINA_TRUE;
+   static Efl_Bool should_fail = EFL_TRUE;
 
    eina_future_chain(_str_future_get(loop),
                      {.cb = _alternate_error_cb, .data = &should_fail},

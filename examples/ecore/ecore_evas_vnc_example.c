@@ -24,7 +24,7 @@ _resize_cb(Ecore_Evas *ee)
    evas_object_resize(vnc, w, h);
 }
 
-static Eina_Bool
+static Efl_Bool
 _anim(void *data)
 {
    static enum { RIGHT, LEFT } direction = LEFT;
@@ -57,11 +57,11 @@ _anim(void *data)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _accept_cb(void *data EFL_UNUSED, Ecore_Evas *ee EFL_UNUSED, const char *client_host)
 {
    printf("Client %s trying to connect\n", client_host);
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void
@@ -70,7 +70,7 @@ _disc_cb(void *data EFL_UNUSED, Ecore_Evas *ee EFL_UNUSED, const char *client_ho
    printf("Client %s disconnected\n", client_host);
 }
 
-static Eina_Bool
+static Efl_Bool
 _keyboard_event(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Key *e = event;
@@ -87,7 +87,7 @@ _keyboard_event(void *data EFL_UNUSED, int type, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
+static Efl_Bool
 _mouse_move(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Move *e = event;
@@ -101,7 +101,7 @@ _mouse_move(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
+static Efl_Bool
 _mouse_button(void *data EFL_UNUSED, int type, void *event)
 {
    Ecore_Event_Mouse_Button *e = event;
@@ -117,7 +117,7 @@ _mouse_button(void *data EFL_UNUSED, int type, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
+static Efl_Bool
 _mouse_wheel(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Wheel *e = event;
@@ -205,7 +205,7 @@ main(int argc, char *argv[])
      *mouse_down, *mouse_up, *mouse_wheel;
    char *engine = "software_x11";
    int args, height = 600;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    static const Ecore_Getopt options = {
      "ecore_evas_vnc_example",
      NULL,
@@ -213,7 +213,7 @@ main(int argc, char *argv[])
      "(C) 2016 Enlightenment Project",
      "BSD 2-Clause",
      "Ecore_Evas VNC example.\n",
-     EINA_TRUE,
+     EFL_TRUE,
      {
        ECORE_GETOPT_STORE_DEF_STR('e', "engine", "The engine backend", "software_x11"),
        ECORE_GETOPT_STORE_DEF_INT('w', "width", "The window width", 800),

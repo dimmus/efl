@@ -8,7 +8,7 @@ static int lines_text = 0;
 static int lines_binary = 0;
 
 static void
-_dummy_send(Eo *dialer, Eina_Bool text, size_t lines)
+_dummy_send(Eo *dialer, Efl_Bool text, size_t lines)
 {
     size_t len = lines * 80;
     char *buf = malloc(len + 1);
@@ -63,9 +63,9 @@ _ws_message_text(void *data EFL_UNUSED, const Efl_Event *event)
    fprintf(stderr, "INFO: got TEXT:\n%s\n", (const char *)event->info);
 
    if (lines_text < 5)
-     _dummy_send(event->object, EINA_TRUE, ++lines_text);
+     _dummy_send(event->object, EFL_TRUE, ++lines_text);
    else
-     _dummy_send(event->object, EINA_FALSE, ++lines_binary);
+     _dummy_send(event->object, EFL_FALSE, ++lines_binary);
 }
 
 static void
@@ -88,7 +88,7 @@ _ws_message_binary(void *data EFL_UNUSED, const Efl_Event *event)
    fprintf(stderr, "\n");
 
    if (lines_binary < 5)
-     _dummy_send(event->object, EINA_FALSE, ++lines_binary);
+     _dummy_send(event->object, EFL_FALSE, ++lines_binary);
    else
      efl_net_dialer_websocket_ping(event->object, "will close on pong");
 }
@@ -121,7 +121,7 @@ _connected(void *data EFL_UNUSED, const Efl_Event *event)
      fprintf(stderr, "INFO: server protocol: %s\n", protocol);
    eina_iterator_free(itr);
 
-   _dummy_send(event->object, EINA_TRUE, ++lines_text);
+   _dummy_send(event->object, EFL_TRUE, ++lines_text);
 }
 
 static void
@@ -198,7 +198,7 @@ static const Ecore_Getopt options = {
   "\n"
   "For the EFL I/O interfaces example, see efl_io_copier_example.c"
   "\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_APPEND('p', "websocket-protocol", "WebSocket protocol to request", ECORE_GETOPT_TYPE_STR),
     ECORE_GETOPT_STORE_STR('U', "username", "Authentication username"),
@@ -261,12 +261,12 @@ efl_main(void *data EFL_UNUSED,
    char *authentication_method_str = "basic";
    char *proxy = NULL;
    char *cookie_jar = NULL;
-   Eina_Bool authentication_restricted = EINA_FALSE;
-   Eina_Bool allow_redirects = EINA_TRUE;
+   Efl_Bool authentication_restricted = EFL_FALSE;
+   Efl_Bool allow_redirects = EFL_TRUE;
    double timeout_dial = 30.0;
    Eina_List *headers = NULL;
    Eina_List *protocols = NULL;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_LIST(protocols),
      ECORE_GETOPT_VALUE_STR(username),

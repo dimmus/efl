@@ -6,7 +6,7 @@
 #include <Ecore.h>
 #include <Ecore_Con.h>
 
-static Eina_Bool
+static Efl_Bool
 _url_data_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Data *url_data = event_info;
@@ -15,10 +15,10 @@ _url_data_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
    for (i = 0; i < url_data->size; i++)
      printf("%c", url_data->data[i]);
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Complete *url_complete = event_info;
@@ -35,7 +35,7 @@ _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 
    ecore_main_loop_quit();
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 int
@@ -43,7 +43,7 @@ main(int argc, const char *argv[])
 {
    Ecore_Con_Url *ec_url = NULL;
    const char *type, *post_data = "";
-   Eina_Bool r;
+   Efl_Bool r;
 
    if (argc < 3)
      {
@@ -67,7 +67,7 @@ main(int argc, const char *argv[])
 
    // check if requests are being pipelined, and set them if not:
    if (!ecore_con_url_pipeline_get())
-     ecore_con_url_pipeline_set(EINA_TRUE);
+     ecore_con_url_pipeline_set(EFL_TRUE);
 
    ec_url = ecore_con_url_custom_new(argv[2], type);
    if (!ec_url)
@@ -80,9 +80,9 @@ main(int argc, const char *argv[])
    ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE, _url_complete_cb, NULL);
 
    ecore_con_url_additional_header_add(ec_url, "User-Agent", "blablabla");
-   ecore_con_url_verbose_set(ec_url, EINA_TRUE);
+   ecore_con_url_verbose_set(ec_url, EFL_TRUE);
 
-   ecore_con_url_httpauth_set(ec_url, "user", "password", EINA_FALSE);
+   ecore_con_url_httpauth_set(ec_url, "user", "password", EFL_FALSE);
 
    ecore_con_url_time(ec_url, ECORE_CON_URL_TIME_IFMODSINCE, 0);
 

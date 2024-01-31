@@ -52,7 +52,7 @@ Ecore_Audio_Vio vio = {
 int
 main(int argc, const char *argv[])
 {
-   Eina_Bool ret;
+   Efl_Bool ret;
 
    ecore_init();
    ecore_audio_init();

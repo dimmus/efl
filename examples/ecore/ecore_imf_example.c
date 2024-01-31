@@ -27,7 +27,7 @@ struct _Entry
    Evas_Textblock_Cursor *preedit_start;
    Evas_Textblock_Cursor *preedit_end;
    Ecore_IMF_Context     *imf_context;
-   Eina_Bool              have_preedit : 1;
+   Efl_Bool              have_preedit : 1;
 };
 
 static void _imf_cursor_info_set(Entry *en);
@@ -86,7 +86,7 @@ _mouse_up_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *ev
              _imf_cursor_info_set(en);
           }
         else
-          evas_object_focus_set(en->rect, EINA_TRUE);
+          evas_object_focus_set(en->rect, EFL_TRUE);
      }
 }
 
@@ -194,17 +194,17 @@ _preedit_clear(Entry *en)
         en->preedit_end = NULL;
      }
 
-   en->have_preedit = EINA_FALSE;
+   en->have_preedit = EFL_FALSE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _ecore_imf_retrieve_surrounding_cb(void *data, Ecore_IMF_Context *ctx EFL_UNUSED, char **text, int *cursor_pos)
 {
    // This callback will be called when the Input Method Context module requests the surrounding context.
    Entry *en = data;
    const char *str;
 
-   if (!en) return EINA_FALSE;
+   if (!en) return EFL_FALSE;
 
    str = evas_object_textblock_text_markup_get(en->txt_obj);
 
@@ -215,7 +215,7 @@ _ecore_imf_retrieve_surrounding_cb(void *data, Ecore_IMF_Context *ctx EFL_UNUSED
    if (cursor_pos && en->cursor)
      *cursor_pos = evas_textblock_cursor_pos_get(en->cursor);
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void
@@ -283,7 +283,7 @@ _ecore_imf_event_preedit_changed_cb(void *data, Ecore_IMF_Context *ctx, void *ev
    Ecore_IMF_Context *imf_context = ctx;
    int preedit_start_pos, preedit_end_pos;
    int i;
-   Eina_Bool preedit_end_state = EINA_FALSE;
+   Efl_Bool preedit_end_state = EFL_FALSE;
 
    if (!en || !en->cursor) return;
 
@@ -292,7 +292,7 @@ _ecore_imf_event_preedit_changed_cb(void *data, Ecore_IMF_Context *ctx, void *ev
    printf("preedit string : %s\n", preedit_string);
 
    if (!strcmp(preedit_string, ""))
-     preedit_end_state = EINA_TRUE;
+     preedit_end_state = EFL_TRUE;
 
    // delete preedit
    _preedit_del(en);
@@ -340,7 +340,7 @@ _ecore_imf_event_preedit_changed_cb(void *data, Ecore_IMF_Context *ctx, void *ev
              evas_textblock_cursor_char_prev(en->preedit_start);
           }
 
-        en->have_preedit = EINA_TRUE;
+        en->have_preedit = EFL_TRUE;
 
         // set cursor position
         evas_textblock_cursor_pos_set(en->cursor, preedit_start_pos + cursor_pos);
@@ -360,7 +360,7 @@ _key_down_cb(void *data, Evas *e EFL_UNUSED, Evas_Object *o EFL_UNUSED, void *ev
 {
    Entry *en = data;
    Evas_Event_Key_Down *ev = event_info;
-   Eina_Bool control, alt, shift;
+   Efl_Bool control, alt, shift;
    if ((!en) || (!ev->key) || (!en->cursor)) return;
 
    if (en->imf_context)
@@ -471,7 +471,7 @@ create_input_field(Evas *evas, Entry *en, Evas_Coord x, Evas_Coord y, Evas_Coord
 {
    if (!en) return;
 
-   en->have_preedit = EINA_FALSE;
+   en->have_preedit = EFL_FALSE;
    en->preedit_start = NULL;
    en->preedit_end = NULL;
 
@@ -486,7 +486,7 @@ create_input_field(Evas *evas, Entry *en, Evas_Coord x, Evas_Coord y, Evas_Coord
    // create text object for displaying text
    en->txt_obj = evas_object_textblock_add(evas);
    evas_object_color_set(en->txt_obj, 0, 0, 0, 255);
-   evas_object_pass_events_set(en->txt_obj, EINA_TRUE);
+   evas_object_pass_events_set(en->txt_obj, EFL_TRUE);
    evas_object_move(en->txt_obj, x, y);
    evas_object_resize(en->txt_obj, w, h);
    evas_object_show(en->txt_obj);
@@ -642,7 +642,7 @@ main(void)
    create_input_field(evas, &en2, 40, 180, 400, 80);
 
    // give focus to input field 1
-   evas_object_focus_set(en1.rect, EINA_TRUE);
+   evas_object_focus_set(en1.rect, EFL_TRUE);
 
    ecore_main_loop_begin(); // begin mainloop
 

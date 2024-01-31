@@ -6,7 +6,7 @@
 #include <Ecore.h>
 #include <Ecore_Con.h>
 
-static Eina_Bool
+static Efl_Bool
 _url_data_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Data *url_data = event_info;
@@ -15,10 +15,10 @@ _url_data_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
    for (i = 0; i < url_data->size; i++)
      printf("%c", url_data->data[i]);
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Complete *url_complete = event_info;
@@ -28,7 +28,7 @@ _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 
    ecore_main_loop_quit();
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 int
@@ -61,8 +61,8 @@ main(int argc, const char *argv[])
    ecore_event_handler_add(ECORE_CON_EVENT_URL_DATA, _url_data_cb, NULL);
    ecore_event_handler_add(ECORE_CON_EVENT_URL_COMPLETE, _url_complete_cb, NULL);
 
-   ecore_con_url_verbose_set(ec_url, EINA_TRUE);
-   ecore_con_url_ftp_use_epsv_set(ec_url, EINA_TRUE);
+   ecore_con_url_verbose_set(ec_url, EFL_TRUE);
+   ecore_con_url_ftp_use_epsv_set(ec_url, EFL_TRUE);
 
    if( !ecore_con_url_ftp_upload(ec_url, file, user, passwd, dir))
      {

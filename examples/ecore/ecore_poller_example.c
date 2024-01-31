@@ -7,7 +7,7 @@
 
 static double _initial_time = 0;
 
-static Eina_Bool
+static Efl_Bool
 _poller_print_cb(void *data)
 {
    char *str = data;
@@ -17,12 +17,12 @@ _poller_print_cb(void *data)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _poller_quit_cb(void *data EFL_UNUSED)
 {
 
    ecore_main_loop_quit();
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 int

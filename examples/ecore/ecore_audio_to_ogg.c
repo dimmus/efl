@@ -39,7 +39,7 @@ main(int argc, char *argv[])
 {
    Eo *out;
    Eo *in;
-   Eina_Bool ret;
+   Efl_Bool ret;
 
    if (argc < 3)
      {

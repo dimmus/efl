@@ -21,7 +21,7 @@ struct _Client
    int sdata;
 };
 
-Eina_Bool
+Efl_Bool
 _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Add *ev)
 {
    struct _Client *client = malloc(sizeof(*client));
@@ -47,7 +47,7 @@ _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Add *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Del *ev)
 {
    struct _Client *client;
@@ -71,7 +71,7 @@ _del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Del *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _data(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Data *ev)
 {
    char fmt[128];

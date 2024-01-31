@@ -2,7 +2,7 @@
 // gcc -o ecore_idler_example ecore_idler_example.c `pkg-config --libs --cflags ecore eo`
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "efl_config.h"
 #endif
 
 #include <Ecore.h>
@@ -21,23 +21,23 @@ struct context   // helper struct to give some context to the callbacks
 
 static int _event_type = 0; // a new type of event will be defined and stored here
 
-static Eina_Bool
+static Efl_Bool
 _enterer_cb(void *data EFL_UNUSED) // the idle enterer callback
 {
    printf("IDLE ENTERER: Ecore entering in idle state.\n");
 
-   return ECORE_CALLBACK_RENEW; // same as EINA_TRUE
+   return ECORE_CALLBACK_RENEW; // same as EFL_TRUE
 }
 
-static Eina_Bool
+static Efl_Bool
 _exiter_cb(void *data EFL_UNUSED) // the idle exiter callback
 {
    printf("IDLE EXITER: Ecore exiting idle state.\n");
 
-   return ECORE_CALLBACK_RENEW; // same as EINA_TRUE
+   return ECORE_CALLBACK_RENEW; // same as EFL_TRUE
 }
 
-static Eina_Bool
+static Efl_Bool
 _idler_cb(void *data) // the idler callback - ran while the mainloop is idle
 {
    struct context *ctxt = data;
@@ -50,10 +50,10 @@ _idler_cb(void *data) // the idler callback - ran while the mainloop is idle
    if ((ctxt->count % 10) == 0)
      ecore_event_add(_event_type, NULL, NULL, NULL);
 
-   return ECORE_CALLBACK_RENEW; // same as EINA_TRUE
+   return ECORE_CALLBACK_RENEW; // same as EFL_TRUE
 }
 
-static Eina_Bool
+static Efl_Bool
 _event_handler_cb(void *data, int type EFL_UNUSED, void *event EFL_UNUSED) // event callback
 {
    struct context *ctxt = data;
@@ -79,10 +79,10 @@ _event_handler_cb(void *data, int type EFL_UNUSED, void *event EFL_UNUSED) // ev
         ecore_main_loop_quit();
      }
 
-   return ECORE_CALLBACK_DONE; // same as EINA_FALSE
+   return ECORE_CALLBACK_DONE; // same as EFL_FALSE
 }
 
-static Eina_Bool
+static Efl_Bool
 _timer_cb(void *data)
 {
    struct context *ctxt = data;
@@ -91,7 +91,7 @@ _timer_cb(void *data)
    if (ctxt->timer)
      ctxt->timer = NULL;
 
-   return ECORE_CALLBACK_CANCEL; // same as EINA_FALSE
+   return ECORE_CALLBACK_CANCEL; // same as EFL_FALSE
 }
 
 int

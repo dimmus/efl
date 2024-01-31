@@ -198,7 +198,7 @@ main(void)
    ee_plug = ecore_evas_object_ecore_evas_get(plug);
    ecore_evas_data_set(ee_plug, "text", text);
 
-   if(!ecore_evas_extn_plug_connect(plug, "socket_exam_service", 0, EINA_FALSE))
+   if(!ecore_evas_extn_plug_connect(plug, "socket_exam_service", 0, EFL_FALSE))
      {
         printf("Fail to connect socket_exam_service!\n");
 		return 0;

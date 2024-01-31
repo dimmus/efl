@@ -4,10 +4,10 @@
 
 static int retval = EXIT_SUCCESS;
 static Ecore_Ipc_Server *server = NULL;
-static Eina_Bool do_flush = EINA_FALSE;
-static Eina_Bool single_message = EINA_FALSE;
+static Efl_Bool do_flush = EFL_FALSE;
+static Efl_Bool single_message = EFL_FALSE;
 
-static Eina_Bool
+static Efl_Bool
 _server_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Add *ev = event;
@@ -19,7 +19,7 @@ _server_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _server_del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Del *ev = event;
@@ -32,7 +32,7 @@ _server_del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _server_data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Data *ev = event;
@@ -53,7 +53,7 @@ _server_data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _on_stdin(void *data EFL_UNUSED, Ecore_Fd_Handler *fdh EFL_UNUSED)
 {
    char *line = NULL;
@@ -113,7 +113,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of ecore_ipc_server_connect() usage.\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_CHOICE('t', "type", "Server type to use, defaults to 'user'", types_strs),
     ECORE_GETOPT_STORE_TRUE('S', "ssl", "Use SSL"),
@@ -144,9 +144,9 @@ main(int argc, char **argv)
    char *type_choice = NULL;
    int port = -1;
    int max_size = -1;
-   Eina_Bool use_ssl = EINA_FALSE;
-   Eina_Bool no_proxy = EINA_FALSE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool use_ssl = EFL_FALSE;
+   Efl_Bool no_proxy = EFL_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(type_choice),
      ECORE_GETOPT_VALUE_BOOL(use_ssl),

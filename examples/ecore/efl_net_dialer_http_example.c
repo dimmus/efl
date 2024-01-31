@@ -168,7 +168,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of Efl_Net_Dialer_Http usage.\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_STR('m', "method", "HTTP method such as GET, POST, PUT..."),
     ECORE_GETOPT_CHOICE('M', "primary-mode", "Define primary operation mode.", primary_mode_choices),
@@ -251,9 +251,9 @@ efl_main(void *data EFL_UNUSED,
    char *input_fname = NULL;
    char *proxy = NULL;
    char *cookie_jar = NULL;
-   Eina_Bool quit_option = EINA_FALSE;
-   Eina_Bool authentication_restricted = EINA_FALSE;
-   Eina_Bool allow_redirects = EINA_TRUE;
+   Efl_Bool quit_option = EFL_FALSE;
+   Efl_Bool authentication_restricted = EFL_FALSE;
+   Efl_Bool allow_redirects = EFL_TRUE;
    double timeout_dial = 30.0;
    Eina_List *headers = NULL;
    Ecore_Getopt_Value values[] = {
@@ -323,7 +323,7 @@ efl_main(void *data EFL_UNUSED,
                         efl_name_set(efl_added, "input"),
                         efl_file_set(efl_added, input_fname),
                         efl_io_file_flags_set(efl_added, O_RDONLY),
-                        efl_io_closer_close_on_exec_set(efl_added, EINA_TRUE), /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
+                        efl_io_closer_close_on_exec_set(efl_added, EFL_TRUE), /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
                         efl_event_callback_add(efl_added, EFL_IO_READER_EVENT_EOS, _eos, NULL));
      }
 
@@ -339,7 +339,7 @@ efl_main(void *data EFL_UNUSED,
                          efl_file_set(efl_added, output_fname),
                          efl_io_file_mode_set(efl_added, 0644),
                          efl_io_file_flags_set(efl_added, O_WRONLY | O_TRUNC | O_CREAT),
-                         efl_io_closer_close_on_exec_set(efl_added, EINA_TRUE)); /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
+                         efl_io_closer_close_on_exec_set(efl_added, EFL_TRUE)); /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
      }
 
    primary_mode = _parse_primary_mode(primary_mode_str);

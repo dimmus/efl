@@ -4,11 +4,11 @@
 
 static int retval = EXIT_SUCCESS;
 static int max_size = -1;
-static Eina_Bool echo = EINA_FALSE;
-static Eina_Bool do_flush = EINA_FALSE;
-static Eina_Bool single_message = EINA_FALSE;
+static Efl_Bool echo = EFL_FALSE;
+static Efl_Bool do_flush = EFL_FALSE;
+static Efl_Bool single_message = EFL_FALSE;
 
-static Eina_Bool
+static Efl_Bool
 _client_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Client_Add *ev = event;
@@ -19,7 +19,7 @@ _client_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 
    if (!echo)
      {
-        ecore_ipc_client_send(ev->client, 1, 2, 3, 0, EINA_TRUE,
+        ecore_ipc_client_send(ev->client, 1, 2, 3, 0, EFL_TRUE,
                               "Hello World!", strlen("Hello World!"));
         if (do_flush) ecore_ipc_client_flush(ev->client);
         if (single_message) ecore_ipc_client_del(ev->client);
@@ -28,7 +28,7 @@ _client_add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _client_del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Client_Del *ev = event;
@@ -38,7 +38,7 @@ _client_del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
+static Efl_Bool
 _client_data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Client_Data *ev = event;
@@ -83,7 +83,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of ecore_ipc_server_add() usage.\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_CHOICE('t', "type", "Server type to use, defaults to 'user'", types_strs),
     ECORE_GETOPT_STORE_TRUE('S', "ssl", "Use SSL"),
@@ -120,9 +120,9 @@ main(int argc, char **argv)
    char *type_choice = NULL;
    int clients_limit = -1;
    int port = -1;
-   Eina_Bool use_ssl = EINA_FALSE;
-   Eina_Bool clients_reject_excess = EINA_FALSE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool use_ssl = EFL_FALSE;
+   Efl_Bool clients_reject_excess = EFL_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(type_choice),
      ECORE_GETOPT_VALUE_BOOL(use_ssl),

@@ -13,7 +13,7 @@
 #include <Ecore_Evas.h>
 #include <unistd.h>
 
-static Eina_Bool
+static Efl_Bool
 _stdin_cb(void *data EFL_UNUSED, Ecore_Fd_Handler *handler EFL_UNUSED)
 {
    Eina_List *l;

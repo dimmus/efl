@@ -16,14 +16,14 @@
 
 static Ecore_Con_Server *svr;
 static int retval = EXIT_SUCCESS;
-static Eina_Bool do_flush = EINA_FALSE;
-static Eina_Bool single_message = EINA_FALSE;
-static Eina_Bool verify = EINA_TRUE;
-static Eina_Bool hostname_verify = EINA_TRUE;
-static Eina_Bool do_ssl_upgrade = EINA_FALSE;
+static Efl_Bool do_flush = EFL_FALSE;
+static Efl_Bool single_message = EFL_FALSE;
+static Efl_Bool verify = EFL_TRUE;
+static Efl_Bool hostname_verify = EFL_TRUE;
+static Efl_Bool do_ssl_upgrade = EFL_FALSE;
 static char *starttls_local_command = NULL;
 
-static Eina_Bool
+static Efl_Bool
 _setup_ssl(void)
 {
    Eina_Iterator *it;
@@ -32,7 +32,7 @@ _setup_ssl(void)
    if (!(it = eina_file_ls("/etc/ssl/certs")))
      {
         retval = EXIT_FAILURE;
-        return EINA_FALSE;
+        return EFL_FALSE;
      }
 
    /* add all the CAs */
@@ -51,10 +51,10 @@ _setup_ssl(void)
    if (hostname_verify)
      ecore_con_ssl_server_verify_basic(svr);
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _on_stdin(void *data EFL_UNUSED, Ecore_Fd_Handler *fdh EFL_UNUSED)
 {
    char *line = NULL;
@@ -132,7 +132,7 @@ _on_stdin(void *data EFL_UNUSED, Ecore_Fd_Handler *fdh EFL_UNUSED)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Add *ev)
 {
    printf("Server with ip %s connected!\n", ecore_con_server_ip_get(ev->server));
@@ -145,7 +145,7 @@ _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Add *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Del *ev)
 {
    printf("Lost server with ip %s!\n", ecore_con_server_ip_get(ev->server));
@@ -155,7 +155,7 @@ _del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Del *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _data(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Data *ev)
 {
    printf("Received %i bytes from server:\n"
@@ -168,21 +168,21 @@ _data(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Data *e
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _write_(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Write *ev)
 {
    printf("Sent %d bytes to server\n", ev->size);
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _error(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Error *ev)
 {
    printf("Server Error: %s\n", ev->error);
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _upgrade(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Server_Upgrade *ev)
 {
    printf("Server upgraded to SSL %p %s\n", ev->server, ecore_con_server_ip_get(ev->server));
@@ -208,7 +208,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of ecore_con_server_connect()\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_CHOICE('t', "type", "Server type to use, defaults to 'tcp'", types_strs),
     ECORE_GETOPT_STORE_TRUE('P', "no-proxy", "Do not use SOCKS proxy for remote connections."),
@@ -240,8 +240,8 @@ main(int argc, char *argv[])
    char *type_choice = NULL;
    Ecore_Con_Type type;
    int port = -1;
-   Eina_Bool no_proxy = EINA_FALSE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool no_proxy = EFL_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(type_choice),
      ECORE_GETOPT_VALUE_BOOL(no_proxy),
@@ -301,7 +301,7 @@ main(int argc, char *argv[])
    else if (strcmp(type_choice, "tcp+ssl") == 0)
      {
         type = ECORE_CON_REMOTE_TCP;
-        do_ssl_upgrade = EINA_TRUE;
+        do_ssl_upgrade = EFL_TRUE;
      }
    else if (strcmp(type_choice, "local-user") == 0)
      type = ECORE_CON_LOCAL_USER;

@@ -36,7 +36,7 @@ _resize_cb(Ecore_Evas *ee)
    evas_object_resize(ecore_evas_data_get(ee, "bg"), w, h);
 }
 
-static Eina_Bool
+static Efl_Bool
 _mouse_pos_print(void *data)
 {
    Efl_Input_Device *pointer;
@@ -62,7 +62,7 @@ _mouse_pos_print(void *data)
         printf("Mouse from seat '%s' is at (%d, %d)\n",
                efl_name_get(seat), x, y);
      }
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static void

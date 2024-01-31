@@ -40,7 +40,7 @@ shutdown_all(void)
    eina_shutdown();
 }
 
-static Eina_Bool
+static Efl_Bool
 init_all(void)
 {
    if (!eina_init()) goto err;
@@ -49,10 +49,10 @@ init_all(void)
    if (!ecore_buffer_init()) goto err;
    if (!ecore_buffer_queue_init()) goto err;
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 err:
    shutdown_all();
-   return EINA_FALSE;
+   return EFL_FALSE;
 }
 
 static void

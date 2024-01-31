@@ -25,10 +25,10 @@
 
 static Ecore_Evas *ee;
 static Evas_Object *text, *bg;
-static Eina_Bool min_set = EINA_FALSE;
-static Eina_Bool max_set = EINA_FALSE;
-static Eina_Bool base_set = EINA_FALSE;
-static Eina_Bool step_set = EINA_FALSE;
+static Efl_Bool min_set = EFL_FALSE;
+static Efl_Bool max_set = EFL_FALSE;
+static Efl_Bool base_set = EFL_FALSE;
+static Efl_Bool step_set = EFL_FALSE;
 
 static const char commands[] = \
   "commands are:\n"
@@ -184,7 +184,7 @@ main(void)
    evas_object_resize(bg, WIDTH, HEIGHT);  /* covers full canvas */
    evas_object_show(bg);
 
-   evas_object_focus_set(bg, EINA_TRUE);
+   evas_object_focus_set(bg, EFL_TRUE);
    evas_object_event_callback_add(
      bg, EVAS_CALLBACK_KEY_DOWN, _on_keydown, NULL);
 

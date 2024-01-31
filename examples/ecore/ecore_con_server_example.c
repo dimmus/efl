@@ -15,12 +15,12 @@
  */
 
 static int retval = EXIT_SUCCESS;
-static Eina_Bool echo = EINA_FALSE;
-static Eina_Bool do_flush = EINA_FALSE;
-static Eina_Bool single_message = EINA_FALSE;
-static Eina_Bool do_ssl_upgrade = EINA_FALSE;
+static Efl_Bool echo = EFL_FALSE;
+static Efl_Bool do_flush = EFL_FALSE;
+static Efl_Bool single_message = EFL_FALSE;
+static Efl_Bool do_ssl_upgrade = EFL_FALSE;
 
-Eina_Bool
+Efl_Bool
 _add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Add *ev = event;
@@ -43,7 +43,7 @@ _add(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Del *ev = event;
@@ -53,7 +53,7 @@ _del(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Data *ev = event;
@@ -93,7 +93,7 @@ _data(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 }
 
 
-Eina_Bool
+Efl_Bool
 _write_(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Write *ev = event;
@@ -101,7 +101,7 @@ _write_(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _error(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Error *ev = event;
@@ -109,7 +109,7 @@ _error(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _upgrade(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    Ecore_Con_Event_Client_Upgrade *ev = event;
@@ -136,7 +136,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of ecore_con_server_add() usage.\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_CHOICE('t', "type", "Server type to use, defaults to 'tcp'", types_strs),
     ECORE_GETOPT_STORE_TRUE(0, "socket-activated",
@@ -172,9 +172,9 @@ main(int argc, char **argv)
    char *type_choice = NULL;
    int clients_limit = -1;
    int port = -1;
-   Eina_Bool socket_activated = EINA_FALSE;
-   Eina_Bool clients_reject_excess = EINA_FALSE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool socket_activated = EFL_FALSE;
+   Efl_Bool clients_reject_excess = EFL_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(type_choice),
      ECORE_GETOPT_VALUE_BOOL(socket_activated),
@@ -234,7 +234,7 @@ main(int argc, char **argv)
    else if (strcmp(type_choice, "tcp+ssl") == 0)
      {
         type = ECORE_CON_REMOTE_TCP;
-        do_ssl_upgrade = EINA_TRUE;
+        do_ssl_upgrade = EFL_TRUE;
      }
    else if (strcmp(type_choice, "local-user") == 0)
      type = ECORE_CON_LOCAL_USER;

@@ -4,7 +4,7 @@
 #include <Ecore.h>
 #include <unistd.h>
 
-static Eina_Bool
+static Efl_Bool
 _timer_cb(void *data EFL_UNUSED)
 {
    printf("ecore time: %0.3f\n", ecore_time_get());
@@ -18,7 +18,7 @@ _timer_cb(void *data EFL_UNUSED)
 
    ecore_main_loop_quit();
 
-   return EINA_FALSE;
+   return EFL_FALSE;
 }
 
 int

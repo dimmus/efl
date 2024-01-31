@@ -36,7 +36,7 @@ shutdown_all(void)
    eina_shutdown();
 }
 
-static Eina_Bool
+static Efl_Bool
 init_all(void)
 {
    if (!eina_init()) goto err;
@@ -45,10 +45,10 @@ init_all(void)
    if (!ecore_buffer_init()) goto err;
    if (!ecore_buffer_queue_init()) goto err;
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 err:
    shutdown_all();
-   return EINA_FALSE;
+   return EFL_FALSE;
 }
 
 Ecore_Buffer *
@@ -129,7 +129,7 @@ paint_pixels(void *image, int padding, int width, int height, uint32_t time)
    }
 }
 
-static Eina_Bool
+static Efl_Bool
 _cb_render_post(void *data)
 {
    Provider_Data *pd = (Provider_Data *)data;

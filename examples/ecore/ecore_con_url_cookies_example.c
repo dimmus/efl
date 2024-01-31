@@ -8,7 +8,7 @@
 
 #define COOKIEJAR "cookies.jar"
 
-static Eina_Bool
+static Efl_Bool
 _url_data_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Data *url_data = event_info;
@@ -19,10 +19,10 @@ _url_data_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
      printf("%c", url_data->data[i]);
    printf("\n>>>>>>\n\n");
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Complete *url_complete = event_info;
@@ -42,7 +42,7 @@ _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 
    ecore_main_loop_quit();
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 int
@@ -50,7 +50,7 @@ main(int argc, const char *argv[])
 {
    Ecore_Con_Url *ec_url = NULL;
    char cmd = '\0';
-   Eina_Bool r;
+   Efl_Bool r;
 
    if (argc < 2)
      {
@@ -96,7 +96,7 @@ main(int argc, const char *argv[])
 
       case 'i': // ignore session
         printf("Ignoring old session cookies.\n");
-        ecore_con_url_cookies_ignore_old_session_set(ec_url, EINA_TRUE);
+        ecore_con_url_cookies_ignore_old_session_set(ec_url, EFL_TRUE);
      }
 
    r = ecore_con_url_get(ec_url);

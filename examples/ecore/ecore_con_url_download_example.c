@@ -19,7 +19,7 @@ struct _request
    long size;
 };
 
-static Eina_Bool
+static Efl_Bool
 _url_progress_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Progress *url_progress = event_info;
@@ -37,10 +37,10 @@ _url_progress_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 
    printf("status: %d\n", ecore_con_url_status_code_get(url_progress->url_con));
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
 {
    Ecore_Con_Event_Url_Complete *url_complete = event_info;
@@ -55,7 +55,7 @@ _url_complete_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event_info)
           "(from received_bytes_get)\n", nbytes);
    ecore_main_loop_quit();
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 int

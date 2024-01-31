@@ -4,7 +4,7 @@
 #include <Ecore.h>
 #include <Ecore_Input.h>
 
-static Eina_Bool
+static Efl_Bool
 _joystick_event_handler_cb(void *data EFL_UNUSED, int type EFL_UNUSED, void *event)
 {
    printf("deadzone: %d\n", ecore_input_joystick_event_axis_deadzone_get());

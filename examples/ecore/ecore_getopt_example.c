@@ -52,7 +52,7 @@ static const Ecore_Getopt options = {
   "456\tyetanother\tsome description\n"
   "12345678\tthis is off\tthis is off\n",
   /* we want strict parsing (any error aborts) */
-  EINA_TRUE,
+  EFL_TRUE,
   /* an array of argument descriptions (must terminate with sentinel) */
   {
 
@@ -81,7 +81,7 @@ static const Ecore_Getopt options = {
     ECORE_GETOPT_STORE_DEF_STR(0, "default-string", "Store a single string.",
                                "default-string-value"),
     ECORE_GETOPT_STORE_DEF_BOOL(0, "default-bool", "Store a single boolean.",
-                                EINA_TRUE),
+                                EFL_TRUE),
     ECORE_GETOPT_STORE_DEF_SHORT(0, "default-short", "Store a single short.",
                                  123),
     ECORE_GETOPT_STORE_DEF_INT(0, "default-int", "Store a single integer.",
@@ -175,7 +175,7 @@ int
 main(int argc, char **argv)
 {
    char *str_value = NULL;
-   Eina_Bool bool_value = EINA_FALSE;
+   Efl_Bool bool_value = EFL_FALSE;
    short short_value = 0;
    int int_value = 0;
    long long_value = 0;
@@ -184,7 +184,7 @@ main(int argc, char **argv)
    unsigned long ulong_value = 0;
    double double_value = 0;
    char *def_str_value = NULL;
-   Eina_Bool def_bool_value = EINA_FALSE;
+   Efl_Bool def_bool_value = EFL_FALSE;
    short def_short_value = 0;
    int def_int_value = 0;
    long def_long_value = 0;
@@ -193,15 +193,15 @@ main(int argc, char **argv)
    unsigned long def_ulong_value = 0;
    double def_double_value = 0;
    char *output_value = NULL;
-   Eina_Bool use_x = EINA_FALSE; /* if stores true, then start with false */
-   Eina_Bool use_y = EINA_TRUE; /* if stores false, then start with true */
+   Efl_Bool use_x = EFL_FALSE; /* if stores true, then start with false */
+   Efl_Bool use_y = EFL_TRUE; /* if stores false, then start with true */
    char *use_z = NULL; /* stores a pointer here */
    int count = 0;
    char *choice = NULL;
    Eina_List *lst_strs = NULL;
    Eina_List *lst_ints = NULL;
-   Eina_Bool break_given = EINA_FALSE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool break_given = EFL_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    char *pos_str = NULL;
    int pos_int = 0;
    char *pos_choice = NULL;
@@ -272,7 +272,7 @@ main(int argc, char **argv)
    /* during development is recommended to use the following to check
     * for duplicated options.
     */
-   assert(ecore_getopt_parser_has_duplicates(&options) == EINA_FALSE);
+   assert(ecore_getopt_parser_has_duplicates(&options) == EFL_FALSE);
 
    args = ecore_getopt_parse(&options, values, argc, argv);
    if (args < 0)

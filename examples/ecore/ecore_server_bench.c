@@ -13,7 +13,7 @@ static Ecore_Con_Server *svr;
 static int add;
 static int del;
 
-Eina_Bool
+Efl_Bool
 _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Add *ev EFL_UNUSED)
 {
    ++add;
@@ -22,7 +22,7 @@ _add(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Add *ev 
    return ECORE_CALLBACK_RENEW;
 }
 
-Eina_Bool
+Efl_Bool
 _del(void *data EFL_UNUSED, int type EFL_UNUSED, Ecore_Con_Event_Client_Del *ev EFL_UNUSED)
 {
    ++del;

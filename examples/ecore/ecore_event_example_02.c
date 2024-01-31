@@ -13,7 +13,7 @@ struct context   // helper struct to give some context to the callbacks
 
 static int _event_type = 0; // a new type of event will be defined and stored here
 
-static Eina_Bool
+static Efl_Bool
 _event_handler1_cb(void *data, int type EFL_UNUSED, void *event)
 {
    int *number = event;
@@ -27,7 +27,7 @@ _event_handler1_cb(void *data, int type EFL_UNUSED, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
+static Efl_Bool
 _event_handler2_cb(void *data, int type EFL_UNUSED, void *event) // event callback
 {
    struct context *ctxt = data;
@@ -48,7 +48,7 @@ _event_handler2_cb(void *data, int type EFL_UNUSED, void *event) // event callba
         ecore_main_loop_quit();
      }
 
-   return ECORE_CALLBACK_DONE; // same as EINA_FALSE
+   return ECORE_CALLBACK_DONE; // same as EFL_FALSE
 }
 
 int

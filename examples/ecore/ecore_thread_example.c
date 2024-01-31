@@ -65,7 +65,7 @@ _short_job(void *data EFL_UNUSED, Ecore_Thread *th)
              return;
           }
         ecore_thread_local_data_add(th, "data", td, _local_data_free,
-                                    EINA_FALSE);
+                                    EFL_FALSE);
      }
 
    for (i = 0; i < 10; i++)
@@ -243,7 +243,7 @@ _thread_cancel_cb(void *data, Ecore_Thread *th)
      ad->thread_3 = NULL;
 }
 
-static Eina_Bool
+static Efl_Bool
 _cancel_timer_cb(void *data)
 {
    App_Data *ad = data;
@@ -251,15 +251,15 @@ _cancel_timer_cb(void *data)
    if (ad->thread_3 && !ecore_thread_check(ad->thread_3))
      ecore_thread_cancel(ad->thread_3);
 
-   return EINA_FALSE;
+   return EFL_FALSE;
 }
 
-static Eina_Bool
+static Efl_Bool
 _status_timer_cb(void *data EFL_UNUSED)
 {
    _print_status();
 
-   return EINA_TRUE;
+   return EFL_TRUE;
 }
 
 static const Ecore_Getopt optdesc = {
@@ -284,7 +284,7 @@ int
 main(int argc, char *argv[])
 {
    int i, max_threads = 0, max_msgs = 0;
-   Eina_Bool opt_quit = EINA_FALSE;
+   Efl_Bool opt_quit = EFL_FALSE;
    Eina_List *path_list = NULL;
    App_Data appdata;
    Ecore_Getopt_Value values[] = {
@@ -323,7 +323,7 @@ main(int argc, char *argv[])
    if (!path_list)
      {
         Feedback_Thread_Data *ftd;
-        ecore_thread_global_data_add("count", (void *)3, NULL, EINA_FALSE);
+        ecore_thread_global_data_add("count", (void *)3, NULL, EFL_FALSE);
         ftd = calloc(1, sizeof(Feedback_Thread_Data));
         ftd->name = strdup("data0");
 #ifdef _WIN32
@@ -332,7 +332,7 @@ main(int argc, char *argv[])
         ftd->base = strdup("/usr/bin");
 #endif
         eina_lock_new(&ftd->mutex);
-        ecore_thread_global_data_add(ftd->name, ftd, NULL, EINA_TRUE);
+        ecore_thread_global_data_add(ftd->name, ftd, NULL, EFL_TRUE);
         ftd = calloc(1, sizeof(Feedback_Thread_Data));
         ftd->name = strdup("data1");
 #ifdef _WIN32
@@ -341,7 +341,7 @@ main(int argc, char *argv[])
         ftd->base = strdup("/usr/lib");
 #endif
         eina_lock_new(&ftd->mutex);
-        ecore_thread_global_data_add(ftd->name, ftd, NULL, EINA_TRUE);
+        ecore_thread_global_data_add(ftd->name, ftd, NULL, EFL_TRUE);
         ftd = calloc(1, sizeof(Feedback_Thread_Data));
         ftd->name = strdup("data2");
 #ifdef _WIN32
@@ -350,7 +350,7 @@ main(int argc, char *argv[])
         ftd->base = strdup("/usr/lib");
 #endif
         eina_lock_new(&ftd->mutex);
-        ecore_thread_global_data_add(ftd->name, ftd, NULL, EINA_TRUE);
+        ecore_thread_global_data_add(ftd->name, ftd, NULL, EFL_TRUE);
      }
    else
      {
@@ -358,7 +358,7 @@ main(int argc, char *argv[])
         char *str;
         ecore_thread_global_data_add("count",
                                      (void *)(uintptr_t)eina_list_count(path_list), NULL,
-                                     EINA_FALSE);
+                                     EFL_FALSE);
         i = 0;
         EINA_LIST_FREE(path_list, str)
           {
@@ -368,7 +368,7 @@ main(int argc, char *argv[])
              ftd->name = strdup(buf);
              ftd->base = strdup(str);
              eina_lock_new(&ftd->mutex);
-             ecore_thread_global_data_add(ftd->name, ftd, NULL, EINA_TRUE);
+             ecore_thread_global_data_add(ftd->name, ftd, NULL, EFL_TRUE);
              free(str);
              i++;
           }
@@ -378,17 +378,17 @@ main(int argc, char *argv[])
    eina_condition_new(&appdata.condition, &appdata.mutex);
 
    ecore_thread_feedback_run(_out_of_pool_job, _feedback_job_msg_cb, NULL,
-                             NULL, &appdata, EINA_TRUE);
+                             NULL, &appdata, EFL_TRUE);
 
    ecore_thread_run(_short_job, _thread_end_cb, _thread_cancel_cb, &appdata);
    ecore_thread_feedback_run(_feedback_job, _feedback_job_msg_cb,
                              _thread_end_cb, _thread_cancel_cb, &appdata,
-                             EINA_FALSE);
+                             EFL_FALSE);
    appdata.thread_3 = ecore_thread_run(_short_job, _thread_end_cb,
                                        _thread_cancel_cb, &appdata);
    ecore_thread_feedback_run(_feedback_job, _feedback_job_msg_cb,
                              _thread_end_cb, _thread_cancel_cb, &appdata,
-                             EINA_FALSE);
+                             EFL_FALSE);
 
    ecore_timer_add(1.0, _cancel_timer_cb, &appdata);
    ecore_timer_add(2.0, _status_timer_cb, NULL);

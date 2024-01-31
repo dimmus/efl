@@ -3,7 +3,7 @@
 #include <Ecore_Getopt.h>
 #include <fcntl.h>
 
-static Eina_Bool echo = EINA_FALSE;
+static Efl_Bool echo = EFL_FALSE;
 static double timeout = 10.0;
 
 /* NOTE: client i/o events are only used as debug, you can omit these */
@@ -322,7 +322,7 @@ _server_client_add(void *data EFL_UNUSED, const Efl_Event *event)
                                   efl_io_copier_destination_set(efl_added, client),
                                   efl_io_copier_timeout_inactivity_set(efl_added, timeout),
                                   efl_event_callback_array_add(efl_added, echo_copier_cbs(), client),
-                                  efl_io_closer_close_on_invalidate_set(efl_added, EINA_TRUE) /* we want to auto-close as we have a single copier */
+                                  efl_io_closer_close_on_invalidate_set(efl_added, EFL_TRUE) /* we want to auto-close as we have a single copier */
                                   );
 
         fprintf(stderr, "INFO: using an echo copier=%p for client %s\n",
@@ -363,7 +363,7 @@ _server_client_add(void *data EFL_UNUSED, const Efl_Event *event)
                                  efl_io_copier_destination_set(efl_added, client),
                                  efl_io_copier_timeout_inactivity_set(efl_added, timeout),
                                  efl_event_callback_array_add(efl_added, send_copier_cbs(), d),
-                                 efl_io_closer_close_on_invalidate_set(efl_added, EINA_FALSE) /* we must wait both copiers to finish before we close! */
+                                 efl_io_closer_close_on_invalidate_set(efl_added, EFL_FALSE) /* we must wait both copiers to finish before we close! */
                                  );
 
         fprintf(stderr, "INFO: using sender buffer %p with copier %p for client %s\n",
@@ -380,7 +380,7 @@ _server_client_add(void *data EFL_UNUSED, const Efl_Event *event)
                                  efl_io_copier_destination_set(efl_added, recv_buffer),
                                  efl_io_copier_timeout_inactivity_set(efl_added, 0.0), /* we'll only set an inactivity timeout once the sender is done */
                                  efl_event_callback_array_add(efl_added, recv_copier_cbs(), d),
-                                 efl_io_closer_close_on_invalidate_set(efl_added, EINA_FALSE) /* we must wait both copiers to finish before we close! */
+                                 efl_io_closer_close_on_invalidate_set(efl_added, EFL_FALSE) /* we must wait both copiers to finish before we close! */
                                  );
 
         fprintf(stderr, "INFO: using receiver buffer %p with copier %p for client %s\n",
@@ -484,7 +484,7 @@ static const Ecore_Getopt options = {
   "Example of Efl_Net_Server objects usage.\n"
   "\n"
   "This example spawns a server of the given protocol at the given address.",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_TRUE('e', "echo",
                             "Behave as 'echo' server, send back to client all the data receive"),
@@ -572,17 +572,17 @@ efl_main(void *data EFL_UNUSED,
    char *str;
    unsigned int clients_limit = 0;
    unsigned udp_mcast_ttl = 1;
-   Eina_Bool clients_reject_excess = EINA_FALSE;
-   Eina_Bool ipv6_only = EINA_TRUE;
-   Eina_Bool udp_dont_route = EINA_FALSE;
-   Eina_Bool udp_mcast_loopback = EINA_TRUE;
+   Efl_Bool clients_reject_excess = EFL_FALSE;
+   Efl_Bool ipv6_only = EFL_TRUE;
+   Efl_Bool udp_dont_route = EFL_FALSE;
+   Efl_Bool udp_mcast_loopback = EFL_TRUE;
    Eina_List *certificates = NULL;
    Eina_List *private_keys = NULL;
    Eina_List *crls = NULL;
    Eina_List *cas = NULL;
    char *cipher_choice = NULL;
-   Eina_Bool socket_activated = EINA_FALSE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool socket_activated = EFL_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_BOOL(echo),
      ECORE_GETOPT_VALUE_BOOL(socket_activated),
@@ -671,8 +671,8 @@ efl_main(void *data EFL_UNUSED,
    if (cls == EFL_NET_SERVER_TCP_CLASS)
      {
         efl_net_server_ip_ipv6_only_set(server, ipv6_only);
-        efl_net_server_fd_reuse_address_set(server, EINA_TRUE); /* optional, but nice for testing */
-        efl_net_server_fd_reuse_port_set(server, EINA_TRUE); /* optional, but nice for testing... not secure unless you know what you're doing */
+        efl_net_server_fd_reuse_address_set(server, EFL_TRUE); /* optional, but nice for testing */
+        efl_net_server_fd_reuse_port_set(server, EFL_TRUE); /* optional, but nice for testing... not secure unless you know what you're doing */
 
         if (socket_activated) efl_net_server_fd_socket_activate(server, address);
      }
@@ -690,8 +690,8 @@ efl_main(void *data EFL_UNUSED,
           efl_net_server_udp_multicast_join(server, str);
 
 
-        efl_net_server_fd_reuse_address_set(server, EINA_TRUE); /* optional, but nice for testing */
-        efl_net_server_fd_reuse_port_set(server, EINA_TRUE); /* optional, but nice for testing... not secure unless you know what you're doing */
+        efl_net_server_fd_reuse_address_set(server, EFL_TRUE); /* optional, but nice for testing */
+        efl_net_server_fd_reuse_port_set(server, EFL_TRUE); /* optional, but nice for testing... not secure unless you know what you're doing */
         if (socket_activated) efl_net_server_fd_socket_activate(server, address);
      }
    else if (cls == EFL_NET_SERVER_SSL_CLASS)
@@ -715,18 +715,18 @@ efl_main(void *data EFL_UNUSED,
                           efl_net_ssl_context_private_keys_set(efl_added, eina_list_iterator_new(private_keys)),
                           efl_net_ssl_context_certificate_revocation_lists_set(efl_added, eina_list_iterator_new(crls)),
                           efl_net_ssl_context_certificate_authorities_set(efl_added, eina_list_iterator_new(cas)),
-                          efl_net_ssl_context_setup(efl_added, cipher, EINA_FALSE /* a server! */));
+                          efl_net_ssl_context_setup(efl_added, cipher, EFL_FALSE /* a server! */));
 
         efl_net_server_ssl_context_set(server, ssl_ctx);
 
-        efl_net_server_fd_reuse_address_set(server, EINA_TRUE); /* optional, but nice for testing */
-        efl_net_server_fd_reuse_port_set(server, EINA_TRUE); /* optional, but nice for testing... not secure unless you know what you're doing */
+        efl_net_server_fd_reuse_address_set(server, EFL_TRUE); /* optional, but nice for testing */
+        efl_net_server_fd_reuse_port_set(server, EFL_TRUE); /* optional, but nice for testing... not secure unless you know what you're doing */
         if (socket_activated) efl_net_server_fd_socket_activate(server, address);
      }
 #ifdef EFL_NET_SERVER_UNIX_CLASS
    else if (cls == EFL_NET_SERVER_UNIX_CLASS)
      {
-        efl_net_server_unix_unlink_before_bind_set(server, EINA_TRUE); /* makes testing easier */
+        efl_net_server_unix_unlink_before_bind_set(server, EFL_TRUE); /* makes testing easier */
         if (socket_activated) efl_net_server_fd_socket_activate(server, address);
      }
 #endif

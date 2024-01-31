@@ -302,7 +302,7 @@ static const Ecore_Getopt options = {
   "\n"
   "This example copies from an Efl_Io_Reader to an Efl_Io_Writer, listening"
   "for events and showing progress.",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_STR('d', "line-delimiter",
                            "If set will define a line delimiter for copy operation, instead of a fixed chunk size. This will trigger line events."),
@@ -399,8 +399,8 @@ efl_main(void *data EFL_UNUSED,
    unsigned long buffer_limit = 0;
    unsigned long read_chunk_size = 0;
    double timeout = 0.0;
-   Eina_Bool ssl_verify = EINA_TRUE;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool ssl_verify = EFL_TRUE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_STR(line_delimiter),
      ECORE_GETOPT_VALUE_ULONG(buffer_limit),
@@ -666,7 +666,7 @@ efl_main(void *data EFL_UNUSED,
         input = efl_add_ref(EFL_IO_FILE_CLASS, NULL,
                         efl_file_set(efl_added, input_fname), /* mandatory */
                         efl_io_file_flags_set(efl_added, O_RDONLY), /* default */
-                        efl_io_closer_close_on_exec_set(efl_added, EINA_TRUE), /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
+                        efl_io_closer_close_on_exec_set(efl_added, EFL_TRUE), /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
                         efl_event_callback_array_add(efl_added, input_cbs(), NULL) /* optional */
                         );
         if (!input)
@@ -942,7 +942,7 @@ efl_main(void *data EFL_UNUSED,
         output = efl_add_ref(EFL_IO_FILE_CLASS, NULL,
                          efl_file_set(efl_added, output_fname), /* mandatory */
                          efl_io_file_flags_set(efl_added, O_WRONLY | O_CREAT | O_TRUNC), /* mandatory for write */
-                         efl_io_closer_close_on_exec_set(efl_added, EINA_TRUE), /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
+                         efl_io_closer_close_on_exec_set(efl_added, EFL_TRUE), /* recommended, set *after* flags, or include O_CLOEXEC in flags -- be careful with _WIN32 that doesn't support it. */
                          efl_io_file_mode_set(efl_added, 0644), /* mandatory for write */
                          efl_event_callback_array_add(efl_added, output_cbs(), NULL) /* optional */
                          );

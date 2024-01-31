@@ -4,8 +4,8 @@
 #include <fcntl.h>
 #include <ctype.h>
 
-static Eina_Bool do_read = EINA_FALSE;
-static Eina_Bool do_discard = EINA_FALSE;
+static Efl_Bool do_read = EFL_FALSE;
+static Efl_Bool do_discard = EFL_FALSE;
 static Eina_Slice line_delm_slice;
 
 static void
@@ -41,7 +41,7 @@ _eos(void *data EFL_UNUSED, const Efl_Event *event)
 static void
 _can_read(void *data EFL_UNUSED, const Efl_Event *event)
 {
-   Eina_Bool can_read = efl_io_reader_can_read_get(event->object);
+   Efl_Bool can_read = efl_io_reader_can_read_get(event->object);
 
    /*
     * Since we have more high level events, such as "slice,changed"
@@ -191,13 +191,13 @@ _unescape(const char *str)
 {
    char *ret = strdup(str);
    char *c, *w;
-   Eina_Bool escaped = EINA_FALSE;
+   Efl_Bool escaped = EFL_FALSE;
 
    for (c = ret, w = ret; *c != '\0'; c++)
      {
         if (escaped)
           {
-             escaped = EINA_FALSE;
+             escaped = EFL_FALSE;
              switch (*c)
                {
                 case 'n': *w = '\n'; break;
@@ -210,7 +210,7 @@ _unescape(const char *str)
         else
           {
              if (*c == '\\')
-               escaped = EINA_TRUE;
+               escaped = EFL_TRUE;
              else
                w++;
           }
@@ -237,7 +237,7 @@ static const Ecore_Getopt options = {
   "BSD 2-Clause", /* license */
   /* long description, may be multiline and contain \n */
   "Example of Efl_Net_Dialer_Simple usage, sending a message and receiving a reply\n",
-  EINA_FALSE,
+  EFL_FALSE,
   {
     ECORE_GETOPT_STORE_TRUE('r', "read", "Wait for data to be read."),
     ECORE_GETOPT_STORE_TRUE('D', "discard-lines", "Lines that are read are discarded from final output."),
@@ -311,7 +311,7 @@ efl_main(void *data EFL_UNUSED,
    unsigned long read_chunk_size = 0;
    double timeout_inactivity = 0.0;
    double connect_timeout = 0.0;
-   Eina_Bool quit_option = EINA_FALSE;
+   Efl_Bool quit_option = EFL_FALSE;
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_BOOL(do_read),
      ECORE_GETOPT_VALUE_BOOL(do_discard),
