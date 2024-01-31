@@ -13,7 +13,7 @@ eolian_gen_src = [
 
 eolian_gen_bin = executable('eolian_gen',
         eolian_gen_src,
-        dependencies: [efl_eolian, efl_tools],
+        dependencies: [eolian, etool],
         install: true,
         c_args : package_c_args,
 )
@@ -30,3 +30,10 @@ else
 endif
 
 eolian_gen = [_eolian_gen_bin, '-S']
+
+summary(
+  {
+    'path': eolian_gen_path,
+  },
+  section: 'Eolian'
+)
