@@ -26,7 +26,7 @@ city = shared_library('city',
 )
 
 bench_etool = executable('eina_bench',
-  sources : bench_src_efl_tools,
+  sources : bench_src_etool,
   dependencies : etool,
   c_args : ['-fPIC','-DCITYHASH_BENCH', '-DEINA_ENABLE_BENCH_E17', '-DEFL_BUILD'],
   include_directories : inc_config,

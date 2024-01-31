@@ -1258,7 +1258,7 @@ ecore_list_node_init(Ecore_List_Node *node)
  * @ingroup Ecore_Data_List_Node_Group
  */
 EAPI Ecore_List_Node *
-ecore_list_node_new()
+ecore_list_node_new(void)
 {
    Ecore_List_Node *new_node;
 
@@ -1306,7 +1306,7 @@ ecore_list_node_destroy(Ecore_List_Node *node, Ecore_Free_Cb free_func)
  * @ingroup Ecore_Data_DList_Creation_Group
  */
 EAPI Ecore_DList *
-ecore_dlist_new()
+ecore_dlist_new(void)
 {
    Ecore_DList *list = NULL;
 
@@ -2129,7 +2129,7 @@ ecore_dlist_node_init(Ecore_DList_Node *node)
  * @return Returns NULL on error, new list node on success
  */
 EAPI Ecore_DList_Node *
-ecore_dlist_node_new()
+ecore_dlist_node_new(void)
 {
    Ecore_DList_Node *new_node;
 
