@@ -2,7 +2,7 @@ project('efl', ['c','cpp'],
   version: '2.0.99',
   default_options : [
     'buildtype=release', # plain,debug,debugoptimized,release,minsize,custom
-    # 'warning_level=1',   # 0,1,2,3
+    'warning_level=1',   # 0,1,2,3
     # 'optimization=g',  # 0,g,1,2,3,s
     # 'b_sanitize=address,undefined',
     # 'b_coverage=true',
@@ -10,9 +10,10 @@ project('efl', ['c','cpp'],
     # 'b_lto_threads=2',
     # 'b_lto_mode=thin',
     # 'b_thinlto_cache=true',
+    'b_staticpic=true', 'stdsplit=false', 'b_pie=true',
     'c_std=gnu99'
   ],
-  meson_version : '>=0.60'
+  meson_version : '>=0.63'
 )
 
 subdir('meson/constants')
@@ -376,7 +377,10 @@ endif
 #   meson.add_install_script('meson/evas_loader_conf.sh', evas_loader_original, evas_loader_link_types)
 # endforeach
 
-subdir('meson/doc')
+doxygen = find_program('doxygen', required : false)
+if doxygen.found()
+  subdir('doc')
+endif
 
 #
 # Configure files
