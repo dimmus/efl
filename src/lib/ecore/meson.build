@@ -175,22 +175,22 @@ ecore_src = files([
   'efl_core_command_line.c',
 ])
 
-if sys_windows == true
+if sys_windows
   #nothing for now ... needs testing
   ecore_src += files(['ecore_exe_win32.c'])
 else
   ecore_src += files(['ecore_signal.c', 'ecore_exe_posix.c'])
 endif
 
-if get_option('glib') == true and sys_windows == false
+if get_option('glib') and not sys_windows
   ecore_ext_deps += dependency('glib-2.0')
   ecore_ext_deps += dependency('gthread-2.0')
   config_h.set('GLIB_INTEGRATION_ALWAYS', '1')
   config_h.set('HAVE_GLIB', '1')
 endif
 
-if get_option('g-mainloop') == true
-  if get_option('glib') == false
+if get_option('g-mainloop')
+  if not get_option('glib')
     error('g-mainloop enabled by glib not. Please enable with -Dglib=true')
   else
     config_h.set('USE_G_MAIN_LOOP', '1')

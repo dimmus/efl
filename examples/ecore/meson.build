@@ -22,7 +22,7 @@ foreach example : examples
   executable(example, example + '.c', dependencies: [eina, ecore, ecore_file])
 endforeach
 
-if get_option('gstreamer') == true
+if get_option('gstreamer')
   examples = [
     'ecore_pipe_gstreamer_example',
   ]
