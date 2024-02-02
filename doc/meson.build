@@ -104,13 +104,12 @@ doc_target = []
 # )
 
 # shot_sh = find_program('shot.sh')
-# tar = find_program('tar')
 # foreach text_filter_property : text_filter_properties
 #   text = text_filter_property[0]
 #   font = text_filter_property[1]
 #   size = text_filter_property[2]
 #   name = text_filter_property[3]
-#   filter_code = run_command('cat', join_paths(meson.source_root(), 'src', 'examples', 'evas', 'filters', 'filter_'+name+'.lua'))
+#   filter_code = run_command('cat', join_paths(meson.source_root(), 'src', 'examples', 'evas', 'filters', 'filter_'+name+'.lua'), check: true)
 
 #   doc_target += custom_target('preview_text_filters_'+name,
 #                   command: [
@@ -181,9 +180,10 @@ doc_target += custom_target('doxygen',
   build_by_default: false
 )
 
+tar = find_program('tar')
 compress_target = custom_target('package_doc_tar',
-  command: [tar, '-C', meson.build_root(), '--xz',  '-cf', 'efl-'+meson.project_version()+'-doc.tar.xz', 'html', 'man'],
-  output: 'efl-'+meson.project_version()+'-doc.tar.xz',
+  command: [tar, '-C', dir_build, '--xz',  '-cf', 'efl-'+version+'-doc.tar.xz', 'html', 'man'],
+  output: 'efl-'+version+'-doc.tar.xz',
   depends: [doc_target],
   build_by_default: false
 )
@@ -194,13 +194,13 @@ run_target('doc',
 )
 
 doxyfile_conf = configuration_data()
-doxyfile_conf.merge_from(config_h)
-doxyfile_conf.set('srcdir', meson.current_source_dir())
-doxyfile_conf.set('top_builddir', meson.build_root())
-doxyfile_conf.set('top_srcdir', meson.source_root())
+doxyfile_conf.merge_from(efl_config)
+doxyfile_conf.set('srcdir',       meson.current_source_dir())
+doxyfile_conf.set('top_builddir', dir_build)
+doxyfile_conf.set('top_srcdir',   dir_source)
 
 configure_file(
-  input: 'Doxyfile.in',
+  input:  'Doxyfile.in',
   output: 'Doxyfile',
   configuration: doxyfile_conf,
 )

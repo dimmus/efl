@@ -593,24 +593,31 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
+# INPUT                  = @top_srcdir@/src/lib \
+#                          @top_builddir@/src/lib \
+#                          @top_builddir@/elm_intro.h \
+#                          @srcdir@/index_elm.dox \
+#                          @srcdir@/main.dox \
+#                          @srcdir@/pkgconfig.dox \
+#                          @srcdir@/eina_examples.dox \
+#                          @srcdir@/ecore_examples.dox \
+#                          @srcdir@/eet_examples.dox \
+#                          @srcdir@/evas_examples.dox \
+#                          @srcdir@/eo_tutorial.dox \
+#                          @srcdir@/eio_examples.dox \
+#                          @srcdir@/eldbus_examples.dox \
+#                          @srcdir@/ephysics_examples.dox \
+#                          @srcdir@/edje_examples.dox \
+#                          @top_srcdir@/src/bin/edje/edje_cc_handlers.c \
+#                          @srcdir@/emotion_examples.dox \
+#                          @srcdir@/elementary_examples.dox
+
 INPUT                  = @top_srcdir@/src/lib \
                          @top_builddir@/src/lib \
-                         @top_builddir@/elm_intro.h \
-                         @srcdir@/index_elm.dox \
                          @srcdir@/main.dox \
                          @srcdir@/pkgconfig.dox \
                          @srcdir@/eina_examples.dox \
-                         @srcdir@/ecore_examples.dox \
-                         @srcdir@/eet_examples.dox \
-                         @srcdir@/evas_examples.dox \
-                         @srcdir@/eo_tutorial.dox \
-                         @srcdir@/eio_examples.dox \
-                         @srcdir@/eldbus_examples.dox \
-                         @srcdir@/ephysics_examples.dox \
-                         @srcdir@/edje_examples.dox \
-                         @top_srcdir@/src/bin/edje/edje_cc_handlers.c \
-                         @srcdir@/emotion_examples.dox \
-                         @srcdir@/elementary_examples.dox
+                         @srcdir@/eo_tutorial.dox
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -681,8 +688,8 @@ EXCLUDE_SYMBOLS        = eo_cxx::*
 # directories that contain example code fragments that are included (see
 # the \include command).
 
-EXAMPLE_PATH           = @top_srcdir@/src/examples \
-                         @top_srcdir@/src/tests
+EXAMPLE_PATH           = @top_srcdir@/examples \
+                         @top_srcdir@/tests
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp
@@ -1438,7 +1445,7 @@ PREDEFINED             = EINA_MAGIC_DEBUG \
                          EAPI= \
                          EINA_PURE= \
                          EINA_CONST= \
-                         EINA_UNUSED= \
+                         EFL_UNUSED= \
                          EFL_DOXYGEN=1 \
                          EFL_BETA_API_SUPPORT=1 \
                          "EO_CXX_INHERIT(name)=::name"
