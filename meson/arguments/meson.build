@@ -1,5 +1,6 @@
-add_project_arguments(dev_cflags, language: 'c')
-add_project_arguments(dev_cflags, language: 'cpp')
+add_project_arguments(dev_cflags_cpp, native: false, language: 'cpp')
+add_project_arguments(dev_cflags_cc, native: false, language: 'c')
+add_global_link_arguments(dev_ldflags, native: false, language: langs)
 
 add_project_arguments('-DHAVE_CONFIG_H=1', language: langs)
 add_project_arguments('-D_GNU_SOURCE=1', language: langs)
@@ -37,9 +38,8 @@ if sys_sun
   add_global_arguments('-D_POSIX_PTHREAD_SEMANTICS', language: 'c')
 endif
 
-#prepare a special linker args flag for binaries on macos (bin/edje and bin/elua)
-bin_linker_args = []
-if sys_osx
-  add_languages('objc')
-  bin_linker_args = ['-pagezero_size', '10000', '-image_base', '100000000']
+# Disable strict aliasing;
+# see https://bugzilla.gnome.org/show_bug.cgi?id=791622
+if cc.has_argument('-fno-strict-aliasing')
+  add_project_arguments('-fno-strict-aliasing', language: 'c')
 endif

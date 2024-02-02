@@ -12,10 +12,12 @@ version_minor = version_arr[1]
 version_micro = version_arr[2]
 version_name  = 'v-' + version_major + '.' + version_minor
 
-cc = meson.get_compiler('c')
 host_os = host_machine.system()
+cpu = host_machine.cpu_family()
 
 langs = ['c', 'cpp']
+cc = meson.get_compiler('c')
+cxx = meson.get_compiler('cpp')
 
 sys_linux   = ['linux'].contains(host_os)
 sys_bsd     = ['bsd', 'freebsd', 'dragonfly', 'netbsd', 'openbsd'].contains(host_os)
@@ -31,6 +33,12 @@ if sys_linux
   else
     host_os = 'linux-gnu'
   endif
+endif
+
+if sys_osx and add_languages('objc', required: get_option('cocoa'), native: false)
+  langs += ['objc']
+  objc = meson.get_compiler('objc')
+  bin_linker_args = ['-pagezero_size', '10000', '-image_base', '100000000']
 endif
 
 dir_prefix    = get_option('prefix')
@@ -49,13 +57,35 @@ local_examples  = 'examples'
 # local_bindings  = 'bindings'
 local_benchmark = 'benchmarks'
 
-summary(
-  {
-    'os': host_os,
-    'prefix': dir_prefix,
-    'bindir': dir_bin,
-    'libdir': dir_lib,
-    'includedir': dir_include,
-  },
-  section: 'Directories'
-)
+# summary(
+#   {
+#     'os': host_os,
+#     'prefix': dir_prefix,
+#     'bindir': dir_bin,
+#     'libdir': dir_lib,
+#     'includedir': dir_include,
+#   },
+#   section: 'Directories'
+# )
+
+# Build environment
+summary_info = {}
+summary_info += {'Build directory':   dir_build}
+summary_info += {'Source directory':  dir_source}
+summary_info += {'Install prefix':    get_option('prefix')}
+summary_info += {'Data directory':    dir_data}
+pathsep = sys_windows ? ';' : ':'
+summary_info += {'Binary directory':  get_option('prefix') / get_option('bindir')}
+summary_info += {'Library directory': get_option('prefix') / get_option('libdir')}
+summary_info += {'Module directory':  dir_source / local_module}
+summary_info += {'Libexec directory': get_option('prefix') / get_option('libexecdir')}
+summary_info += {'Include directory': get_option('prefix') / get_option('includedir')}
+summary_info += {'Config directory':  get_option('prefix') / get_option('sysconfdir')}
+if sys_windows
+  summary_info += {'Local state directory': get_option('prefix') / get_option('localstatedir')}
+  summary_info += {'Manual directory':      get_option('prefix') / get_option('mandir')}
+else
+  summary_info += {'Local state directory': 'queried at runtime'}
+endif
+# summary_info += {'Doc directory':     get_option('prefix') / get_option('docdir')}
+summary(summary_info, bool_yn: true, section: 'Directories')
