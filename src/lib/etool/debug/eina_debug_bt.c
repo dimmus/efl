@@ -197,9 +197,10 @@ static void
 _signal_handler(int sig EFL_UNUSED,
       siginfo_t *si EFL_UNUSED, void *foo EFL_UNUSED)
 {
-   int i, slot = 0;
+   int i;
    pthread_t self = pthread_self();
 #if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && defined(__clockid_t_defined)
+   int slot = 0;
    clockid_t cid;
 #endif
 
@@ -209,7 +210,9 @@ _signal_handler(int sig EFL_UNUSED,
      {
         if (self == _eina_debug_thread_active[i].thread)
           {
+#if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && defined(__clockid_t_defined)
              slot = i;
+#endif
              goto found;
           }
      }
