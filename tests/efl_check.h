@@ -277,6 +277,8 @@ _efl_suite_run_end(SRunner *sr, const char *name)
                 case ';':
                   p[0] = '_';
                   break;
+                default:
+                  break;
                }
           }
         snprintf(srunner_xml_buf, sizeof(srunner_xml_buf), TESTS_BUILD_DIR "/check-results-%s.xml", n);
