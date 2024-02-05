@@ -160,7 +160,6 @@ SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
 
 BitFieldColonSpacing: Both
-SpaceBeforeSquareBrackets: false
 SpaceInEmptyBlock: false
 
 # Use two spaces before trailing comments, for example
@@ -170,21 +169,34 @@ SpaceInEmptyBlock: false
 # Note that this doesn't work for C-style comments.
 SpacesBeforeTrailingComments: 2
 
+SpaceBeforeSquareBrackets: false
 SpacesInSquareBrackets: false
 SpacesInLineCommentPrefix:
     Minimum: 1
     Maximum: -1
 
-# SortIncludes: Never
-# IncludeBlocks: Preserve
-# IncludeIsMainRegex: ""
-# IncludeCategories:
-#     - {Regex: "<.*>",   Priority: -2, CaseSensitive: true}
-#     - {Regex: "\".*\"", Priority: -1, CaseSensitive: true}
+SortIncludes: Never
+IncludeBlocks: Preserve
+IncludeIsMainRegex: ""
+IncludeCategories:
+    - {Regex: "<.*>",   Priority: -2, CaseSensitive: true}
+    - {Regex: "\".*\"", Priority: -1, CaseSensitive: true}
 
-# AttributeMacros: ["__capability"]
-# StatementAttributeLikeMacros: []
-# StatementMacros: []
+AttributeMacros: ["__capability"]
+StatementAttributeLikeMacros: []
+StatementMacros: []
+
+# Dont't use ForEachMacros as it adds space after _FOREACH before brace like:
+# EINA_ITERATOR_FOREACH (it, tile)
+ForEachMacros:
+[
+    # "EINA_LIST_FOREACH",
+    # "EINA_INLIST_FOREACH",
+    # "EINA_ITERATOR_FOREACH",
+    # "EINA_ACCESSOR_FOREACH",
+    # "EINA_INARRAY_FOREACH",
+    # "EINA_VALUE_ARRAY_FOREACH"
+]
 
 # Avoid having function calls broken onto a new line:
 #
