@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdlib.h>
@@ -27,12 +27,12 @@
 #include <libgen.h>
 #include <unistd.h>
 
-#if defined HAVE_DLOPEN && ! defined _WIN32
-# include <dlfcn.h>
+#if defined HAVE_DLOPEN && !defined _WIN32
+#  include <dlfcn.h>
 #endif
 
 #ifdef _WIN32
-# include <evil_private.h>
+#  include <evil_private.h>
 #endif
 
 #include "etool_config.h"
@@ -55,122 +55,124 @@
 
 static int EINA_MODULE_LOG_DOM = -1;
 #ifdef ERR
-#undef ERR
+#  undef ERR
 #endif
 #define ERR(...) EINA_LOG_DOM_ERR(EINA_MODULE_LOG_DOM, __VA_ARGS__)
 
 #ifdef WRN
-#undef WRN
+#  undef WRN
 #endif
 #define WRN(...) EINA_LOG_DOM_WARN(EINA_MODULE_LOG_DOM, __VA_ARGS__)
 
 #ifdef INF
-#undef INF
+#  undef INF
 #endif
 #define INF(...) EINA_LOG_DOM_INFO(EINA_MODULE_LOG_DOM, __VA_ARGS__)
 
 #ifdef DBG
-#undef DBG
+#  undef DBG
 #endif
 #define DBG(...) EINA_LOG_DOM_DBG(EINA_MODULE_LOG_DOM, __VA_ARGS__)
 
-#define EINA_MODULE_SYMBOL_INIT "__eina_module_init"
+#define EINA_MODULE_SYMBOL_INIT     "__eina_module_init"
 #define EINA_MODULE_SYMBOL_SHUTDOWN "__eina_module_shutdown"
 
 struct _Eina_Module
 {
-   void *handle;
-   int ref;
+    void *handle;
+    int   ref;
 
-   Efl_Bool global;
+    Efl_Bool global;
 
-   const char file[1];
+    const char file[1];
 };
 
 typedef struct _Dir_List_Get_Cb_Data
 {
-   Eina_Module_Cb cb;
-   void *data;
-   Eina_Array *array;
+    Eina_Module_Cb cb;
+    void          *data;
+    Eina_Array    *array;
 } Dir_List_Get_Cb_Data;
 
 typedef struct _Dir_List_Cb_Data
 {
-   Eina_Module_Cb cb;
-   void *data;
+    Eina_Module_Cb cb;
+    void          *data;
 } Dir_List_Cb_Data;
 
-static Efl_Bool _dir_list_get_cb(Eina_Module *m, void *data)
+static Efl_Bool
+_dir_list_get_cb(Eina_Module *m, void *data)
 {
-   Dir_List_Get_Cb_Data *cb_data = data;
-   Efl_Bool ret = EFL_TRUE;
+    Dir_List_Get_Cb_Data *cb_data = data;
+    Efl_Bool              ret     = EFL_TRUE;
 
-   if (cb_data->cb)
-      ret = cb_data->cb(m, cb_data->data);
+    if (cb_data->cb) ret = cb_data->cb(m, cb_data->data);
 
-   if (ret)
-      eina_array_push(cb_data->array, m);
+    if (ret) eina_array_push(cb_data->array, m);
 
-   return ret;
+    return ret;
 }
 
-static void _dir_list_cb(const char *name, const char *path, void *data)
+static void
+_dir_list_cb(const char *name, const char *path, void *data)
 {
-   Dir_List_Cb_Data *cb_data = data;
-   size_t length;
+    Dir_List_Cb_Data *cb_data = data;
+    size_t            length;
 
-   length = strlen(name);
-   if (length < sizeof(SHARED_LIB_SUFFIX)) /* x.so */
-      return;
+    length = strlen(name);
+    if (length < sizeof(SHARED_LIB_SUFFIX)) /* x.so */
+        return;
 
-   if (!strcmp(name + length - sizeof(SHARED_LIB_SUFFIX) + 1,
-               SHARED_LIB_SUFFIX))
-     {
-        char *file;
+    if (!strcmp(name + length - sizeof(SHARED_LIB_SUFFIX) + 1,
+                SHARED_LIB_SUFFIX))
+    {
+        char        *file;
         Eina_Module *m;
 
         length = strlen(path) + strlen(name) + 2;
 
-        file = alloca(sizeof (char) * length);
+        file = alloca(sizeof(char) * length);
 
         snprintf(file, length, "%s" EINA_PATH_SEP_S "%s", path, name);
         m = eina_module_new(file);
         if (!m)
-          {
-             return; /* call the user provided cb on this module */
+        {
+            return; /* call the user provided cb on this module */
+        }
 
-          }
-
-        if (!cb_data->cb(m, cb_data->data))
-           eina_module_free(m);
-     }
+        if (!cb_data->cb(m, cb_data->data)) eina_module_free(m);
+    }
 }
 
-static void _dir_arch_list_cb(const char *name, const char *path, void *data)
+static void
+_dir_arch_list_cb(const char *name, const char *path, void *data)
 {
-   Dir_List_Get_Cb_Data *cb_data = data;
-   Eina_Module *m;
-   char *file = NULL;
-   size_t length;
+    Dir_List_Get_Cb_Data *cb_data = data;
+    Eina_Module          *m;
+    char                 *file = NULL;
+    size_t                length;
 
-   length = strlen(path) + 1 + strlen(name) + 1 +
-      strlen((char *)(cb_data->data)) + 1 + sizeof("module") +
-      sizeof(SHARED_LIB_SUFFIX) + 1;
+    length = strlen(path) + 1 + strlen(name) + 1 +
+             strlen((char *)(cb_data->data)) + 1 + sizeof("module") +
+             sizeof(SHARED_LIB_SUFFIX) + 1;
 
-   file = alloca(length);
-   snprintf(file, length, "%s" EINA_PATH_SEP_S "%s" EINA_PATH_SEP_S "%s" EINA_PATH_SEP_S "module" SHARED_LIB_SUFFIX,
-            path, name, (char *)(cb_data->data));
-   m = eina_module_new(file);
-   if (!m)
-      return;
+    file = alloca(length);
+    snprintf(file,
+             length,
+             "%s" EINA_PATH_SEP_S "%s" EINA_PATH_SEP_S "%s" EINA_PATH_SEP_S
+             "module" SHARED_LIB_SUFFIX,
+             path,
+             name,
+             (char *)(cb_data->data));
+    m = eina_module_new(file);
+    if (!m) return;
 
-   eina_array_push(cb_data->array, m);
+    eina_array_push(cb_data->array, m);
 }
 
 /**
  * @endcond
  */
-
 
 /*============================================================================*
 *                                 Global                                     *
@@ -180,7 +182,7 @@ static void _dir_arch_list_cb(const char *name, const char *path, void *data)
  * @cond LOCAL
  */
 
-EINA_API Eina_Error EINA_ERROR_WRONG_MODULE = 0;
+EINA_API Eina_Error EINA_ERROR_WRONG_MODULE       = 0;
 EINA_API Eina_Error EINA_ERROR_MODULE_INIT_FAILED = 0;
 
 /**
@@ -203,14 +205,14 @@ EINA_API Eina_Error EINA_ERROR_MODULE_INIT_FAILED = 0;
 Efl_Bool
 eina_module_init(void)
 {
-   EINA_MODULE_LOG_DOM = eina_log_domain_register
-         ("eina_module", EINA_LOG_COLOR_DEFAULT);
-   if (EINA_MODULE_LOG_DOM < 0)
-     {
+    EINA_MODULE_LOG_DOM =
+        eina_log_domain_register("eina_module", EINA_LOG_COLOR_DEFAULT);
+    if (EINA_MODULE_LOG_DOM < 0)
+    {
         EINA_LOG_ERR("Could not register log domain: eina_module");
         return EFL_FALSE;
-     }
-   return EFL_TRUE;
+    }
+    return EFL_TRUE;
 }
 
 /**
@@ -231,306 +233,308 @@ eina_module_shutdown(void)
     * delete the list of modules here
     */
 
-   eina_log_domain_unregister(EINA_MODULE_LOG_DOM);
-   EINA_MODULE_LOG_DOM = -1;
-   return EFL_TRUE;
+    eina_log_domain_unregister(EINA_MODULE_LOG_DOM);
+    EINA_MODULE_LOG_DOM = -1;
+    return EFL_TRUE;
 }
 
 /*============================================================================*
 *                                   API                                      *
 *============================================================================*/
 
-EINA_API Eina_Module *eina_module_new(const char *file)
+EINA_API Eina_Module *
+eina_module_new(const char *file)
 {
-   Eina_Module *m;
-   size_t len;
-   struct stat st;
+    Eina_Module *m;
+    size_t       len;
+    struct stat  st;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(file, NULL);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(file, NULL);
 
    /* check that the file exists */
-   if (file[0] == '/' ||
-       file[0] == '.' ||
-       file[0] == '\\' ||
-       (file[0] != '\0' && file[1] == ':' && file[2] == '\\'))
-     {
+    if (file[0] == '/' || file[0] == '.' || file[0] == '\\' ||
+        (file[0] != '\0' && file[1] == ':' && file[2] == '\\'))
+    {
         if (stat(file, &st) == -1) return NULL;
         if (!S_ISREG(st.st_mode)) return NULL;
-     }
+    }
 
-   len = strlen(file);
-   EINA_SAFETY_ON_FALSE_RETURN_VAL(len > 0, NULL);
+    len = strlen(file);
+    EINA_SAFETY_ON_FALSE_RETURN_VAL(len > 0, NULL);
 
-   m = malloc(sizeof(Eina_Module) + len + 1);
-   if (!m)
-     {
+    m = malloc(sizeof(Eina_Module) + len + 1);
+    if (!m)
+    {
         ERR("could not malloc(%lu)",
             (unsigned long)(sizeof(Eina_Module) + len + 1));
         return NULL;
-     }
+    }
 
-   memcpy((char *)m->file, file, len + 1);
-   m->ref = 0;
-   m->handle = NULL;
-   m->global = EFL_FALSE;
-   DBG("m=%p, file=%s", m, file);
+    memcpy((char *)m->file, file, len + 1);
+    m->ref    = 0;
+    m->handle = NULL;
+    m->global = EFL_FALSE;
+    DBG("m=%p, file=%s", m, file);
 
-   return m;
+    return m;
 }
 
-EINA_API Efl_Bool eina_module_free(Eina_Module *m)
+EINA_API Efl_Bool
+eina_module_free(Eina_Module *m)
 {
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m, EFL_FALSE);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(m, EFL_FALSE);
 
-   DBG("m=%p, handle=%p, file=%s, refs=%d", m, m->handle, m->file, m->ref);
+    DBG("m=%p, handle=%p, file=%s, refs=%d", m, m->handle, m->file, m->ref);
 
-   if (m->handle)
-      if (eina_module_unload(m) == EFL_FALSE)
-         return EFL_FALSE;
+    if (m->handle)
+        if (eina_module_unload(m) == EFL_FALSE) return EFL_FALSE;
 
-   free(m);
-   return EFL_TRUE;
+    free(m);
+    return EFL_TRUE;
 }
 
-EINA_API Efl_Bool eina_module_load(Eina_Module *m)
+EINA_API Efl_Bool
+eina_module_load(Eina_Module *m)
 {
 #ifdef HAVE_DLOPEN
-   void *dl_handle;
-   Eina_Module_Init *initcall;
-   int flag = RTLD_NOW;
+    void             *dl_handle;
+    Eina_Module_Init *initcall;
+    int               flag = RTLD_NOW;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m, EFL_FALSE);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(m, EFL_FALSE);
 
-   DBG("m=%p, handle=%p, file=%s, refs=%d", m, m->handle, m->file, m->ref);
+    DBG("m=%p, handle=%p, file=%s, refs=%d", m, m->handle, m->file, m->ref);
 
-   if (m->handle)
-      goto loaded;
+    if (m->handle) goto loaded;
 
-   if (getenv("EINA_MODULE_LAZY_LOAD")) flag = RTLD_LAZY;
+    if (getenv("EINA_MODULE_LAZY_LOAD")) flag = RTLD_LAZY;
 
-   if (m->global) flag |= RTLD_GLOBAL;
-   dl_handle = dlopen(m->file, flag);
-   if (m->global) flag &= ~RTLD_GLOBAL;
+    if (m->global) flag |= RTLD_GLOBAL;
+    dl_handle = dlopen(m->file, flag);
+    if (m->global) flag &= ~RTLD_GLOBAL;
 
-   if (!dl_handle)
-     {
+    if (!dl_handle)
+    {
         struct stat st;
         if (!stat(m->file, &st))
-          ERR("could not dlopen(\"%s\", %s): %s", m->file, dlerror(),
-              (flag == RTLD_NOW) ? "RTLD_NOW" : "RTLD_LAZY");
+            ERR("could not dlopen(\"%s\", %s): %s",
+                m->file,
+                dlerror(),
+                (flag == RTLD_NOW) ? "RTLD_NOW" : "RTLD_LAZY");
         else
-          DBG("could not dlopen(\"%s\", %s): %s", m->file, dlerror(),
-              (flag == RTLD_NOW) ? "RTLD_NOW" : "RTLD_LAZY");
+            DBG("could not dlopen(\"%s\", %s): %s",
+                m->file,
+                dlerror(),
+                (flag == RTLD_NOW) ? "RTLD_NOW" : "RTLD_LAZY");
         return EFL_FALSE;
-     }
+    }
 
-   initcall = dlsym(dl_handle, EINA_MODULE_SYMBOL_INIT);
-   if ((!initcall) || (!(*initcall)))
-      goto ok;
+    initcall = dlsym(dl_handle, EINA_MODULE_SYMBOL_INIT);
+    if ((!initcall) || (!(*initcall))) goto ok;
 
-   if ((*initcall)() == EFL_TRUE)
-      goto ok;
+    if ((*initcall)() == EFL_TRUE) goto ok;
 
-   INF("init function returned false for %s", m->file);
-   dlclose(dl_handle);
-   return EFL_FALSE;
+    INF("init function returned false for %s", m->file);
+    dlclose(dl_handle);
+    return EFL_FALSE;
 ok:
-   DBG("successfully loaded %s", m->file);
-   m->handle = dl_handle;
+    DBG("successfully loaded %s", m->file);
+    m->handle = dl_handle;
 loaded:
-   m->ref++;
-   DBG("ref %d", m->ref);
-   return EFL_TRUE;
+    m->ref++;
+    DBG("ref %d", m->ref);
+    return EFL_TRUE;
 #else
-   (void) m;
-   return EFL_FALSE;
+    (void)m;
+    return EFL_FALSE;
 #endif
 }
 
-EINA_API Efl_Bool eina_module_unload(Eina_Module *m)
+EINA_API Efl_Bool
+eina_module_unload(Eina_Module *m)
 {
 #ifdef HAVE_DLOPEN
-   Eina_Module_Shutdown *shut;
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m, EFL_FALSE);
+    Eina_Module_Shutdown *shut;
+    EINA_SAFETY_ON_NULL_RETURN_VAL(m, EFL_FALSE);
 
-   DBG("m=%p, handle=%p, file=%s, refs=%d", m, m->handle, m->file, m->ref);
+    DBG("m=%p, handle=%p, file=%s, refs=%d", m, m->handle, m->file, m->ref);
 
-   m->ref--;
-   if (!m->ref)
-     {
+    m->ref--;
+    if (!m->ref)
+    {
         shut = dlsym(m->handle, EINA_MODULE_SYMBOL_SHUTDOWN);
-        if ((shut) && (*shut))
-           (*shut)();
+        if ((shut) && (*shut)) (*shut)();
 
         dlclose(m->handle);
         m->handle = NULL;
         DBG("unloaded module %s", m->file);
         return EFL_TRUE;
-     }
+    }
 
-   return EFL_FALSE;
+    return EFL_FALSE;
 #else
-   (void) m;
-   return EFL_FALSE;
+    (void)m;
+    return EFL_FALSE;
 #endif
 }
 
-EINA_API void *eina_module_symbol_get(const Eina_Module *m, const char *symbol)
+EINA_API void *
+eina_module_symbol_get(const Eina_Module *m, const char *symbol)
 {
 #ifdef HAVE_DLOPEN
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m,         NULL);
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m->handle, NULL);
-   return dlsym(m->handle, symbol);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(m->handle, NULL);
+    return dlsym(m->handle, symbol);
 #else
-   (void) m;
-   (void) symbol;
-   return NULL;
+    (void)m;
+    (void)symbol;
+    return NULL;
 #endif
 }
 
-EINA_API const char *eina_module_file_get(const Eina_Module *m)
+EINA_API const char *
+eina_module_file_get(const Eina_Module *m)
 {
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
-   return m->file;
+    EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
+    return m->file;
 }
 
-EINA_API void eina_module_symbol_global_set(Eina_Module *module, Efl_Bool global)
+EINA_API void
+eina_module_symbol_global_set(Eina_Module *module, Efl_Bool global)
 {
-   EINA_SAFETY_ON_NULL_RETURN(module);
-   module->global = !!global;
+    EINA_SAFETY_ON_NULL_RETURN(module);
+    module->global = !!global;
 }
 
-EINA_API char *eina_module_symbol_path_get(const void *symbol, const char *sub_dir)
+EINA_API char *
+eina_module_symbol_path_get(const void *symbol, const char *sub_dir)
 {
 #ifdef HAVE_DLADDR
-   Dl_info eina_dl;
+    Dl_info eina_dl;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(symbol, NULL);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(symbol, NULL);
 
-   if (dladdr(symbol, &eina_dl))
-     {
+    if (dladdr(symbol, &eina_dl))
+    {
         char *pos = strrchr(eina_dl.dli_fname, EINA_PATH_SEP_C);
         if (pos)
-          {
-             char *path;
-             int l0;
-             int l1;
-             int l2 = 0;
+        {
+            char *path;
+            int   l0;
+            int   l1;
+            int   l2 = 0;
 
-             l0 = strlen(eina_dl.dli_fname);
-             l1 = strlen(pos);
-             if (sub_dir && (*sub_dir != '\0'))
-                l2 = strlen(sub_dir);
+            l0 = strlen(eina_dl.dli_fname);
+            l1 = strlen(pos);
+            if (sub_dir && (*sub_dir != '\0')) l2 = strlen(sub_dir);
 
-             path = malloc(l0 - l1 + l2 + 1);
-             if (path)
-               {
-                  memcpy(path, eina_dl.dli_fname, l0 - l1);
-                  if (sub_dir && (*sub_dir != '\0'))
-                     memcpy(path + l0 - l1, sub_dir, l2);
+            path = malloc(l0 - l1 + l2 + 1);
+            if (path)
+            {
+                memcpy(path, eina_dl.dli_fname, l0 - l1);
+                if (sub_dir && (*sub_dir != '\0'))
+                    memcpy(path + l0 - l1, sub_dir, l2);
 
-                  path[l0 - l1 + l2] = '\0';
-                  return path;
-               }
-          }
-     }
+                path[l0 - l1 + l2] = '\0';
+                return path;
+            }
+        }
+    }
 #else
-   (void) symbol;
-   (void) sub_dir;
+    (void)symbol;
+    (void)sub_dir;
 #endif /* ! HAVE_DLADDR */
 
-   return NULL;
+    return NULL;
 }
 
-EINA_API char *eina_module_environment_path_get(const char *env,
-                                            const char *sub_dir)
+EINA_API char *
+eina_module_environment_path_get(const char *env, const char *sub_dir)
 {
-   const char *env_dir;
+    const char *env_dir;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(env, NULL);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(env, NULL);
 #if defined(HAVE_GETUID) && defined(HAVE_GETEUID)
-   if (getuid() != geteuid()) return NULL; // if setuid dont use dangerous env
+    if (getuid() != geteuid()) return NULL;  // if setuid dont use dangerous env
 #endif
-   env_dir = getenv(env);
-   if (env_dir)
-     {
-        char *path;
+    env_dir = getenv(env);
+    if (env_dir)
+    {
+        char  *path;
         size_t l1;
         size_t l2 = 0;
 
         l1 = strlen(env_dir);
-        if (sub_dir && (*sub_dir != '\0'))
-           l2 = strlen(sub_dir);
+        if (sub_dir && (*sub_dir != '\0')) l2 = strlen(sub_dir);
 
         path = (char *)malloc(l1 + l2 + 1);
         if (path)
-          {
-                memcpy(path,      env_dir, l1);
-             if (sub_dir && (*sub_dir != '\0'))
-                memcpy(path + l1, sub_dir, l2);
+        {
+            memcpy(path, env_dir, l1);
+            if (sub_dir && (*sub_dir != '\0')) memcpy(path + l1, sub_dir, l2);
 
-             path[l1 + l2] = '\0';
+            path[l1 + l2] = '\0';
 
-             return path;
-          }
-     }
+            return path;
+        }
+    }
 
-   return NULL;
+    return NULL;
 }
 
-EINA_API Eina_Array *eina_EFL_MODULE_ARCH_list_get(Eina_Array *array,
-                                           const char *path,
-                                           const char *arch)
+EINA_API Eina_Array *
+eina_EFL_MODULE_ARCH_list_get(Eina_Array *array,
+                              const char *path,
+                              const char *arch)
 {
-   Dir_List_Get_Cb_Data list_get_cb_data;
+    Dir_List_Get_Cb_Data list_get_cb_data;
 
-   if ((!path) || (!arch))
-      return array;
+    if ((!path) || (!arch)) return array;
 
-   list_get_cb_data.array = array ? array : eina_array_new(4);
-   list_get_cb_data.cb = NULL;
-   list_get_cb_data.data = (void *)arch;
+    list_get_cb_data.array = array ? array : eina_array_new(4);
+    list_get_cb_data.cb    = NULL;
+    list_get_cb_data.data  = (void *)arch;
 
-   eina_file_dir_list(path, EFL_FALSE, &_dir_arch_list_cb, &list_get_cb_data);
+    eina_file_dir_list(path, EFL_FALSE, &_dir_arch_list_cb, &list_get_cb_data);
 
-   return list_get_cb_data.array;
+    return list_get_cb_data.array;
 }
 
-EINA_API Eina_Array *eina_module_list_get(Eina_Array *array,
-                                      const char *path,
-                                      Efl_Bool recursive,
-                                      Eina_Module_Cb cb,
-                                      void *data)
+EINA_API Eina_Array *
+eina_module_list_get(Eina_Array    *array,
+                     const char    *path,
+                     Efl_Bool       recursive,
+                     Eina_Module_Cb cb,
+                     void          *data)
 {
-   Dir_List_Get_Cb_Data list_get_cb_data;
-   Dir_List_Cb_Data list_cb_data;
+    Dir_List_Get_Cb_Data list_get_cb_data;
+    Dir_List_Cb_Data     list_cb_data;
 
-   if (!path)
-      return array;
+    if (!path) return array;
 
-   list_get_cb_data.array = array ? array : eina_array_new(4);
-   list_get_cb_data.cb = cb;
-   list_get_cb_data.data = data;
+    list_get_cb_data.array = array ? array : eina_array_new(4);
+    list_get_cb_data.cb    = cb;
+    list_get_cb_data.data  = data;
 
-   list_cb_data.cb = &_dir_list_get_cb;
-   list_cb_data.data = &list_get_cb_data;
+    list_cb_data.cb   = &_dir_list_get_cb;
+    list_cb_data.data = &list_get_cb_data;
 
-   eina_file_dir_list(path, recursive, &_dir_list_cb, &list_cb_data);
+    eina_file_dir_list(path, recursive, &_dir_list_cb, &list_cb_data);
 
-   return list_get_cb_data.array;
+    return list_get_cb_data.array;
 }
 
 EINA_API Eina_Module *
 eina_module_find(const Eina_Array *array, const char *module)
 {
-   unsigned int i;
-   Eina_Array_Iterator iterator;
-   Eina_Module *m;
+    unsigned int        i;
+    Eina_Array_Iterator iterator;
+    Eina_Module        *m;
 
-   EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
-     {
-        char *file_m;
-        char *tmp;
+    EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
+    {
+        char   *file_m;
+        char   *tmp;
         ssize_t len;
 
         /* basename() can modify its argument, so we first get a copie */
@@ -539,55 +543,55 @@ eina_module_find(const Eina_Array *array, const char *module)
         tmp = alloca(len + 1);
         memcpy(tmp, eina_module_file_get(m), len + 1);
         file_m = basename(tmp);
-        len = strlen(file_m);
+        len    = strlen(file_m);
         len -= sizeof(SHARED_LIB_SUFFIX) - 1;
-        if (len <= 0)
-           continue;
+        if (len <= 0) continue;
 
-        if (!strncmp(module, file_m, len))
-	   return m;
-     }
+        if (!strncmp(module, file_m, len)) return m;
+    }
 
-   return NULL;
+    return NULL;
 }
 
-EINA_API void eina_module_list_load(Eina_Array *array)
+EINA_API void
+eina_module_list_load(Eina_Array *array)
 {
-   Eina_Array_Iterator iterator;
-   Eina_Module *m;
-   unsigned int i;
+    Eina_Array_Iterator iterator;
+    Eina_Module        *m;
+    unsigned int        i;
 
-   if (!array) return;
-   DBG("array %p, count %u", array, array->count);
-   EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
-     {
-        if (!eina_module_load(m))
-          DBG("Cannot load module %s", m->file);
-     }
+    if (!array) return;
+    DBG("array %p, count %u", array, array->count);
+    EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
+    {
+        if (!eina_module_load(m)) DBG("Cannot load module %s", m->file);
+    }
 }
 
-EINA_API void eina_module_list_unload(Eina_Array *array)
+EINA_API void
+eina_module_list_unload(Eina_Array *array)
 {
-   Eina_Array_Iterator iterator;
-   Eina_Module *m;
-   unsigned int i;
+    Eina_Array_Iterator iterator;
+    Eina_Module        *m;
+    unsigned int        i;
 
-   if (!array) return;
-   DBG("array %p, count %u", array, array->count);
-   EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
-     eina_module_unload(m);
+    if (!array) return;
+    DBG("array %p, count %u", array, array->count);
+    EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
+    eina_module_unload(m);
 }
 
-EINA_API void eina_module_list_free(Eina_Array *array)
+EINA_API void
+eina_module_list_free(Eina_Array *array)
 {
-   Eina_Array_Iterator iterator;
-   Eina_Module *m;
-   unsigned int i;
+    Eina_Array_Iterator iterator;
+    Eina_Module        *m;
+    unsigned int        i;
 
-   EINA_SAFETY_ON_NULL_RETURN(array);
-   DBG("array %p, count %u", array, array->count);
-   EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
-     eina_module_free(m);
+    EINA_SAFETY_ON_NULL_RETURN(array);
+    DBG("array %p, count %u", array, array->count);
+    EINA_ARRAY_ITER_NEXT(array, i, m, iterator)
+    eina_module_free(m);
 
-   eina_array_flush(array);
+    eina_array_flush(array);
 }

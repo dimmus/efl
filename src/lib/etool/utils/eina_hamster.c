@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdio.h>
@@ -36,10 +36,7 @@
  */
 
 static const int _eina_hamster =
-  (VMAJ * 100 * 100 * 100) +
-  (VMIN * 100 * 100      ) +
-  (VMIC * 100            ) +
-  (VREV                  );
+    (VMAJ * 100 * 100 * 100) + (VMIN * 100 * 100) + (VMIC * 100) + (VREV);
 
 /**
  * @endcond
@@ -56,7 +53,7 @@ static const int _eina_hamster =
 EINA_API int
 eina_hamster_count(void)
 {
-   return _eina_hamster;
+    return _eina_hamster;
 }
 
 /**

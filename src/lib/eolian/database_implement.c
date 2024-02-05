@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <Eina.h>
@@ -8,11 +8,11 @@
 void
 database_implement_del(Eolian_Implement *impl)
 {
-   if (!impl) return;
-   eina_stringshare_del(impl->base.file);
-   eina_stringshare_del(impl->base.name);
-   database_doc_del(impl->common_doc);
-   database_doc_del(impl->get_doc);
-   database_doc_del(impl->set_doc);
-   free(impl);
+    if (!impl) return;
+    eina_stringshare_del(impl->base.file);
+    eina_stringshare_del(impl->base.name);
+    database_doc_del(impl->common_doc);
+    database_doc_del(impl->get_doc);
+    database_doc_del(impl->set_doc);
+    free(impl);
 }

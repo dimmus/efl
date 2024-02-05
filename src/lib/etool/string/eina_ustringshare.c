@@ -28,7 +28,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include "etool_config.h"
@@ -41,19 +41,19 @@
 #include "eina_safety_checks.h"
 #include "eina_ustringshare.h"
 
-
 #ifdef CRI
-#undef CRI
+#  undef CRI
 #endif
-#define CRI(...) EINA_LOG_DOM_CRIT(_eina_share_ustringshare_log_dom, __VA_ARGS__)
+#define CRI(...) \
+    EINA_LOG_DOM_CRIT(_eina_share_ustringshare_log_dom, __VA_ARGS__)
 
 #ifdef ERR
-#undef ERR
+#  undef ERR
 #endif
 #define ERR(...) EINA_LOG_DOM_ERR(_eina_share_ustringshare_log_dom, __VA_ARGS__)
 
 #ifdef DBG
-#undef DBG
+#  undef DBG
 #endif
 #define DBG(...) EINA_LOG_DOM_DBG(_eina_share_ustringshare_log_dom, __VA_ARGS__)
 
@@ -81,31 +81,32 @@ static const char EINA_MAGIC_USTRINGSHARE_NODE_STR[] = "Eina UStringshare Node";
 Efl_Bool
 eina_ustringshare_init(void)
 {
-   Efl_Bool ret;
+    Efl_Bool ret;
 
-   if (_eina_share_ustringshare_log_dom < 0)
-     {
-        _eina_share_ustringshare_log_dom = eina_log_domain_register
-          ("eina_ustringshare", EINA_LOG_COLOR_DEFAULT);
+    if (_eina_share_ustringshare_log_dom < 0)
+    {
+        _eina_share_ustringshare_log_dom =
+            eina_log_domain_register("eina_ustringshare",
+                                     EINA_LOG_COLOR_DEFAULT);
 
         if (_eina_share_ustringshare_log_dom < 0)
-          {
-             EINA_LOG_ERR("Could not register log domain: eina_ustringshare");
-             return EFL_FALSE;
-          }
-     }
+        {
+            EINA_LOG_ERR("Could not register log domain: eina_ustringshare");
+            return EFL_FALSE;
+        }
+    }
 
-   ret = eina_share_common_init(&ustringshare_share,
-                                EINA_MAGIC_USTRINGSHARE_NODE,
-                                EINA_MAGIC_USTRINGSHARE_NODE_STR);
+    ret = eina_share_common_init(&ustringshare_share,
+                                 EINA_MAGIC_USTRINGSHARE_NODE,
+                                 EINA_MAGIC_USTRINGSHARE_NODE_STR);
 
-   if (!ret)
-     {
+    if (!ret)
+    {
         eina_log_domain_unregister(_eina_share_ustringshare_log_dom);
         _eina_share_ustringshare_log_dom = -1;
-     }
+    }
 
-   return ret;
+    return ret;
 }
 
 /**
@@ -122,16 +123,16 @@ eina_ustringshare_init(void)
 Efl_Bool
 eina_ustringshare_shutdown(void)
 {
-   Efl_Bool ret;
-   ret = eina_share_common_shutdown(&ustringshare_share);
+    Efl_Bool ret;
+    ret = eina_share_common_shutdown(&ustringshare_share);
 
-   if (_eina_share_ustringshare_log_dom >= 0)
-     {
+    if (_eina_share_ustringshare_log_dom >= 0)
+    {
         eina_log_domain_unregister(_eina_share_ustringshare_log_dom);
         _eina_share_ustringshare_log_dom = -1;
-     }
+    }
 
-   return ret;
+    return ret;
 }
 
 /*============================================================================*
@@ -141,49 +142,47 @@ eina_ustringshare_shutdown(void)
 EINA_API void
 eina_ustringshare_del(const Eina_Unicode *str)
 {
-   if (!str)
-      return;
+    if (!str) return;
 
-   if (!eina_share_common_del(ustringshare_share, (const char *)str))
-     CRI("EEEK trying to del non-shared ustringshare \"%s\"", (const char *)str);
+    if (!eina_share_common_del(ustringshare_share, (const char *)str))
+        CRI("EEEK trying to del non-shared ustringshare \"%s\"",
+            (const char *)str);
 }
 
 EINA_API const Eina_Unicode *
 eina_ustringshare_add_length(const Eina_Unicode *str, unsigned int slen)
 {
-   return (const Eina_Unicode *)eina_share_common_add_length(ustringshare_share,
-                                                             (const char *)str,
-                                                             slen *
-                                                             sizeof(
-                                                                Eina_Unicode),
-                                                             sizeof(
-                                                                Eina_Unicode));
+    return (const Eina_Unicode *)eina_share_common_add_length(
+        ustringshare_share,
+        (const char *)str,
+        slen * sizeof(Eina_Unicode),
+        sizeof(Eina_Unicode));
 }
 
 EINA_API const Eina_Unicode *
 eina_ustringshare_add(const Eina_Unicode *str)
 {
-   int slen = (str) ? (int)eina_unicode_strlen(str) : -1;
-   return eina_ustringshare_add_length(str, slen);
+    int slen = (str) ? (int)eina_unicode_strlen(str) : -1;
+    return eina_ustringshare_add_length(str, slen);
 }
 
 EINA_API const Eina_Unicode *
 eina_ustringshare_ref(const Eina_Unicode *str)
 {
-   return (const Eina_Unicode *)eina_share_common_ref(ustringshare_share,
-                                                      (const char *)str);
+    return (const Eina_Unicode *)eina_share_common_ref(ustringshare_share,
+                                                       (const char *)str);
 }
 
 EINA_API int
 eina_ustringshare_strlen(const Eina_Unicode *str)
 {
-   int len = eina_share_common_length(ustringshare_share, (const char *)str);
-   len = (len > 0) ? len / (int)sizeof(Eina_Unicode) : -1;
-   return len;
+    int len = eina_share_common_length(ustringshare_share, (const char *)str);
+    len     = (len > 0) ? len / (int)sizeof(Eina_Unicode) : -1;
+    return len;
 }
 
 EINA_API void
 eina_ustringshare_dump(void)
 {
-   eina_share_common_dump(ustringshare_share, NULL, 0);
+    eina_share_common_dump(ustringshare_share, NULL, 0);
 }

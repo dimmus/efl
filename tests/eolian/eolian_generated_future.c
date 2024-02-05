@@ -1,6 +1,6 @@
 
 #ifdef HAVE_CONFIG_H
-#include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <Eina.h>
@@ -8,7 +8,8 @@
 
 #include <check.h>
 
-struct Generated_Future_Data {};
+struct Generated_Future_Data
+{};
 typedef struct Generated_Future_Data Generated_Future_Data;
 
 #define EOTEST_API

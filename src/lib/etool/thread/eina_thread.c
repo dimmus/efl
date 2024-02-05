@@ -17,13 +17,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stddef.h>
 
 #ifdef HAVE_PTHREAD_H
-# include <pthread.h>
+#  include <pthread.h>
 #endif
 
 #include "eina_types.h"
@@ -31,15 +31,17 @@
 #include "eina_thread.h"
 
 EINA_API void *
-eina_thread_cancellable_run(Eina_Thread_Cancellable_Run_Cb cb, Eina_Free_Cb cleanup_cb, void *data)
+eina_thread_cancellable_run(Eina_Thread_Cancellable_Run_Cb cb,
+                            Eina_Free_Cb                   cleanup_cb,
+                            void                          *data)
 {
-   Efl_Bool old = EFL_FALSE;
-   void *ret;
+    Efl_Bool old = EFL_FALSE;
+    void    *ret;
 
-   EINA_THREAD_CLEANUP_PUSH(cleanup_cb, data);
-   eina_thread_cancellable_set(EFL_TRUE, &old); // is a cancellation point
-   ret = cb(data); // may not run if was previously canceled
-   EINA_THREAD_CLEANUP_POP(EFL_TRUE);
-   eina_thread_cancellable_set(old, NULL);
-   return ret;
+    EINA_THREAD_CLEANUP_PUSH(cleanup_cb, data);
+    eina_thread_cancellable_set(EFL_TRUE, &old); // is a cancellation point
+    ret = cb(data); // may not run if was previously canceled
+    EINA_THREAD_CLEANUP_POP(EFL_TRUE);
+    eina_thread_cancellable_set(old, NULL);
+    return ret;
 }

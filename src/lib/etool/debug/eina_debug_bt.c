@@ -17,19 +17,19 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #ifdef HAVE_DLADDR
-# ifdef _WIN32
-#  include <evil_private.h> /* dladdr */
-# else
-#  include <dlfcn.h>
-# endif
+#  ifdef _WIN32
+#    include <evil_private.h> /* dladdr */
+#  else
+#    include <dlfcn.h>
+#  endif
 #endif
 
 #ifdef HAVE_UNWIND
-# include <libunwind.h>
+#  include <libunwind.h>
 #endif
 
 #include "eina_debug.h"
@@ -37,15 +37,15 @@
 #include "eina_util.h"
 
 #ifndef _WIN32
-# include <signal.h>
+#  include <signal.h>
 // realtime signals guarantee a minimum of 8, so SIGRTMIN + 7 would be valid
 // at a minimum, so let's choose + 6 ... second last of the minimum set.
 // SIGRTMAX of course is defined too... note the manual pages for sigation say
 // that it calls rt_sigaction transparently for us so... no need for anything
 // else special
-#ifdef SIGRTMIN
-# define SIG (SIGRTMIN + 6)
-#else
+#  ifdef SIGRTMIN
+#    define SIG (SIGRTMIN + 6)
+#  else
 // OSX seems to not support posix RT signals... too old a kernel. so be partly
 // broken on OSX in that a HUP signal will maybe cause a crash... but compiling
 // with -pg would have guaranteed always caused a crash before anyway.
@@ -95,21 +95,21 @@
 // (excerpt from OSX's signal.h - found at:
 // http://github.com/st3fan/osx-10.9/blob/master/xnu-2422.1.72/bsd/sys/signal.h
 // pasting here due to how difficult it was to find a signal list for OSX)
-#  define SIG SIGHUP
-# endif
+#    define SIG SIGHUP
+#  endif
 #endif
 
 static Eina_Semaphore _wait_for_bts_sem;
 
 // _bt_buf[0] is always for mainloop, 1 + is for extra threads
-static void             ***_bt_buf;
-static int                *_bt_buf_len;
-static struct timespec    *_bt_ts;
-static int                *_bt_cpu;
+static void          ***_bt_buf;
+static int             *_bt_buf_len;
+static struct timespec *_bt_ts;
+static int             *_bt_cpu;
 
 /* Used by trace timer */
-static double _trace_t0 = 0.0;
-static Eina_Debug_Timer *_timer = NULL;
+static double            _trace_t0 = 0.0;
+static Eina_Debug_Timer *_timer    = NULL;
 
 #ifndef _WIN32
 static struct sigaction old_sigprof_action;
@@ -119,32 +119,32 @@ void
 _eina_debug_dump_fhandle_bt(FILE *f, void **bt, int btlen)
 {
 #ifndef _WIN32
-   int i;
-   Dl_info info;
-   const char *file;
-   unsigned long long offset, base;
+    int                i;
+    Dl_info            info;
+    const char        *file;
+    unsigned long long offset, base;
 
-   for (i = 0; i < btlen; i++)
-     {
-        file = NULL;
+    for (i = 0; i < btlen; i++)
+    {
+        file   = NULL;
         offset = base = 0;
         // we have little choice but to hope/assume dladdr() doesn't alloc
         // anything here
         if ((dladdr(bt[i], &info)) && (info.dli_fname) && (info.dli_fname[0]))
-          {
-             offset = (unsigned long long)(uintptr_t)bt[i];
-             base = (unsigned long long)(uintptr_t)info.dli_fbase;
-             file = _eina_debug_file_get(info.dli_fname);
-          }
+        {
+            offset = (unsigned long long)(uintptr_t)bt[i];
+            base   = (unsigned long long)(uintptr_t)info.dli_fbase;
+            file   = _eina_debug_file_get(info.dli_fname);
+        }
         // rely on normal libc buffering for file ops to avoid syscalls.
         // may or may not be a good idea. good enough for now.
         if (file) fprintf(f, "%s 0x%llx 0x%llx\n", file, offset, base);
         else fprintf(f, "?? -\n");
-     }
+    }
 #else
-   (void)f;
-   (void)bt;
-   (void)btlen;
+    (void)f;
+    (void)bt;
+    (void)btlen;
 #endif
 }
 
@@ -153,27 +153,27 @@ static inline int
 _eina_debug_unwind_bt(void **bt, int max)
 {
 #ifdef HAVE_UNWIND
-   unw_cursor_t cursor;
-   unw_context_t uc;
-   unw_word_t p;
-   int total;
+    unw_cursor_t  cursor;
+    unw_context_t uc;
+    unw_word_t    p;
+    int           total;
 
-   // create a context for unwinding
-   unw_getcontext(&uc);
-   // begin our work
-   unw_init_local(&cursor, &uc);
-   // walk up each stack frame until there is no more, storing it
-   for (total = 0; (unw_step(&cursor) > 0) && (total < max); total++)
-     {
+    // create a context for unwinding
+    unw_getcontext(&uc);
+    // begin our work
+    unw_init_local(&cursor, &uc);
+    // walk up each stack frame until there is no more, storing it
+    for (total = 0; (unw_step(&cursor) > 0) && (total < max); total++)
+    {
         unw_get_reg(&cursor, UNW_REG_IP, &p);
         bt[total] = (void *)p;
-     }
-   // return our total backtrace stack size
-   return total;
+    }
+    // return our total backtrace stack size
+    return total;
 #else
-   (void)bt;
-   (void)max;
-   return 0;
+    (void)bt;
+    (void)max;
+    return 0;
 #endif
 }
 
@@ -182,46 +182,49 @@ static inline double
 get_time(void)
 {
 #if defined(__clockid_t_defined)
-   struct timespec t;
-   clock_gettime(CLOCK_MONOTONIC, &t);
-   return (double)t.tv_sec + (((double)t.tv_nsec) / 1000000000.0);
+    struct timespec t;
+    clock_gettime(CLOCK_MONOTONIC, &t);
+    return (double)t.tv_sec + (((double)t.tv_nsec) / 1000000000.0);
 #else
-   struct timeval timev;
-   gettimeofday(&timev, NULL);
-   return (double)timev.tv_sec + (((double)timev.tv_usec) / 1000000.0);
+    struct timeval timev;
+    gettimeofday(&timev, NULL);
+    return (double)timev.tv_sec + (((double)timev.tv_usec) / 1000000.0);
 #endif
 }
 
 #ifndef _WIN32
 static void
-_signal_handler(int sig EFL_UNUSED,
-      siginfo_t *si EFL_UNUSED, void *foo EFL_UNUSED)
+_signal_handler(int sig       EFL_UNUSED,
+                siginfo_t *si EFL_UNUSED,
+                void *foo     EFL_UNUSED)
 {
-   int i;
-   pthread_t self = pthread_self();
-#if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && defined(__clockid_t_defined)
-   int slot = 0;
-   clockid_t cid;
-#endif
+    int       i;
+    pthread_t self = pthread_self();
+#  if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && \
+      defined(__clockid_t_defined)
+    int       slot = 0;
+    clockid_t cid;
+#  endif
 
-   // find which slot in the array of threads we have so we store info
-   // in the correct slot for us
-   for (i = 0; i < _eina_debug_thread_active_num; i++)
-     {
+    // find which slot in the array of threads we have so we store info
+    // in the correct slot for us
+    for (i = 0; i < _eina_debug_thread_active_num; i++)
+    {
         if (self == _eina_debug_thread_active[i].thread)
-          {
-#if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && defined(__clockid_t_defined)
-             slot = i;
-#endif
-             goto found;
-          }
-     }
-   // we couldn't find out thread reference! help!
-   e_debug("EINA DEBUG ERROR: can't find thread slot!");
-   eina_semaphore_release(&_wait_for_bts_sem, 1);
-   return;
+        {
+#  if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && \
+      defined(__clockid_t_defined)
+            slot = i;
+#  endif
+            goto found;
+        }
+    }
+    // we couldn't find out thread reference! help!
+    e_debug("EINA DEBUG ERROR: can't find thread slot!");
+    eina_semaphore_release(&_wait_for_bts_sem, 1);
+    return;
 found:
-   /*
+    /*
     * Below is very non-portable code!
     *
     * - clock_gettime() is not implemented on macOS < 10.12
@@ -230,29 +233,30 @@ found:
     * - CLOCK_THREAD_CPUTIME_ID should be identical to pthread_getcpuclockid(),
     *   but it requires POSIX thingies to be defined.
     */
-#if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && defined(__clockid_t_defined)
-   // store thread info like what cpu core we are on now (not reliable
-   // but hey - better than nothing), the amount of cpu time total
-   // we have consumed (it's cumulative so subtracing deltas can give
-   // you an average amount of cpu time consumed between now and the
-   // previous time we looked) and also a full backtrace
-   _bt_cpu[slot] = sched_getcpu();
-# ifdef HAVE_PTHREAD_GETCPUCLOCKID
-   /* Try pthread_getcpuclockid() first */
-   pthread_getcpuclockid(self, &cid);
-# elif defined(_POSIX_THREAD_CPUTIME)
+#  if defined(HAVE_CLOCK_GETTIME) && defined(HAVE_SCHED_GETCPU) && \
+      defined(__clockid_t_defined)
+    // store thread info like what cpu core we are on now (not reliable
+    // but hey - better than nothing), the amount of cpu time total
+    // we have consumed (it's cumulative so subtracing deltas can give
+    // you an average amount of cpu time consumed between now and the
+    // previous time we looked) and also a full backtrace
+    _bt_cpu[slot] = sched_getcpu();
+#    ifdef HAVE_PTHREAD_GETCPUCLOCKID
+    /* Try pthread_getcpuclockid() first */
+    pthread_getcpuclockid(self, &cid);
+#    elif defined(_POSIX_THREAD_CPUTIME)
    /* Fallback to POSIX clock id. */
-   cid = CLOCK_THREAD_CPUTIME_ID;
-# else
+    cid = CLOCK_THREAD_CPUTIME_ID;
+#    else
    /* Boom, we lost */
-#  error Cannot determine the clock id for clock_gettime()
-# endif
-   clock_gettime(cid, &(_bt_ts[slot]));
-   _bt_buf_len[slot] = _eina_debug_unwind_bt(_bt_buf[slot], EINA_MAX_BT);
-#endif /* HAVE_CLOCK_GETTIME && HAVE_SCHED_GETCPU */
-   // now wake up the monitor to let them know we are done collecting our
-   // backtrace info
-   eina_semaphore_release(&_wait_for_bts_sem, 1);
+#      error Cannot determine the clock id for clock_gettime()
+#    endif
+    clock_gettime(cid, &(_bt_ts[slot]));
+    _bt_buf_len[slot] = _eina_debug_unwind_bt(_bt_buf[slot], EINA_MAX_BT);
+#  endif /* HAVE_CLOCK_GETTIME && HAVE_SCHED_GETCPU */
+    // now wake up the monitor to let them know we are done collecting our
+    // backtrace info
+    eina_semaphore_release(&_wait_for_bts_sem, 1);
 }
 #endif
 
@@ -260,30 +264,30 @@ static void
 _signal_init(void)
 {
 #ifndef _WIN32
-   struct sigaction sa;
+    struct sigaction sa;
 
-   memset(&sa, 0, sizeof(struct sigaction));
+    memset(&sa, 0, sizeof(struct sigaction));
 
-   sa.sa_handler = SIG_DFL;
-   sa.sa_sigaction = NULL;
-   sa.sa_flags = SA_RESTART | SA_SIGINFO;
-   sigemptyset(&sa.sa_mask);
-   sigaction(SIG, &sa, &old_sigprof_action);
+    sa.sa_handler   = SIG_DFL;
+    sa.sa_sigaction = NULL;
+    sa.sa_flags     = SA_RESTART | SA_SIGINFO;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIG, &sa, &old_sigprof_action);
 
-   memset(&sa, 0, sizeof(struct sigaction));
-   // set up signal handler for our profiling signal - eevery thread should
-   // obey this (this is the case on linux - other OSs may vary)
-   sa.sa_sigaction = _signal_handler;
-   sa.sa_flags = SA_RESTART | SA_SIGINFO;
-   sigemptyset(&sa.sa_mask);
-   if (sigaction(SIG, &sa, NULL) != 0)
-      e_debug("EINA DEBUG ERROR: Can't set up sig %i handler!", SIG);
+    memset(&sa, 0, sizeof(struct sigaction));
+    // set up signal handler for our profiling signal - eevery thread should
+    // obey this (this is the case on linux - other OSs may vary)
+    sa.sa_sigaction = _signal_handler;
+    sa.sa_flags     = SA_RESTART | SA_SIGINFO;
+    sigemptyset(&sa.sa_mask);
+    if (sigaction(SIG, &sa, NULL) != 0)
+        e_debug("EINA DEBUG ERROR: Can't set up sig %i handler!", SIG);
 
-   sa.sa_sigaction = NULL;
-   sa.sa_handler = SIG_IGN;
-   sigemptyset(&sa.sa_mask);
-   sa.sa_flags = 0;
-   if (sigaction(SIGPIPE, &sa, 0) == -1) perror(0);
+    sa.sa_sigaction = NULL;
+    sa.sa_handler   = SIG_IGN;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    if (sigaction(SIGPIPE, &sa, 0) == -1) perror(0);
 #endif
 }
 
@@ -291,129 +295,133 @@ static void
 _signal_shutdown(void)
 {
 #ifndef _WIN32
-   sigaction(SIG, &old_sigprof_action, NULL);
+    sigaction(SIG, &old_sigprof_action, NULL);
 #endif
 }
 
 static void
 _collect_bt(Eina_Thread th)
 {
-   // this async signals the thread to switch to the deebug signal handler
-   // and collect a backtrace and other info from inside the thread
+    // this async signals the thread to switch to the deebug signal handler
+    // and collect a backtrace and other info from inside the thread
 #ifndef _WIN32
-   pthread_kill((pthread_t)th, SIG); // we can cast Eina_Thread -> pthread_t
+    pthread_kill((pthread_t)th, SIG);  // we can cast Eina_Thread -> pthread_t
 #else
-   (th); // silenmce unused warn
+    (th); // silenmce unused warn
 #endif
 }
 
 static Efl_Bool
 _trace_cb(void *data EFL_UNUSED)
 {
-   static int bts = 0;
-   int i;
+    static int bts = 0;
+    int        i;
 
-   if (!EINA_DBL_NONZERO(_trace_t0)) _trace_t0 = get_time();
+    if (!EINA_DBL_NONZERO(_trace_t0)) _trace_t0 = get_time();
 
-   // take a lock on grabbing thread debug info like backtraces
-   eina_spinlock_take(&_eina_debug_thread_lock);
-   // too many threads (over 1 million) !!!!
-   if (_eina_debug_thread_active_num > (1024 * 1024)) goto err;
-   // reset our "stack" of memory se use to dump thread info into
-   _eina_debug_chunk_tmp_reset();
-   // get an array of pointers for the backtrace array for main + th
-   _bt_buf = _eina_debug_chunk_tmp_push
-      ((_eina_debug_thread_active_num) * sizeof(void *));
-   if (!_bt_buf) goto err;
-   // get an array of pointers for the timespec array for mainloop + th
-   _bt_ts = _eina_debug_chunk_tmp_push
-      ((_eina_debug_thread_active_num) * sizeof(struct timespec));
-   if (!_bt_ts) goto err;
-   // get an array of pointers for the cpuid array for mainloop + th
-   _bt_cpu = _eina_debug_chunk_tmp_push
-      ((_eina_debug_thread_active_num) * sizeof(int));
-   if (!_bt_cpu) goto err;
-   // get an array of void ptrs for each thread we know about for bt
-   for (i = 0; i < _eina_debug_thread_active_num; i++)
-     {
+    // take a lock on grabbing thread debug info like backtraces
+    eina_spinlock_take(&_eina_debug_thread_lock);
+    // too many threads (over 1 million) !!!!
+    if (_eina_debug_thread_active_num > (1024 * 1024)) goto err;
+    // reset our "stack" of memory se use to dump thread info into
+    _eina_debug_chunk_tmp_reset();
+    // get an array of pointers for the backtrace array for main + th
+    _bt_buf = _eina_debug_chunk_tmp_push((_eina_debug_thread_active_num) *
+                                         sizeof(void *));
+    if (!_bt_buf) goto err;
+    // get an array of pointers for the timespec array for mainloop + th
+    _bt_ts = _eina_debug_chunk_tmp_push((_eina_debug_thread_active_num) *
+                                        sizeof(struct timespec));
+    if (!_bt_ts) goto err;
+    // get an array of pointers for the cpuid array for mainloop + th
+    _bt_cpu = _eina_debug_chunk_tmp_push((_eina_debug_thread_active_num) *
+                                         sizeof(int));
+    if (!_bt_cpu) goto err;
+    // get an array of void ptrs for each thread we know about for bt
+    for (i = 0; i < _eina_debug_thread_active_num; i++)
+    {
         _bt_buf[i] = _eina_debug_chunk_tmp_push(EINA_MAX_BT * sizeof(void *));
         if (!_bt_buf[i]) goto err;
-     }
-   // get an array of ints to stor the bt len for mainloop + threads
-   _bt_buf_len = _eina_debug_chunk_tmp_push
-      ((_eina_debug_thread_active_num) * sizeof(int));
-   // now collect per thread
-   for (i = 0; i < _eina_debug_thread_active_num; i++)
-      _collect_bt(_eina_debug_thread_active[i].thread);
-   // we're done probing. now collec all the "i'm done" msgs on the
-   // semaphore for every thread + mainloop
-   for (i = 0; i < (_eina_debug_thread_active_num); i++)
-      eina_semaphore_lock(&_wait_for_bts_sem);
-   // we now have gotten all the data from all threads
-   // we can process it now as we see fit, so release thread lock
-   for (i = 0; i < _eina_debug_thread_active_num; i++)
-     {
+    }
+    // get an array of ints to stor the bt len for mainloop + threads
+    _bt_buf_len = _eina_debug_chunk_tmp_push((_eina_debug_thread_active_num) *
+                                             sizeof(int));
+    // now collect per thread
+    for (i = 0; i < _eina_debug_thread_active_num; i++)
+        _collect_bt(_eina_debug_thread_active[i].thread);
+    // we're done probing. now collec all the "i'm done" msgs on the
+    // semaphore for every thread + mainloop
+    for (i = 0; i < (_eina_debug_thread_active_num); i++)
+        eina_semaphore_lock(&_wait_for_bts_sem);
+    // we now have gotten all the data from all threads
+    // we can process it now as we see fit, so release thread lock
+    for (i = 0; i < _eina_debug_thread_active_num; i++)
+    {
         _eina_debug_dump_fhandle_bt(stderr, _bt_buf[i], _bt_buf_len[i]);
-     }
+    }
 err:
-   eina_spinlock_release(&_eina_debug_thread_lock);
-   //// XXX: some debug just to see how well we perform - will go
-   bts++;
-   if (bts >= 10000)
-     {
+    eina_spinlock_release(&_eina_debug_thread_lock);
+    //// XXX: some debug just to see how well we perform - will go
+    bts++;
+    if (bts >= 10000)
+    {
         double t;
         t = get_time();
         e_debug("%1.5f bt's per sec", (double)bts / (t - _trace_t0));
         _trace_t0 = t;
-        bts = 0;
-     }
-   return EFL_TRUE;
+        bts       = 0;
+    }
+    return EFL_TRUE;
 }
 
 // profiling on with poll time gap as uint payload
 static Efl_Bool
-_prof_on_cb(Eina_Debug_Session *session, int cid EFL_UNUSED, void *buffer, int size)
+_prof_on_cb(Eina_Debug_Session *session,
+            int cid             EFL_UNUSED,
+            void               *buffer,
+            int                 size)
 {
-   unsigned int time;
+    unsigned int time;
 
-   _signal_init();
-   if (size >= 4)
-     {
+    _signal_init();
+    if (size >= 4)
+    {
         memcpy(&time, buffer, 4);
         _trace_t0 = 0.0;
         if (_timer) eina_debug_timer_del(_timer);
         _timer = eina_debug_timer_add(time, _trace_cb, session);
-     }
-   return EFL_TRUE;
+    }
+    return EFL_TRUE;
 }
 
 static Efl_Bool
-_prof_off_cb(Eina_Debug_Session *session EFL_UNUSED, int cid EFL_UNUSED, void *buffer EFL_UNUSED, int size EFL_UNUSED)
+_prof_off_cb(Eina_Debug_Session *session EFL_UNUSED,
+             int cid                     EFL_UNUSED,
+             void *buffer                EFL_UNUSED,
+             int size                    EFL_UNUSED)
 {
-   eina_debug_timer_del(_timer);
-   _timer = NULL;
-   _signal_shutdown();
-   return EFL_TRUE;
+    eina_debug_timer_del(_timer);
+    _timer = NULL;
+    _signal_shutdown();
+    return EFL_TRUE;
 }
 
 EINA_DEBUG_OPCODES_ARRAY_DEFINE(_OPS,
-      {"Profiler/on", NULL, &_prof_on_cb},
-      {"Profiler/off", NULL, &_prof_off_cb},
-      {NULL, NULL, NULL}
-);
+                                { "Profiler/on", NULL, &_prof_on_cb },
+                                { "Profiler/off", NULL, &_prof_off_cb },
+                                { NULL, NULL, NULL });
 
 Efl_Bool
 _eina_debug_bt_init(void)
 {
-   eina_semaphore_new(&_wait_for_bts_sem, 0);
-   eina_debug_opcodes_register(NULL, _OPS(), NULL, NULL);
-   return EFL_TRUE;
+    eina_semaphore_new(&_wait_for_bts_sem, 0);
+    eina_debug_opcodes_register(NULL, _OPS(), NULL, NULL);
+    return EFL_TRUE;
 }
 
 Efl_Bool
 _eina_debug_bt_shutdown(void)
 {
-   eina_semaphore_free(&_wait_for_bts_sem);
-   return EFL_TRUE;
+    eina_semaphore_free(&_wait_for_bts_sem);
+    return EFL_TRUE;
 }
-

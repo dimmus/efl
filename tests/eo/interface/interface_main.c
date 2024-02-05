@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include "Eo.h"
@@ -12,39 +12,38 @@
 int
 main(int argc, char *argv[])
 {
-   (void) argc;
-   (void) argv;
-   efl_object_init();
+    (void)argc;
+    (void)argv;
+    efl_object_init();
 
-   Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
+    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
 
-   simple_a_set(obj, 1);
-   simple_b_set(obj, 2);
+    simple_a_set(obj, 1);
+    simple_b_set(obj, 2);
 
-   int a = 0, b = 0, sum = 0;
-   a = simple_a_get(obj);
-   b = simple_b_get(obj);
-   sum = interface_ab_sum_get(obj);
-   fail_if(sum != a + b);
+    int a = 0, b = 0, sum = 0;
+    a   = simple_a_get(obj);
+    b   = simple_b_get(obj);
+    sum = interface_ab_sum_get(obj);
+    fail_if(sum != a + b);
 
-   sum = 0;
-   sum = interface_ab_sum_get(obj);
-   sum = interface_ab_sum_get(obj);
-   fail_if(sum != a + b);
-   sum = interface2_ab_sum_get2(obj);
-   sum = interface2_ab_sum_get2(obj);
-   fail_if(sum != a + b + 1);
+    sum = 0;
+    sum = interface_ab_sum_get(obj);
+    sum = interface_ab_sum_get(obj);
+    fail_if(sum != a + b);
+    sum = interface2_ab_sum_get2(obj);
+    sum = interface2_ab_sum_get2(obj);
+    fail_if(sum != a + b + 1);
 
-   fail_if(!efl_isa(obj, INTERFACE_CLASS));
-   fail_if(!efl_isa(obj, INTERFACE2_CLASS));
-   fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE_CLASS));
-   fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE2_CLASS));
-   fail_if(efl_isa(INTERFACE_CLASS, INTERFACE2_CLASS));
+    fail_if(!efl_isa(obj, INTERFACE_CLASS));
+    fail_if(!efl_isa(obj, INTERFACE2_CLASS));
+    fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE_CLASS));
+    fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE2_CLASS));
+    fail_if(efl_isa(INTERFACE_CLASS, INTERFACE2_CLASS));
 
-   fail_if(efl_class_type_get(INTERFACE_CLASS) != EFL_CLASS_TYPE_INTERFACE);
+    fail_if(efl_class_type_get(INTERFACE_CLASS) != EFL_CLASS_TYPE_INTERFACE);
 
-   efl_unref(obj);
-   efl_object_shutdown();
-   return 0;
+    efl_unref(obj);
+    efl_object_shutdown();
+    return 0;
 }
-

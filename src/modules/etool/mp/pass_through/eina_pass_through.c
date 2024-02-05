@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdlib.h>
@@ -30,65 +30,65 @@
 static void *
 eina_pass_through_malloc(EFL_UNUSED void *data, unsigned int size)
 {
-   return malloc(size);
+    return malloc(size);
 }
 
 static void
 eina_pass_through_free(EFL_UNUSED void *data, void *ptr)
 {
-   free(ptr);
+    free(ptr);
 }
 
 static Efl_Bool
 eina_pass_through_from(EFL_UNUSED void *data, void *ptr EFL_UNUSED)
 {
    // Good luck
-   return EFL_TRUE;
+    return EFL_TRUE;
 }
 
 static void *
 eina_pass_through_realloc(EFL_UNUSED void *data, void *ptr, unsigned int size)
 {
-   return realloc(ptr, size);
+    return realloc(ptr, size);
 }
 
 static void *
 eina_pass_through_init(EFL_UNUSED const char *context,
                        EFL_UNUSED const char *option,
-                       EFL_UNUSED va_list args)
+                       EFL_UNUSED va_list     args)
 {
-   return (void *)0x1;
+    return (void *)0x1;
 }
 
 static void
 eina_pass_through_shutdown(EFL_UNUSED void *data)
-{
-}
-
+{}
 
 static Eina_Mempool_Backend _eina_pass_through_mp_backend = {
-   "pass_through",
-   &eina_pass_through_init,
-   &eina_pass_through_free,
-   &eina_pass_through_malloc,
-   &eina_pass_through_realloc,
-   NULL,
-   NULL,
-   &eina_pass_through_shutdown,
-   NULL,
-   &eina_pass_through_from,
-   NULL,
-   NULL
+    "pass_through",
+    &eina_pass_through_init,
+    &eina_pass_through_free,
+    &eina_pass_through_malloc,
+    &eina_pass_through_realloc,
+    NULL,
+    NULL,
+    &eina_pass_through_shutdown,
+    NULL,
+    &eina_pass_through_from,
+    NULL,
+    NULL
 };
 
-Efl_Bool pass_through_init(void)
+Efl_Bool
+pass_through_init(void)
 {
-   return eina_mempool_register(&_eina_pass_through_mp_backend);
+    return eina_mempool_register(&_eina_pass_through_mp_backend);
 }
 
-void pass_through_shutdown(void)
+void
+pass_through_shutdown(void)
 {
-   eina_mempool_unregister(&_eina_pass_through_mp_backend);
+    eina_mempool_unregister(&_eina_pass_through_mp_backend);
 }
 
 #ifndef EINA_STATIC_BUILD_PASS_THROUGH

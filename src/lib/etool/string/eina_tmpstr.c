@@ -40,133 +40,133 @@ typedef struct _Str Str;
 
 struct _Str
 {
-   size_t length;
-   Str *next;
-   char *str;
-   Efl_Bool ma : 1;
+    size_t   length;
+    Str     *next;
+    char    *str;
+    Efl_Bool ma : 1;
 };
 
 static Eina_Lock _mutex;
-static Str *strs = NULL;
+static Str      *strs = NULL;
 
 Efl_Bool
 eina_tmpstr_init(void)
 {
-   if (!eina_lock_new(&_mutex)) return EFL_FALSE;
-   return EFL_TRUE;
+    if (!eina_lock_new(&_mutex)) return EFL_FALSE;
+    return EFL_TRUE;
 }
 
 Efl_Bool
 eina_tmpstr_shutdown(void)
 {
-   eina_lock_free(&_mutex);
-   return EFL_TRUE;
+    eina_lock_free(&_mutex);
+    return EFL_TRUE;
 }
 
 EINA_API Eina_Tmpstr *
 eina_tmpstr_add_length(const char *str, size_t length)
 {
-   Str *s;
+    Str *s;
 
-   if (!str || !length) return NULL;
-   s = malloc(sizeof(Str) + length + 1);
-   if (!s) return NULL;
-   s->length = length;
-   s->str = ((char *)s) + sizeof(Str);
-   eina_strlcpy(s->str, str, length + 1);
-   s->str[length] = '\0';
-   s->ma = EFL_FALSE;
-   eina_lock_take(&_mutex);
-   s->next = strs;
-   strs = s;
-   eina_lock_release(&_mutex);
-   return s->str;
+    if (!str || !length) return NULL;
+    s = malloc(sizeof(Str) + length + 1);
+    if (!s) return NULL;
+    s->length = length;
+    s->str    = ((char *)s) + sizeof(Str);
+    eina_strlcpy(s->str, str, length + 1);
+    s->str[length] = '\0';
+    s->ma          = EFL_FALSE;
+    eina_lock_take(&_mutex);
+    s->next = strs;
+    strs    = s;
+    eina_lock_release(&_mutex);
+    return s->str;
 }
 
 EINA_API Eina_Tmpstr *
 eina_tmpstr_manage_new_length(char *str, size_t length)
 {
-   Str *s;
+    Str *s;
 
-   if (!str || !length) return NULL;
-   s = calloc(1, sizeof(Str));
-   if (!s) return NULL;
-   s->length = length;
-   s->str = str;
-   s->ma = EFL_TRUE;
-   eina_lock_take(&_mutex);
-   s->next = strs;
-   strs = s;
-   eina_lock_release(&_mutex);
-   return s->str;
+    if (!str || !length) return NULL;
+    s = calloc(1, sizeof(Str));
+    if (!s) return NULL;
+    s->length = length;
+    s->str    = str;
+    s->ma     = EFL_TRUE;
+    eina_lock_take(&_mutex);
+    s->next = strs;
+    strs    = s;
+    eina_lock_release(&_mutex);
+    return s->str;
 }
 
 EINA_API Eina_Tmpstr *
 eina_tmpstr_manage_new(char *str)
 {
-   size_t len;
+    size_t len;
 
-   if (!str) return NULL;
-   len = strlen(str);
-   return eina_tmpstr_manage_new_length(str, len);
+    if (!str) return NULL;
+    len = strlen(str);
+    return eina_tmpstr_manage_new_length(str, len);
 }
 
 EINA_API Eina_Tmpstr *
 eina_tmpstr_add(const char *str)
 {
-   size_t len;
+    size_t len;
 
-   if (!str) return NULL;
-   len = strlen(str);
-   return eina_tmpstr_add_length(str, len);
+    if (!str) return NULL;
+    len = strlen(str);
+    return eina_tmpstr_add_length(str, len);
 }
 
 EINA_API void
 eina_tmpstr_del(Eina_Tmpstr *tmpstr)
 {
-   Str *s, *sp;
+    Str *s, *sp;
 
-   if ((!strs) || (!tmpstr)) return;
-   eina_lock_take(&_mutex);
-   for (sp = NULL, s = strs; s; sp = s, s = s->next)
-     {
+    if ((!strs) || (!tmpstr)) return;
+    eina_lock_take(&_mutex);
+    for (sp = NULL, s = strs; s; sp = s, s = s->next)
+    {
         if (s->str == tmpstr)
-          {
-             if (sp) sp->next = s->next;
-             else strs = s->next;
-             if (s->ma) free(s->str);
-             free(s);
-             break;
-          }
-     }
-   eina_lock_release(&_mutex);
+        {
+            if (sp) sp->next = s->next;
+            else strs = s->next;
+            if (s->ma) free(s->str);
+            free(s);
+            break;
+        }
+    }
+    eina_lock_release(&_mutex);
 }
 
 EINA_API size_t
 eina_tmpstr_strlen(Eina_Tmpstr *tmpstr)
 {
-   if (!tmpstr) return 0;
-   return eina_tmpstr_len(tmpstr) + 1;
+    if (!tmpstr) return 0;
+    return eina_tmpstr_len(tmpstr) + 1;
 }
 
 EINA_API size_t
 eina_tmpstr_len(Eina_Tmpstr *tmpstr)
 {
-   Str *s;
+    Str *s;
 
-   if (!tmpstr) return 0;
-   if (!strs) return strlen(tmpstr);
-   eina_lock_take(&_mutex);
-   for (s = strs; s; s = s->next)
-     {
+    if (!tmpstr) return 0;
+    if (!strs) return strlen(tmpstr);
+    eina_lock_take(&_mutex);
+    for (s = strs; s; s = s->next)
+    {
         if (s->str == tmpstr)
-	  {
-             size_t ret = s->length;
-             eina_lock_release(&_mutex);
-             return ret;
-	  }
-     }
-   eina_lock_release(&_mutex);
+        {
+            size_t ret = s->length;
+            eina_lock_release(&_mutex);
+            return ret;
+        }
+    }
+    eina_lock_release(&_mutex);
 
-   return strlen(tmpstr);
+    return strlen(tmpstr);
 }

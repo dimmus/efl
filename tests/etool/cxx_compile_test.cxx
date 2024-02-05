@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include "Eina.h"
@@ -25,10 +25,11 @@
 #include <iostream>
 using namespace std;
 
-int main()
+int
+main()
 {
-   eina_init();
-   cout << "Eina compiles with C++!";
-   eina_shutdown();
-   return 0;
+    eina_init();
+    cout << "Eina compiles with C++!";
+    eina_shutdown();
+    return 0;
 }

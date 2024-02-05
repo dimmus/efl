@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdio.h>
@@ -27,28 +27,30 @@
 #include "eina_suite.h"
 
 EFL_START_TEST(eina_simple)
-{
-}
+{}
+
 EFL_END_TEST
 
 EFL_START_TEST(eina_cpu)
 {
-   fail_if(eina_cpu_count() <= 0);
+    fail_if(eina_cpu_count() <= 0);
 
-   eina_cpu_features_get();
-
+    eina_cpu_features_get();
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(eina_hamster)
 {
-   fail_if(eina_hamster_count() <= 0);
+    fail_if(eina_hamster_count() <= 0);
 }
+
 EFL_END_TEST
 
-void eina_test_main(TCase *tc)
+void
+eina_test_main(TCase *tc)
 {
-   tcase_add_test(tc, eina_simple);
-   tcase_add_test(tc, eina_cpu);
-   tcase_add_test(tc, eina_hamster);
+    tcase_add_test(tc, eina_simple);
+    tcase_add_test(tc, eina_cpu);
+    tcase_add_test(tc, eina_hamster);
 }

@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #define EFL_UI_SCROLLBAR_PROTECTED
@@ -81,55 +81,59 @@
 static void
 _noref_death(void *data EFL_UNUSED, const Efl_Event *event)
 {
-   efl_event_callback_del(event->object, EFL_EVENT_NOREF, _noref_death, NULL);
-   efl_del(event->object);
+    efl_event_callback_del(event->object, EFL_EVENT_NOREF, _noref_death, NULL);
+    efl_del(event->object);
 }
 
 EAPI Efl_Object *
 efl_part(const Eo *obj, const char *name)
 {
-   Efl_Object *r;
+    Efl_Object *r;
 
-   r = efl_part_get(obj, name);
-   if (!r) return NULL;
+    r = efl_part_get(obj, name);
+    if (!r) return NULL;
 
-   efl_event_callback_add(r, EFL_EVENT_NOREF, _noref_death, NULL);
+    efl_event_callback_add(r, EFL_EVENT_NOREF, _noref_death, NULL);
 
    //ensure that the parts that we have here are never leaked
    //by checking theire references and ownership details
-   EINA_SAFETY_ON_NULL_RETURN_VAL(efl_parent_get(r), r);
-   EINA_SAFETY_ON_FALSE_RETURN_VAL(efl_ref_count(r) == 1, r);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(efl_parent_get(r), r);
+    EINA_SAFETY_ON_FALSE_RETURN_VAL(efl_ref_count(r) == 1, r);
 
-   ___efl_auto_unref_set(r, EFL_TRUE);
+    ___efl_auto_unref_set(r, EFL_TRUE);
 
-   return efl_ref(r);
+    return efl_ref(r);
 }
 
 EAPI void
 __efl_internal_init(void)
 {
-   efl_model_init();
+    efl_model_init();
 }
 
 static Eina_Value
-_efl_ui_view_factory_item_created(Eo *factory, void *data EFL_UNUSED, const Eina_Value v)
+_efl_ui_view_factory_item_created(Eo              *factory,
+                                  void *data       EFL_UNUSED,
+                                  const Eina_Value v)
 {
-   Efl_Gfx_Entity *item;
-   int len, i;
+    Efl_Gfx_Entity *item;
+    int             len, i;
 
-   EINA_VALUE_ARRAY_FOREACH(&v, len, i, item)
-     efl_event_callback_call(factory, EFL_UI_FACTORY_EVENT_ITEM_CREATED, item);
+    EINA_VALUE_ARRAY_FOREACH(&v, len, i, item)
+    efl_event_callback_call(factory, EFL_UI_FACTORY_EVENT_ITEM_CREATED, item);
 
-   return v;
+    return v;
 }
 
 EOLIAN static Eina_Future *
-_efl_ui_view_factory_create_with_event(Efl_Ui_Factory *factory, Eina_Iterator *models)
+_efl_ui_view_factory_create_with_event(Efl_Ui_Factory *factory,
+                                       Eina_Iterator  *models)
 {
-   EINA_SAFETY_ON_NULL_RETURN_VAL(factory, NULL);
-   return efl_future_then(factory, efl_ui_factory_create(factory, models),
-                          .success_type = EINA_VALUE_TYPE_ARRAY,
-                          .success = _efl_ui_view_factory_item_created);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(factory, NULL);
+    return efl_future_then(factory,
+                           efl_ui_factory_create(factory, models),
+                           .success_type = EINA_VALUE_TYPE_ARRAY,
+                           .success      = _efl_ui_view_factory_item_created);
 }
 
 #include "efl_ui_view_factory.eo.c"

@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdio.h>
@@ -28,7 +28,6 @@
 #include "etool_config.h"
 #include "eina_private.h"
 
-
 /* undefs EINA_ARG_NONULL() so NULL checks are not compiled out! */
 #include "eina_safety_checks.h"
 #include "eina_error.h"
@@ -36,7 +35,7 @@
 #include "eina_lock.h"
 #include "eina_str.h"
 #ifdef EINA_HAVE_THREADS
-#include "eina_hash.h"
+#  include "eina_hash.h"
 #endif
 
 /* TODO
@@ -55,80 +54,78 @@
  */
 
 typedef struct _Eina_Error_Message Eina_Error_Message;
+
 struct _Eina_Error_Message
 {
-   Efl_Bool string_allocated;
-   const char *string;
+    Efl_Bool    string_allocated;
+    const char *string;
 };
 
 #ifdef EINA_HAVE_THREADS
 static Eina_Spinlock _eina_errno_msgs_lock;
-static Eina_Hash *_eina_errno_msgs = NULL;
+static Eina_Hash    *_eina_errno_msgs = NULL;
 #endif
-static Eina_Error_Message *_eina_errors = NULL;
-static size_t _eina_errors_count = 0;
-static size_t _eina_errors_allocated = 0;
+static Eina_Error_Message *_eina_errors           = NULL;
+static size_t              _eina_errors_count     = 0;
+static size_t              _eina_errors_allocated = 0;
 
 /* used to differentiate registered errors from errno.h */
-#define EINA_ERROR_REGISTERED_BIT (1 << 30)
-#define EINA_ERROR_REGISTERED_CHECK(err) ((err) & EINA_ERROR_REGISTERED_BIT)
+#define EINA_ERROR_REGISTERED_BIT        (1 << 30)
+#define EINA_ERROR_REGISTERED_CHECK(err) ((err)&EINA_ERROR_REGISTERED_BIT)
 
 #define EINA_ERROR_FROM_INDEX(idx) ((idx) | EINA_ERROR_REGISTERED_BIT)
-#define EINA_ERROR_TO_INDEX(err) ((err) & (~EINA_ERROR_REGISTERED_BIT))
+#define EINA_ERROR_TO_INDEX(err)   ((err) & (~EINA_ERROR_REGISTERED_BIT))
 
 static Eina_Error _eina_last_error;
-static Eina_TLS _eina_last_key;
+static Eina_TLS   _eina_last_key;
 
 static Eina_Error_Message *
 _eina_error_msg_alloc(void)
 {
-   size_t idx;
+    size_t idx;
 
-   if (_eina_errors_count == _eina_errors_allocated)
-     {
-        void *tmp;
+    if (_eina_errors_count == _eina_errors_allocated)
+    {
+        void  *tmp;
         size_t size;
 
-        if (EINA_UNLIKELY(_eina_errors_allocated == 0))
-           size = 24;
-        else
-           size = _eina_errors_allocated + 8;
+        if (EINA_UNLIKELY(_eina_errors_allocated == 0)) size = 24;
+        else size = _eina_errors_allocated + 8;
 
         tmp = realloc(_eina_errors, sizeof(Eina_Error_Message) * size);
-        if (!tmp)
-           return NULL;
+        if (!tmp) return NULL;
 
-        _eina_errors = tmp;
+        _eina_errors           = tmp;
         _eina_errors_allocated = size;
-     }
+    }
 
-   idx = _eina_errors_count;
-   _eina_errors_count++;
-   return _eina_errors + idx;
+    idx = _eina_errors_count;
+    _eina_errors_count++;
+    return _eina_errors + idx;
 }
 
 #ifdef _WIN32
-# define HAVE_STRERROR_R
-# ifdef STRERROR_R_CHAR_P
-#  undef STRERROR_R_CHAR_P
-# endif
+#  define HAVE_STRERROR_R
+#  ifdef STRERROR_R_CHAR_P
+#    undef STRERROR_R_CHAR_P
+#  endif
 /* Windows has strerror_s(), similar to POSIX strerror_r() */
-static inline int strerror_r(int errnum, char *buf, size_t buflen)
+static inline int
+strerror_r(int errnum, char *buf, size_t buflen)
 {
-   int ret;
+    int ret;
 
-   ret = strerror_s(buf, buflen, errnum);
-   if (strcmp(buf, "Unknown error") == 0)
-     snprintf(buf, buflen, "Unknown error %d", errnum);
+    ret = strerror_s(buf, buflen, errnum);
+    if (strcmp(buf, "Unknown error") == 0)
+        snprintf(buf, buflen, "Unknown error %d", errnum);
 
-   return ret;
+    return ret;
 }
 #endif
 
 /**
  * @endcond
  */
-
 
 /*============================================================================*
 *                                 Global                                     *
@@ -160,24 +157,23 @@ EINA_API Eina_Error EINA_ERROR_OUT_OF_MEMORY = ENOMEM;
 Efl_Bool
 eina_error_init(void)
 {
-   if (!eina_tls_new(&_eina_last_key))
-     return EFL_FALSE;
+    if (!eina_tls_new(&_eina_last_key)) return EFL_FALSE;
 
 #ifdef EINA_HAVE_THREADS
-   if (!eina_spinlock_new(&_eina_errno_msgs_lock)) goto failed_lock;
-   _eina_errno_msgs = eina_hash_int32_new(EINA_FREE_CB(eina_stringshare_del));
-   if (!_eina_errno_msgs) goto failed_hash;
+    if (!eina_spinlock_new(&_eina_errno_msgs_lock)) goto failed_lock;
+    _eina_errno_msgs = eina_hash_int32_new(EINA_FREE_CB(eina_stringshare_del));
+    if (!_eina_errno_msgs) goto failed_hash;
 #endif
 
-   return EFL_TRUE;
+    return EFL_TRUE;
 
 #ifdef EINA_HAVE_THREADS
- failed_hash:
-   eina_spinlock_free(&_eina_errno_msgs_lock);
- failed_lock:
-   eina_tls_free(_eina_last_key);
-   _eina_last_error = 0;
-   return EFL_FALSE;
+failed_hash:
+    eina_spinlock_free(&_eina_errno_msgs_lock);
+failed_lock:
+    eina_tls_free(_eina_last_key);
+    _eina_last_error = 0;
+    return EFL_FALSE;
 #endif
 }
 
@@ -195,30 +191,29 @@ eina_error_init(void)
 Efl_Bool
 eina_error_shutdown(void)
 {
-   Eina_Error_Message *eem, *eem_end;
+    Eina_Error_Message *eem, *eem_end;
 
-   eem = _eina_errors;
-   eem_end = eem + _eina_errors_count;
+    eem     = _eina_errors;
+    eem_end = eem + _eina_errors_count;
 
-   for (; eem < eem_end; eem++)
-      if (eem->string_allocated)
-         eina_stringshare_del(eem->string);
+    for (; eem < eem_end; eem++)
+        if (eem->string_allocated) eina_stringshare_del(eem->string);
 
-   free(_eina_errors);
-   _eina_errors = NULL;
-   _eina_errors_count = 0;
-   _eina_errors_allocated = 0;
+    free(_eina_errors);
+    _eina_errors           = NULL;
+    _eina_errors_count     = 0;
+    _eina_errors_allocated = 0;
 
 #ifdef EINA_HAVE_THREADS
-   eina_hash_free(_eina_errno_msgs);
-   _eina_errno_msgs = NULL;
-   eina_spinlock_free(&_eina_errno_msgs_lock);
+    eina_hash_free(_eina_errno_msgs);
+    _eina_errno_msgs = NULL;
+    eina_spinlock_free(&_eina_errno_msgs_lock);
 #endif
 
-   eina_tls_free(_eina_last_key);
-   _eina_last_error = 0;
+    eina_tls_free(_eina_last_key);
+    _eina_last_error = 0;
 
-   return EFL_TRUE;
+    return EFL_TRUE;
 }
 
 /*============================================================================*
@@ -228,75 +223,73 @@ eina_error_shutdown(void)
 EINA_API Eina_Error
 eina_error_msg_register(const char *msg)
 {
-   Eina_Error_Message *eem;
+    Eina_Error_Message *eem;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(msg, 0);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(msg, 0);
 
-   eem = _eina_error_msg_alloc();
-   if (!eem)
-      return 0;
+    eem = _eina_error_msg_alloc();
+    if (!eem) return 0;
 
-   eem->string_allocated = EFL_TRUE;
-   eem->string = eina_stringshare_add(msg);
-   if (!eem->string)
-     {
+    eem->string_allocated = EFL_TRUE;
+    eem->string           = eina_stringshare_add(msg);
+    if (!eem->string)
+    {
         _eina_errors_count--;
         return 0;
-     }
+    }
 
-   return EINA_ERROR_FROM_INDEX(_eina_errors_count); /* identifier = index + 1 (== _count). */
+    return EINA_ERROR_FROM_INDEX(
+        _eina_errors_count); /* identifier = index + 1 (== _count). */
 }
 
 EINA_API Eina_Error
 eina_error_msg_static_register(const char *msg)
 {
-   Eina_Error_Message *eem;
+    Eina_Error_Message *eem;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(msg, 0);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(msg, 0);
 
-   eem = _eina_error_msg_alloc();
-   if (!eem)
-      return 0;
+    eem = _eina_error_msg_alloc();
+    if (!eem) return 0;
 
-   eem->string_allocated = EFL_FALSE;
-   eem->string = msg;
-   return EINA_ERROR_FROM_INDEX(_eina_errors_count); /* identifier = index + 1 (== _count). */
+    eem->string_allocated = EFL_FALSE;
+    eem->string           = msg;
+    return EINA_ERROR_FROM_INDEX(
+        _eina_errors_count); /* identifier = index + 1 (== _count). */
 }
 
 EINA_API Efl_Bool
 eina_error_msg_modify(Eina_Error error, const char *msg)
 {
-   EINA_SAFETY_ON_NULL_RETURN_VAL(msg, EFL_FALSE);
-   EINA_SAFETY_ON_FALSE_RETURN_VAL(EINA_ERROR_REGISTERED_CHECK(error), EFL_FALSE);
-   error = EINA_ERROR_TO_INDEX(error);
-   if (error < 1)
-      return EFL_FALSE;
+    EINA_SAFETY_ON_NULL_RETURN_VAL(msg, EFL_FALSE);
+    EINA_SAFETY_ON_FALSE_RETURN_VAL(EINA_ERROR_REGISTERED_CHECK(error),
+                                    EFL_FALSE);
+    error = EINA_ERROR_TO_INDEX(error);
+    if (error < 1) return EFL_FALSE;
 
-   if ((size_t)error > _eina_errors_count)
-      return EFL_FALSE;
+    if ((size_t)error > _eina_errors_count) return EFL_FALSE;
 
-   if (_eina_errors[error - 1].string_allocated)
-     {
+    if (_eina_errors[error - 1].string_allocated)
+    {
         const char *tmp;
 
-        if (!(tmp = eina_stringshare_add(msg)))
-           return EFL_FALSE;
+        if (!(tmp = eina_stringshare_add(msg))) return EFL_FALSE;
 
         eina_stringshare_del(_eina_errors[error - 1].string);
         _eina_errors[error - 1].string = tmp;
         return EFL_TRUE;
-     }
+    }
 
-   _eina_errors[error - 1].string = msg;
-   return EFL_TRUE;
+    _eina_errors[error - 1].string = msg;
+    return EFL_TRUE;
 }
 
 EINA_API const char *
 eina_error_msg_get(Eina_Error error)
 {
-   if (!EINA_ERROR_REGISTERED_CHECK(error))
-     {
-        const char unknown_prefix[] = "Unknown error ";
+    if (!EINA_ERROR_REGISTERED_CHECK(error))
+    {
+        const char  unknown_prefix[] = "Unknown error ";
         const char *msg;
 
         /* original behavior of this function did not return strings
@@ -307,39 +300,38 @@ eina_error_msg_get(Eina_Error error)
 
 #ifndef EINA_HAVE_THREADS
         msg = strerror(error);
-        if (strncmp(msg, unknown_prefix, sizeof(unknown_prefix) -1) == 0)
-          msg = NULL;
+        if (strncmp(msg, unknown_prefix, sizeof(unknown_prefix) - 1) == 0)
+            msg = NULL;
 #else /* EINA_HAVE_THREADS */
         /* strerror() is not thread safe, so use a local buffer with
          * strerror_r() and cache resolved strings in a hash so we can
          * return the stringshared refernece.
          */
         if (eina_spinlock_take(&_eina_errno_msgs_lock) != EINA_LOCK_SUCCEED)
-          {
-             EINA_SAFETY_ERROR("could not take spinlock for errno messages hash!");
-             return NULL;
-          }
+        {
+            EINA_SAFETY_ERROR(
+                "could not take spinlock for errno messages hash!");
+            return NULL;
+        }
         msg = eina_hash_find(_eina_errno_msgs, &error);
         eina_spinlock_release(&_eina_errno_msgs_lock);
 
         if (!msg)
-          {
-             char buf[256] = "";
-             const char *str = NULL;
+        {
+            char        buf[256] = "";
+            const char *str      = NULL;
 
-#ifdef HAVE_STRERROR_R
-# ifndef STRERROR_R_CHAR_P
-             int ret;
+#  ifdef HAVE_STRERROR_R
+#    ifndef STRERROR_R_CHAR_P
+            int         ret;
 
-             ret = strerror_r(error, buf, sizeof(buf)); /* XSI */
-             if (ret == 0)
-               str = buf;
-             else if (ret == EINVAL)
-               return NULL;
-# else /* STRERROR_R_CHAR_P */
-             str = strerror_r(error, buf, sizeof(buf)); /* GNU */
-# endif /* ! STRERROR_R_CHAR_P */
-#else
+            ret = strerror_r(error, buf, sizeof(buf)); /* XSI */
+            if (ret == 0) str = buf;
+            else if (ret == EINVAL) return NULL;
+#    else /* STRERROR_R_CHAR_P */
+            str = strerror_r(error, buf, sizeof(buf)); /* GNU */
+#    endif /* ! STRERROR_R_CHAR_P */
+#  else
               /* not so good fallback. Usually strerror(err) will
                * return a const string if a known error (what we use),
                * and will return a pointer to a global modified string
@@ -347,84 +339,81 @@ eina_error_msg_get(Eina_Error error)
                * ignore... so while it's not super-correct, this
                * should work well.
                */
-             eina_strlcpy(buf, strerror(error), sizeof(buf));
-             str = buf;
-#endif /* HAVE_STRERROR_R */
+            eina_strlcpy(buf, strerror(error), sizeof(buf));
+            str = buf;
+#  endif /* HAVE_STRERROR_R */
 
-             if (!str)
-               EINA_SAFETY_ERROR("strerror_r() failed");
-             else
-               {
-                  if (strncmp(str, unknown_prefix, sizeof(unknown_prefix) -1) == 0)
+            if (!str) EINA_SAFETY_ERROR("strerror_r() failed");
+            else
+            {
+                if (strncmp(str, unknown_prefix, sizeof(unknown_prefix) - 1) ==
+                    0)
                     msg = NULL;
-                  else
+                else
+                {
+                    msg = eina_stringshare_add(str);
+                    if (eina_spinlock_take(&_eina_errno_msgs_lock) !=
+                        EINA_LOCK_SUCCEED)
                     {
-                       msg = eina_stringshare_add(str);
-                       if (eina_spinlock_take(&_eina_errno_msgs_lock) != EINA_LOCK_SUCCEED)
-                         {
-                            EINA_SAFETY_ERROR("could not take spinlock for errno messages hash!");
-                            return NULL;
-                         }
-                       eina_hash_add(_eina_errno_msgs, &error, msg);
-                       eina_spinlock_release(&_eina_errno_msgs_lock);
+                        EINA_SAFETY_ERROR(
+                            "could not take spinlock for errno messages hash!");
+                        return NULL;
                     }
-               }
-          }
+                    eina_hash_add(_eina_errno_msgs, &error, msg);
+                    eina_spinlock_release(&_eina_errno_msgs_lock);
+                }
+            }
+        }
 #endif
         return msg;
-     }
+    }
 
-   error = EINA_ERROR_TO_INDEX(error);
+    error = EINA_ERROR_TO_INDEX(error);
 
-   if (error < 1)
-      return NULL;
+    if (error < 1) return NULL;
 
-   if ((size_t)error > _eina_errors_count)
-      return NULL;
+    if ((size_t)error > _eina_errors_count) return NULL;
 
-   return _eina_errors[error - 1].string;
+    return _eina_errors[error - 1].string;
 }
 
 EINA_API Eina_Error
 eina_error_get(void)
 {
-   if (eina_main_loop_is())
-     return _eina_last_error;
+    if (eina_main_loop_is()) return _eina_last_error;
 
-   return (Eina_Error)(uintptr_t) eina_tls_get(_eina_last_key);
+    return (Eina_Error)(uintptr_t)eina_tls_get(_eina_last_key);
 }
 
 EINA_API void
 eina_error_set(Eina_Error err)
 {
-   if (eina_main_loop_is())
-     _eina_last_error = err;
-   else
-     eina_tls_set(_eina_last_key, (void*)(uintptr_t) err);
+    if (eina_main_loop_is()) _eina_last_error = err;
+    else eina_tls_set(_eina_last_key, (void *)(uintptr_t)err);
 }
 
 EINA_API Eina_Error
 eina_error_find(const char *msg)
 {
-   size_t i;
+    size_t i;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(msg, 0);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(msg, 0);
 
-   for (i = 0; i < _eina_errors_count; i++)
-     {
+    for (i = 0; i < _eina_errors_count; i++)
+    {
         if (_eina_errors[i].string_allocated)
-          {
-             if (_eina_errors[i].string == msg)
-               return EINA_ERROR_FROM_INDEX(i + 1);
-          }
+        {
+            if (_eina_errors[i].string == msg)
+                return EINA_ERROR_FROM_INDEX(i + 1);
+        }
         if (!strcmp(_eina_errors[i].string, msg))
-          return EINA_ERROR_FROM_INDEX(i + 1);
-     }
+            return EINA_ERROR_FROM_INDEX(i + 1);
+    }
 
    /* not bothering to lookup errno.h as we don't have a "maximum
     * error", thus we'd need to loop up to some arbitrary constant and
     * keep comparing if strerror() returns something meaningful.
     */
 
-   return 0;
+    return 0;
 }

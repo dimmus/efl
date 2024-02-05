@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <unistd.h>
@@ -26,7 +26,7 @@
 
 #include "eina_suite.h"
 
-static Eina_Thread wk1, wk2, wk3, wk4, wk5;
+static Eina_Thread  wk1, wk2, wk3, wk4, wk5;
 static Eina_Barrier barrier;
 
 static void *
@@ -60,7 +60,7 @@ wk3_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 EFL_START_TEST(eina_barrier_test_simple)
 {
     Efl_Bool r;
-    int i;
+    int      i;
 
     i = eina_threads_init();
     _ck_assert_int(i, >=, 1);
@@ -99,13 +99,14 @@ EFL_START_TEST(eina_barrier_test_simple)
 
     eina_threads_shutdown();
 }
+
 EFL_END_TEST
 
 void
 eina_test_barrier(TCase *tc)
 {
 #ifndef _WIN32
-   tcase_set_timeout(tc, 1);
+    tcase_set_timeout(tc, 1);
 #endif
-   tcase_add_test(tc, eina_barrier_test_simple);
+    tcase_add_test(tc, eina_barrier_test_simple);
 }

@@ -21,7 +21,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <math.h>
@@ -49,34 +49,34 @@
  * @cond LOCAL
  */
 
-static const char look_up_table[] = {'0', '1', '2', '3', '4',
-                                     '5', '6', '7', '8', '9',
-                                     'a', 'b', 'c', 'd', 'e', 'f'};
-static int _eina_convert_log_dom = -1;
+static const char look_up_table[] = { '0', '1', '2', '3', '4', '5', '6', '7',
+                                      '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+static int        _eina_convert_log_dom = -1;
 
 #ifdef ERR
-#undef ERR
+#  undef ERR
 #endif
 #define ERR(...) EINA_LOG_DOM_ERR(_eina_convert_log_dom, __VA_ARGS__)
 
 #ifdef DBG
-#undef DBG
+#  undef DBG
 #endif
 #define DBG(...) EINA_LOG_DOM_DBG(_eina_convert_log_dom, __VA_ARGS__)
 
 #define HEXA_TO_INT(Hexa) (Hexa >= 'a') ? Hexa - 'a' + 10 : Hexa - '0'
 
-static inline void reverse(char s[], int length)
+static inline void
+reverse(char s[], int length)
 {
-   int i, j;
-   char c;
+    int  i, j;
+    char c;
 
-   for (i = 0, j = length - 1; i < j; i++, j--)
-     {
-        c = s[i];
+    for (i = 0, j = length - 1; i < j; i++, j--)
+    {
+        c    = s[i];
         s[i] = s[j];
         s[j] = c;
-     }
+    }
 }
 
 /**
@@ -91,8 +91,8 @@ static inline void reverse(char s[], int length)
  * @cond LOCAL
  */
 
-EINA_API Eina_Error EINA_ERROR_CONVERT_P_NOT_FOUND = 0;
-EINA_API Eina_Error EINA_ERROR_CONVERT_0X_NOT_FOUND = 0;
+EINA_API Eina_Error EINA_ERROR_CONVERT_P_NOT_FOUND          = 0;
+EINA_API Eina_Error EINA_ERROR_CONVERT_0X_NOT_FOUND         = 0;
 EINA_API Eina_Error EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH = 0;
 
 /**
@@ -113,14 +113,14 @@ EINA_API Eina_Error EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH = 0;
 Efl_Bool
 eina_convert_init(void)
 {
-   _eina_convert_log_dom = eina_log_domain_register("eina_convert",
-                                                    EINA_LOG_COLOR_DEFAULT);
-   if (_eina_convert_log_dom < 0)
-     {
+    _eina_convert_log_dom =
+        eina_log_domain_register("eina_convert", EINA_LOG_COLOR_DEFAULT);
+    if (_eina_convert_log_dom < 0)
+    {
         EINA_LOG_ERR("Could not register log domain: eina_convert");
         return EFL_FALSE;
-     }
-   return EFL_TRUE;
+    }
+    return EFL_TRUE;
 }
 
 /**
@@ -137,9 +137,9 @@ eina_convert_init(void)
 Efl_Bool
 eina_convert_shutdown(void)
 {
-   eina_log_domain_unregister(_eina_convert_log_dom);
-   _eina_convert_log_dom = -1;
-   return EFL_TRUE;
+    eina_log_domain_unregister(_eina_convert_log_dom);
+    _eina_convert_log_dom = -1;
+    return EFL_TRUE;
 }
 
 /*============================================================================*
@@ -153,307 +153,301 @@ eina_convert_shutdown(void)
 EINA_API int
 eina_convert_itoa(int n, char *s)
 {
-   int i = 0;
-   int r = 0;
+    int i = 0;
+    int r = 0;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(s, 0);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(s, 0);
 
-   if (n < 0)
-     {
+    if (n < 0)
+    {
         *s++ = '-';
-        r = 1;
-     }
+        r    = 1;
+    }
 
-   do {
+    do
+    {
         s[i++] = abs(n % 10) + '0';
-   } while (n /= 10);
+    }
+    while (n /= 10);
 
-   s[i] = '\0';
+    s[i] = '\0';
 
-   reverse(s, i);
+    reverse(s, i);
 
-   return i + r;
+    return i + r;
 }
 
 EINA_API int
 eina_convert_xtoa(unsigned int n, char *s)
 {
-   int i;
+    int i;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(s, 0);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(s, 0);
 
-   i = 0;
-   do {
+    i = 0;
+    do
+    {
         s[i++] = look_up_table[n & 0xF];
-   } while ((n >>= 4) > 0);
+    }
+    while ((n >>= 4) > 0);
 
-   s[i] = '\0';
+    s[i] = '\0';
 
-   reverse(s, i);
+    reverse(s, i);
 
-   return i;
+    return i;
 }
 
 EINA_API Efl_Bool
 eina_convert_atod(const char *src, int length, long long *m, long *e)
 {
-   const char *str = src;
-   long long mantisse;
-   long exponent;
-   int nbr_decimals = 0;
-   int sign = 1;
+    const char *str = src;
+    long long   mantisse;
+    long        exponent;
+    int         nbr_decimals = 0;
+    int         sign         = 1;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(src, EFL_FALSE);
-   EINA_SAFETY_ON_NULL_RETURN_VAL(m,   EFL_FALSE);
-   EINA_SAFETY_ON_NULL_RETURN_VAL(e,   EFL_FALSE);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(src, EFL_FALSE);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(m, EFL_FALSE);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(e, EFL_FALSE);
 
-   if (length <= 0)
-     goto on_length_error;
+    if (length <= 0) goto on_length_error;
 
    /* Compute the mantisse. */
-   if (*str == '-')
-     {
+    if (*str == '-')
+    {
         sign = -1;
         str++;
         length--;
-     }
+    }
 
-   if (length <= 2)
-     goto on_length_error;
+    if (length <= 2) goto on_length_error;
 
-   if (strncmp(str, "0x", 2))
-     {
+    if (strncmp(str, "0x", 2))
+    {
         DBG("'0x' not found in '%s'", src);
         return EFL_FALSE;
-     }
+    }
 
-   str += 2;
-   length -= 2;
+    str += 2;
+    length -= 2;
 
-   mantisse = HEXA_TO_INT(*str);
+    mantisse = HEXA_TO_INT(*str);
 
-   str++;
-   length--; if (length <= 0)
-      goto on_length_error;
+    str++;
+    length--;
+    if (length <= 0) goto on_length_error;
 
-   if (*str == '.')
-     for (str++, length--;
-          length > 0 && *str != 'p';
-          ++str, --length, ++nbr_decimals)
-       {
-          mantisse <<= 4;
-          mantisse += HEXA_TO_INT(*str);
-       }
+    if (*str == '.')
+        for (str++, length--; length > 0 && *str != 'p';
+             ++str, --length, ++nbr_decimals)
+        {
+            mantisse <<= 4;
+            mantisse += HEXA_TO_INT(*str);
+        }
 
-   if (sign < 0)
-     mantisse = -mantisse;
+    if (sign < 0) mantisse = -mantisse;
 
    /* Compute the exponent. */
-   if (*str != 'p')
-     {
+    if (*str != 'p')
+    {
         DBG("'p' not found in '%s'", src);
         return EFL_FALSE;
-     }
+    }
 
-   sign = +1;
+    sign = +1;
 
-   str++;
-   length--; if (length <= 0)
-      goto on_length_error;
+    str++;
+    length--;
+    if (length <= 0) goto on_length_error;
 
-   if (strchr("-+", *str))
-     {
+    if (strchr("-+", *str))
+    {
         sign = (*str == '-') ? -1 : +1;
 
-        str++; length--;
-     }
+        str++;
+        length--;
+    }
 
-   for (exponent = 0; length > 0 && *str != '\0'; ++str, --length)
-     {
+    for (exponent = 0; length > 0 && *str != '\0'; ++str, --length)
+    {
         exponent *= 10;
         exponent += *str - '0';
-     }
+    }
 
-   if (sign < 0)
-     exponent = -exponent;
+    if (sign < 0) exponent = -exponent;
 
-   *m = mantisse;
-   *e = exponent - (nbr_decimals << 2);
+    *m = mantisse;
+    *e = exponent - (nbr_decimals << 2);
 
-   return EFL_TRUE;
+    return EFL_TRUE;
 
 on_length_error:
-   return EFL_FALSE;
+    return EFL_FALSE;
 }
 
 EINA_API int
 eina_convert_dtoa(double d, char *des)
 {
-   int length = 0;
-   int p;
-   int i;
+    int length = 0;
+    int p;
+    int i;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(des, 0);
-   EINA_SAFETY_ON_FALSE_RETURN_VAL(!isnan(d) && !isinf(d), 0);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(des, 0);
+    EINA_SAFETY_ON_FALSE_RETURN_VAL(!isnan(d) && !isinf(d), 0);
 
-   if (d < 0.0)
-     {
+    if (d < 0.0)
+    {
         *(des++) = '-';
-        d = -d;
+        d        = -d;
         length++;
-     }
+    }
 
-   d = frexp(d, &p);
+    d = frexp(d, &p);
 
-   if (p)
-     {
+    if (p)
+    {
         d *= 2;
         p -= 1;
-     }
+    }
 
-   *(des++) = '0';
-   *(des++) = 'x';
-   *(des++) = look_up_table[(size_t)d];
-   *(des++) = '.';
-   length += 4;
+    *(des++) = '0';
+    *(des++) = 'x';
+    *(des++) = look_up_table[(size_t)d];
+    *(des++) = '.';
+    length += 4;
 
-   for (i = 0; i < 16; i++, length++)
-     {
+    for (i = 0; i < 16; i++, length++)
+    {
         d -= floor(d);
         d *= 16;
         *(des++) = look_up_table[(size_t)d];
-     }
+    }
 
-   while (*(des - 1) == '0')
-     {
+    while (*(des - 1) == '0')
+    {
         des--;
         length--;
-     }
+    }
 
-   if (*(des - 1) == '.')
-     {
+    if (*(des - 1) == '.')
+    {
         des--;
         length--;
-     }
+    }
 
-   *(des++) = 'p';
-   if (p < 0)
-     {
+    *(des++) = 'p';
+    if (p < 0)
+    {
         *(des++) = '-';
-        p = -p;
-     }
-   else
-     *(des++) = '+';
+        p        = -p;
+    }
+    else *(des++) = '+';
 
-   length += 2;
+    length += 2;
 
-   return length + eina_convert_itoa(p, des);
+    return length + eina_convert_itoa(p, des);
 }
 
 EINA_API int
 eina_convert_fptoa(Eina_F32p32 fp, char *des)
 {
-   int length = 0;
-   int p = 0;
-   int i;
+    int length = 0;
+    int p      = 0;
+    int i;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(des, EFL_FALSE);
+    EINA_SAFETY_ON_NULL_RETURN_VAL(des, EFL_FALSE);
 
-   if (fp == 0)
-     {
+    if (fp == 0)
+    {
         memcpy(des, "0x0p+0", 7);
         return 7;
-     }
+    }
 
-   if (fp < 0)
-     {
+    if (fp < 0)
+    {
         *(des++) = '-';
-        fp = -fp;
+        fp       = -fp;
         length++;
-     }
+    }
 
    /* fp >= 1 */
-   if (fp >= 0x0000000100000000LL)
-     while (fp >= 0x0000000100000000LL)
-       {
-          p++;
+    if (fp >= 0x0000000100000000LL)
+        while (fp >= 0x0000000100000000LL)
+        {
+            p++;
           /* fp /= 2 */
-          fp >>= 1;
-       } /* fp < 0.5 */
-   else if (fp < 0x80000000)
-     while (fp < 0x80000000)
-       {
-          p--;
+            fp >>= 1;
+        } /* fp < 0.5 */
+    else if (fp < 0x80000000)
+        while (fp < 0x80000000)
+        {
+            p--;
           /* fp *= 2 */
-          fp <<= 1;
-       }
+            fp <<= 1;
+        }
 
-   if (p)
-     {
+    if (p)
+    {
         p--;
         /* fp *= 2 */
         fp <<= 1;
-     }
+    }
 
-   *(des++) = '0';
-   *(des++) = 'x';
-   *(des++) = look_up_table[fp >> 32];
-   *(des++) = '.';
-   length += 4;
+    *(des++) = '0';
+    *(des++) = 'x';
+    *(des++) = look_up_table[fp >> 32];
+    *(des++) = '.';
+    length += 4;
 
-   for (i = 0; i < 16; i++, length++)
-     {
+    for (i = 0; i < 16; i++, length++)
+    {
         fp &= 0x00000000ffffffffLL;
         fp <<= 4; /* fp *= 16 */
         *(des++) = look_up_table[fp >> 32];
-     }
+    }
 
-   while (*(des - 1) == '0')
-     {
+    while (*(des - 1) == '0')
+    {
         des--;
         length--;
-     }
+    }
 
-   if (*(des - 1) == '.')
-     {
+    if (*(des - 1) == '.')
+    {
         des--;
         length--;
-     }
+    }
 
-   *(des++) = 'p';
-   if (p < 0)
-     {
+    *(des++) = 'p';
+    if (p < 0)
+    {
         *(des++) = '-';
-        p = -p;
-     }
-   else
-     *(des++) = '+';
+        p        = -p;
+    }
+    else *(des++) = '+';
 
-   length += 2;
+    length += 2;
 
-   return length + eina_convert_itoa(p, des);
+    return length + eina_convert_itoa(p, des);
 }
 
 EINA_API Efl_Bool
 eina_convert_atofp(const char *src, int length, Eina_F32p32 *fp)
 {
-   long long m;
-   long e;
+    long long m;
+    long      e;
 
-   if (!eina_convert_atod(src, length, &m, &e))
-     return EFL_FALSE;
+    if (!eina_convert_atod(src, length, &m, &e)) return EFL_FALSE;
 
-   if (!fp)
-     return EFL_FALSE;
+    if (!fp) return EFL_FALSE;
 
-   e += 32;
+    e += 32;
 
-   if (e > 0)
-     *fp = m << e;
-   else
-     *fp = m >> -e;
+    if (e > 0) *fp = m << e;
+    else *fp = m >> -e;
 
-   return EFL_TRUE;
+    return EFL_TRUE;
 }
 
 /*
@@ -471,194 +465,185 @@ eina_convert_atofp(const char *src, int length, Eina_F32p32 *fp)
 EINA_API double
 eina_convert_strtod_c(const char *nptr, char **endptr)
 {
-   const char *iter;
-   const char *a;
-   double val;
-   unsigned long long integer_part;
-   int minus;
+    const char        *iter;
+    const char        *a;
+    double             val;
+    unsigned long long integer_part;
+    int                minus;
 
-   if (endptr) *endptr = (char*)nptr;
-   EINA_SAFETY_ON_NULL_RETURN_VAL(nptr, 0.0);
+    if (endptr) *endptr = (char *)nptr;
+    EINA_SAFETY_ON_NULL_RETURN_VAL(nptr, 0.0);
 
-   a = iter = nptr;
+    a = iter = nptr;
 
    /* ignore leading whitespaces */
-   while (isspace(*iter))
-     iter++;
+    while (isspace(*iter))
+        iter++;
 
    /* signed or not */
-   minus = 1;
-   if (*iter == '-')
-     {
+    minus = 1;
+    if (*iter == '-')
+    {
         minus = -1;
         iter++;
-     }
-   else if (*iter == '+')
-     iter++;
+    }
+    else if (*iter == '+') iter++;
 
-   if (tolower(*iter) == 'i')
-     {
-        if ((tolower(*(iter + 1)) == 'n') &&
-            (tolower(*(iter + 2)) == 'f'))
-          iter += 3;
-        else
-          goto on_error;
+    if (tolower(*iter) == 'i')
+    {
+        if ((tolower(*(iter + 1)) == 'n') && (tolower(*(iter + 2)) == 'f'))
+            iter += 3;
+        else goto on_error;
         if (tolower(*(iter + 3)) == 'i')
-          {
-             if ((tolower(*(iter + 4)) == 'n') &&
-                 (tolower(*(iter + 5)) == 'i') &&
-                 (tolower(*(iter + 6)) == 't') &&
-                 (tolower(*(iter + 7)) == 'y'))
-               iter += 5;
-             else
-               goto on_error;
-          }
-        if (endptr)
-          *endptr = (char *)iter;
+        {
+            if ((tolower(*(iter + 4)) == 'n') &&
+                (tolower(*(iter + 5)) == 'i') &&
+                (tolower(*(iter + 6)) == 't') && (tolower(*(iter + 7)) == 'y'))
+                iter += 5;
+            else goto on_error;
+        }
+        if (endptr) *endptr = (char *)iter;
         return (minus == -1) ? -INFINITY : INFINITY;
-     }
+    }
 
-   if (tolower(*iter) == 'n')
-     {
-        if ((tolower(*(iter + 1)) == 'a') &&
-            (tolower(*(iter + 2)) == 'n'))
-          iter += 3;
-        else
-          goto on_error;
-        if (endptr)
-          *endptr = (char *)iter;
+    if (tolower(*iter) == 'n')
+    {
+        if ((tolower(*(iter + 1)) == 'a') && (tolower(*(iter + 2)) == 'n'))
+            iter += 3;
+        else goto on_error;
+        if (endptr) *endptr = (char *)iter;
         return (minus == -1) ? -NAN : NAN;
-     }
+    }
 
-   integer_part = 0;
+    integer_part = 0;
 
    /* (optional) integer part before dot */
-   if (isdigit(*iter))
-     {
+    if (isdigit(*iter))
+    {
         for (; isdigit(*iter); iter++)
-          integer_part = integer_part * 10ULL + (unsigned long long)(*iter - '0');
+            integer_part =
+                integer_part * 10ULL + (unsigned long long)(*iter - '0');
         a = iter;
-     }
-   else if (*iter != '.')
-     {
+    }
+    else if (*iter != '.')
+    {
         val = 0.0;
         goto on_success;
-     }
+    }
 
-   val = (double)integer_part;
+    val = (double)integer_part;
 
    /* (optional) decimal part after dot */
-   if (*iter == '.')
-     {
+    if (*iter == '.')
+    {
         unsigned long long decimal_part;
         unsigned long long pow10;
-        int count;
+        int                count;
 
         iter++;
 
         decimal_part = 0;
-        count = 0;
-        pow10 = 1;
+        count        = 0;
+        pow10        = 1;
 
         if (isdigit(*iter))
-          {
-             for (; isdigit(*iter); iter++, count++)
-               {
-                  if (count < 19)
-                    {
-                       decimal_part = decimal_part * 10ULL +  + (unsigned long long)(*iter - '0');
-                       pow10 *= 10ULL;
-                    }
-               }
-          }
+        {
+            for (; isdigit(*iter); iter++, count++)
+            {
+                if (count < 19)
+                {
+                    decimal_part = decimal_part * 10ULL +
+                                   +(unsigned long long)(*iter - '0');
+                    pow10 *= 10ULL;
+                }
+            }
+        }
         val += (double)decimal_part / (double)pow10;
         a = iter;
-     }
+    }
 
    /* (optional) exponent */
-   if ((*iter == 'e') || (*iter == 'E'))
-     {
-        double scale = 1.0;
+    if ((*iter == 'e') || (*iter == 'E'))
+    {
+        double       scale = 1.0;
         unsigned int expo_part;
-        int minus_e;
+        int          minus_e;
 
         iter++;
 
         /* signed or not */
         minus_e = 1;
         if (*iter == '-')
-          {
-             minus_e = -1;
-             iter++;
-          }
-        else if (*iter == '+')
-          iter++;
+        {
+            minus_e = -1;
+            iter++;
+        }
+        else if (*iter == '+') iter++;
 
         /* exponential part */
         expo_part = 0;
         if (isdigit(*iter))
-          {
+        {
             while (*iter == 0)
-              iter++;
+                iter++;
 
             for (; isdigit(*iter); iter++)
-              {
+            {
                 expo_part = expo_part * 10U + (unsigned int)(*iter - '0');
-              }
-          }
+            }
+        }
         else if (!isdigit(*(a - 1)))
-          {
-             a = nptr;
-             goto on_success;
-          }
-        else if (*iter == 0)
-          goto on_success;
+        {
+            a = nptr;
+            goto on_success;
+        }
+        else if (*iter == 0) goto on_success;
 
-        if ((eina_dbl_exact(val, 2.2250738585072011)) && ((minus_e * (int)expo_part) == -308))
-          {
+        if ((eina_dbl_exact(val, 2.2250738585072011)) &&
+            ((minus_e * (int)expo_part) == -308))
+        {
             val *= 1.0e-308;
-            a = iter;
+            a     = iter;
             errno = ERANGE;
             goto on_success;
-          }
+        }
 
-        if ((eina_dbl_exact(val, 2.2250738585072012)) && ((minus_e * (int)expo_part) <= -308))
-          {
+        if ((eina_dbl_exact(val, 2.2250738585072012)) &&
+            ((minus_e * (int)expo_part) <= -308))
+        {
             val *= 1.0e-308;
             a = iter;
             goto on_success;
-          }
+        }
 
         a = iter;
 
         while (expo_part >= 8U)
-          {
+        {
             scale *= 1E8;
             expo_part -= 8U;
-          }
+        }
         while (expo_part > 0U)
-          {
+        {
             scale *= 10.0;
             expo_part--;
-          }
+        }
 
         val = (minus_e == -1) ? (val / scale) : (val * scale);
-     }
-   else if ((iter > nptr) && !isdigit(*(iter - 1)))
-     {
-       a = nptr;
-       goto on_success;
-     }
+    }
+    else if ((iter > nptr) && !isdigit(*(iter - 1)))
+    {
+        a = nptr;
+        goto on_success;
+    }
 
- on_success:
-   if (endptr)
-     *endptr = (char *)a;
-   return minus * val;
+on_success:
+    if (endptr) *endptr = (char *)a;
+    return minus * val;
 
- on_error:
-   if (endptr)
-     *endptr = (char *)nptr;
-   return 0.0;
+on_error:
+    if (endptr) *endptr = (char *)nptr;
+    return 0.0;
 }
 
 /**

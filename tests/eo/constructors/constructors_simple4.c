@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include "Eo.h"
@@ -10,14 +10,11 @@
 #define MY_CLASS SIMPLE4_CLASS
 
 static const Efl_Class_Description class_desc = {
-     EO_VERSION,
-     "Simple4",
-     EFL_CLASS_TYPE_REGULAR,
-     0,
-     NULL,
-     NULL,
-     NULL
+    EO_VERSION, "Simple4", EFL_CLASS_TYPE_REGULAR, 0, NULL, NULL, NULL
 };
 
-EFL_DEFINE_CLASS(simple4_class_get, &class_desc, SIMPLE_CLASS, MIXIN_CLASS, NULL);
-
+EFL_DEFINE_CLASS(simple4_class_get,
+                 &class_desc,
+                 SIMPLE_CLASS,
+                 MIXIN_CLASS,
+                 NULL);

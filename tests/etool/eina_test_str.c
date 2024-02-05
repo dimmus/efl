@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdio.h>
@@ -28,377 +28,376 @@
 
 EFL_START_TEST(str_simple)
 {
-   size_t i;
-   char *str, *ret;
-   const char *escape_ret = "\\ a\\\\x\\'";
+    size_t      i;
+    char       *str, *ret;
+    const char *escape_ret = "\\ a\\\\x\\'";
 
+    fail_if(!eina_str_has_prefix("", ""));
 
-   fail_if(!eina_str_has_prefix("", ""));
+    fail_if(!eina_str_has_prefix("x", "x"));
+    fail_if(!eina_str_has_prefix("xab", "x"));
+    fail_if(!eina_str_has_prefix("xab", "xab"));
 
-   fail_if(!eina_str_has_prefix("x", "x"));
-   fail_if(!eina_str_has_prefix("xab", "x"));
-   fail_if(!eina_str_has_prefix("xab", "xab"));
+    fail_if(eina_str_has_prefix("x", "xab"));
+    fail_if(eina_str_has_prefix("xab", "xyz"));
+    fail_if(eina_str_has_prefix("", "x"));
+    fail_if(eina_str_has_prefix("X", "x"));
+    fail_if(eina_str_has_prefix("xAb", "X"));
+    fail_if(eina_str_has_prefix("xAb", "xab"));
 
-   fail_if(eina_str_has_prefix("x", "xab"));
-   fail_if(eina_str_has_prefix("xab", "xyz"));
-   fail_if(eina_str_has_prefix("", "x"));
-   fail_if(eina_str_has_prefix("X", "x"));
-   fail_if(eina_str_has_prefix("xAb", "X"));
-   fail_if(eina_str_has_prefix("xAb", "xab"));
+    fail_if(!eina_str_has_suffix("", ""));
 
+    fail_if(!eina_str_has_suffix("x", "x"));
+    fail_if(!eina_str_has_suffix("abx", "x"));
+    fail_if(!eina_str_has_suffix("xab", "xab"));
 
-   fail_if(!eina_str_has_suffix("", ""));
+    fail_if(eina_str_has_suffix("x", "xab"));
+    fail_if(eina_str_has_suffix("xab", "xyz"));
+    fail_if(eina_str_has_suffix("", "x"));
+    fail_if(eina_str_has_suffix("X", "x"));
+    fail_if(eina_str_has_suffix("aBx", "X"));
+    fail_if(eina_str_has_suffix("xaB", "Xab"));
 
-   fail_if(!eina_str_has_suffix("x", "x"));
-   fail_if(!eina_str_has_suffix("abx", "x"));
-   fail_if(!eina_str_has_suffix("xab", "xab"));
+    fail_if(!eina_str_has_extension("", ""));
 
-   fail_if(eina_str_has_suffix("x", "xab"));
-   fail_if(eina_str_has_suffix("xab", "xyz"));
-   fail_if(eina_str_has_suffix("", "x"));
-   fail_if(eina_str_has_suffix("X", "x"));
-   fail_if(eina_str_has_suffix("aBx", "X"));
-   fail_if(eina_str_has_suffix("xaB", "Xab"));
+    fail_if(!eina_str_has_extension("x", "x"));
+    fail_if(!eina_str_has_extension("abx", "x"));
+    fail_if(!eina_str_has_extension("xab", "xab"));
+    fail_if(!eina_str_has_extension("x", "X"));
+    fail_if(!eina_str_has_extension("abx", "X"));
+    fail_if(!eina_str_has_extension("xab", "Xab"));
+    fail_if(!eina_str_has_extension("X", "X"));
+    fail_if(!eina_str_has_extension("aBx", "X"));
+    fail_if(!eina_str_has_extension("xaB", "Xab"));
 
+    fail_if(eina_str_has_extension("x", "xab"));
+    fail_if(eina_str_has_extension("xab", "xyz"));
+    fail_if(eina_str_has_extension("", "x"));
+    fail_if(eina_str_has_extension("x", "xAb"));
+    fail_if(eina_str_has_extension("xab", "xYz"));
+    fail_if(eina_str_has_extension("", "x"));
 
-   fail_if(!eina_str_has_extension("", ""));
+    fail_if(eina_streq("xab", NULL));
+    fail_if(eina_streq(NULL, "xab"));
+    fail_if(eina_streq("x", "xab"));
+    fail_if(eina_streq("xab", "XAB"));
+    fail_if(eina_streq("x", "x "));
+    fail_if(!eina_streq("xab", "xab"));
 
-   fail_if(!eina_str_has_extension("x", "x"));
-   fail_if(!eina_str_has_extension("abx", "x"));
-   fail_if(!eina_str_has_extension("xab", "xab"));
-   fail_if(!eina_str_has_extension("x", "X"));
-   fail_if(!eina_str_has_extension("abx", "X"));
-   fail_if(!eina_str_has_extension("xab", "Xab"));
-   fail_if(!eina_str_has_extension("X", "X"));
-   fail_if(!eina_str_has_extension("aBx", "X"));
-   fail_if(!eina_str_has_extension("xaB", "Xab"));
+    fail_if(eina_strlen_bounded("abc", 4) != strlen("abc"));
+    fail_if(eina_strlen_bounded("abc", 2) != (size_t)-1);
 
-   fail_if(eina_str_has_extension("x", "xab"));
-   fail_if(eina_str_has_extension("xab", "xyz"));
-   fail_if(eina_str_has_extension("", "x"));
-   fail_if(eina_str_has_extension("x", "xAb"));
-   fail_if(eina_str_has_extension("xab", "xYz"));
-   fail_if(eina_str_has_extension("", "x"));
+    str = malloc(sizeof(char) * 4);
+    strcpy(str, "bSd");
+    eina_str_tolower(&str);
+    fail_if(strcmp(str, "bsd") != 0);
+    eina_str_toupper(&str);
+    fail_if(strcmp(str, "BSD") != 0);
+    free(str);
 
-   fail_if(eina_streq("xab", NULL));
-   fail_if(eina_streq(NULL, "xab"));
-   fail_if(eina_streq("x", "xab"));
-   fail_if(eina_streq("xab", "XAB"));
-   fail_if(eina_streq("x", "x "));
-   fail_if(!eina_streq("xab", "xab"));
+    str = malloc(sizeof(char) * 8);
+    strcpy(str, " a\\x'");
+    ret = eina_str_escape(str);
+    fail_if(strlen(ret) != strlen(escape_ret));
+    for (i = 0; i <= strlen(ret); i++)
+        fail_if(ret[i] != escape_ret[i]);
+    free(str);
+    free(ret);
 
-   fail_if(eina_strlen_bounded("abc", 4) != strlen("abc"));
-   fail_if(eina_strlen_bounded("abc", 2) != (size_t)-1);
-
-   str = malloc(sizeof(char) * 4);
-   strcpy(str, "bSd");
-   eina_str_tolower(&str);
-   fail_if(strcmp(str, "bsd") != 0);
-   eina_str_toupper(&str);
-   fail_if(strcmp(str, "BSD") != 0);
-   free(str);
-
-   str = malloc(sizeof(char) * 8);
-   strcpy(str, " a\\x'");
-   ret = eina_str_escape(str);
-   fail_if(strlen(ret) != strlen(escape_ret));
-   for (i = 0; i <= strlen(ret); i++)
-     fail_if(ret[i] != escape_ret[i]);
-   free(str);
-   free(ret);
-
-   str = malloc(sizeof(char) * 4);
-   strcpy(str, "a\t ");
-   ret = eina_str_escape(str);
-   fail_if(!eina_streq(ret, "a\\t\\ "));
-   free(str);
-   free(ret);
-
+    str = malloc(sizeof(char) * 4);
+    strcpy(str, "a\t ");
+    ret = eina_str_escape(str);
+    fail_if(!eina_streq(ret, "a\\t\\ "));
+    free(str);
+    free(ret);
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(str_split)
 {
-   char **result;
-   unsigned int elements;
-   char *str;
+    char       **result;
+    unsigned int elements;
+    char        *str;
 
+    result = eina_str_split_full(NULL, ":", 1, &elements);
+    fail_if(result != NULL);
+    fail_if(elements != 0);
 
-   result = eina_str_split_full(NULL, ":", 1, &elements);
-        fail_if(result != NULL);
-        fail_if(elements != 0);
+    result = eina_str_split_full("nomatch", NULL, 1, &elements);
+    fail_if(result != NULL);
+    fail_if(elements != 0);
 
-   result = eina_str_split_full("nomatch", NULL, 1, &elements);
-        fail_if(result != NULL);
-        fail_if(elements != 0);
+    result = eina_str_split_full("match:match", ":", 1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 1);
+    fail_if(strcmp(result[0], "match:match") != 0);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("match:match", ":", 1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 1);
-        fail_if(strcmp(result[0], "match:match") != 0);
-        free(result[0]);
-        free(result);
+    result =
+        eina_str_split_full("match:match:nomatch:nomatch", ":", 3, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 3);
+    fail_if(strcmp(result[0], "match") != 0);
+    fail_if(strcmp(result[1], "match") != 0);
+    fail_if(strcmp(result[2], "nomatch:nomatch") != 0);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("match:match:nomatch:nomatch", ":", 3, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 3);
-        fail_if(strcmp(result[0], "match") != 0);
-        fail_if(strcmp(result[1], "match") != 0);
-        fail_if(strcmp(result[2], "nomatch:nomatch") != 0);
-        free(result[0]);
-        free(result);
+    result = eina_str_split_full("nomatch", "", -1, &elements);
+    fail_if(result != NULL);
+    fail_if(elements != 0);
 
-   result = eina_str_split_full("nomatch", "", -1, &elements);
-        fail_if(result != NULL);
-        fail_if(elements != 0);
+    result = eina_str_split_full("nomatch", "x", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 1);
+    fail_if(strcmp(result[0], "nomatch") != 0);
+    fail_if(result[1]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("nomatch", "x", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 1);
-        fail_if(strcmp(result[0], "nomatch") != 0);
-        fail_if(result[1]);
-        free(result[0]);
-        free(result);
+    result = eina_str_split_full("nomatch", "xyz", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 1);
+    fail_if(strcmp(result[0], "nomatch") != 0);
+    fail_if(result[1]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("nomatch", "xyz", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 1);
-        fail_if(strcmp(result[0], "nomatch") != 0);
-        fail_if(result[1]);
-        free(result[0]);
-        free(result);
+    result = eina_str_split_full("match:match:match", ":", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 3);
+    for (elements = 0; elements < 3 - 1; elements++)
+        fail_if(strcmp(result[elements], "match") != 0);
+    fail_if(result[3]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("match:match:match", ":", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 3);
-   for (elements = 0; elements < 3 - 1; elements++)
-     fail_if(strcmp(result[elements], "match") != 0);
-   fail_if(result[3]);
-      free(result[0]);
-      free(result);
+    str    = malloc(sizeof(char) * 1024);
+    str[0] = 0;
+    for (elements = 0; elements < 300; elements++)
+        strcat(str, "ma:");
+    strcat(str, "ma");
+    result = eina_str_split_full(str, ":", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 301);
+    free(result[0]);
+    free(result);
+    free(str);
 
-   str = malloc(sizeof(char) * 1024);
-   str[0] = 0;
-   for (elements = 0; elements < 300; elements++)
-     strcat(str, "ma:");
-   strcat(str, "ma");
-   result = eina_str_split_full(str, ":", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 301);
-        free(result[0]);
-        free(result);
-   free(str);
+    result = eina_str_split_full("a:b:c", ":", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 3);
+    fail_if(strcmp(result[0], "a") != 0);
+    fail_if(strcmp(result[1], "b") != 0);
+    fail_if(strcmp(result[2], "c") != 0);
+    fail_if(result[3]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("a:b:c", ":", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 3);
-        fail_if(strcmp(result[0], "a") != 0);
-        fail_if(strcmp(result[1], "b") != 0);
-        fail_if(strcmp(result[2], "c") != 0);
-        fail_if(result[3]);
-        free(result[0]);
-        free(result);
+    result = eina_str_split_full("a:b:", ":", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 3);
+    fail_if(strcmp(result[0], "a") != 0);
+    fail_if(strcmp(result[1], "b") != 0);
+    fail_if(strcmp(result[2], "") != 0);
+    fail_if(result[3]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("a:b:", ":", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 3);
-        fail_if(strcmp(result[0], "a") != 0);
-        fail_if(strcmp(result[1], "b") != 0);
-        fail_if(strcmp(result[2], "") != 0);
-        fail_if(result[3]);
-        free(result[0]);
-        free(result);
+    result = eina_str_split_full(":b:c", ":", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 3);
+    fail_if(strcmp(result[0], "") != 0);
+    fail_if(strcmp(result[1], "b") != 0);
+    fail_if(strcmp(result[2], "c") != 0);
+    fail_if(result[3]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full(":b:c", ":", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 3);
-        fail_if(strcmp(result[0], "") != 0);
-        fail_if(strcmp(result[1], "b") != 0);
-        fail_if(strcmp(result[2], "c") != 0);
-        fail_if(result[3]);
-        free(result[0]);
-        free(result);
+    result = eina_str_split_full(":", ":", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 2);
+    fail_if(strcmp(result[0], "") != 0);
+    fail_if(strcmp(result[1], "") != 0);
+    fail_if(result[2]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full(":", ":", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 2);
-        fail_if(strcmp(result[0], "") != 0);
-        fail_if(strcmp(result[1], "") != 0);
-        fail_if(result[2]);
-        free(result[0]);
-        free(result);
+    result = eina_str_split_full("a", "!!!!!!!!!", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 1);
+    fail_if(strcmp(result[0], "a") != 0);
+    fail_if(result[1]);
+    free(result[0]);
+    free(result);
 
-   result = eina_str_split_full("a", "!!!!!!!!!", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 1);
-        fail_if(strcmp(result[0], "a") != 0);
-        fail_if(result[1]);
-        free(result[0]);
-        free(result);
-
-   result = eina_str_split_full("aaba", "ab", -1, &elements);
-        fail_if(result == NULL);
-        fail_if(elements != 2);
-        fail_if(strcmp(result[0], "a") != 0);
-        fail_if(strcmp(result[1], "a") != 0);
-        fail_if(result[2]);
-        free(result[0]);
-        free(result);
-
+    result = eina_str_split_full("aaba", "ab", -1, &elements);
+    fail_if(result == NULL);
+    fail_if(elements != 2);
+    fail_if(strcmp(result[0], "a") != 0);
+    fail_if(strcmp(result[1], "a") != 0);
+    fail_if(result[2]);
+    free(result[0]);
+    free(result);
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(str_lcat_lcpy)
 {
-   char dst[9];
-   size_t ret;
-   size_t ds = (sizeof(dst) / sizeof(char));
+    char   dst[9];
+    size_t ret;
+    size_t ds = (sizeof(dst) / sizeof(char));
 
+    dst[0] = '\0';
 
-   dst[0] = '\0';
+    ret = eina_strlcat(dst, "cat1", ds);
+    fail_if(ret != 4);
+    fail_if(strcmp(dst, "cat1") != 0);
 
-   ret = eina_strlcat(dst, "cat1", ds);
-        fail_if(ret != 4);
-        fail_if(strcmp(dst, "cat1") != 0);
+    ret = eina_strlcat(dst, NULL, ds);
+    fail_if(ret != 4);
+    fail_if(strcmp(dst, "cat1") != 0);
 
-   ret = eina_strlcat(dst, NULL, ds);
-        fail_if(ret != 4);
-        fail_if(strcmp(dst, "cat1") != 0);
+    ret = eina_strlcat(dst, "cat234", ds);
+    fail_if(ret != (ds - 1 + 2));
+    fail_if(strcmp(dst, "cat1cat2") != 0);
 
-   ret = eina_strlcat(dst, "cat234", ds);
-        fail_if(ret != (ds - 1 + 2));
-        fail_if(strcmp(dst, "cat1cat2") != 0);
+    ret = eina_strlcat(dst, "cat3", ds);
+    fail_if(ret != (ds - 1 + 4));
+    fail_if(strcmp(dst, "cat1cat2") != 0);
 
-   ret = eina_strlcat(dst, "cat3", ds);
-        fail_if(ret != (ds - 1 + 4));
-        fail_if(strcmp(dst, "cat1cat2") != 0);
+    ret = eina_strlcat(dst, "cat3", ds - 1);
+    fail_if(ret != (ds - 1 + 4));
+    fail_if(strcmp(dst, "cat1cat2") != 0);
 
-   ret = eina_strlcat(dst, "cat3", ds - 1);
-        fail_if(ret != (ds - 1 + 4));
-        fail_if(strcmp(dst, "cat1cat2") != 0);
+    ret = eina_strlcpy(dst, "copycopy", ds);
+    fail_if(ret != 8);
+    fail_if(strcmp(dst, "copycopy") != 0);
 
-   ret = eina_strlcpy(dst, "copycopy", ds);
-        fail_if(ret != 8);
-        fail_if(strcmp(dst, "copycopy") != 0);
-
-   ret = eina_strlcpy(dst, "copy2copy2", ds);
-        fail_if(ret != 10);
-        fail_if(strcmp(dst, "copy2cop") != 0);
-
+    ret = eina_strlcpy(dst, "copy2copy2", ds);
+    fail_if(ret != 10);
+    fail_if(strcmp(dst, "copy2cop") != 0);
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(str_join_len)
 {
-   char dst[9];
-   size_t ret;
-   size_t ds = (sizeof(dst) / sizeof(char));
+    char   dst[9];
+    size_t ret;
+    size_t ds = (sizeof(dst) / sizeof(char));
 
+    dst[0] = '\0';
 
-   dst[0] = '\0';
+    ret = eina_str_join_len(dst, ds, '#', "ab", 2, "cde", 3);
+    fail_if(ret != 6);
+    fail_if(strcmp(dst, "ab#cde") != 0);
 
-   ret = eina_str_join_len(dst, ds, '#', "ab", 2, "cde", 3);
-        fail_if(ret != 6);
-        fail_if(strcmp(dst, "ab#cde") != 0);
+    ret = eina_str_join_len(dst, ds, '#', "abcdefghi", 9, "cde", 3);
+    fail_if(ret != 13);
+    fail_if(strcmp(dst, "abcdefgh") != 0);
 
-   ret = eina_str_join_len(dst, ds, '#', "abcdefghi", 9, "cde", 3);
-        fail_if(ret != 13);
-        fail_if(strcmp(dst, "abcdefgh") != 0);
+    ret = eina_str_join_len(dst, ds, '#', "abcdefgh", 8, "cde", 3);
+    fail_if(ret != 12);
+    fail_if(strcmp(dst, "abcdefgh") != 0);
 
-   ret = eina_str_join_len(dst, ds, '#', "abcdefgh", 8, "cde", 3);
-        fail_if(ret != 12);
-        fail_if(strcmp(dst, "abcdefgh") != 0);
-
-   ret = eina_str_join_len(dst, ds, '#', "abcd", 4, "efgh", 4);
-        fail_if(ret != 9);
-        fail_if(strcmp(dst, "abcd#efg") != 0);
-
+    ret = eina_str_join_len(dst, ds, '#', "abcd", 4, "efgh", 4);
+    fail_if(ret != 9);
+    fail_if(strcmp(dst, "abcd#efg") != 0);
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(str_memdup)
 {
-   struct temp {
-      int i;
-      char *s;
-      double d;
-   } t1,*t2;
-   unsigned char buf[7];
-   unsigned char *temp_buf;
+    struct temp
+    {
+        int    i;
+        char  *s;
+        double d;
+    } t1, *t2;
 
+    unsigned char  buf[7];
+    unsigned char *temp_buf;
 
-   t1.i = 1234;
-   t1.s = "hello";
-   t1.d = 123.456;
+    t1.i = 1234;
+    t1.s = "hello";
+    t1.d = 123.456;
 
-   t2 = (struct temp *)eina_memdup((unsigned char *)&t1, sizeof(struct temp), EFL_TRUE);
-   fail_if(t2->i != t1.i);
-   fail_if(strcmp(t2->s,t1.s) != 0);
-   fail_if(!EINA_FLT_EQ(t2->d, t1.d));
-   free(t2);
+    t2 = (struct temp *)eina_memdup((unsigned char *)&t1,
+                                    sizeof(struct temp),
+                                    EFL_TRUE);
+    fail_if(t2->i != t1.i);
+    fail_if(strcmp(t2->s, t1.s) != 0);
+    fail_if(!EINA_FLT_EQ(t2->d, t1.d));
+    free(t2);
 
-   memcpy(buf, "aaabbb", 6);
-   temp_buf = eina_memdup(buf, 6, EFL_TRUE);
-   fail_if(strcmp((char *) temp_buf, "aaabbb") != 0);
-   free(temp_buf);
-
+    memcpy(buf, "aaabbb", 6);
+    temp_buf = eina_memdup(buf, 6, EFL_TRUE);
+    fail_if(strcmp((char *)temp_buf, "aaabbb") != 0);
+    free(temp_buf);
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(str_strftime)
 {
-   time_t curr_time;
-   struct tm *info;
-   char *buf;
+    time_t     curr_time;
+    struct tm *info;
+    char      *buf;
 
-   curr_time = time(NULL);
-   info = localtime(&curr_time);
+    curr_time = time(NULL);
+    info      = localtime(&curr_time);
 
-   buf = eina_strftime("%I:%M%p", info);
-   fail_if(buf == NULL);
-   free(buf);
-
+    buf = eina_strftime("%I:%M%p", info);
+    fail_if(buf == NULL);
+    free(buf);
 }
+
 EFL_END_TEST
 
 #ifdef HAVE_ICONV
 EFL_START_TEST(str_convert)
 {
-   char *utf8 = "\xc3\xa9\xc3\xa1\xc3\xba\xc3\xad\xc3\xa8\xc3\xa0\xc3\xb9\xc3\xac\xc3\xab\xc3\xa4\xc3\xbc\xc3\xaf";
-   char *utf16 = "\xe9\x0\xe1\x0\xfa\x0\xed\x0\xe8\x0\xe0\x0\xf9\x0\xec\x0\xeb\x0\xe4\x0\xfc\x0\xef\x0";
-   char *ret;
-   size_t ret_sz;
-   int i;
+    char *utf8  = "\xc3\xa9\xc3\xa1\xc3\xba\xc3\xad\xc3\xa8\xc3\xa0\xc3\xb9\xc3"
+                  "\xac\xc3\xab\xc3\xa4\xc3\xbc\xc3\xaf";
+    char *utf16 = "\xe9\x0\xe1\x0\xfa\x0\xed\x0\xe8\x0\xe0\x0\xf9\x0\xec\x0\xeb"
+                  "\x0\xe4\x0\xfc\x0\xef\x0";
+    char *ret;
+    size_t ret_sz;
+    int    i;
 
+    ret = eina_str_convert("UTF-8", "UTF-16LE", utf8);
+    fail_if(ret == NULL);
+    for (i = 0; i < 24; i++)
+        fail_if(ret[i] != utf16[i]);
 
-   ret = eina_str_convert("UTF-8", "UTF-16LE", utf8);
-        fail_if(ret == NULL);
-        for( i=0; i<24; i++)
-          fail_if(ret[i] != utf16[i]);
+    free(ret);
 
-   free(ret);
-
-   ret = eina_str_convert_len("UTF-8", "UTF-16LE", utf8, 24, &ret_sz);
-        fail_if(ret == NULL);
-        fail_if(ret_sz != 24);
-        for( i=0; i<24; i++)
-          fail_if(ret[i] != utf16[i]);
-   free(ret);
-
+    ret = eina_str_convert_len("UTF-8", "UTF-16LE", utf8, 24, &ret_sz);
+    fail_if(ret == NULL);
+    fail_if(ret_sz != 24);
+    for (i = 0; i < 24; i++)
+        fail_if(ret[i] != utf16[i]);
+    free(ret);
 }
+
 EFL_END_TEST
 #endif
 
 void
 eina_test_str(TCase *tc)
 {
-   tcase_add_test(tc, str_simple);
-   tcase_add_test(tc, str_split);
-   tcase_add_test(tc, str_lcat_lcpy);
-   tcase_add_test(tc, str_join_len);
-   tcase_add_test(tc, str_memdup);
-   tcase_add_test(tc, str_strftime);
+    tcase_add_test(tc, str_simple);
+    tcase_add_test(tc, str_split);
+    tcase_add_test(tc, str_lcat_lcpy);
+    tcase_add_test(tc, str_join_len);
+    tcase_add_test(tc, str_memdup);
+    tcase_add_test(tc, str_strftime);
 #ifdef HAVE_ICONV
-   tcase_add_test(tc, str_convert);
+    tcase_add_test(tc, str_convert);
 #endif
 }

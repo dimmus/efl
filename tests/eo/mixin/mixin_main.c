@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include "Eo.h"
@@ -14,43 +14,41 @@
 int
 main(int argc, char *argv[])
 {
-   (void) argc;
-   (void) argv;
-   efl_object_init();
+    (void)argc;
+    (void)argv;
+    efl_object_init();
 
-   Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
+    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
 
-   simple_a_set(obj, 1);
-   simple_b_set(obj, 2);
+    simple_a_set(obj, 1);
+    simple_b_set(obj, 2);
 
-   int a = 0, b = 0, sum = 0;
-   a = simple_a_get(obj);
-   b = simple_b_get(obj);
-   sum = mixin_ab_sum_get(obj);
-   fail_if(sum != a + b + 2); /* 2 for the two mixins... */
+    int a = 0, b = 0, sum = 0;
+    a   = simple_a_get(obj);
+    b   = simple_b_get(obj);
+    sum = mixin_ab_sum_get(obj);
+    fail_if(sum != a + b + 2); /* 2 for the two mixins... */
 
-   sum = mixin_ab_sum_get(obj);
-   sum = mixin_ab_sum_get(obj);
+    sum = mixin_ab_sum_get(obj);
+    sum = mixin_ab_sum_get(obj);
 
-   Mixin2_Public_Data *pd2 = efl_data_scope_get(obj, MIXIN2_CLASS);
-   fail_if(pd2->count != 6);
+    Mixin2_Public_Data *pd2 = efl_data_scope_get(obj, MIXIN2_CLASS);
+    fail_if(pd2->count != 6);
 
-   Mixin3_Public_Data *pd3 = efl_data_scope_get(obj, MIXIN3_CLASS);
-   fail_if(pd3->count != 9);
+    Mixin3_Public_Data *pd3 = efl_data_scope_get(obj, MIXIN3_CLASS);
+    fail_if(pd3->count != 9);
 
-   efl_unref(obj);
+    efl_unref(obj);
 
-   obj = efl_add_ref(INHERIT_CLASS, NULL);
-   simple_a_set(obj, 5);
-   a = simple_a_get(obj);
-   printf("%d\n", a);
-   fail_if(a != 5);
+    obj = efl_add_ref(INHERIT_CLASS, NULL);
+    simple_a_set(obj, 5);
+    a = simple_a_get(obj);
+    printf("%d\n", a);
+    fail_if(a != 5);
 
-   fail_if(efl_class_type_get(MIXIN_CLASS) != EFL_CLASS_TYPE_MIXIN);
+    fail_if(efl_class_type_get(MIXIN_CLASS) != EFL_CLASS_TYPE_MIXIN);
 
-
-   efl_unref(obj);
-   efl_object_shutdown();
-   return 0;
+    efl_unref(obj);
+    efl_object_shutdown();
+    return 0;
 }
-
