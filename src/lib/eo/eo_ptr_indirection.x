@@ -2,6 +2,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <malloc.h>
+#include <string.h>
 
 #ifdef _WIN32
 # include <evil_private.h> /* mmap mprotect */
@@ -13,6 +15,14 @@
 # include <valgrind.h>
 # include <memcheck.h>
 #endif
+
+#ifndef EFL_BETA_API_SUPPORT
+# define EFL_BETA_API_SUPPORT
+#endif
+
+#include "Eo.h"
+#include "eo_internal.h"
+#include "eo_private.h"
 
 /* Start of pointer indirection:
  *
@@ -83,7 +93,7 @@
 # define DROPPED_TABLES           0
 # define DROPPED_ENTRIES          4
 typedef int16_t Table_Index;
-typedef uint16_t Generation_Counter;
+typedef u_int16_t Generation_Counter;
 #else
 # ifndef EO_FULL64BIT
 /* 47 bits */
@@ -97,7 +107,7 @@ typedef uint16_t Generation_Counter;
 #  define DROPPED_TABLES           2
 #  define DROPPED_ENTRIES          3
 typedef int16_t Table_Index;
-typedef uint16_t Generation_Counter;
+typedef u_int16_t Generation_Counter;
 # else
 /* 64 bits */
 #  define BITS_MID_TABLE_ID       11
