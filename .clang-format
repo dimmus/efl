@@ -1,15 +1,18 @@
 # Configuration of clang-format
 # =============================
-# Tested to work with versions: 8 to 11.
+# Tested to work with version: 16.
 #
 # Introduction: https://clang.llvm.org/docs/ClangFormat.html
 # Supported options: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+# See https://wiki.apertis.org/Guidelines/Coding_conventions#Code_formatting
+BasedOnStyle: GNU
 
 Language: Cpp
 Standard: Latest
 
 # Line width (don't exceed 100).
-ColumnLimit: 99
+ColumnLimit: 80
 
 # Never use tabs for indentation.
 # Note: TabWidth and IndentWidth must be the same, or strange things happen.
@@ -26,31 +29,14 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 1
 
 # For switch statements, don't indent the cases.
-IndentCaseLabels: false
-IndentCaseBlocks: false
-
+IndentCaseLabels: true
+IndentCaseBlocks: true
 IndentGotoLabels: false
-
-# Indent after the hash inside preprocessor directives
 IndentPPDirectives: AfterHash
-
 IndentWrappedFunctionNames: false
 
-# Cause initializer lists to have one member initialized per line, in the case
-# that all initializers can't fit on a single line.
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
-
-# Indent the : after a constructor. For example:
-#
-#   explicit foo_class ()
-#       : member1_(5)
-#   {
-#   }
-#
-ConstructorInitializerIndentWidth: 4
-
 # Make access modifier slightly more visible.
-AccessModifierOffset: -1
+# AccessModifierOffset: -1
 
 # This causes parameters on continuations to align to the opening brace.
 #
@@ -104,7 +90,7 @@ AlignTrailingComments:
 BinPackArguments: false
 BinPackParameters: false
 
-AllowAllArgumentsOnNextLine: true
+AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 
 # Disallow short functions on one line; break them up.
@@ -133,15 +119,15 @@ AlwaysBreakBeforeMultilineStrings: false
 # This tries to match EFL's style as much as possible.
 BreakBeforeBraces: Custom
 BraceWrapping:
-    AfterCaseLabel:        false
-    AfterControlStatement: Never
-    AfterEnum:             false
+    AfterCaseLabel:        true
+    AfterControlStatement: true
+    AfterEnum:             true
     AfterExternBlock:      false
     AfterFunction:         true
-    AfterStruct:           false
+    AfterStruct:           true
     AfterUnion:            false
-    BeforeElse:            false
-    BeforeWhile:           false
+    BeforeElse:            true
+    BeforeWhile:           true
     IndentBraces:          false
     SplitEmptyFunction:    false
     SplitEmptyRecord:      false
@@ -151,15 +137,15 @@ BreakBeforeInlineASMColon: OnlyMultiline
 BreakBeforeTernaryOperators: true
 
 DerivePointerAlignment: false
-PointerAlignment: Left
+PointerAlignment: Right
 
 QualifierAlignment: Custom
-QualifierOrder: ["inline", "static", "volatile", "restrict", "const", "type"]
+QualifierOrder: ["static", "inline", "volatile", "restrict", "const", "type"]
 
 ReflowComments: false
-BreakStringLiterals: false
+BreakStringLiterals: true
 RemoveSemicolon: true
-RemoveParentheses: ReturnStatement
+# RemoveParentheses: ReturnStatement # no in clang-fromat 16
 InsertBraces: false
 SeparateDefinitionBlocks: Always
 
@@ -189,16 +175,16 @@ SpacesInLineCommentPrefix:
     Minimum: 1
     Maximum: -1
 
-SortIncludes: Never
-IncludeBlocks: Preserve
-IncludeIsMainRegex: ""
-IncludeCategories:
-    - {Regex: "<.*>",   Priority: -2, CaseSensitive: true}
-    - {Regex: "\".*\"", Priority: -1, CaseSensitive: true}
+# SortIncludes: Never
+# IncludeBlocks: Preserve
+# IncludeIsMainRegex: ""
+# IncludeCategories:
+#     - {Regex: "<.*>",   Priority: -2, CaseSensitive: true}
+#     - {Regex: "\".*\"", Priority: -1, CaseSensitive: true}
 
-AttributeMacros: ["__capability"]
-StatementAttributeLikeMacros: []
-StatementMacros: []
+# AttributeMacros: ["__capability"]
+# StatementAttributeLikeMacros: []
+# StatementMacros: []
 
 # Avoid having function calls broken onto a new line:
 #
@@ -210,17 +196,17 @@ StatementMacros: []
 #   int a =
 #       foo(long, list, of, many, params);
 #
-PenaltyBreakAssignment: 200
+# PenaltyBreakAssignment: 200
 
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
-PenaltyBreakOpenParenthesis: 0
+# PenaltyBreakBeforeFirstCallParameter: 19
+# PenaltyBreakComment: 300
+# PenaltyBreakFirstLessLess: 120
+# PenaltyBreakOpenParenthesis: 0
 
 # We don't want literal strings to break,
 # however clang-format seems to ignore this (sigh).
-PenaltyBreakString: 1000000
+# PenaltyBreakString: 1000000
 
-PenaltyExcessCharacter: 10
-PenaltyIndentedWhitespace: 0
-PenaltyReturnTypeOnItsOwnLine: 60
+# PenaltyExcessCharacter: 10
+# PenaltyIndentedWhitespace: 0
+# PenaltyReturnTypeOnItsOwnLine: 60
