@@ -40,7 +40,19 @@ if get_option('buildtype').startswith('debug')
       '-Wduplicated-branches',
       '-Wimplicit-fallthrough',
       '-Wmisleading-indentation',
+
+
+      '-Wduplicated-cond',
+      '-Wformat-nonliteral',
+      '-Wformat-security',
+      # '-Wmissing-format-attribute',
+      '-Wmissing-include-dirs',
+      '-Wmissing-noreturn',
+      '-Wpointer-arith',
+      '-Wuninitialized',
+
       '-Wno-switch-enum', # too many in eolian
+      '-Wno-switch-default',
       '-Wno-conversion', # a lot here !!!
       '-Wno-double-promotion', # a lot here !!!
       '-Wno-missing-prototypes',
@@ -190,6 +202,12 @@ if not has_malloc_trim and get_option('malloc_trim').enabled()
   endif
 endif
 
+debug = get_option('debug')
+# optimization = get_option('optimization')
+if debug
+  dev_cflags += '-DDEBUG'
+endif
+
 # Compilation information
 summary_info = {}
 summary_info += {'Host CPU':          cpu}
@@ -241,4 +259,5 @@ summary_info += {'Memory allocator':  get_option('malloc')}
 # summary_info += {'avx512f optimization': config_host_data.get('CONFIG_AVX512F_OPT')}
 summary_info += {'GCov':              get_option('b_coverage')}
 summary_info += {'Download dependencies': get_option('wrap_mode') != 'nodownload'}
+summary_info += {'Debugging': get_option('debug')}
 summary(summary_info, bool_yn: true, section: 'Build environment')
