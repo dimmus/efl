@@ -1,3 +1,4 @@
 # Vendored code
 src/static/**/*
+tests/eolian/data/*
 *.h
