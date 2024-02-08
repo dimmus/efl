@@ -12,7 +12,7 @@ enum Efl.Ui.Layout_Orientation
      enum is used to define how widgets should expand and orient themselves,
      not to rotate images.
 
-     See also @Efl.Ui.Layout_Orientable.
+     See also Efl.Ui.Layout_Orientable.
 
      @since 1.23
    ]]

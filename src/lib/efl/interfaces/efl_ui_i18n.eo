@@ -20,7 +20,7 @@ interface @beta Efl.Ui.I18n
            to set the value of @.mirrored.
 
            This property may be implemented by high-level widgets (in Efl.Ui)
-           but not by low-level widgets (in @Efl.Canvas.Scene) as the configuration
+           but not by low-level widgets (in Efl.Canvas.Scene) as the configuration
            should affect only high-level widgets.
          ]]
          values {

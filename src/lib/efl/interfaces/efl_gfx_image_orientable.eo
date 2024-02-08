@@ -10,7 +10,7 @@ enum Efl.Gfx.Image_Orientation
      its roof pointing to the right if the $right orientation is used).
      Flipping values ($flip_horizontal and $flip_vertical) can be additionally added
      to produce a mirroring in each axis.
-     Not to be confused with @Efl.Ui.Layout_Orientation which is meant for widgets, rather
+     Not to be confused with Efl.Ui.Layout_Orientation which is meant for widgets, rather
      than images and canvases. This enum is used to rotate images, videos and
      the like.
 
@@ -33,7 +33,7 @@ interface Efl.Gfx.Image_Orientable
 {
    [[Interface for images which can be rotated or flipped (mirrored).
 
-     Compare with @Efl.Ui.Layout_Orientable which works for layout objects and does
+     Compare with Efl.Ui.Layout_Orientable which works for layout objects and does
      not include rotation.
 
      @since 1.23

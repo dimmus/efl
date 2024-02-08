@@ -43,8 +43,8 @@ mixin Efl.File requires Efl.Object {
          [[The key which corresponds to the target data within a file.
 
            Some file types can contain multiple data streams which are indexed by
-           a key. Use this property for such cases (See for example @Efl.Ui.Image or
-           @Efl.Ui.Layout).
+           a key. Use this property for such cases (See for example Efl.Ui.Image or
+           Efl.Ui.Layout).
 
            You must not modify the strings on the returned pointers.
          ]]

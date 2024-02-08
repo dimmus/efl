@@ -264,7 +264,7 @@ interface Efl.Gfx.Hint
            scene composition.
 
            See documentation of possible users: in Evas, they are the
-           @Efl.Ui.Box "box" and @Efl.Ui.Table "table" smart objects.
+           Efl.Ui.Box "box" and Efl.Ui.Table "table" smart objects.
 
            This is not a size enforcement in any way, it's just a hint
            that should be used whenever appropriate.

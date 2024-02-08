@@ -100,7 +100,7 @@ interface Efl.Ui.Scrollable
            This function will block scrolling movement (by input of a user) in
            a given direction. You can disable movements in the X axis, the Y
            axis or both.
-           The default value is @Efl.Ui.Layout_Orientation.default meaning that movements are
+           The default value is Efl.Ui.Layout_Orientation.default meaning that movements are
            allowed in both directions.
          ]]
          set {

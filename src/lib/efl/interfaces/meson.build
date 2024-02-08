@@ -1,4 +1,4 @@
-eolian_include_directories += ['-I', join_paths(source_root, 'src', 'lib')]
+eolian_include_directories += ['-I', join_paths(dir_source, 'src/lib')]
 
 pub_legacy_eo_files = [
   'efl_gfx_fill.eo',
@@ -144,7 +144,7 @@ efl_interfaces_eot_files = pub_eo_types_files
 pub_eo_files = []
 pub_eo_types_files = []
 
-efl_src += files([
+src_efl += files([
   'efl_interfaces_main.c',
   'efl_mvvm_common.c',
   'efl_gfx_path.c',
