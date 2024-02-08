@@ -199,7 +199,7 @@ EINA_VALUE_INIT(short, SHORT, short)
 EINA_VALUE_INIT(int, INT, int)
 EINA_VALUE_INIT(long, LONG, long)
 EINA_VALUE_INIT(int64, INT64, int64_t)
-/* EINA_VALUE_INIT(float, FLOAT, float) */ /* implicit conversion from ‘float’ to ‘double’ when passing argument to function */
+EINA_VALUE_INIT(float, FLOAT, float)
 EINA_VALUE_INIT(double, DOUBLE, double)
 EINA_VALUE_INIT(bool, BOOL, Efl_Bool)
 EINA_VALUE_INIT(string, STRING, const char *)
