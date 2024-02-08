@@ -168,13 +168,13 @@ eina_mempool_init(void)
     _backends = eina_hash_string_superfast_new(NULL);
 
    /* dynamic backends */
-    _modules = eina_EFL_MODULE_ARCH_list_get(NULL,
+    _modules = eina_module_arch_list_get(NULL,
                                              EFL_LIB_DIR "/eina/modules/mp",
                                              EFL_MODULE_ARCH);
 
     path     = eina_module_symbol_path_get((const void *)eina_init,
                                        "/eina/modules/mp");
-    _modules = eina_EFL_MODULE_ARCH_list_get(_modules, path, EFL_MODULE_ARCH);
+    _modules = eina_module_arch_list_get(_modules, path, EFL_MODULE_ARCH);
     if (path) free(path);
 
     if (!_modules)
