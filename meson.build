@@ -6,10 +6,10 @@ project('efl', ['c','cpp'],
     # 'optimization=g',  # 0,g,1,2,3,s
     # 'b_sanitize=address,undefined',
     # 'b_coverage=true',
-    # 'b_lto=true',
-    # 'b_lto_threads=2',
-    # 'b_lto_mode=thin',
-    # 'b_thinlto_cache=true',
+    'b_lto=true',
+    'b_lto_threads=32',
+    'b_lto_mode=thin',
+    'b_thinlto_cache=true',
     'b_staticpic=true', 'stdsplit=false', 'b_pie=true',
     'c_std=gnu99'
   ],
@@ -26,8 +26,11 @@ subdir('meson/arguments')
 efl_config = configuration_data()
 efl_config.set_quoted('EFL_MODULE_ARCH' , version_name)
 efl_config.set_quoted('EFL_VERSION'     , version)
+efl_config.set_quoted('EFL_BIN_DIR'     , dir_bin)
 efl_config.set_quoted('EFL_LIB_DIR'     , dir_lib)
 efl_config.set_quoted('EFL_BUILD_DIR'   , dir_build)
+efl_config.set_quoted('EFL_SRC_DIR'     , dir_source)
+efl_config.set_quoted('EFL_BUILD_ID'    , '1')
 efl_config.set10     ('EFL_HAVE_THREADS', true)
 
 # efl_config.set_quoted('PACKAGE'            , name)
@@ -128,10 +131,10 @@ subprojects = [
   ['etool'              ,[]                    , false,  true, false,   true,   true,      true,   true,  [], []],
   ['eolian'             ,[]                    , false,  true,  true,  false,   true,     false,  false, ['etool'], []],
   ['eo'                 ,[]                    , false,  true, false,   true,   true,     false,   true, ['etool'], []],
-  # ['efl'              ,[]                    , false,  true, false,  false,   true,     false,  true, ['eo'], []],
+  ['efl'                ,[]                    , false,  true, false,  false,  false,     false,  true, ['eo'], []],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
   # ['eet'              ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'emile', 'efl'], []],
-  # ['ecore'            ,[]                    , false,  true, false,  false,  false,     false,  true, ['eina', 'eo', 'efl'], ['buildsystem']],
+  ['ecore'              ,[]                    , false,  true, false,  false,  false,     false,  true, ['etool', 'eo', 'efl'], []],
   # ['eldbus'           ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []],
   # ['ecore'            ,[]                    ,  true, false, false,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []], #ecore modules depend on eldbus
   # ['ecore_audio'      ,['audio']             , false,  true, false,  false,  false,     false,  true, ['eina', 'eo'], []],
@@ -331,7 +334,39 @@ endforeach
 # If they are enabled, the object gets overwritten by the library file.
 # ecore_audio = declare_dependency()
 
-subdir('meson/efl-one')
+if get_option('efl-one')
+  lib_efl_one = shared_library('efl-one',
+    link_whole : efl_one_parts,
+    install : true,
+    version : version,
+  )
+
+  efl_one = declare_dependency(
+    link_with: lib_efl_one,
+    include_directories : inc_efl_one,
+    dependencies : [thread_dep, intl] + dep_efl_one_eo,
+    version: version
+  )
+
+  pkgconfig.generate(
+    name : 'efl-one',
+    subdirs : sub_efl_one,
+    description: 'Configureation for efl in one big fat .so',
+    libraries : [efl_one] + dep_etool, #eina is a special case here which drags in m dl & threads
+  )
+
+  #overwrite all the dependencies of subprojects with efl-one, in order to link the modules and binaries to the correct .so
+  foreach package : subprojects
+    package_name = package[0]
+    if package[1].length() == 0 or get_option(package[1][0])
+      if package[3]
+        if package[8] and get_option('efl-one')
+          set_variable(package_name, efl_one)
+        endif
+      endif
+    endif
+  endforeach
+endif
 
 # subdir('src/bin/efl') #build this later, as the debug services are depending on ecore
 # subdir('src/generic/evas')
@@ -390,7 +425,6 @@ endif
 # efl_one_config_h.set('EFL_VERSION_MAJOR', version_major)
 # efl_one_config_h.set('EFL_VERSION_MINOR', version_minor)
 # efl_one_config_h.set('EFL_VERSION_MICRO', version_micro)
-# efl_one_config_h.set('EFL_BUILD_ID', get_option('build-id'))
 
 # FIXME placeholder
 # efl_one_config_h.set('EFL_API_LEGACY_DEF', '#define EFL_API_LEGACY_DEF "FIXME NOT IMPLEMENTED"')
