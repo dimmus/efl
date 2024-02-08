@@ -46,7 +46,7 @@
  * EINA_MODULE_INIT() and EINA_MODULE_SHUTDOWN().
  *
  * There are some helpers to automatically create modules based on
- * directory listing. See eina_EFL_MODULE_ARCH_list_get(),
+ * directory listing. See eina_module_arch_list_get(),
  * eina_module_list_get() and eina_module_find().
  *
  * #EINA_MODULE_LICENSE, #EINA_MODULE_AUTHOR, #EINA_MODULE_VERSION and
@@ -265,7 +265,7 @@ EINA_API char *
  * @c NULL. In that case, it is created with 4 elements.
  */
 EINA_API Eina_Array *
- eina_EFL_MODULE_ARCH_list_get(Eina_Array *array, const char *path, const char *arch);
+ eina_module_arch_list_get(Eina_Array *array, const char *path, const char *arch);
 
 /**
  * @brief Gets a list of modules found on the directory path.

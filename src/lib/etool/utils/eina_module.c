@@ -483,9 +483,9 @@ eina_module_environment_path_get(const char *env, const char *sub_dir)
 }
 
 EINA_API Eina_Array *
-eina_EFL_MODULE_ARCH_list_get(Eina_Array *array,
-                              const char *path,
-                              const char *arch)
+eina_module_arch_list_get(Eina_Array *array,
+                            const char *path,
+                            const char *arch)
 {
     Dir_List_Get_Cb_Data list_get_cb_data;
 
