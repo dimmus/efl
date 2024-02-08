@@ -85,6 +85,17 @@ option('debug_stack_usage',
         value: false,
         description: 'measure coroutine stack usage')
 
+option('install-eo-files',
+  type: 'boolean',
+  value: true,
+  description : 'Install any eo file'
+)
+
+option('build-id',
+  type : 'string',
+  value : '',
+  description : 'The build id string for efl set as the EFL_BUILD_ID define')
+
 # option('audio',
 #   type : 'boolean',
 #   value : true,
@@ -163,11 +174,6 @@ option('cocoa',
 #   value : 'es-egl',
 #   description : 'Type of OpenGL support in efl'
 # )
-
-# option('build-id',
-#   type : 'string',
-#   value : 'none',
-#   description : 'The build id string for efl set as the EFL_BUILD_ID define')
 
 # option('glib',
 #   type : 'boolean',
@@ -395,12 +401,6 @@ option('cocoa',
 #   type : 'string',
 #   value : '.elementary',
 #   description : 'The name of the directory for user supplied elementary data files like themes, config files'
-# )
-
-# option('install-eo-files',
-#   type: 'boolean',
-#   value: true,
-#   description : 'Install any eo file'
 # )
 
 # option('mono-friend-assemblies',
