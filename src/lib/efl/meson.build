@@ -1,29 +1,31 @@
-efl_deps = [m]
-efl_pub_deps = [eo]
-efl_ext_deps = []
+dep_efl = [m]
+dep_efl_pub = [eo]
+dep_efl_ext = []
+
+inc_efl = [include_directories('.')]
 
 efl_header_src = [
   'Efl.h',
   'Efl_MVVM_Common.h'
 ]
 
-efl_src = []
+src_efl = []
 
 subdir('interfaces')
 package_header_subdirs += 'interfaces'
 
-efl_lib = library('efl',
-    efl_src, pub_eo_file_target,
+lib_efl = library('efl',
+    src_efl, pub_eo_file_target,
     c_args : package_c_args,
-    dependencies: [efl_deps, efl_pub_deps, efl_ext_deps],
+    dependencies: [dep_efl, dep_efl_pub, dep_efl_ext],
     install: true,
-    version : meson.project_version()
+    version : version
 )
 
 efl = declare_dependency(
-  include_directories: [include_directories('.'), config_dir],
-  link_with: efl_lib,
-  dependencies: efl_deps + efl_pub_deps,
+  include_directories: [include_directories('.'), inc_config],
+  link_with: lib_efl,
+  dependencies: dep_efl + dep_efl_pub,
   sources : pub_eo_file_target
 )
 
