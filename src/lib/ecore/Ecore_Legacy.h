@@ -116,7 +116,7 @@ typedef struct _Ecore_Animator Ecore_Animator;
  * function will be passed the @p data pointer as its parameter.
  *
  * When the animator @p func is called, it must return a boolean value.
- * If it returns @c EFL_TRUE (or @c ECORE_CALLBACK_RENEW), it will be called again at
+ * If it returns @c EFL_TRUE(or @c ECORE_CALLBACK_RENEW), it will be called again at
  * the next tick, or if it returns @c EFL_FALSE (or @c ECORE_CALLBACK_CANCEL) it will be
  * deleted automatically making any references/handles for it invalid.
  * @see ecore_animator_timeline_add()

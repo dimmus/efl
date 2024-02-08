@@ -1034,7 +1034,7 @@ EAPI void       ecore_getopt_help(FILE *fp, const Ecore_Getopt *info);
  * @param info The structure containing information about command line options.
  * @param category The category to print.
  *
- * @return @c EFL_TRUE when the category exists, @c EFL_FALSE otherwise.
+ * @return @c EFL_TRUEwhen the category exists, @c EFL_FALSE otherwise.
  *
  * @see ecore_getopt_help()
  */
@@ -1043,7 +1043,7 @@ EAPI Efl_Bool  ecore_getopt_help_category(FILE *fp, const Ecore_Getopt *info, co
 /**
  * Checks parser for duplicate entries, print them out.
  *
- * @return @c EFL_TRUE if there are duplicates, @c EFL_FALSE otherwise.
+ * @return @c EFL_TRUEif there are duplicates, @c EFL_FALSE otherwise.
  * @param parser The parser to be checked.
  */
 EAPI Efl_Bool  ecore_getopt_parser_has_duplicates(const Ecore_Getopt *parser);
@@ -1183,7 +1183,7 @@ EAPI Eina_List *ecore_getopt_list_free(Eina_List *list);
  * @param data This parameter isn't in use.
  * @param storage Must be a pointer to @c Eina_Rectangle and will be used to
  * store the four values passed in the given string.
- * @return @c EFL_TRUE on success, @c EFL_FALSE on incorrect geometry value.
+ * @return @c EFL_TRUEon success, @c EFL_FALSE on incorrect geometry value.
  *
  * This is a helper function to be used with ECORE_GETOPT_CALLBACK_*().
  *
@@ -1201,7 +1201,7 @@ EAPI Efl_Bool  ecore_getopt_callback_geometry_parse(const Ecore_Getopt *parser, 
  * @param storage Must be a pointer to @c Eina_Rectangle and will be used to
  * store the two values passed in the given string and @c 0 in the x and y
  * fields.
- * @return @c EFL_TRUE on success, @c EFL_FALSE on incorrect size value.
+ * @return @c EFL_TRUEon success, @c EFL_FALSE on incorrect size value.
  *
  * @c callback_data value is ignored, you can safely use @c NULL.
  */

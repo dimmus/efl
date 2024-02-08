@@ -3,7 +3,7 @@ class @beta Efl.Boolean_Model extends Efl.Composite_Model
    [[@Efl.Model that efficiently stores boolean properties (they can only be $true or $false).
 
      Internally the values are stored in a compact bit buffer, taking up minimum memory.
-     An example usage is @Efl.Ui.Select_Model.
+     An example usage is Efl.Ui.Select_Model.
    ]]
    methods {
       boolean_add {

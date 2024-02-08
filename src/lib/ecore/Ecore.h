@@ -271,7 +271,7 @@
 #ifndef _ECORE_H
 #define _ECORE_H
 
-//#include <Efl_One_Config.h>
+#include "efl_config.h"
 
 #include <Eina.h>
 #include <Eo.h>

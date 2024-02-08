@@ -1,7 +1,7 @@
 #ifndef _ECORE_COMMON_H
 #define _ECORE_COMMON_H
 
-//#include <Efl_One_Config.h>
+#include "efl_config.h"
 
 /**
  * @defgroup Ecore_Init_Group Ecore initialization, shutdown functions and reset on fork.
@@ -150,9 +150,9 @@ typedef struct _Ecore_Version
 EAPI extern Ecore_Version *ecore_version;
 
 #define ECORE_CALLBACK_CANCEL  EFL_FALSE /**< Return value to remove a callback */
-#define ECORE_CALLBACK_RENEW   EFL_TRUE /**< Return value to keep a callback */
+#define ECORE_CALLBACK_RENEW   EFL_TRUE/**< Return value to keep a callback */
 
-#define ECORE_CALLBACK_PASS_ON EFL_TRUE /**< Return value to pass event to next handler */
+#define ECORE_CALLBACK_PASS_ON EFL_TRUE/**< Return value to pass event to next handler */
 #define ECORE_CALLBACK_DONE    EFL_FALSE /**< Return value to stop event handling */
 
 /**
@@ -187,7 +187,7 @@ EAPI void ecore_main_loop_iterate(void);
  * queue with blocking/non-blocking status.
  *
  * @param may_block A flag if the main loop has a possibility of blocking.
- * (@c EFL_TRUE = may block/@c EFL_FALSE = non block)
+ * (@c EFL_TRUE= may block/@c EFL_FALSE = non block)
  *
  * This is an extension API for ecore_main_loop_iterate() with additional
  * parameter. It does everything that is already done inside an
@@ -269,7 +269,7 @@ EAPI Ecore_Select_Function ecore_main_loop_select_func_get(void);
  * }
  *
  * @endcode
- * @return @c EFL_TRUE on success of,
+ * @return @c EFL_TRUEon success of,
  *         @c EFL_FALSE if it failed likely due to no GLib support in Ecore.
  * @note This is only available if Ecore was compiled with GLib support.
  * @note You don't need to call this function if Ecore was compiled with.
@@ -327,7 +327,7 @@ EAPI void ecore_main_loop_quit(void);
 /**
  * Returns if an animator has ticked off during this loop iteration.
  *
- * @return @c EFL_TRUE if an animator has been called, @c EFL_FALSE otherwise.
+ * @return @c EFL_TRUEif an animator has been called, @c EFL_FALSE otherwise.
  *
  * There should be little need for anyone to use this - ever.
  *
@@ -369,7 +369,7 @@ typedef void *(*Ecore_Data_Cb)(void *data);
  * ecore_fork_reset() is called. This allows other libraries and subsystems
  * to also reset their internal state after a fork.
  *
- * @return @c EFL_TRUE on success, else @c EFL_FALSE.
+ * @return @c EFL_TRUEon success, else @c EFL_FALSE.
  * @since 1.7
  */
 EAPI Efl_Bool ecore_fork_reset_callback_add(Ecore_Cb func, const void *data);
@@ -383,7 +383,7 @@ EAPI Efl_Bool ecore_fork_reset_callback_add(Ecore_Cb func, const void *data);
  * This deletes the callback added by ecore_fork_reset_callback_add() using
  * the function and data pointer to specify which to remove.
  *
- * @return @c EFL_TRUE on success, else @c EFL_FALSE.
+ * @return @c EFL_TRUEon success, else @c EFL_FALSE.
  * @since 1.7
  */
 EAPI Efl_Bool ecore_fork_reset_callback_del(Ecore_Cb func, const void *data);
@@ -1173,7 +1173,7 @@ EAPI void ecore_exe_callback_pre_free_set(Ecore_Exe *exe, Ecore_Exe_Cb func);
  * @param exe  The child process to send to
  * @param data The data to send
  * @param size The size of the data to send, in bytes
- * @return @c EFL_TRUE if successful, @c EFL_FALSE on failure.
+ * @return @c EFL_TRUEif successful, @c EFL_FALSE on failure.
  */
 EAPI Efl_Bool ecore_exe_send(Ecore_Exe *exe, const void *data, int size);
 
@@ -1519,7 +1519,7 @@ EAPI int ecore_main_fd_handler_fd_get(Ecore_Fd_Handler *fd_handler);
  * @param fd_handler The given FD handler.
  * @param flags The flags, @c ECORE_FD_READ, @c ECORE_FD_WRITE or
  * @c ECORE_FD_ERROR to query.
- * @return @c EFL_TRUE if any of the given flags are active, @c EFL_FALSE
+ * @return @c EFL_TRUEif any of the given flags are active, @c EFL_FALSE
  * otherwise.
  */
 EAPI Efl_Bool ecore_main_fd_handler_active_get(Ecore_Fd_Handler *fd_handler, Ecore_Fd_Handler_Flags flags);
@@ -1848,7 +1848,7 @@ EAPI Ecore_Thread *ecore_thread_feedback_run(Ecore_Thread_Cb func_heavy, Ecore_T
  * Cancels a running thread.
  *
  * @param thread The thread to cancel.
- * @return Will return @c EFL_TRUE if the thread has been cancelled,
+ * @return Will return @c EFL_TRUEif the thread has been cancelled,
  *         @c EFL_FALSE if it is pending.
  *
  * This function can be called both in the main loop or in the running thread.
@@ -1886,7 +1886,7 @@ EAPI Ecore_Thread *ecore_thread_feedback_run(Ecore_Thread_Cb func_heavy, Ecore_T
  * other way.
  *
  * @p thread will be freed and should not be used again if this function
- * returns @c EFL_TRUE or after the @c func_cancel callback returns.
+ * returns @c EFL_TRUEor after the @c func_cancel callback returns.
  *
  * @see ecore_thread_check()
  * @see eina_thread_cancellable_run()
@@ -1899,7 +1899,7 @@ EAPI Efl_Bool ecore_thread_cancel(Ecore_Thread *thread);
  *
  * @param thread The thread to wait on.
  * @param wait Maximum time to wait before exiting anyway.
- * @return EFL_TRUE if the thread execution is over.
+ * @return EFL_TRUEif the thread execution is over.
  *
  * Note: This function should only be called in the main loop.
  *
@@ -1910,7 +1910,7 @@ EAPI Efl_Bool ecore_thread_wait(Ecore_Thread *thread, double wait);
  * Checks if a thread is pending cancellation.
  *
  * @param thread The thread to test.
- * @return @c EFL_TRUE if the thread is pending cancellation,
+ * @return @c EFL_TRUEif the thread is pending cancellation,
  *         @c EFL_FALSE if it is not.
  *
  * This function can be called both in the main loop or in the running thread.
@@ -1932,7 +1932,7 @@ EAPI Efl_Bool ecore_thread_check(Ecore_Thread *thread);
  *
  * @param thread The current ::Ecore_Thread context to send data from
  * @param msg_data Data to be transmitted to the main loop
- * @return @c EFL_TRUE if @p msg_data was successfully sent to main loop,
+ * @return @c EFL_TRUEif @p msg_data was successfully sent to main loop,
  *         @c EFL_FALSE if anything goes wrong.
  *
  * You should use this function only in the @c func_heavy call.
@@ -1954,7 +1954,7 @@ EAPI Efl_Bool ecore_thread_feedback(Ecore_Thread *thread, const void *msg_data);
  * Asks for the function in the thread to be called again at a later time.
  *
  * @param thread The current ::Ecore_Thread context to rescheduled
- * @return @c EFL_TRUE if the task was successfully rescheduled,
+ * @return @c EFL_TRUEif the task was successfully rescheduled,
  *         @c EFL_FALSE if anything goes wrong.
  *
  * This function should be called only from the same function represented
@@ -1984,7 +1984,7 @@ EAPI Efl_Bool ecore_thread_reschedule(Ecore_Thread *thread);
  * through the Ecore_Thread API.
  *
  * @note Jobs started through the ecore_thread_feedback_run() function with
- * the @c try_no_queue parameter set to @c EFL_TRUE will not be accounted for
+ * the @c try_no_queue parameter set to @c EFL_TRUEwill not be accounted for
  * in the return of this function unless the thread creation fails and it
  * falls back to using one from the pool.
  */
@@ -2088,7 +2088,7 @@ EAPI int ecore_thread_available_get(void);
  * @param thread The thread context to set the name of
  * @param name The string to name the thread - this cannot be NULL
  *
- * @return EFL_TRUE if it succeeds setting the name or EFL_FALSE otherwise.
+ * @return EFL_TRUEif it succeeds setting the name or EFL_FALSE otherwise.
  *
  * @since 1.26
  */
@@ -2103,7 +2103,7 @@ EAPI Efl_Bool ecore_thread_name_set(Ecore_Thread *thread, const char *name);
  * @param cb Function to free the data when removed from the hash
  * @param direct If @c true, this will not copy the key string (like
  * eina_hash_direct_add())
- * @return @c EFL_TRUE on success, @c EFL_FALSE on failure.
+ * @return @c EFL_TRUEon success, @c EFL_FALSE on failure.
  *
  * Ecore Thread has a mechanism to share data across several worker functions
  * that run on the same system thread. That is, the data is stored per
@@ -2234,7 +2234,7 @@ EAPI void *ecore_thread_local_data_find(Ecore_Thread *thread, const char *key);
  *
  * @param thread The thread context the data belongs to
  * @param key The name under which the data is stored
- * @return @c EFL_TRUE on success, @c EFL_FALSE on failure.
+ * @return @c EFL_TRUEon success, @c EFL_FALSE on failure.
  *
  * If there's any data stored associated with @p key in the global hash,
  * this function will remove it from it and return @c EFL_TRUE. If no data
@@ -2263,7 +2263,7 @@ EAPI Efl_Bool ecore_thread_local_data_del(Ecore_Thread *thread, const char *key)
  * @param cb Function to free the data when removed from the hash
  * @param direct If @c true, this will not copy the key string (like
  * eina_hash_direct_add())
- * @return @c EFL_TRUE on success, @c EFL_FALSE on failure.
+ * @return @c EFL_TRUEon success, @c EFL_FALSE on failure.
  *
  * Ecore Thread keeps a hash that can be used to share data across several
  * threads, including the main loop one, without having to manually handle
@@ -2340,7 +2340,7 @@ EAPI void *ecore_thread_global_data_find(const char *key);
  * Deletes from the shared hash the data corresponding to the given key.
  *
  * @param key The name under which the data is stored
- * @return @c EFL_TRUE on success, @c EFL_FALSE on failure.
+ * @return @c EFL_TRUEon success, @c EFL_FALSE on failure.
  *
  * If there's any data stored associated with @p key in the global hash,
  * this function will remove it from it and return @c EFL_TRUE. If no data
@@ -2469,7 +2469,7 @@ EAPI void *ecore_pipe_del(Ecore_Pipe *p);
  * @param p      The Ecore_Pipe object.
  * @param buffer The data to write into the pipe.
  * @param nbytes The size of the @p buffer in bytes.
- * @return       @c EFL_TRUE on a successful write, @c EFL_FALSE on error.
+ * @return       @c EFL_TRUEon a successful write, @c EFL_FALSE on error.
  */
 EAPI Efl_Bool ecore_pipe_write(Ecore_Pipe *p, const void *buffer, unsigned int nbytes);
 

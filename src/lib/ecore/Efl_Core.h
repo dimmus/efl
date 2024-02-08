@@ -1,7 +1,7 @@
 #ifndef _EFL_CORE_H
 #define _EFL_CORE_H
 
-//#include <Efl_One_Config.h>
+#include "efl_config.h"
 
 #include <Eina.h>
 #include <Eo.h>

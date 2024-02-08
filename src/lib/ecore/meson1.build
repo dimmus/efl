@@ -1,11 +1,8 @@
-dep_ecore = []
-dep_ecore_pub = [etool, eo, efl]
-dep_ecore_ext = [intl, m]
-# dep_ecore_ext = [intl, m, buildsystem]
+ecore_deps = []
+ecore_pub_deps = [eina, eo, efl]
+ecore_ext_deps = [intl, m, buildsystem]
 
-inc_ecore = include_directories('.')
-
-if sys_sun
+if sys_sun == true
    ecore_deps += [malloc]
 endif
 
@@ -106,7 +103,7 @@ ecore_header_src = [
   'efl_loop_timer_eo.legacy.h',
 ]
 
-src_ecore = files([
+ecore_src = files([
   'efl_app.c',
   'ecore.c',
   'ecore_alloc.c',
@@ -178,42 +175,42 @@ src_ecore = files([
   'efl_core_command_line.c',
 ])
 
-if sys_windows
+if sys_windows == true
   #nothing for now ... needs testing
-  src_ecore += files(['ecore_exe_win32.c'])
+  ecore_src += files(['ecore_exe_win32.c'])
 else
-  src_ecore += files(['ecore_signal.c', 'ecore_exe_posix.c'])
+  ecore_src += files(['ecore_signal.c', 'ecore_exe_posix.c'])
 endif
 
-# if get_option('glib') and not sys_windows
-#   ecore_ext_deps += dependency('glib-2.0')
-#   ecore_ext_deps += dependency('gthread-2.0')
-#   config_h.set('GLIB_INTEGRATION_ALWAYS', '1')
-#   config_h.set('HAVE_GLIB', '1')
-# endif
+if get_option('glib') == true and sys_windows == false
+  ecore_ext_deps += dependency('glib-2.0')
+  ecore_ext_deps += dependency('gthread-2.0')
+  config_h.set('GLIB_INTEGRATION_ALWAYS', '1')
+  config_h.set('HAVE_GLIB', '1')
+endif
 
-# if get_option('g-mainloop')
-#   if not get_option('glib')
-#     error('g-mainloop enabled by glib not. Please enable with -Dglib=true')
-#   else
-#     config_h.set('USE_G_MAIN_LOOP', '1')
-#   endif
-# endif
+if get_option('g-mainloop') == true
+  if get_option('glib') == false
+    error('g-mainloop enabled by glib not. Please enable with -Dglib=true')
+  else
+    config_h.set('USE_G_MAIN_LOOP', '1')
+  endif
+endif
 
-lib_ecore = library('ecore',
-    src_ecore, pub_eo_file_target,
-    dependencies: dep_ecore_pub + [dep_ecore, dep_ecore_ext],
-    include_directories : inc_config + [include_directories(join_paths('..','..'))],
+ecore_lib = library('ecore',
+    ecore_src, pub_eo_file_target,
+    dependencies: ecore_pub_deps + [ecore_deps, ecore_ext_deps],
+    include_directories : config_dir + [include_directories(join_paths('..','..'))],
     install: true,
     c_args : package_c_args,
-    version : version
+    version : meson.project_version()
 )
 
 ecore = declare_dependency(
   include_directories: [include_directories('.')],
-  link_with: lib_ecore,
+  link_with: ecore_lib,
   sources : pub_eo_file_target + priv_eo_file_target,
-  dependencies: dep_ecore_pub,
+  dependencies: ecore_pub_deps,
 )
 
 eolian_ecore_dir = join_paths(eolian_include_dir, package_version_name)
@@ -228,4 +225,6 @@ install_headers(ecore_header_src,
   install_dir : dir_package_include,
 )
 
-dep_ecore_one = dep_ecore + dep_ecore_pub + dep_ecore_ext
+#TODO:
+# HAVE_TIZEN_CONFIGUREATION_MANAGER
+# avahi
