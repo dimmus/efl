@@ -329,8 +329,8 @@ ecore_init(void)
     */
 #ifdef _WIN32
     if (!evil_init()) return --_ecore_init_count;
-#endif
     if (!eina_init()) goto shutdown_evil;
+#endif
     eina_evlog(">RUN", NULL, 0.0, NULL);
     _ecore_log_dom = eina_log_domain_register("ecore", ECORE_DEFAULT_LOG_COLOR);
     if (_ecore_log_dom < 0)
@@ -447,8 +447,8 @@ shutdown_mempool:
     efl_object_shutdown();
 shutdown_log_dom:
     eina_shutdown();
-shutdown_evil:
 #ifdef _WIN32
+shutdown_evil:
     evil_shutdown();
 #endif
 
