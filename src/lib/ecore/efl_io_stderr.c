@@ -1,8 +1,8 @@
 #define EFL_IO_WRITER_FD_PROTECTED 1
-#define EFL_IO_WRITER_PROTECTED    1
+#define EFL_IO_WRITER_PROTECTED 1
 
 #ifdef HAVE_CONFIG_H
-#  include "efl_config.h"
+# include "efl_config.h"
 #endif
 
 #include <Ecore.h>
@@ -13,85 +13,67 @@
 static void
 _efl_io_stderr_event_write(void *data EFL_UNUSED, const Efl_Event *event)
 {
-    efl_io_writer_can_write_set(event->object, EFL_TRUE);
+   efl_io_writer_can_write_set(event->object, EFL_TRUE);
 }
 
 static void
 _efl_io_stderr_event_error(void *data EFL_UNUSED, const Efl_Event *event)
 {
-    efl_io_writer_can_write_set(event->object, EFL_FALSE);
+   efl_io_writer_can_write_set(event->object, EFL_FALSE);
 }
 
 EOLIAN static void
 _efl_io_stderr_efl_loop_fd_fd_set(Eo *o, void *pd EFL_UNUSED, int fd)
 {
-    efl_loop_fd_file_set(efl_super(o, MY_CLASS), fd);
-    efl_io_writer_fd_set(o, fd);
+   efl_loop_fd_file_set(efl_super(o, MY_CLASS), fd);
+   efl_io_writer_fd_set(o, fd);
 }
 
 EOLIAN static Efl_Object *
 _efl_io_stderr_efl_object_finalize(Eo *o, void *pd EFL_UNUSED)
 {
-    int fd = efl_loop_fd_get(o);
-    if (fd < 0) efl_loop_fd_set(o, STDIN_FILENO);
+   int fd = efl_loop_fd_get(o);
+   if (fd < 0) efl_loop_fd_set(o, STDIN_FILENO);
 
-    o = efl_finalize(efl_super(o, MY_CLASS));
-    if (!o) return NULL;
+   o = efl_finalize(efl_super(o, MY_CLASS));
+   if (!o) return NULL;
 
-    efl_event_callback_add(o,
-                           EFL_LOOP_FD_EVENT_WRITE,
-                           _efl_io_stderr_event_write,
-                           NULL);
-    efl_event_callback_add(o,
-                           EFL_LOOP_FD_EVENT_ERROR,
-                           _efl_io_stderr_event_error,
-                           NULL);
+   efl_event_callback_add(o, EFL_LOOP_FD_EVENT_WRITE, _efl_io_stderr_event_write, NULL);
+   efl_event_callback_add(o, EFL_LOOP_FD_EVENT_ERROR, _efl_io_stderr_event_error, NULL);
 
-    return o;
+   return o;
 }
 
 EOLIAN static Eina_Error
-_efl_io_stderr_efl_io_writer_write(Eo         *o,
-                                   void *pd    EFL_UNUSED,
-                                   Eina_Slice *ro_slice,
-                                   Eina_Slice *remaining)
+_efl_io_stderr_efl_io_writer_write(Eo *o, void *pd EFL_UNUSED, Eina_Slice *ro_slice, Eina_Slice *remaining)
 {
-    Eina_Error ret;
+   Eina_Error ret;
 
-    ret = efl_io_writer_write(efl_super(o, MY_CLASS), ro_slice, remaining);
-    if (ro_slice && ro_slice->len > 0)
-        efl_io_writer_can_write_set(o,
-                                    EFL_FALSE); /* wait Efl.Loop.Fd "write" */
+   ret = efl_io_writer_write(efl_super(o, MY_CLASS), ro_slice, remaining);
+   if (ro_slice && ro_slice->len > 0)
+     efl_io_writer_can_write_set(o, EFL_FALSE); /* wait Efl.Loop.Fd "write" */
 
-    return ret;
+   return ret;
 }
 
 EOLIAN static void
-_efl_io_stderr_efl_io_writer_can_write_set(Eo      *o,
-                                           void *pd EFL_UNUSED,
-                                           Efl_Bool value)
+_efl_io_stderr_efl_io_writer_can_write_set(Eo *o, void *pd EFL_UNUSED, Efl_Bool value)
 {
-    Efl_Bool old = efl_io_writer_can_write_get(o);
-    if (old == value) return;
+   Efl_Bool old = efl_io_writer_can_write_get(o);
+   if (old == value) return;
 
-    efl_io_writer_can_write_set(efl_super(o, MY_CLASS), value);
+   efl_io_writer_can_write_set(efl_super(o, MY_CLASS), value);
 
-    if (value)
-    {
+   if (value)
+     {
         /* stop monitoring the FD, we need to wait the user to write and clear the kernel flag */
-        efl_event_callback_del(o,
-                               EFL_LOOP_FD_EVENT_WRITE,
-                               _efl_io_stderr_event_write,
-                               NULL);
-    }
-    else
-    {
+        efl_event_callback_del(o, EFL_LOOP_FD_EVENT_WRITE, _efl_io_stderr_event_write, NULL);
+     }
+   else
+     {
         /* kernel flag is clear, resume monitoring the FD */
-        efl_event_callback_add(o,
-                               EFL_LOOP_FD_EVENT_WRITE,
-                               _efl_io_stderr_event_write,
-                               NULL);
-    }
+        efl_event_callback_add(o, EFL_LOOP_FD_EVENT_WRITE, _efl_io_stderr_event_write, NULL);
+     }
 }
 
 #include "efl_io_stderr.eo.c"
