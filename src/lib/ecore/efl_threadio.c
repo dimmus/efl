@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <Ecore.h>
@@ -12,7 +12,7 @@ typedef struct _Efl_ThreadIO_Data Efl_ThreadIO_Data;
 
 struct _Efl_ThreadIO_Data
 {
-   void *indata, *outdata;
+    void *indata, *outdata;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -22,25 +22,25 @@ struct _Efl_ThreadIO_Data
 EOLIAN static void
 _efl_threadio_indata_set(Eo *obj EFL_UNUSED, Efl_ThreadIO_Data *pd, void *data)
 {
-   pd->indata = data;
+    pd->indata = data;
 }
 
 EOLIAN static void *
 _efl_threadio_indata_get(const Eo *obj EFL_UNUSED, Efl_ThreadIO_Data *pd)
 {
-   return pd->indata;
+    return pd->indata;
 }
 
 EOLIAN static void
 _efl_threadio_outdata_set(Eo *obj EFL_UNUSED, Efl_ThreadIO_Data *pd, void *data)
 {
-   pd->outdata = data;
+    pd->outdata = data;
 }
 
 EOLIAN static void *
 _efl_threadio_outdata_get(const Eo *obj EFL_UNUSED, Efl_ThreadIO_Data *pd)
 {
-   return pd->outdata;
+    return pd->outdata;
 }
 
 //////////////////////////////////////////////////////////////////////////

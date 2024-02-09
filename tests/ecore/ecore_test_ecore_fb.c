@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdio.h>
@@ -36,9 +36,11 @@ EFL_START_TEST(ecore_test_ecore_fb_init)
      }
  */
 }
+
 EFL_END_TEST
 
-void ecore_test_ecore_fb(TCase *tc)
+void
+ecore_test_ecore_fb(TCase *tc)
 {
-   tcase_add_test(tc, ecore_test_ecore_fb_init);
+    tcase_add_test(tc, ecore_test_ecore_fb_init);
 }
