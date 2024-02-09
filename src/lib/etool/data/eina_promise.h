@@ -1725,7 +1725,7 @@ eina_future_race_array(Eina_Future *array[])
  * @endcode
  * @see eina_future_chain_array()
  */
-#define eina_future_chain(_prev, ...) eina_future_chain_array(_prev, (Eina_Future_Desc[]){__VA_ARGS__, {.cb = NULL, .data = NULL}})
+#define eina_future_chain(_prev, ...) eina_future_chain_array(_prev, (Eina_Future_Desc[]){__VA_ARGS__, {.cb = NULL, .data = NULL, .storage = NULL}})
 /**
  * A syntactic sugar over eina_future_then_from_desc().
  * Usage:

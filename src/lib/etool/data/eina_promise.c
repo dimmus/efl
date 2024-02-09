@@ -1655,5 +1655,5 @@ eina_future_cb_log_from_desc(const Eina_Future_Cb_Log_Desc desc)
     ctx->line   = desc.line;
 
 exit:
-    return (Eina_Future_Desc){ .cb = _future_cb_log, .data = ctx };
+    return (Eina_Future_Desc){ .cb = _future_cb_log, .data = ctx, NULL };
 }
