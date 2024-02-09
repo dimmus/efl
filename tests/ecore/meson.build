@@ -2,19 +2,22 @@
 ecore_suite_src = [
   'ecore_suite.c',
   'ecore_test_ecore.c',
-  # 'ecore_test_ecore_imf.c', # need ecore_imf
   'ecore_test_idle.c',
   'ecore_test_timer.c',
-  # 'ecore_test_ecore_evas.c', # need ecore_evas
-  # 'ecore_test_ecore_evas_selection.c',
   'ecore_test_animator.c',
   'ecore_test_ecore_thread_eina_thread_queue.c',
-  # 'ecore_test_ecore_input.c', # need ecore_input
-  # 'ecore_test_ecore_file.c', # need ecore_file
   'ecore_test_job.c',
   'ecore_test_args.c',
   'ecore_test_pipe.c',
   'ecore_suite.h'
+]
+
+ecore_suite_src += [
+  # 'ecore_test_ecore_imf.c', # need ecore_imf
+  # 'ecore_test_ecore_evas.c', # need ecore_evas
+  # 'ecore_test_ecore_evas_selection.c', # need ecore_evas
+  # 'ecore_test_ecore_input.c', # need ecore_input
+  # 'ecore_test_ecore_file.c', # need ecore_file
 ]
 
 ecore_suite_deps = [m]
