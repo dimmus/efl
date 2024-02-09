@@ -614,6 +614,7 @@ ecore_fork_reset_callback_add(Ecore_Cb func, const void *data)
     fcb->func = func;
     fcb->data = (void *)data;
     fork_cbs  = eina_list_append(fork_cbs, fcb);
+    free(fcb);
     return EFL_TRUE;
 }
 
@@ -717,6 +718,7 @@ ecore_main_loop_thread_safe_call_async(Ecore_Cb callback, void *data)
     order->suspend  = EFL_FALSE;
 
     _ecore_main_loop_thread_safe_call(order);
+    free(order);
 }
 
 EAPI void *
