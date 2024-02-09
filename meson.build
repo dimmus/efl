@@ -32,6 +32,9 @@ efl_config.set_quoted('EFL_BUILD_DIR'   , dir_build)
 efl_config.set_quoted('EFL_SRC_DIR'     , dir_source)
 efl_config.set_quoted('EFL_BUILD_ID'    , '1')
 efl_config.set10     ('EFL_HAVE_THREADS', true)
+efl_config.set       ('EFL_VERSION_MAJOR', version_major)
+efl_config.set       ('EFL_VERSION_MINOR', version_minor)
+efl_config.set       ('EFL_VERSION_MICRO', version_micro)
 
 # efl_config.set_quoted('PACKAGE'            , name)
 # efl_config.set_quoted('VERSION'            , version)
@@ -134,7 +137,7 @@ subprojects = [
   ['efl'                ,[]                    , false,  true, false,  false,  false,     false,  true, ['eo'], []],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
   # ['eet'              ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'emile', 'efl'], []],
-  ['ecore'              ,[]                    , false,  true, false,  false,  false,     false,  true, ['etool', 'eo', 'efl'], []],
+  ['ecore'              ,[]                    , false,  true, false,  false,   true,     false,  true, ['etool', 'eo', 'efl'], []],
   # ['eldbus'           ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []],
   # ['ecore'            ,[]                    ,  true, false, false,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []], #ecore modules depend on eldbus
   # ['ecore_audio'      ,['audio']             , false,  true, false,  false,  false,     false,  true, ['eina', 'eo'], []],
