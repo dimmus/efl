@@ -1,12 +1,13 @@
 Bugfixes:
 
-* lib/eo_gen/eo_lexer.c:1263:15: warning: variable 'ls' might be clobbered by 'longjmp' or 'vfork' [-Wclobbered]
-  lib/eo_gen/eo_parser.c:2698:17: warning: variable 'fname' might be clobbered by 'longjmp' or 'vfork' [-Wclobbered]
-  Build with -O3 (buildtype=release)
+* -Dbuild-benchmarks=true
+  benchmarks: we have a c++ code there. So several cflags does't work for c++ - have an error during meson setup.
 
-* lib/shared/data/eina_inline_value.x:490:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
-  lib/shared/data/eina_inline_value.x:497:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
-  Build with -O3 (buildtype=release)
+* -Dbuildtype=release (-O3)
+  - lib/eo_gen/eo_lexer.c:1263:15: warning: variable 'ls' might be clobbered by 'longjmp' or 'vfork' [-Wclobbered]
+  - lib/eo_gen/eo_parser.c:2698:17: warning: variable 'fname' might be clobbered by 'longjmp' or 'vfork' [-Wclobbered]
+  - lib/shared/data/eina_inline_value.x:490:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
+  - lib/shared/data/eina_inline_value.x:497:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
 
 External:
 
