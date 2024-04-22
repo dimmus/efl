@@ -1,11 +1,11 @@
 option('build-tests',
         type  : 'boolean',
-        value : true,
+        value : false,
         description : 'Compile tests')
 
 option('build-examples',
         type : 'boolean',
-        value : true,
+        value : false,
         description : 'Compile examples')
 
 option('build-benchmarks',
@@ -25,7 +25,7 @@ option('native-arch-optimization',
 
 option('nls',
         type: 'boolean',
-        value: false,
+        value: true,
         description: 'Localization')
 
 option('eina-magic-debug',
@@ -91,35 +91,30 @@ option('debug_stack_usage',
         description: 'measure coroutine stack usage')
 
 option('install-eo-files',
-  type: 'boolean',
-  value: true,
-  description : 'Install any eo file'
-)
+        type: 'boolean',
+        value: true,
+        description : 'Install any eo file')
 
 option('build-id',
-  type : 'string',
-  value : '',
-  description : 'The build id string for efl set as the EFL_BUILD_ID define')
-
+        type : 'string',
+        value : '',
+        description : 'The build id string for efl set as the EFL_BUILD_ID define')
 
 option('docs',
-  type: 'boolean',
-  value: false,
-  description: 'Enable building C of documentation (requires doxygen)'
-)
+        type: 'boolean',
+        value: true,
+        description: 'Enable building C of documentation (requires doxygen)')
 
 option('wl',
-  type : 'boolean',
-  value : true,
-  description : 'Wayland client support in efl'
-)
+        type : 'boolean',
+        value : true,
+        description : 'Wayland client support in efl')
 
  option('opengl',
-  type : 'combo',
-  choices : ['full', 'es-egl', 'none'],
-  value : 'es-egl',
-  description : 'Type of OpenGL support in efl'
-)
+        type : 'combo',
+        choices : ['full', 'es-egl', 'none'],
+        value : 'es-egl',
+        description : 'Type of OpenGL support in efl')
 
 # option('eeze',
 #   type : 'boolean',
