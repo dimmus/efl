@@ -1,16 +1,15 @@
 project('efl', ['c','cpp'],
   version: '2.0.99',
   default_options : [
-    'buildtype=debug', # plain,debug,debugoptimized,release,minsize,custom
-    # 'warning_level=1',   # 0,1,2,3
+    'buildtype=release', # plain,debug,debugoptimized,release,minsize,custom
+    'warning_level=2',   # 0,1,2,3
     # 'optimization=g',  # 0,g,1,2,3,s
-    # 'b_sanitize=address,undefined',
+    # 'b_sanitize=none   # none,address,thread,undefined,memory,leak,address,undefined',
     # 'b_coverage=true',
-    # 'b_lto=true',
+    # 'b_lto=false',
     # 'b_lto_threads=32',
-    # 'b_lto_mode=thin',
-    # 'b_thinlto_cache=true',
-    # 'b_staticpic=true', 'stdsplit=false', 'b_pie=true',
+    # 'b_staticpic=true', 
+    # 'b_pie=false',
     # 'b_lundef=true',
     'c_std=gnu99'
   ],
@@ -120,7 +119,7 @@ subprojects = [
   ['eo_interfaces'      ,[]                    , false,  true, false,  false,   true,     false,  true, ['eo'], []],
   ['core'               ,[]                    , false,  true, false,  false,  false,     false,  true, ['shared', 'eo', 'eo_interfaces'], []],
   ['dbus'               ,[]                    , false,  true,  true,  false,   true,      true,  true, ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
-  ['core'               ,[]                    ,  true, false, false,  false,   true,      true,  true, ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
+  ['core'               ,[]                    ,  true, false, false,  false,   true,      true,  true, ['shared', 'eo', 'eo_interfaces'], []], 
   ['core_input'         ,[]                    , false,  true, false,  false,  false,     false,  true, ['shared', 'eo'], []],
   ['core_wl'            ,['wl']                ,  true,  true, false,  false,   true,     false,  true, ['shared'], ['libdrm']],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
