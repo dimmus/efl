@@ -45,7 +45,6 @@ checks.json
 *-protocol.h
 *-protocol.c
 
-/build
+/build/*
 .vscode/
 
-/scripts
