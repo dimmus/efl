@@ -1,11 +1,31 @@
-# Configuration of clang-format
+# This configuration file can be used to auto-format the code base.
+# Not all guidelines specified in CODING_STYLE are followed, so the
+# result MUST NOT be committed indiscriminately, but each automated
+# change should be reviewed and only the appropriate ones committed.
+#
+# The easiest way to apply the formatting to your changes ONLY,
+# is to use the git-clang-format script (usually installed with clang-format).
+#
+# -  Fix up formatting before committing
+# 1. Edit and stage your files.
+# 2. Run `git clang-format`.
+# 3. Verify + correct + (un)stage changes.
+# 4. Commit.
+#
+# -  Fix up formatting after committing
+# 1. Commit your changes.
+# 2. Run `git clang-format HEAD~` - Refer the commit *before* your changes here.
+# 3. Verify + correct changes, `git difftool -d` can help here.
+# 4. Stage + commit, potentially with `--amend` (means to fixup the last commit).
+#
+# To run clang-format on all sourcefiles, use the following line:
+# $ git ls-files 'src/*.[ch]' 'src/*.cc' | xargs clang-format -i -style=file
 # =============================
 # Tested to work with version: 16.
 #
 # Introduction: https://clang.llvm.org/docs/ClangFormat.html
 # Supported options: https://clang.llvm.org/docs/ClangFormatStyleOptions.html
-
-# See https://wiki.apertis.org/Guidelines/Coding_conventions#Code_formatting
+# See as well https://wiki.apertis.org/Guidelines/Coding_conventions#Code_formatting
 BasedOnStyle: GNU
 
 Language: Cpp
@@ -151,7 +171,7 @@ SpaceBeforeAssignmentOperators: true
 SpaceBeforeCaseColon: false
 
 # Use "if (...)" instead of "if(...)", but have function calls like foo().
-SpaceBeforeParens: ControlStatements
+SpaceBeforeParens: ControlStatementsExceptForEachMacros
 SpaceInEmptyParentheses: false
 
 BitFieldColonSpacing: Both
@@ -181,17 +201,13 @@ AttributeMacros: ["__capability"]
 StatementAttributeLikeMacros: []
 StatementMacros: []
 
-# Dont't use ForEachMacros as it adds space after _FOREACH before brace like:
-# EINA_ITERATOR_FOREACH (it, tile)
 ForEachMacros:
-[
-    # "EINA_LIST_FOREACH",
-    # "EINA_INLIST_FOREACH",
-    # "EINA_ITERATOR_FOREACH",
-    # "EINA_ACCESSOR_FOREACH",
-    # "EINA_INARRAY_FOREACH",
-    # "EINA_VALUE_ARRAY_FOREACH"
-]
+    - EINA_LIST_FOREACH
+    - EINA_INLIST_FOREACH
+    - EINA_ITERATOR_FOREACH
+    - EINA_ACCESSOR_FOREACH
+    - EINA_INARRAY_FOREACH
+    - EINA_VALUE_ARRAY_FOREACH
 
 # Avoid having function calls broken onto a new line:
 #
