@@ -21,7 +21,7 @@
 #endif
 
 #include "eina_bench.h"
-#include "Eina.h"
+#include "Efl_Shared.h"
 
 static void
 eina_bench_eina_rectangle_pool(int request)

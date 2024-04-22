@@ -25,7 +25,7 @@
 #endif
 
 #include "eina_bench.h"
-#include "Eina.h"
+#include "Efl_Shared.h"
 
 static void
 _eina_mempool_bench(Eina_Mempool *mp, int request)

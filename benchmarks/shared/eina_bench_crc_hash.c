@@ -11,7 +11,7 @@
 # include <glib.h>
 #endif
 
-#include <Eina.h>
+#include <Efl_Shared.h>
 #include "Evas_Data.h"
 #include "Ecore_Data.h"
 
