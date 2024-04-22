@@ -1,0 +1,21 @@
+Bugfixes:
+
+* lib/eo_gen/eo_lexer.c:1263:15: warning: variable 'ls' might be clobbered by 'longjmp' or 'vfork' [-Wclobbered]
+  lib/eo_gen/eo_parser.c:2698:17: warning: variable 'fname' might be clobbered by 'longjmp' or 'vfork' [-Wclobbered]
+  Build with -O3 (buildtype=release)
+
+* lib/shared/data/eina_inline_value.x:490:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
+  lib/shared/data/eina_inline_value.x:497:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
+  Build with -O3 (buildtype=release)
+
+External:
+
+* wayland:
+  - protocol: 
+* objc:
+  - meson: test Objective-C build flags
+
+Regularly:
+
+* po: update pot files
+* doc: update api documentation
