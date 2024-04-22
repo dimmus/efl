@@ -172,7 +172,7 @@ _introspect_append_interface(Efl_Strbuf *buf, Eldbus_Service_Interface *iface)
 
     iterator = eina_hash_iterator_data_new(iface->methods);
     EINA_ITERATOR_FOREACH(iterator, method)
-    _introspect_append_method(buf, method);
+        _introspect_append_method(buf, method);
     eina_iterator_free(iterator);
 
     for (i = 0; i < eina_array_count(iface->sign_of_signals); i++)
@@ -180,7 +180,7 @@ _introspect_append_interface(Efl_Strbuf *buf, Eldbus_Service_Interface *iface)
 
     iterator = eina_hash_iterator_data_new(iface->properties);
     EINA_ITERATOR_FOREACH(iterator, prop)
-    _instrospect_append_property(buf, prop->property, iface);
+        _instrospect_append_property(buf, prop->property, iface);
     eina_iterator_free(iterator);
 
     eina_strbuf_append(buf, "</interface>");
@@ -387,7 +387,7 @@ cb_introspect(const Eldbus_Service_Interface *_iface,
 
         iterator = eina_hash_iterator_data_new(obj->interfaces);
         EINA_ITERATOR_FOREACH(iterator, iface)
-        _introspect_append_interface(obj->introspection_data, iface);
+            _introspect_append_interface(obj->introspection_data, iface);
         eina_iterator_free(iterator);
 
         baselen = strlen(obj->path);
@@ -395,9 +395,9 @@ cb_introspect(const Eldbus_Service_Interface *_iface,
         if (baselen != 1) baselen++;
 
         EINA_INLIST_FOREACH(obj->children, child)
-        eina_strbuf_append_printf(obj->introspection_data,
-                                  "<node name=\"%s\" />",
-                                  child->path + baselen);
+            eina_strbuf_append_printf(obj->introspection_data,
+                                      "<node name=\"%s\" />",
+                                      child->path + baselen);
 
         eina_strbuf_append(obj->introspection_data, "</node>");
         obj->introspection_dirty = EFL_FALSE;
@@ -566,13 +566,13 @@ _managed_obj_append(Eldbus_Service_Object *obj,
     eldbus_message_iter_container_close(obj_entry, array_interface);
     eldbus_message_iter_container_close(array, obj_entry);
 
-    foreach:
-   EINA_INLIST_FOREACH(obj->children, children)
-        {
-            Efl_Bool ret;
-            ret = _managed_obj_append(children, array, EFL_FALSE);
-            if (!ret) return EFL_FALSE;
-        }
+foreach:
+    EINA_INLIST_FOREACH(obj->children, children)
+    {
+        Efl_Bool ret;
+        ret = _managed_obj_append(children, array, EFL_FALSE);
+        if (!ret) return EFL_FALSE;
+    }
     return EFL_TRUE;
 }
 
@@ -1269,12 +1269,12 @@ _object_free(Eldbus_Service_Object *obj)
          * that this object is the ObjectManager
          */
         EINA_INLIST_FOREACH(obj->children, children)
-        _children_ifaces_add_removed_flush(children);
+            _children_ifaces_add_removed_flush(children);
     }
 
     iterator = eina_hash_iterator_data_new(obj->interfaces);
     EINA_ITERATOR_FOREACH(iterator, iface)
-    _interface_free(iface);
+        _interface_free(iface);
 
     /**
     * Flush our iface_add/removed if this object are
@@ -1645,7 +1645,7 @@ eldbus_service_object_manager_detach(Eldbus_Service_Interface *iface)
     * that this object is the ObjectManager
     */
     EINA_INLIST_FOREACH(obj->children, children)
-    _children_ifaces_add_removed_flush(children);
+        _children_ifaces_add_removed_flush(children);
 
     ret             = eina_hash_del(obj->interfaces, objmanager->name, NULL);
     obj->objmanager = NULL;

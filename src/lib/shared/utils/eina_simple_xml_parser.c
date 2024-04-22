@@ -1117,7 +1117,7 @@ _eina_simple_xml_node_tag_attributes_append(Efl_Strbuf               *buf,
     Eina_Simple_XML_Attribute *a;
 
     EINA_INLIST_FOREACH(tag->attributes, a)
-    eina_strbuf_append_printf(buf, " %s=\"%s\"", a->key, a->value);
+        eina_strbuf_append_printf(buf, " %s=\"%s\"", a->key, a->value);
 }
 
 static void _eina_simple_xml_node_dump(Efl_Strbuf           *buf,
@@ -1134,7 +1134,7 @@ _eina_simple_xml_node_children_dump(Efl_Strbuf               *buf,
     Eina_Simple_XML_Node *node;
 
     EINA_INLIST_FOREACH(tag->children, node)
-    _eina_simple_xml_node_dump(buf, node, indent, level);
+        _eina_simple_xml_node_dump(buf, node, indent, level);
 }
 
 static void

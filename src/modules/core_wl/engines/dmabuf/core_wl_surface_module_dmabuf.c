@@ -170,11 +170,11 @@ _evas_dmabuf_surface_assign(Ecore_Wl_Surface *s, void *priv_data)
          */
         //        WRN("No free DMAbuf buffers, dropping a frame");
         EINA_LIST_FOREACH(p->buffers, l, b)
-        ecore_wl_buffer_age_set(b, 0);
+            ecore_wl_buffer_age_set(b, 0);
         return 0;
     }
     EINA_LIST_FOREACH(p->buffers, l, b)
-    ecore_wl_buffer_age_inc(b);
+        ecore_wl_buffer_age_inc(b);
 
     return ecore_wl_buffer_age_get(p->current);
 }

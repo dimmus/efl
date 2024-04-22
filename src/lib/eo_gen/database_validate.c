@@ -666,10 +666,10 @@ _validate_function(Validate_State  *vals,
                                              func->set_return_by_ref))
         return _reset_stable(vals, was_stable, EFL_FALSE);
 
-#define EOLIAN_PARAMS_VALIDATE(params)  \
-    EINA_LIST_FOREACH(params, l, param) \
-    if (!_validate_param(vals, param))  \
-        return _reset_stable(vals, was_stable, EFL_FALSE);
+#define EOLIAN_PARAMS_VALIDATE(params)     \
+    EINA_LIST_FOREACH(params, l, param)    \
+        if (!_validate_param(vals, param)) \
+            return _reset_stable(vals, was_stable, EFL_FALSE);
 
     EOLIAN_PARAMS_VALIDATE(func->prop_values);
     EOLIAN_PARAMS_VALIDATE(func->prop_values_get);
@@ -1084,7 +1084,7 @@ _db_fill_ihash(Eolian_Class *icl, Eina_Hash *icls)
     Eina_List    *l;
     Eolian_Class *sicl;
     EINA_LIST_FOREACH(icl->extends, l, sicl)
-    _db_fill_ihash(sicl, icls);
+        _db_fill_ihash(sicl, icls);
     eina_hash_set(icls, &icl, icl);
 }
 
@@ -1363,7 +1363,7 @@ _add_implicit_composite(Eolian_Class *icl, Eina_Hash *ch, Efl_Bool try_tree)
     if (!try_tree) return;
     Eina_List *l;
     EINA_LIST_FOREACH(icl->extends, l, icl)
-    _add_implicit_composite(icl, ch, try_tree);
+        _add_implicit_composite(icl, ch, try_tree);
 }
 
 static Efl_Bool
@@ -1469,7 +1469,7 @@ _db_fill_inherits(Validate_State *vals,
     /* iterate extensions, add any composite stuff into the hash as well */
     Eolian_Class *icl;
     EINA_LIST_FOREACH(cl->extends, il, icl)
-    _add_composite(cl, icl, ch);
+        _add_composite(cl, icl, ch);
 
     /* failed on the way, no point in filling further
     * the failed stuff will get dropped so it's ok if it's inconsistent
@@ -1492,7 +1492,7 @@ _db_fill_inherits(Validate_State *vals,
         if (cl->parent) _db_fill_ihash(cl->parent, ih);
 
         EINA_LIST_FOREACH(cl->extends, il, icl)
-        _db_fill_ihash(icl, ih);
+            _db_fill_ihash(icl, ih);
 
         /* go through only the explicitly specified composite list part, as the
          * rest was to be handled in parents already... add what hasn't been
@@ -1535,7 +1535,7 @@ _db_fill_inherits(Validate_State *vals,
     if (cl->parent) _db_fill_callables(cl, cl->parent, fh, EFL_TRUE);
 
     EINA_LIST_FOREACH(cl->extends, il, icl)
-    _db_fill_callables(cl, icl, fh, EFL_FALSE);
+        _db_fill_callables(cl, icl, fh, EFL_FALSE);
 
     /* verify that all methods are implemented on the class */
     if (!_db_check_implemented(vals, cl, fh, ch, errh)) vals->warned = EFL_TRUE;
@@ -1578,7 +1578,7 @@ _required_classes(Eolian_Class *mixin)
         result = eina_list_merge(result, _required_classes(mixin->parent));
 
     EINA_LIST_FOREACH(mixin->extends, n, extension)
-    result = eina_list_merge(result, _required_classes(extension));
+        result = eina_list_merge(result, _required_classes(extension));
 
     return result;
 }
@@ -1713,19 +1713,19 @@ _validate_class(Validate_State *vals,
     if (!_validate_doc_since(vals, cl->doc)) return EFL_FALSE;
 
     EINA_LIST_FOREACH(cl->properties, l, func)
-    if (!_validate_function(vals, func, nhash)) return EFL_FALSE;
+        if (!_validate_function(vals, func, nhash)) return EFL_FALSE;
 
     EINA_LIST_FOREACH(cl->methods, l, func)
-    if (!_validate_function(vals, func, nhash)) return EFL_FALSE;
+        if (!_validate_function(vals, func, nhash)) return EFL_FALSE;
 
     EINA_LIST_FOREACH(cl->events, l, event)
-    if (!_validate_event(vals, event, ehash)) return EFL_FALSE;
+        if (!_validate_event(vals, event, ehash)) return EFL_FALSE;
 
     EINA_LIST_FOREACH(cl->parts, l, part)
-    if (!_validate_part(vals, part, phash)) return EFL_FALSE;
+        if (!_validate_part(vals, part, phash)) return EFL_FALSE;
 
     EINA_LIST_FOREACH(cl->implements, l, impl)
-    if (!_validate_implement(vals, impl)) return EFL_FALSE;
+        if (!_validate_implement(vals, impl)) return EFL_FALSE;
 
     /* all the checks that need to be done every time are performed now */
     if (valid)

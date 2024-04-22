@@ -321,11 +321,11 @@ eina_file_common_map_free(Eina_File *file,
     if (!em)
     {
         EINA_LIST_FOREACH(file->dead_map, l, em)
-        if (em->map == map)
-        {
-            hashed = EFL_FALSE;
-            break;
-        }
+            if (em->map == map)
+            {
+                hashed = EFL_FALSE;
+                break;
+            }
         if (hashed) return;
     }
 

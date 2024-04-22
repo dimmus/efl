@@ -1034,7 +1034,7 @@ eina_list_reverse_clone(const Eina_List *list)
 #endif
     lclone = NULL;
     EINA_LIST_FOREACH(list, l, data)
-    lclone = eina_list_prepend(lclone, data);
+        lclone = eina_list_prepend(lclone, data);
 
     return lclone;
 }
@@ -1053,7 +1053,7 @@ eina_list_clone(const Eina_List *list)
 #endif
     lclone = NULL;
     EINA_LIST_FOREACH(list, l, data)
-    lclone = eina_list_append(lclone, data);
+        lclone = eina_list_append(lclone, data);
 
     return lclone;
 }

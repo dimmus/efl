@@ -1991,7 +1991,7 @@ _ecore_main_select(Eo *obj, Efl_Loop_Data *pd, double timeout)
     outval = 0;
 BAIL:
     EINA_LIST_FOREACH(pd->always_fd_handlers, l, fdh)
-    _ecore_try_add_to_call_list(obj, pd, fdh);
+        _ecore_try_add_to_call_list(obj, pd, fdh);
 
     if (ret > 0)
     {

@@ -422,8 +422,8 @@ _eina_quadtree_merge(Eina_Inlist *result, Eina_List *both)
         Eina_List *l;
 
         EINA_LIST_FOREACH(both, l, item)
-        if (item->visible)
-            result = eina_inlist_append(result, EINA_INLIST_GET(item));
+            if (item->visible)
+                result = eina_inlist_append(result, EINA_INLIST_GET(item));
 
         return result;
     }

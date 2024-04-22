@@ -133,7 +133,7 @@ _ecore_wl_output_find(Ecore_Wl_Display *display, struct wl_output *op)
     Ecore_Wl_Output *wlop;
 
     EINA_INLIST_FOREACH(display->outputs, wlop)
-    if (wlop->wl_output == op) return wlop;
+        if (wlop->wl_output == op) return wlop;
 
     return NULL;
 }

@@ -629,7 +629,7 @@ _ecore_thread_shutdown(void)
     SLKL(_ecore_running_job_mutex);
 
     EINA_LIST_FOREACH(_ecore_running_job, l, work)
-    ecore_thread_cancel((Ecore_Thread *)work);
+        ecore_thread_cancel((Ecore_Thread *)work);
 
     SLKU(_ecore_running_job_mutex);
 
@@ -802,7 +802,8 @@ ecore_thread_cancel(Ecore_Thread *thread)
                     return EFL_TRUE;
                 }
             }
-        else EINA_LIST_FOREACH(_ecore_pending_job_threads_feedback, l, work)
+        else
+            EINA_LIST_FOREACH(_ecore_pending_job_threads_feedback, l, work)
             {
                 if ((void *)work == (void *)thread)
                 {

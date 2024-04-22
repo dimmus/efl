@@ -190,7 +190,7 @@ _efl_filter_model_child_fetch(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
 
    // Get the first and only child in the array
     EINA_VALUE_ARRAY_FOREACH(&v, len, i, target)
-    break;
+        break;
 
     r->child = efl_ref(target);
 
@@ -338,7 +338,7 @@ _filter_remove_array(Eo *o EFL_UNUSED, void *data, const Eina_Value v)
     Eo                       *target = NULL;
 
     EINA_VALUE_ARRAY_FOREACH(&v, len, i, target)
-    break;
+        break;
 
     if (efl_isa(target, EFL_FILTER_MODEL_CLASS))
     {

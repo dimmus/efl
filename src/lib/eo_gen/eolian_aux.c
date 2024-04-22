@@ -177,7 +177,7 @@ _all_impls_find(Eina_List            **l,
     Eina_List          *tl;
     const Eolian_Class *icl;
     EINA_LIST_FOREACH(eina_hash_find(children, &cl), tl, icl)
-    _all_impls_find(l, icl, func, got, children);
+        _all_impls_find(l, icl, func, got, children);
 }
 
 EOLIAN_API Eina_List *

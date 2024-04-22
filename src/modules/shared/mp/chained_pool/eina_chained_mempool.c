@@ -321,8 +321,9 @@ eina_chained_mempool_malloc(void *data, EFL_UNUSED unsigned int size)
     }
 
 #ifdef DEBUG
-    if (p == NULL) EINA_INLIST_FOREACH(pool->first, p)
-    assert(!p->base && !p->last);
+    if (p == NULL)
+        EINA_INLIST_FOREACH(pool->first, p)
+            assert(!p->base && !p->last);
 #endif
 
     // we have reached the end of the list - no free pools

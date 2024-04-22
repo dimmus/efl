@@ -548,8 +548,9 @@ _efl_loop_timer_enable_new(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
     Efl_Loop_Timer_Data *timer;
 
     if (!pd->timers_added) return;
-    pd->timers_added                                         = 0;
-    EINA_INLIST_FOREACH(pd->timers, timer) timer->just_added = 0;
+    pd->timers_added = 0;
+    EINA_INLIST_FOREACH(pd->timers, timer)
+        timer->just_added = 0;
 }
 
 int
@@ -652,7 +653,7 @@ _efl_loop_timer_expired_call(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd, double when)
         Efl_Loop_Timer_Data *timer;
         // User set time backwards
         EINA_INLIST_FOREACH(pd->timers, timer)
-        timer->at -= (pd->last_check - when);
+            timer->at -= (pd->last_check - when);
     }
     pd->last_check = when;
 

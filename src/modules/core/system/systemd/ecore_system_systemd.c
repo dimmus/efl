@@ -7,7 +7,6 @@
 #include "Efl_Dbus.h"
 #include "Efl_Core.h"
 
-
 static int                _log_dom = -1;
 static Eldbus_Connection *_conn    = NULL;
 
@@ -260,7 +259,7 @@ _property_change_monitor(const char      *name,
 }
 
 static void         _ecore_system_systemd_shutdown(void);
-static Efl_Bool    _ecore_system_systemd_init(void);
+static Efl_Bool     _ecore_system_systemd_init(void);
 static unsigned int reseting = 0;
 
 static void
@@ -277,7 +276,8 @@ _ecore_system_systemd_init(void)
 {
     eldbus_init();
     if (!reseting)
-        ecore_fork_reset_callback_add((Ecore_Cb)_ecore_system_systemd_reset, NULL);
+        ecore_fork_reset_callback_add((Ecore_Cb)_ecore_system_systemd_reset,
+                                      NULL);
 
     _log_dom = eina_log_domain_register("ecore_system_systemd", NULL);
     if (_log_dom < 0)
@@ -321,7 +321,8 @@ _ecore_system_systemd_shutdown(void)
 
     DBG("ecore system 'systemd' unloaded");
     if (!reseting)
-        ecore_fork_reset_callback_del((Ecore_Cb)_ecore_system_systemd_reset, NULL);
+        ecore_fork_reset_callback_del((Ecore_Cb)_ecore_system_systemd_reset,
+                                      NULL);
 
     while (_proxies)
     {

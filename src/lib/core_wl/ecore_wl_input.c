@@ -74,7 +74,7 @@ _ecore_wl_input_mouse_down_info_get(int device)
 
     l = _ecore_wl_mouse_down_info_list;
     EINA_INLIST_FOREACH(l, info)
-    if (info->device == device) return info;
+        if (info->device == device) return info;
 
     info = calloc(1, sizeof(Ecore_Wl_Mouse_Down_Info));
     if (!info) return NULL;
@@ -1847,7 +1847,7 @@ _ecore_wl_input_del(Ecore_Wl_Input *input)
         eina_inlist_remove(display->inputs, EINA_INLIST_GET(input));
 
     EINA_INLIST_FOREACH(display->windows, window)
-    if (window->grab == input) window->grab = NULL;
+        if (window->grab == input) window->grab = NULL;
 
     eina_stringshare_replace(&input->name, NULL);
     free(input);

@@ -249,7 +249,7 @@ _efl_invalidate(_Eo_Object *obj)
 
     // Invalidate all children too
     EINA_INLIST_FOREACH(pd->children, child)
-    eina_array_push(&stash, _efl_ref(child));
+        eina_array_push(&stash, _efl_ref(child));
 
     while ((child = eina_array_pop(&stash)))
     {

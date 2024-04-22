@@ -1776,11 +1776,11 @@ parse_implement(Eo_Lexer *ls, Efl_Bool iface)
         Eina_List        *l;
         Eolian_Implement *fimp;
         EINA_LIST_FOREACH(ls->klass->implements, l, fimp)
-        if (iname == fimp->base.name)
-        {
-            impl = fimp;
-            break;
-        }
+            if (iname == fimp->base.name)
+            {
+                impl = fimp;
+                break;
+            }
         eina_stringshare_del(iname);
         if (!impl)
         {
@@ -2249,14 +2249,14 @@ _requires_add(Eo_Lexer *ls, Efl_Strbuf *buf)
     required = eina_stringshare_add(eina_strbuf_string_get(buf));
 
     EINA_LIST_FOREACH(ls->klass->requires, l, oname)
-    if (required == oname)
-    {
-        eo_lexer_context_restore(ls);
-        eina_stringshare_del(required);
-        snprintf(ebuf, sizeof(ebuf), "duplicate entry '%s'", oname);
-        eo_lexer_syntax_error(ls, ebuf);
-        return;
-    }
+        if (required == oname)
+        {
+            eo_lexer_context_restore(ls);
+            eina_stringshare_del(required);
+            snprintf(ebuf, sizeof(ebuf), "duplicate entry '%s'", oname);
+            eo_lexer_syntax_error(ls, ebuf);
+            return;
+        }
 
     fnm = database_class_to_filename(required);
 
@@ -2282,14 +2282,14 @@ _composite_add(Eo_Lexer *ls, Efl_Strbuf *buf)
     const char *nm = eina_stringshare_add(eina_strbuf_string_get(buf));
 
     EINA_LIST_FOREACH(ls->klass->composite, l, oname)
-    if (nm == oname)
-    {
-        eo_lexer_context_restore(ls);
-        snprintf(ebuf, sizeof(ebuf), "duplicate entry '%s'", nm);
-        eina_stringshare_del(nm);
-        eo_lexer_syntax_error(ls, ebuf);
-        return;
-    }
+        if (nm == oname)
+        {
+            eo_lexer_context_restore(ls);
+            snprintf(ebuf, sizeof(ebuf), "duplicate entry '%s'", nm);
+            eina_stringshare_del(nm);
+            eo_lexer_syntax_error(ls, ebuf);
+            return;
+        }
 
     char *fnm = database_class_to_filename(nm);
     if (!eina_hash_find(ls->state->filenames_eo, fnm))

@@ -7,7 +7,6 @@
 #include "Efl_Dbus.h"
 #include "Efl_Core.h"
 
-
 static int                _log_dom = -1;
 static Eldbus_Connection *_conn    = NULL;
 
@@ -47,12 +46,12 @@ static Ecore_System_Upower_Version _version = 0;
 
 static Efl_Bool _ecore_on_battery    = EFL_FALSE;
 static Efl_Bool _ecore_low_battery   = EFL_FALSE;
-static int       _ecore_battery_level = -1;
+static int      _ecore_battery_level = -1;
 
 static Eina_List *_eldbus_pending = NULL;
 
 static Efl_Bool _ecore_system_upower_display_device_init(void);
-static void      _ecore_system_upower_shutdown(void);
+static void     _ecore_system_upower_shutdown(void);
 
 static void
 _battery_eval(void)
@@ -425,7 +424,7 @@ disp_error:
     return EFL_FALSE;
 }
 
-static Efl_Bool    _ecore_system_upower_init(void);
+static Efl_Bool     _ecore_system_upower_init(void);
 static void         _ecore_system_upower_shutdown(void);
 static unsigned int reseting;
 
@@ -445,7 +444,8 @@ _ecore_system_upower_init(void)
 
     eldbus_init();
     if (!reseting)
-        ecore_fork_reset_callback_add((Ecore_Cb)_ecore_system_upower_reset, NULL);
+        ecore_fork_reset_callback_add((Ecore_Cb)_ecore_system_upower_reset,
+                                      NULL);
 
     _log_dom = eina_log_domain_register("ecore_system_upower", NULL);
     if (_log_dom < 0)
@@ -506,7 +506,8 @@ _ecore_system_upower_shutdown(void)
 
     DBG("ecore system 'upower' unloaded");
     if (!reseting)
-        ecore_fork_reset_callback_del((Ecore_Cb)_ecore_system_upower_reset, NULL);
+        ecore_fork_reset_callback_del((Ecore_Cb)_ecore_system_upower_reset,
+                                      NULL);
 
     eldbus_name_owner_changed_callback_del(_conn,
                                            "org.freedesktop.UPower",

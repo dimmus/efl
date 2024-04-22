@@ -3395,11 +3395,11 @@ _eo_log_obj_entry_is_new_backtrace(const Eina_List  *entries,
 
     hash = _eo_log_obj_backtrace_hash(entry);
     EINA_LIST_FOREACH(entries, li, other)
-    if (_eo_log_obj_backtrace_hash(other) == hash)
-    {
-        other->bt_hits++;
-        ret = EFL_FALSE;
-    }
+        if (_eo_log_obj_backtrace_hash(other) == hash)
+        {
+            other->bt_hits++;
+            ret = EFL_FALSE;
+        }
 
     return ret;
 }

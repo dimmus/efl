@@ -83,22 +83,22 @@ _check_function(const Eolian_Function *f, Eina_Hash *depset, Eina_Hash *chash)
     if ((f->type == EOLIAN_METHOD) || (f->type == EOLIAN_FUNCTION_POINTER))
     {
         EINA_LIST_FOREACH(f->params, l, arg)
-        _check_param(arg, depset, chash);
+            _check_param(arg, depset, chash);
     }
     else
     {
         EINA_LIST_FOREACH(f->prop_values, l, arg)
-        _check_param(arg, depset, chash);
+            _check_param(arg, depset, chash);
         EINA_LIST_FOREACH(f->prop_values_get, l, arg)
-        _check_param(arg, depset, chash);
+            _check_param(arg, depset, chash);
         EINA_LIST_FOREACH(f->prop_values_set, l, arg)
-        _check_param(arg, depset, chash);
+            _check_param(arg, depset, chash);
         EINA_LIST_FOREACH(f->prop_keys, l, arg)
-        _check_param(arg, depset, chash);
+            _check_param(arg, depset, chash);
         EINA_LIST_FOREACH(f->prop_keys_get, l, arg)
-        _check_param(arg, depset, chash);
+            _check_param(arg, depset, chash);
         EINA_LIST_FOREACH(f->prop_keys_set, l, arg)
-        _check_param(arg, depset, chash);
+            _check_param(arg, depset, chash);
     }
 }
 
@@ -114,28 +114,28 @@ _check_class(const Eolian_Class *cl, Eina_Hash *depset, Eina_Hash *chash)
 
     Eina_Iterator *itr = eina_list_iterator_new(cl->extends);
     EINA_ITERATOR_FOREACH(itr, icl)
-    _add_dep(depset, icl->base.unit);
+        _add_dep(depset, icl->base.unit);
     eina_iterator_free(itr);
 
     itr = eina_list_iterator_new(cl->requires);
     EINA_ITERATOR_FOREACH(itr, icl)
-    _add_dep(depset, icl->base.unit);
+        _add_dep(depset, icl->base.unit);
     eina_iterator_free(itr);
 
     itr = eina_list_iterator_new(cl->composite);
     EINA_ITERATOR_FOREACH(itr, icl)
-    _add_dep(depset, icl->base.unit);
+        _add_dep(depset, icl->base.unit);
     eina_iterator_free(itr);
 
     const Eolian_Function *fid;
     itr = eina_list_iterator_new(cl->properties);
     EINA_ITERATOR_FOREACH(itr, fid)
-    _check_function(fid, depset, chash);
+        _check_function(fid, depset, chash);
     eina_iterator_free(itr);
 
     itr = eina_list_iterator_new(cl->methods);
     EINA_ITERATOR_FOREACH(itr, fid)
-    _check_function(fid, depset, chash);
+        _check_function(fid, depset, chash);
     eina_iterator_free(itr);
 
     const Eolian_Event *ev;
@@ -149,7 +149,7 @@ _check_class(const Eolian_Class *cl, Eina_Hash *depset, Eina_Hash *chash)
     const Eolian_Part *part;
     itr = eina_list_iterator_new(cl->parts);
     EINA_ITERATOR_FOREACH(itr, part)
-    _add_dep(depset, part->klass->base.unit);
+        _add_dep(depset, part->klass->base.unit);
     eina_iterator_free(itr);
 }
 
@@ -291,7 +291,7 @@ database_check(const Eolian_State *state)
     Eina_Iterator     *itr = eolian_state_units_get(state);
     const Eolian_Unit *unit;
     EINA_ITERATOR_FOREACH(itr, unit)
-    _check_unit(unit);
+        _check_unit(unit);
     eina_iterator_free(itr);
 
    /* namespace checks */

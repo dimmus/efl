@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <efl_config.h>
+#  include <efl_config.h>
 #endif
 
 #include "codegen.h"
@@ -8,154 +8,152 @@
 Efl_Bool
 file_read(const char *file_name, char **buffer)
 {
-   FILE *xml_handler;
-   int data; /* fgetc needs int to detect EOF correctly */
-   Efl_Strbuf *buf;
+    FILE       *xml_handler;
+    int         data; /* fgetc needs int to detect EOF correctly */
+    Efl_Strbuf *buf;
 
-   xml_handler = fopen(file_name, "rt");
-   if (!xml_handler)
-     {
+    xml_handler = fopen(file_name, "rt");
+    if (!xml_handler)
+    {
         printf("Error to read file: %s\n", file_name);
         return EFL_FALSE;
-     }
-   buf = eina_strbuf_new();
+    }
+    buf = eina_strbuf_new();
 
-   while ((data = fgetc(xml_handler)) != EOF)
-     eina_strbuf_append_char(buf, (char)data);
+    while ((data = fgetc(xml_handler)) != EOF)
+        eina_strbuf_append_char(buf, (char)data);
 
-   fclose(xml_handler);
-   *buffer = eina_strbuf_string_steal(buf);
-   eina_strbuf_free(buf);
+    fclose(xml_handler);
+    *buffer = eina_strbuf_string_steal(buf);
+    eina_strbuf_free(buf);
 
-   return EFL_TRUE;
+    return EFL_TRUE;
 }
 
 Efl_Bool
 file_write(const char *file_name, const char *buffer)
 {
-   FILE *file_handler;
-   const char *filename = file_name;
-   Efl_Strbuf *fname = NULL;
+    FILE       *file_handler;
+    const char *filename = file_name;
+    Efl_Strbuf *fname    = NULL;
 
-   fname = eina_strbuf_new();
+    fname = eina_strbuf_new();
 
-   if (output_dir)
-     {
+    if (output_dir)
+    {
         eina_strbuf_append_printf(fname, "%s/%s", output_dir, file_name);
         filename = eina_strbuf_string_get(fname);
-     }
-   file_handler = fopen(filename, "wt");
-   if (!file_handler)
-     {
+    }
+    file_handler = fopen(filename, "wt");
+    if (!file_handler)
+    {
         printf("Error to write file: %s\n", filename);
         eina_strbuf_free(fname);
         return EFL_FALSE;
-     }
+    }
 
-   if (fwrite(buffer, strlen(buffer), 1, file_handler) < 1)
-     {
+    if (fwrite(buffer, strlen(buffer), 1, file_handler) < 1)
+    {
         printf("Error writing to file: %s\n", filename);
-     }
-   fclose(file_handler);
-   eina_strbuf_free(fname);
+    }
+    fclose(file_handler);
+    eina_strbuf_free(fname);
 
-   return EFL_TRUE;
+    return EFL_TRUE;
 }
 
 char *
 dbus_name_to_c(const char *dbus)
 {
-   char *str_cpy = strdup(dbus), *pch, *ret;
-   Efl_Strbuf *buffer = eina_strbuf_new();
-   unsigned i;
+    char       *str_cpy = strdup(dbus), *pch, *ret;
+    Efl_Strbuf *buffer  = eina_strbuf_new();
+    unsigned    i;
 
-   pch = strtok(str_cpy, "/.");
-   if (!pch)
-     {
+    pch = strtok(str_cpy, "/.");
+    if (!pch)
+    {
         ret = strdup("root");
         goto end;
-     }
-   eina_strbuf_append(buffer, pch);
+    }
+    eina_strbuf_append(buffer, pch);
 
-   while ((pch = strtok(NULL, "/.")))
-     eina_strbuf_append_printf(buffer, "_%s",pch);
+    while ((pch = strtok(NULL, "/.")))
+        eina_strbuf_append_printf(buffer, "_%s", pch);
 
-   ret = eina_strbuf_string_steal(buffer);
-   for (i = 0; ret[i]; i++)
-     {
-        if (i > 0 && ret[i-1] != '_' && ret[i] > '@' && ret[i] < '[')//upper case
-          eina_strbuf_append_printf(buffer, "_%c", tolower(ret[i]));
-        else
-          eina_strbuf_append_char(buffer, tolower(ret[i]));
-     }
-   free(ret);
-   eina_strbuf_replace_all(buffer, "-", "_");
-   ret = eina_strbuf_string_steal(buffer);
+    ret = eina_strbuf_string_steal(buffer);
+    for (i = 0; ret[i]; i++)
+    {
+        if (i > 0 && ret[i - 1] != '_' && ret[i] > '@' &&
+            ret[i] < '[')//upper case
+            eina_strbuf_append_printf(buffer, "_%c", tolower(ret[i]));
+        else eina_strbuf_append_char(buffer, tolower(ret[i]));
+    }
+    free(ret);
+    eina_strbuf_replace_all(buffer, "-", "_");
+    ret = eina_strbuf_string_steal(buffer);
 end:
-   free(str_cpy);
-   eina_strbuf_free(buffer);
-   return ret;
+    free(str_cpy);
+    eina_strbuf_free(buffer);
+    return ret;
 }
 
 char *
 replace_string(const char *string, const char *substr, const char *replacement)
 {
-   char *str_cpy = strdup(string);
-   char *pch;
-   char *ret;
-   Efl_Strbuf *buffer = eina_strbuf_new();
+    char       *str_cpy = strdup(string);
+    char       *pch;
+    char       *ret;
+    Efl_Strbuf *buffer = eina_strbuf_new();
 
-   pch = strtok(str_cpy, substr);
-   if (!pch)
-     {
+    pch = strtok(str_cpy, substr);
+    if (!pch)
+    {
         eina_strbuf_free(buffer);
         return str_cpy;
-     }
-   eina_strbuf_append(buffer, pch);
+    }
+    eina_strbuf_append(buffer, pch);
 
-   while ((pch = strtok(NULL, substr)))
-     eina_strbuf_append_printf(buffer, "%s%s", replacement, pch);
+    while ((pch = strtok(NULL, substr)))
+        eina_strbuf_append_printf(buffer, "%s%s", replacement, pch);
 
-   ret = eina_strbuf_string_steal(buffer);
-   free(str_cpy);
-   eina_strbuf_free(buffer);
-   return ret;
+    ret = eina_strbuf_string_steal(buffer);
+    free(str_cpy);
+    eina_strbuf_free(buffer);
+    return ret;
 }
 
 char *
 get_pieces(const char *string, char break_in, int amount)
 {
-   int i;
-   int found = 0;
+    int i;
+    int found = 0;
 
-   for (i = strlen(string) - 1; i && amount > found; i--)
-     if (string[i] == break_in)
-       found++;
+    for (i = strlen(string) - 1; i && amount > found; i--)
+        if (string[i] == break_in) found++;
 
-   if (found)
-     return strdup(string+i+2);
-   else
-     return strdup(string);
+    if (found) return strdup(string + i + 2);
+    else return strdup(string);
 }
 
 char *
 string_build(const char *fmt, ...)
 {
-   va_list ap;
-   Efl_Strbuf *buffer = eina_strbuf_new();
-   char *ret;
+    va_list     ap;
+    Efl_Strbuf *buffer = eina_strbuf_new();
+    char       *ret;
 
-   va_start(ap, fmt);
-   eina_strbuf_prepend_vprintf(buffer, fmt, ap);
-   va_end(ap);
+    va_start(ap, fmt);
+    eina_strbuf_prepend_vprintf(buffer, fmt, ap);
+    va_end(ap);
 
-   ret = eina_strbuf_string_steal(buffer);
-   eina_strbuf_free(buffer);
+    ret = eina_strbuf_string_steal(buffer);
+    eina_strbuf_free(buffer);
 
-   return ret;
+    return ret;
 }
 
-#define UTIL_H "\
+#define UTIL_H \
+    "\
 #ifndef ELDBUS_UTILS_H\n\
 #define ELDBUS_UTILS_H 1\n\
 \n\
@@ -185,5 +183,5 @@ typedef void (*Eldbus_Codegen_Property_Complex_Get_Cb)(void *data, Eldbus_Pendin
 Efl_Bool
 util_h_write(void)
 {
-   return file_write("eldbus_utils.h", UTIL_H);
+    return file_write("eldbus_utils.h", UTIL_H);
 }

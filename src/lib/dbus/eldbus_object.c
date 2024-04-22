@@ -139,10 +139,10 @@ _eldbus_object_free(Eldbus_Object *obj)
         Eina_Iterator *iterator = eina_hash_iterator_data_new(obj->proxies);
         Eldbus_Proxy  *proxy;
         EINA_ITERATOR_FOREACH(iterator, proxy)
-        ERR("obj=%p alive proxy=%p %s",
-            obj,
-            proxy,
-            eldbus_proxy_interface_get(proxy));
+            ERR("obj=%p alive proxy=%p %s",
+                obj,
+                proxy,
+                eldbus_proxy_interface_get(proxy));
         eina_iterator_free(iterator);
         eina_hash_free(obj->proxies);
     }

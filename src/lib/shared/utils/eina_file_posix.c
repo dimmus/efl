@@ -1175,11 +1175,11 @@ eina_file_map_faulted(Eina_File *file, void *map)
             Eina_List *l;
 
             EINA_LIST_FOREACH(file->dead_map, l, em)
-            if (em->map == map)
-            {
-                r = em->faulty;
-                break;
-            }
+                if (em->map == map)
+                {
+                    r = em->faulty;
+                    break;
+                }
         }
     }
 

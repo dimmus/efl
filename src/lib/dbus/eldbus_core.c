@@ -122,7 +122,7 @@ _eldbus_fork_reset(void)
             Eldbus_Handler_Data *fd_handler;
 
             EINA_INLIST_FOREACH_SAFE(conn->fd_handlers, list, fd_handler)
-            dbus_watch_set_data(fd_handler->watch, NULL, NULL);
+                dbus_watch_set_data(fd_handler->watch, NULL, NULL);
         }
         shared_connections[i] = NULL;
     }
@@ -226,11 +226,11 @@ print_live_connection(Eldbus_Connection *conn)
 
             inner_itr = eina_hash_iterator_data_new(name->objects);
             EINA_ITERATOR_FOREACH(inner_itr, obj)
-            ERR("conn=%p alive object=%p %s of bus=%s",
-                conn,
-                obj,
-                obj->name,
-                name->name);
+                ERR("conn=%p alive object=%p %s of bus=%s",
+                    conn,
+                    obj,
+                    obj->name,
+                    name->name);
             eina_iterator_free(inner_itr);
         }
         eina_iterator_free(iter);
@@ -241,13 +241,13 @@ print_live_connection(Eldbus_Connection *conn)
     {
         Eldbus_Pending *p;
         EINA_INLIST_FOREACH(conn->pendings, p)
-        ERR("conn=%p alive pending call=%p dest=%s path=%s %s.%s()",
-            conn,
-            p,
-            eldbus_pending_destination_get(p),
-            eldbus_pending_path_get(p),
-            eldbus_pending_interface_get(p),
-            eldbus_pending_method_get(p));
+            ERR("conn=%p alive pending call=%p dest=%s path=%s %s.%s()",
+                conn,
+                p,
+                eldbus_pending_destination_get(p),
+                eldbus_pending_path_get(p),
+                eldbus_pending_interface_get(p),
+                eldbus_pending_method_get(p));
     }
 }
 
@@ -1250,7 +1250,7 @@ _eldbus_connection_free(Eldbus_Connection *conn)
     dbus_connection_flush(conn->dbus_conn);
 
     EINA_INLIST_FOREACH_SAFE(conn->pendings, list, p)
-    eldbus_pending_cancel(p);
+        eldbus_pending_cancel(p);
 
     cns  = eina_array_new(eina_hash_population(conn->names));
     iter = eina_hash_iterator_data_new(conn->names);
@@ -1288,25 +1288,25 @@ _eldbus_connection_free(Eldbus_Connection *conn)
     {
         CRI("Connection %p released with live pending calls!", conn);
         EINA_INLIST_FOREACH(conn->pendings, p)
-        ERR("conn=%p alive pending call=%p dest=%s path=%s %s.%s()",
-            conn,
-            p,
-            eldbus_pending_destination_get(p),
-            eldbus_pending_path_get(p),
-            eldbus_pending_interface_get(p),
-            eldbus_pending_method_get(p));
+            ERR("conn=%p alive pending call=%p dest=%s path=%s %s.%s()",
+                conn,
+                p,
+                eldbus_pending_destination_get(p),
+                eldbus_pending_path_get(p),
+                eldbus_pending_interface_get(p),
+                eldbus_pending_method_get(p));
     }
 
     if (conn->signal_handlers)
     {
         CRI("Connection %p released with live signal handlers!", conn);
         EINA_INLIST_FOREACH(conn->signal_handlers, h)
-        ERR("conn=%p alive signal=%p %s.%s path=%s",
-            conn,
-            h,
-            h->interface,
-            h->member,
-            h->path);
+            ERR("conn=%p alive signal=%p %s.%s path=%s",
+                conn,
+                h,
+                h->interface,
+                h->member,
+                h->path);
     }
 
     for (i = 0; i < ELDBUS_CONNECTION_EVENT_LAST; i++)
@@ -1330,10 +1330,10 @@ _eldbus_connection_free(Eldbus_Connection *conn)
     conn->dbus_conn = NULL;
 
     EINA_INLIST_FOREACH_SAFE(conn->fd_handlers, list, fd_handler)
-    eldbus_fd_handler_del(fd_handler);
+        eldbus_fd_handler_del(fd_handler);
 
     EINA_INLIST_FOREACH_SAFE(conn->timeouts, list, timer)
-    eldbus_timeout_data_free(timer->handler);
+        eldbus_timeout_data_free(timer->handler);
 
     eldbus_data_del_all(&conn->data);
 

@@ -432,7 +432,7 @@ _opcodes_register_all(Eina_Debug_Session *session)
                             EINA_DEBUG_OPCODE_REGISTER,
                             _callbacks_register_cb);
     EINA_LIST_FOREACH(session->opcode_reply_infos, l, info)
-    _opcodes_registration_send(session, info);
+        _opcodes_registration_send(session, info);
     ;
 }
 

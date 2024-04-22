@@ -303,7 +303,7 @@ _cb_global_add(void               *data,
                                               &wl_compositor_interface,
                                               ewd->wl.compositor_version);
         EINA_INLIST_FOREACH(ewd->windows, window)
-        _ecore_wl_window_surface_create(window);
+            _ecore_wl_window_surface_create(window);
     }
     else if (!strcmp(interface, "wl_subcompositor"))
     {
@@ -354,9 +354,9 @@ _cb_global_add(void               *data,
                                    &_aux_hints_listener,
                                    ewd);
         EINA_INLIST_FOREACH(ewd->windows, window)
-        if (window->surface)
-            efl_aux_hints_get_supported_aux_hints(ewd->wl.efl_aux_hints,
-                                                  window->surface);
+            if (window->surface)
+                efl_aux_hints_get_supported_aux_hints(ewd->wl.efl_aux_hints,
+                                                      window->surface);
     }
     else if (!strcmp(interface, "wl_output")) _ecore_wl_output_add(ewd, id);
     else if (!strcmp(interface, "wl_seat"))
@@ -515,17 +515,17 @@ _recovery_timer_add(Ecore_Wl_Display *ewd)
 
     memset(&ewd->wl, 0, sizeof(ewd->wl));
     EINA_INLIST_FOREACH_SAFE(ewd->inputs, tmp, input)
-    _ecore_wl_input_del(input);
+        _ecore_wl_input_del(input);
 
     EINA_INLIST_FOREACH_SAFE(ewd->outputs, tmp, output)
-    _ecore_wl_output_del(output);
+        _ecore_wl_output_del(output);
 
     EINA_INLIST_FOREACH_SAFE(ewd->windows, tmp, window)
     {
         Ecore_Wl_Subsurface *subsurf;
 
         EINA_INLIST_FOREACH_SAFE(window->subsurfs, tmp2, subsurf)
-        _ecore_wl_subsurf_unmap(subsurf);
+            _ecore_wl_subsurf_unmap(subsurf);
         _ecore_wl_window_semi_free(window);
         window->set_config.serial  = 0;
         window->req_config.serial  = 0;
@@ -789,11 +789,11 @@ _ecore_wl_display_cleanup(Ecore_Wl_Display *ewd)
 
     /* free each input */
     EINA_INLIST_FOREACH_SAFE(ewd->inputs, tmp, input)
-    _ecore_wl_input_del(input);
+        _ecore_wl_input_del(input);
 
     /* free each output */
     EINA_INLIST_FOREACH_SAFE(ewd->outputs, tmp, output)
-    _ecore_wl_output_del(output);
+        _ecore_wl_output_del(output);
 
     if (ewd->fd_hdl) ecore_main_fd_handler_del(ewd->fd_hdl);
 
@@ -1141,7 +1141,7 @@ ecore_wl_display_input_find(const Ecore_Wl_Display *display, unsigned int id)
     EINA_SAFETY_ON_NULL_RETURN_VAL(display, NULL);
     EINA_SAFETY_ON_TRUE_RETURN_VAL(display->pid, NULL);
     EINA_INLIST_FOREACH(display->inputs, input)
-    if (input->id == id) return input;
+        if (input->id == id) return input;
     return NULL;
 }
 
@@ -1154,7 +1154,7 @@ ecore_wl_display_input_find_by_name(const Ecore_Wl_Display *display,
     EINA_SAFETY_ON_NULL_RETURN_VAL(display, NULL);
     EINA_SAFETY_ON_TRUE_RETURN_VAL(display->pid, NULL);
     EINA_INLIST_FOREACH(display->inputs, input)
-    if (eina_streq(input->name, name)) return input;
+        if (eina_streq(input->name, name)) return input;
     return NULL;
 }
 

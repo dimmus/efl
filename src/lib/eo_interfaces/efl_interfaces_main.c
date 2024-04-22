@@ -120,7 +120,9 @@ _efl_ui_view_factory_item_created(Eo              *factory,
     int             len, i;
 
     EINA_VALUE_ARRAY_FOREACH(&v, len, i, item)
-    efl_event_callback_call(factory, EFL_UI_FACTORY_EVENT_ITEM_CREATED, item);
+        efl_event_callback_call(factory,
+                                EFL_UI_FACTORY_EVENT_ITEM_CREATED,
+                                item);
 
     return v;
 }

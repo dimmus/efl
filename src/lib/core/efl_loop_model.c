@@ -143,11 +143,12 @@ _efl_loop_model_efl_model_children_index_get(Eo            *obj,
     eina_array_step_set(&futures, sizeof(Eina_Array), 8);
 
     EINA_ITERATOR_FOREACH(indexes, idx)
-    eina_array_push(&futures,
-                    eina_future_then(efl_model_children_slice_get(obj, idx, 1),
-                                     _unpack_from_array,
-                                     NULL,
-                                     NULL));
+        eina_array_push(
+            &futures,
+            eina_future_then(efl_model_children_slice_get(obj, idx, 1),
+                             _unpack_from_array,
+                             NULL,
+                             NULL));
     eina_iterator_free(indexes);
 
     r = efl_future_then(

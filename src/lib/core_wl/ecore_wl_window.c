@@ -679,10 +679,10 @@ ecore_wl_window_free(Ecore_Wl_Window *window)
     display = window->display;
 
     EINA_INLIST_FOREACH(display->inputs, input)
-    _ecore_wl_input_window_remove(input, window);
+        _ecore_wl_input_window_remove(input, window);
 
     EINA_INLIST_FOREACH_SAFE(window->subsurfs, tmp, subsurf)
-    _ecore_wl_subsurf_free(subsurf);
+        _ecore_wl_subsurf_free(subsurf);
 
     _ecore_wl_window_aux_hint_free(window);
 
@@ -1579,7 +1579,7 @@ _frame_cb(void *data, struct wl_callback *callback, uint32_t timestamp)
     wl_callback_destroy(callback);
     window->callback = NULL;
     EINA_INLIST_FOREACH_SAFE(window->frame_callbacks, l, cb)
-    cb->cb(window, timestamp, cb->data);
+        cb->cb(window, timestamp, cb->data);
 }
 
 static struct wl_callback_listener _frame_listener = { _frame_cb };
