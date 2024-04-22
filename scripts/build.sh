@@ -175,23 +175,22 @@ meson_setup_dev_all()
 
 meson_setup_dev()
 {
-    # -Db_sanitize='address'
     time -p -f "Execution time: %e sec" \
     meson setup . $BD \
-        -Db_lto=false \
         -Dbuildtype=debug \
-        -Dwarning_level=2 \
-        -Deina-magic-debug=true \
-        -Dsystemd=true \
         -Dbuild-tests=true \
         -Dbuild-examples=true \
-        -Dbuild-benchmarks=true \
+        -Dbuild-benchmarks=false \
+        -Deina-magic-debug=false \
+        -Ddebug-threads=false \
+        -Dstack_protector=auto \
         -Dsanitizers=false \
         -Dtsan=false \
-        -Dmalloc_trim=enabled \
-        -Ddebug_graph_lock=true \
-        -Ddebug_mutex=true \
-        -Ddebug_stack_usage=true
+        -Dmalloc_trim=auto \
+        -Dmalloc=system \
+        -Ddebug_graph_lock=false \
+        -Ddebug_mutex=false \
+        -Ddebug_stack_usage=false
 }
 
 meson_compile()
@@ -295,11 +294,11 @@ case "$1" in
         tests_show_todo
         ;;
     co|cocci)
-        declare -l -r coc=./scripts/coccinelle
-        if [ -d ${coc} ]; then
-            exec ./scripts/coccinelle/coccicheck.sh
+        if [ -d scripts/coccinelle ]; then
+            # exec ./scripts/coccinelle/coccicheck.sh
+            exec ./scripts/coccinelle/run-coccinelle.sh
         else
-            eprint "ERR" "Coccicheck scripts folder not found!\n"
+            eprint "ERR" "Coccinelle scripts folder not found!\n"
         fi
         ;;
     cv|coverage)
