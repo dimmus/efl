@@ -2,36 +2,37 @@ project('efl', ['c','cpp'],
   version: '2.0.99',
   default_options : [
     'buildtype=release', # plain,debug,debugoptimized,release,minsize,custom
-    'warning_level=1',   # 0,1,2,3
+    # 'warning_level=1',   # 0,1,2,3
     # 'optimization=g',  # 0,g,1,2,3,s
     # 'b_sanitize=address,undefined',
     # 'b_coverage=true',
-    'b_lto=true',
-    'b_lto_threads=32',
-    'b_lto_mode=thin',
-    'b_thinlto_cache=true',
-    'b_staticpic=true', 'stdsplit=false', 'b_pie=true',
+    # 'b_lto=true',
+    # 'b_lto_threads=32',
+    # 'b_lto_mode=thin',
+    # 'b_thinlto_cache=true',
+    # 'b_staticpic=true', 'stdsplit=false', 'b_pie=true',
+    # 'b_lundef=true',
     'c_std=gnu99'
   ],
   meson_version : '>=0.63'
 )
 
-subdir('meson/constants')
 subdir('meson/arrays')
+subdir('meson/constants')
 subdir('meson/cflags')
 subdir('meson/arguments')
 
 # env = find_program('env', native: true)
 
 efl_config = configuration_data()
-efl_config.set_quoted('EFL_MODULE_ARCH' , version_name)
-efl_config.set_quoted('EFL_VERSION'     , version)
-efl_config.set_quoted('EFL_BIN_DIR'     , dir_bin)
-efl_config.set_quoted('EFL_LIB_DIR'     , dir_lib)
-efl_config.set_quoted('EFL_BUILD_DIR'   , dir_build)
-efl_config.set_quoted('EFL_SRC_DIR'     , dir_source)
-efl_config.set_quoted('EFL_BUILD_ID'    , '1')
-efl_config.set10     ('EFL_HAVE_THREADS', true)
+efl_config.set_quoted('EFL_MODULE_ARCH'  , version_name)
+efl_config.set_quoted('EFL_VERSION'      , version)
+efl_config.set_quoted('EFL_BIN_DIR'      , dir_bin)
+efl_config.set_quoted('EFL_LIB_DIR'      , dir_lib)
+efl_config.set_quoted('EFL_BUILD_DIR'    , dir_build)
+efl_config.set_quoted('EFL_SRC_DIR'      , dir_source)
+efl_config.set_quoted('EFL_BUILD_ID'     , '1')
+efl_config.set10     ('EFL_HAVE_THREADS' , true)
 efl_config.set       ('EFL_VERSION_MAJOR', version_major)
 efl_config.set       ('EFL_VERSION_MINOR', version_minor)
 efl_config.set       ('EFL_VERSION_MICRO', version_micro)
@@ -64,35 +65,32 @@ efl_config.set       ('EFL_VERSION_MICRO', version_micro)
 # endif
 
 subdir('meson/optimizations')
+subdir('meson/header_checks')
+subdir('meson/lua')
 
-inc_config = [include_directories('.')]
-
-if sys_linux or sys_bsd or sys_sun
-  sys_lib_extension = 'so'
-  sys_exe_extension = ''
-  sys_mod_extension = 'so'
-elif sys_windows
-  sys_lib_extension = 'dll'
-  sys_exe_extension = 'exe'
-  sys_mod_extension = 'dll'
+if sys_linux
+  subdir('meson/system/linux')
+elif sys_bsd
+  subdir('meson/system/bsd')
 elif sys_osx
-  sys_lib_extension = 'dylib'
-  sys_exe_extension = ''
-  sys_mod_extension = 'so'
-  efl_config.set('environ', '(*_NSGetEnviron())')
+  subdir('meson/system/osx')
+elif sys_sun
+  subdir('meson/system/sun')
+elif sys_windows
+  subdir('meson/system/win')
 else
   error('System ' + host_os + ' not known')
 endif
 
-if sys_linux or sys_bsd or sys_sun
-  efl_config.set('_STAT_VER_LINUX', '1')
-endif
+subdir('po')
 
-if sys_bsd
-  # This is necessary. We MUST use OpenSSL in base as bringing in from ports
-  # can cause major issues (2 copies of the same library).
-  crypto = declare_dependency(link_args : [ '-lssl', '-lcrypto'])
-elif get_option('crypto') == 'openssl'
+# if get_option('tslib')
+#   efl_config.set('HAVE_TSLIB', '1')
+# endif
+
+inc_config = [include_directories('.')]
+
+if get_option('crypto') == 'openssl'
   crypto = dependency('openssl')
 endif
 if crypto.found()
@@ -103,41 +101,30 @@ if get_option('crypto') != ''
   efl_config.set('HAVE_SIGNATURE', '1')
 endif
 
-efl_config.set_quoted('SHARED_LIB_SUFFIX', '.' + sys_lib_extension)
-efl_config.set_quoted('MOD_SUFFIX', '.' + sys_mod_extension)
-if sys_exe_extension == ''
-  efl_config.set_quoted('EXE_SUFFIX', '')
-else
-  efl_config.set_quoted('EXE_SUFFIX', '.' + sys_exe_extension)
-endif
-
-# if get_option('tslib')
-#   efl_config.set('HAVE_TSLIB', '1')
+efl_config.set_quoted('SHARED_LIB_SUFFIX', '.' + sys_lib_extension) # eina_module
+efl_config.set_quoted('MOD_SUFFIX', '.' + sys_mod_extension) # ecore
+# if sys_exe_extension == ''
+#   efl_config.set_quoted('EXE_SUFFIX', '')
+# else
+#   efl_config.set_quoted('EXE_SUFFIX', '.' + sys_exe_extension)
 # endif
-
-subdir('meson/header_checks')
-subdir('po')
-
-# if get_option('wl')
-#   subdir('src/wayland_protocol')
-# endif
-
-subdir('meson/lua')
 
 #we have to do that first, eina modules are required by eina
 #the other modules require theire package
-subdir(join_paths(local_module,'etool'))
+subdir(join_paths(local_module,'shared'))
 
 subprojects = [
   # name                |   option             | mod   | lib  | bin | bench | tests | examples | true if build in efl-one | pkg-config options | name of static libs
   # ['evil'             ,[]                    , false,  true, false,  false,  false,     false,  true, [], []],
-  ['etool'              ,[]                    , false,  true, false,   true,   true,      true,   true,  [], []],
-  ['eolian'             ,[]                    , false,  true,  true,  false,   true,     false,  false, ['etool'], []],
-  ['eo'                 ,[]                    , false,  true, false,   true,   true,     false,   true, ['etool'], []],
-  ['efl'                ,[]                    , false,  true, false,  false,  false,     false,  true, ['eo'], []],
+  ['shared'             ,[]                    , false,  true, false,   true,   true,      true,  true, [], []],
+  ['eo_gen'             ,[]                    , false,  true,  true,  false,  false,     false, false, ['shared'], []],
+  ['eo'                 ,[]                    , false,  true, false,   true,   true,     false,  true, ['shared'], []],
+  ['eo_interfaces'      ,[]                    , false,  true, false,  false,  false,     false,  true, ['eo'], []],
+  ['core'               ,[]                    , false,  true, false,  false,   true,      true,  true, ['shared', 'eo', 'efl'], []],
+  ['core_input'         ,[]                    , false,  true, false,  false,  false,     false,  true, ['shared', 'eo'], []],
+  ['core_wl'            ,['wl']                ,  true,  true, false,  false,   true,     false,  true, ['shared'], ['libdrm']],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
   # ['eet'              ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'emile', 'efl'], []],
-  ['ecore'              ,[]                    , false,  true, false,  false,   true,     false,  true, ['etool', 'eo', 'efl'], []],
   # ['eldbus'           ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []],
   # ['ecore'            ,[]                    ,  true, false, false,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []], #ecore modules depend on eldbus
   # ['ecore_audio'      ,['audio']             , false,  true, false,  false,  false,     false,  true, ['eina', 'eo'], []],
@@ -145,10 +132,8 @@ subprojects = [
   # ['ecore_con'        ,[]                    , false,  true,  true,  false,   true,     false,  true, ['eina', 'eo', 'efl', 'ecore'], ['http-parser']],
   # ['ecore_file'       ,[]                    , false,  true, false,  false,  false,     false,  true, ['eina'], []],
   # ['eeze'             ,['eeze']              ,  true,  true,  true,  false,   true,     false,  true, ['eina', 'efl'], []],
-  # ['ecore_input'      ,[]                    , false,  true, false,  false,  false,     false,  true, ['eina', 'eo'], []],
   # ['ecore_x'          ,['x11']               , false,  true, false,  false,  false,     false,  true, ['eina', 'efl'], []],
   # ['ecore_fb'         ,['fb']                , false,  true, false,  false,  false,     false,  true, ['eina'], []],
-  # ['ecore_wl2'        ,['wl']                ,  true,  true, false,  false,   true,     false,  true, ['eina'], ['libdrm']],
   # ['ecore_sdl'        ,['sdl']               , false,  true, false,  false,  false,     false,  true, ['eina'], []],
   # ['ecore_win32'      ,[]                    , false,  true, false,  false,  false,     false,  true, ['eina'], []],
   # ['ecore_ipc'        ,[]                    , false,  true, false,  false,  false,     false,  true, ['eina'], []],
@@ -257,7 +242,7 @@ foreach package : subprojects
     endif
     
     #special case for eolian, this is never efl-one, but will be required in the library
-    if package_name == 'eolian'
+    if package_name == 'eo_gen'
       package_c_args = [
         '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, package_name)+'"',
         '-DNEED_RUN_IN_TREE=1',
@@ -324,7 +309,7 @@ foreach package : subprojects
       '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, package_name)+'"',
       '-DNEED_RUN_IN_TREE=1',
     ]
-    if package[4] and package_name != 'eolian'
+    if package[4] and package_name != 'eo_gen'
        subdir(join_paths(local_bin, package_name))
     endif
     if package[5]
@@ -355,7 +340,7 @@ if get_option('efl-one')
     name : 'efl-one',
     subdirs : sub_efl_one,
     description: 'Configureation for efl in one big fat .so',
-    libraries : [efl_one] + dep_etool, #eina is a special case here which drags in m dl & threads
+    libraries : [efl_one] + dep_shared, #eina is a special case here which drags in m dl & threads
   )
 
   #overwrite all the dependencies of subprojects with efl-one, in order to link the modules and binaries to the correct .so
@@ -415,10 +400,13 @@ endif
 #   meson.add_install_script('meson/evas_loader_conf.sh', evas_loader_original, evas_loader_link_types)
 # endforeach
 
-doxygen = find_program('doxygen', required : false)
-if doxygen.found()
-  subdir('doc')
+if get_option('docs')
+  doxygen = find_program('doxygen', required : false)
+  if doxygen.found()
+    subdir('doc/api')
+  endif
 endif
+summary_info += {'Documentation': get_option('docs') and doxygen.found()}
 
 #
 # Configure files
@@ -469,3 +457,9 @@ subdir('services')
 #   )
 # endforeach
 
+summary(summary_dir,  bool_yn: true, section: 'Directories')
+summary(summary_env,  bool_yn: true, section: 'Build environment')
+summary(summary_mem,  bool_yn: true, section: 'Memory configuration')
+summary(summary_opt,  bool_yn: true, section: 'Optimization')
+summary(summary_efl,  bool_yn: true, section: 'EFL tools')
+summary(summary_info, bool_yn: true, section: 'Information')

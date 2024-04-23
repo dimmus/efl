@@ -8,6 +8,11 @@ option('build-examples',
         value : false,
         description : 'Compile examples')
 
+option('build-benchmarks',
+        type : 'boolean',
+        value : false,
+        description : 'Compile benchmarks')
+
 option('efl-one',
         type: 'boolean',
         value : true,
@@ -25,7 +30,7 @@ option('nls',
 
 option('eina-magic-debug',
         type : 'boolean',
-        value : true,
+        value : false,
         description : 'Magic number checking of eina structures in EFL')
 
 option('debug-threads',
@@ -41,7 +46,7 @@ option('crypto',
 
 option('systemd',
         type : 'boolean',
-        value : true,
+        value : false,
         description : 'Systemd and Elogind support at runtime in EFL')
 
 option('stack_protector',
@@ -96,6 +101,32 @@ option('build-id',
   value : '',
   description : 'The build id string for efl set as the EFL_BUILD_ID define')
 
+
+option('docs',
+  type: 'boolean',
+  value: false,
+  description: 'Enable building C of documentation (requires doxygen)'
+)
+
+option('wl',
+  type : 'boolean',
+  value : true,
+  description : 'Wayland client support in efl'
+)
+
+ option('opengl',
+  type : 'combo',
+  choices : ['full', 'es-egl', 'none'],
+  value : 'es-egl',
+  description : 'Type of OpenGL support in efl'
+)
+
+option('eeze',
+  type : 'boolean',
+  value : false,
+  description : 'Device abstraction (udev wrapper) in efl'
+)
+
 # option('audio',
 #   type : 'boolean',
 #   value : true,
@@ -126,12 +157,6 @@ option('build-id',
 #   description : 'SDL support in efl'
 # )
 
-# option('wl',
-#   type : 'boolean',
-#   value : false,
-#   description : 'Wayland client support in efl'
-# )
-
 # option('buffer',
 #   type : 'boolean',
 #   value : false,
@@ -160,19 +185,6 @@ option('cocoa',
 #   type : 'boolean',
 #   value : false,
 #   description : 'Physics engine (bullet) in efl'
-# )
-
-# option('eeze',
-#   type : 'boolean',
-#   value : true,
-#   description : 'Device abstraction (udev wrapper) in efl'
-# )
-
-# option('opengl',
-#   type : 'combo',
-#   choices : ['full', 'es-egl', 'none'],
-#   value : 'es-egl',
-#   description : 'Type of OpenGL support in efl'
 # )
 
 # option('glib',
