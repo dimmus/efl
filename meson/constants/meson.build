@@ -41,12 +41,20 @@ if sys_osx and add_languages('objc', required: get_option('cocoa'), native: fals
   bin_linker_args = ['-pagezero_size', '10000', '-image_base', '100000000']
 endif
 
-dir_prefix    = get_option('prefix')
-dir_sysconf   = join_paths(dir_prefix, get_option('sysconfdir'))
-dir_bin       = join_paths(dir_prefix, get_option('bindir'))
-dir_data      = join_paths(dir_prefix, get_option('datadir'))
-dir_include   = join_paths(dir_prefix, get_option('includedir'))
-dir_lib       = join_paths(dir_prefix, get_option('libdir'))
+dir_prefix  = get_option('prefix')
+dir_sysconf = dir_prefix / get_option('sysconfdir')
+dir_bin     = dir_prefix / get_option('bindir')
+dir_data    = dir_prefix / get_option('datadir')
+dir_include = dir_prefix / get_option('includedir')
+dir_lib     = dir_prefix /get_option('libdir')
+# dir_libexec = dir_prefix / get_option('libexecdir')
+# dir_module_weston = dir_lib / 'weston'
+# dir_module_libweston = dir_lib / 'libweston-@0@'.format(libweston_major)
+# dir_data_pc = dir_data / 'pkgconfig'
+# dir_lib_pc = dir_lib / 'pkgconfig'
+# dir_man = dir_prefix / get_option('mandir')
+# dir_protocol_libweston = 'libweston-@0@'.format(libweston_major) / 'protocols'
+# dir_gitlab_ci = meson.project_source_root() / '.gitlab-ci'
 
 local_lib       = 'src/lib'
 local_bin       = 'src/bin'
@@ -57,35 +65,19 @@ local_examples  = 'examples'
 # local_bindings  = 'bindings'
 local_benchmark = 'benchmarks'
 
-# summary(
-#   {
-#     'os': host_os,
-#     'prefix': dir_prefix,
-#     'bindir': dir_bin,
-#     'libdir': dir_lib,
-#     'includedir': dir_include,
-#   },
-#   section: 'Directories'
-# )
-
 # Build environment
-summary_info = {}
-summary_info += {'Build directory':   dir_build}
-summary_info += {'Source directory':  dir_source}
-summary_info += {'Install prefix':    get_option('prefix')}
-summary_info += {'Data directory':    dir_data}
+summary_dir += {'Build directory':   dir_build}
+summary_dir += {'Source directory':  dir_source}
+summary_dir += {'Install prefix':    get_option('prefix')}
+summary_dir += {'Data directory':    dir_data}
 pathsep = sys_windows ? ';' : ':'
-summary_info += {'Binary directory':  get_option('prefix') / get_option('bindir')}
-summary_info += {'Library directory': get_option('prefix') / get_option('libdir')}
-summary_info += {'Module directory':  dir_source / local_module}
-summary_info += {'Libexec directory': get_option('prefix') / get_option('libexecdir')}
-summary_info += {'Include directory': get_option('prefix') / get_option('includedir')}
-summary_info += {'Config directory':  get_option('prefix') / get_option('sysconfdir')}
-if sys_windows
-  summary_info += {'Local state directory': get_option('prefix') / get_option('localstatedir')}
-  summary_info += {'Manual directory':      get_option('prefix') / get_option('mandir')}
-else
-  summary_info += {'Local state directory': 'queried at runtime'}
+summary_dir += {'Binary directory':  dir_bin}
+summary_dir += {'Library directory': dir_lib}
+summary_dir += {'Module directory':  dir_source / local_module}
+summary_dir += {'Libexec directory': get_option('prefix') / get_option('libexecdir')}
+summary_dir += {'Include directory': dir_include}
+summary_dir += {'Config directory':  get_option('prefix') / get_option('sysconfdir')}
+if not sys_windows
+  summary_dir += {'Local state directory': 'queried at runtime'}
 endif
-# summary_info += {'Doc directory':     get_option('prefix') / get_option('docdir')}
-summary(summary_info, bool_yn: true, section: 'Directories')
+# summary_dir += {'Doc directory':     get_option('prefix') / get_option('docdir')}

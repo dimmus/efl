@@ -1,7 +1,7 @@
-# module_files = []
+module_files = []
 # evas_loader_map = []
 
-eolian_include_directories = []
+eo_gen_include_directories = []
 
 # ecore_evas_wayland_engine_include_dir = []
 # evas_static_list = []
@@ -9,8 +9,17 @@ eolian_include_directories = []
 dir_test       = []
 dir_example    = []
 efl_one_parts  = []
-dep_efl_one    = []
-dep_efl_one_eo = []
 inc_efl_one    = []
 sub_efl_one    = []
-dep_etool      = []
+
+dep_shared     = []
+dep_core       = []
+dep_efl_one    = []
+dep_efl_one_eo = []
+
+summary_dir    = {}
+summary_info   = {}
+summary_mem    = {}
+summary_opt    = {}
+summary_efl    = {}
+

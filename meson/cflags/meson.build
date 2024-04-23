@@ -3,7 +3,7 @@ dev_ldflags = []
 if get_option('buildtype').startswith('debug')
   if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
     dev_cflags_common_try = [
-      # '-g3',
+      '-g3',
       # '-fsanitize-trap', # undefined reference to `__ubsan_handle*
       '-fvisibility=hidden',
       '-Wundef',
@@ -40,8 +40,6 @@ if get_option('buildtype').startswith('debug')
       '-Wduplicated-branches',
       '-Wimplicit-fallthrough',
       '-Wmisleading-indentation',
-
-
       '-Wduplicated-cond',
       '-Wformat-nonliteral',
       '-Wformat-security',
@@ -57,9 +55,7 @@ if get_option('buildtype').startswith('debug')
       '-Wno-double-promotion', # a lot here !!!
       '-Wno-missing-prototypes',
       '-Wno-vla', # no in C90 standard
-      # Due to function casts through (void*) we cannot support -Wpedantic:
-      '-Wno-pedantic',
-      # We explicitly require variadic macros
+      '-Wno-pedantic', # due to function casts through (void*) we cannot support -Wpedantic:
       '-Wno-variadic-macros',
       # '-Werror=format=2',
       '-Werror=init-self',
@@ -140,15 +136,15 @@ endif
 
 if get_option('sanitizers')
   if cc.has_argument('-fsanitize=address')
-    dev_cflags = ['-fsanitize=address'] + dev_cflags
-    dev_ldflags = ['-fsanitize=address'] + dev_ldflags
+    dev_cflags += ['-fsanitize=address']
+    dev_ldflags += ['-fsanitize=address']
   endif
 
   # Detect static linking issue with ubsan - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
   if cc.links('int main(int argc, char **argv) { return argc + 1; }',
               args: [dev_ldflags, '-fsanitize=undefined'])
-    dev_cflags = ['-fsanitize=undefined'] + dev_cflags
-    dev_ldflags = ['-fsanitize=undefined'] + dev_ldflags
+    dev_cflags += ['-fsanitize=undefined']
+    dev_ldflags += ['-fsanitize=undefined']
   endif
 endif
 
@@ -164,8 +160,8 @@ if get_option('tsan')
                          prefix: '#include <sanitizer/tsan_interface.h>')
     error('Cannot enable TSAN due to missing fiber annotation interface')
   endif
-  dev_cflags = ['-fsanitize=thread'] + dev_cflags
-  dev_ldflags = ['-fsanitize=thread'] + dev_ldflags
+  dev_cflags += ['-fsanitize=thread']
+  dev_ldflags += ['-fsanitize=thread']
 endif
 
 # if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
@@ -173,16 +169,6 @@ endif
   # The combination is known as "full relro", because .got.plt is read-only too.
   dev_ldflags += cc.get_supported_link_arguments('-Wl,-z,relro', '-Wl,-z,now', '-Wl,-z,nodelete', '-Wl,-Bsymbolic-functions')
 # endif
-
-if sys_windows
-  dev_ldflags += cc.get_supported_link_arguments('-Wl,--no-seh', '-Wl,--nxcompat')
-  dev_ldflags += cc.get_supported_link_arguments('-Wl,--dynamicbase', '-Wl,--high-entropy-va')
-endif
-
-# Exclude --warn-common with TSan to suppress warnings from the TSan libraries.
-if sys_sun and not get_option('tsan')
-  dev_ldflags += cc.get_supported_link_arguments('-Wl,--warn-common')
-endif
 
 # Malloc tests
 malloc = []
@@ -209,55 +195,66 @@ if debug
 endif
 
 # Compilation information
-summary_info = {}
-summary_info += {'Host CPU':          cpu}
-summary_info += {'Host endianness':   build_machine.endian()}
-summary_info += {'Host system':       host_os}
-if build_machine.system() != host_os
-  summary_info += {'Build CPU':        build_machine.cpu_family()}
-  summary_info += {'Build endianness': build_machine.endian()}
-  summary_info += {'Build system':     build_machine.system()}
+summary_env = {}
+summary_env += {'Host system':       host_os}
+summary_env += {'Host CPU':          cpu}
+summary_env += {'Host endianness':   build_machine.endian()}
+
+if build_machine.system() != host_machine.system()
+  summary_env += {'Build CPU':        build_machine.cpu_family()}
+  summary_env += {'Build endianness': build_machine.endian()}
+  summary_env += {'Build system':     build_machine.system()}
 endif
-summary_info += {'C compiler':        ' '.join(meson.get_compiler('c').cmd_array())}
-summary_info += {'Host C compiler':   ' '.join(meson.get_compiler('c', native: true).cmd_array())}
+
+summary_env += {'C compiler':        ' '.join(meson.get_compiler('c').cmd_array())}
+summary_env += {'Host C compiler':   ' '.join(meson.get_compiler('c', native: true).cmd_array())}
+
 if 'cpp' in langs
-  summary_info += {'C++ compiler':    ' '.join(meson.get_compiler('cpp').cmd_array())}
+  summary_env += {'C++ compiler':    ' '.join(meson.get_compiler('cpp').cmd_array())}
 else
-  summary_info += {'C++ compiler':      false}
+  summary_env += {'C++ compiler':      false}
 endif
+
 if 'objc' in langs
-  summary_info += {'Objective-C compiler': ' '.join(meson.get_compiler('objc').cmd_array())}
+  summary_env += {'Objective-C compiler': ' '.join(meson.get_compiler('objc').cmd_array())}
 else
-  summary_info += {'Objective-C compiler': false}
+  summary_env += {'Objective-C compiler': false}
 endif
+
 option_cflags = (get_option('debug') ? ['-g'] : [])
+
 if get_option('optimization') != 'plain'
   option_cflags += ['-O' + get_option('optimization')]
 endif
-summary_info += {'CFLAGS':            ' '.join(get_option('c_args') + option_cflags)}
+
+summary_env += {'CFLAGS':            ' '.join(get_option('c_args') + option_cflags)}
+
 if 'cpp' in langs
-  summary_info += {'CXXFLAGS':        ' '.join(get_option('cpp_args') + option_cflags)}
+  summary_env += {'CXXFLAGS':        ' '.join(get_option('cpp_args') + option_cflags)}
 endif
+
 if 'objc' in langs
-  summary_info += {'OBJCFLAGS':       ' '.join(get_option('objc_args') + option_cflags)}
+  summary_env += {'OBJCFLAGS':       ' '.join(get_option('objc_args') + option_cflags)}
 endif
+
 link_args = get_option('c_link_args')
 if link_args.length() > 0
-  summary_info += {'LDFLAGS':         ' '.join(link_args)}
+  summary_env += {'LDFLAGS':         ' '.join(link_args)}
 endif
-summary_info += {'LTO':               get_option('b_lto')}
-summary_info += {'PIE':               get_option('b_pie')}
-summary_info += {'Static build':      get_option('prefer_static')}
-summary_info += {'Stack protector':   have_stack_protector}
-summary_info += {'Malloc trim support': has_malloc_trim}
-# summary_info += {'debug graph lock':  get_option('debug_graph_lock')}
-# summary_info += {'debug stack usage': get_option('debug_stack_usage')}
-# summary_info += {'mutex debugging':   get_option('debug_mutex')}
-summary_info += {'Memory allocator':  get_option('malloc')}
-# summary_info += {'avx2 optimization': config_host_data.get('CONFIG_AVX2_OPT')}
-# summary_info += {'avx512bw optimization': config_host_data.get('CONFIG_AVX512BW_OPT')}
-# summary_info += {'avx512f optimization': config_host_data.get('CONFIG_AVX512F_OPT')}
-summary_info += {'GCov':              get_option('b_coverage')}
-summary_info += {'Download dependencies': get_option('wrap_mode') != 'nodownload'}
-summary_info += {'Debugging': get_option('debug')}
-summary(summary_info, bool_yn: true, section: 'Build environment')
+
+summary_env += {'LTO':               get_option('b_lto')}
+summary_env += {'PIE':               get_option('b_pie')}
+summary_env += {'Static build':      get_option('prefer_static')}
+summary_env += {'Stack protector':   have_stack_protector}
+# summary_env += {'debug graph lock':  get_option('debug_graph_lock')}
+# summary_env += {'debug stack usage': get_option('debug_stack_usage')}
+# summary_env += {'mutex debugging':   get_option('debug_mutex')}
+# summary_env += {'avx2 optimization': config_host_data.get('CONFIG_AVX2_OPT')}
+# summary_env += {'avx512bw optimization': config_host_data.get('CONFIG_AVX512BW_OPT')}
+# summary_env += {'avx512f optimization': config_host_data.get('CONFIG_AVX512F_OPT')}
+summary_env += {'GCov':              get_option('b_coverage')}
+summary_env += {'Download dependencies': get_option('wrap_mode') != 'nodownload'}
+summary_env += {'Debugging': get_option('debug')}
+
+summary_mem += {'Memory allocator':  get_option('malloc')}
+summary_mem += {'Malloc trim support': has_malloc_trim}

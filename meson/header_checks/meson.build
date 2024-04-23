@@ -157,11 +157,6 @@ m = cc.find_library('m')
 dl = cc.find_library('dl', required: false)
 rt = cc.find_library('rt', required: false)
 
-if sys_sun
-  malloc = cc.find_library('malloc', required: true)
-  socket = cc.find_library('socket', required: true)
-endif
-
 thread_dep = dependency('threads')
 
 #check for the headers
@@ -207,25 +202,9 @@ if cc.has_header_symbol('sys/stat.h', 'fstatat')
   efl_config.set10('HAVE_ATFILE_SOURCE', true)
 endif
 
-if sys_linux and \
-    efl_config.has('HAVE_LISTXATTR') and \
-    efl_config.has('HAVE_SETXATTR') and \
-    efl_config.has('HAVE_GETXATTR')
-  efl_config.set10('HAVE_XATTR', true)
-endif
-
-regexp = []
-if sys_windows
-   regexp = cc.find_library('regex',
-                            has_headers: ['regex.h'],
-                            required: true)
-   if not regexp.found()
-      error('regex can not be found')
-   endif
-else
-   if not cc.has_header_symbol('regex.h', 'regcomp')
-      error('regcomp can not be found')
-   endif
+# regexp = []
+if not cc.has_header_symbol('regex.h', 'regcomp')
+  error('regcomp can not be found')
 endif
 
 efl_config.set('VMAJ', version_major)
@@ -240,17 +219,24 @@ if jpeg.found()
   jpeg = cc.find_library('jpeg')
 endif
 
-if sys_bsd
-  efl_config.set('HAVE_NOTIFY_KEVENT', '1')
-endif
-
-if sys_osx
-  efl_config.set('HAVE_NOTIFY_COCOA', '1')
-endif
 efl_config.set('SIZEOF_INT', cc.sizeof('int'))
 efl_config.set('SIZEOF_LONG', cc.sizeof('long'))
 
-if sys_windows
-  efl_config.set('HAVE_NOTIFY_WIN32', '1')
-  efl_config.set10('HAVE_DDRAW_H', true)
+# Memory configuration
+have_aligned_malloc = cc.has_function('_aligned_malloc', prefix: '#include <malloc.h>')
+if have_aligned_malloc
+  efl_config.set('HAVE__ALIGNED_MALLOC', 1)
 endif
+
+have_aligned_calloc = host_os != 'windows' and cc.has_function('aligned_alloc', prefix: '#include <stdlib.h>')
+if have_aligned_calloc
+  efl_config.set('HAVE_ALIGNED_ALLOC', 1)
+endif
+have_posix_memalign = host_os != 'windows' and cc.has_function('posix_memalign', prefix: '#include <stdlib.h>')
+if have_posix_memalign
+  efl_config.set('HAVE_POSIX_MEMALIGN', 1)
+endif
+
+summary_mem += {'Have aligned malloc': have_aligned_malloc}
+summary_mem += {'Have aligned calloc': have_aligned_calloc}
+summary_mem += {'Have posix memalign': have_posix_memalign}
