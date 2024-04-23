@@ -155,7 +155,7 @@ _xdg_toplevel_cb_configure(void                             *data,
                            struct wl_array                  *states)
 {
     Ecore_Wl_Window *win = data;
-    uint32_t         *s;
+    uint32_t        *s;
 
     win->def_config.maximized  = EFL_FALSE;
     win->def_config.fullscreen = EFL_FALSE;
@@ -215,7 +215,7 @@ _xdg_popup_cb_configure(void                       *data,
                         int32_t                     width,
                         int32_t                     height)
 {
-    Ecore_Wl_Window *win      = data;
+    Ecore_Wl_Window *win       = data;
     win->def_config.geometry.w = width;
     win->def_config.geometry.h = height;
 }
@@ -373,10 +373,10 @@ _ecore_wl_window_shell_surface_init(Ecore_Wl_Window *window)
                                                     gh);
 
             ecore_wl_window_opaque_region_set(window,
-                                               window->opaque.x,
-                                               window->opaque.y,
-                                               window->opaque.w,
-                                               window->opaque.h);
+                                              window->opaque.x,
+                                              window->opaque.y,
+                                              window->opaque.w,
+                                              window->opaque.h);
         }
         else
             zwp_e_session_recovery_get_uuid(
@@ -512,11 +512,11 @@ _ecore_wl_window_create_destroy_send(Ecore_Wl_Window *window, Efl_Bool create)
 
 EAPI Ecore_Wl_Window *
 ecore_wl_window_new(Ecore_Wl_Display *display,
-                     Ecore_Wl_Window  *parent,
-                     int                x,
-                     int                y,
-                     int                w,
-                     int                h)
+                    Ecore_Wl_Window  *parent,
+                    int               x,
+                    int               y,
+                    int               w,
+                    int               h)
 {
     Ecore_Wl_Window *win;
 
@@ -554,9 +554,8 @@ ecore_wl_window_new(Ecore_Wl_Display *display,
 
 EAPI void
 ecore_wl_window_close_callback_set(Ecore_Wl_Window *window,
-                                    void (*cb)(void             *data,
-                                               Ecore_Wl_Window *win),
-                                    void *data)
+                                   void (*cb)(void *data, Ecore_Wl_Window *win),
+                                   void *data)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->cb_close      = cb;
@@ -589,16 +588,16 @@ ecore_wl_window_show(Ecore_Wl_Window *window)
 
     if (window->input_set)
         ecore_wl_window_input_region_set(window,
-                                          window->input_rect.x,
-                                          window->input_rect.y,
-                                          window->input_rect.w,
-                                          window->input_rect.h);
+                                         window->input_rect.x,
+                                         window->input_rect.y,
+                                         window->input_rect.w,
+                                         window->input_rect.h);
     if (window->opaque_set)
         ecore_wl_window_opaque_region_set(window,
-                                           window->opaque.x,
-                                           window->opaque.y,
-                                           window->opaque.w,
-                                           window->opaque.h);
+                                          window->opaque.x,
+                                          window->opaque.y,
+                                          window->opaque.w,
+                                          window->opaque.h);
 
     if ((window->type != ECORE_WL2_WINDOW_TYPE_DND) &&
         (window->type != ECORE_WL2_WINDOW_TYPE_NONE))
@@ -669,7 +668,7 @@ ecore_wl_window_free(Ecore_Wl_Window *window)
     Ecore_Wl_Display    *display;
     Ecore_Wl_Input      *input;
     Ecore_Wl_Subsurface *subsurf;
-    Eina_Inlist          *tmp;
+    Eina_Inlist         *tmp;
 
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -741,8 +740,8 @@ ecore_wl_window_move(Ecore_Wl_Window *window, Ecore_Wl_Input *input)
 
 EAPI void
 ecore_wl_window_resize(Ecore_Wl_Window *window,
-                        Ecore_Wl_Input  *input,
-                        int               location)
+                       Ecore_Wl_Input  *input,
+                       int              location)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     EINA_SAFETY_ON_NULL_RETURN(window->display->inputs);
@@ -793,10 +792,10 @@ ecore_wl_window_alpha_set(Ecore_Wl_Window *window, Efl_Bool alpha)
 
 EAPI void
 ecore_wl_window_opaque_region_set(Ecore_Wl_Window *window,
-                                   int               x,
-                                   int               y,
-                                   int               w,
-                                   int               h)
+                                  int              x,
+                                  int              y,
+                                  int              w,
+                                  int              h)
 {
     int nx = 0, ny = 0, nw = 0, nh = 0;
 
@@ -846,10 +845,10 @@ ecore_wl_window_opaque_region_set(Ecore_Wl_Window *window,
 
 EAPI void
 ecore_wl_window_opaque_region_get(Ecore_Wl_Window *window,
-                                   int              *x,
-                                   int              *y,
-                                   int              *w,
-                                   int              *h)
+                                  int             *x,
+                                  int             *y,
+                                  int             *w,
+                                  int             *h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -861,10 +860,10 @@ ecore_wl_window_opaque_region_get(Ecore_Wl_Window *window,
 
 EAPI void
 ecore_wl_window_input_region_set(Ecore_Wl_Window *window,
-                                  int               x,
-                                  int               y,
-                                  int               w,
-                                  int               h)
+                                 int              x,
+                                 int              y,
+                                 int              w,
+                                 int              h)
 {
     int nx = 0, ny = 0, nw = 0, nh = 0;
 
@@ -914,10 +913,10 @@ ecore_wl_window_input_region_set(Ecore_Wl_Window *window,
 
 EAPI void
 ecore_wl_window_input_region_get(Ecore_Wl_Window *window,
-                                  int              *x,
-                                  int              *y,
-                                  int              *w,
-                                  int              *h)
+                                 int             *x,
+                                 int             *y,
+                                 int             *w,
+                                 int             *h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1085,10 +1084,10 @@ ecore_wl_window_class_get(Ecore_Wl_Window *window)
 
 EAPI void
 ecore_wl_window_geometry_get(Ecore_Wl_Window *window,
-                              int              *x,
-                              int              *y,
-                              int              *w,
-                              int              *h)
+                             int             *x,
+                             int             *y,
+                             int             *w,
+                             int             *h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1100,10 +1099,10 @@ ecore_wl_window_geometry_get(Ecore_Wl_Window *window,
 
 EAPI void
 ecore_wl_window_geometry_set(Ecore_Wl_Window *window,
-                              int               x,
-                              int               y,
-                              int               w,
-                              int               h)
+                             int              x,
+                             int              y,
+                             int              w,
+                             int              h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1151,8 +1150,7 @@ ecore_wl_window_type_set(Ecore_Wl_Window *window, Ecore_Wl_Window_Type type)
 }
 
 EAPI void
-ecore_wl_window_popup_input_set(Ecore_Wl_Window *window,
-                                 Ecore_Wl_Input  *input)
+ecore_wl_window_popup_input_set(Ecore_Wl_Window *window, Ecore_Wl_Input *input)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     EINA_SAFETY_ON_NULL_RETURN(input);
@@ -1211,7 +1209,7 @@ ecore_wl_window_buffer_transform_set(Ecore_Wl_Window *window, int transform)
 
 EAPI void
 ecore_wl_window_wm_rotation_supported_set(Ecore_Wl_Window *window,
-                                           Efl_Bool          enabled)
+                                          Efl_Bool         enabled)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->wm_rot.supported = enabled;
@@ -1254,8 +1252,8 @@ ecore_wl_window_preferred_rotation_get(Ecore_Wl_Window *window)
 
 EAPI void
 ecore_wl_window_available_rotations_set(Ecore_Wl_Window *window,
-                                         const int        *rots,
-                                         unsigned int      count)
+                                        const int       *rots,
+                                        unsigned int     count)
 {
     unsigned int i = 0;
     EINA_SAFETY_ON_NULL_RETURN(window);
@@ -1279,8 +1277,8 @@ ecore_wl_window_available_rotations_set(Ecore_Wl_Window *window,
 
 EAPI Efl_Bool
 ecore_wl_window_available_rotations_get(Ecore_Wl_Window *window,
-                                         int             **rots,
-                                         unsigned int     *count)
+                                        int            **rots,
+                                        unsigned int    *count)
 {
     unsigned int i   = 0;
     int         *val = NULL;
@@ -1307,10 +1305,10 @@ ecore_wl_window_available_rotations_get(Ecore_Wl_Window *window,
 
 EAPI void
 ecore_wl_window_rotation_change_prepare_send(Ecore_Wl_Window *window,
-                                              int               rot,
-                                              int               w,
-                                              int               h,
-                                              Efl_Bool          resize)
+                                             int              rot,
+                                             int              w,
+                                             int              h,
+                                             Efl_Bool         resize)
 {
     Ecore_Wl_Event_Window_Rotation_Change_Prepare *ev;
 
@@ -1333,7 +1331,7 @@ ecore_wl_window_rotation_change_prepare_send(Ecore_Wl_Window *window,
 
 EAPI void
 ecore_wl_window_rotation_change_prepare_done_send(Ecore_Wl_Window *window,
-                                                   int               rot)
+                                                  int              rot)
 {
     Ecore_Wl_Event_Window_Rotation_Change_Prepare_Done *ev;
 
@@ -1378,9 +1376,9 @@ ecore_wl_window_rotation_change_request_send(Ecore_Wl_Window *window, int rot)
 
 EAPI void
 ecore_wl_window_rotation_change_done_send(Ecore_Wl_Window *window,
-                                           int               rot,
-                                           int               w,
-                                           int               h)
+                                          int              rot,
+                                          int              w,
+                                          int              h)
 {
     Ecore_Wl_Event_Window_Rotation_Change_Done *ev;
 
@@ -1422,9 +1420,9 @@ ecore_wl_window_aux_hints_supported_get(Ecore_Wl_Window *win)
 
 EAPI void
 ecore_wl_window_aux_hint_add(Ecore_Wl_Window *win,
-                              int               id,
-                              const char       *hint,
-                              const char       *val)
+                             int              id,
+                             const char      *hint,
+                             const char      *val)
 {
     if (!win) return;
     if ((!win->surface) || (!win->display->wl.efl_aux_hints)) return;
@@ -1507,9 +1505,9 @@ ecore_wl_window_floating_mode_get(Ecore_Wl_Window *window)
 
 EAPI void
 ecore_wl_window_aspect_set(Ecore_Wl_Window *window,
-                            int               w,
-                            int               h,
-                            unsigned int      aspect)
+                           int              w,
+                           int              h,
+                           unsigned int     aspect)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     EINA_SAFETY_ON_TRUE_RETURN(w < 1);
@@ -1535,9 +1533,9 @@ ecore_wl_window_aspect_set(Ecore_Wl_Window *window,
 
 EAPI void
 ecore_wl_window_aspect_get(Ecore_Wl_Window *window,
-                            int              *w,
-                            int              *h,
-                            unsigned int     *aspect)
+                           int             *w,
+                           int             *h,
+                           unsigned int    *aspect)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1574,7 +1572,7 @@ _frame_cb(void *data, struct wl_callback *callback, uint32_t timestamp)
 {
     Ecore_Wl_Frame_Cb_Handle *cb;
     Ecore_Wl_Window          *window;
-    Eina_Inlist               *l;
+    Eina_Inlist              *l;
 
     window                 = data;
     window->commit_pending = EFL_FALSE;
@@ -1798,8 +1796,8 @@ ecore_wl_window_pending_get(Ecore_Wl_Window *window)
 
 EAPI Ecore_Wl_Frame_Cb_Handle *
 ecore_wl_window_frame_callback_add(Ecore_Wl_Window  *window,
-                                    Ecore_Wl_Frame_Cb cb,
-                                    void              *data)
+                                   Ecore_Wl_Frame_Cb cb,
+                                   void             *data)
 {
     Ecore_Wl_Frame_Cb_Handle *callback;
 
@@ -1829,10 +1827,10 @@ ecore_wl_window_frame_callback_del(Ecore_Wl_Frame_Cb_Handle *handle)
 
 EAPI void
 ecore_wl_window_buffer_attach(Ecore_Wl_Window *win,
-                               void             *buffer,
-                               int               x,
-                               int               y,
-                               Efl_Bool          implicit)
+                              void            *buffer,
+                              int              x,
+                              int              y,
+                              Efl_Bool         implicit)
 {
     EINA_SAFETY_ON_NULL_RETURN(win);
     EINA_SAFETY_ON_NULL_RETURN(win->surface);
@@ -1863,8 +1861,8 @@ ecore_wl_window_update_begin(Ecore_Wl_Window *window)
 
 EAPI void
 ecore_wl_window_damage(Ecore_Wl_Window *window,
-                        Eina_Rectangle   *rects,
-                        unsigned int      count)
+                       Eina_Rectangle  *rects,
+                       unsigned int     count)
 {
     void (*damage)(struct wl_surface *, int32_t, int32_t, int32_t, int32_t);
     unsigned int k;

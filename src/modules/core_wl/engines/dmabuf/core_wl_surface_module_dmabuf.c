@@ -18,8 +18,8 @@ int ECORE_WL2_SURFACE_DMABUF = 0;
 typedef struct _Ecore_Wl_Dmabuf_Private
 {
     Ecore_Wl_Buffer *current;
-    Eina_List        *buffers;
-    int               unused_duration;
+    Eina_List       *buffers;
+    int              unused_duration;
 } Ecore_Wl_Dmabuf_Private;
 
 static void *
@@ -47,15 +47,15 @@ _evas_dmabuf_surface_setup(Ecore_Wl_Window *win)
 
 static void
 _evas_dmabuf_surface_reconfigure(Ecore_Wl_Surface *s EFL_UNUSED,
-                                 void                *priv_data,
-                                 int                  w,
-                                 int                  h,
-                                 uint32_t flags       EFL_UNUSED,
-                                 Efl_Bool alpha       EFL_UNUSED)
+                                 void               *priv_data,
+                                 int                 w,
+                                 int                 h,
+                                 uint32_t flags      EFL_UNUSED,
+                                 Efl_Bool alpha      EFL_UNUSED)
 {
     Ecore_Wl_Dmabuf_Private *p;
     Ecore_Wl_Buffer         *b;
-    Eina_List                *l, *tmp;
+    Eina_List               *l, *tmp;
 //   Efl_Bool alpha_change;
 
     p = priv_data;
@@ -77,14 +77,14 @@ _evas_dmabuf_surface_reconfigure(Ecore_Wl_Surface *s EFL_UNUSED,
 
 static void *
 _evas_dmabuf_surface_data_get(Ecore_Wl_Surface *s EFL_UNUSED,
-                              void                *priv_data,
-                              int                 *w,
-                              int                 *h)
+                              void               *priv_data,
+                              int                *w,
+                              int                *h)
 {
     Ecore_Wl_Dmabuf_Private *p;
     Ecore_Wl_Buffer         *b;
-    void                     *ptr;
-    int                       stride;
+    void                    *ptr;
+    int                      stride;
 
     p = priv_data;
 
@@ -106,10 +106,10 @@ static Ecore_Wl_Buffer *
 _evas_dmabuf_surface_wait(Ecore_Wl_Surface *s, Ecore_Wl_Dmabuf_Private *p)
 {
     Ecore_Wl_Buffer *b, *best = NULL;
-    Eina_List        *l;
-    int               best_age = -1;
-    int               age;
-    int               num_required = 1, num_allocated = 0;
+    Eina_List       *l;
+    int              best_age = -1;
+    int              age;
+    int              num_required = 1, num_allocated = 0;
 
     EINA_LIST_FOREACH(p->buffers, l, b)
     {
@@ -157,7 +157,7 @@ _evas_dmabuf_surface_assign(Ecore_Wl_Surface *s, void *priv_data)
 {
     Ecore_Wl_Dmabuf_Private *p;
     Ecore_Wl_Buffer         *b;
-    Eina_List                *l;
+    Eina_List               *l;
 
     p          = priv_data;
     p->current = _evas_dmabuf_surface_wait(s, p);
@@ -181,14 +181,14 @@ _evas_dmabuf_surface_assign(Ecore_Wl_Surface *s, void *priv_data)
 
 static void
 _evas_dmabuf_surface_post(Ecore_Wl_Surface *s,
-                          void              *priv_data,
-                          Eina_Rectangle    *rects,
-                          unsigned int       count)
+                          void             *priv_data,
+                          Eina_Rectangle   *rects,
+                          unsigned int      count)
 {
     Ecore_Wl_Dmabuf_Private *p;
     Ecore_Wl_Buffer         *b;
     Ecore_Wl_Window         *win;
-    struct wl_buffer         *wlb;
+    struct wl_buffer        *wlb;
 
     p = priv_data;
 
@@ -226,8 +226,8 @@ _evas_dmabuf_surface_destroy(Ecore_Wl_Surface *s EFL_UNUSED, void *priv_data)
 
 static void
 _evas_dmabuf_surface_flush(Ecore_Wl_Surface *surface EFL_UNUSED,
-                           void                      *priv_data,
-                           Efl_Bool                   purge)
+                           void                     *priv_data,
+                           Efl_Bool                  purge)
 {
     Ecore_Wl_Dmabuf_Private *p;
     Ecore_Wl_Buffer         *b;

@@ -308,7 +308,7 @@ eina_strlcpy(char *dst, const char *src, size_t siz)
 #ifdef HAVE_STRLCPY
     return strlcpy(dst, src, siz);
 #else
-#if 0
+#  if 0
     char       *d = dst;
     const char *s = src;
     size_t      n = siz;
@@ -330,9 +330,12 @@ eina_strlcpy(char *dst, const char *src, size_t siz)
     }
 
     return (s - src - 1); /* count does not include NUL */
-#endif
+#  endif
     static_assert(sizeof(dst) >= sizeof(src));
-    memcpy(dst, src, siz); /* if strcpy is not easily replaced with memcpy then the code is fundamentally wrong */
+    memcpy(
+        dst,
+        src,
+        siz); /* if strcpy is not easily replaced with memcpy then the code is fundamentally wrong */
 #endif
 }
 

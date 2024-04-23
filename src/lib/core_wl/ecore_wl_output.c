@@ -17,7 +17,7 @@ _cb_geometry(void                       *data,
              int                         transform)
 {
     Ecore_Wl_Output *output;
-    int               ot;
+    int              ot;
 
     output = data;
     if (!output) return;

@@ -45,15 +45,15 @@ struct _dnd_read_ctx
 
 struct _Ecore_Wl_Offer
 {
-    Ecore_Wl_Input      *input;
+    Ecore_Wl_Input       *input;
     struct wl_data_offer *offer;
     Eina_Array           *mimetypes;
-    Ecore_Wl_Drag_Action actions;
-    Ecore_Wl_Drag_Action action;
+    Ecore_Wl_Drag_Action  actions;
+    Ecore_Wl_Drag_Action  action;
     uint32_t              serial;
     Eina_List            *reads;
     int                   ref;
-    Ecore_Wl_Window     *window;
+    Ecore_Wl_Window      *window;
     Efl_Bool              proxied : 1;
 };
 
@@ -151,8 +151,7 @@ data_source_send(void                  *data,
 }
 
 static void
-event_fill(struct _Ecore_Wl_Event_Data_Source_Event *ev,
-           Ecore_Wl_Input                           *input)
+event_fill(struct _Ecore_Wl_Event_Data_Source_Event *ev, Ecore_Wl_Input *input)
 {
     if (input->focus.keyboard) ev->source = input->focus.keyboard;
 
@@ -246,12 +245,12 @@ _unset_serial(void *user_data, void *event)
 }
 
 void
-_ecore_wl_dnd_enter(Ecore_Wl_Input      *input,
-                     struct wl_data_offer *offer,
-                     struct wl_surface    *surface,
-                     int                   x,
-                     int                   y,
-                     uint32_t              serial)
+_ecore_wl_dnd_enter(Ecore_Wl_Input       *input,
+                    struct wl_data_offer *offer,
+                    struct wl_surface    *surface,
+                    int                   x,
+                    int                   y,
+                    uint32_t              serial)
 {
     Ecore_Wl_Window          *window;
     Ecore_Wl_Event_Dnd_Enter *ev;
@@ -271,9 +270,9 @@ _ecore_wl_dnd_enter(Ecore_Wl_Input      *input,
             if (input->display->wl.data_device_manager_version >=
                 WL_DATA_OFFER_SET_ACTIONS_SINCE_VERSION)
                 ecore_wl_offer_actions_set(input->drag.offer,
-                                            ECORE_WL2_DRAG_ACTION_MOVE |
-                                                ECORE_WL2_DRAG_ACTION_COPY,
-                                            ECORE_WL2_DRAG_ACTION_MOVE);
+                                           ECORE_WL2_DRAG_ACTION_MOVE |
+                                               ECORE_WL2_DRAG_ACTION_COPY,
+                                           ECORE_WL2_DRAG_ACTION_MOVE);
         }
     }
     else input->drag.offer = NULL;
@@ -479,8 +478,8 @@ ecore_wl_dnd_drag_types_set(Ecore_Wl_Input *input, const char **types)
 
 EAPI uint32_t
 ecore_wl_dnd_drag_start(Ecore_Wl_Input  *input,
-                         Ecore_Wl_Window *window,
-                         Ecore_Wl_Window *drag_window)
+                        Ecore_Wl_Window *window,
+                        Ecore_Wl_Window *drag_window)
 {
     struct wl_surface *dsurface = NULL, *osurface;
 
@@ -668,7 +667,7 @@ data_offer_offer(void                               *data,
                  const char                         *type)
 {
     Ecore_Wl_Offer *offer = data;
-    char            *str;
+    char           *str;
 
     if (type) eina_array_push(offer->mimetypes, strdup(type)); /*LEEEAK */
     else
@@ -686,11 +685,11 @@ data_offer_source_actions(void                               *data,
                           uint32_t                            source_actions)
 {
     Ecore_Wl_Offer *offer;
-    unsigned int     i;
-    uint32_t         types[] = { WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
-                                 WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY,
-                                 WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK,
-                                 WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE };
+    unsigned int    i;
+    uint32_t        types[] = { WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
+                                WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY,
+                                WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK,
+                                WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE };
 
     offer = data;
 
@@ -742,8 +741,8 @@ ecore_wl_offer_actions_get(Ecore_Wl_Offer *offer)
 
 EAPI void
 ecore_wl_offer_actions_set(Ecore_Wl_Offer      *offer,
-                            Ecore_Wl_Drag_Action actions,
-                            Ecore_Wl_Drag_Action action)
+                           Ecore_Wl_Drag_Action actions,
+                           Ecore_Wl_Drag_Action action)
 {
     uint32_t val = 0;
     int      i   = 0;
@@ -803,16 +802,16 @@ ecore_wl_offer_accept(Ecore_Wl_Offer *offer, const char *mime_type)
 
 typedef struct
 {
-    int              len;
-    void            *data;
-    char            *mimetype;
+    int             len;
+    void           *data;
+    char           *mimetype;
     Ecore_Wl_Offer *offer;
 } Read_Buffer;
 
 static void
 _free_buf(void *user_data, void *event)
 {
-    Read_Buffer                      *buf = user_data;
+    Read_Buffer                     *buf = user_data;
     Ecore_Wl_Event_Offer_Data_Ready *ev  = event;
 
     _ecore_wl_offer_unref(buf->offer);

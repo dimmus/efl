@@ -46,15 +46,15 @@
 typedef struct _Ecore_Wl_Mouse_Down_Info
 {
     EINA_INLIST;
-    int               device, sx, sy;
+    int              device, sx, sy;
     Ecore_Wl_Window *last_win;
     Ecore_Wl_Window *last_last_win;
     Ecore_Wl_Window *last_event_win;
     Ecore_Wl_Window *last_last_event_win;
-    unsigned int      last_time;
-    unsigned int      last_last_time;
-    Efl_Bool          double_click : 1;
-    Efl_Bool          triple_click : 1;
+    unsigned int     last_time;
+    unsigned int     last_last_time;
+    Efl_Bool         double_click : 1;
+    Efl_Bool         triple_click : 1;
 } Ecore_Wl_Mouse_Down_Info;
 
 static Eina_Inlist *_ecore_wl_mouse_down_info_list = NULL;
@@ -69,7 +69,7 @@ static void _keyboard_cb_key(void                        *data,
 static Ecore_Wl_Mouse_Down_Info *
 _ecore_wl_input_mouse_down_info_get(int device)
 {
-    Eina_Inlist               *l    = NULL;
+    Eina_Inlist              *l    = NULL;
     Ecore_Wl_Mouse_Down_Info *info = NULL;
 
     l = _ecore_wl_mouse_down_info_list;
@@ -79,8 +79,8 @@ _ecore_wl_input_mouse_down_info_get(int device)
     info = calloc(1, sizeof(Ecore_Wl_Mouse_Down_Info));
     if (!info) return NULL;
 
-    info->device = device;
-    l            = eina_inlist_append(l, (Eina_Inlist *)info);
+    info->device                   = device;
+    l                              = eina_inlist_append(l, (Eina_Inlist *)info);
     _ecore_wl_mouse_down_info_list = l;
 
     return info;
@@ -88,10 +88,10 @@ _ecore_wl_input_mouse_down_info_get(int device)
 
 static Ecore_Wl_Input_Devices *
 _ecore_wl_devices_get(const Ecore_Wl_Input  *input,
-                       const Ecore_Wl_Window *window)
+                      const Ecore_Wl_Window *window)
 {
     Ecore_Wl_Input_Devices *devices;
-    Eina_List               *l;
+    Eina_List              *l;
 
     EINA_LIST_FOREACH(input->devices_list, l, devices)
     {
@@ -161,8 +161,7 @@ _ecore_wl_input_mouse_in_send(Ecore_Wl_Input *input, Ecore_Wl_Window *window)
 }
 
 static void
-_ecore_wl_input_mouse_out_send(Ecore_Wl_Input  *input,
-                                Ecore_Wl_Window *window)
+_ecore_wl_input_mouse_out_send(Ecore_Wl_Input *input, Ecore_Wl_Window *window)
 {
     Ecore_Event_Mouse_IO *ev;
 
@@ -182,10 +181,10 @@ _ecore_wl_input_mouse_out_send(Ecore_Wl_Input  *input,
 
 static void
 _ecore_wl_input_mouse_move_send(Ecore_Wl_Input  *input,
-                                 Ecore_Wl_Window *window,
-                                 int               device)
+                                Ecore_Wl_Window *window,
+                                int              device)
 {
-    Ecore_Event_Mouse_Move    *ev;
+    Ecore_Event_Mouse_Move   *ev;
     Ecore_Wl_Mouse_Down_Info *info;
 
     ev = calloc(1, sizeof(Ecore_Event_Mouse_Move));
@@ -227,9 +226,9 @@ _ecore_wl_input_mouse_move_send(Ecore_Wl_Input  *input,
 
 static void
 _ecore_wl_input_mouse_wheel_send(Ecore_Wl_Input *input,
-                                  unsigned int     axis,
-                                  int              value,
-                                  unsigned int     timestamp)
+                                 unsigned int    axis,
+                                 int             value,
+                                 unsigned int    timestamp)
 {
     Ecore_Event_Mouse_Wheel *ev;
 
@@ -262,7 +261,7 @@ _ecore_wl_input_mouse_wheel_send(Ecore_Wl_Input *input,
     {
         ev->window       = (Ecore_Window)input->focus.pointer;
         ev->event_window = (Ecore_Window)input->focus.pointer;
-        ev->dev = _ecore_wl_mouse_dev_get(input, input->focus.pointer);
+        ev->dev          = _ecore_wl_mouse_dev_get(input, input->focus.pointer);
     }
     else if (input->focus.touch)
     {
@@ -273,8 +272,7 @@ _ecore_wl_input_mouse_wheel_send(Ecore_Wl_Input *input,
 
     if (!ev->dev)
     {
-        ev->dev =
-            _ecore_wl_mouse_dev_get(input, (Ecore_Wl_Window *)ev->window);
+        ev->dev = _ecore_wl_mouse_dev_get(input, (Ecore_Wl_Window *)ev->window);
         if (!ev->dev)
             ev->dev =
                 _ecore_wl_touch_dev_get(input, (Ecore_Wl_Window *)ev->window);
@@ -285,12 +283,12 @@ _ecore_wl_input_mouse_wheel_send(Ecore_Wl_Input *input,
 
 static void
 _ecore_wl_input_mouse_down_send(Ecore_Wl_Input  *input,
-                                 Ecore_Wl_Window *window,
-                                 int               device,
-                                 unsigned int      button,
-                                 unsigned int      timestamp)
+                                Ecore_Wl_Window *window,
+                                int              device,
+                                unsigned int     button,
+                                unsigned int     timestamp)
 {
-    Ecore_Event_Mouse_Button  *ev;
+    Ecore_Event_Mouse_Button *ev;
     Ecore_Wl_Mouse_Down_Info *info;
 
     ev = calloc(1, sizeof(Ecore_Event_Mouse_Button));
@@ -392,12 +390,12 @@ _ecore_wl_input_mouse_down_send(Ecore_Wl_Input  *input,
 
 static void
 _ecore_wl_input_mouse_up_send(Ecore_Wl_Input  *input,
-                               Ecore_Wl_Window *window,
-                               int               device,
-                               unsigned int      button,
-                               unsigned int      timestamp)
+                              Ecore_Wl_Window *window,
+                              int              device,
+                              unsigned int     button,
+                              unsigned int     timestamp)
 {
-    Ecore_Event_Mouse_Button  *ev;
+    Ecore_Event_Mouse_Button *ev;
     Ecore_Wl_Mouse_Down_Info *info;
 
     ev = calloc(1, sizeof(Ecore_Event_Mouse_Button));
@@ -486,8 +484,7 @@ _ecore_wl_input_focus_in_send(Ecore_Wl_Window *window, Ecore_Wl_Input *input)
 }
 
 static void
-_ecore_wl_input_focus_out_send(Ecore_Wl_Window *window,
-                                Ecore_Wl_Input  *input)
+_ecore_wl_input_focus_out_send(Ecore_Wl_Window *window, Ecore_Wl_Input *input)
 {
     Ecore_Wl_Event_Focus_Out *ev;
 
@@ -507,9 +504,9 @@ _ecore_wl_input_focus_out_send(Ecore_Wl_Window *window,
 
 static int
 _ecore_wl_input_key_translate(xkb_keysym_t keysym,
-                               unsigned int modifiers,
-                               char        *buffer,
-                               int          bytes)
+                              unsigned int modifiers,
+                              char        *buffer,
+                              int          bytes)
 {
     /* this function is copied, with slight changes in variable names, from KeyBind.c in libX11
  * the license from that file can be found below:
@@ -601,9 +598,9 @@ in this Software without prior written authorization from The Open Group.
 
 static void
 _ecore_wl_input_symbol_rep_find(xkb_keysym_t keysym,
-                                 char        *buffer,
-                                 int          size,
-                                 unsigned int code)
+                                char        *buffer,
+                                int          size,
+                                unsigned int code)
 {
     if (xkb_keysym_get_name(keysym, buffer, size) != 0) return;
 
@@ -623,12 +620,12 @@ _ecore_wl_keyboard_dev_get(Ecore_Wl_Input *input, Ecore_Wl_Window *window)
 
 static void
 _ecore_wl_input_key_send(Ecore_Wl_Input  *input,
-                          Ecore_Wl_Window *window,
-                          xkb_keysym_t      sym,
-                          xkb_keysym_t      sym_name,
-                          unsigned int      code,
-                          unsigned int      state,
-                          unsigned int      timestamp)
+                         Ecore_Wl_Window *window,
+                         xkb_keysym_t     sym,
+                         xkb_keysym_t     sym_name,
+                         unsigned int     code,
+                         unsigned int     state,
+                         unsigned int     timestamp)
 {
     Ecore_Event_Key *ev;
     char             key[256] = "", keyname[256] = "", compose[256] = "";
@@ -638,9 +635,9 @@ _ecore_wl_input_key_send(Ecore_Wl_Input  *input,
     _ecore_wl_input_symbol_rep_find(sym, key, sizeof(key), code);
     _ecore_wl_input_symbol_rep_find(sym_name, keyname, sizeof(keyname), code);
     _ecore_wl_input_key_translate(sym,
-                                   input->keyboard.modifiers,
-                                   compose,
-                                   sizeof(compose));
+                                  input->keyboard.modifiers,
+                                  compose,
+                                  sizeof(compose));
 
     name_len = strlen(keyname);
     key_len  = strlen(key);
@@ -677,8 +674,8 @@ _ecore_wl_input_key_send(Ecore_Wl_Input  *input,
 
 void
 _ecore_wl_input_grab(Ecore_Wl_Input  *input,
-                      Ecore_Wl_Window *window,
-                      unsigned int      button)
+                     Ecore_Wl_Window *window,
+                     unsigned int     button)
 {
     input->grab.window = window;
     input->grab.button = button;
@@ -689,10 +686,10 @@ _ecore_wl_input_ungrab(Ecore_Wl_Input *input)
 {
     if ((input->grab.window) && (input->grab.button) && (input->grab.count))
         _ecore_wl_input_mouse_up_send(input,
-                                       input->grab.window,
-                                       0,
-                                       input->grab.button,
-                                       input->grab.timestamp);
+                                      input->grab.window,
+                                      0,
+                                      input->grab.button,
+                                      input->grab.timestamp);
 
     input->grab.window      = NULL;
     input->grab.button      = 0;
@@ -822,10 +819,10 @@ _pointer_cb_button(void                      *data,
 
         if (input->focus.pointer)
             _ecore_wl_input_mouse_down_send(input,
-                                             input->focus.pointer,
-                                             0,
-                                             button,
-                                             timestamp);
+                                            input->focus.pointer,
+                                            0,
+                                            button,
+                                            timestamp);
 
         input->grab.count++;
     }
@@ -833,10 +830,10 @@ _pointer_cb_button(void                      *data,
     {
         if (input->focus.pointer)
             _ecore_wl_input_mouse_up_send(input,
-                                           input->focus.pointer,
-                                           0,
-                                           button,
-                                           timestamp);
+                                          input->focus.pointer,
+                                          0,
+                                          button,
+                                          timestamp);
 
         if (input->grab.count) input->grab.count--;
         if ((input->grab.window) && (input->grab.button == button) &&
@@ -860,9 +857,9 @@ _pointer_cb_axis(void                      *data,
     input->timestamp = timestamp;
 
     _ecore_wl_input_mouse_wheel_send(input,
-                                      axis,
-                                      wl_fixed_to_int(value),
-                                      timestamp);
+                                     axis,
+                                     wl_fixed_to_int(value),
+                                     timestamp);
 }
 
 static const struct wl_pointer_listener _pointer_listener = {
@@ -888,8 +885,8 @@ _keyboard_cb_keymap(void                        *data,
 {
     Ecore_Wl_Input                     *input;
     Ecore_Wl_Event_Seat_Keymap_Changed *ev;
-    char                                *map = NULL;
-    const char                          *locale;
+    char                               *map = NULL;
+    const char                         *locale;
 
     input = data;
     if (!input)
@@ -1066,12 +1063,12 @@ _keyboard_cb_repeat(void *data)
     if (!window) goto out;
 
     _ecore_wl_input_key_send(input,
-                              input->focus.keyboard,
-                              input->repeat.sym,
-                              input->repeat.sym_name,
-                              input->repeat.key + 8,
-                              WL_KEYBOARD_KEY_STATE_PRESSED,
-                              input->repeat.time);
+                             input->focus.keyboard,
+                             input->repeat.sym,
+                             input->repeat.sym_name,
+                             input->repeat.key + 8,
+                             WL_KEYBOARD_KEY_STATE_PRESSED,
+                             input->repeat.time);
 
     if (!input->repeat.repeating)
     {
@@ -1121,8 +1118,8 @@ _keyboard_cb_key(void                        *data,
                  unsigned int                 keycode,
                  unsigned int                 state)
 {
-    Ecore_Wl_Input    *input;
-    Ecore_Wl_Window   *window;
+    Ecore_Wl_Input     *input;
+    Ecore_Wl_Window    *window;
     unsigned int        code;
     xkb_keysym_t        sym = XKB_KEY_NoSymbol, sym_name = XKB_KEY_NoSymbol;
     const xkb_keysym_t *syms;
@@ -1147,12 +1144,12 @@ _keyboard_cb_key(void                        *data,
     sym_name = xkb_state_key_get_one_sym(input->xkb.maskless_state, code);
 
     _ecore_wl_input_key_send(input,
-                              window,
-                              sym,
-                              sym_name,
-                              code,
-                              state,
-                              timestamp);
+                             window,
+                             sym,
+                             sym_name,
+                             code,
+                             state,
+                             timestamp);
 
     if (!xkb_keymap_key_repeats(input->xkb.keymap, code)) return;
 
@@ -1199,7 +1196,7 @@ _keyboard_cb_modifiers(void                        *data,
                        unsigned int                 group)
 {
     Ecore_Wl_Input *input;
-    xkb_mod_mask_t   mask;
+    xkb_mod_mask_t  mask;
 
     input = data;
     if (!input) return;
@@ -1324,10 +1321,10 @@ _touch_cb_down(void                  *data,
     }
 
     _ecore_wl_input_mouse_down_send(input,
-                                     input->focus.touch,
-                                     id,
-                                     BTN_LEFT,
-                                     timestamp);
+                                    input->focus.touch,
+                                    id,
+                                    BTN_LEFT,
+                                    timestamp);
 }
 
 static void
@@ -1349,10 +1346,10 @@ _touch_cb_up(void                  *data,
     input->display->serial = serial;
 
     _ecore_wl_input_mouse_up_send(input,
-                                   input->focus.touch,
-                                   id,
-                                   BTN_LEFT,
-                                   timestamp);
+                                  input->focus.touch,
+                                  id,
+                                  BTN_LEFT,
+                                  timestamp);
 
     if (input->grab.count) input->grab.count--;
     if (input->grab.touch_count) input->grab.touch_count--;
@@ -1430,11 +1427,11 @@ _data_cb_enter(void                              *data,
     if (!input) return;
 
     _ecore_wl_dnd_enter(input,
-                         offer,
-                         surface,
-                         wl_fixed_to_int(x),
-                         wl_fixed_to_int(y),
-                         serial);
+                        offer,
+                        surface,
+                        wl_fixed_to_int(x),
+                        wl_fixed_to_int(y),
+                        serial);
 }
 
 static void
@@ -1460,10 +1457,7 @@ _data_cb_motion(void                              *data,
     input = data;
     if (!input) return;
 
-    _ecore_wl_dnd_motion(input,
-                          wl_fixed_to_int(x),
-                          wl_fixed_to_int(y),
-                          serial);
+    _ecore_wl_dnd_motion(input, wl_fixed_to_int(x), wl_fixed_to_int(y), serial);
 }
 
 static void
@@ -1665,7 +1659,7 @@ _ecore_wl_cb_device_event(void *data, int type, void *event)
     ;
     Ecore_Wl_Event_Device *ev    = event;
     Ecore_Wl_Input        *input = data;
-    Eina_List              *l;
+    Eina_List             *l;
 
     if (input->id != ev->seat_id) return ECORE_CALLBACK_PASS_ON;
 
@@ -1734,8 +1728,8 @@ _ecore_wl_cb_device_event(void *data, int type, void *event)
 
 void
 _ecore_wl_input_add(Ecore_Wl_Display *display,
-                     unsigned int       id,
-                     unsigned int       version)
+                    unsigned int      id,
+                    unsigned int      version)
 {
     Ecore_Wl_Input *input;
 
@@ -1788,7 +1782,7 @@ _ecore_wl_input_del(Ecore_Wl_Input *input)
 {
     Ecore_Wl_Input_Devices   *devices;
     Ecore_Wl_Display         *display;
-    Eina_Inlist               *l    = NULL;
+    Eina_Inlist              *l    = NULL;
     Ecore_Wl_Mouse_Down_Info *info = NULL;
     Ecore_Wl_Window          *window;
 
@@ -1870,7 +1864,7 @@ void
 _ecore_wl_input_window_remove(Ecore_Wl_Input *input, Ecore_Wl_Window *window)
 {
     Ecore_Wl_Input_Devices *devices;
-    Eina_List               *l, *l_next;
+    Eina_List              *l, *l_next;
 
     if ((input->focus.pointer) && (input->focus.pointer == window))
         input->focus.pointer = NULL;
@@ -1944,8 +1938,8 @@ ecore_wl_input_keymap_get(const Ecore_Wl_Input *input)
 
 EAPI Efl_Bool
 ecore_wl_input_keyboard_repeat_set(Ecore_Wl_Input *input,
-                                    double           rate,
-                                    double           delay)
+                                   double          rate,
+                                   double          delay)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(input, EFL_FALSE);
     EINA_SAFETY_ON_NULL_RETURN_VAL(input->display, EFL_FALSE);
@@ -1958,8 +1952,8 @@ ecore_wl_input_keyboard_repeat_set(Ecore_Wl_Input *input,
 
 EAPI Efl_Bool
 ecore_wl_input_keyboard_repeat_get(const Ecore_Wl_Input *input,
-                                    double                *rate,
-                                    double                *delay)
+                                   double               *rate,
+                                   double               *delay)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(input, EFL_FALSE);
     EINA_SAFETY_ON_NULL_RETURN_VAL(input->display, EFL_FALSE);
@@ -1970,10 +1964,10 @@ ecore_wl_input_keyboard_repeat_get(const Ecore_Wl_Input *input,
 }
 
 EAPI void
-ecore_wl_input_pointer_set(Ecore_Wl_Input   *input,
-                            struct wl_surface *surface,
-                            int                hot_x,
-                            int                hot_y)
+ecore_wl_input_pointer_set(Ecore_Wl_Input    *input,
+                           struct wl_surface *surface,
+                           int                hot_x,
+                           int                hot_y)
 {
     EINA_SAFETY_ON_NULL_RETURN(input);
 

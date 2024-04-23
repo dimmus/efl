@@ -11,8 +11,7 @@ static Eina_Hash *_server_displays = NULL;
 static Eina_Hash *_client_displays = NULL;
 
 static Efl_Bool _cb_connect_data(void *data, Ecore_Fd_Handler *hdl);
-static Efl_Bool _ecore_wl_display_connect(Ecore_Wl_Display *ewd,
-                                           Efl_Bool           sync);
+static Efl_Bool _ecore_wl_display_connect(Ecore_Wl_Display *ewd, Efl_Bool sync);
 
 static void _ecore_wl_display_sync_add(Ecore_Wl_Display *ewd);
 
@@ -108,12 +107,12 @@ _aux_hints_supported_aux_hints(void                           *data,
                                uint32_t                        num_hints)
 {
     Ecore_Wl_Display                  *ewd     = data;
-    struct wl_surface                  *surface = surface_resource;
+    struct wl_surface                 *surface = surface_resource;
     Ecore_Wl_Window                   *win     = NULL;
-    char                               *p       = NULL;
-    char                              **str     = NULL;
-    const char                         *hint    = NULL;
-    unsigned int                        i       = 0;
+    char                              *p       = NULL;
+    char                             **str     = NULL;
+    const char                        *hint    = NULL;
+    unsigned int                       i       = 0;
     Ecore_Wl_Event_Aux_Hint_Supported *ev;
 
     if (!surface) return;
@@ -165,7 +164,7 @@ _aux_hints_allowed_aux_hint(void                           *data,
                             struct wl_surface              *surface_resource,
                             int                             id)
 {
-    struct wl_surface                *surface = surface_resource;
+    struct wl_surface               *surface = surface_resource;
     Ecore_Wl_Window                 *win     = NULL;
     Ecore_Wl_Display                *ewd     = data;
     Ecore_Wl_Event_Aux_Hint_Allowed *ev;
@@ -189,7 +188,7 @@ static void
 _cb_aux_message_free(void *data EFL_UNUSED, void *event)
 {
     Ecore_Wl_Event_Aux_Message *ev;
-    char                        *str;
+    char                       *str;
 
     ev = event;
     ecore_wl_display_disconnect(ev->display);
@@ -210,8 +209,8 @@ _aux_hints_aux_message(void                           *data,
 {
     Ecore_Wl_Window            *win = NULL;
     Ecore_Wl_Event_Aux_Message *ev;
-    char                        *p = NULL, *str = NULL;
-    Eina_List                   *opt_list = NULL;
+    char                       *p = NULL, *str = NULL;
+    Eina_List                  *opt_list = NULL;
     Ecore_Wl_Display           *ewd      = data;
 
     if (!surface_resource) return;
@@ -448,7 +447,7 @@ static const struct wl_registry_listener _registry_listener = {
 static Efl_Bool
 _cb_create_data(void *data, Ecore_Fd_Handler *hdl EFL_UNUSED)
 {
-    Ecore_Wl_Display    *ewd = data;
+    Ecore_Wl_Display     *ewd = data;
     struct wl_event_loop *loop;
 
     loop = wl_display_get_event_loop(ewd->wl.display);
@@ -498,7 +497,7 @@ _ecore_wl_display_globals_cleanup(Ecore_Wl_Display *ewd)
 static void
 _recovery_timer_add(Ecore_Wl_Display *ewd)
 {
-    Eina_Inlist      *tmp, *tmp2;
+    Eina_Inlist     *tmp, *tmp2;
     Ecore_Wl_Output *output;
     Ecore_Wl_Input  *input;
     Ecore_Wl_Window *window;
@@ -560,7 +559,7 @@ static void
 _cb_connect_pre(void *data, Ecore_Fd_Handler *hdl EFL_UNUSED)
 {
     Ecore_Wl_Display *ewd = data;
-    int                ret = 0, code;
+    int               ret = 0, code;
 
     while ((wl_display_prepare_read(ewd->wl.display) != 0) && (ret >= 0))
         ret = wl_display_dispatch_pending(ewd->wl.display);
@@ -584,7 +583,7 @@ static Efl_Bool
 _cb_connect_data(void *data, Ecore_Fd_Handler *hdl)
 {
     Ecore_Wl_Display *ewd = data;
-    int                ret = 0, code;
+    int               ret = 0, code;
 
     if (ecore_main_fd_handler_active_get(hdl, ECORE_FD_READ))
     {
@@ -630,7 +629,7 @@ _cb_globals_hash_del(void *data)
 static Ecore_Wl_Global *
 _ecore_wl_global_find(Ecore_Wl_Display *ewd, const char *interface)
 {
-    Eina_Iterator    *itr;
+    Eina_Iterator   *itr;
     Ecore_Wl_Global *global = NULL, *g = NULL;
 
     itr = eina_hash_iterator_data_new(ewd->globals);
@@ -653,8 +652,8 @@ static void
 _ecore_wl_shell_bind(Ecore_Wl_Display *ewd)
 {
     Ecore_Wl_Global *global = NULL;
-    const char      **itr;
-    const char       *shells[] = { "xdg_wm_base", "zxdg_shell_v6", NULL };
+    const char     **itr;
+    const char      *shells[] = { "xdg_wm_base", "zxdg_shell_v6", NULL };
 
     if (ewd->shell_done) return;
 
@@ -784,7 +783,7 @@ _ecore_wl_display_cleanup(Ecore_Wl_Display *ewd)
 {
     Ecore_Wl_Output *output;
     Ecore_Wl_Input  *input;
-    Eina_Inlist      *tmp;
+    Eina_Inlist     *tmp;
 
     if (ewd->xkb_context) xkb_context_unref(ewd->xkb_context);
 
@@ -804,8 +803,8 @@ _ecore_wl_display_cleanup(Ecore_Wl_Display *ewd)
 }
 
 Ecore_Wl_Window *
-_ecore_wl_display_window_surface_find(Ecore_Wl_Display *display,
-                                       struct wl_surface *wl_surface)
+_ecore_wl_display_window_surface_find(Ecore_Wl_Display  *display,
+                                      struct wl_surface *wl_surface)
 {
     Ecore_Wl_Window *window;
 
@@ -822,7 +821,7 @@ _ecore_wl_display_window_surface_find(Ecore_Wl_Display *display,
 EAPI Ecore_Wl_Display *
 ecore_wl_display_create(const char *name)
 {
-    Ecore_Wl_Display    *ewd;
+    Ecore_Wl_Display     *ewd;
     struct wl_event_loop *loop;
 
     if (!_server_displays)
@@ -919,8 +918,8 @@ EAPI Ecore_Wl_Display *
 ecore_wl_display_connect(const char *name)
 {
     Ecore_Wl_Display *ewd;
-    const char        *n;
-    Efl_Bool           hash_create = !_client_displays;
+    const char       *n;
+    Efl_Bool          hash_create = !_client_displays;
 
     if (!_client_displays)
         _client_displays = eina_hash_string_superfast_new(NULL);
@@ -1081,7 +1080,7 @@ EAPI void
 ecore_wl_display_screen_size_get(Ecore_Wl_Display *display, int *w, int *h)
 {
     Ecore_Wl_Output *output;
-    int               ow = 0, oh = 0;
+    int              ow = 0, oh = 0;
 
     EINA_SAFETY_ON_NULL_RETURN(display);
 
@@ -1148,7 +1147,7 @@ ecore_wl_display_input_find(const Ecore_Wl_Display *display, unsigned int id)
 
 EAPI Ecore_Wl_Input *
 ecore_wl_display_input_find_by_name(const Ecore_Wl_Display *display,
-                                     const char              *name)
+                                    const char             *name)
 {
     Ecore_Wl_Input *input;
 
@@ -1196,8 +1195,8 @@ ecore_wl_display_flush(Ecore_Wl_Display *display)
 }
 
 EAPI Ecore_Wl_Window *
-ecore_wl_display_window_find_by_surface(Ecore_Wl_Display *display,
-                                         struct wl_surface *surface)
+ecore_wl_display_window_find_by_surface(Ecore_Wl_Display  *display,
+                                        struct wl_surface *surface)
 {
     return _ecore_wl_display_window_surface_find(display, surface);
 }

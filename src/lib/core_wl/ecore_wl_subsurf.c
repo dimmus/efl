@@ -99,9 +99,7 @@ ecore_wl_subsurface_surface_get(Ecore_Wl_Subsurface *subsurface)
 }
 
 EAPI void
-ecore_wl_subsurface_position_set(Ecore_Wl_Subsurface *subsurface,
-                                  int                   x,
-                                  int                   y)
+ecore_wl_subsurface_position_set(Ecore_Wl_Subsurface *subsurface, int x, int y)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(subsurface->wl.subsurface);
@@ -116,8 +114,8 @@ ecore_wl_subsurface_position_set(Ecore_Wl_Subsurface *subsurface,
 
 EAPI void
 ecore_wl_subsurface_position_get(Ecore_Wl_Subsurface *subsurface,
-                                  int                  *x,
-                                  int                  *y)
+                                 int                 *x,
+                                 int                 *y)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
 
@@ -127,7 +125,7 @@ ecore_wl_subsurface_position_get(Ecore_Wl_Subsurface *subsurface,
 
 EAPI void
 ecore_wl_subsurface_place_above(Ecore_Wl_Subsurface *subsurface,
-                                 struct wl_surface    *surface)
+                                struct wl_surface   *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(surface);
@@ -137,7 +135,7 @@ ecore_wl_subsurface_place_above(Ecore_Wl_Subsurface *subsurface,
 
 EAPI void
 ecore_wl_subsurface_place_below(Ecore_Wl_Subsurface *subsurface,
-                                 struct wl_surface    *surface)
+                                struct wl_surface   *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(surface);
@@ -162,10 +160,10 @@ ecore_wl_subsurface_sync_set(Ecore_Wl_Subsurface *subsurface, Efl_Bool sync)
 
 EAPI void
 ecore_wl_subsurface_opaque_region_set(Ecore_Wl_Subsurface *subsurface,
-                                       int                   x,
-                                       int                   y,
-                                       int                   w,
-                                       int                   h)
+                                      int                  x,
+                                      int                  y,
+                                      int                  w,
+                                      int                  h)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(subsurface->wl.subsurface);

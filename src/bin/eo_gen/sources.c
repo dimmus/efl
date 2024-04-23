@@ -1632,7 +1632,8 @@ eo_gen_impl_gen(const Eolian_Class *cl, Efl_Strbuf *buf)
 
     if (!_type_exists("<Efl_Eo.h>", buf))
     {
-        printf("generating includes for <Efl_Eo.h> and \"%s.eo.h\"...\n", cnamel);
+        printf("generating includes for <Efl_Eo.h> and \"%s.eo.h\"...\n",
+               cnamel);
         eina_strbuf_append(beg, "#include <Efl_Eo.h>\n");
         eina_strbuf_append_printf(beg, "#include \"%s.eo.h\"\n\n", cnamel);
     }

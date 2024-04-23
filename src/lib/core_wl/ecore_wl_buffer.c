@@ -53,8 +53,8 @@ struct dma_buf_sync
 static int drm_fd = -1;
 
 typedef struct _Ecore_Wl_Buffer Ecore_Wl_Buffer;
-typedef struct _Buffer_Handle    Buffer_Handle;
-typedef struct _Buffer_Manager   Buffer_Manager;
+typedef struct _Buffer_Handle   Buffer_Handle;
+typedef struct _Buffer_Manager  Buffer_Manager;
 
 struct _Buffer_Manager
 {
@@ -64,8 +64,7 @@ struct _Buffer_Manager
                             int             h,
                             unsigned long  *stride,
                             int32_t        *fd);
-    struct wl_buffer *(*to_buffer)(Ecore_Wl_Display *ewd,
-                                   Ecore_Wl_Buffer  *db);
+    struct wl_buffer *(*to_buffer)(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer *db);
     void *(*map)(Ecore_Wl_Buffer *buf);
     void (*unmap)(Ecore_Wl_Buffer *buf);
     void (*discard)(Ecore_Wl_Buffer *buf);
@@ -954,7 +953,7 @@ void
 _ecore_wl_buffer_test(Ecore_Wl_Display *ewd)
 {
     struct zwp_linux_buffer_params_v1 *dp;
-    Ecore_Wl_Buffer                  *buf;
+    Ecore_Wl_Buffer                   *buf;
 
     if (!ecore_wl_buffer_init(ewd, ECORE_WL2_BUFFER_DMABUF)) return;
 

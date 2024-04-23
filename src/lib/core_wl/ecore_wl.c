@@ -192,8 +192,8 @@ ecore_wl_init(void)
     ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED      = ecore_event_type_new();
     ECORE_WL2_EVENT_DEVICE_ADDED                   = ecore_event_type_new();
     ECORE_WL2_EVENT_DEVICE_REMOVED                 = ecore_event_type_new();
-    _ecore_wl_event_window_www                    = ecore_event_type_new();
-    _ecore_wl_event_window_www_drag               = ecore_event_type_new();
+    _ecore_wl_event_window_www                     = ecore_event_type_new();
+    _ecore_wl_event_window_www_drag                = ecore_event_type_new();
     ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE      = ecore_event_type_new();
     ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED            = ecore_event_type_new();
     ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED   = ecore_event_type_new();

@@ -18,7 +18,7 @@ ecore_wl_surface_destroy(Ecore_Wl_Surface *surface)
     ecore_event_handler_del(surface->offscreen_handler);
     surface->funcs->destroy(surface, surface->private_data);
     surface->wl_win->wl_surface = NULL;
-    surface->wl_win              = NULL;
+    surface->wl_win             = NULL;
 
     free(surface);
    /* We took a reference to ecore_wl in surface create to prevent
@@ -29,10 +29,10 @@ ecore_wl_surface_destroy(Ecore_Wl_Surface *surface)
 
 EAPI void
 ecore_wl_surface_reconfigure(Ecore_Wl_Surface *surface,
-                              int                w,
-                              int                h,
-                              uint32_t           flags,
-                              Efl_Bool           alpha)
+                             int               w,
+                             int               h,
+                             uint32_t          flags,
+                             Efl_Bool          alpha)
 {
     EINA_SAFETY_ON_NULL_RETURN(surface);
 
@@ -61,8 +61,8 @@ ecore_wl_surface_assign(Ecore_Wl_Surface *surface)
 
 EAPI void
 ecore_wl_surface_post(Ecore_Wl_Surface *surface,
-                       Eina_Rectangle    *rects,
-                       unsigned int       count)
+                      Eina_Rectangle   *rects,
+                      unsigned int      count)
 {
     EINA_SAFETY_ON_NULL_RETURN(surface);
 
@@ -92,7 +92,7 @@ EAPI Ecore_Wl_Surface *
 ecore_wl_surface_create(Ecore_Wl_Window *win, Efl_Bool alpha)
 {
     Ecore_Wl_Surface           *out;
-    Eina_List                   *l;
+    Eina_List                  *l;
     Ecore_Wl_Surface_Interface *intf;
 
     EINA_SAFETY_ON_NULL_RETURN_VAL(win, NULL);
@@ -104,16 +104,16 @@ ecore_wl_surface_create(Ecore_Wl_Window *win, Efl_Bool alpha)
     if (!out) return NULL;
 
     out->wl_win = win;
-    out->alpha   = alpha;
-    out->w       = 0;
-    out->h       = 0;
+    out->alpha  = alpha;
+    out->w      = 0;
+    out->h      = 0;
 
     EINA_LIST_FOREACH(_smanagers, l, intf)
     {
         out->private_data = intf->setup(win);
         if (out->private_data)
         {
-            out->funcs       = intf;
+            out->funcs      = intf;
             win->wl_surface = out;
             out->offscreen_handler =
                 ecore_event_handler_add(ECORE_WL2_EVENT_WINDOW_OFFSCREEN,
