@@ -1,0 +1,1 @@
+inc_shared += include_directories('.')

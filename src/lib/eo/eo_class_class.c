@@ -2,6 +2,6 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 
 #include "efl_class.eo.c"

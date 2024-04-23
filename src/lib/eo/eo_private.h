@@ -1,8 +1,8 @@
 #ifndef _EO_PRIVATE_H
 #define _EO_PRIVATE_H
 
-#include <Eo.h>
-#include <Eina.h>
+#include <Efl_Eo.h>
+#include <Efl_Shared.h>
 
 #define EO_EINA_MAGIC 0xa186bc32
 #define EO_EINA_MAGIC_STR "Eo"

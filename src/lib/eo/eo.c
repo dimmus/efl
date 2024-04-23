@@ -6,7 +6,7 @@
 #  include <dlfcn.h>
 #endif
 
-#include <Eina.h>
+#include <Efl_Shared.h>
 
 #ifdef _WIN32
 #  include <evil_private.h> /* evil_time_get dladdr */
@@ -16,7 +16,7 @@
 #  include <mach/mach_time.h>
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "eo_ptr_indirection.h"
 #include "eo_private.h"
 #include "eo_add_fallback.h"

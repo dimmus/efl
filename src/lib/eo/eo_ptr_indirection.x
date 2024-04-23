@@ -20,7 +20,7 @@
 # define EFL_BETA_API_SUPPORT
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "eo_internal.h"
 #include "eo_private.h"
 

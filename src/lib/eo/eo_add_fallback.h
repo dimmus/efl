@@ -1,8 +1,8 @@
 #ifndef _EO_ADD_FALLBACK_H
 #define _EO_ADD_FALLBACK_H
 
-#include <Eina.h>
-#include <Eo.h>
+#include <Efl_Shared.h>
+#include <Efl_Eo.h>
 
 typedef struct _Eo_Stack_Frame
 {

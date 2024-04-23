@@ -11,7 +11,7 @@
 #  include <dlfcn.h>
 #endif
 
-#include <Eina.h>
+#include <Efl_Shared.h>
 
 #include "eo_ptr_indirection.h"
 #include "eo_private.h"

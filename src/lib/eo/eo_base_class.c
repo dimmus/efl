@@ -2,9 +2,9 @@
 #  include "efl_config.h"
 #endif
 
-#include <Eina.h>
+#include <Efl_Shared.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_internal.h"
 

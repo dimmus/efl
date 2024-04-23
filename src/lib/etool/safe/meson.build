@@ -1,1 +1,0 @@
-inc_etool += include_directories('.')

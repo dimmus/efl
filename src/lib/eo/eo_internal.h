@@ -1,7 +1,7 @@
 #ifndef _EO_INTERNAL_H_
 #define _EO_INTERNAL_H_
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 typedef unsigned char Efl_Bool;
 typedef struct _Eo_Opaque Eo;
