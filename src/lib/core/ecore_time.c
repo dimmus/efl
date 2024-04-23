@@ -17,7 +17,7 @@
 #  include <evil_private.h> /* gettimeofday */
 #endif
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #if defined(_WIN32)

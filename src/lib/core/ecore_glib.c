@@ -17,7 +17,7 @@
 #  include <netinet/in.h>
 #endif
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #ifdef HAVE_GLIB

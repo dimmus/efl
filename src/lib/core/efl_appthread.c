@@ -6,7 +6,7 @@
 #define EFL_IO_WRITER_PROTECTED 1
 #define EFL_IO_CLOSER_PROTECTED 1
 
-#include <Ecore.h>
+#include <Efl_Core.h>
 
 #include "ecore_private.h"
 

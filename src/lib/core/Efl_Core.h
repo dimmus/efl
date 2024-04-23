@@ -1,7 +1,9 @@
 #ifndef _EFL_CORE_H
 #define _EFL_CORE_H
 
-#include "efl_config.h"
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
 
 #include <Efl_Shared.h>
 #include <Efl_Eo.h>
@@ -60,7 +62,7 @@ EAPI extern double _efl_startup_time;
 #include "Ecore_Common.h"
 #include "Ecore_Eo.h"
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 
 #ifdef __cplusplus
 }

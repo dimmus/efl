@@ -12,7 +12,7 @@
 #  endif
 #  include "Eeze.h"
 #endif
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "Efl_Core_Input.h"
 #include "ecore_input_private.h"
 
@@ -658,7 +658,7 @@ ecore_input_joystick_name_get(int index)
             if (fd < 0) return NULL;
 
             if (ioctl(fd, JSIOCGNAME(sizeof(name)), name) < 0)
-                strncpy(name, "Unknown", sizeof(name));
+                eina_strlcpy(name, "Unknown", sizeof(name));
             return eina_slstr_copy_new(name);
         }
     }

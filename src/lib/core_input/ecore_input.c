@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #include "Efl_Core_Input.h"

@@ -6,7 +6,7 @@
 
 #include <Efl_Eo.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 static Efl_Bool _ecore_job_event_handler(void *data, int type, void *ev);

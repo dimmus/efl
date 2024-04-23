@@ -10,7 +10,7 @@
 #  include "efl_config.h"
 #endif
 
-#include <Ecore.h>
+#include <Efl_Core.h>
 #include "ecore_private.h"
 #include <sys/types.h>
 #include <sys/stat.h>

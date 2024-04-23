@@ -9,7 +9,7 @@
 
 #include <evil_private.h> /* evil_last_error_get */
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #include "ecore_exe_private.h"

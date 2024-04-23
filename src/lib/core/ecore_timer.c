@@ -7,7 +7,7 @@
 
 #include <Efl_Eo.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #define MY_CLASS      EFL_LOOP_TIMER_CLASS

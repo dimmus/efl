@@ -6,7 +6,7 @@
 
 #include <Efl_Eo.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 EFL_CALLBACKS_ARRAY_DEFINE(ecore_idle_exiter_callbacks,

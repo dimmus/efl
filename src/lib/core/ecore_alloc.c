@@ -6,7 +6,7 @@
 
 #include <Efl_Shared.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 typedef struct _Ecore_Mempool Ecore_Mempool;

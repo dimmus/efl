@@ -1,11 +1,10 @@
 dep_eo_interfaces     = [ m ]
 dep_eo_interfaces_pub = [ eo ]
 dep_eo_interfaces_ext = []
-inc_eo_interfaces     = include_directories('.')
 src_eo_interfaces     = []
+inc_eo_interfaces     = include_directories('.')
 
-# ##############################
-
+eo_gen_include_directories += ['-I', dir_current_source]
 eo_gen_include_directories += ['-I', join_paths(dir_source, 'src/lib')]
 
 dir_current_source = meson.current_source_dir()
@@ -179,16 +178,12 @@ install_headers('efl_file.h',
   install_dir : join_paths(dir_package_include, 'interfaces'),
 )
 
-eo_gen_include_directories += ['-I', dir_current_source]
-
-# #######################################
-
 lib_eo_interfaces = library('efl_eo_interfaces',
-    src_eo_interfaces, pub_eo_file_target,
-    c_args :            package_c_args,
-    dependencies:       [ dep_eo_interfaces, dep_eo_interfaces_pub, dep_eo_interfaces_ext ],
-    install:            true,
-    version :           version
+  src_eo_interfaces, pub_eo_file_target,
+  c_args :            package_c_args,
+  dependencies:       [ dep_eo_interfaces, dep_eo_interfaces_pub, dep_eo_interfaces_ext ],
+  install:            true,
+  version :           version
 )
 
 eo_interfaces = declare_dependency(
@@ -201,3 +196,14 @@ eo_interfaces = declare_dependency(
 package_eo_subdirs += ['eo_interfaces']
 
 dep_eo_interfaces_one = dep_eo_interfaces + dep_eo_interfaces_pub + dep_eo_interfaces_ext
+
+# headers
+
+eo_interfaces_header_src = [
+  'Efl_Eo_Interfaces.h',
+  'Efl_Model.h'
+]
+
+install_headers(eo_interfaces_header_src,
+  install_dir : dir_package_include,
+)

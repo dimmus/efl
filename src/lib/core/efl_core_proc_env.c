@@ -5,7 +5,7 @@
 #ifdef _WIN32
 #  include <evil_private.h> /* setenv unsetenv */
 #endif
-#include <Ecore.h>
+#include <Efl_Core.h>
 #ifdef HAVE_CRT_EXTERNS_H
 #  include <crt_externs.h>
 #endif

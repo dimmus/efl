@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Ecore_Wl.h"
+#include "Efl_Core_Wl.h"
 #include "ecore_wl_internal.h"
 
 #include <sys/types.h>

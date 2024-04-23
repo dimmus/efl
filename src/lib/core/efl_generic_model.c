@@ -3,7 +3,7 @@
 #endif
 
 #include <Efl_Eo_Interfaces.h>
-#include <Ecore.h>
+#include <Efl_Core.h>
 
 #include "ecore_internal.h"
 

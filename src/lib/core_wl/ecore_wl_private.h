@@ -1,14 +1,14 @@
-#ifndef _ECORE_WL2_PRIVATE_H
-# define _ECORE_WL2_PRIVATE_H
+#ifndef  _EFL_CORE_WL_PRIVATE_H
+# define _EFL_CORE_WL_PRIVATE_H
 
 # include <unistd.h>
-# include "Ecore_Wl.h"
-# include "Efl_Core_Input.h"
 # include <xkbcommon/xkbcommon-compose.h>
+
+# include "Efl_Core_Wl.h"
+# include "Efl_Core_Input.h"
 # include "ecore_wl_internal.h"
 
 # include "session-recovery-client-protocol.h"
-
 # include "xdg-shell-client-protocol.h"
 # include "xdg-shell-unstable-v6-client-protocol.h"
 # include "efl-aux-hints-client-protocol.h"

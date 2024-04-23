@@ -26,6 +26,7 @@
 #include <string.h>
 #include <limits.h>
 #include <ctype.h>
+#include <assert.h> /* static_assert */
 
 #ifdef HAVE_BSD_STRING_H
 #  include <bsd/string.h>
@@ -307,6 +308,7 @@ eina_strlcpy(char *dst, const char *src, size_t siz)
 #ifdef HAVE_STRLCPY
     return strlcpy(dst, src, siz);
 #else
+#if 0
     char       *d = dst;
     const char *s = src;
     size_t      n = siz;
@@ -328,6 +330,9 @@ eina_strlcpy(char *dst, const char *src, size_t siz)
     }
 
     return (s - src - 1); /* count does not include NUL */
+#endif
+    static_assert(sizeof(dst) >= sizeof(src));
+    memcpy(dst, src, siz); /* if strcpy is not easily replaced with memcpy then the code is fundamentally wrong */
 #endif
 }
 

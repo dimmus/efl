@@ -15,7 +15,7 @@
  * succeeds, @c 1 will be returned, otherwise @c 0 will be returned.
  *
  * @code
- * #include <Ecore.h>
+ * #include <Efl_Core.h>
  *
  * int main(int argc, char **argv)
  * {

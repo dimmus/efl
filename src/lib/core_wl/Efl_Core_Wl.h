@@ -2,7 +2,8 @@
 # define _ECORE_WL2_H_
 
 # include <Efl_Shared.h>
-# include <Ecore.h>
+# include <Efl_Core.h>
+# include <Ecore.h> /* use old api here. should be removed later */
 # include <wayland-client.h>
 # include <wayland-cursor.h>
 # include <xkbcommon/xkbcommon.h>

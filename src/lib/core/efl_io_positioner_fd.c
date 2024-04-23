@@ -4,7 +4,7 @@
 #  include "efl_config.h"
 #endif
 
-#include <Ecore.h>
+#include <Efl_Core.h>
 #include "ecore_private.h"
 
 #define MY_CLASS EFL_IO_POSITIONER_FD_CLASS

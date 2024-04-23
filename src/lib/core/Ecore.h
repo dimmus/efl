@@ -161,7 +161,7 @@
  * For example:
  *
  * @code
- * #include <Ecore.h>
+ * #include <Efl_Core.h>
  *
  * int
  * main(int argc, const char **argv)
@@ -180,7 +180,7 @@
  * more by adding some event handlers and timers.
  *
  * @code
- * #include <Ecore.h>
+ * #include <Efl_Core.h>
  *
  * Ecore_Timer         *timer1     = NULL;
  * Ecore_Event_Handler *handler1   = NULL;
@@ -325,7 +325,7 @@ extern "C" {
 
 #include "Ecore_Common.h"
 #ifndef EFL_NOLEGACY_API_SUPPORT
-#include "Ecore_Legacy.h"
+# include "Ecore_Legacy.h"
 #endif
 #include "Ecore_Eo.h"
 

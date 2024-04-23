@@ -4,7 +4,7 @@
 #  include "efl_config.h"
 #endif
 
-#include <Ecore.h>
+#include <Efl_Core.h>
 #include <fcntl.h>
 #include "ecore_private.h"
 

@@ -6,7 +6,7 @@
 
 #include <Efl_Eo.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #define MY_CLASS ECORE_POLLER_CLASS
@@ -231,6 +231,7 @@ ecore_poller_poll_interval_get(Ecore_Poller_Type type EFL_UNUSED)
     return poll_interval;
 }
 
+#ifndef EFL_NOLEGACY_API_SUPPORT
 EAPI Ecore_Poller *
 ecore_poller_add(Ecore_Poller_Type type EFL_UNUSED,
                  int                    interval,
@@ -275,6 +276,7 @@ ecore_poller_add(Ecore_Poller_Type type EFL_UNUSED,
 
     return poller;
 }
+#endif
 
 EAPI Efl_Bool
 ecore_poller_poller_interval_set(Ecore_Poller *poller, int interval)

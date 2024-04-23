@@ -507,7 +507,7 @@ struct _Eina_Future_Desc {
  * Here's a typical example:
  *
  * @code
- * #include <Ecore.h>
+ * #include <Efl_Core.h>
  *
  * static void
  * _promise_cancel(void *data, Eina_Promise *p EFL_UNUSED)

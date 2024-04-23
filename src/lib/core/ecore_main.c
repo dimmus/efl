@@ -55,7 +55,7 @@
 #ifdef _WIN32
 #  include <evil_private.h> /* evil_last_error_get */
 #endif
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #include "ecore_main_common.h"

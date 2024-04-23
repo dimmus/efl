@@ -12,7 +12,7 @@
 #include <sys/time.h>
 #include <errno.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #include "ecore_main_common.h"

@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 #define MY_CLASS EFL_ACCELERATE_INTERPOLATOR_CLASS

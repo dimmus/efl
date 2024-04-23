@@ -4,7 +4,7 @@
 
 #include <Efl_Shared.h>
 #include <Efl_Eo_Interfaces.h>
-#include <Ecore.h>
+#include <Efl_Core.h>
 
 #include "ecore_private.h"
 #include "efl_composite_model.eo.h"

@@ -49,7 +49,7 @@
  *
  * // all these files will emit warning from EINA_ARG_NONNULL()
  * #include <Evas.h>  // third party headers
- * #include <Ecore.h>
+ * #include <Efl_Core.h>
  *
  * #include <eina_safety_checks.h>
  * // all the files below will NOT emit warning from EINA_ARG_NONNULL(),

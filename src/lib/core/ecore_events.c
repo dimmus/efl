@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 static Ecore_Event_Message_Handler *_event_msg_handler = NULL;

@@ -59,7 +59,7 @@
 #  define PIPE_FD_ERROR                -1
 #endif /* ! _WIN32 */
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 // How of then we should retry to write to the pipe

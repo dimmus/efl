@@ -12,7 +12,7 @@ dep_core_wl_ext = [ dependency('wayland-client'), dependency('wayland-server'), 
 inc_core_wl = include_directories('.')
 
 src_core_wl_header = [
-  'Ecore_Wl.h'
+  'Efl_Core_Wl.h'
 ]
 
 src_core_wl = files([

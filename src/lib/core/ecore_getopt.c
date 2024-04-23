@@ -26,7 +26,7 @@
 
 #define _(x) dgettext("ecore", x)
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "Ecore_Getopt.h"
 
 static const char *prog    = NULL;

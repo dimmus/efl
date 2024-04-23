@@ -9,7 +9,7 @@
 #ifdef _WIN32
 #  include <evil_private.h> /* pipe fcntl */
 #endif
-#include <Ecore.h>
+#include <Efl_Core.h>
 
 #include "ecore_private.h"
 

@@ -4,7 +4,7 @@
 
 #ifdef NEED_RUN_IN_TREE
 // #  include "../../static_libs/buildsystem/buildsystem.h"
-#  include "Ecore.h" /* bs_mod_get */
+#  include "Efl_Core.h" /* bs_mod_get */
 #endif
 
 #include "ecore_wl_private.h"

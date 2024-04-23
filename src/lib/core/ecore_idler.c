@@ -6,7 +6,7 @@
 
 #include <Efl_Eo.h>
 
-#include "Ecore.h"
+#include "Efl_Core.h"
 #include "ecore_private.h"
 
 struct _Ecore_Factorized_Idle

@@ -9,6 +9,10 @@
 #include "ecore_event_message.eo.h"
 #include "ecore_event_message_handler.eo.h"
 
+#ifndef EFL_NOLEGACY_API_SUPPORT
+# include "Ecore_Legacy.h"
+#endif
+
 #ifdef EAPI
 # undef EAPI
 #endif

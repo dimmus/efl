@@ -8,9 +8,8 @@ assert(protocols_dir != '', 'Could not get pkgdatadir from wayland-protocols.pc'
 
 wayland_protocol_server_headers = []
 wayland_protocol_client_headers = []
-wayland_protocol_sources = []
-
-wayland_protocol_files = {}
+wayland_protocol_sources        = []
+# wayland_protocol_files          = {}
 
 wayland_protocols = [
   
