@@ -1,0 +1,191 @@
+Enlightenment Foundation Library (EFL)
+
+WEB SITE:
+        https://enlightenment.org/about-efl
+
+GIT:
+        git@enlightenment.org:enlightenment/efl.git
+        https://git.enlightenment.org/enlightenment/efl.git
+
+MAILING LIST:
+        https://lists.freedesktop.org/mailman/listinfo/enlightenment-devel
+
+IRC:
+        #e on irc.libera.chat
+
+BUG REPORTS:
+        https://git.enlightenment.org/enlightenment/efl/issues
+
+API DOCUMENTATION:
+        https://
+
+AUTHOR:
+        Carsten Haitzler
+        Cedric Bail
+        Mike Blumenkrantz
+        Christopher Michael
+        Vincent Torri
+        Boris Faure
+        Tom Hacohen
+        Derek Foreman
+        ...and many others (see AUTHORS)
+
+LICENSE:
+        LGPL-2.1-or-later for all code, exceptions noted in LICENSES/README.md
+
+REQUIREMENTS:
+        libc
+        gstreamer (Ensure all codecs you want are installed.)
+        zlib
+        lua (lua 5.1, luajit or lua 5.2 support optional)
+        openssl
+        curl
+        dbus
+        fontconfig
+        freetype2
+        fribidi
+        harfbuzz
+        libpulse
+        libsndfile
+        libx11
+        libxau
+        libxcomposite
+        libxdamage
+        libxdmcp
+        libxext
+        libxfixes
+        libxinerama
+        libxrandr
+        libxrender
+        libxss
+        libxtst
+        libxcursor
+        libxi (2.2 or newer)
+        opengl(mesa etc.) (opengl/glx/full or opengl-es2/egl. full opengl only on osx - must be explicitly specified to be full to have support)
+        giflib/libgif
+        systemd / libudev
+        poppler / poppler-cpp
+        libraw
+        libspectre
+        librsvg
+        libpng
+        libjpeg
+        openjpeg2
+        libtiff
+        openmp (clang needs libomp, while gcc uses libgomp)
+        libwebp
+
+        During runtime, you need the following additional
+        dependencies:
+
+        util-linux >= v2.27.1 required (libmount + libblkid)
+        libreoffice
+
+BUILD:
+        To build in directory build/:
+          meson setup build/ && ninja -C build/
+
+        Any configuration options can be specified as -Darg=value... arguments
+        to meson. After the build directory is initially configured, meson will
+        refuse to run again, and options must be changed with:
+          meson configure -Darg=value build/
+        meson configure without any arguments will print out available options and
+        their current values.
+
+        Useful commands:
+          ninja -C build -v some/target
+          meson test -C build/
+          sudo meson install -C build/ --no-rebuild
+          DESTDIR=... meson install -C build/
+
+        A tarball can be created with:
+          v=250 && git archive --prefix=efl-$v/ v$v | zstd >efl-$v.tar.zstd
+        
+        Additional packages are necessary to run some tests:
+        - nc                 (used by test/TEST-12-ISSUE-3171)
+        - python             (test-udev which is installed is in python)
+        - python-pyparsing
+        - python-evdev       (used by hwdb parsing tests)
+        - strace             (used by test/test-functions)
+        - capsh              (optional, used by test-execute)
+
+POLICY FOR SUPPORT OF DISTRIBUTIONS AND ARCHITECTURES:
+        systemd main branch and latest major or stable releases are generally
+        expected to compile on current versions of popular distributions (at
+        least all non-EOL versions of Fedora, Debian unstable/testing/stable,
+        latest Ubuntu LTS and non-LTS releases, openSUSE Tumbleweed/Leap,
+        CentOS Stream 8 and 9, up-to-date Arch, etc.)  We will generally
+        attempt to support also other non-EOL versions of various distros.
+        Features which would break compilation on slightly older distributions
+        will only be introduced if there are significant reasons for this
+        (i.e. supporting them interferes with development or requires too many
+        resources to support). In some cases backports of specific libraries or
+        tools might be required.
+
+        The policy is similar for architecture support. systemd is regularly
+        tested on popular architectures (currently amd64, i386, arm64, ppc64el,
+        and s390x), but should compile and work also on other architectures, for
+        which support has been added. systemd will emit warnings when
+        architecture-specific constants are not defined.
+
+STATIC COMPILATION AND "STANDALONE" BINARIES:
+        systemd provides a public shared libraries libsystemd.so and
+        libudev.so. The latter is deprecated, and the sd-device APIs in
+        libsystemd should be used instead for new code. In addition, systemd is
+        built with a private shared library, libsystemd-shared-<suffix>.so,
+        that also includes the libsystemd code, and by default most systemd
+        binaries are linked to it. Using shared libraries saves disk space and
+        memory at runtime, because only one copy of the code is needed.
+
+        It is possible to build static versions of systemd public shared
+        libraries (via the configuration options '-Dstatic-libsystemd' and
+        '-Dstatic-libudev'). This allows the libsystemd and libudev code to be
+        linked statically into programs. Note that mixing & matching different
+        versions of libsystemd and systemd is generally not recommended, since
+        various of its APIs wrap internal state and protocols of systemd
+        (e.g. logind and udev databases), which are not considered
+        stable. Hence, using static libraries is not recommended since it
+        generally means that version of the static libsystemd linked into
+        applications and the host systemd are not in sync, and will thus create
+        compatibility problems.
+
+        In addition, it is possible to disable the use of
+        libsystemd-shared-<suffix>.so for various components (via the
+        configuration options '-Dlink-*-shared'). In this mode, the libsystemd
+        and libsystemd-shared code is linked statically into selected
+        binaries. This option is intended for systems where some of the
+        components are intended to be delivered independently of the main
+        systemd package. Finally, some binaries can be compiled in a second
+        version (via the configuration option '-Dstandalone-binaries'). The
+        version suffixed with ".standalone" has the libsystemd and
+        libsystemd-shared code linked statically. Those binaries are intended
+        as replacements to be used in limited installations where the full
+        systemd suite is not installed. Yet another option is to rebuild
+        systemd with a different '-Dshared-lib-tag' setting, allowing different
+        systemd binaries to be linked to instances of the private shared
+        library that can be installed in parallel.
+
+        Again: Using the default shared linking is recommended, building static
+        or "standalone" versions is not. Mixing versions of systemd components
+        that would normally be built and used together (in particular various
+        daemons and the manager) is not recommended: we do not test such
+        combinations upstream and cannot provide support. Distributors making
+        use of those options are responsible if things do not work as expected.
+
+VALGRIND:
+        To run systemd under valgrind, compile systemd with the valgrind
+        development headers available (i.e. valgrind-devel or equivalent).
+        Otherwise, false positives will be triggered by code which violates
+        some rules but is actually safe. Note that valgrind generates nice
+        output only on exit(), hence on shutdown we don't execve()
+        systemd-shutdown.
+
+STABLE BRANCHES AND BACKPORTS:
+        Stable branches with backported patches are available in the
+        systemd-stable repo at https://github.com/systemd/systemd-stable.
+
+        Stable branches are started for certain releases of systemd and named
+        after them, e.g. v238-stable. Stable branches are managed by
+        distribution maintainers on an as needed basis. See
+        https://www.freedesktop.org/wiki/Software/systemd/Backports for some
+        more information and examples.
