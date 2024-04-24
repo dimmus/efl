@@ -15,7 +15,7 @@ eo_interfaces_suite_bin = executable('efl_eo_interfaces_suite',
             '-DTESTS_SRC_DIR="'+dir_current_source+'"']
 )
 
-test('efl_eo_interfaces-suite', eo_interfaces_suite_bin,
+test('efl_suite-eo_interfaces', eo_interfaces_suite_bin,
   env : test_env,
   timeout : master_timeout
 )

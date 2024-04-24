@@ -16,7 +16,7 @@ eo_interface = executable('eo_interface',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-interface', eo_interface,
+test('efl_suite-eo-interface', eo_interface,
   env : test_env
 )
 
@@ -28,6 +28,6 @@ eo_interface = executable('eo_interface_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-interface-dbg', eo_interface,
+test('efl_suite-eo-interface-dbg', eo_interface,
   env : test_env
 )

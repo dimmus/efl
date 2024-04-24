@@ -22,7 +22,7 @@ eo_mixin = executable('eo_mixin',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-mixins', eo_mixin,
+test('efl_suite-eo-mixins', eo_mixin,
   env : test_env
 )
 eo_mixin = executable('eo_mixin_dbg',
@@ -33,6 +33,6 @@ eo_mixin = executable('eo_mixin_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-mixins-dbg', eo_mixin,
+test('efl_suite-eo-mixins-dbg', eo_mixin,
   env : test_env
 )

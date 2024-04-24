@@ -14,7 +14,7 @@ eo_composite_objects = executable('eo_composite_objects',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-composite-objects', eo_composite_objects,
+test('efl_suite-eo-composite-objects', eo_composite_objects,
   env : test_env
 )
 
@@ -26,6 +26,6 @@ eo_composite_objects = executable('eo_composite_objects_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-composite-objects-dbg', eo_composite_objects,
+test('efl_suite-eo-composite-objects-dbg', eo_composite_objects,
   env : test_env
 )

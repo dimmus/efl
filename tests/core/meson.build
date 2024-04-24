@@ -112,12 +112,12 @@ efl_app_suite = executable('efl_app_suite',
             '-DTESTS_SRC_DIR="'+dir_current_source+'"']
 )
 
-test('efl_core-suite', core_suite,
+test('efl_suite-core', core_suite,
   env : test_env,
   timeout : master_timeout
 )
 
-test('efl-app', efl_app_suite,
+test('efl_suite-core-app', efl_app_suite,
   env : test_env,
   timeout : master_timeout
 )

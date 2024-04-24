@@ -69,6 +69,6 @@ shared_suite_bin = executable('efl_shared_suite',
             '-DTESTS_SRC_DIR="'+dir_source+'"']
 )
 
-test('efl_shared-suite', shared_suite_bin,
+test('efl_suite-shared', shared_suite_bin,
   env : test_env,
 )

@@ -12,7 +12,7 @@ eo_children = executable('eo_children',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-children', eo_children,
+test('efl_suite-eo-children', eo_children,
   env : test_env
 )
 
@@ -24,6 +24,6 @@ eo_children = executable('eo_children_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-children-dbg', eo_children,
+test('efl_suite-eo-children-dbg', eo_children,
   env : test_env
 )

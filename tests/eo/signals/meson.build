@@ -12,7 +12,7 @@ eo_signals = executable('eo_signals',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-signals', eo_signals,
+test('efl_suite-eo-signals', eo_signals,
   env : test_env
 )
 
@@ -24,6 +24,6 @@ eo_signals = executable('eo_signals_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-signals-dbg', eo_signals,
+test('efl_suite-eo-signals-dbg', eo_signals,
   env : test_env
 )

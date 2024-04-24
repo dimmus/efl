@@ -17,7 +17,7 @@ eo_access = executable('eo_access',
             '-DTESTS_SRC_DIR="'+dir_current_source+'"']
 )
 
-test('eo-access', eo_access,
+test('efl_suite-eo-access', eo_access,
   env : test_env
 )
 
@@ -28,6 +28,6 @@ eo_access_dbg = executable('eo_access_dbg',
             '-DTESTS_SRC_DIR="'+dir_current_source+'"']
 )
 
-test('eo-access-dbg', eo_access_dbg,
+test('efl_suite-eo-access-dbg', eo_access_dbg,
   env : test_env
 )

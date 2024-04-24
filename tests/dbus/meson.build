@@ -26,7 +26,7 @@ dbus_suite = executable('efl_dbus_suite',
             '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('efl_dbus-suite', dbus_suite,
+test('efl_suite-dbus', dbus_suite,
   env : test_env,
   timeout : master_timeout
 )

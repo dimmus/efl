@@ -26,7 +26,7 @@ eo_constructors = executable('eo_constructors',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-constructors', eo_constructors,
+test('efl_suite-eo-constructors', eo_constructors,
   env : test_env
 )
 
@@ -38,6 +38,6 @@ eo_constructors = executable('eo_constructors_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-constructors-dbg', eo_constructors,
+test('efl_suite-eo-constructors-dbg', eo_constructors,
   env : test_env
 )

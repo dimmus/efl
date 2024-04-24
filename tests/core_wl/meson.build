@@ -24,7 +24,7 @@ core_wl_suite = executable('efl_core_wl_suite',
             '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('efl_core_wl-suite', core_wl_suite,
+test('efl_suite-core_wl', core_wl_suite,
   env : test_env,
   timeout : master_timeout
 )

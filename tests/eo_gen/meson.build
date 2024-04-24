@@ -40,6 +40,6 @@ eo_gen_suite = executable('efl_eo_gen_suite',
   ]
 )
 
-test('eo_gen-suite', eo_gen_suite,
+test('efl_suite-eo_gen', eo_gen_suite,
   env : test_env
 )

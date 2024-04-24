@@ -18,7 +18,7 @@ eo_function_overrides = executable('eo_function_overrides',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-function-overrides', eo_interface,
+test('efl_suite-eo-function-overrides', eo_interface,
   env : test_env
 )
 
@@ -30,6 +30,6 @@ eo_function_overrides = executable('eo_function_overrides_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-function-overrides-dbg', eo_interface,
+test('efl_suite-eo-function-overrides-dbg', eo_interface,
   env : test_env
 )
