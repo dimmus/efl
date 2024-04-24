@@ -434,10 +434,10 @@ if unwind.found()
 endif
 
 iconv = dependency('iconv', required: false, method: 'auto')
-dep_shared += [iconv]
+dep_shared += [ iconv ]
 
 execinfo = cc.find_library('execinfo', required: false)
-dep_shared += [execinfo]
+dep_shared += [ execinfo ]
 
 lib_shared = library('efl_shared', src_shared,
   c_args : [package_c_args, '-DEINA_BUILD'],
@@ -450,8 +450,8 @@ lib_shared = library('efl_shared', src_shared,
 
 shared = declare_dependency(
   include_directories: inc_config + inc_shared,
-  dependencies : dep_shared,
-  link_with: lib_shared,
+  dependencies :       dep_shared,
+  link_with:           lib_shared,
 )
 
 install_headers(public_headers,

@@ -154,7 +154,7 @@ endif
 pub_eo_files       = []
 pub_eo_types_files = []
 
-src_eo_interfaces += files([
+src_eo_interfaces += files(
   'efl_interfaces_main.c',
   'efl_mvvm_common.c',
   'efl_gfx_path.c',
@@ -172,7 +172,7 @@ src_eo_interfaces += files([
   'efl_ui_layout_orientable_readonly.c',
   'efl_text_markup_util.c',
   'efl_model_provider.c',
-])
+)
 
 install_headers('efl_file.h',
   install_dir : join_paths(dir_package_include, 'interfaces'),
@@ -187,22 +187,20 @@ lib_eo_interfaces = library('efl_eo_interfaces',
 )
 
 eo_interfaces = declare_dependency(
-  include_directories:  [ inc_eo_interfaces, inc_config ],
-  link_with:            lib_eo_interfaces,
-  dependencies:         dep_eo_interfaces + dep_eo_interfaces_pub,
-  sources :             pub_eo_file_target
+  include_directories:[ inc_eo_interfaces, inc_config ],
+  link_with:          lib_eo_interfaces,
+  dependencies:       dep_eo_interfaces + dep_eo_interfaces_pub,
+  sources :           pub_eo_file_target
 )
 
 package_eo_subdirs += ['eo_interfaces']
 
 dep_eo_interfaces_one = dep_eo_interfaces + dep_eo_interfaces_pub + dep_eo_interfaces_ext
 
-# headers
-
-eo_interfaces_header_src = [
+eo_interfaces_header_src = files(
   'Efl_Eo_Interfaces.h',
   'Efl_Model.h'
-]
+)
 
 install_headers(eo_interfaces_header_src,
   install_dir : dir_package_include,

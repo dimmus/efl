@@ -1,4 +1,4 @@
-eo_gen_src = [
+eo_gen_src = files(
   'main.c',
   'main.h',
   'types.c',
@@ -9,7 +9,7 @@ eo_gen_src = [
   'sources.h',
   'docs.c',
   'docs.h'
-]
+)
 
 eo_gen_bin = executable('efl_eo_gen',
   eo_gen_src,
@@ -19,7 +19,6 @@ eo_gen_bin = executable('efl_eo_gen',
 )
 
 eo_gen_path = eo_gen_bin.full_path()
-
 
 if meson.is_cross_build()
   _eo_gen_bin = find_program('efl_eo_gen', native : true)

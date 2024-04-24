@@ -12,7 +12,7 @@ pub_eo_files = [
   'efl_object_override.eo'
 ]
 
-src_eo = files([
+src_eo = files(
   'eo.c',
   'eo_ptr_indirection.c',
   'eo_ptr_indirection.h',
@@ -22,7 +22,7 @@ src_eo = files([
   'eo_add_fallback.h',
   'eo_private.h',
   'eo_internal.h'
-])
+)
 
 pub_eo_types_files = [
   'eina_types.eot'
@@ -45,7 +45,7 @@ foreach eo_file : pub_eo_types_files
   )
 endforeach
 
-eo_header = ['Efl_Eo.h']
+eo_header = files('Efl_Eo.h')
 
 foreach eo_file : pub_eo_files
   pub_eo_file_target += custom_target('eo_gen_' + eo_file,

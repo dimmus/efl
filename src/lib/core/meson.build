@@ -104,7 +104,7 @@ src_core_header = [
   'efl_loop_timer_eo.legacy.h',
 ]
 
-src_core = files([
+src_core = files(
   'efl_app.c',
   'ecore.c',
   'ecore_alloc.c',
@@ -174,13 +174,13 @@ src_core = files([
   'efl_core_env.c',
   'efl_core_proc_env.c',
   'efl_core_command_line.c',
-])
+)
 
 if sys_windows
   #nothing for now ... needs testing
-  src_core += files(['ecore_exe_win32.c'])
+  src_core += files('ecore_exe_win32.c')
 else
-  src_core += files(['ecore_signal.c', 'ecore_exe_posix.c'])
+  src_core += files('ecore_signal.c', 'ecore_exe_posix.c')
 endif
 
 # if get_option('glib') and not sys_windows

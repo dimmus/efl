@@ -52,7 +52,7 @@ endforeach
 
 eo_gen_include_directories += ['-I', dir_current_source]
 
-src_dbus_headers = [
+src_dbus_headers = files(
   'Efl_Dbus.h',
   'eldbus_connection.h',
   'eldbus_freedesktop.h',
@@ -66,9 +66,9 @@ src_dbus_headers = [
   'eldbus_introspection.h',
   'Eldbus_Model.h',
   'eldbus_message_eina_value.h'
-]
+)
 
-src_dbus = files([
+src_dbus = files(
   'eldbus_private.h',
   'eldbus_private_types.h',
   'eldbus_model_private.h',
@@ -97,7 +97,7 @@ src_dbus = files([
   'eldbus_model_arguments.c',
   'eldbus_model_signal.c',
   'eldbus_introspection.c'
-])
+)
 
 lib_dbus = library('efl_dbus',
     src_dbus, pub_eo_file_target,

@@ -8,13 +8,13 @@ src_core_input_header = [
   'Efl_Core_Input.h'
 ]
 
-src_core_input = files([
+src_core_input = files(
   'ecore_input.c',
   'ecore_input_compose.c',
   'ecore_input_joystick.c',
   'ecore_input_compose.h',
   'ecore_input_private.h'
-])
+)
 
 # if get_option('eeze')
 #   core_input_deps += eeze
