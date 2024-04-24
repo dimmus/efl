@@ -1,4 +1,5 @@
 Bugfixes:
+=========
 
 * -Dbuild-benchmarks=true
   benchmarks: we have a c++ code there. So several cflags does't work for c++ - have an error during meson setup.
@@ -10,13 +11,32 @@ Bugfixes:
   - lib/shared/data/eina_inline_value.x:497:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
 
 External:
+=========
+
+* analisys
+  - fuzzing: realize. Template for Google's OSS-Fuzz provided
+
+* docs
+  - adopt manuals
+  - adopt README and README.md
+
+* scripts
+  - places numerous examples with different tasks. Need to be rewrited!
+  - shell-completion: rewrite based on provided example
+
+* github
+  - rewrite .github/workflows/unit-tests.{sh, yml} to be appropriate to EFL (example provided)
 
 * wayland:
   - protocol: 
 * objc:
-  - meson: test Objective-C build flags
+  - meson: test Objective-C build flags (meson/cflags)
 
 Regularly:
+==========
+
+* github: check workflows status
 
 * po: update pot files
+
 * doc: update api documentation
