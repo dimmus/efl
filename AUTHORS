@@ -1,0 +1,734 @@
+Evil
+----
+
+Vincent Torri <vtorri at univ-evry dot fr>
+Tor Lillqvist <tml at iki dot fi> (pipe function)
+Lance Fetters
+Vincent Richomme <vrichomme at smartmobili dot com>
+Paul Vixie (ISC) (inet_pton and inet_ntop functions)
+Daniel Stenberg (inet_pton and inet_ntop functions)
+The MinGW and MinGW-w64 teams (POSIX printf family functions)
+Keith Marshall (realpath on Windows XP). See http://sourceforge.net/tracker/?func=detail&atid=302435&aid=1294010&group_id=2435
+Michelle Legrand <legrand.michelle@outlook.com>
+
+Escape
+------
+
+Youness Alaoui (KaKaRoTo)
+
+Eina
+----
+
+Jorge Luis "turran" Zapata <jorgeluis.zapata@gmail.com>
+Carsten Haitzler <raster@rasterman.com>
+Corey "atmos" Donohoe <atmos@atmos.org>
+Vincent "caro" Torri  <vtorri at univ-evry dot fr>
+Gustavo Sverzut Barbieri <barbieri@gmail.com>
+Tilman Sauerbeck <tilman@code-monkey.de>
+Cedric Bail <cedric.bail@free.fr>
+Peter "pfritz" Wehrfritz <peter.wehrfritz@web.de>
+Arnaud de Turckheim "quarium" <quarium@gmail.com>
+Alexandre "diaxen" Becoulet <diaxen@free.fr>
+Albin "Lutin" Tonnerre <albin.tonnerre@gmail.com>
+Andre Dieb <andre.dieb@gmail.com>
+Raphael Kubo da Costa <kubo@profusion.mobi>
+Gustavo Chaves <glima@profusion.mobi>
+Fabiano Fidêncio <fidencio@profusion.mobi>
+Brett Nash <nash@nash.id.au>
+Tom Hacohen <tom@stosb.com>
+Sebastian Dransfeld <sd@tango.flipp.net>
+Myungjae Lee <mjae.lee@samsung.com>
+Youness Alaoui <kakaroto@kakaroto.homelinux.net>
+Boris Faure <billiob@gmail.com>
+Sung W. Park <sungwoo@gmail.com>
+Guillaume Friloux <guillaume.friloux@gmail.com>
+Jonas M. Gastal <jgastal@profusion.mobi>
+Raphael Kubo da Costa <rakuco@freebsd.org>
+Jérôme Pinot <ngc891@gmail.com>
+Mike Blumenkrantz <michael.blumenkrantz@gmail.com>
+Patryk Kaczmarek <patryk.k@samsung.com>
+Igor Murzov <e-mail@date.by>
+Vladislav Brovko <v.brovko@samsung.com>
+Hermet Park <hermetpark@gmail.com>
+Rajeev Ranjan (Rajeev) <rajeev.r@samsung.com> <rajeev.jnnce@gmail.com>
+Subodh Kumar <s7158.kumar@samsung.com>
+Michelle Legrand <legrand.michelle@outlook.com>
+Shilpa Singh <shilpa.singh@samsung.com> <shilpasingh.o@gmail.com>
+Prasoon Singh <prasoonsingh16@gmail.com>
+ 
+Eet
+---
+
+The Rasterman (Carsten Haitzler) <raster@rasterman.com>
+David Goodlad <dgoodlad@gmail.com>
+Cedric Bail <cedric.bail@free.fr>
+Arnaud de Turckheim <quarium@gmail.com>
+Luis Felipe Strano Moraes <lfelipe@profusion.mobi>
+Chidambar Zinnoury <illogict@online.fr>
+Vincent Torri <vtorri@univ-evry.fr>
+Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+Raphael Kubo da Costa <kubo@profusion.mobi>
+Mathieu Taillefumier <mathieu.taillefumier@free.fr>
+Albin "Lutin" Tonnerre <albin.tonnerre@gmail.com>
+Adam Simpkins <adam@adamsimpkins.net>
+Mike Blumenkrantz <michael.blumenkrantz@gmail.com>
+Lionel Orry <lionel.orry@gmail.com>
+Jérôme Pinot <ngc891@gmail.com>
+Leandro Santiago <leandrosansilva@gmail.com>
+Christophe Sadoine <chris@indefini.org>
+
+Eo
+--
+
+Tom Hacohen <tom@stosb.com>
+Cedric Bail <cedric.bail@free.fr>
+
+Ector
+-----
+
+Cedric Bail <cedric.bail@free.fr>
+Jorge Luis Zapata Muga <jorgeluis.zapata@gmail.com>
+Jose O Gonzalez <jose_ogp@juno.com>
+
+Evas
+----
+
+Carsten Haitzler <raster@rasterman.com>
+Till Adam <till@adam-lilienthal.de>
+Steve Ireland <sireland@pobox.com>
+Brett Nash <nash@nash.id.au>
+Tilman Sauerbeck <tilman@code-monkey.de>
+Corey Donohoe <atmos@atmos.org>
+Yuri Hudobin <glassy_ape@users.sourceforge.net>
+Nathan Ingersoll <ningerso@d.umn.edu>
+Willem Monsuwe <willem@stack.nl>
+Jose O Gonzalez <jose_ogp@juno.com>
+Bernhard Nemec <Bernhard.Nemec@viasyshc.com>
+Jorge Luis Zapata Muga <jorgeluis.zapata@gmail.com>
+Cedric Bail <cedric.bail@free.fr>
+Gustavo Sverzut Barbieri <barbieri@gmail.com>
+Vincent Torri <vtorri at univ-evry dot fr>
+Tim Horton <hortont424@gmail.com>
+Tom Hacohen <tom@stosb.com>
+Mathieu Taillefumier <mathieu.taillefumier@free.fr>
+Iván Briano <ivan@profusion.mobi>
+Gustavo Lima Chaves <glima@profusion.mobi>
+Samsung Electronics
+Samsung SAIT
+Sung W. Park <sungwoo@gmail.com>
+Jiyoun Park <jy0703.park@samsung.com>
+Myoungwoon Roy Kim(roy_kim) <myoungwoon.kim@samsung.com> <myoungwoon@gmail.com>
+Thierry el Borgi <thierry@substantiel.fr>
+Shilpa Singh <shilpa.singh@samsung.com> <shilpasingh.o@gmail.com>
+Hermet Park <hermetpark@gmail.com>
+Christopher 'devilhorns' Michael <cpmichael1@comcast.net>
+Seungsoo Woo <om101.woo@samsung.com>
+Youness Alaoui <kakaroto@kakaroto.homelinux.net>
+Jim Kukunas <james.t.kukunas@linux.intel.com>
+Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Rafal Krypa <r.krypa@samsung.com>
+Hyoyoung Chang <hyoyoung@gmail.com>
+Jérôme Pinot <ngc891@gmail.com>
+Rafael Antognolli <antognolli@profusion.mobi>
+Daniel Zaoui <daniel.zaoui@samsung.com>
+Christophe Sadoine <chris@indefini.org>
+Igor Murzov <e-mail@date.by>
+Sohyun Kim <anna1014.kim@samsung.com>
+Boris Faure <billiob@gmail.com>
+Eduardo Lima (Etrunko) <eblima@gmail.com>
+Leandro Dorileo (dorileo) <dorileo@profusion.mobi>
+Patryk Kaczmarek <patryk.k@samsung.com>
+Zbigniew Kosinski <z.kosinski@samsung.com>
+Paulo Cavalcanti <paulo.cavalcanti@linux.intel.com>
+Jean-Philippe Andre <jp.andre@samsung.com>
+Yury Usischev <y.usishchev@samsung.com>
+Youngbok Shin <youngb.shin@samsung.com>
+Rajeev Ranjan (Rajeev) <rajeev.r@samsung.com> <rajeev.jnnce@gmail.com>
+MinKyoung Kim <mer.kim@samsung.com>
+Pierre Lamot <pierre.lamot@yahoo.fr>
+Michelle Legrand <legrand.michelle@outlook.com>
+Romain Perier <romain.perier@openwide.fr>
+Subodh Kumar <s7158.kumar@samsung.com>
+
+Evas Generic Loaders
+--------------------
+
+The Rasterman (Carsten Haitzler) <raster@rasterman.com>
+Christian Kreibich <cK@whoop.org>
+Vincent Torri <vtorri at univ-evry dot fr>
+Michael Bouchaud <michael.bouchaud@gmail.com>
+Fanina "cippp" Cristian <fancris3@gmail.com>
+Cedric BAIL <cedric.bail@free.fr>
+Jérémy Zurcher <jeremy@asynk.ch>
+Stefan Schmidt <stefan@datenfreihafen.org>
+Daniel Juyung Seo <seojuyung2@gmail.com>
+Doug Newgard <scimmia22@outlook.com>
+Mike Blumenkrantz <michael.blumenkrantz@gmail.com>
+Alex-P. Natsios <drakevr@linuxteam.teilar.gr>
+Jihoon Kim <imfine98@gmail.com>
+Samuel F. Baggen <thanatermesis.elive@gmail.com>
+Sebastian Dransfeld <sd@tango.flipp.net>
+
+Ecore
+-----
+
+The Rasterman <raster@rasterman.com>
+Tom Gilbert <tom@linuxbrit.co.uk>
+Burra <burra@colorado.edu>
+Chris Ross <chris@darkrock.co.uk>
+Term <term@twistedpath.org>
+Tilman Sauerbeck <tilman@code-monkey.de>
+Ibukun Olumuyiwa <ibukun@computer.org>
+Yuri <da2001@hotmail.ru>
+Nicholas Curran <quasar@bigblue.net.au>
+Howell Tam <pigeon@pigeond.net>
+Nathan Ingersoll <rbdpngn@users.sourceforge.net>
+Andrew Williams <andy@eandywilliams.me>
+Kim Woelders <kim@woelders.dk>
+Sebastian Dransfeld <sd@tango.flipp.net>
+Simon Poole <simon.armlinux@themalago.net>
+Jorge Luis Zapata Muga <jorgeluis.zapata@gmail.com>
+dan sinclair <zero@everburning.com>
+Michael 'Mickey' Lauer <mickey@tm.informatik.uni-frankfurt.de>
+David 'onefang' Seikel <onefang@gmail.com>
+Hisham 'CodeWarrior' Mardam Bey <hisham@hisham.cc>
+Brian 'rephorm' Mattern <rephorm@rephorm.com>
+Tim Horton <hortont424@gmail.com>
+Arnaud de Turckheim 'quarium' <quarium@gmail.com>
+Matt Barclay <mbarclay@gmail.com>
+Peter Wehrfritz <peter.wehrfritz@web.de>
+Albin "Lutin" Tonnerre <albin.tonnerre@gmail.com>
+Vincent Torri <vincent.torri@gmail.com>
+Lars Munch <lars@segv.dk>
+Andre Dieb <andre.dieb@gmail.com>
+Mathieu Taillefumier <mathieu.taillefumier@free.fr>
+Rui Miguel Silva Seabra <rms@1407.org>
+Samsung Electronics <tbd>
+Samsung SAIT <tbd>
+Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Brett Nash <nash@nash.id.au>
+Mike Blumenkrantz <michael.blumenkrantz@gmail.com>
+Leif Middelschulte <leif.middelschulte@gmail.com>
+Mike McCormack <mikem@ring3k.org>
+Sangho Park <gouache95@gmail.com>
+Jihoon Kim <jihoon48.kim@samsung.com> <imfine98@gmail.com>
+PnB <Poor.NewBie@gmail.com>
+Daniel Juyung Seo <seojuyung2@gmail.com> <juyung.seo@samsung.com>
+Christopher 'devilhorns' Michael <cpmichael1@comcast.net>
+Hermet Park <hermetpark@gmail.com>
+xlopez@igalia.com
+Rafael Antognolli <antognolli@profusion.mobi>
+Kim Yunhan <spbear@gmail.com>
+Youness Alaoui <kakaroto@kakaroto.homelinux.net>
+Bluezery <ohpowel@gmail.com>
+Doyoun Kang <wayofmine@gmail.com> <doyoun.kang@samsung.com>
+Haifeng Deng <haifeng.deng@samsung.com>
+Jérémy Zurcher <jeremy@asynk.ch>
+Seong-ho Cho (DarkCircle) <darkcircle.0426@gmail.com>
+Patryk Kaczmarek <patryk.k@samsung.com>
+Daniel Willmann <d.willmann@samsung.com>
+Michal Pakula vel Rutka <m.pakula@samsung.com>
+Vikram Narayanan <vikram186@gmail.com>
+Daniel Zaoui <daniel.zaoui@samsung.com>
+Yakov Goldberg <yakov.g@samsung.com>
+Eduardo Lima (Etrunko) <eblima@gmail.com>
+Alexey Yakovenko <wakeroid@gmail.com>
+Myoungwoon Roy Kim(roy_kim) <myoungwoon.kim@samsung.com> <myoungwoon@gmail.com>
+Robert David <robert.david.public@gmail.com>
+Gwanglim Lee <gl77.lee@samsung.com> <gwanglim@gmail.com>
+Sung-Jin Park <sj76.park@samsung.com>
+Guillaume Friloux <guillaume.friloux@gmail.com>
+Boris Faure <billiob@gmail.com>
+Pierre Lamot <pierre.lamot@yahoo.fr>
+Michelle Legrand <legrand.michelle@outlook.com>
+Romain Perier <romain.perier@openwide.fr>
+
+Embryo
+------
+
+The Rasterman (Carsten Haitzler) <raster@rasterman.com>
+Jérôme Pinot <ngc891@gmail.com>
+kumar Navneet <k.navneet@samsung.com>
+Deborshi Saha <deb.saha@samsung.com>
+
+Eio
+---
+
+Cedric Bail <cedric.bail@free.fr>
+Stephen Houston <UnixTitan@gmail.com>
+Gustavo Sverzut Barbieri <barbieri@gmail.com>
+Vincent "caro" Torri <vtorri at univ-evry dot fr>
+Mikael SANS <sans.mikael@gmail.com>
+Mike Blumenkrantz (zmike/discomfitor) <michael.blumenkrantz@gmail.com>
+Jérôme Pinot <ngc891@gmail.com>
+Daniel Willmann <d.willmann@samsung.com>
+Jérémy Zurcher <jeremy@asynk.ch>
+Pierre Lamot <pierre.lamot@yahoo.fr>
+Michelle Legrand <legrand.michelle@outlook.com>
+
+Eldbus
+-----
+
+Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+José Roberto de Souza <zehortigoza@profusion.mobi>
+Leandro Pereira <leandro@profusion.mobi>
+Lucas De Marchi <lucas.demarchi@profusion.mobi>
+
+
+Efreet
+------
+
+dan 'dj2' sinclair
+Brian 'rephorm' Mattern
+Sebastian Dransfeld <sd@tango.flipp.net>
+Nathan 'RbdPngn' Ingersoll
+Nicholas 'Mekius' Hughart
+Albin "Lutin" Tonnerre <albin.tonnerre@gmail.com>
+Mathieu Taillefumier <mathieu.taillefumier@free.fr>
+
+
+Eeze
+----
+Mike Blumenkrantz (zmike/discomfitor) <michael.blumenkrantz@gmail.com>
+Cedric Bail <cedric@efl.so>
+Mikael Sans <sans.mikael@gmail.com>
+Christophe Dumez <christophe.dumez@intel.com>
+Stefan Schmidt <stefan@datenfreihafen.org>
+
+
+EPhysics
+--------
+Bruno Dilly <bdilly@profusion.mobi>
+Leandro Dorileo <dorileo@profusion.mobi>
+Ricardo de Almeida Gonzaga <ricardo@profusion.mobi>
+
+Edje
+----
+The Rasterman (Carsten Haitzler) <raster@rasterman.com>
+Tilman Sauerbeck (tilman at code-monkey de)
+ZigsMcKenzie <zigsmckenzie@gmail.com>
+Cedric BAIL <cedric.bail@free.fr>
+Brian Mattern <rephorm@rephorm.com>
+Mathieu Taillefumier <mathieu.taillefumier@free.fr>
+Tristan <blunderer@gmail.com>
+Gustavo Lima Chaves <glima@profusion.mobi>
+Bruno Dilly <bdilly@profusion.mobi>
+Fabiano Fidêncio <fidencio@profusion.mobi>
+Jihoon Kim <jihoon48.kim@samsung.com>
+Tiago Falcão <tiago@profusion.mobi>
+Davide Andreoli <dave@gurumeditation.it>
+Sebastian Dransfeld <sd@tango.flipp.net>
+Tom Hacohen <tom@stosb.com>
+Aharon Hillel <a.hillel@partner.samsung.com>
+Shilpa Singh <shilpa.singh@samsung.com> <shilpasingh.o@gmail.com>
+Mike Blumenkrantz <michael.blumenkrantz@gmail.com
+Jaehwan Kim <jae.hwan.kim@samsung.com>
+Boris Faure <billiob@gmail.com>
+Govindaraju SM <govi.sm@samsung.com> <govism@gmail.com>
+Prince Kumar Dubey <prince.dubey@samsung.com> <prince.dubey@gmail.com>
+David Seikel <onefang at gmail.com>
+Mikael Sans <sans.mikael@gmail.com>
+Jérôme Pinot <ngc891@gmail.com>
+Rajeev Ranjan (Rajeev) <rajeev.r@samsung.com> <rajeev.jnnce@gmail.com>
+Hermet Park <hermetpark@gmail.com>
+Kim Shinwoo <kimcinoo.efl@gmail.com>
+Michael Bouchaud (yoz) <michael.bouchaud@gmail.com>
+WooHyun Jung (woohyun) <woohyun0705@gmail.com>
+Guilherme Silveira <xguiga@gmail.com>
+Flavio Ceolin <flavio.ceolin@profusion.mobi>
+Daniel Zaoui <daniel.zaoui@yahoo.com>
+Daniel Willmann <d.willmann@samsung.com>
+Robert David <robert.david.public@gmail.com>
+Bluezery <ohpowel@gmail.com>
+Andrii Kroitor <an.kroitor@samsung.com>
+Vorobiov Vitalii <vi.vorobiov@samsung.com>
+m.biliavskyi <m.biliavskyi@samsung.com>
+Vyacheslav Reutskiy <v.reutskiy@samsung.com>
+Kumar Navneet <k.navneet@samsung.com>
+Katpagavalli Anantharaj <katpagavalli@gmail.com>
+Subodh Kumar <s7158.kumar@samsung.com>
+
+Emotion
+-------
+Carsten Haitzler <raster@rasterman.com>
+Vincent Torri <torri@maths.univ-evry.fr>
+Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Sebastian Dransfeld <sd@tango.flipp.net>
+Cedric Bail <cedric.bail@free.fr>
+Rafael Antognolli <antognolli@profusion.mobi>
+Jérôme Pinot <ngc891@gmail.com>
+Pierre Le Magourou <pierre.lemagourou@openwide.fr>
+Hugo Camboulive <hugo.camboulive@zodiacaerospace.com>
+Sohyun Kim <anna1014.kim@samsung.com>
+Leandro Dorileo <dorileo@profusion.mobi>
+Michael Bouchaud (yoz) <yoz@efl.so>
+Aymeric Dumaz <aymeric.dumaz@gmail.com>
+
+Emotion Generic VLC
+---
+Cedric Bail <cedric.bail@free.fr>
+Hugo Camboulive <hugo.camboulive@zodiacaerospace.com>
+Leandro Dorileo <dorileo@profusion.mobi>
+Pierre Le Magourou <pierre.lemagourou@openwide.fr>
+Rafael Antognolli <antognolli@profusion.mobi>
+Sohyun Kim <anna1014.kim@samsung.com>
+Carsten Haitzler (Rasterman) <raster@rasterman.com>
+Davide Andreoli <dave@gurumeditation.it>
+Gustavo Sverzut Barbieri <barbieri@gmail.com>
+Stefan Schmidt <s.schmidt@samsung.com>
+Bruno Dilly <bdilly@profusion.mobi>
+Hermet Park <hermetpark@gmail.com>
+Daniel Juyung Seo <juyung.seo@samsung.com>
+Doug Newgard <scimmia22@outlook.com>
+Jerome Pinot <ngc891@gmail.com>
+Mike Blumenkrantz <zmike@samsung.com>
+Sebastian Dransfeld <sd@tango.flipp.net>
+Vincent Torri <vincent.torri@gmail.com>
+
+Ethumb
+------
+Rafael Antognolli <antognolli@profusion.mobi>
+Cedric Bail <cedric.bail@free.fr>
+Mikael SANS <sans.mikael@gmail.com>
+Jérôme Pinot <ngc891@gmail.com>
+
+EFL-C++
+-------
+Savio Sena <savio@expertisesolutions.com.br>
+Felipe Magno de Almeida <felipe@expertisesolutions.com.br>
+Vitor Sousa <vitorsousa@expertisesolutions.com.br>
+Lauro Moura <lauromoura@expertisesolutions.com.br>
+Jean-Philippe Andre <jp.andre@samsung.com>
+Luciana Magno de Almeida <luciana@expertisesolutions.com.br>
+Jaehyun Cho <jae_hyun.cho@samsung.com>
+Daniel Kolesa <quaker66@gmail.com>
+Vincent Torri <vtorri at univ-evry dot fr>
+Stefan Schmidt <stefan@datenfreihafen.org>
+Cedric BAIL <cedric.bail@free.fr>
+Xavi Artigas <xavierartigas@yahoo.es>
+YeongJong Lee <yj34.lee@samsung.com>
+Mike Blumenkrantz <michael.blumenkrantz@gmail.com>
+Larry Lira <larry@expertisesolutions.com.br>
+WooHyun Jung (woohyun) <woohyun0705@gmail.com>
+Marcel Hollerbach <marcel-hollerbach@t-online.de>
+Daniel Zaoui <daniel.zaoui@samsung.com>
+Sanghyeon Lee <sh10233.lee@samsung.com>
+Thiep Ha <thiepha@gmail.com>
+Vinícius dos Santos Oliveira <vini.ipsmaker@expertisesolutions.com.br>
+Bryce Harrington <bryce@osg.samsung.com>
+Tom Hacohen <tom@stosb.com>
+Carsten Haitzler <raster@rasterman.com>
+Andrew Williams <andy@eandywilliams.me>
+Amitesh Singh <singh.amitesh@gmail.com> <amitesh.sh@samsung.com>
+
+EFL-C#
+------
+
+Felipe Magno de Almeida <felipe@expertisesolutions.com.br>
+Vitor Sousa <vitorsousa@expertisesolutions.com.br>
+Lauro Moura <lauromoura@expertisesolutions.com.br>
+Jaehyun Cho <jae_hyun.cho@samsung.com>
+Xavi Artigas <xavierartigas@yahoo.es>
+Marcel Hollerbach <marcel-hollerbach@t-online.de>
+YeongJong Lee <yj34.lee@samsung.com>
+Daniel Kolesa <quaker66@gmail.com>
+Vincent Torri <vtorri at univ-evry dot fr>
+WooHyun Jung (woohyun) <woohyun0705@gmail.com>
+Jean-Philippe Andre <jp.andre@samsung.com>
+
+ELua
+----
+Daniel Kolesa <quaker66@gmail.com>
+
+Elementary
+----------
+The Rasterman (Carsten Haitzler) <raster@rasterman.com>
+Gustavo Sverzut Barbieri <barbieri@profusion.mobi>
+Cedric Bail <cedric.bail@free.fr>
+Vincent Torri <vtorri@univ-evry.fr>
+Daniel Kolesa <quaker66@gmail.com>
+Jaime Thomas <avi.thomas@gmail.com>
+Swisscom - http://www.swisscom.ch/
+Christopher Michael <devilhorns@comcast.net>
+Marco Trevisan (Treviño) <mail@3v1n0.net>
+Michael Bouchaud <michael.bouchaud@gmail.com>
+Jonathan Atton (Watchwolf) <jonathan.atton@gmail.com>
+Brian Wang <brian.wang.0721@gmail.com>
+Mike Blumenkrantz (discomfitor/zmike) <michael.blumenkrantz@gmail.com>
+Samsung Electronics <tbd>
+Samsung SAIT <tbd>
+Brett Nash <nash@nash.id.au>
+Bruno Dilly <bdilly@profusion.mobi>
+Rafael Fonseca <rfonseca@profusion.mobi>
+Hermet Park <hermetpark@gmail.com>
+Woohyun Jung <wh0705.jung@samsung.com>
+Jaehwan Kim <jae.hwan.kim@samsung.com>
+Wonguk Jeong <wonguk.jeong@samsung.com>
+Leandro A. F. Pereira <leandro@profusion.mobi>
+Helen Fornazier <helen.fornazier@profusion.mobi>
+Gustavo Lima Chaves <glima@profusion.mobi>
+Fabiano Fidêncio <fidencio@profusion.mobi>
+Tiago Falcão <tiago@profusion.mobi>
+Otavio Pontes <otavio@profusion.mobi>
+Viktor Kojouharov <vkojouharov@gmail.com>
+Daniel Juyung Seo (SeoZ) <juyung.seo@samsung.com> <seojuyung2@gmail.com>
+Sangho Park <sangho.g.park@samsung.com> <gouache95@gmail.com>
+Rajeev Ranjan (Rajeev) <rajeev.r@samsung.com> <rajeev.jnnce@gmail.com>
+Seunggyun Kim <sgyun.kim@samsung.com> <tmdrbs@gmail.com>
+Sohyun Kim <anna1014.kim@samsung.com> <sohyun.anna@gmail.com>
+Jihoon Kim <jihoon48.kim@samsung.com>
+Jeonghyun Yun (arosis) <jh0506.yun@samsung.com>
+Tom Hacohen <tom@stosb.com>
+Aharon Hillel <a.hillel@samsung.com>
+Shinwoo Kim <kimcinoo@gmail.com>
+Govindaraju SM <govi.sm@samsung.com> <govism@gmail.com>
+Prince Kumar Dubey <prince.dubey@samsung.com> <prince.dubey@gmail.com>
+Sung W. Park <sungwoo@gmail.com>
+Thierry el Borgi <thierry@substantiel.fr>
+Shilpa Singh <shilpa.singh@samsung.com> <shilpasingh.o@gmail.com>
+Chanwook Jung <joey.jung@samsung.com> <jchanwook@gmail.com>
+Hyoyoung Chang <hyoyoung.chang@samsung.com>
+Guillaume "Kuri" Friloux <guillaume.friloux@asp64.com>
+Kim Yunhan <spbear@gmail.com>
+Tae-Hwan Kim (Bluezery) <the81.kim@samsung.com> <ohpowel@gmail.com>
+Nicolas Aguirre <aguirre.nicolas@gmail.com>
+Sanjeev BA <iamsanjeev@gmail.com>
+Hyunsil Park <hyunsil.park@samsung.com>
+Goun Lee <gouni.lee@samsung.com>
+Mikael Sans <sans.mikael@gmail.com>
+Doyoun Kang <doyoun.kang@samsung.com>
+M.V.K. Sumanth <sumanth.m@samsung.com> <mvksumanth@gmail.com>
+Jérôme Pinot <ngc891@gmail.com>
+Davide Andreoli <dave@gurumeditation.it>
+Michal Pakula vel Rutka <m.pakula@samsung.com>
+Thiep Ha <thiep.ha@samsung.com>
+Artem Popov <artem.popov@samsung.com>
+Minseok Kim <minseok3.kim@samsung.com>
+Jean-Philippe André <jpeg@videolan.org>
+JiHyeon Seol <jihyeon.seol@samsung.com>
+Flavio Ceolin <flavio.ceolin@profusion.mobi>
+Igor Murzov <e-mail@date.by>
+Jiyoun Park <jy0703.park@samsung.com>
+KoziarekBeata <b.koziarek@samsung.com>
+Daniel Zaoui <daniel.zaoui@samsung.com>
+Yakov Goldberg <yakov.g@samsung.com>
+Murilo Belluzzo <murilo.belluzzo@profusion.mobi>
+Ricardo de Almeida Gonzaga <ricardo@profusion.mobi>
+Gwanglim Lee <gl77.lee@samsung.com> <gwanglim@gmail.com>
+JaeHyun Cho <jae_hyun_cho@naver.com>
+Bora Hwang <bora1.hwang@samsung.com>
+Jiyoung Choi <jychoi7.choi@samsung.com>
+Arvind R <arvino55@gmail.com>
+Paulo Cavalcanti <paulo.cavalcanti@linux.intel.com>
+Stefan Schmidt <stefan@datenfreihafen.org>
+Ryuan Choi (ryuan) <ryuan.choi@samsung.com> <ryuan.choi@gmail.com>
+Hosang Kim <hosang12.kim@samsung.com>
+Youngbok Shin <youngb.shin@samsung.com>
+Niraj Kumar <niraj.kr@samsung.com> <niraj.kumar.ait@gmail.com>
+Amitesh Singh <singh.amitesh@gmail.com> <amitesh.sh@samsung.com>
+Abhinandan Aryadipta <a.aryadipta@samsung.com>
+Sanghyeon Lee <sh10233.lee@samsung.com>
+Anil Kumar Nahak <ak.nahak@samsung.com>
+Michal Jagiello <m.jagiello@samsung.com>
+Chinmaya Panigrahi <c.panigrahi@samsung.com>
+Mohammad Irfan <mohammad.i@samsung.com>
+ajwillia.ms (Andrew Williams) <andy@andywilliams.me>
+Iván Briano <sachieru@gmail.com>
+Jonas M. Gastal <jgastal@profusion.mobi>
+Rafael Antognolli <antognolli@gmail.com>
+Mike McCormack <mike@atratus.org>
+Massimo Maiurana <maiurana@gmail.com>
+Henrique Dante de Almeida <hdante@profusion.mobi>
+Lucas De Marchi <lucas.demarchi@profusion.mobi>
+Boris Faure <billiob@gmail.com>
+Sebastian Dransfeld <sd@tango.flipp.net>
+Daniel Willmann <daniel@totalueberwachung.de>
+maxerba <maiurana@gmail.com>
+Youness Alaoui <kakaroto@kakaroto.homelinux.net>
+Rui Seabra <rms@1407.org>
+Andreas Volz <linux@brachttal.net>
+Jaeun Choi <jaeun12.choi@samsung.com>
+Doug Newgard <scimmia22@outlook.com>
+José Roberto de Souza <zehortigoza@profusion.mobi>
+Luis Felipe Strano Moraes <lfelipe@profusion.mobi>
+Thiago Thamada <tiba@profusion.mobi>
+U. Artie Eoff <ullysses.a.eoff@intel.com>
+Daniel Hirt <daniel.hirt@samsung.com>
+Eduardo Lima <eduardo.lima@intel.com>
+Leif Middelschulte <leif.middelschulte@gmail.com>
+Lukasz Stanislawski <l.stanislaws@samsung.com>
+Stephen Houston <smhouston88@gmail.com>
+Andrii Kroitor <an.kroitor@samsung.com>
+Joao Paulo Fernandes Ventura <ventura@profusion.mobi>
+Pau Espin Pedrol <pespin.shar@gmail.com>
+Jérémy Zurcher <jeremy@asynk.ch>
+Kai Huuhko <kai.huuhko@gmail.com>
+Leandro Dorileo <dorileo@profusion.mobi>
+Michael Jennings <mej@kainx.org>
+Myungjae Lee <mjae.lee@samsung.com>
+Tristan Lelong <tristan.lelong@blunderer.org>
+Yossi Kantor <yossi.kantor@samsung.com>
+cabelitos <guilherme.iscaro@intel.com>
+Alex Wu <zhiwen.wu@linux.intel.com>
+Alex-P. Natsios <drakevr@linuxteam.teilar.gr>
+Aron Xu <happyaron.xu@gmail.com>
+Chidambar Zinnoury <illogict@online.fr>
+Christophe Sadoine <chris@indefini.org>
+Daniel Vieira Franzolin <daniel@profusion.mobi>
+Daniele Ricci <daniele.athome@gmail.com>
+David Walter Seikel <onefang@gmail.com>
+Dennis Schridde <devurandom@gmx.net>
+Hannes Janetzek <hannes.janetzek@gmail.com>
+Lionel Landwerlin <llandwerlin@gmail.com>
+Mariusz Bialonczyk <manio@skyboo.net>
+Martin Jansa <Martin.Jansa@gmail.com>
+Michael Lauer <mlauer@vanille-media.de>
+Mike Frysinger <vapier@gentoo.org>
+Rodrigo Cesar Lopes Belem <rclbelem@gmail.com>
+Seong-ho Cho <darkcircle.0426@gmail.com>
+Seunghun Lee <shiin.lee@samsung.com>
+Thanatermesis <thanatermesis.ecvs@gmail.com>
+Viacheslav Lvov <v.lvov@samsung.com>
+Deasung Kim <deasung.kim@samsung.com>
+Jeonghoon Park <jh1979.park@samsung.com>
+Prashant <pb.ingale@samsung.com>
+suxia li <suxia.li@samsung.com>
+yan.wang <yan.wang@linux.intel.com>
+Anand <anand.km@samsung.com>
+Subhransu Sekhar Mohanty <sub.mohanty@samsung.com>
+Rajesh P S <rajeshps@samsung.com>
+Srivardhan Hebbar <sri.hebbar@samsung.com>
+Savio Sena <savio@expertisesolutions.com.br>
+Jae Yong Hwang <j_yong.hwang@samsung.com>
+Kabeer Khan <kabeer.khan@samsung.com>
+yinsc <shouchen.yin@samsung.com>
+Woochan Lee <wc0917.lee@samsung.com>
+Vitalii Vorobiov <vi.vorobiov@samsung.com>
+Jee-Yong Um <conr2d@gmail.com>
+Ji-In Moon <jiin.moon@samsung.com> 
+Subodh Kumar <s7158.kumar@samsung.com>
+Kumar Navneet <k.navneet@samsung.com>
+Godly T Alias <godly.talias@samsung.com> <godlytalias@yahoo.co.in>
+Shashank Pandey <shashank.p@samsung.com> <shashank0990@gmail.com>
+Divyesh Purohit <div.purohit@samsung.com> <purohit.div@gmail.com>
+Minkyu Kang <mk7.kang@samsung.com>
+Jinyong Park <j4939.park@samsung.com>
+
+Merged EFL
+----------
+Michael Jennings <mej@kainx.org>
+Mike Frysinger <vapier@gentoo.org>
+Daniel Kolesa <quaker66@gmail.com>
+Horms <horms@users.sourceforge.net>
+Massimo Maiurana <maiurana@gmail.com>
+Viktor Kojouharov <vkojouharov@gmail.com>
+Sebastian Dröge <sebastian@centricular.com>
+Paulo Alcantara <pcacjr@profusion.mobi>
+Andreas Volz <linux@brachttal.net>
+Ulisses Furquim <ulisses@profusion.mobi>
+Hannes Janetzek <hannes.janetzek@gmail.com>
+Jonathan Atton <jonathan.atton@gmail.com>
+Mikhail Gusarov <dottedmag@dottedmag.net>
+Ryuan Choi <ryuan.choi@gmail.com>
+Eric Schuele <ravenlock@ravenlock.us>
+Stafford Mitchell Horne <shorne@gmail.com>
+Guilherme Iscaro <iscaro@profusion.mobi>
+Laurence J. Lane <ljlane@users.sourceforge.net>
+Caio Marcelo de Oliveira Filho <cmarcelo@gmail.com>
+Henrique Dante de Almeida <hdante@profusion.mobi>
+U. Artie Eoff <ullysses.a.eoff@intel.com>
+Jaime Thomas <avi.thomas@gmail.com>
+Massimiliano Calamelli <mcalamelli@gmail.com>
+Alex Wu <zhiwen.wu@linux.intel.com>
+Naruto TAKAHASHI <tnaruto@gmail.com>
+Andres Blanc <andresblanc@gmail.com>
+Joerg Sonnenberger <joerg@britannica.bec.de>
+Rafael Fonseca <rfonseca@profusion.mobi>
+Samuel F. Baggen <thanatermesis.elive@gmail.com>
+Sanjeev BA <iamsanjeev@gmail.com>
+Wonsik Jung <sidein@samsung.com>
+Eduardo Felipe <eduardofelipe87@gmail.com>
+Emfox Zhou <emfoxzhou@gmail.com>
+Jaehyun Cho <jae_hyun.cho@samsung.com>
+Miculcy Brian <morlenxus@gmx.net>
+Raoul HECKY <raoul.hecky@gmail.com>
+Valerii Kanunik <v.kanunik@samsung.com>
+Alexander Kerner <alexander.kerner@googlemail.com>
+Dennis Schridde <devurandom@gmx.net>
+EunMi Lee <eunmi15.lee@samsung.com>
+Marc Andre Tanner <mat@brain-dump.org>
+Rob Bradford <rob@linux.intel.com>
+booleanlabel <booleanlabel@gmail.com>
+cnook <kimcinoo@gmail.com>
+Aron Xu <happyaron.xu@gmail.com>
+Ben Martin <monkeyiq@users.sf.net>
+Daniel Hirt <daniel.hirt@samsung.com>
+Daniel Vieira Franzolin <daniel@profusion.mobi>
+Deon 'PrinceAMD' Thomas <PrinceAMD.Elive@Gmail.com>
+Doug Newgard <scimmia22@outlook.com>
+Jan Arne Petersen <jpetersen@openismus.com>
+Jean Guyomarc'h <jean.guyomarch@gmail.com>
+João Paulo Rechi Vita <jprvita@profusion.mobi>
+Mariusz Grzegorczyk <mariusz.g@samsung.com>
+Michal Jagiello <m.jagiello@samsung.com>
+Nikolay Lopatka <n.lopatka@samsung.com>
+Rodrigo Cesar Lopes Belem <rclbelem@gmail.com>
+Thiago Thamada <tiba@profusion.mobi>
+Thiep Ha <thiepha@gmail.com>
+Ulrich Eckhardt <doomster@knuut.de>
+Vostokov Sergey <s.vostokov@samsung.com>
+Adrian Negreanu <adrian.m.negreanu@intel.com>
+Alex-P. Natsios <drakevr@linuxteam.teilar.gr>
+André Ribes <andre.ribes@gmail.com>
+Christopher Rosendahl <crosendahl@trustlab.com>
+Dan Mashal <dan.mashal@fedoraproject.org>
+Dmytro Kaidalov <d.kaidalov@samsung.com>
+Ederson Desouza <ederson.desouza@intel.com>
+Galatsanos 'godfath3r' Panagiotis <galatsanosp@gmail.com>
+Greg Garner <Greg@rt-eng.com>
+Hanspeter Portner <ventosus@airpost.net>
+Ingvaldur Sigurjonsson <rocketiii.scientist@gmail.com>
+Jeonghyun Yun <jh0506.yun@samsung.com>
+Joel Klinghed <the_jk@yahoo.com>
+Josef Reidinger <jreidinger@suse.cz>
+Joshua Deere <dphase@users.sourceforge.net>
+KoziarekBeata <b.koziarek@samsung.com>
+Lukasz Wrzosek <l.wrzosek@samsung.com>
+Marco Trevisan (Treviño) <mail@3v1n0.net>
+Martin Jansa <Martin.Jansa@gmail.com>
+Nick Reed <nick@fuel7.com>
+Oleksander Sirook <o.sirook@samsung.com>
+Oleksandr Shcherbina <o.shcherbina@samsung.com>
+Otavio Pontes <otavio@profusion.mobi>
+P Purkayastha <ppurka@gmail.com>
+Rajesh P S <rajeshps@samsung.com>
+Sanghee Park <sh15.park@samsung.com>
+Seong-ho Cho <darkcircle.0426@gmail.com>
+Sergii Kanaev <sergiikanaev@gmail.com>
+Seunghun Lee <shiin.lee@samsung.com>
+Simon <simon@simotek.net>
+Stanislav Vorobiov <s.vorobiov@samsung.com>
+Tae-Hwan Kim <the81.kim@samsung.com>
+Thanatermesis <thanatermesis.ecvs@gmail.com>
+Tomas Cech <tcech@suse.cz>
+Viacheslav Lvov <v.lvov@samsung.com>
+Vitaliy Venzak <v.venzak@samsung.com>
+perepelits.m <perepelits.m@samsung.com>
+rustyBSD <rustyBSD@gmx.fr>
+Haifeng Deng <haifeng.deng@samsung.com>
+Alastair Poole <netstar@gmail.com>
+Marcel Hollerbach <marcel-hollerbach@t-online.de>
+Hermet Park <hermetpark@gmail.com>
+Jeeyong Um <conr2d@gmail.com>
+SooHye Shin <soohye.shin@samsung.com>
+Hosang Kim <hosang12.kim@samsung.com>
+Minkyu Kang <mk7.kang@samsung.com>
+Jinyong Park <j4939.park@samsung.com>
+Woochan Lee <wc0917.lee@samsung.com>
+Taehyub Kim <taehyub.kim@samsung.com>
+Sungtaek Hong <taxi2se@gmail.com>
+Bryce Harrington <bryce@osg.samsung.com>
+YeongJong Lee <yj34.lee@samsung.com>
+Bowon Ryu <bowon.ryu@samsung.com>
+Wonki Kim <wonki_.kim@samsung.com>
+Junsu Choi <jsuya.choi@samsung.com>
