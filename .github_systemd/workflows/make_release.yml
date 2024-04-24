@@ -1,0 +1,24 @@
+name: Make a Github release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    if: github.repository == 'dimmus/efl' || github.repository == 'dimmus/efl-stable'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Release
+        uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564
+        with:
+          prerelease: ${{ contains(github.ref_name, '-beta') }}
+          draft: ${{ github.repository == 'dimmus/efl' }}

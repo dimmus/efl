@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: LGPL-2.1-or-later
+# vi: sw=2 ts=2 et:
+
+analisys:
+  - changed-files:
+    - any-glob-to-any-file: 'analisys/**/*'
+benchmarks:
+  - changed-files:
+    - any-glob-to-any-file: 'benchmarks/**/*'
+translation:
+  - changed-files:
+    - any-glob-to-any-file: 'po/*'
+services:
+  - changed-files:
+    - any-glob-to-any-file: 'services/*'
+build-system:
+  - changed-files:
+    - any-glob-to-any-file: ['meson_options.txt', '**/meson.build', 'Makefile', 'configure']
+ci:
+  - changed-files:
+    - any-glob-to-any-file: '.github/*'
+scripts:
+  - changed-files:
+    - any-glob-to-any-file: 'scripts/**/*'
+coccinelle:
+  - changed-files:
+    - any-glob-to-any-file: 'scripts/coccinelle/*'
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: ['NEWS', 'README*', 'docs/**/*']
+lib:
+  - changed-files:
+    - any-glob-to-any-file: 'src/lib/**/*'
+bin:
+  - changed-files:
+    - any-glob-to-any-file: 'src/bin/**/*'
+core:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/core/*', 'src/bin/core/*', 'src/modules/core/*', 'tests/core/*']
+core-input:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/core_input/*', 'src/bin/core_input/*', 'tests/core_input/*']
+core-wl:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/core_wl/*', 'src/bin/core_wl/*', 'src/modules/core_wl/*', 'tests/core_wl/*']
+dbus:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/dbus/*', 'src/bin/dbus/*', 'tests/dbus/*']
+eo:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/eo/*', 'src/bin/eo/*', 'tests/eo/*']
+eo-gen:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/eo_gen/*', 'src/bin/eo_gen/*', 'tests/eo_gen/*']
+eo-interfaces:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/eo_interfaces/*', 'src/bin/eo_interfaces/*', 'tests/eo_interface/*']
+shared:
+  - changed-files:
+    - any-glob-to-any-file: ['src/lib/shared/*', 'src/bin/shared/*', 'src/modules/shared/*', 'tests/shared/*']
+modules:
+  - changed-files:
+    - any-glob-to-any-file: 'src/modules/**/*'
+meson:
+  - changed-files:
+    - any-glob-to-any-file: ['meson_options.txt', '**/meson.build']
+tests:
+  - changed-files:
+    - any-glob-to-any-file: [
+      'tests/**/*',
+      '.github/workflows/*'
+  ]
