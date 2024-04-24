@@ -1,5 +1,5 @@
-# EditorConfig configuration for EFL
 # http://EditorConfig.org
+# Consistent coding style across different editors.
 
 # NOTE: If you update this file make 
 # sure to update .dir-locals.el and .vimrc, too.
@@ -7,12 +7,13 @@
 # Top-most EditorConfig file
 root = true
 
-# Unix-style newlines with a newline ending every file, utf-8 charset
 [*]
+charset = utf-8
 end_of_line = lf
+indent_size = 2
+indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
-charset = utf-8
 
 [NEWS]
 indent_style = space
@@ -39,3 +40,10 @@ indent_size = 2
 [docs/**/*.html]
 indent_style = space
 indent_size = 2
+
+[*.md]
+indent_size = 4
+trim_trailing_whitespace = false
+
+[*.py]
+indent_size = 4
