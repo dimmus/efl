@@ -25,10 +25,12 @@ External:
   - shell-completion: rewrite based on provided example
 
 * github
+  - a lot needs to be adopted here
   - rewrite .github/workflows/unit-tests.{sh, yml} to be appropriate to EFL (example provided)
 
 * wayland:
   - protocol: 
+
 * objc:
   - meson: test Objective-C build flags (meson/cflags)
 
