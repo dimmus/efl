@@ -121,11 +121,11 @@ option('wl',
   description : 'Type of OpenGL support in efl'
 )
 
-option('eeze',
-  type : 'boolean',
-  value : false,
-  description : 'Device abstraction (udev wrapper) in efl'
-)
+# option('eeze',
+#   type : 'boolean',
+#   value : true,
+#   description : 'Device abstraction (udev wrapper) in efl'
+# )
 
 # option('audio',
 #   type : 'boolean',
