@@ -16,9 +16,9 @@ src_core_input = files([
   'ecore_input_private.h'
 ])
 
-if get_option('eeze')
-  core_input_deps += eeze
-endif
+# if get_option('eeze')
+#   core_input_deps += eeze
+# endif
 
 lib_core_input = library('efl_core_input',
     src_core_input, pub_eo_file_target,
