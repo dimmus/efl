@@ -14,7 +14,6 @@ Standard: Latest
 # Line width (don't exceed 100).
 ColumnLimit: 80
 
-# Never use tabs for indentation.
 # Note: TabWidth and IndentWidth must be the same, or strange things happen.
 UseTab: Never
 TabWidth: 4
@@ -28,15 +27,11 @@ InsertNewlineAtEOF: true
 KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 1
 
-# For switch statements, don't indent the cases.
 IndentCaseLabels: true
 IndentCaseBlocks: true
 IndentGotoLabels: false
 IndentPPDirectives: AfterHash
 IndentWrappedFunctionNames: false
-
-# Make access modifier slightly more visible.
-# AccessModifierOffset: -1
 
 # This causes parameters on continuations to align to the opening brace.
 #

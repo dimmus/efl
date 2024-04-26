@@ -1,0 +1,44 @@
+import eldbus_types;
+
+class @beta Eldbus.Model.Method extends Eldbus.Model.Arguments {
+    [[Eldbus model method class]]
+    methods {
+        @property proxy {
+            [[Custom Eldbus_Model_Method constructor.
+
+              @since 1.21]]
+	    set {}
+            values {
+                proxy: ptr(Eldbus.Proxy); [[Eldbus proxy]]
+            }
+        }
+        @property method {
+            [[Object]]
+            set {}
+            values {
+                method: ptr(const(Eldbus.Introspection.Method)); [[The introspected interface]]
+            }
+        }
+        call {
+            [[Calls the method. The properties must have been set.
+
+              The event EMODEL_EVENT_PROPERTIES_CHANGED is raised for output arguments (properties).
+
+              The event ELDBUS_MODEL_METHOD_EVENT_METHOD_CALLED is raised for a successful call. Otherwise
+
+              @since 1.16]]
+        }
+    }
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.finalize;
+    }
+    constructors {
+        .proxy;
+        .method;
+    }
+    events {
+      successful,call: void; [[Event dispatched for a successful method call.]]
+   }
+
+}

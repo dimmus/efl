@@ -360,6 +360,7 @@ eina_init(void)
 EINA_API int
 eina_shutdown(void)
 {
+    printf("%d", _eina_main_count);
     if (_eina_main_count <= 0)
     {
         ERR("Init count not greater than 0 in shutdown.");

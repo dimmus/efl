@@ -1,0 +1,10 @@
+if get_option('systemd')
+  core_systemd_mod = shared_module('systemd',
+      'ecore_system_systemd.c',
+      dependencies: [ core, dbus ],
+      install:      true,
+      install_dir:  mod_install_dir,
+      name_suffix : sys_mod_extension
+  )
+  module_files += join_paths(mod_install_dir, 'libsystemd.' + sys_mod_extension)
+endif

@@ -1,4 +1,4 @@
-shared_module('efl_core_wl_engines_dmabuf',
+shared_module('dmabuf',
     'core_wl_surface_module_dmabuf.c',
     dependencies: [ core_wl, wayland_protocol ],
     install:      true,

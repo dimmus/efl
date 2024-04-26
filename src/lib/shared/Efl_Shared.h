@@ -33,8 +33,8 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef EINA_H_
-#define EINA_H_
+#ifndef EFL_SHARED_H_
+#define EFL_SHARED_H_
 
 /**
  * @file

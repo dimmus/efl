@@ -1,0 +1,35 @@
+import eldbus_types;
+
+class @beta Eldbus.Model.Arguments extends Eldbus.Model {
+    [[Eldbus model arguments class]]
+
+    methods {
+        custom_constructor {
+            [[Custom Eldbus_Model_Arguments constructor.
+
+            @since 1.16]]
+            params {
+                @in proxy: ptr(Eldbus.Proxy); [[Eldbus proxy]]
+                @in name: string; [[Name]]
+                @in arguments: const(list<Eldbus.Introspection.Argument>); [[The introspected arguments]]
+            }
+        }
+    @property arg_name {
+            [[Name of the argument]]
+            get {}
+            values {
+                name: string; [[Argument name]]
+            }
+        }
+    }
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.finalize;
+        Efl.Object.invalidate;
+        Efl.Model.properties { get; }
+        Efl.Model.property { set; get; }
+    }
+    constructors {
+        .custom_constructor;
+    }
+}

@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "constructors_simple.h"
 #include "constructors_simple2.h"
 #include "constructors_simple3.h"

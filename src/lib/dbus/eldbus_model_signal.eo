@@ -1,0 +1,22 @@
+class @beta Eldbus.Model.Signal extends Eldbus.Model.Arguments {
+    [[Eldbus model signal class]]
+
+    methods {
+        signal_constructor {
+              [[Custom Eldbus_Model_Signal constructor.
+
+                @since 1.16]]
+            params {
+                @in proxy: ptr(Eldbus.Proxy); [[Eldbus proxy]]
+                @in signal: ptr(const(Eldbus.Introspection.Signal)); [[The introspected method]]
+            }
+        }
+    }
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.invalidate;
+    }
+    constructors {
+        .signal_constructor;
+    }
+}

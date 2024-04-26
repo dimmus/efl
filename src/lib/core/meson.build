@@ -1,11 +1,11 @@
+dir_current_source = meson.current_source_dir()
+dir_current_build  = meson.current_build_dir()
+
 dep_core_pub = [ shared, eo, eo_interfaces ]
 dep_core_ext = [ intl, m ]
 # dep_ecore_ext = [intl, m, buildsystem]
 
 inc_core = include_directories('.')
-
-dir_current_source = meson.current_source_dir()
-dir_current_build  = meson.current_build_dir()
 
 legacy_eo_files = [
   'ecore_event_message.eo',
@@ -13,9 +13,8 @@ legacy_eo_files = [
 ]
 
 eo_file_target = []
-
 foreach eo_file : legacy_eo_files
-  eo_file_target += custom_target('eolian_gen_' + eo_file,
+  eo_file_target += custom_target('eo_gen_' + eo_file,
     input :       eo_file,
     output :      eo_file + '.h',
     depfile :     eo_file + '.d',
@@ -90,7 +89,7 @@ endforeach
 
 eo_types_files = []
 
-eo_gen_include_directories += ['-I', inc_core]
+eo_gen_include_directories += ['-I', dir_current_source]
 
 src_core_header = [
   'Ecore.h',

@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "composite_objects_simple.h"
 
 const Efl_Event_Description _EV_A_CHANGED = EFL_EVENT_DESCRIPTION("a,changed");

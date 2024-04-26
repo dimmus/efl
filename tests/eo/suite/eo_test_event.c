@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_test_class_simple.h"
@@ -95,7 +95,6 @@ EFL_START_TEST(eo_event)
     ck_assert_int_ne(data.event2, 0);
     ck_assert_int_ne(data.event3, 0);
 }
-
 EFL_END_TEST
 
 static void
@@ -158,7 +157,6 @@ EFL_START_TEST(eo_event_call_in_call)
     ck_assert_int_ne(data.event2, 0);
     ck_assert_int_ne(data.event3, 0);
 }
-
 EFL_END_TEST
 
 static Efl_Bool emitted = 0;
@@ -226,7 +224,6 @@ EFL_START_TEST(eo_event_generation_bug)
 
     ck_assert_int_ne(emitted, 0);
 }
-
 EFL_END_TEST
 
 static void
@@ -270,7 +267,6 @@ EFL_START_TEST(eo_event_fowarder_test)
     efl_event_callback_call(obj1, EFL_TEST_EVENT_EVENT_TESTER, NULL);
     ck_assert_int_eq(called, 0);
 }
-
 EFL_END_TEST
 
 void

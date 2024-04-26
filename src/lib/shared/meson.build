@@ -1,6 +1,7 @@
-dep_shared += [m, rt, dl, thread_dep]
+dep_shared += [ m, rt, dl, thread_dep ]
 
 inc_shared = [include_directories('.')]
+
 subdir('checksum')
 subdir('data')
 subdir('debug')
@@ -286,7 +287,7 @@ src_shared += src_shared_checksum \
            + src_shared_string \
            + src_shared_thread \
            + src_shared_utils \
-           + eina_mp_sources # module
+           + efl_shared_mp_sources # module
 
 if sys_windows
   src_shared += src_shared_win32
@@ -322,8 +323,9 @@ else
    want_cow_magic     = false
 endif
 
-# efl_config.set('EINA_LOG_LEVEL_MAXIMUM', 3)
-efl_config.set('EINA_LOG_LEVEL', 1)
+if with_max_log_level != -1
+   efl_config.set('EINA_LOG_LEVEL_MAXIMUM', with_max_log_level)
+endif
 
 if stringshare_usage
    efl_config.set('EINA_STRINGSHARE_USAGE', 1)

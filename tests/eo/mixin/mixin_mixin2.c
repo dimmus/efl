@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "mixin_mixin.h"
 #include "mixin_mixin2.h"
 #include "mixin_simple.h"

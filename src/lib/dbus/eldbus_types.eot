@@ -1,0 +1,91 @@
+struct @beta @extern Eldbus.Proxy; [[Represents a client object bound to an interface]]
+struct @beta @extern Eldbus.Connection; [[Represents a connection of one the type of connection with the DBus daemon.]]
+struct @beta @extern Eldbus.Object; [[Represents an object path already attached with bus name or unique id]]
+
+enum @beta @extern Eldbus.Connection.Type
+{
+    [[Eldbus connection type]]
+    unknown = 0, [[Sentinel, not a real type]]
+    session, [[Regular user session bus, used for applications and services running per user]]
+    system, [[System-wide connection bus, used for system services]]
+    starter, [[Uses whatever bus started our application, be session or system]]
+    address, [[A private bus at a specific address]]
+    last, [[Sentinel, not a real type]]
+}
+
+enum @beta @extern Eldbus.Introspection.Argument_Direction
+{
+   [[Argument direction]]
+   none = 0, [[No direction]]
+   in, [[Incoming direction]]
+   out, [[Outgoing direction]]
+}
+
+/* DTD conversion form: http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd */
+
+enum @beta @extern Eldbus.Introspection.Property_Access
+{
+   [[Property access rights]]
+   read, [[Property can be read]]
+   write, [[Property can be written]]
+   readwrite, [[Property can be read and written]]
+}
+
+/* FIXME: Properly type all of these lists. */
+struct @beta @extern Eldbus.Introspection.Node
+{
+   [[DBus Node]]
+   name: stringshare; [[Node name (optional)]]
+   nodes: list<void_ptr>; [[List with nodes]]
+   interfaces: list<void_ptr>; [[List with interfaces]]
+}
+
+struct @beta @extern Eldbus.Introspection.Interface
+{
+   [[DBus Interface]]
+   name: stringshare; [[Interface name]]
+   methods: list<void_ptr>; [[List with interface methods]]
+   signals: list<void_ptr>; [[List with interface signals]]
+   properties: list<void_ptr>; [[List with interface properties]]
+   annotations: list<void_ptr>; [[List with interface annotations]]
+}
+
+struct @beta @extern Eldbus.Introspection.Method
+{
+   [[DBus Method]]
+   name: stringshare; [[Method name]]
+   arguments: list<void_ptr>; [[List with method arguments]]
+   annotations: list<void_ptr>; [[List with method annotations]]
+}
+
+struct @beta @extern Eldbus.Introspection.Property
+{
+   [[DBus Property]]
+   name: stringshare; [[Property name]]
+   type: stringshare; [[Property type]]
+   access: Eldbus.Introspection.Property_Access; [[Property access rights]]
+   annotations: list<void_ptr>; [[List with property annotations]]
+}
+
+struct @beta @extern Eldbus.Introspection.Annotation
+{
+   [[DBus Annotation]]
+   name: stringshare; [[Annotation name]]
+   value: stringshare; [[Annotation value]]
+}
+
+struct @beta @extern Eldbus.Introspection.Argument
+{
+   [[DBus Argument]]
+    name: stringshare; [[Argument name (optional)]]
+    type: stringshare; [[Argument type]]
+    direction: Eldbus.Introspection.Argument_Direction; [[Argument direction]]
+}
+
+struct @beta @extern Eldbus.Introspection.Signal
+{
+   [[DBus Signal]]
+    name: stringshare; [[Signal name]]
+    arguments: list<Eldbus.Introspection.Argument>; [[List with signal arguments]]
+    annotations: list<Eldbus.Introspection.Annotation>; [[List with signal annotations]]
+}

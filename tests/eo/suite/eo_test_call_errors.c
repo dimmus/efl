@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_error_msgs.h"
@@ -28,7 +28,6 @@ EFL_START_TEST(eo_pure_virtual_fct_call)
     efl_unref(obj);
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_api_not_implemented_call)
@@ -46,7 +45,6 @@ EFL_START_TEST(eo_api_not_implemented_call)
     efl_unref(obj);
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_op_not_found_in_super)
@@ -65,7 +63,6 @@ EFL_START_TEST(eo_op_not_found_in_super)
     efl_unref(obj);
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 //the fallback code that will be called
@@ -120,7 +117,6 @@ EFL_START_TEST(eo_fallbackcall_execute)
     simple_error_test(obj);
     ck_assert_int_eq(fallback_called, 1);
 }
-
 EFL_END_TEST
 
 void

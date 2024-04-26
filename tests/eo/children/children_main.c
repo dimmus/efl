@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 
 #include "../eunit_tests.h"
 #include "children_simple.h"

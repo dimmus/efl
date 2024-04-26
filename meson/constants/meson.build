@@ -13,10 +13,10 @@ version_micro = version_arr[2]
 version_name  = 'v-' + version_major + '.' + version_minor
 
 host_os = host_machine.system()
-cpu = host_machine.cpu_family()
+cpu     = host_machine.cpu_family()
 
 langs = ['c', 'cpp']
-cc = meson.get_compiler('c')
+cc  = meson.get_compiler('c')
 cxx = meson.get_compiler('cpp')
 
 sys_linux   = ['linux'].contains(host_os)
@@ -46,7 +46,7 @@ dir_sysconf = dir_prefix / get_option('sysconfdir')
 dir_bin     = dir_prefix / get_option('bindir')
 dir_data    = dir_prefix / get_option('datadir')
 dir_include = dir_prefix / get_option('includedir')
-dir_lib     = dir_prefix /get_option('libdir')
+dir_lib     = dir_prefix / get_option('libdir')
 # dir_libexec = dir_prefix / get_option('libexecdir')
 # dir_module_weston = dir_lib / 'weston'
 # dir_module_libweston = dir_lib / 'libweston-@0@'.format(libweston_major)

@@ -90,10 +90,8 @@ extern int _ecore_log_dom;
 typedef struct _Ecore_Factorized_Idle Ecore_Factorized_Idle;
 
 typedef struct _Efl_Loop_Promise_Simple_Data Efl_Loop_Promise_Simple_Data;
-
 typedef struct _Efl_Loop_Timer_Data Efl_Loop_Timer_Data;
 typedef struct _Efl_Loop_Data Efl_Loop_Data;
-
 typedef struct _Efl_Task_Data Efl_Task_Data;
 typedef struct _Efl_Appthread_Data Efl_Appthread_Data;
 
@@ -304,10 +302,10 @@ Ecore_Factorized_Idle *_ecore_factorized_idle_add(const Efl_Callback_Array_Item*
                                                   Ecore_Task_Cb func,
                                                   const void   *data);
 void        *_ecore_factorized_idle_del(Ecore_Idler *idler);
-void    _ecore_factorized_idle_process(void *data, const Efl_Event *event);
-void    _ecore_factorized_idle_event_del(void *data, const Efl_Event *event);
+void         _ecore_factorized_idle_process(void *data, const Efl_Event *event);
+void         _ecore_factorized_idle_event_del(void *data, const Efl_Event *event);
 
-Efl_Bool    _ecore_event_init(void);
+Efl_Bool     _ecore_event_init(void);
 void         _ecore_event_shutdown(void);
 int          _ecore_event_exist(void);
 Ecore_Event *_ecore_event_add(int type,
@@ -319,11 +317,11 @@ void         _ecore_event_call(void);
 Efl_Loop_Timer *_ecore_exe_doomsday_clock_get(Ecore_Exe *exe);
 void            _ecore_exe_doomsday_clock_set(Ecore_Exe *exe, Efl_Loop_Timer *dc);
 
-void      *_ecore_event_signal_user_new(void);
-void      *_ecore_event_signal_hup_new(void);
-void      *_ecore_event_signal_exit_new(void);
-void      *_ecore_event_signal_power_new(void);
-void      *_ecore_event_signal_realtime_new(void);
+void       *_ecore_event_signal_user_new(void);
+void       *_ecore_event_signal_hup_new(void);
+void       *_ecore_event_signal_exit_new(void);
+void       *_ecore_event_signal_power_new(void);
+void       *_ecore_event_signal_realtime_new(void);
 
 Ecore_Pipe *_ecore_pipe_add(Ecore_Pipe_Cb handler,
                             const void   *data);
@@ -362,15 +360,10 @@ void       _ecore_main_shutdown(void);
 
 #if defined (_WIN32) || defined (__lv2ppu__)
 static inline void _ecore_signal_shutdown(void) { }
-
 static inline void _ecore_signal_init(void) { }
-
 static inline void _ecore_signal_received_process(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED) { }
-
-static inline int _ecore_signal_count_get(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED) { return 0; }
-
+static inline int  _ecore_signal_count_get(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED) { return 0; }
 static inline void _ecore_signal_call(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED) { }
-
 #else
 #define ECORE_SIGNALS 1
 typedef struct _Ecore_Signal_Pid_Info Ecore_Signal_Pid_Info;
@@ -404,9 +397,9 @@ void       _ecore_exe_event_del_free(void *data,
                                      void *ev);
 #endif
 
-void _ecore_animator_init(void);
-void _ecore_animator_shutdown(void);
-void _ecore_animator_run_reset(void);
+void     _ecore_animator_init(void);
+void     _ecore_animator_shutdown(void);
+void     _ecore_animator_run_reset(void);
 Efl_Bool _ecore_animator_run_get(void);
 Efl_Bool _ecore_animator_flush(void);
 
@@ -427,7 +420,6 @@ void _ecore_job_shutdown(void);
 
 void _ecore_main_loop_init(void);
 void _ecore_main_loop_shutdown(void);
-
 void _ecore_main_loop_iterate(Eo *obj, Efl_Loop_Data *pd);
 int  _ecore_main_loop_iterate_may_block(Eo *obj, Efl_Loop_Data *pd, int may_block);
 void _ecore_main_loop_begin(Eo *obj, Efl_Loop_Data *pd);
@@ -444,10 +436,10 @@ void _ecore_main_timechanges_start(Eo *obj);
 void _ecore_main_timechanges_stop(Eo *obj);
 
 Efl_Bool _ecore_event_do_filter(void *handler_pd, Eo *msg_handler, Eo *msg);
-void _ecore_event_filters_call(Eo *obj, Efl_Loop_Data *pd);
+void     _ecore_event_filters_call(Eo *obj, Efl_Loop_Data *pd);
+
 void _efl_loop_messages_filter(Eo *obj, Efl_Loop_Data *pd, void *handler_pd);
 void _efl_loop_messages_call(Eo *obj, Efl_Loop_Data *pd, void *func, void *data);
-
 void _efl_loop_message_send_info_set(Eo *obj, Eina_Inlist *node, Eo *loop, Efl_Loop_Data *loop_data);
 void _efl_loop_message_unsend(Eo *obj);
 

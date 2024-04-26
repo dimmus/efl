@@ -1,7 +1,7 @@
 #ifndef _EO_ERROR_MSGS_H
 #define _EO_ERROR_MSGS_H
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "eo_suite.h"
 
 /* The Max level to consider when working with the print cb. */

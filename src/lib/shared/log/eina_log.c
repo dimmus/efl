@@ -1439,7 +1439,7 @@ eina_log_domain_unregister_unlocked(int domain)
             fprintf(File,                                                     \
                     "## Copy & Paste the below (until EOF) into a terminal, " \
                     "then hit Enter\n\n"                                      \
-                    "eina_btlog << EOF\n");                                   \
+                    "efl_btlog << EOF\n");                                    \
             EINA_BT(File);                                                    \
             fprintf(File, "EOF\n\n");                                         \
         }

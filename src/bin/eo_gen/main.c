@@ -195,7 +195,7 @@ _write_file(const char *fname, const Efl_Strbuf *buf)
     if (!f)
     {
         fprintf(stderr,
-                "eolian: could not open '%s' (%s)\n",
+                "efl_eo_gen: could not open '%s' (%s)\n",
                 fname,
                 strerror(errno));
         return EFL_FALSE;
@@ -209,7 +209,7 @@ _write_file(const char *fname, const Efl_Strbuf *buf)
     if (fwrite(eina_strbuf_string_get(buf), 1, bl, f) != bl)
     {
         fprintf(stderr,
-                "eolian: could not write '%s' (%s)\n",
+                "efl_eo_gen: could not write '%s' (%s)\n",
                 fname,
                 strerror(errno));
         fret = EFL_FALSE;
@@ -234,7 +234,7 @@ _read_file(const char *fname, Efl_Strbuf **buf)
     long fs = ftell(f);
     if (fs < 0)
     {
-        fprintf(stderr, "eolian: could not get length of '%s'\n", fname);
+        fprintf(stderr, "efl_eo_gen: could not get length of '%s'\n", fname);
         fclose(f);
         return EFL_FALSE;
     }
@@ -243,7 +243,9 @@ _read_file(const char *fname, Efl_Strbuf **buf)
     char *cont = malloc(fs + 1);
     if (!cont)
     {
-        fprintf(stderr, "eolian: could not allocate memory for '%s'\n", fname);
+        fprintf(stderr,
+                "efl_eo_gen: could not allocate memory for '%s'\n",
+                fname);
         fclose(f);
         return EFL_FALSE;
     }
@@ -252,7 +254,7 @@ _read_file(const char *fname, Efl_Strbuf **buf)
     if (as != fs)
     {
         fprintf(stderr,
-                "eolian: could not read %ld bytes from '%s' (got %ld)\n",
+                "efl_eo_gen: could not read %ld bytes from '%s' (got %ld)\n",
                 fs,
                 fname,
                 as);
@@ -602,14 +604,14 @@ main(int argc, char **argv)
     const char *input = argv[optind];
     if (!input)
     {
-        fprintf(stderr, "eolian: no input file\n");
+        fprintf(stderr, "efl_eo_gen: no input file\n");
         goto end;
     }
 
     const char *ext = strrchr(input, '.');
     if (!ext || (strcmp(ext, ".eo") && strcmp(ext, ".eot")))
     {
-        fprintf(stderr, "eolian: invalid input file '%s'\n", input);
+        fprintf(stderr, "efl_eo_gen: invalid input file '%s'\n", input);
         goto end;
     }
 
@@ -617,7 +619,7 @@ main(int argc, char **argv)
     {
         if (!eolian_state_system_directory_add(eos))
         {
-            fprintf(stderr, "eolian: could not scan system directory\n");
+            fprintf(stderr, "efl_eo_gen: could not scan system directory\n");
             goto end;
         }
     }
@@ -627,14 +629,14 @@ main(int argc, char **argv)
     {
         if (!eolian_state_directory_add(eos, inc))
         {
-            fprintf(stderr, "eolian: could not scan '%s'\n", inc);
+            fprintf(stderr, "efl_eo_gen: could not scan '%s'\n", inc);
             goto end;
         }
     }
 
     if (!eolian_state_file_path_parse(eos, input))
     {
-        fprintf(stderr, "eolian: could not parse file '%s'\n", input);
+        fprintf(stderr, "efl_eo_gen: could not parse file '%s'\n", input);
         goto end;
     }
 

@@ -2,8 +2,8 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eina.h"
-#include "Eo.h"
+#include "Efl_Shared.h"
+#include "Efl_Eo.h"
 #include "eo_test_domain.h"
 
 #define MY_CLASS DOMAIN_CLASS

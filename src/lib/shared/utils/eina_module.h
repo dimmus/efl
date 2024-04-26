@@ -336,6 +336,21 @@ EINA_API void
 EINA_API Eina_Module *
  eina_module_find(const Eina_Array *array, const char *module) EINA_ARG_NONNULL(1, 2);
 
+
+/**
+ * @brief Check the existence of modules subsystem library file.
+ *
+ * @param[in] path The directory's path to search for modules.
+ * @param[in] maxlen Path length of modules directory
+ * @param[in] subsystem Path to modules subsystem.
+ * @param[in] mod_name Subsystem's library file name.
+ * @return The EFL_TRUE if modules path found.
+ *
+ * This function checks the existenth of modules subsystem path.
+ */
+EINA_API Efl_Bool
+eina_module_subsystem_lib_exist(char *path, size_t maxlen, const char *subsystem, const char *mod_name) EINA_ARG_NONNULL(1, 4);
+
 /**
  * @}
  */

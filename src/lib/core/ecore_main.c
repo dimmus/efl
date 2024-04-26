@@ -1156,32 +1156,20 @@ _ecore_main_loop_shutdown(void)
 void
 _ecore_main_loop_iterate(Eo *obj, Efl_Loop_Data *pd)
 {
-    if (obj == ML_OBJ)
-    {
 #ifdef HAVE_LIBUV
-        if (!_dl_uv_run)
-        {
-#endif
-#ifndef USE_G_MAIN_LOOP
-            _update_loop_time(pd);
-            _ecore_main_loop_iterate_internal(obj, pd, 1);
-#else
-        g_main_context_iteration(NULL, 0);
-#endif
-#ifdef HAVE_LIBUV
-        }
-        else _dl_uv_run(_dl_uv_default_loop(), UV_RUN_ONCE | UV_RUN_NOWAIT);
-#endif
-    }
-    else
+    if (!_dl_uv_run)
     {
+#endif
 #ifndef USE_G_MAIN_LOOP
         _update_loop_time(pd);
         _ecore_main_loop_iterate_internal(obj, pd, 1);
 #else
-        g_main_context_iteration(NULL, 0);
+    g_main_context_iteration(NULL, 0);
 #endif
+#ifdef HAVE_LIBUV
     }
+    else _dl_uv_run(_dl_uv_default_loop(), UV_RUN_ONCE | UV_RUN_NOWAIT);
+#endif
 }
 
 int

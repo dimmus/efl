@@ -29,7 +29,6 @@ pub_eo_types_files = [
 ]
 
 pub_eo_file_target = []
-
 foreach eo_file : pub_eo_types_files
   pub_eo_file_target += custom_target('eo_gen_' + eo_file,
     input :       eo_file,
@@ -97,7 +96,7 @@ eo_dbg = declare_dependency(
 
 # if get_option('install-eo-files')
 #   install_data(pub_eo_files + pub_eo_types_files,
-#     install_dir: join_paths(eolian_include_dir, package_version_name)
+#     install_dir: join_paths(eo_include_dir, package_version_name)
 #   )
 # endif
 

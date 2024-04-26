@@ -776,11 +776,11 @@ eina_debug_shutdown(void)
     return EFL_TRUE;
 }
 
+extern Efl_Bool fork_resetting;
+
 EINA_API void
 eina_debug_fork_reset(void)
 {
-    extern Efl_Bool fork_resetting;
-
     fork_resetting = EFL_TRUE;
     eina_debug_shutdown();
     eina_debug_init();

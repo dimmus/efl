@@ -9,7 +9,7 @@
 #  include <unistd.h>
 #endif
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_internal.h"
 
@@ -32,7 +32,6 @@ EFL_START_TEST(eo_simple)
     efl_destructor(obj);
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_singleton)
@@ -48,7 +47,6 @@ EFL_START_TEST(eo_singleton)
     efl_unref(obj);
     efl_unref(obj2);
 }
-
 EFL_END_TEST
 
 #define OVERRIDE_A_SIMPLE 100859
@@ -139,7 +137,6 @@ EFL_START_TEST(efl_object_override_tests)
 
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 static int _eo_signals_cb_current = 0;
@@ -321,7 +318,6 @@ EFL_START_TEST(eo_signals)
     }
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_data_fetch)
@@ -351,7 +347,6 @@ EFL_START_TEST(efl_data_fetch)
     fail_if(!efl_data_scope_get(obj, EFL_OBJECT_CLASS));
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_data_safe_fetch)
@@ -374,7 +369,6 @@ EFL_START_TEST(efl_data_safe_fetch)
     efl_unref(obj);
     fail_if(efl_data_scope_safe_get(obj, SIMPLE3_CLASS) != NULL);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_isa_tests)
@@ -429,7 +423,6 @@ EFL_START_TEST(efl_isa_tests)
     fail_if(!efl_isa(obj, EO_CLASS));
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_composite_tests)
@@ -458,7 +451,6 @@ EFL_START_TEST(efl_composite_tests)
 
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 static Efl_Bool         _man_should_con = EFL_TRUE;
@@ -563,7 +555,6 @@ EFL_START_TEST(eo_man_free)
     DISABLE_ABORT_ON_CRITICAL_END;
     fail_if(!efl_manual_free(obj));
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_refs)
@@ -705,7 +696,6 @@ EFL_START_TEST(efl_refs)
     efl_del(obj2);
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_weak_reference)
@@ -772,7 +762,6 @@ EFL_START_TEST(efl_weak_reference)
     efl_unref(obj);
     efl_unref(obj2);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_generic_data)
@@ -935,7 +924,6 @@ EFL_START_TEST(eo_generic_data)
     efl_unref(obj2);
     efl_unref(obj3);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_magic_checks)
@@ -1022,7 +1010,6 @@ EFL_START_TEST(eo_magic_checks)
         else buf = NULL;
     }
 }
-
 EFL_END_TEST
 
 /* resolve issues */
@@ -1074,7 +1061,6 @@ EFL_START_TEST(efl_func_resolve)
     fail_if(!efl_destructed_is(obj));
     efl_manual_free(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_add_do_and_custom)
@@ -1111,7 +1097,6 @@ EFL_START_TEST(efl_add_do_and_custom)
     fail_if(!finalized);
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_pointers_indirection)
@@ -1184,7 +1169,6 @@ EFL_START_TEST(eo_pointers_indirection)
     efl_unref(objs[0]);
     free(objs);
 }
-
 EFL_END_TEST
 
 static Eo *
@@ -1221,7 +1205,6 @@ EFL_START_TEST(efl_add_failures)
 
     fail_if(obj);
 }
-
 EFL_END_TEST
 
 static Efl_Bool intercepted = EFL_FALSE;
@@ -1284,7 +1267,6 @@ EFL_START_TEST(efl_del_intercept)
     ck_assert_int_eq(efl_ref_count(obj), 2);
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_name)
@@ -1339,7 +1321,6 @@ EFL_START_TEST(efl_name)
 
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_comment)
@@ -1367,7 +1348,6 @@ EFL_START_TEST(eo_comment)
 
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_rec_interface)
@@ -1382,7 +1362,6 @@ EFL_START_TEST(eo_rec_interface)
 
     efl_del(obj);
 }
-
 EFL_END_TEST
 
 typedef struct
@@ -1584,7 +1563,6 @@ EFL_START_TEST(eo_domain)
     signal(SIGALRM, NULL);
 #endif
 }
-
 EFL_END_TEST
 
 static int
@@ -1676,7 +1654,6 @@ EFL_START_TEST(efl_cast_test)
     ck_assert_int_eq(inherit_value(efl_cast(obj, SIMPLE_CLASS)), 0);
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 static void
@@ -1716,7 +1693,6 @@ EFL_START_TEST(efl_object_destruct_test)
     // var should be 2 if del then destruct, 0 otherwise
     ck_assert_int_eq(var, 2);
 }
-
 EFL_END_TEST
 
 static void
@@ -1775,7 +1751,6 @@ EFL_START_TEST(efl_object_auto_unref_test)
     fail_if(!_auto_unref_del);
     efl_unref(parent);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_object_size)
@@ -1789,7 +1764,6 @@ EFL_START_TEST(efl_object_size)
     ck_assert_int_le(efl_class_memory_size_get(SIMPLE_CLASS), 148);
 #endif
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_class_replacement)
@@ -1816,7 +1790,6 @@ EFL_START_TEST(eo_test_class_replacement)
     ck_assert_ptr_eq(efl_class_get(obj), SIMPLE_CLASS);
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_class_type)
@@ -1825,7 +1798,6 @@ EFL_START_TEST(eo_test_class_type)
     ck_assert_int_eq(efl_class_type_get((void *)0xAFFE),
                      EFL_CLASS_TYPE_INVALID);
 }
-
 EFL_END_TEST
 
 void

@@ -54,6 +54,13 @@ First, fix the bug. Then, fix the real bug: your process allowed this mistake to
 
 The solution might be simple, like adding strcat to the list of functions that should trigger your “review this code carefully” reflex. It might be employing static analysis so a computer can detect this problem for you. Perhaps the code needs to be refactored so it’s simpler and easier to spot errors in. Failing to reflect on how to avoid future fuck-ups would be the real fuck-up here.
 
+## General reliability
+
+Software developers have stopped caring about reliability.
+Prioritize simplicity - you and i are not smart enough to be clever, so don’t try.
+There are two kinds of programs: those simple enough to obviously have no bugs, and those complicated enough to have no obvious bugs.
+Prefer to use proven technologies. Stop letting economics decide everything you do. Don’t think about rushing to market first, and instead prioritize getting a good product into your user’s hands.
+
 ## P.S.
 It’s important to remember that rules are made to be broken. There may be cases where things that are discouraged should be used, and things that are encouraged disregarded. You should strive to make such cases the exception, not the norm, and carefully justify them when they happen.
 

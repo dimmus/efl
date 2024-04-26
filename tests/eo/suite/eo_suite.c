@@ -4,9 +4,9 @@
 
 #include "eo_suite.h"
 #include "../../efl_check.h"
-#include <Eo.h>
+#include <Efl_Eo.h>
 #include <eo_ptr_indirection.h>
-#include <Eina.h>
+#include <Efl_Shared.h>
 
 int _eo_log_dom = -1;
 

@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_test_class_simple.h"
@@ -18,7 +18,6 @@ EFL_START_TEST(eo_test_base_del)
 
     ck_assert_ptr_eq(efl_class_name_get(obj), NULL);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_base_unref)
@@ -29,7 +28,6 @@ EFL_START_TEST(eo_test_base_unref)
 
     ck_assert_ptr_eq(efl_class_name_get(obj), NULL);
 }
-
 EFL_END_TEST
 
 typedef struct
@@ -112,7 +110,6 @@ EFL_START_TEST(eo_test_shutdown_eventting)
 
     ck_assert_ptr_eq(efl_class_name_get(obj), NULL);
 }
-
 EFL_END_TEST
 
 static void
@@ -138,7 +135,6 @@ EFL_START_TEST(eo_test_del_in_noref)
 
     ck_assert_ptr_eq(efl_class_name_get(obj), NULL);
 }
-
 EFL_END_TEST
 
 static void
@@ -160,7 +156,6 @@ EFL_START_TEST(eo_test_unref_noref)
 
     ck_assert_ptr_eq(efl_class_name_get(obj), NULL);
 }
-
 EFL_END_TEST
 
 typedef struct
@@ -243,7 +238,6 @@ EFL_START_TEST(eo_test_ownership_events)
     ck_assert_int_eq(counter.unique, 2);
     ck_assert_int_eq(counter.invalidate, 1);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_ownership_events_with_parent)
@@ -299,7 +293,6 @@ EFL_START_TEST(eo_test_ownership_events_with_parent)
     ck_assert_int_eq(counter.shared, 2);
     ck_assert_int_eq(counter.unique, 2);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_ownership_events_with_parent_invalidate)
@@ -329,7 +322,6 @@ EFL_START_TEST(eo_test_ownership_events_with_parent_invalidate)
     ck_assert_int_eq(counter.unique, 0);
     ck_assert_int_eq(counter.invalidate, 1);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_ownership_events_with_parent_invalidate2)
@@ -369,7 +361,6 @@ EFL_START_TEST(eo_test_ownership_events_with_parent_invalidate2)
     ck_assert_int_eq(counter.unique, 1);
     ck_assert_int_eq(counter.invalidate, 1);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_ownership_events_with_parent_invalidate3)
@@ -415,7 +406,6 @@ EFL_START_TEST(eo_test_ownership_events_with_parent_invalidate3)
     ck_assert_int_eq(counter.unique, 1);
     ck_assert_int_eq(counter.invalidate, 1);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_ownership_events_self_invalidate)
@@ -464,7 +454,6 @@ EFL_START_TEST(eo_test_ownership_events_self_invalidate)
     ck_assert_int_eq(counter.unique, 1);
     ck_assert_int_eq(counter.invalidate, 1);
 }
-
 EFL_END_TEST
 
 typedef struct
@@ -494,7 +483,6 @@ EFL_START_TEST(eo_test_invalidating_get)
     efl_unref(par);
     ck_assert_int_eq(data.called, EFL_TRUE);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_alive_get)
@@ -511,7 +499,6 @@ EFL_START_TEST(eo_test_alive_get)
     efl_unref(obj);
     ck_assert_ptr_eq(efl_class_name_get(obj), NULL);
 }
-
 EFL_END_TEST
 
 void

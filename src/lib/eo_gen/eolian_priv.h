@@ -21,7 +21,7 @@ _eolian_log_line(const char *file, int line, int column, const char *str)
      }
    else
      {
-        fprintf(stderr, "eolian: %s:%d:%d: %s\n", file, line, column, str);
+        fprintf(stderr, "efl_eo_gen: %s:%d:%d: %s\n", file, line, column, str);
      }
 }
 
@@ -35,7 +35,7 @@ _eolian_log(const char *str)
      }
    else
      {
-        fprintf(stderr, "eolian: %s\n", str);
+        fprintf(stderr, "efl_eo_gen: %s\n", str);
      }
 }
 

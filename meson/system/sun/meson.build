@@ -15,5 +15,5 @@ endif
 malloc = cc.find_library('malloc', required: true)
 socket = cc.find_library('socket', required: true)
 
-dep_core += [malloc]
+dep_core   += [malloc]
 dep_shared += [socket]

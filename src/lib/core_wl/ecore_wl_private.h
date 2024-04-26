@@ -4,6 +4,7 @@
 # include <unistd.h>
 # include <xkbcommon/xkbcommon-compose.h>
 
+# include "Efl_Core.h"
 # include "Efl_Core_Wl.h"
 # include "Efl_Core_Input.h"
 # include "ecore_wl_internal.h"

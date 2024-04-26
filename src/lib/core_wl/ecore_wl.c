@@ -4,7 +4,7 @@
 
 #ifdef NEED_RUN_IN_TREE
 // #  include "../../static_libs/buildsystem/buildsystem.h"
-#  include "Efl_Core.h" /* bs_mod_get */
+#  include "Efl_Core.h"
 #endif
 
 #include "ecore_wl_private.h"
@@ -81,7 +81,10 @@ _ecore_wl_surface_modules_init(void)
         char path[PATH_MAX];
         //when running in tree we are ignoring all the settings
         //and just load the intree module that we have build
-        if (bs_mod_get(path, sizeof(path), "ecore_wl/engines", "dmabuf"))
+        if (eina_module_subsystem_lib_exist(path,
+                                            sizeof(path),
+                                            "core_wl/engines",
+                                            "dmabuf"))
         {
             Eina_Module *local_module = eina_module_new(path);
             EINA_SAFETY_ON_NULL_RETURN_VAL(local_module, EFL_FALSE);
@@ -97,10 +100,9 @@ _ecore_wl_surface_modules_init(void)
         }
     }
 #endif
-    supplied_modules =
-        eina_module_arch_list_get(NULL,
-                                  EFL_LIB_DIR "/ecore_wl/engines",
-                                  EFL_MODULE_ARCH);
+    supplied_modules = eina_module_arch_list_get(NULL,
+                                                 EFL_LIB_DIR "/core_wl/engines",
+                                                 EFL_MODULE_ARCH);
     eina_module_list_load(supplied_modules);
 
     mod_dir = getenv("ECORE_WL2_SURFACE_MODULE_DIR");
@@ -137,10 +139,10 @@ ecore_wl_init(void)
 
    /* try to create Eina logging domain */
     _ecore_wl_log_dom =
-        eina_log_domain_register("ecore_wl", ECORE_WL2_DEFAULT_LOG_COLOR);
+        eina_log_domain_register("efl_core_wl", ECORE_WL2_DEFAULT_LOG_COLOR);
     if (_ecore_wl_log_dom < 0)
     {
-        EINA_LOG_ERR("Cannot create a log domain for Ecore Wl2");
+        EINA_LOG_ERR("Cannot create a log domain for EFl_Core_Wl");
         goto eina_err;
     }
     printf("-> phase 3 ");

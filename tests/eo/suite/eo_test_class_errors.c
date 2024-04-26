@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_error_msgs.h"
@@ -57,7 +57,6 @@ EFL_START_TEST(eo_inherit_errors)
     (void)klass;
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_inconsistent_mro)
@@ -121,7 +120,6 @@ EFL_START_TEST(eo_inconsistent_mro)
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 static void
@@ -163,7 +161,6 @@ EFL_START_TEST(eo_bad_interface)
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 static void
@@ -206,7 +203,6 @@ EFL_START_TEST(eo_null_api)
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 #endif
 
@@ -242,7 +238,6 @@ EFL_START_TEST(eo_api_redefined)
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 static Efl_Bool
@@ -277,7 +272,6 @@ EFL_START_TEST(eo_dich_func_override)
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 void

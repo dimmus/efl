@@ -62,7 +62,7 @@ EAPI extern double _efl_startup_time;
 #include "Ecore_Common.h"
 #include "Ecore_Eo.h"
 
-#include "Efl_Core.h"
+#include "Ecore.h"
 
 #ifdef __cplusplus
 }

@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_test_class_simple.h"
@@ -12,7 +12,6 @@ EFL_START_TEST(eo_test_simple)
     fail_if(!efl_object_init()); /* one init by test suite */
     fail_if(!efl_object_shutdown());
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_init_shutdown)
@@ -38,7 +37,6 @@ EFL_START_TEST(eo_test_init_shutdown)
     simple_a_set(obj, 1);
     ck_assert_int_eq(1, simple_a_get(obj));
 }
-
 EFL_END_TEST
 
 void

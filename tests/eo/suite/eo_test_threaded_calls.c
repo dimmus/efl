@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 
@@ -142,7 +142,6 @@ EFL_START_TEST(eo_threaded_calls_test)
     eina_barrier_free(&barrier);
     eina_barrier_free(&barrier0);
 }
-
 EFL_END_TEST
 
 void

@@ -11,5 +11,5 @@ pthread_args = '-D_GNU_SOURCE'
 if efl_config.has('HAVE_LISTXATTR') and \
    efl_config.has('HAVE_SETXATTR') and \
    efl_config.has('HAVE_GETXATTR')
-  efl_config.set10('HAVE_XATTR', true)
+      efl_config.set10('HAVE_XATTR', true)
 endif

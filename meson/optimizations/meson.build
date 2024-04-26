@@ -48,6 +48,6 @@ if with_optimization
   endif
 endif
 
-summary_opt +=  {'Enabled': with_optimization}
+summary_opt += {'Enabled': with_optimization}
 summary_opt += {'Platform': cpu_family}
 summary_opt += {'Native cargs': native_arch_opt_c_args}

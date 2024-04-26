@@ -1,5 +1,2 @@
-# The following files are opted into `ninja clang-format` and
-# enforcement in the CI.
-
+# The following files are opted into `ninja clang-format`
 src/**/*
-tests/**/*

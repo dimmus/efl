@@ -1,0 +1,31 @@
+class @beta Eldbus.Model.Object extends Eldbus.Model {
+    [[Eldbus model object class]]
+
+    data: Eldbus_Model_Object_Data;
+    methods {
+        @property bus {
+            [[DBus Name or unique-id]]
+            get { }
+            set { }
+            values {
+                bus: string; [[DBus name]]
+            }
+        }
+        @property path {
+            [[DBus path]]
+            get { }
+            set { }
+            values {
+                path: string; [[DBus path]]
+            }
+        }
+    }
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.finalize;
+        Efl.Object.invalidate;
+        Efl.Object.destructor;
+        Efl.Model.children_slice_get;
+        Efl.Model.children_count { get; }
+    }
+}

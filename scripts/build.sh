@@ -119,7 +119,7 @@ meson_setup_dev_all()
         -Dcrypto=openssl \
         -Daudio=true \
         -Davahi=false \
-        -Dx11=true \
+        -Dx11=true \ \
         -Dfb=false \
         -Dsdl=false \
         -Dwl=true \
@@ -132,6 +132,7 @@ meson_setup_dev_all()
         -Ddebug-threads=false \
         -Dbuild-examples=false \
         -Dbuild-tests=false \
+        -Dbuild-benchmarks=true \
         -Dglib=true \
         -Dg-mainloop=false \
         -Dsystemd=false \
@@ -180,8 +181,17 @@ meson_setup_dev()
         -Db_lto=false \
         -Dbuildtype=debug \
         -Dwarning_level=2 \
+        -Deina-magic-debug=true \
+        -Dsystemd=true \
         -Dbuild-tests=true \
-        -Dbuild-examples=true
+        -Dbuild-examples=true \
+        -Dbuild-benchmarks=true \
+        -Dsanitizers=false \
+        -Dtsan=false \
+        -Dmalloc_trim=enabled \
+        -Ddebug_graph_lock=true \
+        -Ddebug_mutex=true \
+        -Ddebug_stack_usage=true
 }
 
 meson_compile()

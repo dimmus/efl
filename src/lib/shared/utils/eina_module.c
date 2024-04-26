@@ -593,3 +593,43 @@ eina_module_list_free(Eina_Array *array)
 
     eina_array_flush(array);
 }
+
+EINA_API Efl_Bool
+eina_module_subsystem_lib_exist(char       *path,
+                                size_t      maxlen,
+                                const char *subsystem,
+                                const char *mod_name)
+{
+    if (!getenv("EFL_RUN_IN_TREE")) return EFL_FALSE;
+
+    // there is a name conflict between a ethumb module and the emotion library,
+    // this causes the module to link to itself, instead of the library
+    if (!strcmp(subsystem, "ethumb"))
+        snprintf(path,
+                 maxlen,
+                 EFL_BUILD_DIR "/src/modules/%s/%s/lib%s_el" MOD_SUFFIX,
+                 subsystem,
+                 mod_name,
+                 mod_name);
+    else if (!strcmp(subsystem, "evas/image_loaders"))
+        snprintf(path,
+                 maxlen,
+                 EFL_BUILD_DIR "/src/modules/%s/libshared_loader_%s" MOD_SUFFIX,
+                 subsystem,
+                 mod_name);
+    else if (!strcmp(subsystem, "evas/image_savers"))
+        snprintf(path,
+                 maxlen,
+                 EFL_BUILD_DIR "/src/modules/%s/libshared_saver_%s" MOD_SUFFIX,
+                 subsystem,
+                 mod_name);
+    else
+        snprintf(path,
+                 maxlen,
+                 EFL_BUILD_DIR "/src/modules/%s/%s/lib%s" MOD_SUFFIX,
+                 subsystem,
+                 mod_name,
+                 mod_name);
+
+    return EFL_TRUE;
+}

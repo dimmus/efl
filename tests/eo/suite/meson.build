@@ -29,7 +29,7 @@ eo_suite = executable('eo_suite',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-suite', eo_suite,
+test('efl_eo-suite', eo_suite,
   env : test_env,
   timeout : master_timeout
 )
@@ -43,7 +43,7 @@ eo_suite = executable('eo_suite_dbg',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-suite-dbg', eo_suite,
+test('efl_eo-suite-dbg', eo_suite,
   env : test_env,
   timeout : master_timeout
 )
@@ -58,7 +58,7 @@ eo_suite = executable('eo_suite_fallback',
   '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
 )
 
-test('eo-suite-fallback', eo_suite,
+test('efl_eo-suite-fallback', eo_suite,
   env : test_env,
   timeout : master_timeout
 )

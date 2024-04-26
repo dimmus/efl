@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "eo_test_class_singleton.h"
 #include "eo_test_class_simple.h"
 

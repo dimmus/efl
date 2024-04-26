@@ -286,10 +286,11 @@ _cpufreq_on_cb(Eina_Debug_Session *session EFL_UNUSED,
     return EFL_TRUE;
 }
 
+extern Efl_Bool fork_resetting;
+
 static void
 _stop_cpu_thread(void)
 {
-    extern Efl_Bool fork_resetting;
     eina_lock_take(&_sysmon_lock);
     _eina_debug_cpu_active = 0;
     eina_lock_release(&_sysmon_lock);

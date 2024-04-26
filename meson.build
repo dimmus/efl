@@ -1,7 +1,7 @@
 project('efl', ['c','cpp'],
   version: '2.0.99',
   default_options : [
-    'buildtype=release', # plain,debug,debugoptimized,release,minsize,custom
+    'buildtype=debug', # plain,debug,debugoptimized,release,minsize,custom
     # 'warning_level=1',   # 0,1,2,3
     # 'optimization=g',  # 0,g,1,2,3,s
     # 'b_sanitize=address,undefined',
@@ -36,6 +36,8 @@ efl_config.set10     ('EFL_HAVE_THREADS' , true)
 efl_config.set       ('EFL_VERSION_MAJOR', version_major)
 efl_config.set       ('EFL_VERSION_MINOR', version_minor)
 efl_config.set       ('EFL_VERSION_MICRO', version_micro)
+
+# efl_config.set_quoted('EFL_NOLEGACY_API_SUPPORT', '1')
 
 # efl_config.set_quoted('PACKAGE'            , name)
 # efl_config.set_quoted('VERSION'            , version)
@@ -84,11 +86,7 @@ endif
 
 subdir('po')
 
-# if get_option('tslib')
-#   efl_config.set('HAVE_TSLIB', '1')
-# endif
-
-inc_config = [include_directories('.')]
+inc_config = [ include_directories('.') ]
 
 if get_option('crypto') == 'openssl'
   crypto = dependency('openssl')
@@ -116,17 +114,17 @@ subdir(join_paths(local_module,'shared'))
 subprojects = [
   # name                |   option             | mod   | lib  | bin | bench | tests | examples | true if build in efl-one | pkg-config options | name of static libs
   # ['evil'             ,[]                    , false,  true, false,  false,  false,     false,  true, [], []],
-  ['shared'             ,[]                    , false,  true, false,   true,   true,      true,  true, [], []],
+  ['shared'             ,[]                    , false,  true,  true,   true,   true,      true,  true, [], []],
   ['eo_gen'             ,[]                    , false,  true,  true,  false,  false,     false, false, ['shared'], []],
   ['eo'                 ,[]                    , false,  true, false,   true,   true,     false,  true, ['shared'], []],
-  ['eo_interfaces'      ,[]                    , false,  true, false,  false,  false,     false,  true, ['eo'], []],
-  ['core'               ,[]                    , false,  true, false,  false,   true,      true,  true, ['shared', 'eo', 'efl'], []],
+  ['eo_interfaces'      ,[]                    , false,  true, false,  false,   true,     false,  true, ['eo'], []],
+  ['core'               ,[]                    , false,  true, false,  false,  false,     false,  true, ['shared', 'eo', 'eo_interfaces'], []],
+  ['dbus'               ,[]                    , false,  true,  true,  false,   true,      true,  true, ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
+  ['core'               ,[]                    ,  true, false, false,  false,   true,      true,  true, ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
   ['core_input'         ,[]                    , false,  true, false,  false,  false,     false,  true, ['shared', 'eo'], []],
   ['core_wl'            ,['wl']                ,  true,  true, false,  false,   true,     false,  true, ['shared'], ['libdrm']],
   # ['emile'            ,[]                    , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
   # ['eet'              ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'emile', 'efl'], []],
-  # ['eldbus'           ,[]                    , false,  true,  true,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []],
-  # ['ecore'            ,[]                    ,  true, false, false,  false,   true,      true,  true, ['eina', 'eo', 'efl'], []], #ecore modules depend on eldbus
   # ['ecore_audio'      ,['audio']             , false,  true, false,  false,  false,     false,  true, ['eina', 'eo'], []],
   # ['ecore_avahi'      ,['avahi']             , false,  true, false,  false,  false,      true, false, ['eina', 'ecore'], []],
   # ['ecore_con'        ,[]                    , false,  true,  true,  false,   true,     false,  true, ['eina', 'eo', 'efl', 'ecore'], ['http-parser']],
@@ -241,10 +239,10 @@ foreach package : subprojects
       endif
     endif
     
-    #special case for eolian, this is never efl-one, but will be required in the library
+    #special case for eo_gen, this is never efl-one, but will be required in the library
     if package_name == 'eo_gen'
       package_c_args = [
-        '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, package_name)+'"',
+        '-DPACKAGE_DATA_DIR="'+join_paths(dir_data, package_name)+'"',
         '-DNEED_RUN_IN_TREE=1',
       ]
       if package[4]

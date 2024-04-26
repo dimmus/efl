@@ -5,3 +5,24 @@ EINA_WARN_UNUSED_RESULT      EFL_WARN_UNUSED_RESULT
 
 Eina_Strbuf                  Efl_Strbuf
 Eina_Bool                    Efl_Bool
+
+PACKAGE_LIB_DIR              EFL_LIB_DIR
+MODULE_ARCH                  EFL_MODULE_ARCH
+
+config.h                     efl_config.h
+Eina.h                       Efl_Shared.h
+Efl.h                        Efl_Eo_Interfaces.h
+Eo.h                         Efl_Eo.h
+Eolian.h                     Efl_Eo_Gen.h
+Ecore_Wl2.h                  Efl_Core_Wl.h
+Eldbus.h                     Efl_Dbus.h
+Ecore.h                      Efl_Core.h
+
+Ecore_Wl2_Display            Ecore_Wl_Display
+Ecore_Wl2_Window             Ecore_Wl_Window
+Ecore_Wl2_Output             Ecore_Wl_Output 
+Ecore_Wl2_Input              Ecore_Wl_Input
+Ecore_Wl2_Window_Type        Ecore_Wl_Window_Type
+Ecore_Wl2_Seat_Capabilities  Ecore_Wl_Seat_Capabilities
+Ecore_Wl2_Global             Ecore_Wl_Global
+ecore_wl2_*                  ecore_wl_

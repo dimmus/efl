@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "Eo.h"
+#include "Efl_Eo.h"
 #include "function_overrides_simple.h"
 #include "function_overrides_inherit.h"
 

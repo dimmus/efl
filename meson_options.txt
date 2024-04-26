@@ -1,11 +1,11 @@
 option('build-tests',
         type  : 'boolean',
-        value : false,
+        value : true,
         description : 'Compile tests')
 
 option('build-examples',
         type : 'boolean',
-        value : false,
+        value : true,
         description : 'Compile examples')
 
 option('build-benchmarks',
@@ -46,7 +46,7 @@ option('crypto',
 
 option('systemd',
         type : 'boolean',
-        value : false,
+        value : true,
         description : 'Systemd and Elogind support at runtime in EFL')
 
 option('stack_protector',

@@ -12,10 +12,10 @@ eo_gen_src = [
 ]
 
 eo_gen_bin = executable('efl_eo_gen',
-        eo_gen_src,
-        dependencies: [ eo_gen, shared ],
-        install: true,
-        c_args : package_c_args,
+  eo_gen_src,
+  dependencies: [ eo_gen, shared ],
+  install:      true,
+  c_args :      package_c_args,
 )
 
 eo_gen_path = eo_gen_bin.full_path()
@@ -29,7 +29,7 @@ else
   eo_gen_path = _eo_gen_bin.full_path()
 endif
 
-efl_eo_gen = [_eo_gen_bin, '-S']
+efl_eo_gen = [ _eo_gen_bin, '-S' ]
 
 summary(
   {

@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_test_class_simple.h"
@@ -20,7 +20,6 @@ EFL_START_TEST(eo_test_reflection_invalid)
     fail_if(efl_property_reflection_get(simple, "simple_a_invalid").type !=
             EINA_VALUE_TYPE_ERROR);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_reflection_inherited)
@@ -39,7 +38,6 @@ EFL_START_TEST(eo_test_reflection_inherited)
     eina_value_int_convert(&res, &number_ref);
     ck_assert_int_eq(number_ref, 22);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_reflection_simple)
@@ -69,7 +67,6 @@ EFL_START_TEST(eo_test_reflection_simple)
     eina_value_int_convert(&res, &number_ref);
     ck_assert_int_eq(number_ref, 22);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(eo_test_reflection_complex_class_structure)
@@ -84,7 +81,6 @@ EFL_START_TEST(eo_test_reflection_complex_class_structure)
     ck_assert_int_eq(complex_mixin_m_test_get(simple), numb);
     ck_assert_int_eq(complex_interface_i_test_get(simple), numb);
 }
-
 EFL_END_TEST
 
 void

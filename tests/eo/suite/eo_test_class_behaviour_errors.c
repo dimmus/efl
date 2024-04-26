@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_error_msgs.h"
@@ -60,7 +60,6 @@ EFL_START_TEST(efl_destructor_unref)
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 EFL_START_TEST(efl_destructor_double_del)
@@ -87,7 +86,6 @@ EFL_START_TEST(efl_destructor_double_del)
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
-
 EFL_END_TEST
 
 void

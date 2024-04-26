@@ -1,0 +1,10 @@
+class @beta Eldbus.Model.Connection extends Eldbus.Model {
+    [[Eldbus model connection class]]
+
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.invalidate;
+        Efl.Model.children_slice_get;
+        Efl.Model.children_count { get; }
+    }
+}

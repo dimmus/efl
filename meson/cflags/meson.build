@@ -3,7 +3,7 @@ dev_ldflags = []
 if get_option('buildtype').startswith('debug')
   if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
     dev_cflags_common_try = [
-      '-g3',
+      # '-g3',
       # '-fsanitize-trap', # undefined reference to `__ubsan_handle*
       '-fvisibility=hidden',
       '-Wundef',
@@ -33,7 +33,7 @@ if get_option('buildtype').startswith('debug')
       '-Wformat-zero-length',
       '-Wendif-labels',
       '-Wwrite-strings',
-      '-Wpacked',
+      # '-Wpacked', # get warning in libdrm (i915_drm.h)
       '-Winline',
       '-Wshadow',
       '-Wattributes',

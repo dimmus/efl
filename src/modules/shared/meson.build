@@ -1,4 +1,4 @@
-eina_mp_sources = []
+efl_shared_mp_sources = []
 
 subdir('mp/chained_pool')
 subdir('mp/one_big')

@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-#include <Eo.h>
+#include <Efl_Eo.h>
 
 #include "eo_suite.h"
 #include "eo_test_class_simple.h"
@@ -44,7 +44,6 @@ EFL_START_TEST(eo_value)
     efl_dbg_info_free(eo_dbg_info);
     efl_unref(obj);
 }
-
 EFL_END_TEST
 
 void
