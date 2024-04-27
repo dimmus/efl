@@ -152,12 +152,12 @@ if strerror_r_char_p
 endif
 
 #for later use, a bunch of librarie findings
-m = cc.find_library('m')
+dep_libm = cc.find_library('m')
 #just keep this here as required false, if it is not inplace the library rt will just be linked as NOP
-dl = cc.find_library('dl', required: false)
-rt = cc.find_library('rt', required: false)
+dep_libdl = cc.find_library('dl', required: false)
+dep_librt = cc.find_library('rt', required: false)
 
-thread_dep = dependency('threads')
+dep_threads = dependency('threads')
 
 #check for the headers
 foreach header : header_checks
