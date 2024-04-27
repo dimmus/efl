@@ -28,7 +28,6 @@
 #include <Efl_Eo_Interfaces.h>
 
 #include "Efl_Core.h"
-#include "Efl_Core.h"
 #include "ecore_private.h"
 // #include "../../static_libs/buildsystem/buildsystem.h" // we have no autotools, so no need anymore
 
