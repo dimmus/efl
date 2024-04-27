@@ -6,6 +6,7 @@ EINA_WARN_UNUSED_RESULT      EFL_WARN_UNUSED_RESULT
 Eina_Strbuf                  Efl_Strbuf
 Eina_Bool                    Efl_Bool
 
+PACKAGE_BUILD_DIR            EFL_BUILD_DIR
 PACKAGE_LIB_DIR              EFL_LIB_DIR
 MODULE_ARCH                  EFL_MODULE_ARCH
 
@@ -26,3 +27,12 @@ Ecore_Wl2_Window_Type        Ecore_Wl_Window_Type
 Ecore_Wl2_Seat_Capabilities  Ecore_Wl_Seat_Capabilities
 Ecore_Wl2_Global             Ecore_Wl_Global
 ecore_wl2_*                  ecore_wl_
+
+ck_assert                    efl_assert_true
+ck_assert_str_eq             efl_assert_str_eq
+ck_assert_int_ne             efl_assert_int_ne
+ck_assert_ptr_ne             efl_assert_ptr_ne
+ck_assert_ptr_eq             efl_assert_ptr_eq
+ck_assert_uint_eq            efl_assert_uint_eq
+fail_unless                  efl_assert_true
+fail_if                      efl_assert_fail_if
