@@ -92,7 +92,12 @@ EAPI unsigned int ecore_shutdown_ex(void);
  *
  * @since 1.18 (as beta)
  */
-EWAPI void efl_build_version_set(int vmaj, int vmin, int vmic, int revision, const char *flavor, const char *build_id);
+EWAPI void efl_build_version_set(int         vmaj,
+                                 int         vmin,
+                                 int         vmic,
+                                 int         revision,
+                                 const char *flavor,
+                                 const char *build_id);
 
 /**
  * @}
@@ -139,19 +144,22 @@ EWAPI void efl_build_version_set(int vmaj, int vmin, int vmic, int revision, con
  */
 typedef struct _Ecore_Version
 {
-   int major; /** < major (binary or source incompatible changes) */
-   int minor; /** < minor (new features, bugfixes, major improvements version) */
-   int micro; /** < micro (bugfix, internal improvements, no new features version) */
-   int revision; /** < git revision (0 if a proper release or the git revision number Ecore is built from) */
+    int major; /** < major (binary or source incompatible changes) */
+    int minor; /** < minor (new features, bugfixes, major improvements version) */
+    int micro; /** < micro (bugfix, internal improvements, no new features version) */
+    int revision; /** < git revision (0 if a proper release or the git revision number Ecore is built from) */
 } Ecore_Version;
 
 EAPI extern Ecore_Version *ecore_version;
 
-#define ECORE_CALLBACK_CANCEL  EFL_FALSE /**< Return value to remove a callback */
-#define ECORE_CALLBACK_RENEW   EFL_TRUE/**< Return value to keep a callback */
+#define ECORE_CALLBACK_CANCEL \
+    EFL_FALSE /**< Return value to remove a callback */
+#define ECORE_CALLBACK_RENEW EFL_TRUE /**< Return value to keep a callback */
 
-#define ECORE_CALLBACK_PASS_ON EFL_TRUE/**< Return value to pass event to next handler */
-#define ECORE_CALLBACK_DONE    EFL_FALSE /**< Return value to stop event handling */
+#define ECORE_CALLBACK_PASS_ON \
+    EFL_TRUE /**< Return value to pass event to next handler */
+#define ECORE_CALLBACK_DONE \
+    EFL_FALSE /**< Return value to stop event handling */
 
 /**
  * @typedef Ecore_Task_Cb Ecore_Task_Cb
@@ -163,7 +171,11 @@ typedef Efl_Bool (*Ecore_Task_Cb)(void *data);
  * @typedef Ecore_Select_Function
  * A function which can be used to replace select() in the main loop.
  */
-typedef int (*Ecore_Select_Function)(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, struct timeval *timeout);
+typedef int (*Ecore_Select_Function)(int             nfds,
+                                     fd_set         *readfds,
+                                     fd_set         *writefds,
+                                     fd_set         *exceptfds,
+                                     struct timeval *timeout);
 
 /**
  * Runs a single iteration of the main loop to process everything on the
@@ -437,7 +449,8 @@ EAPI void ecore_main_loop_thread_safe_call_async(Ecore_Cb callback, void *data);
  * Remember this function will block until the callback is executed in the
  * main loop. It can take time and you have no guaranty about the timeline.
  */
-EAPI void *ecore_main_loop_thread_safe_call_sync(Ecore_Data_Cb callback, void *data);
+EAPI void *ecore_main_loop_thread_safe_call_sync(Ecore_Data_Cb callback,
+                                                 void         *data);
 
 /**
  * @brief Waits for the next thread call in the main loop.
@@ -563,28 +576,41 @@ EAPI int ecore_thread_main_loop_end(void);
 #define ECORE_EVENT_SIGNAL_EXIT     3 /**< Exit signal event */
 #define ECORE_EVENT_SIGNAL_POWER    4 /**< Power signal event */
 #define ECORE_EVENT_SIGNAL_REALTIME 5 /**< Realtime signal event */
-#define ECORE_EVENT_MEMORY_STATE             6 /**< Memory state changed, see ecore_memory_state_get() */
-#define ECORE_EVENT_POWER_STATE              7 /**< Power state changed, see ecore_power_state_get() */
-#define ECORE_EVENT_LOCALE_CHANGED           8 /**< Locale changed */
-#define ECORE_EVENT_HOSTNAME_CHANGED         9 /**< Hostname changed */
+#define ECORE_EVENT_MEMORY_STATE \
+    6 /**< Memory state changed, see ecore_memory_state_get() */
+#define ECORE_EVENT_POWER_STATE \
+    7 /**< Power state changed, see ecore_power_state_get() */
+#define ECORE_EVENT_LOCALE_CHANGED          8 /**< Locale changed */
+#define ECORE_EVENT_HOSTNAME_CHANGED        9 /**< Hostname changed */
 #define ECORE_EVENT_SYSTEM_TIMEDATE_CHANGED 10 /**< Time or Date changed */
 #define ECORE_EVENT_COUNT                   11 /**< Number of events */
 
-typedef struct _Ecore_Win32_Handler         Ecore_Win32_Handler;    /**< A handle for HANDLE handlers on Windows */
-typedef struct _Ecore_Event_Handler         Ecore_Event_Handler;    /**< A handle for an event handler */
-typedef struct _Ecore_Event_Filter          Ecore_Event_Filter;    /**< A handle for an event filter */
-typedef struct _Ecore_Event                 Ecore_Event;    /**< A handle for an event */
-typedef struct _Ecore_Event_Signal_User     Ecore_Event_Signal_User;    /**< User signal event */
-typedef struct _Ecore_Event_Signal_Hup      Ecore_Event_Signal_Hup;    /**< Hup signal event */
-typedef struct _Ecore_Event_Signal_Exit     Ecore_Event_Signal_Exit;    /**< Exit signal event */
-typedef struct _Ecore_Event_Signal_Power    Ecore_Event_Signal_Power;    /**< Power signal event */
-typedef struct _Ecore_Event_Signal_Realtime Ecore_Event_Signal_Realtime;    /**< Realtime signal event */
+typedef struct _Ecore_Win32_Handler
+    Ecore_Win32_Handler; /**< A handle for HANDLE handlers on Windows */
+typedef struct _Ecore_Event_Handler
+    Ecore_Event_Handler; /**< A handle for an event handler */
+typedef struct _Ecore_Event_Filter
+    Ecore_Event_Filter; /**< A handle for an event filter */
+typedef struct _Ecore_Event Ecore_Event; /**< A handle for an event */
+typedef struct _Ecore_Event_Signal_User
+    Ecore_Event_Signal_User; /**< User signal event */
+typedef struct _Ecore_Event_Signal_Hup
+    Ecore_Event_Signal_Hup; /**< Hup signal event */
+typedef struct _Ecore_Event_Signal_Exit
+    Ecore_Event_Signal_Exit; /**< Exit signal event */
+typedef struct _Ecore_Event_Signal_Power
+    Ecore_Event_Signal_Power; /**< Power signal event */
+typedef struct _Ecore_Event_Signal_Realtime
+    Ecore_Event_Signal_Realtime; /**< Realtime signal event */
 
 /**
  * @typedef Ecore_Filter_Cb
  * A callback used for filtering events from the main loop.
  */
-typedef Efl_Bool (*Ecore_Filter_Cb)(void *data, void *loop_data, int type, void *event);
+typedef Efl_Bool (*Ecore_Filter_Cb)(void *data,
+                                    void *loop_data,
+                                    int   type,
+                                    void *event);
 
 /**
  * @typedef Ecore_End_Cb Ecore_End_Cb
@@ -606,11 +632,11 @@ typedef Efl_Bool (*Ecore_Event_Handler_Cb)(void *data, int type, void *event);
  */
 struct _Ecore_Event_Signal_User
 {
-   int       number;  /**< The signal number. Either 1 or 2 */
-   void     *ext_data;  /**< Extension data - not used */
+    int   number; /**< The signal number. Either 1 or 2 */
+    void *ext_data; /**< Extension data - not used */
 
-#if !defined (_WIN32) && !defined (__lv2ppu__)
-   siginfo_t data; /**< Signal info */
+#if !defined(_WIN32) && !defined(__lv2ppu__)
+    siginfo_t data; /**< Signal info */
 #endif
 };
 
@@ -620,10 +646,10 @@ struct _Ecore_Event_Signal_User
  */
 struct _Ecore_Event_Signal_Hup
 {
-   void     *ext_data;  /**< Extension data - not used */
+    void *ext_data; /**< Extension data - not used */
 
-#if !defined (_WIN32) && !defined (__lv2ppu__)
-   siginfo_t data; /**< Signal info */
+#if !defined(_WIN32) && !defined(__lv2ppu__)
+    siginfo_t data; /**< Signal info */
 #endif
 };
 
@@ -633,13 +659,15 @@ struct _Ecore_Event_Signal_Hup
  */
 struct _Ecore_Event_Signal_Exit
 {
-   Efl_Bool interrupt : 1; /**< Set if the exit request was an interrupt  signal*/
-   Efl_Bool quit      : 1; /**< set if the exit request was a quit signal */
-   Efl_Bool terminate : 1; /**< Set if the exit request was a terminate signal */
-   void     *ext_data; /**< Extension data - not used */
+    Efl_Bool
+        interrupt : 1; /**< Set if the exit request was an interrupt  signal*/
+    Efl_Bool quit : 1; /**< set if the exit request was a quit signal */
+    Efl_Bool
+          terminate : 1; /**< Set if the exit request was a terminate signal */
+    void *ext_data; /**< Extension data - not used */
 
-#if !defined (_WIN32) && !defined (__lv2ppu__)
-   siginfo_t data; /**< Signal info */
+#if !defined(_WIN32) && !defined(__lv2ppu__)
+    siginfo_t data; /**< Signal info */
 #endif
 };
 
@@ -649,10 +677,10 @@ struct _Ecore_Event_Signal_Exit
  */
 struct _Ecore_Event_Signal_Power
 {
-   void     *ext_data;  /**< Extension data - not used */
+    void *ext_data; /**< Extension data - not used */
 
-#if !defined (_WIN32) && !defined (__lv2ppu__)
-   siginfo_t data; /**< Signal info */
+#if !defined(_WIN32) && !defined(__lv2ppu__)
+    siginfo_t data; /**< Signal info */
 #endif
 };
 
@@ -662,10 +690,10 @@ struct _Ecore_Event_Signal_Power
  */
 struct _Ecore_Event_Signal_Realtime
 {
-   int       num; /**< The realtime signal's number */
+    int num; /**< The realtime signal's number */
 
-#if !defined (_WIN32) && !defined (__lv2ppu__)
-   siginfo_t data; /**< Signal info */
+#if !defined(_WIN32) && !defined(__lv2ppu__)
+    siginfo_t data; /**< Signal info */
 #endif
 };
 
@@ -692,7 +720,9 @@ struct _Ecore_Event_Signal_Realtime
  * event, so all handler set to handle that event type that have not already
  * been called, will not be.
  */
-EAPI Ecore_Event_Handler *ecore_event_handler_add(int type, Ecore_Event_Handler_Cb func, const void *data);
+EAPI Ecore_Event_Handler *ecore_event_handler_add(int                    type,
+                                                  Ecore_Event_Handler_Cb func,
+                                                  const void            *data);
 
 /**
  * @brief Adds an event handler to the beginning of the handler list.
@@ -705,7 +735,10 @@ EAPI Ecore_Event_Handler *ecore_event_handler_add(int type, Ecore_Event_Handler_
  * creates the handler at the start of the list. Do not use this function.
  * @since 1.21
  */
-EAPI Ecore_Event_Handler *ecore_event_handler_prepend(int type, Ecore_Event_Handler_Cb func, const void *data);
+EAPI Ecore_Event_Handler *
+ecore_event_handler_prepend(int                    type,
+                            Ecore_Event_Handler_Cb func,
+                            const void            *data);
 
 /**
  * @brief Deletes an event handler.
@@ -734,7 +767,8 @@ EAPI void *ecore_event_handler_del(Ecore_Event_Handler *event_handler);
  * cleaning up. If @p func_free is NULL, free() will be called with the private
  * structure pointer.
  */
-EAPI Ecore_Event *ecore_event_add(int type, void *ev, Ecore_End_Cb func_free, void *data);
+EAPI Ecore_Event *
+ecore_event_add(int type, void *ev, Ecore_End_Cb func_free, void *data);
 
 /**
  * @brief Deletes an event from the queue.
@@ -768,7 +802,8 @@ EAPI void *ecore_event_handler_data_get(Ecore_Event_Handler *eh);
  * This function sets @p data to @p eh and returns the old data pointer
  * which was previously associated with @p eh by ecore_event_handler_add().
  */
-EAPI void *ecore_event_handler_data_set(Ecore_Event_Handler *eh, const void *data);
+EAPI void *ecore_event_handler_data_set(Ecore_Event_Handler *eh,
+                                        const void          *data);
 
 /**
  * @brief Allocates a new event type id sensibly and returns the new id.
@@ -799,9 +834,8 @@ EAPI void ecore_event_type_flush_internal(int type, ...);
  * This function is to be called before calling ecore_shutdown() if any event
  * has still a chance to be in the ecore event queue.
  */
-#define ecore_event_type_flush(...)                                     \
-  ecore_event_type_flush_internal(__VA_ARGS__, ECORE_EVENT_NONE);
-
+#define ecore_event_type_flush(...) \
+    ecore_event_type_flush_internal(__VA_ARGS__, ECORE_EVENT_NONE);
 
 /**
  * @brief Adds a filter the current event queue.
@@ -823,7 +857,10 @@ EAPI void ecore_event_type_flush_internal(int type, ...);
  * called and is passed the loop_data(returned by @c func_start) and @p data
  * pointer to clean up.
  */
-EAPI Ecore_Event_Filter *ecore_event_filter_add(Ecore_Data_Cb func_start, Ecore_Filter_Cb func_filter, Ecore_End_Cb func_end, const void *data);
+EAPI Ecore_Event_Filter *ecore_event_filter_add(Ecore_Data_Cb   func_start,
+                                                Ecore_Filter_Cb func_filter,
+                                                Ecore_End_Cb    func_end,
+                                                const void     *data);
 
 /**
  * @brief Deletes an event filter.
@@ -917,10 +954,10 @@ EAPI void *ecore_event_current_event_get(void);
  * Indicates current system memory state.
  * @since 1.8
  */
-enum _Ecore_Memory_State    /* Memory state */
+enum _Ecore_Memory_State /* Memory state */
 {
-   ECORE_MEMORY_STATE_NORMAL, /**< The normal memory usage state. No need to do anything special here - operation as normal. */
-   ECORE_MEMORY_STATE_LOW /**< The system is low on memory resources. This would indicate that it may be a good idea to free memory you don't need and minimize footprint to avoid general system problems. */
+    ECORE_MEMORY_STATE_NORMAL, /**< The normal memory usage state. No need to do anything special here - operation as normal. */
+    ECORE_MEMORY_STATE_LOW /**< The system is low on memory resources. This would indicate that it may be a good idea to free memory you don't need and minimize footprint to avoid general system problems. */
 };
 typedef enum _Ecore_Memory_State Ecore_Memory_State;
 
@@ -947,19 +984,18 @@ EAPI Ecore_Memory_State ecore_memory_state_get(void);
  */
 EAPI void ecore_memory_state_set(Ecore_Memory_State state);
 
-
 /**
  * @enum _Ecore_Power_State
  * Indicates current system memory state.
  * @since 1.8
  */
-enum _Ecore_Power_State    /* Power state */
+enum _Ecore_Power_State /* Power state */
 {
-   ECORE_POWER_STATE_MAINS, /**< The system is connected to a mains supply of power, thus there is no need to limit processing to save battery life at all. */
-   ECORE_POWER_STATE_BATTERY, /**< The system is running off battery power, but is otherwise running normally. */
-   ECORE_POWER_STATE_LOW, /**< The system is low on power (on battery) and the process should do its best to conserve power. For example it may reduce or suspend polling of network resources, turn off animations or reduce framerate etc. */
-   //ECORE_POWER_STATE_CRITICAL, /**< The system is very low on power (on battery) and the process should begin taking even more conservative action @since 1.13*/
-   //ECORE_POWER_STATE_EMERGENCY /**< The system is extremely low on power (on battery) and the process should prepare for suspend/hibernate/power loss @since 1.13 */
+    ECORE_POWER_STATE_MAINS, /**< The system is connected to a mains supply of power, thus there is no need to limit processing to save battery life at all. */
+    ECORE_POWER_STATE_BATTERY, /**< The system is running off battery power, but is otherwise running normally. */
+    ECORE_POWER_STATE_LOW, /**< The system is low on power (on battery) and the process should do its best to conserve power. For example it may reduce or suspend polling of network resources, turn off animations or reduce framerate etc. */
+    //ECORE_POWER_STATE_CRITICAL, /**< The system is very low on power (on battery) and the process should begin taking even more conservative action @since 1.13*/
+    //ECORE_POWER_STATE_EMERGENCY /**< The system is extremely low on power (on battery) and the process should prepare for suspend/hibernate/power loss @since 1.13 */
 };
 typedef enum _Ecore_Power_State Ecore_Power_State;
 
@@ -990,8 +1026,6 @@ EAPI void ecore_power_state_set(Ecore_Power_State state);
  * @}
  */
 
-
-
 /**
  * @ingroup Ecore_Main_Loop_Group
  * @defgroup Ecore_Exe_Group Process Spawning Functions
@@ -1012,10 +1046,11 @@ EAPI void ecore_power_state_set(Ecore_Power_State state);
 /** Inherit priority from parent process */
 #define ECORE_EXE_PRIORITY_INHERIT 9999
 
-EAPI extern int ECORE_EXE_EVENT_ADD;     /**< A child process has been added */
-EAPI extern int ECORE_EXE_EVENT_DEL;     /**< A child process has been deleted (it exited, naming consistent with the rest of ecore). */
-EAPI extern int ECORE_EXE_EVENT_DATA;    /**< Data from a child process. */
-EAPI extern int ECORE_EXE_EVENT_ERROR;    /**< Errors from a child process. */
+EAPI extern int ECORE_EXE_EVENT_ADD; /**< A child process has been added */
+EAPI extern int
+    ECORE_EXE_EVENT_DEL; /**< A child process has been deleted (it exited, naming consistent with the rest of ecore). */
+EAPI extern int ECORE_EXE_EVENT_DATA; /**< Data from a child process. */
+EAPI extern int ECORE_EXE_EVENT_ERROR; /**< Errors from a child process. */
 
 /**
  * @enum _Ecore_Exe_Win32_Priority
@@ -1023,12 +1058,12 @@ EAPI extern int ECORE_EXE_EVENT_ERROR;    /**< Errors from a child process. */
  */
 enum _Ecore_Exe_Win32_Priority
 {
-   ECORE_EXE_WIN32_PRIORITY_IDLE, /**< Idle priority, for monitoring the system */
-   ECORE_EXE_WIN32_PRIORITY_BELOW_NORMAL, /**< Below default priority */
-   ECORE_EXE_WIN32_PRIORITY_NORMAL, /**< Default priority */
-   ECORE_EXE_WIN32_PRIORITY_ABOVE_NORMAL, /**< Above default priority */
-   ECORE_EXE_WIN32_PRIORITY_HIGH, /**< High priority, use with care as other threads in the system will not get processor time */
-   ECORE_EXE_WIN32_PRIORITY_REALTIME     /**< Realtime priority, should be almost never used as it can interrupt system threads that manage mouse input, keyboard input, and background disk flushing */
+    ECORE_EXE_WIN32_PRIORITY_IDLE, /**< Idle priority, for monitoring the system */
+    ECORE_EXE_WIN32_PRIORITY_BELOW_NORMAL, /**< Below default priority */
+    ECORE_EXE_WIN32_PRIORITY_NORMAL, /**< Default priority */
+    ECORE_EXE_WIN32_PRIORITY_ABOVE_NORMAL, /**< Above default priority */
+    ECORE_EXE_WIN32_PRIORITY_HIGH, /**< High priority, use with care as other threads in the system will not get processor time */
+    ECORE_EXE_WIN32_PRIORITY_REALTIME /**< Realtime priority, should be almost never used as it can interrupt system threads that manage mouse input, keyboard input, and background disk flushing */
 };
 typedef enum _Ecore_Exe_Win32_Priority Ecore_Exe_Win32_Priority;
 
@@ -1041,10 +1076,12 @@ typedef enum _Ecore_Exe_Win32_Priority Ecore_Exe_Win32_Priority;
  * A callback to run with the associated @ref Ecore_Exe, usually
  * for cleanup purposes.
  */
-typedef void                            (*Ecore_Exe_Cb)(void *data, const Ecore_Exe *exe);
+typedef void (*Ecore_Exe_Cb)(void *data, const Ecore_Exe *exe);
 
-typedef struct _Ecore_Exe_Event_Add       Ecore_Exe_Event_Add; /**< Spawned Exe add event */
-typedef struct _Ecore_Exe_Event_Del       Ecore_Exe_Event_Del; /**< Spawned Exe exit event */
+typedef struct _Ecore_Exe_Event_Add
+    Ecore_Exe_Event_Add; /**< Spawned Exe add event */
+typedef struct _Ecore_Exe_Event_Del
+    Ecore_Exe_Event_Del; /**< Spawned Exe exit event */
 
 /**
  * @struct _Ecore_Exe_Event_Add
@@ -1052,8 +1089,8 @@ typedef struct _Ecore_Exe_Event_Del       Ecore_Exe_Event_Del; /**< Spawned Exe 
  */
 struct _Ecore_Exe_Event_Add
 {
-   Ecore_Exe *exe; /**< The handle to the added process */
-   void      *ext_data; /**< Extension data - not used */
+    Ecore_Exe *exe; /**< The handle to the added process */
+    void      *ext_data; /**< Extension data - not used */
 };
 
 /**
@@ -1062,15 +1099,18 @@ struct _Ecore_Exe_Event_Add
  */
 struct _Ecore_Exe_Event_Del
 {
-   pid_t      pid; /**< The process ID of the process that exited */
-   int        exit_code; /**< The exit code of the process */
-   Ecore_Exe *exe; /**< The handle to the exited process, or @c NULL if not found */
-   int        exit_signal; /**< The signal that caused the process to exit */
-   Efl_Bool  exited    : 1; /**< Set to 1 if the process exited of its own accord */
-   Efl_Bool  signalled : 1; /**< Set to 1 if the process exited due to uncaught signal */
-   void      *ext_data; /**< Extension data - not used */
-#if !defined (_WIN32) && !defined (__lv2ppu__)
-   siginfo_t  data; /**< Signal info */
+    pid_t pid; /**< The process ID of the process that exited */
+    int   exit_code; /**< The exit code of the process */
+    Ecore_Exe
+        *exe; /**< The handle to the exited process, or @c NULL if not found */
+    int  exit_signal; /**< The signal that caused the process to exit */
+    Efl_Bool
+        exited : 1; /**< Set to 1 if the process exited of its own accord */
+    Efl_Bool
+        signalled : 1; /**< Set to 1 if the process exited due to uncaught signal */
+    void *ext_data; /**< Extension data - not used */
+#if !defined(_WIN32) && !defined(__lv2ppu__)
+    siginfo_t data; /**< Signal info */
 #endif
 };
 
@@ -1144,7 +1184,9 @@ EAPI Ecore_Exe *ecore_exe_run(const char *exe_cmd, const void *data);
  * @param   data    Data to attach to the returned process handle.
  * @return  A process handle to the spawned process.
  */
-EAPI Ecore_Exe *ecore_exe_pipe_run(const char *exe_cmd, Ecore_Exe_Flags flags, const void *data);
+EAPI Ecore_Exe *ecore_exe_pipe_run(const char     *exe_cmd,
+                                   Ecore_Exe_Flags flags,
+                                   const void     *data);
 
 /**
  * Defines a function to be called before really freeing the handle data.
@@ -1193,7 +1235,11 @@ EAPI void ecore_exe_close_stdin(Ecore_Exe *exe);
  * @param   end_lines Limit of lines at end of output to buffer.
  *
  */
-EAPI void ecore_exe_auto_limits_set(Ecore_Exe *exe, int start_bytes, int end_bytes, int start_lines, int end_lines);
+EAPI void ecore_exe_auto_limits_set(Ecore_Exe *exe,
+                                    int        start_bytes,
+                                    int        end_bytes,
+                                    int        start_lines,
+                                    int        end_lines);
 
 /**
  * Gets the auto pipe data for the given process handle
@@ -1202,7 +1248,8 @@ EAPI void ecore_exe_auto_limits_set(Ecore_Exe *exe, int start_bytes, int end_byt
  * @param   flags   Is this a ECORE_EXE_PIPE_READ or ECORE_EXE_PIPE_ERROR?
  * @return The event data.
  */
-EAPI Ecore_Exe_Event_Data *ecore_exe_event_data_get(Ecore_Exe *exe, Ecore_Exe_Flags flags);
+EAPI Ecore_Exe_Event_Data *ecore_exe_event_data_get(Ecore_Exe      *exe,
+                                                    Ecore_Exe_Flags flags);
 
 /**
  * Frees the given event data.
@@ -1375,7 +1422,8 @@ EAPI void ecore_exe_hup(Ecore_Exe *exe);
  * @{
  */
 
-typedef struct _Ecore_Fd_Handler Ecore_Fd_Handler; /**< A handle for Fd handlers */
+typedef struct _Ecore_Fd_Handler
+    Ecore_Fd_Handler; /**< A handle for Fd handlers */
 
 /**
  * @enum _Ecore_Fd_Handler_Flags
@@ -1383,15 +1431,15 @@ typedef struct _Ecore_Fd_Handler Ecore_Fd_Handler; /**< A handle for Fd handlers
  */
 enum _Ecore_Fd_Handler_Flags
 {
-   ECORE_FD_READ = 1, /**< Fd Read mask */
-   ECORE_FD_WRITE = 2, /**< Fd Write mask */
-   ECORE_FD_ERROR = 4, /**< Fd Error mask */
-   /* ECORE_FD_ALWAYS is intended to fix a problem with wayland
+    ECORE_FD_READ  = 1, /**< Fd Read mask */
+    ECORE_FD_WRITE = 2, /**< Fd Write mask */
+    ECORE_FD_ERROR = 4, /**< Fd Error mask */
+    /* ECORE_FD_ALWAYS is intended to fix a problem with wayland
     * and threads.  It causes the fd handler to be called
     * in any state, so wayland libs can call read_cancel
     * if nothing is available to read.  Everyone else should
     * stay away. */
-   ECORE_FD_ALWAYS = 8, /**< Fd Always mask - DO NOT USE! */
+    ECORE_FD_ALWAYS = 8, /**< Fd Always mask - DO NOT USE! */
 };
 typedef enum _Ecore_Fd_Handler_Flags Ecore_Fd_Handler_Flags;
 
@@ -1451,7 +1499,12 @@ typedef Efl_Bool (*Ecore_Win32_Handle_Cb)(void *data, Ecore_Win32_Handler *wh);
  * @warning This function should @b not be used for monitoring "normal" files, like text files.
  *
  */
-EAPI Ecore_Fd_Handler *ecore_main_fd_handler_add(int fd, Ecore_Fd_Handler_Flags flags, Ecore_Fd_Cb func, const void *data, Ecore_Fd_Cb buf_func, const void *buf_data);
+EAPI Ecore_Fd_Handler *ecore_main_fd_handler_add(int                    fd,
+                                                 Ecore_Fd_Handler_Flags flags,
+                                                 Ecore_Fd_Cb            func,
+                                                 const void            *data,
+                                                 Ecore_Fd_Cb buf_func,
+                                                 const void *buf_data);
 
 /**
  * @brief Adds a callback for activity on the given file descriptor.
@@ -1473,7 +1526,13 @@ EAPI Ecore_Fd_Handler *ecore_main_fd_handler_add(int fd, Ecore_Fd_Handler_Flags 
  *
  * @since 1.7
  */
-EAPI Ecore_Fd_Handler *ecore_main_fd_handler_file_add(int fd, Ecore_Fd_Handler_Flags flags, Ecore_Fd_Cb func, const void *data, Ecore_Fd_Cb buf_func, const void *buf_data);
+EAPI Ecore_Fd_Handler *
+ecore_main_fd_handler_file_add(int                    fd,
+                               Ecore_Fd_Handler_Flags flags,
+                               Ecore_Fd_Cb            func,
+                               const void            *data,
+                               Ecore_Fd_Cb            buf_func,
+                               const void            *buf_data);
 
 /**
  * @brief Sets the prepare callback with data for a given #Ecore_Fd_Handler.
@@ -1491,7 +1550,10 @@ EAPI Ecore_Fd_Handler *ecore_main_fd_handler_file_add(int fd, Ecore_Fd_Handler_F
  * @note You probably don't need this function. It is only necessary for very
  * uncommon cases that need special behavior.
  */
-EAPI void ecore_main_fd_handler_prepare_callback_set(Ecore_Fd_Handler *fd_handler, Ecore_Fd_Prep_Cb func, const void *data);
+EAPI void
+ecore_main_fd_handler_prepare_callback_set(Ecore_Fd_Handler *fd_handler,
+                                           Ecore_Fd_Prep_Cb  func,
+                                           const void       *data);
 /**
  * @brief Marks an FD handler for deletion.
  * @param fd_handler The FD handler.
@@ -1520,13 +1582,15 @@ EAPI int ecore_main_fd_handler_fd_get(Ecore_Fd_Handler *fd_handler);
  * @return @c EFL_TRUEif any of the given flags are active, @c EFL_FALSE
  * otherwise.
  */
-EAPI Efl_Bool ecore_main_fd_handler_active_get(Ecore_Fd_Handler *fd_handler, Ecore_Fd_Handler_Flags flags);
+EAPI Efl_Bool ecore_main_fd_handler_active_get(Ecore_Fd_Handler *fd_handler,
+                                               Ecore_Fd_Handler_Flags flags);
 /**
  * @brief Sets what active streams the given FD handler should be monitoring.
  * @param fd_handler The given FD handler.
  * @param flags The flags to be watching.
  */
-EAPI void ecore_main_fd_handler_active_set(Ecore_Fd_Handler *fd_handler, Ecore_Fd_Handler_Flags flags);
+EAPI void ecore_main_fd_handler_active_set(Ecore_Fd_Handler      *fd_handler,
+                                           Ecore_Fd_Handler_Flags flags);
 
 /**
  * @brief Creates a Ecore_Win32_Handler object and add it to the win32_handlers list.
@@ -1534,7 +1598,10 @@ EAPI void ecore_main_fd_handler_active_set(Ecore_Fd_Handler *fd_handler, Ecore_F
  * @param func The function to add as a callback.
  * @param data The data to pass to the callback when it is called.
  */
-EAPI Ecore_Win32_Handler *ecore_main_win32_handler_add(void *h, Ecore_Win32_Handle_Cb func, const void *data);
+EAPI Ecore_Win32_Handler *
+ecore_main_win32_handler_add(void                 *h,
+                             Ecore_Win32_Handle_Cb func,
+                             const void           *data);
 /**
  * @brief Sets Ecore_Win32_Handler object to delete state.
  * The handler will be deleted in the _ecore_main_win32_handlers_cleanup function.
@@ -1737,7 +1804,9 @@ typedef void (*Ecore_Thread_Cb)(void *data, Ecore_Thread *thread);
  * A callback used by the main loop to receive data sent by an
  * @ref Ecore_Thread_Group.
  */
-typedef void (*Ecore_Thread_Notify_Cb)(void *data, Ecore_Thread *thread, void *msg_data);
+typedef void (*Ecore_Thread_Notify_Cb)(void         *data,
+                                       Ecore_Thread *thread,
+                                       void         *msg_data);
 
 /**
  * Schedules a task to run in a parallel thread to avoid locking the main loop.
@@ -1796,7 +1865,10 @@ typedef void (*Ecore_Thread_Notify_Cb)(void *data, Ecore_Thread *thread, void *m
  * @see ecore_thread_reschedule()
  * @see ecore_thread_max_set()
  */
-EAPI Ecore_Thread *ecore_thread_run(Ecore_Thread_Cb func_blocking, Ecore_Thread_Cb func_end, Ecore_Thread_Cb func_cancel, const void *data);
+EAPI Ecore_Thread *ecore_thread_run(Ecore_Thread_Cb func_blocking,
+                                    Ecore_Thread_Cb func_end,
+                                    Ecore_Thread_Cb func_cancel,
+                                    const void     *data);
 
 /**
  * Launches a thread to run a task that can talk back to the main thread.
@@ -1838,9 +1910,12 @@ EAPI Ecore_Thread *ecore_thread_run(Ecore_Thread_Cb func_blocking, Ecore_Thread_
  * @see ecore_thread_reschedule()
  * @see ecore_thread_max_set()
  */
-EAPI Ecore_Thread *ecore_thread_feedback_run(Ecore_Thread_Cb func_heavy, Ecore_Thread_Notify_Cb func_notify,
-                                             Ecore_Thread_Cb func_end, Ecore_Thread_Cb func_cancel,
-                                             const void *data, Efl_Bool try_no_queue);
+EAPI Ecore_Thread *ecore_thread_feedback_run(Ecore_Thread_Cb        func_heavy,
+                                             Ecore_Thread_Notify_Cb func_notify,
+                                             Ecore_Thread_Cb        func_end,
+                                             Ecore_Thread_Cb        func_cancel,
+                                             const void            *data,
+                                             Efl_Bool try_no_queue);
 
 /**
  * Cancels a running thread.
@@ -2176,8 +2251,11 @@ EAPI Efl_Bool ecore_thread_name_set(Ecore_Thread *thread, const char *name);
  * @see ecore_thread_local_data_find()
  * @see ecore_thread_local_data_del()
  */
-EAPI Efl_Bool ecore_thread_local_data_add(Ecore_Thread *thread, const char *key, void *value,
-                                           Eina_Free_Cb cb, Efl_Bool direct);
+EAPI Efl_Bool ecore_thread_local_data_add(Ecore_Thread *thread,
+                                          const char   *key,
+                                          void         *value,
+                                          Eina_Free_Cb  cb,
+                                          Efl_Bool      direct);
 
 /**
  * Sets some data in the hash local to the given thread.
@@ -2206,7 +2284,10 @@ EAPI Efl_Bool ecore_thread_local_data_add(Ecore_Thread *thread, const char *key,
  * @see ecore_thread_local_data_del()
  * @see ecore_thread_local_data_find()
  */
-EAPI void *ecore_thread_local_data_set(Ecore_Thread *thread, const char *key, void *value, Eina_Free_Cb cb);
+EAPI void *ecore_thread_local_data_set(Ecore_Thread *thread,
+                                       const char   *key,
+                                       void         *value,
+                                       Eina_Free_Cb  cb);
 
 /**
  * Gets data stored in the hash local to the given thread.
@@ -2251,7 +2332,8 @@ EAPI void *ecore_thread_local_data_find(Ecore_Thread *thread, const char *key);
  *
  * @see ecore_thread_local_data_add()
  */
-EAPI Efl_Bool ecore_thread_local_data_del(Ecore_Thread *thread, const char *key);
+EAPI Efl_Bool ecore_thread_local_data_del(Ecore_Thread *thread,
+                                          const char   *key);
 
 /**
  * Adds some data to a hash shared by all threads.
@@ -2291,7 +2373,10 @@ EAPI Efl_Bool ecore_thread_local_data_del(Ecore_Thread *thread, const char *key)
  * @see ecore_thread_global_data_set()
  * @see ecore_thread_global_data_find()
  */
-EAPI Efl_Bool ecore_thread_global_data_add(const char *key, void *value, Eina_Free_Cb cb, Efl_Bool direct);
+EAPI Efl_Bool ecore_thread_global_data_add(const char  *key,
+                                           void        *value,
+                                           Eina_Free_Cb cb,
+                                           Efl_Bool     direct);
 
 /**
  * Sets some data in the hash shared by all threads.
@@ -2314,7 +2399,8 @@ EAPI Efl_Bool ecore_thread_global_data_add(const char *key, void *value, Eina_Fr
  * @see ecore_thread_global_data_del()
  * @see ecore_thread_global_data_find()
  */
-EAPI void *ecore_thread_global_data_set(const char *key, void *value, Eina_Free_Cb cb);
+EAPI void *
+ecore_thread_global_data_set(const char *key, void *value, Eina_Free_Cb cb);
 
 /**
  * Gets data stored in the hash shared by all threads.
@@ -2448,10 +2534,11 @@ EAPI Ecore_Pipe *ecore_pipe_add(Ecore_Pipe_Cb handler, const void *data);
  * @see ecore_pipe_add()
  */
 EAPI Ecore_Pipe *ecore_pipe_full_add(Ecore_Pipe_Cb handler,
-                                     const void *data,
-                                     int fd_read, int fd_write,
-                                     Efl_Bool read_survive_fork,
-                                     Efl_Bool write_survive_fork);
+                                     const void   *data,
+                                     int           fd_read,
+                                     int           fd_write,
+                                     Efl_Bool      read_survive_fork,
+                                     Efl_Bool      write_survive_fork);
 
 /**
  * Frees an Ecore_Pipe object created with ecore_pipe_add().
@@ -2469,7 +2556,9 @@ EAPI void *ecore_pipe_del(Ecore_Pipe *p);
  * @param nbytes The size of the @p buffer in bytes.
  * @return       @c EFL_TRUEon a successful write, @c EFL_FALSE on error.
  */
-EAPI Efl_Bool ecore_pipe_write(Ecore_Pipe *p, const void *buffer, unsigned int nbytes);
+EAPI Efl_Bool ecore_pipe_write(Ecore_Pipe  *p,
+                               const void  *buffer,
+                               unsigned int nbytes);
 
 /**
  * Closes the write end of an Ecore_Pipe object created with ecore_pipe_add().
@@ -2747,8 +2836,8 @@ EAPI double ecore_throttle_get(void);
 /** Defines the timing sources for animators. */
 typedef enum
 {
-   ECORE_ANIMATOR_SOURCE_TIMER, /**< The default system clock/timer based animator that ticks every "frametime" seconds */
-   ECORE_ANIMATOR_SOURCE_CUSTOM /**< A custom animator trigger that you need to call ecore_animator_custom_tick() to make it tick */
+    ECORE_ANIMATOR_SOURCE_TIMER, /**< The default system clock/timer based animator that ticks every "frametime" seconds */
+    ECORE_ANIMATOR_SOURCE_CUSTOM /**< A custom animator trigger that you need to call ecore_animator_custom_tick() to make it tick */
 } Ecore_Animator_Source;
 
 /**
@@ -2760,34 +2849,34 @@ typedef Efl_Bool (*Ecore_Timeline_Cb)(void *data, double pos);
 /** Defines the position mappings for the animation. */
 typedef enum
 {
-  ECORE_POS_MAP_LINEAR = 0, /**< Linear 0.0 -> 1.0 */
-  ECORE_POS_MAP_ACCELERATE, /**< Start slow then speed up */
-  ECORE_POS_MAP_DECELERATE, /**< Start fast then slow down */
-  ECORE_POS_MAP_SINUSOIDAL, /**< Start slow, speed up then slow down at end */
-  ECORE_POS_MAP_ACCELERATE_FACTOR, /**< Start slow then speed up, v1 being a
+    ECORE_POS_MAP_LINEAR = 0, /**< Linear 0.0 -> 1.0 */
+    ECORE_POS_MAP_ACCELERATE, /**< Start slow then speed up */
+    ECORE_POS_MAP_DECELERATE, /**< Start fast then slow down */
+    ECORE_POS_MAP_SINUSOIDAL, /**< Start slow, speed up then slow down at end */
+    ECORE_POS_MAP_ACCELERATE_FACTOR, /**< Start slow then speed up, v1 being a
                                     * power factor, 0.0 being linear, 1.0 being
                                     * normal accelerate, 2.0 being much more
                                     * pronounced accelerate (squared), 3.0
                                     * being cubed, etc. */
-  ECORE_POS_MAP_DECELERATE_FACTOR, /**< Start fast then slow down, v1 being a
+    ECORE_POS_MAP_DECELERATE_FACTOR, /**< Start fast then slow down, v1 being a
                                     * power factor, 0.0 being linear, 1.0 being
                                     * normal decelerate, 2.0 being much more
                                     * pronounced decelerate (squared), 3.0
                                     * being cubed, etc. */
-  ECORE_POS_MAP_SINUSOIDAL_FACTOR, /**< Start slow, speed up then slow down at
+    ECORE_POS_MAP_SINUSOIDAL_FACTOR, /**< Start slow, speed up then slow down at
                                     * end, v1 being a power factor, 0.0 being
                                     * linear, 1.0 being normal sinusoidal, 2.0
                                     * being much more pronounced sinusoidal
                                     * (squared), 3.0 being cubed, etc. */
-  ECORE_POS_MAP_DIVISOR_INTERP, /**< Start at gradient * v1, interpolated via
+    ECORE_POS_MAP_DIVISOR_INTERP, /**< Start at gradient * v1, interpolated via
                                  * power of v2 curve */
-  ECORE_POS_MAP_BOUNCE, /**< Start at 0.0 then "drop" like a ball bouncing to
+    ECORE_POS_MAP_BOUNCE, /**< Start at 0.0 then "drop" like a ball bouncing to
                          * the ground at 1.0, and bounce v2 times, with decay
                          * factor of v1 */
-  ECORE_POS_MAP_SPRING, /**< Start at 0.0 then "wobble" like a spring rest
+    ECORE_POS_MAP_SPRING, /**< Start at 0.0 then "wobble" like a spring rest
                          * position 1.0, and wobble v2 times, with decay factor
                          * of v1 */
-  ECORE_POS_MAP_CUBIC_BEZIER /**< Follow the cubic-bezier curve calculated with
+    ECORE_POS_MAP_CUBIC_BEZIER /**< Follow the cubic-bezier curve calculated with
                               * the control points (x1, y1), (x2, y2) */
 } Ecore_Pos_Map;
 
@@ -2881,7 +2970,8 @@ EAPI double ecore_animator_frametime_get(void);
  *
  * @since 1.1.0
  */
-EAPI double ecore_animator_pos_map(double pos, Ecore_Pos_Map map, double v1, double v2);
+EAPI double
+ecore_animator_pos_map(double pos, Ecore_Pos_Map map, double v1, double v2);
 
 /**
  * @brief Maps an input position from 0.0 to 1.0 along a timeline to a
@@ -2945,7 +3035,10 @@ EAPI double ecore_animator_pos_map(double pos, Ecore_Pos_Map map, double v1, dou
  *
  * @see Ecore_Pos_Map
  */
-EAPI double ecore_animator_pos_map_n(double pos, Ecore_Pos_Map map, int v_size, double *v);
+EAPI double ecore_animator_pos_map_n(double        pos,
+                                     Ecore_Pos_Map map,
+                                     int           v_size,
+                                     const double *v);
 
 /**
  * @brief Sets the source of animator ticks for the mainloop.
@@ -3005,7 +3098,9 @@ EAPI Ecore_Animator_Source ecore_animator_source_get(void);
  * @see ecore_animator_custom_source_tick_end_callback_set()
  * @see ecore_animator_custom_tick()
  */
-EAPI void ecore_animator_custom_source_tick_begin_callback_set(Ecore_Cb func, const void *data);
+EAPI void
+ecore_animator_custom_source_tick_begin_callback_set(Ecore_Cb    func,
+                                                     const void *data);
 
 /**
  * @brief Sets the function that ends a custom animator tick source.
@@ -3025,7 +3120,8 @@ EAPI void ecore_animator_custom_source_tick_begin_callback_set(Ecore_Cb func, co
  * @see ecore_animator_custom_source_tick_begin_callback_set()
  * @see ecore_animator_custom_tick()
  */
-EAPI void ecore_animator_custom_source_tick_end_callback_set(Ecore_Cb func, const void *data);
+EAPI void ecore_animator_custom_source_tick_end_callback_set(Ecore_Cb    func,
+                                                             const void *data);
 
 /**
  * @brief Triggers a custom animator tick.
@@ -3179,12 +3275,14 @@ typedef struct _Ecore_Factorized_Idle Ecore_Idler; /**< A handle for idlers */
 /*
  * @since 1.8
  */
-typedef struct _Ecore_Factorized_Idle Ecore_Idle_Enterer; /**< A handle for idle enterers */
+typedef struct _Ecore_Factorized_Idle
+    Ecore_Idle_Enterer; /**< A handle for idle enterers */
 
 /*
  * @since 1.8
  */
-typedef struct _Ecore_Factorized_Idle Ecore_Idle_Exiter; /**< A handle for idle exiters */
+typedef struct _Ecore_Factorized_Idle
+    Ecore_Idle_Exiter; /**< A handle for idle exiters */
 
 /**
  * @}
@@ -3216,7 +3314,7 @@ typedef struct _Ecore_Factorized_Idle Ecore_Idle_Exiter; /**< A handle for idle 
 /**
  * @since 1.8
  */
-typedef struct _Ecore_Job Ecore_Job;    /**< A job handle */
+typedef struct _Ecore_Job Ecore_Job; /**< A job handle */
 
 #define _ECORE_JOB_EO_CLASS_TYPE
 /**

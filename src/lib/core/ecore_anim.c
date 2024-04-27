@@ -723,7 +723,10 @@ _pos_map_cubic_bezier(double pos, double x1, double y1, double x2, double y2)
 #define MUL(A, B)   eina_f32p32_mul(A, B)
 
 EAPI double
-ecore_animator_pos_map_n(double pos, Ecore_Pos_Map map, int v_size, double *v)
+ecore_animator_pos_map_n(double        pos,
+                         Ecore_Pos_Map map,
+                         int           v_size,
+                         const double *v)
 {
     double v0 = 0, v1 = 0, v2 = 0, v3 = 0;
 
