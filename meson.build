@@ -31,10 +31,12 @@ efl_config.set_quoted('EFL_LIB_DIR'      , dir_lib)
 efl_config.set_quoted('EFL_BUILD_DIR'    , dir_build)
 efl_config.set_quoted('EFL_SRC_DIR'      , dir_source)
 efl_config.set_quoted('EFL_BUILD_ID'     , '1')
+efl_config.set_quoted('EFL_HOST_SYSTEM'  , host_os)
 efl_config.set10     ('EFL_HAVE_THREADS' , true)
 efl_config.set       ('EFL_VERSION_MAJOR', version_major)
 efl_config.set       ('EFL_VERSION_MINOR', version_minor)
 efl_config.set       ('EFL_VERSION_MICRO', version_micro)
+efl_config.set       ('EFL_VERSION_GIT'  , version_rev_full)
 
 # efl_config.set_quoted('EFL_NOLEGACY_API_SUPPORT', '1')
 
