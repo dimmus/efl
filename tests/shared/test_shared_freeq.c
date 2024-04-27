@@ -60,7 +60,8 @@ TEST(freeq_tune)
     eina_freeq_clear(eina_freeq_main_get());
     efl_assert_fail_if(_n > 0);
 
-    efl_assert_fail_if(eina_freeq_ptr_pending(eina_freeq_main_get()) == EFL_TRUE);
+    efl_assert_fail_if(eina_freeq_ptr_pending(eina_freeq_main_get()) ==
+                       EFL_TRUE);
 }
 
 TEST(freeq_reduce)
@@ -80,7 +81,8 @@ TEST(freeq_reduce)
     while (eina_freeq_ptr_pending(eina_freeq_main_get()))
         eina_freeq_reduce(eina_freeq_main_get(), 1);
     efl_assert_fail_if(_n > 0);
-    efl_assert_fail_if(eina_freeq_ptr_pending(eina_freeq_main_get()) == EFL_TRUE);
+    efl_assert_fail_if(eina_freeq_ptr_pending(eina_freeq_main_get()) ==
+                       EFL_TRUE);
 
     _n++;
     p = malloc(9);
@@ -95,7 +97,8 @@ TEST(freeq_reduce)
     while (eina_freeq_ptr_pending(eina_freeq_main_get()))
         eina_freeq_reduce(eina_freeq_main_get(), 5);
     efl_assert_fail_if(_n > 0);
-    efl_assert_fail_if(eina_freeq_ptr_pending(eina_freeq_main_get()) == EFL_TRUE);
+    efl_assert_fail_if(eina_freeq_ptr_pending(eina_freeq_main_get()) ==
+                       EFL_TRUE);
 }
 
 static void

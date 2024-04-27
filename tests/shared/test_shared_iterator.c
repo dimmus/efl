@@ -105,6 +105,7 @@ TEST(iterator_filter_free)
 
     free(data);
 }
+
 static Efl_Bool
 eina_iterator_array_check(EFL_UNUSED const Eina_Array *array,
                           int                         *data,
@@ -703,8 +704,9 @@ TEST(iterator_multi)
         efl_assert_fail_if(i != j * j);
         j++;
     }
-    efl_assert_fail_if(j < EINA_C_ARRAY_LENGTH(array1) + EINA_C_ARRAY_LENGTH(array2) +
-                    EINA_C_ARRAY_LENGTH(array3));
+    efl_assert_fail_if(j < EINA_C_ARRAY_LENGTH(array1) +
+                               EINA_C_ARRAY_LENGTH(array2) +
+                               EINA_C_ARRAY_LENGTH(array3));
     eina_iterator_free(it);
 }
 

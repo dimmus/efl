@@ -104,8 +104,8 @@ TEST(fp_mul)
         }
     }
     testlog("Max delta(multiplication): %f (%f%%)\n",
-           maxdelta,
-           maxdelta_per * 100);
+            maxdelta,
+            maxdelta_per * 100);
 }
 
 TEST(fp_div)

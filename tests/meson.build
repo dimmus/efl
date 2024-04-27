@@ -129,6 +129,9 @@ foreach t : tests
 		t_sources,
 		c_args: [
 			'-DTEST_NAME="' + t_name + '"',
+			'-DTESTS_WD="`pwd`"',
+			'-DTESTS_BUILD_DIR="'+meson.current_build_dir()+'/'+t_name + '"',
+        	'-DTESTS_SRC_DIR="'+meson.current_source_dir()+'/'+t_name + '"',
 		],
 		build_by_default: true,
 		include_directories: [ include_directories('.'), inc_config, t.get('inc_dirs') ],

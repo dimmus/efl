@@ -94,10 +94,10 @@ TEST(test_spinlock)
     efl_assert_fail_if(!eina_spinlock_new(&spin));
 
     efl_assert_fail_if(!eina_thread_create(&thread,
-                                EINA_THREAD_NORMAL,
-                                -1,
-                                _eina_test_lock_thread,
-                                "test"));
+                                           EINA_THREAD_NORMAL,
+                                           -1,
+                                           _eina_test_lock_thread,
+                                           "test"));
 
     for (i = 0; i < 150; i++)
     {
@@ -159,10 +159,10 @@ TEST(test_tls)
     efl_assert_fail_if(!eina_tls_set(key, _eina_test_tls_alloc(42)));
 
     efl_assert_fail_if(!eina_thread_create(&thread,
-                                EINA_THREAD_NORMAL,
-                                -1,
-                                _eina_test_tls_thread,
-                                NULL));
+                                           EINA_THREAD_NORMAL,
+                                           -1,
+                                           _eina_test_tls_thread,
+                                           NULL));
 
     eina_thread_join(thread);
     efl_assert_fail_if(_eina_tls_free_count != 1);
@@ -218,10 +218,10 @@ TEST(test_rwlock)
     efl_assert_fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
 
     efl_assert_fail_if(!eina_thread_create(&thread,
-                                EINA_THREAD_NORMAL,
-                                -1,
-                                _eina_test_rwlock_thread,
-                                NULL));
+                                           EINA_THREAD_NORMAL,
+                                           -1,
+                                           _eina_test_rwlock_thread,
+                                           NULL));
 
     efl_assert_fail_if(!eina_barrier_wait(&barrier));
     efl_assert_fail_if(!eina_condition_wait(&condition));

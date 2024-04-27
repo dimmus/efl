@@ -386,7 +386,8 @@ TEST(log_customize)
     test_set_get(abort_on_critical_level, -1234);
     test_set_get(abort_on_critical_level, 4567);
 
-    efl_assert_fail_if(eina_log_domain_level_get(TEST_DOM) != eina_log_level_get());
+    efl_assert_fail_if(eina_log_domain_level_get(TEST_DOM) !=
+                       eina_log_level_get());
 
     eina_log_domain_level_set(TEST_DOM, -123);
     efl_assert_fail_if(eina_log_domain_level_get(TEST_DOM) != -123);
@@ -416,7 +417,8 @@ TEST(log_customize)
     ctx.msg   = "safety check failed: _log_domains[domain].deleted is true";
     ctx.fnc   = "eina_log_domain_registered_level_get";
     ctx.did   = EFL_FALSE;
-    efl_assert_fail_if(eina_log_domain_registered_level_get(d) != EINA_LOG_LEVEL_UNKNOWN);
+    efl_assert_fail_if(eina_log_domain_registered_level_get(d) !=
+                       EINA_LOG_LEVEL_UNKNOWN);
     assert(ctx.did);
 
     eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);

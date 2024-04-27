@@ -337,7 +337,8 @@ TEST(file_map_new_test)
     // set last element of big_buffer in '\0' - end of string
     big_buffer[big_buffer_size - file_min_offset] = '\0';
     // check big_buffer valid length
-    efl_assert_fail_if((int)strlen(big_buffer) != (big_buffer_size - file_min_offset));
+    efl_assert_fail_if((int)strlen(big_buffer) !=
+                       (big_buffer_size - file_min_offset));
 
     // generating file 1 full name
     strcpy(test_file_path, (char *)test_dirname);
@@ -350,16 +351,18 @@ TEST(file_map_new_test)
               O_WRONLY | O_BINARY | O_CREAT | O_TRUNC,
               S_IWUSR | S_IRUSR);
     efl_assert_fail_if(fd <= 0);
-    efl_assert_fail_if(write(fd, eina_map_test_string, strlen(eina_map_test_string)) !=
-            (ssize_t)strlen(eina_map_test_string));
+    efl_assert_fail_if(
+        write(fd, eina_map_test_string, strlen(eina_map_test_string)) !=
+        (ssize_t)strlen(eina_map_test_string));
     close(fd);
 
     fd = open(test_file2_path,
               O_WRONLY | O_BINARY | O_CREAT | O_TRUNC,
               S_IWUSR | S_IRUSR);
     efl_assert_fail_if(fd <= 0);
-    efl_assert_fail_if(write(fd, big_buffer, big_buffer_size - file_min_offset) !=
-            big_buffer_size - file_min_offset);
+    efl_assert_fail_if(
+        write(fd, big_buffer, big_buffer_size - file_min_offset) !=
+        big_buffer_size - file_min_offset);
     close(fd);
 
     e_file = eina_file_open(test_file_path, EFL_FALSE);
@@ -553,10 +556,10 @@ TEST(test_file_thread)
 
     for (i = 0; i < 4; i++)
         efl_assert_fail_if(!(eina_thread_create(&th[i],
-                                     EINA_THREAD_NORMAL,
-                                     -1,
-                                     _eina_test_file_thread,
-                                     NULL)));
+                                                EINA_THREAD_NORMAL,
+                                                -1,
+                                                _eina_test_file_thread,
+                                                NULL)));
 
     for (i = 0; i < 4; i++)
         efl_assert_fail_if(eina_thread_join(th[i]) != NULL);
@@ -841,7 +844,8 @@ TEST(test_file_mktemp)
     }
 
     /* temp directory */
-    efl_assert_fail_if(!eina_file_mkdtemp("eina_file_test_XXXXXX", &tmpdir) || !tmpdir);
+    efl_assert_fail_if(!eina_file_mkdtemp("eina_file_test_XXXXXX", &tmpdir) ||
+                       !tmpdir);
 
     it = eina_file_direct_ls(tmpdir);
     efl_assert_fail_if(!it);

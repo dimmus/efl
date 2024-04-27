@@ -359,10 +359,12 @@ TEST(test_list_split)
 
         if (i % 2 == 0)
             efl_assert_fail_if(eina_list_count(left) == 1 &&
-                    eina_list_count(right) + eina_list_count(left) == i + 7);
+                               eina_list_count(right) + eina_list_count(left) ==
+                                   i + 7);
         else
             efl_assert_fail_if(eina_list_count(left) == 2 &&
-                    eina_list_count(right) + eina_list_count(left) == i + 7);
+                               eina_list_count(right) + eina_list_count(left) ==
+                                   i + 7);
 
         list = eina_list_merge(left, right);
         list = eina_list_append(list, "roslin");

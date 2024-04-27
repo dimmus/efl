@@ -108,9 +108,9 @@ TEST(binbuf_manage_simple)
 
     efl_assert_fail_if(memcmp(eina_binbuf_string_get(buf), cbuf, size));
     efl_assert_fail_if(size != eina_binbuf_length_get(buf));
-    
+
     eina_binbuf_append_length(buf, cbuf, size);
-    
+
     efl_assert_fail_if(memcmp(eina_binbuf_string_get(buf), cbuf, size));
     efl_assert_fail_if(memcmp(eina_binbuf_string_get(buf) + size, cbuf, size));
     efl_assert_fail_if(2 * size != eina_binbuf_length_get(buf));
@@ -135,15 +135,16 @@ TEST(binbuf_manage_read_only_simple)
 
     efl_assert_fail_if(eina_binbuf_string_get(buf) != cbuf);
     efl_assert_fail_if(size != eina_binbuf_length_get(buf));
-    
+
     eina_binbuf_append_length(buf, cbuf, size);
-    
+
     efl_assert_fail_if(memcmp(eina_binbuf_string_get(buf), cbuf, size));
     efl_assert_fail_if(memcmp(eina_binbuf_string_get(buf) + size, cbuf, size));
     efl_assert_fail_if(2 * size != eina_binbuf_length_get(buf));
 
     eina_binbuf_free(buf);
 }
+
 #pragma GCC diagnostic pop
 
 TEST(binbuf_insert)
@@ -293,7 +294,7 @@ TEST(binbuf_expand)
     r        = eina_binbuf_use(buf, rw_slice.len);
     efl_assert_int_eq(r, EFL_TRUE);
     efl_assert_int_eq(eina_slice_compare(eina_binbuf_slice_get(buf), hi_there),
-                     0);
+                      0);
 
     /* start with 'Hello World */
     eina_binbuf_reset(buf);
@@ -315,7 +316,8 @@ TEST(binbuf_expand)
 
     ro_slice = eina_binbuf_slice_get(buf);
     efl_assert_int_eq(ro_slice.len, hello_world.len + rw_slice.len);
-    efl_assert_int_eq(memcmp(ro_slice.mem, hello_world.mem, hello_world.len), 0);
+    efl_assert_int_eq(memcmp(ro_slice.mem, hello_world.mem, hello_world.len),
+                      0);
 
     for (i = hello_world.len; i < ro_slice.len; i++)
         efl_assert_int_eq(ro_slice.bytes[i], 0xfe);

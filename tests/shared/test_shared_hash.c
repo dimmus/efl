@@ -370,17 +370,21 @@ TEST(test_hash_add_del_by_hash)
     key_len  = _eina_string_key_length("4");
     key_hash = eina_hash_crc("4", key_len);
 
-    efl_assert_fail_if(eina_hash_add_by_hash(hash, "4", key_len, key_hash, &array[2]) !=
-            EFL_TRUE);
-    efl_assert_fail_if(eina_hash_del_by_hash(hash, "4", key_len, key_hash, &array[2]) !=
-            EFL_TRUE);
-    efl_assert_fail_if(eina_hash_del_by_hash(hash, "4", key_len, key_hash, &array[2]) !=
-            EFL_FALSE);
+    efl_assert_fail_if(
+        eina_hash_add_by_hash(hash, "4", key_len, key_hash, &array[2]) !=
+        EFL_TRUE);
+    efl_assert_fail_if(
+        eina_hash_del_by_hash(hash, "4", key_len, key_hash, &array[2]) !=
+        EFL_TRUE);
+    efl_assert_fail_if(
+        eina_hash_del_by_hash(hash, "4", key_len, key_hash, &array[2]) !=
+        EFL_FALSE);
 
     key_len  = _eina_string_key_length("42");
     key_hash = eina_hash_crc("42", key_len);
-    efl_assert_fail_if(eina_hash_del_by_hash(hash, "42", key_len, key_hash, &array[1]) !=
-            EFL_TRUE);
+    efl_assert_fail_if(
+        eina_hash_del_by_hash(hash, "42", key_len, key_hash, &array[1]) !=
+        EFL_TRUE);
 
     efl_assert_fail_if(eina_hash_population(hash) != 3);
     eina_hash_free(hash);

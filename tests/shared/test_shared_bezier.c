@@ -21,9 +21,9 @@ TEST(bezier_test_values)
     eina_bezier_values_set(&b, 1, 2, 3, 4, 5, 6, 7, 8);
     eina_bezier_values_get(&b, &sx, &sy, &cx1, &cy1, &cx2, &cy2, &ex, &ey);
     efl_assert_fail_if(!EINA_DBL_EQ(sx, 1) || !EINA_DBL_EQ(sy, 2) ||
-            !EINA_DBL_EQ(cx1, 3) || !EINA_DBL_EQ(cy1, 4) ||
-            !EINA_DBL_EQ(cx2, 5) || !EINA_DBL_EQ(cy2, 6) ||
-            !EINA_DBL_EQ(ex, 7) || !EINA_DBL_EQ(ey, 8));
+                       !EINA_DBL_EQ(cx1, 3) || !EINA_DBL_EQ(cy1, 4) ||
+                       !EINA_DBL_EQ(cx2, 5) || !EINA_DBL_EQ(cy2, 6) ||
+                       !EINA_DBL_EQ(ex, 7) || !EINA_DBL_EQ(ey, 8));
 }
 
 TEST(bezier_test_angle)
@@ -106,8 +106,8 @@ TEST(bezier_test_bounds_get)
 
     eina_bezier_bounds_get(&b, &x, &y, &w, &h);
 
-    efl_assert_fail_if(!EINA_DBL_EQ(x, 0) || !EINA_DBL_EQ(y, 0) || !EINA_DBL_EQ(w, 100) ||
-            !EINA_DBL_EQ(h, 100));
+    efl_assert_fail_if(!EINA_DBL_EQ(x, 0) || !EINA_DBL_EQ(y, 0) ||
+                       !EINA_DBL_EQ(w, 100) || !EINA_DBL_EQ(h, 100));
 }
 
 TEST(bezier_test_on_interval)

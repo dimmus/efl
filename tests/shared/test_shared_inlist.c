@@ -101,7 +101,8 @@ TEST(inlist_simple)
     tmp = _eina_test_inlist_build(1664);
     lst = eina_inlist_append_relative(lst, EINA_INLIST_GET(tmp), lst);
     efl_assert_fail_if(!lst);
-    efl_assert_fail_if(EINA_INLIST_CONTAINER_GET(lst, Eina_Test_Inlist)->i != 42);
+    efl_assert_fail_if(EINA_INLIST_CONTAINER_GET(lst, Eina_Test_Inlist)->i !=
+                       42);
 
     prev = tmp;
     tmp  = _eina_test_inlist_build(3227);
@@ -109,7 +110,8 @@ TEST(inlist_simple)
                                        EINA_INLIST_GET(tmp),
                                        EINA_INLIST_GET(prev));
     efl_assert_fail_if(!lst);
-    efl_assert_fail_if(EINA_INLIST_CONTAINER_GET(lst, Eina_Test_Inlist)->i != 42);
+    efl_assert_fail_if(EINA_INLIST_CONTAINER_GET(lst, Eina_Test_Inlist)->i !=
+                       42);
 
     lst = eina_inlist_remove(lst, EINA_INLIST_GET(tmp));
 
@@ -328,16 +330,16 @@ _eina_test_inlist_cmp2(const void *d1, const void *d2)
     return t2->value - t1->value;
 }
 
-#define _eina_test_inlist_check(LIST)                \
-    {                                                \
-        const Eina_Test_Inlist_Sorted *_t;           \
-        int                            _i = 0;       \
-                                                     \
-        EINA_INLIST_FOREACH(LIST, _t)                \
-        {                                            \
+#define _eina_test_inlist_check(LIST)                 \
+    {                                                 \
+        const Eina_Test_Inlist_Sorted *_t;            \
+        int                            _i = 0;        \
+                                                      \
+        EINA_INLIST_FOREACH(LIST, _t)                 \
+        {                                             \
             efl_assert_int_eq(_t->value, values[_i]); \
-            _i++;                                    \
-        }                                            \
+            _i++;                                     \
+        }                                             \
     }
 
 #define _eina_test_inlist_check_reverse(LIST)                                \
@@ -347,7 +349,7 @@ _eina_test_inlist_cmp2(const void *d1, const void *d2)
                                                                              \
         EINA_INLIST_FOREACH(LIST, _t)                                        \
         {                                                                    \
-            efl_assert_int_eq(_t->value, values[_i]);                         \
+            efl_assert_int_eq(_t->value, values[_i]);                        \
             _i--;                                                            \
         }                                                                    \
     }

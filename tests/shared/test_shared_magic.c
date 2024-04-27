@@ -137,8 +137,8 @@ TEST(magic_simple)
     eina_magic_string_set(EINA_MAGIC_TEST2, EINA_MAGIC_STRING);
 
     efl_assert_fail_if(eina_magic_string_get(EINA_MAGIC_TEST) == NULL);
-    efl_assert_fail_if(strcmp(eina_magic_string_get(EINA_MAGIC_TEST), EINA_MAGIC_STRING) !=
-            0);
+    efl_assert_fail_if(
+        strcmp(eina_magic_string_get(EINA_MAGIC_TEST), EINA_MAGIC_STRING) != 0);
 
     eina_log_print_cb_set(_eina_test_magic_print_cb, &ctx);
 

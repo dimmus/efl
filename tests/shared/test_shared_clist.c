@@ -93,7 +93,8 @@ iterating_two_phase_with_add_head(unsigned int n, const char *str, int n_ent)
     entries[0]->string = str;
     eina_clist_add_tail(&string_list, &entries[0]->entry);
     n++;
-    efl_assert_fail_if(eina_clist_next(&string_list, tail) != &entries[0]->entry);
+    efl_assert_fail_if(eina_clist_next(&string_list, tail) !=
+                       &entries[0]->entry);
     efl_assert_fail_if(eina_clist_tail(&string_list) != &entries[0]->entry);
     for (i = 1; i < n_ent; i++)
     {
@@ -104,8 +105,9 @@ iterating_two_phase_with_add_head(unsigned int n, const char *str, int n_ent)
         n++;
         efl_assert_fail_if(eina_clist_count(&string_list) != n);
         efl_assert_fail_if(eina_clist_tail(&string_list) != &entries[i]->entry);
-        efl_assert_fail_if(eina_clist_next(&string_list, &entries[i - 1]->entry) !=
-                &entries[i]->entry);
+        efl_assert_fail_if(
+            eina_clist_next(&string_list, &entries[i - 1]->entry) !=
+            &entries[i]->entry);
     };
 }
 

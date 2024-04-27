@@ -97,26 +97,26 @@ efl_assert_fail_(const char *fmt, ...)
 ({																\
 	val_type a_ = (a);											\
 	val_type b_ = (b);											\
-	bool cond = a_ cmp b_;										\
-	if (!cond)													\
+	bool test_cond = a_ cmp b_;										\
+	if (!test_cond)													\
 		custom_assert_fail_("%s:%u: Assertion %s %s %s (" val_fmt " %s " val_fmt ") failed!\n",	\
 				    __FILE__, __LINE__, #a, #cmp, #b, a_, #cmp, b_);							\
-	cond;																						\
+	test_cond;																						\
 })
 
 #define efl_assert_fn_(fn, a, b, val_type, val_fmt, cmp)		\
 ({																\
 	val_type a_ = (a);											\
 	val_type b_ = (b);											\
-	bool cond = fn(a_, b_) cmp 0;								\
-	if (!cond)													\
+	bool test_cond = fn(a_, b_) cmp 0;								\
+	if (!test_cond)													\
 		custom_assert_fail_("%s:%u: Assertion %s %s %s (" val_fmt " %s " val_fmt ") failed!\n",	\
 				    __FILE__, __LINE__, #a, #cmp, #b, a_, #cmp, b_);							\
-	cond;																						\
+	test_cond;																						\
 })
 
-#define efl_assert_true(a) efl_assert_(a, true, bool, "%d", ==)
-#define efl_assert_false(a) efl_assert_(a, true, bool, "%d", !=)
+#define efl_assert_true(a)    efl_assert_(a, true, bool, "%d", ==)
+#define efl_assert_false(a)   efl_assert_(a, true, bool, "%d", !=)
 #define efl_assert_fail_if(a) efl_assert_false(a)
 
 #define efl_assert_ptr_eq(a, b)   efl_assert_(a, b, const void *, "%p", ==)
@@ -129,6 +129,8 @@ efl_assert_fail_(const char *fmt, ...)
 #define efl_assert_int_ne(a, b) efl_assert_(a, b, int, "%d", !=)
 #define efl_assert_int_ge(a, b) efl_assert_(a, b, int, "%d", >=)
 #define efl_assert_int_le(a, b) efl_assert_(a, b, int, "%d", <=)
+
+#define efl_assert_uint_eq(a, b) efl_assert_(a, b, uint, "%d", ==)
 
 #define efl_assert_str_eq(a, b) efl_assert_fn_(strcmp, a, b, const char *, "%s", ==)
 #define efl_assert_str_ne(a, b) efl_assert_fn_(strcmp, a, b, const char *, "%s", !=)

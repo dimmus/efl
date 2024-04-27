@@ -208,9 +208,9 @@ TEST(error_test_failures)
 
     efl_assert_str_eq(eina_error_msg_get(ENOMEM),
 #  if defined(_WIN32) || defined(__sun)
-                     "Not enough space");
+                      "Not enough space");
 #  else
-                     "Cannot allocate memory");
+                      "Cannot allocate memory");
 #  endif
 
     TEST_MAGIC_SAFETY("eina_error_find", "safety check failed: msg == NULL");

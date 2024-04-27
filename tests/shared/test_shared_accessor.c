@@ -33,7 +33,8 @@ TEST(accessor_array_simple)
     it = eina_array_accessor_new(ea);
     efl_assert_fail_if(!it);
 
-    efl_assert_fail_if(eina_accessor_data_get(it, 100, (void **)&tmp) != EFL_TRUE);
+    efl_assert_fail_if(eina_accessor_data_get(it, 100, (void **)&tmp) !=
+                       EFL_TRUE);
     efl_assert_fail_if(!tmp);
     efl_assert_fail_if(*tmp != 100);
 
@@ -133,12 +134,16 @@ TEST(accessor_inlist_simple)
                        4,
                        &i);
 
-    efl_assert_fail_if(eina_accessor_data_get(it, 5, (void **)&tmp) != EFL_TRUE);
-    efl_assert_fail_if(eina_accessor_data_get(it, 3, (void **)&tmp) != EFL_TRUE);
+    efl_assert_fail_if(eina_accessor_data_get(it, 5, (void **)&tmp) !=
+                       EFL_TRUE);
+    efl_assert_fail_if(eina_accessor_data_get(it, 3, (void **)&tmp) !=
+                       EFL_TRUE);
     efl_assert_fail_if(tmp->i != 1664);
-    efl_assert_fail_if(eina_accessor_data_get(it, 3, (void **)&tmp) != EFL_TRUE);
+    efl_assert_fail_if(eina_accessor_data_get(it, 3, (void **)&tmp) !=
+                       EFL_TRUE);
     efl_assert_fail_if(tmp->i != 1664);
-    efl_assert_fail_if(eina_accessor_data_get(it, 1, (void **)&tmp) != EFL_TRUE);
+    efl_assert_fail_if(eina_accessor_data_get(it, 1, (void **)&tmp) !=
+                       EFL_TRUE);
     efl_assert_fail_if(tmp->i != 42);
 
     eina_accessor_free(it);

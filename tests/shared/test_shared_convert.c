@@ -167,8 +167,8 @@ _eina_convert_strtod_c_check(const char *str)
             break;
         default:
             efl_assert_fail_if((fpclassify(d1) != FP_ZERO) &&
-                    (fpclassify(d1) != FP_SUBNORMAL) &&
-                    (fpclassify(d1) != FP_NORMAL));
+                               (fpclassify(d1) != FP_SUBNORMAL) &&
+                               (fpclassify(d1) != FP_NORMAL));
             if (!EINA_DBL_EQ(d1, d2) || (e1 != e2))
             {
                 fprintf(stderr, "  FP_NORMAL\n");

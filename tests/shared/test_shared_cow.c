@@ -121,8 +121,9 @@ TEST(cow)
     write->i = 42;
     write->c = 5;
     eina_cow_done(cow, (const Eina_Cow_Data **)&cur, write, EFL_TRUE);
-    efl_assert_fail_if(cur->i != 42 || cur->c != 5 || prev->i != 7 || prev->c != 42 ||
-            default_value.c != 42 || default_value.i != 0);
+    efl_assert_fail_if(cur->i != 42 || cur->c != 5 || prev->i != 7 ||
+                       prev->c != 42 || default_value.c != 42 ||
+                       default_value.i != 0);
 
     efl_assert_fail_if(eina_cow_gc(cow) == EFL_FALSE);
 
