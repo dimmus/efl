@@ -5,7 +5,7 @@ layout: default
 SPDX-License-Identifier: LGPL-2.1-or-later
 ---
 
-# Testing systemd Using Sanitizers
+# Testing EFL Using Sanitizers
 
 To catch the *nastier* kind of bugs, you can run your code with [Address Sanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
 and [Undefined Behavior Sanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html).
