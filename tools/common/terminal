@@ -1,0 +1,54 @@
+term_color_normal='\e[0m'
+term_color_error='\e[31;1m'
+term_color_warning='\e[33;1m'
+term_color_status=
+term_color_header='\e[35;1m'
+term_black_bg='\e[48;5;0m'
+
+echo_header() { 
+	echo ; echo "${term_black_bg}${term_color_header}$*${term_color_normal}"
+}
+
+echo_status() {
+	echo "  ${term_color_status}$*${term_color_normal}"
+}
+
+echo_warning() {
+	echo "  ${term_color_warning}$*${term_color_normal}"
+}
+
+echo_error() {
+	echo "  ${term_color_error}$*${term_color_normal}"
+}
+
+# echo_pkg_deny_terminal() {
+# 	local buildend="`date '+%s'`"
+# 	date --date=@$((buildend - buildstart)) --utc "+${term_color_error}+%H:%M:%S Package $1-$2 $3${term_color_normal}"
+# }
+
+# echo_pkg_start_terminal() {
+# 	buildstart="`date '+%s'`"
+# 	date "+%n${term_color_header}%T Building $1-$2/$3 ($4)$(fmt_time $6)${term_color_normal}"
+# }
+
+# echo_pkg_finish_terminal() {
+# 	local buildend="`date '+%s'`"
+# 	date --date=@$((buildend - buildstart)) --utc "+  ${term_color_header}+%H:%M:%S Finished building $2/$3${term_color_normal}"
+# }
+
+# echo_pkg_abort_terminal() {
+# 	local buildend="`date '+%s'`"
+# 	date --date=@$((buildend - buildstart)) --utc "+  ${term_color_error}+%H:%M:%S Aborted building $2/$3${term_color_normal}"
+# }
+
+# eprint()
+# {
+#     ERR="\033[1;31m"    # 31 - red    : "\e[1;31m$1\e[0m"
+#     MSG="\033[0;32m"    # 32 - green  : "\e[1;32m$1\e[0m"
+#     WRN="\033[1;33m"    # 33 - yellow : "\e[1;33m$1\e[0m"
+#     TXT="\033[0;34m"    # 34 - blue   : "\e[1;34m$1\e[0m"
+#     HDR="\033[1;35m"    # 35 - purple : "\e[1;35m$1\e[0m"
+#     NC="\033[0m"        # No Color    : "\e[0m$1\e[0m"
+#     # Display coloured text setting its background color to black
+#     printf "\e[48;5;0m${!1}\n${2}${NC}\n" || exit
+# }
