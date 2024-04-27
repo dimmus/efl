@@ -10,8 +10,6 @@ root = true
 [*]
 charset = utf-8
 end_of_line = lf
-indent_size = 2
-indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
@@ -28,10 +26,15 @@ max_line_length = 109
 [*.sh]
 indent_style = space
 indent_size = 4
+max_line_length = 80
 
 [meson.build]
 indent_style = space
-indent_size = 4
+indent_size = 2
+
+[meson_options.txt]
+indent_style = space
+indent_size = 8
 
 [docs/**/*.css]
 indent_style = space
@@ -47,3 +50,8 @@ trim_trailing_whitespace = false
 
 [*.py]
 indent_size = 4
+
+[*.xml]
+indent_style = space
+indent_size = 2
+tab_width = 8
