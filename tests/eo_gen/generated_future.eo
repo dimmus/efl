@@ -1,7 +1,0 @@
-class Generated_Future extends Efl.Object {
-   [[Docs for class Generated_Future. @since 1.66]]
-   methods {
-   }
-}
-
-
