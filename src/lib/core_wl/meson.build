@@ -5,7 +5,7 @@ subdir('protocols')
 dep_core_wl     = [ core, core_input ]
 dep_core_wl_pub = [ core, shared ]
 dep_core_wl_ext = [ dependency('wayland-client'), dependency('wayland-server'), dependency('xkbcommon'),
-                    wayland_protocol, libdrm, dl, m]
+                    wayland_protocol, libdrm, dep_libdl, dep_libm]
 
 inc_core_wl = include_directories('.')
 

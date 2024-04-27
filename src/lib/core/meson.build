@@ -2,7 +2,7 @@ dir_current_source = meson.current_source_dir()
 dir_current_build  = meson.current_build_dir()
 
 dep_core_pub = [ shared, eo, eo_interfaces ]
-dep_core_ext = [ intl, m ]
+dep_core_ext = [ intl, dep_libm ]
 # dep_ecore_ext = [intl, m, buildsystem]
 
 inc_core = include_directories('.')

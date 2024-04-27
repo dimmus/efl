@@ -1,4 +1,4 @@
-dep_eo_interfaces     = [ m ]
+dep_eo_interfaces     = [ dep_libm ]
 dep_eo_interfaces_pub = [ eo ]
 dep_eo_interfaces_ext = []
 src_eo_interfaces     = []

@@ -1,6 +1,6 @@
-dep_shared += [ m, rt, dl, thread_dep ]
+dep_shared += [ dep_libm, dep_librt, dep_libdl, dep_threads ]
 
-inc_shared = [include_directories('.')]
+inc_shared = [ include_directories('.') ]
 
 subdir('checksum')
 subdir('data')
