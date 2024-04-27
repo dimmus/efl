@@ -57,7 +57,7 @@ tests += [
 			'shared/test_shared_ustr.c',
 			'shared/test_shared_ustringshare.c',
 			'shared/test_shared_util.c',
-			# 'shared/test_shared_value.c',
+			# 'shared/test_shared_value.c', # bug here
 			'shared/test_shared_vector.c',
 			'shared/test_shared_vpath.c',
 			'shared/test_shared_xattr.c',
