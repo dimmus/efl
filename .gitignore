@@ -6,26 +6,6 @@
 # NOTE! Please use 'git ls-files -i --exclude-standard'
 # command after changing this file, to see if there are
 # any tracked files which get ignored after the change.
-#
-checks.json
-*.edj
-*~
-*swp
-*swo
-*.gmo
-.deps
-.libs
-*.trs
-*.log
-*.core
-*.exe
-*.o
-*.lo
-*.a
-*.la
-*.gcno
-*.gcda
-*.dirstamp
 
 *.eo.c
 *.eo.h
@@ -39,12 +19,10 @@ checks.json
 *.eot.cs
 *.eo.lua
 
-/src/bin/efl_wl/efl_wl_test
-/src/bin/efl_wl/efl_wl_test_stack
-
 *-protocol.h
 *-protocol.c
 
-/build/*
-.vscode/
+/build*
+.vscode*
+checks.json
 
