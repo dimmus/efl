@@ -1,5 +1,5 @@
 dep_eo_pub = [ shared ]
-dep_eo_ext = [ valgrind, dl, execinfo ]
+dep_eo_ext = [ valgrind, dep_libdl, execinfo ]
 
 inc_eo = include_directories('.')
 
