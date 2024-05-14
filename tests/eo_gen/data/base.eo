@@ -1,0 +1,19 @@
+abstract Base {
+   [[Docs for abstract class Base. @since 1.66]]
+   methods {
+      @property z {
+           values {
+                a: int;
+                b: char;
+                c: float;
+           }
+      }
+      constructor @pure_virtual {
+      }
+      destructor {
+      }
+   }
+   constructors {
+      .constructor;
+   }
+}

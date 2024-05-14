@@ -1,0 +1,20 @@
+class Object_Impl_Add extends Base {
+   data: Object_Impl_Data;
+
+   methods {
+      @property c @beta {
+         set {
+         }
+         get {
+            /* set as virtual pure - no implementation expected */
+         }
+         values {
+            value: list<string> @move;
+         }
+      }
+   }
+
+   implements {
+      Base.constructor;
+   }
+}

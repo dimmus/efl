@@ -1,0 +1,21 @@
+class Complex_Type {
+   methods {
+      @property a @beta {
+         set {
+            return: list<array<strbuf @move> > @move;
+         }
+         get {
+         }
+         values {
+            value: list<string> @move;
+         }
+      }
+      foo @beta {
+         params {
+            buf: mstring @move;
+            sl: slice<ubyte>;
+         }
+         return: list<stringshare> @move; [[comment for method return]]
+      }
+   }
+}

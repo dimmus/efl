@@ -1,0 +1,74 @@
+abstract Object_Impl extends Base {
+   [[This Object Impl
+     @since 1.66
+   ]]
+   methods {
+      @property a @beta {
+         set {
+            values {
+                value: const(list<string>);
+            }
+            return: bool (false);
+         }
+         get {
+         }
+         keys {
+            part: string;
+         }
+         values {
+            value: list<string> @move;
+         }
+      }
+      @property b {
+         [[Docs for property b. @since 1.66]]
+         set {
+         }
+         get @pure_virtual {
+            /* set as virtual pure - no implementation expected */
+         }
+         values {
+            value: iterator<string> @move;
+         }
+      }
+      constructor_1 {
+         [[Docs for method constructor_1. @since 1.66]]
+         params {
+            @in a: int;
+            @in b: char;
+         }
+      }
+      constructor_2 {
+         [[Docs for method constructor_2. @since 1.66]]
+      }
+      foo1 {
+         [[comment foo. @since 1.66]]
+         params {
+            @in a: int; [[a]]
+            @inout b: char;
+            @out c: double;
+         }
+         return: mstring (null); [[comment for method return]]
+      }
+      foo2 @const {
+         [[comment foo. @since 1.66]]
+         params {
+            @in a: int;
+            @in b: string;
+         }
+      }
+      pure_foo3 @pure_virtual {
+         [[Docs for method pure_foo3. @since 1.66]]
+         /* set as virtual pure - no implementation expected */
+      }
+   }
+   implements {
+      class.constructor;
+      class.destructor;
+      Base.constructor;
+      Base.destructor;
+   }
+   constructors {
+      .constructor_1;
+      .constructor_2;
+   }
+}

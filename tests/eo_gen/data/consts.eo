@@ -1,0 +1,14 @@
+class Consts {
+   [[Docs for class Consts. @since 1.66]]
+   methods {
+      foo @const {
+         [[comment foo]]
+         params {
+            @in a: int; [[a]]
+            @inout b: char;
+            @out c: double;
+         }
+         return: int;
+      }
+   }
+}

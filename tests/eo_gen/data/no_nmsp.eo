@@ -1,0 +1,7 @@
+mixin no_nmsp {
+   [[Docs for mixin no_nmsp . @since 1.66]]
+   methods {
+      foo {
+      }
+   }
+}

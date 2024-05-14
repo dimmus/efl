@@ -1,0 +1,10 @@
+class Aux_C {
+    [[Docs for class Aux_C. @since 1.66]]
+    methods {
+        foo {}
+        bar {}
+    }
+    events {
+        test: void;
+    }
+}

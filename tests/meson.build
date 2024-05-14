@@ -38,10 +38,10 @@ endif
 tests = []
 
 foreach dir : dir_test
-	package_c_args = [
-		'-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, dir)+'"',
-		'-DNEED_RUN_IN_TREE=1',
-	]
+	# package_c_args = [
+	# 	'-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, dir)+'"',
+	# 	'-DNEED_RUN_IN_TREE=1',
+	# ]
 	subdir(dir)
 endforeach
 
@@ -129,10 +129,9 @@ foreach t : tests
 		t_sources,
 		c_args: [
 			'-DTEST_NAME="' + t_name + '"',
-			'-DTESTS_WD="`pwd`"',
-			'-DTESTS_BUILD_DIR="'+meson.current_build_dir()+'/'+t_name + '"',
-        	'-DTESTS_SRC_DIR="'+meson.current_source_dir()+'/'+t_name + '"',
-		],
+			'-DTESTS_BUILD_DIR="' + meson.current_build_dir()  + '/' + t.get('name') + '"',
+        	'-DTESTS_SRC_DIR="'   + meson.current_source_dir() + '/' + t.get('name') + '"',
+		] + t.get('c_args', []),
 		build_by_default: true,
 		include_directories: [ include_directories('.'), inc_config, t.get('inc_dirs') ],
 		dependencies: t_deps,
