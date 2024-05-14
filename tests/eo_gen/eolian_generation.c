@@ -124,7 +124,7 @@ TEST(eolian_dev_impl_code)
     efl_assert_fail_if(0 != _eolian_gen_execute(TESTS_SRC_DIR "/data/object_impl_add.eo",
                                      "-gi",
                                      output_filepath));
-    testlog("[%s]\n", output_filepath);
+    /* testlog("[%s]\n", output_filepath); */
     efl_assert_fail_if(!_files_compare(TESTS_SRC_DIR "/data/object_impl_add_ref.c",
                             output_filepath,
                             "c"));

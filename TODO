@@ -11,7 +11,8 @@ Bugfixes:
   - lib/shared/data/eina_inline_value.x:497:26: warning: array subscript 'const char * const[0]' is partly outside array bounds of 'char[1]' [-Warray-bounds=]
 
 # tests
-  - solve bug in type conversion tests in 'shared/test_shared_value.c',
+  - solve bug in 'shared/test_shared_value.c',
+  - solve bug in 'eo_gen/eolian_generation.c'
 
 Tasks:
 =========
