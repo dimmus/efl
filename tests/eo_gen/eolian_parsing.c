@@ -1521,10 +1521,10 @@ TEST(eolian_parts)
         const Eolian_Class         *klass;
         char                        pattern[24];
 
-        /* testlog(pattern, "part%d", i + 1); */
+        sprintf(pattern, "part%d", i + 1);
         efl_assert_str_eq(pattern, eolian_part_name_get(part));
 
-        /* testlog(pattern, "Part %d", i + 1); */
+        sprintf(pattern, "Part %d", i + 1);
         efl_assert_fail_if(!(doc = eolian_part_documentation_get(part)));
         efl_assert_str_eq(pattern, eolian_documentation_summary_get(doc));
 
