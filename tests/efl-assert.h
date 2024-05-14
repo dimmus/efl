@@ -56,7 +56,7 @@
 
 /**
  * NaN comes out as is
- *This function is not intended for hiding NaN.
+ * This function is not intended for hiding NaN.
  */
 EFL_UNUSED static float
 ensure_unit_range(float v)
@@ -115,22 +115,23 @@ efl_assert_fail_(const char *fmt, ...)
 	test_cond;																						\
 })
 
-#define efl_assert_true(a)    efl_assert_(a, true, bool, "%d", ==)
-#define efl_assert_false(a)   efl_assert_(a, true, bool, "%d", !=)
-#define efl_assert_fail_if(a) efl_assert_false(a)
 
-#define efl_assert_ptr_eq(a, b)   efl_assert_(a, b, const void *, "%p", ==)
-#define efl_assert_ptr_ne(a, b)   efl_assert_(a, b, const void *, "%p", !=)
-#define efl_assert_ptr_is_null(a) efl_assert_(a, NULL, const void *, "%p", ==)
+#define efl_assert_true(a)    		efl_assert_(a, true, bool, "%d", ==)
+#define efl_assert_false(a)   		efl_assert_(a, true, bool, "%d", !=)
+#define efl_assert_fail_if(a) 		efl_assert_false(a)
 
-#define efl_assert_double_eq(a, b) efl_assert_(a, b, double, "%.10g", ==)
+#define efl_assert_ptr_eq(a, b)   	efl_assert_(a, b, const void *, "%p", ==)
+#define efl_assert_ptr_ne(a, b)   	efl_assert_(a, b, const void *, "%p", !=)
+#define efl_assert_ptr_is_null(a) 	efl_assert_(a, NULL, const void *, "%p", ==)
 
-#define efl_assert_int_eq(a, b) efl_assert_(a, b, int, "%d", ==)
-#define efl_assert_int_ne(a, b) efl_assert_(a, b, int, "%d", !=)
-#define efl_assert_int_ge(a, b) efl_assert_(a, b, int, "%d", >=)
-#define efl_assert_int_le(a, b) efl_assert_(a, b, int, "%d", <=)
+#define efl_assert_double_eq(a, b) 	efl_assert_(a, b, double, "%.10g", ==)
 
-#define efl_assert_uint_eq(a, b) efl_assert_(a, b, uint, "%d", ==)
+#define efl_assert_int_eq(a, b) 	efl_assert_(a, b, int, "%d", ==)
+#define efl_assert_int_ne(a, b) 	efl_assert_(a, b, int, "%d", !=)
+#define efl_assert_int_ge(a, b) 	efl_assert_(a, b, int, "%d", >=)
+#define efl_assert_int_le(a, b) 	efl_assert_(a, b, int, "%d", <=)
 
-#define efl_assert_str_eq(a, b) efl_assert_fn_(strcmp, a, b, const char *, "%s", ==)
-#define efl_assert_str_ne(a, b) efl_assert_fn_(strcmp, a, b, const char *, "%s", !=)
+#define efl_assert_uint_eq(a, b) 	efl_assert_(a, b, uint, "%d", ==)
+
+#define efl_assert_str_eq(a, b) 	efl_assert_fn_(strcmp, a, b, const char *, "%s", ==)
+#define efl_assert_str_ne(a, b) 	efl_assert_fn_(strcmp, a, b, const char *, "%s", !=)

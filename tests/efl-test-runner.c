@@ -299,17 +299,9 @@ run_case(struct efl_testsuite_data   *suite_data,
             iteration_nr);
 
     if (suite_data->type == TEST_TYPE_PLUGIN)
-    {
-        ret = run_test(suite_data,
-                       fixture_nr,
-                       t,
-                       suite_data->compositor,
-                       iteration);
-    }
+        ret = run_test(suite_data, fixture_nr, t, NULL, iteration);
     else
-    {
         ret = run_test(suite_data, fixture_nr, t, (void *)test_data, iteration);
-    }
 
     switch (ret)
     {

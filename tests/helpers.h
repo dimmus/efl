@@ -178,23 +178,11 @@ do { \
 
 /** Ensure argument is of given type */
 #ifndef TYPEVERIFY
-#define TYPEVERIFY(type, arg) ({		\
+#define TYPEVERIFY(type, arg) ({	\
 	typeof(arg) tmp___ = (arg);		\
 	(void)((type)0 == tmp___);		\
 	tmp___; })
 #endif
-
-/** Private symbol export for tests
- *
- * Symbols tagged with this are private libweston functions that are exported
- * only for the test suite to allow unit testing. Nothing else internal or
- * external to libweston is allowed to use these exports.
- *
- * Therefore, the ABI exported with this tag is completely unversioned, and
- * is allowed to break at any time without any indication or version bump.
- * This may happen in all git branches, including stable release branches.
- */
-#define WESTON_EXPORT_FOR_TESTS __attribute__ ((visibility("default")))
 
 static inline uint64_t
 u64_from_u32s(uint32_t hi, uint32_t lo)
@@ -226,4 +214,4 @@ do {                        \
 }
 #endif
 
-#endif /* WESTON_HELPERS_H */
+#endif

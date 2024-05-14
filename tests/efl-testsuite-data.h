@@ -31,9 +31,7 @@
 #include <semaphore.h>
 #include <stdarg.h>
 
-#include <bits/types.h>
-
-typedef __uint8_t uint8_t;
+typedef __uint8_t  uint8_t;
 typedef __uint16_t uint16_t;
 typedef __uint32_t uint32_t;
 typedef __uint64_t uint64_t;
@@ -52,14 +50,11 @@ enum test_result_code {
 	RESULT_HARD_ERROR = 99,
 };
 
-struct weston_test;
-struct weston_compositor;
-
-/** Weston test types
+/** EFL test types
  *
- * \sa weston_test_harness_execute_standalone
- * weston_test_harness_execute_as_plugin
- * weston_test_harness_execute_as_client
+ * \sa efl_test_harness_execute_standalone
+ * efl_test_harness_execute_as_plugin
+ * efl_test_harness_execute_as_client
  *
  * \ingroup testharness_private
  */
@@ -122,7 +117,7 @@ struct efl_test_pending_breakpoint {
  */
 struct efl_test_active_breakpoint {
 	/** libweston compositor instance in use */
-	struct weston_compositor *compositor;
+	/* struct weston_compositor *compositor; */
 	/** type-specific pointer to resource which triggered this breakpoint */
 	void *resource;
 	/** on release, reinsert the template to trigger next time */
@@ -175,7 +170,6 @@ struct efl_testsuite_data {
 	unsigned tests_count;
 	int case_index;
 	enum test_type type;
-	struct weston_compositor *compositor;
 
 	/* client thread control */
 	int thread_event_pipe;
