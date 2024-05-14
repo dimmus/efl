@@ -31,6 +31,7 @@ ecore_wl2_*                  ecore_wl_
 ck_assert                    efl_assert_true
 ck_assert_str_eq             efl_assert_str_eq
 ck_assert_int_ne             efl_assert_int_ne
+ck_assert_int_eq             efl_assert_int_eq
 ck_assert_ptr_ne             efl_assert_ptr_ne
 ck_assert_ptr_eq             efl_assert_ptr_eq
 ck_assert_uint_eq            efl_assert_uint_eq
