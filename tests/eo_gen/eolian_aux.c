@@ -9,7 +9,6 @@
 static enum test_result_code
 fixture_setup(struct efl_test_harness *harness)
 {
-    eina_init();
     eolian_init();
 
     return efl_test_harness_execute_standalone(harness);
