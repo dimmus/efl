@@ -54,7 +54,7 @@ test_source = files(
 	'test_shared_ustr.c',
 	'test_shared_ustringshare.c',
 	'test_shared_util.c',
-	# 'test_shared_value.c', # bug here
+	# 'test_shared_value.c', # TODO: bug here
 	'test_shared_vector.c',
 	'test_shared_vpath.c',
 	'test_shared_xattr.c',
