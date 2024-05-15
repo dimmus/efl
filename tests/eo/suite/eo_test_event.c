@@ -1,0 +1,240 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
+#include <stdio.h>
+
+#include <Efl_Eo.h>
+
+#include "eo_suite.h"
+#include "eo_test_class_simple.h"
+
+//Class definition with one event
+
+EO_API_WEAK const Efl_Class *efl_test_event_class_get(void) EINA_CONST;
+
+EO_API_WEAK extern const Efl_Event_Description _EFL_TEST_EVENT_EVENT_TESTER;
+EO_API_WEAK extern const Efl_Event_Description _EFL_TEST_EVENT_EVENT_TESTER_SUBSCRIBE;
+EO_API_WEAK extern const Efl_Event_Description _EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST;
+
+#define EFL_TEST_EVENT_EVENT_TESTER (&(_EFL_TEST_EVENT_EVENT_TESTER))
+#define EFL_TEST_EVENT_EVENT_TESTER_SUBSCRIBE (&(_EFL_TEST_EVENT_EVENT_TESTER_SUBSCRIBE))
+#define EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST (&(_EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST))
+
+typedef struct {
+   Efl_Bool event1;
+   Efl_Bool event2;
+   Efl_Bool event3;
+} Test_Data;
+
+typedef struct {
+   int not_empty;
+} Efl_Test_Event_Data;
+
+static void
+_cb3(void *data, const Efl_Event *event EFL_UNUSED)
+{
+   Test_Data *d = data;
+
+   d->event3 = EFL_TRUE;
+}
+
+static void
+_cb2(void *data, const Efl_Event *event EFL_UNUSED)
+{
+   Test_Data *d = data;
+
+   d->event2 = EFL_TRUE;
+}
+
+static void
+_cb1(void *data, const Efl_Event *event)
+{
+   Test_Data *d = data;
+
+   d->event1 = EFL_TRUE;
+
+   efl_event_callback_add(event->object, EFL_TEST_EVENT_EVENT_TESTER, _cb3, data);
+}
+
+TEST(eo_event)
+{
+   Test_Data data;
+   Eo *obj;
+
+   obj = efl_add_ref(efl_test_event_class_get(), NULL);
+   efl_event_callback_priority_add(obj, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, _cb2, &data);
+   efl_event_callback_priority_add(obj, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, _cb1, &data);
+
+   memset(&data, 0, sizeof(Test_Data));
+   efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
+   efl_assert_int_ne(data.event1, 0);
+   efl_assert_int_ne(data.event2, 0);
+   efl_assert_int_eq(data.event3, 0);
+
+   memset(&data, 0, sizeof(Test_Data));
+   efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
+   efl_assert_int_ne(data.event1, 0);
+   efl_assert_int_ne(data.event2, 0);
+   efl_assert_int_ne(data.event3, 0);
+
+}
+
+static void
+_cb_rec_3(void *data EFL_UNUSED, const Efl_Event *event)
+{
+   Test_Data *d = event->info;
+   efl_assert_int_eq(d->event3, 0);
+   d->event3 = EFL_TRUE;
+}
+
+static void
+_cb_rec_2(void *data EFL_UNUSED, const Efl_Event *event)
+{
+   Test_Data *d = event->info;
+   efl_assert_int_eq(d->event2, 0);
+   d->event2 = EFL_TRUE;
+}
+
+static void
+_cb_rec_1(void *data, const Efl_Event *event)
+{
+   Test_Data *d = event->info;
+
+   if (event->info)
+     {
+        efl_assert_int_eq(d->event1, 0);
+        d->event1 = EFL_TRUE;
+     }
+   else
+     {
+        efl_event_callback_add(event->object , EFL_TEST_EVENT_EVENT_TESTER, _cb_rec_2, NULL);
+        efl_event_callback_add(event->object , EFL_TEST_EVENT_EVENT_TESTER, _cb_rec_3, NULL);
+        efl_event_callback_call(event->object, EFL_TEST_EVENT_EVENT_TESTER, data);
+     }
+}
+
+TEST(eo_event_call_in_call)
+{
+   Test_Data data;
+   Eo *obj;
+
+   obj = efl_add_ref(efl_test_event_class_get(), NULL);
+   efl_event_callback_priority_add(obj, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, _cb_rec_1, &data);
+
+   memset(&data, 0, sizeof(Test_Data));
+   efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
+   efl_assert_int_ne(data.event1, 0);
+   efl_assert_int_ne(data.event2, 0);
+   efl_assert_int_ne(data.event3, 0);
+
+}
+
+static Efl_Bool emitted = 0;
+
+static void
+_generation_clamp_step3(void *data EFL_UNUSED, const Efl_Event *e EFL_UNUSED)
+{
+   emitted = 1;
+}
+
+static void
+_generation_clamp_subscribe(void *data EFL_UNUSED, const Efl_Event *e)
+{
+   //generation is 2
+   efl_event_callback_add(e->object, EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST, _generation_clamp_step3, NULL);
+}
+
+static void
+_generation_clamp_step1(void *data EFL_UNUSED, const Efl_Event *e)
+{
+   //generation is 1
+   efl_event_callback_call(e->object, EFL_TEST_EVENT_EVENT_TESTER_SUBSCRIBE, NULL);
+
+   efl_event_callback_call(e->object, EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST, NULL);
+   efl_event_callback_call(e->object, EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST, NULL);
+}
+
+TEST(eo_event_generation_bug)
+{
+
+   /*
+    * The idea is:
+    *
+    * #1 a event gets emitted (generation is 1)
+    * #2 a event gets emitted as a result of #1 (generation is 2)
+    * in a callback from #2 a new subscription for E is added (S) (generation of it is 2)
+    * in a callback of #1 event E is emitted (generation is 2)
+    * S now MUST get executed (Here is the bug generation of S is 2 and of emission is 2, event gets skipped)
+    * subscription adds a callback to a event
+    */
+
+   Eo *obj;
+
+   obj = efl_add_ref(efl_test_event_class_get(), NULL);
+   emitted = 0;
+   efl_event_callback_priority_add(obj, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, _generation_clamp_step1, NULL);
+   efl_event_callback_priority_add(obj, EFL_TEST_EVENT_EVENT_TESTER_SUBSCRIBE, EFL_CALLBACK_PRIORITY_BEFORE, _generation_clamp_subscribe, NULL);
+   efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
+
+   efl_assert_int_ne(emitted, 0);
+
+}
+
+static void
+_inc_when_called(void *data, const Efl_Event *ev EFL_UNUSED)
+{
+   int *called = (int*)data;
+   *called += 1;
+}
+
+TEST(eo_event_fowarder_test)
+{
+   Eo *obj1, *obj2;
+   int called = 0;
+
+   obj1 = efl_add_ref(efl_test_event_class_get(), NULL);
+   obj2 = efl_add_ref(efl_test_event_class_get(), NULL);
+   efl_event_callback_add(obj2, EFL_TEST_EVENT_EVENT_TESTER, _inc_when_called, &called);
+
+   efl_event_callback_forwarder_priority_add(obj1, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, obj2);
+   efl_event_callback_call(obj1, EFL_TEST_EVENT_EVENT_TESTER, NULL);
+   efl_assert_int_eq(called, 1);
+   called = 0;
+
+   //call it a second time with another forwarder
+   efl_event_callback_forwarder_priority_add(obj1, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, obj2);
+   efl_event_callback_call(obj1, EFL_TEST_EVENT_EVENT_TESTER, NULL);
+   efl_assert_int_eq(called, 1); //we still should only emit it once
+   called = 0;
+
+   //delete it, nothing should happen now
+   efl_event_callback_forwarder_del(obj1, EFL_TEST_EVENT_EVENT_TESTER, obj2);
+   efl_event_callback_call(obj1, EFL_TEST_EVENT_EVENT_TESTER, NULL);
+   efl_assert_int_eq(called, 0);
+
+}
+
+//class implementation
+
+EO_API_WEAK const Efl_Event_Description _EFL_TEST_EVENT_EVENT_TESTER =
+   EFL_EVENT_DESCRIPTION("tester");
+
+EO_API_WEAK const Efl_Event_Description _EFL_TEST_EVENT_EVENT_TESTER_SUBSCRIBE =
+   EFL_EVENT_DESCRIPTION("tester");
+
+EO_API_WEAK const Efl_Event_Description _EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST =
+   EFL_EVENT_DESCRIPTION("tester");
+
+
+static const Efl_Class_Description _efl_test_event_class_desc = {
+   EO_VERSION,
+   "Efl_Test_Event",
+   EFL_CLASS_TYPE_REGULAR,
+   sizeof(Efl_Test_Event_Data),
+   NULL,
+   NULL,
+   NULL
+};
+
+EFL_DEFINE_CLASS(efl_test_event_class_get, &_efl_test_event_class_desc, EFL_OBJECT_CLASS, NULL);

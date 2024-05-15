@@ -16,8 +16,10 @@
 #include "helpers.h"
 #include "string-helpers.h"
 #include "zalloc.h"
-#include "efl-assert.h"
 
+#include "Efl_Shared.h"
+
+#include "efl-assert.h"
 #include "efl-testsuite-data.h"
 
 #ifdef NDEBUG

@@ -57,13 +57,13 @@
 
 extern const struct efl_test_entry __start_test_section, __stop_test_section;
 
-struct weston_test_run_info
+struct _test_run_info
 {
     char name[512];
     int  fixture_nr;
 };
 
-static const struct weston_test_run_info *test_run_info_;
+static const struct _test_run_info *test_run_info_;
 
 /** Get the test name string with counter
  *
@@ -158,7 +158,7 @@ run_test(struct efl_testsuite_data   *suite_data,
          void                        *data,
          int                          iteration)
 {
-    struct weston_test_run_info info;
+    struct _test_run_info info;
 
     if (data)
     {
@@ -689,7 +689,7 @@ main(int argc, char *argv[])
     int                               fi;
     int                               fi_end;
 
- /* This is horrific, but it gives us working leak checking. If we
+    /* This is horrific, but it gives us working leak checking. If we
 	 * actually unload llvmpipe, then we also unload LLVM, and some global
 	 * setup it's done - which llvmpipe can't tear down because the actual
 	 * client might be using LLVM instead.

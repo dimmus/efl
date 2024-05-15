@@ -1,0 +1,53 @@
+#include "eo_error_msgs.h"
+
+void
+eo_test_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EFL_UNUSED)
+{
+   struct log_ctx *myctx = data;
+
+   if (level > _EINA_LOG_MAX)
+      return;
+
+#ifdef SHOW_LOG
+   eina_log_print_cb_stderr(d, level, file, fnc, line, fmt, NULL, args);
+#else
+   (void)d;
+   (void)file;
+   (void)line;
+#endif
+
+   efl_assert_int_eq(level, myctx->expected_level);
+   if (myctx->msg)
+      efl_assert_str_eq(myctx->msg, fmt);
+   efl_assert_str_eq(myctx->fnc, fnc);
+   myctx->did = EFL_TRUE;
+}
+
+void
+eo_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EFL_UNUSED)
+{
+   struct log_ctx *myctx = data;
+   va_list cp_args;
+   const char *str;
+
+   if (level > _EINA_LOG_MAX)
+     return;
+
+#ifdef SHOW_LOG
+   eina_log_print_cb_stderr(d, level, file, fnc, line, fmt, NULL, args);
+#else
+   (void)d;
+   (void)file;
+   (void)line;
+#endif
+
+   va_copy(cp_args, args);
+   str = va_arg(cp_args, const char *);
+   va_end(cp_args);
+
+   efl_assert_int_eq(level, myctx->expected_level);
+   efl_assert_str_eq(fmt, "%s");
+   efl_assert_str_eq(myctx->msg, str);
+   efl_assert_str_eq(myctx->fnc, fnc);
+   myctx->did = EFL_TRUE;
+}
