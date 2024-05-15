@@ -2,30 +2,108 @@
 EFL 2.0.99
 ==========
 
-Changes since 1.26.0:
----------------------
+Changes since 1.26.3 (2023-12-23):
+---------------------------------
 
 Features:
-
-   * 
+   * new eina APIS (releative path and sha1)
+   * add URI List to elm cnp
+   * add JXL Evas loader/saver
+   * add Eet fs sync call to force writes to disk
+   * add support for LibreSSL 3.5.x
+   * add QOI Evas image loader/saver
 
 Fixes:
+   * Lots of minor bug fixes (too many to summarize here - see git log)
+   * Support ecore exe terminate with parent on windows
+   * Removed GNUTLS support now openssl3 is out
+   * Elementary icons - policy change to use theme icons for std icons
+   * Elementary entry - allow past into password entries
 
-   * 
+
+Changes since 1.26.2 (2022-09-16):
+---------------------------------
+
+Fixes:
+   * fix theme issues
+   * fix edje calc internal return values in some cases
+   * fix ecore-x netwm moveresize request handling
+   * fix ecore-x xkb handling to not leak
+   * fix new xkb event handling
+   * fix evas smart object to null out fields for safety
+   * fix elm null cnp object handling to not crash in odd cases
+   * fix ecore evas x11 dnd handling to not null out xdnd props
+   * fix data checkme file so relocation at runtime works again
+   * fix eina bt output to always have spaces between fields
+   * fix png loader on arm to not have rgb values when a is 0
+   * fix textgrid to guard against null glyphs
+   * fix ecore-x vblank to use current time not vlbank time
+   * fix emile to handle invalid compress types more gracefully
+   * fix compile warnings
+   * fix evas psd loader crash
+   * fix osx sample compile conf script options
+   * fix wl vsync timer to use current time not vblank time
+   * work around xwayland issue where synthetic events are not sent
 
 
-Changes since 1.25.0:
----------------------
+Changes since 1.26.1 (2022-02-07) :
+----------------------------------
+
+Fixes:
+   * Fix crash when doing wierd combinations of eet_write and eet_read
+   * fix elementary tests to pass
+   * fix portability of putenv/setenv for niche OS's
+   * fix ecore input to build on BSD
+   * fix svg decoding crashes for vector decode
+   * fix theme - ibar label overlay
+   * fix theme - pointer scaling and sizing
+   * fix ecore x - ensure pointer on screen when setting bounds
+
+
+Changes since 1.26.0 (2022-01-03) :
+----------------------------------
+
+Fixes:
+   * elm theme - win - fix mystery off-by-1 resize of content
+   * elm theme - fix mis-named colorclass for inwin bg
+   * edje entry - fix past to use shft+ins for paste and no ctl
+   * edje entry - complete key handling for cut (shft+del)
+   * elm theme - fix placement of procstats and volume so they dont fight
+
+
+Changes since 1.25.1 (2021-12-26) :
+----------------------------------
 
 Features:
-
-   * 
+   * Default theme is now the flat theme
+   * New color palette files and API
 
 Fixes:
+   * lots of minor bug fixes (too many to summarize here - see git log)
+   * evas GL dithers by default for better quality (but it's a bit slower)
+   * to disable: export EVAS_GL_RENDER_DISABLE_DITHER=1
+   * evas HEIF format loaded (need to remove from disabled set)
+   * improved speed of Entry appending
+   * improved performance by not rendering invisible windows
 
-   * 
 
-Changes since 1.24.0:
+Changes since 1.25.0 (2020-09-28) :
+----------------------------------
+
+Fixes:
+   * evas: sw font draw - protect against null pointer access
+   * efreet - windows - still call stat but skip lstat/readlink
+   * efreetd - cache - add more statinfo work around 0 mtime distros
+   * edje - fix edje_cc mis-re-iding images in image sets
+   * evas - render - dont crash is private data is null
+   * eina vpath - fix windows ~username handling to only error when used
+   * efl ui image - fix scal to fill - broken with non-rect src images
+   * edje - calce - really respect max image size for img sets
+   * evas - fix deadlock with sw async rendering calling cbs in post flush
+   * ecore - don't do anything with heap between fork and exec
+
+
+Changes since 1.24.0 :
 ---------------------
 
 Features:
