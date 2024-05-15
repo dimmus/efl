@@ -13,6 +13,10 @@ Bugfixes:
 # tests
   - solve bug in 'shared/test_shared_value.c',
   - solve bug in 'eo_gen/eolian_generation.c'
+  - solve bug in 'eo/suite/' with '-DEO_DEBUG=1' (may be in pair with '-D_EO_ADD_FALLBACK_FORCE=1' as well, untested)
+  - solve bug in 'eo/suite/eo_test_init': wtf '1' i get at the begining of the string before 'ok'
+    stdout: 48: UNKNOWN: 1ok 46  eo_test_init_shutdown/1
+    ERROR: Unknown TAP output lines for a supported TAP version.
 
 Tasks:
 =========
