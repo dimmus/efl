@@ -13,7 +13,7 @@ SPDX-License-Identifier: LGPL-2.1-or-later
 - [Ways to contribute](#ways-to-contribute)
 - [Quick start for developer](#quick-start-for-developer)
 - [Commit Message rules](#commit-message-rules)
-- [Filing Issues](#filing-issues)
+- [Filing Issues or Bug Reports](#filing-issues-or-bug-reports)
 - [Posting Pull Requests](#posting-pull-requests)
 - [Reviewing Pull Requests](#reviewing-pull-requests)
 - [Backward Compatibility And External Dependencies](#backward-compatibility-and-external-dependencies)
@@ -144,17 +144,22 @@ See [contributing page](https://www.enlightenment.org/contrib/start) on official
   important, since "git show" will show the patch inlined with the commit
   message.
 
-## Filing Issues
+## Filing Issues or Bug Reports
 
-* We use [GitHub Issues](https://github.com/systemd/systemd/issues) **exclusively** for tracking **bugs** and **feature** **requests** (RFEs) of systemd.
-  If you are looking for help, please try the forums of your distribution first, or [systemd-devel mailing list](https://lists.freedesktop.org/mailman/listinfo/systemd-devel) for general questions about systemd.
-* We only track bugs in the **two** **most** **recently** **released** (non-rc) **versions** of systemd in the GitHub Issue tracker.
-  If you are using an older version of systemd, please contact your distribution's bug tracker instead (see below).
-  See [GitHub Release Page](https://github.com/systemd/systemd/releases) for the list of most recent releases.
-* When filing a feature request issue (RFE), please always check first if the newest upstream version of systemd already implements the feature,
+* Please do NOT submit bug reports for questions. Ask questions on IRC at #e on Libera Chat.
+* Proprietary graphics drivers, including nvidia, are not supported. Please use the open source equivalents, such as nouveau, if you would like to use EFL.
+* Please do NOT submit issues for information from the github wiki. The github wiki is community maintained and therefore may contain outdated information, scripts that don't work or obsolete workarounds.
+* If you find outdated information, don't hesitate to adjust the wiki page.
+* We use [GitHub Issues](https://github.com/enlightenment/efl/issues) **exclusively** for tracking **Bugs** and **Feature** **Requests** (RFEs) of EFL.
+  If you are looking for help, please try the forums of your distribution first, or [enlightenment-devel mailing list](https://lists.freedesktop.org/mailman/listinfo/enlightenment-devel) for general questions about EFL.
+* We only track bugs in the **two** **most** **recently** **released** (non-rc) **versions** of EFL in the GitHub Issue tracker.
+  If you are using an older version of EFL, please contact your distribution's bug tracker instead (see below).
+  See [GitHub Release Page](https://github.com/enlightenment/efl/releases) for the list of most recent releases.
+* When filing a feature request issue (RFE), please always check first if the newest upstream version of EFL already implements the feature,
   and whether there's already an issue filed for your feature by someone else.
-* When filing an issue, specify the **systemd** **version** you are experiencing the issue with. Also, indicate which **distribution** you are using.
-* Please include an explanation how to reproduce the issue you are pointing out.
+* When filing an issue, specify the **EFL** **version** you are experiencing the issue with. Also, indicate which **distribution** you are using.
+* Please include in plain English an explanation how to reproduce the issue you are pointing out (step-by-step).
+* Copy error log from a TTY and upload it to a pastebin, such as gist.github.com. Give a link to it in the issue text. If the lines mentioning EFL have `??` for the location, your EFL were built without debug symbols. Please compile it from source with `-Dbuildtype=debug` and try to reproduce.
 
 Following these guidelines makes it easier for us to process your issue, and ensures we won't close your issue right-away for being misfiled.
 
@@ -192,9 +197,9 @@ submitting.
 * Make sure to run the test suite locally, before posting your PR. We use a CI system, meaning we don't even look at your PR if the build and tests don't pass.
 * If you need to update the code in an existing PR, force-push into the same branch, overriding old commits with new versions.
 * After you have pushed a new version, add a comment explaining the latest changes.
-  If you are a member of the systemd project on GitHub, remove the `reviewed/needs-rework`/`ci-fails/needs-rework`/`needs-rebase` labels.
+  If you are a member of the enlightenment project on GitHub, remove the `reviewed/needs-rework`/`ci-fails/needs-rework`/`needs-rebase` labels.
 * If you are copying existing code from another source (eg: a compat header), please make sure the license is compatible with `LGPL-2.1-or-later`.
-  If the license is not `LGPL-2.1-or-later`, please add a note to [`LICENSES/README.md`](https://github.com/systemd/systemd/blob/main/LICENSES/README.md).
+  If the license is not `LGPL-2.1-or-later`, please add a note to [`LICENSES/README.md`](https://github.com/enlightenment/enlightenment/blob/main/LICENSES/README.md).
 * If the pull request stalls without review, post a ping in a comment after some time has passed.
   We are always short on reviewer time, and pull requests which haven't seen any recent activity can be easily forgotten.
 * Github will automatically add the `please-review` label when a pull request is opened or updated.
