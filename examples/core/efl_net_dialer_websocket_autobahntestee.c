@@ -278,7 +278,7 @@ _closed_quit(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Eo *dialer = event->object;
    efl_del(dialer);
-   ecore_main_loop_quit();
+   core_main_loop_quit();
 }
 
 static void
@@ -293,7 +293,7 @@ _tests_finished(Eo *loop)
      {
         if (verbose)
           fprintf(stderr, "INFO: tests finished, user required to not update the reports\n");
-        ecore_main_loop_quit();
+        core_main_loop_quit();
         return;
      }
 
@@ -305,7 +305,7 @@ _tests_finished(Eo *loop)
         fprintf(stderr, "ERROR: could not create URL "
                 "'%s/updateReports?agent=%s': %s",
                 address, agent, strerror(errno));
-        ecore_main_loop_quit();
+        core_main_loop_quit();
         return;
      }
    else if ((size_t)len > sizeof(url))
@@ -313,14 +313,14 @@ _tests_finished(Eo *loop)
         fprintf(stderr, "ERROR: could not create URL "
                 "'%s/updateReports?agent=%s': no space.",
                 address, agent);
-        ecore_main_loop_quit();
+        core_main_loop_quit();
         return;
      }
 
    dialer = _websocket_new("update-reports", loop);
    if (!dialer)
      {
-        ecore_main_loop_quit();
+        core_main_loop_quit();
         return;
      }
 
@@ -584,7 +584,7 @@ _websocket_load_tests(Eo *loop)
    return EFL_TRUE;
 }
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_dialer_websocket_autobahntestee", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -600,19 +600,19 @@ static const Ecore_Getopt options = {
   "\n",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_UINT('s', "start-index", "when running batch, specifies the start (first) index"),
-    ECORE_GETOPT_STORE_UINT('e', "end-index", "when running batch, specifies the end (last) index"),
-    ECORE_GETOPT_STORE_TRUE('n', "no-report-update", "do not trigger autobahn to update report"),
-    ECORE_GETOPT_STORE_TRUE('v', "verbose", "print messages"),
-    ECORE_GETOPT_APPEND('t', "test-case", "the test-case tuple such as '1.2.8'", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_STORE_STR('a', "agent", "the agent identifier"),
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_UINT('s', "start-index", "when running batch, specifies the start (first) index"),
+    CORE_GETOPT_STORE_UINT('e', "end-index", "when running batch, specifies the end (last) index"),
+    CORE_GETOPT_STORE_TRUE('n', "no-report-update", "do not trigger autobahn to update report"),
+    CORE_GETOPT_STORE_TRUE('v', "verbose", "print messages"),
+    CORE_GETOPT_APPEND('t', "test-case", "the test-case tuple such as '1.2.8'", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_STORE_STR('a', "agent", "the agent identifier"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The address (URL) to dial, such as ws://127.0.0.1:9001", "address"),
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -648,29 +648,29 @@ efl_main(void *data EFL_UNUSED,
          const Efl_Event *ev)
 {
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_UINT(start_index),
-     ECORE_GETOPT_VALUE_UINT(end_index),
-     ECORE_GETOPT_VALUE_BOOL(no_report_update),
-     ECORE_GETOPT_VALUE_BOOL(verbose),
-     ECORE_GETOPT_VALUE_LIST(case_tuples),
-     ECORE_GETOPT_VALUE_STR(agent),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_UINT(start_index),
+     CORE_GETOPT_VALUE_UINT(end_index),
+     CORE_GETOPT_VALUE_BOOL(no_report_update),
+     CORE_GETOPT_VALUE_BOOL(verbose),
+     CORE_GETOPT_VALUE_LIST(case_tuples),
+     CORE_GETOPT_VALUE_STR(agent),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_STR(address),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Efl_Bool r;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -679,7 +679,7 @@ efl_main(void *data EFL_UNUSED,
 
    if (quit_option) goto end;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);
@@ -695,7 +695,7 @@ efl_main(void *data EFL_UNUSED,
 
    if (r)
      {
-        ecore_main_loop_begin();
+        core_main_loop_begin();
      }
 
    if (pending)

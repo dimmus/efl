@@ -257,15 +257,15 @@ main(int argc, char *argv[])
         return -3;
      }
 
-   ecore_evas_init();
-   ecore_init();
+   core_evas_init();
+   core_init();
    evas_init();
    eina_init();
 
    winw = 2 * maxw + 3 * WINDOW_PAD;
    winh = maxh + 2 * WINDOW_PAD;
 
-   ee = ecore_evas_new(NULL, 0, 0, winw, winh, NULL);
+   ee = core_evas_new(NULL, 0, 0, winw, winh, NULL);
    if (!ee)
      {
         fputs("ERROR: Could not create window. Check ecore-evas install.\n",
@@ -273,7 +273,7 @@ main(int argc, char *argv[])
         goto end;
      }
 
-   evas = ecore_evas_get(ee);
+   evas = core_evas_get(ee);
 
    o = evas_object_rectangle_add(evas);
    evas_object_color_set(o, 255, 255, 255, 255);
@@ -295,22 +295,22 @@ main(int argc, char *argv[])
    evas_object_show(o);
 
    tiler = eina_tiler_new(maxw, maxh);
-   ecore_timer_add(2.0, process_input, NULL);
+   core_timer_add(2.0, process_input, NULL);
 
-   ecore_evas_show(ee);
-   ecore_main_loop_begin();
+   core_evas_show(ee);
+   core_main_loop_begin();
 
    eina_list_free(output_objs);
    eina_tiler_free(tiler);
-   ecore_evas_free(ee);
+   core_evas_free(ee);
 
  end:
    free(input_rects);
 
    eina_shutdown();
    evas_shutdown();
-   ecore_shutdown();
-   ecore_evas_shutdown();
+   core_shutdown();
+   core_evas_shutdown();
 
    return 0;
 }

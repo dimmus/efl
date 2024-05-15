@@ -14,8 +14,8 @@ static Efl_Bool
 _timer1_cb(void *data EFL_UNUSED)
 {
    printf("\nFishing...\n");
-   ecore_main_loop_quit();
-   return ECORE_CALLBACK_CANCEL;
+   core_main_loop_quit();
+   return CORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -197,7 +197,7 @@ main(void)
    int i;
    int plus_one = 24;
 
-   ecore_init();
+   core_init();
    eldbus_init();
 
    conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
@@ -272,13 +272,13 @@ main(void)
 
    pending = eldbus_proxy_property_get(test2_proxy, "Resp2", get_property_resp2, test2_proxy);
 
-   ecore_timer_add(10, _timer1_cb, NULL);
+   core_timer_add(10, _timer1_cb, NULL);
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
 
    eldbus_connection_unref(conn);
 
    eldbus_shutdown();
-   ecore_shutdown();
+   core_shutdown();
    return 0;
 }

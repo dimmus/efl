@@ -134,8 +134,8 @@ main_loop_quit_idler(void *data EFL_UNUSED)
    eldbus_connection_unref(conn);
 
    INF("Finishing");
-   ecore_main_loop_quit();
-   return ECORE_CALLBACK_CANCEL;
+   core_main_loop_quit();
+   return CORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -172,7 +172,7 @@ name_release_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
          break;
      }
 
-   ecore_idler_add(main_loop_quit_idler, NULL);
+   core_idler_add(main_loop_quit_idler, NULL);
 }
 
 static void
@@ -207,7 +207,7 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
         goto exit_eina;
      }
 
-   if (!ecore_init())
+   if (!core_init())
      {
         EINA_LOG_ERR("Failed to initialize Ecore");
         goto exit_eina;
@@ -259,13 +259,13 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
                        ELDBUS_NAME_REQUEST_FLAG_REPLACE_EXISTING | ELDBUS_NAME_REQUEST_FLAG_ALLOW_REPLACEMENT,
                        name_request_cb, NULL);
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
 
 end:
    eldbus_shutdown();
 
 exit_ecore:
-   ecore_shutdown();
+   core_shutdown();
    eina_log_domain_unregister(_conn_addr_log_dom);
 
 exit_eina:

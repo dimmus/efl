@@ -229,7 +229,7 @@ static const char * protocols[] = {
   NULL
 };
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_dialer_simple_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -239,31 +239,31 @@ static const Ecore_Getopt options = {
   "Example of Efl_Net_Dialer_Simple usage, sending a message and receiving a reply\n",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_TRUE('r', "read", "Wait for data to be read."),
-    ECORE_GETOPT_STORE_TRUE('D', "discard-lines", "Lines that are read are discarded from final output."),
-    ECORE_GETOPT_APPEND('s', "send", "send the given string to the server once connected.", ECORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_STORE_TRUE('r', "read", "Wait for data to be read."),
+    CORE_GETOPT_STORE_TRUE('D', "discard-lines", "Lines that are read are discarded from final output."),
+    CORE_GETOPT_APPEND('s', "send", "send the given string to the server once connected.", CORE_GETOPT_TYPE_STR),
 
-    ECORE_GETOPT_STORE_STR('d', "line-delimiter",
+    CORE_GETOPT_STORE_STR('d', "line-delimiter",
                            "If set will define a line delimiter for copy operation, instead of a fixed chunk size. This will trigger line events."),
-    ECORE_GETOPT_STORE_ULONG('l', "buffer-limit",
+    CORE_GETOPT_STORE_ULONG('l', "buffer-limit",
                              "If set will limit buffer size to this limit of bytes. If used alongside with --line-delimiter and that delimiter was not found but bffer limit was reached, the line event will be triggered without the delimiter at the end."),
-    ECORE_GETOPT_STORE_ULONG('c', "read-chunk-size",
+    CORE_GETOPT_STORE_ULONG('c', "read-chunk-size",
                              "If set will change the base chunk size used while reading."),
-    ECORE_GETOPT_STORE_DOUBLE('i', "inactivity-timeout",
+    CORE_GETOPT_STORE_DOUBLE('i', "inactivity-timeout",
                               "If greater than zero, specifies the number of seconds without any reads or writes that the dialer will be timed out."),
-    ECORE_GETOPT_STORE_DOUBLE('t', "connect-timeout",
+    CORE_GETOPT_STORE_DOUBLE('t', "connect-timeout",
                               "If greater than zero, specifies the number of seconds without any reads or writes that the dialer will be timed out."),
 
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
 
-    ECORE_GETOPT_CHOICE_METAVAR(0, NULL, "The dialer protocol.", "protocol",
+    CORE_GETOPT_CHOICE_METAVAR(0, NULL, "The dialer protocol.", "protocol",
                                 protocols),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The address (URL) to dial", "address"),
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -312,34 +312,34 @@ efl_main(void *data EFL_UNUSED,
    double timeout_inactivity = 0.0;
    double connect_timeout = 0.0;
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_BOOL(do_read),
-     ECORE_GETOPT_VALUE_BOOL(do_discard),
-     ECORE_GETOPT_VALUE_LIST(to_send),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_BOOL(do_read),
+     CORE_GETOPT_VALUE_BOOL(do_discard),
+     CORE_GETOPT_VALUE_LIST(to_send),
 
-     ECORE_GETOPT_VALUE_STR(line_delimiter_str),
-     ECORE_GETOPT_VALUE_ULONG(buffer_limit),
-     ECORE_GETOPT_VALUE_ULONG(read_chunk_size),
-     ECORE_GETOPT_VALUE_DOUBLE(timeout_inactivity),
-     ECORE_GETOPT_VALUE_DOUBLE(connect_timeout),
+     CORE_GETOPT_VALUE_STR(line_delimiter_str),
+     CORE_GETOPT_VALUE_ULONG(buffer_limit),
+     CORE_GETOPT_VALUE_ULONG(read_chunk_size),
+     CORE_GETOPT_VALUE_DOUBLE(timeout_inactivity),
+     CORE_GETOPT_VALUE_DOUBLE(connect_timeout),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(protocol),
-     ECORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_STR(protocol),
+     CORE_GETOPT_VALUE_STR(address),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eo *loop;
    Eina_Error err;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -350,7 +350,7 @@ efl_main(void *data EFL_UNUSED,
 
    loop = ev->object;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);

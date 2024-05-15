@@ -11,7 +11,7 @@
 static char *resp2;
 /* dummy, incremented each time DBus.Properties.Get() is called */
 static int int32 = 35;
-static Ecore_Timer *timer;
+static Core_Timer *timer;
 
 static Eldbus_Message *
 _receive_array(const Eldbus_Service_Interface *iface EFL_UNUSED, const Eldbus_Message *msg)
@@ -334,7 +334,7 @@ static Efl_Bool _emit_changed(void *data)
    Eldbus_Service_Interface *iface = data;
    eldbus_service_property_changed(iface, "int32");
    eldbus_service_property_invalidate_set(iface, "Resp2", EFL_TRUE);
-   return ECORE_CALLBACK_RENEW;
+   return CORE_CALLBACK_RENEW;
 }
 
 static void
@@ -361,7 +361,7 @@ on_name_request(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending E
         return;
      }
 
-   timer = ecore_timer_add(3, _emit_changed, iface);
+   timer = core_timer_add(3, _emit_changed, iface);
 }
 
 int
@@ -370,7 +370,7 @@ main(void)
    Eldbus_Connection *conn;
    Eldbus_Service_Interface *iface;
 
-   ecore_init();
+   core_init();
    eldbus_init();
 
    conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
@@ -381,14 +381,14 @@ main(void)
    eldbus_name_request(conn, BUS, ELDBUS_NAME_REQUEST_FLAG_DO_NOT_QUEUE,
                       on_name_request, iface);
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
 
    free(resp2);
-   ecore_timer_del(timer);
+   core_timer_del(timer);
    eldbus_service_interface_unregister(iface);
    eldbus_connection_unref(conn);
 
    eldbus_shutdown();
-   ecore_shutdown();
+   core_shutdown();
    return 0;
 }

@@ -291,7 +291,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(copier_cbs,
                            { EFL_IO_COPIER_EVENT_LINE, _copier_line});
 
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_io_copier_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -304,24 +304,24 @@ static const Ecore_Getopt options = {
   "for events and showing progress.",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_STR('d', "line-delimiter",
+    CORE_GETOPT_STORE_STR('d', "line-delimiter",
                            "If set will define a line delimiter for copy operation, instead of a fixed chunk size. This will trigger line events."),
-    ECORE_GETOPT_STORE_ULONG('l', "buffer-limit",
+    CORE_GETOPT_STORE_ULONG('l', "buffer-limit",
                              "If set will limit buffer size to this limit of bytes. If used alongside with --line-delimiter and that delimiter was not found but bffer limit was reached, the line event will be triggered without the delimiter at the end."),
-    ECORE_GETOPT_STORE_ULONG('c', "read-chunk-size",
+    CORE_GETOPT_STORE_ULONG('c', "read-chunk-size",
                              "If set will change the base chunk size used while reading."),
-    ECORE_GETOPT_STORE_DOUBLE('t', "inactivity-timeout",
+    CORE_GETOPT_STORE_DOUBLE('t', "inactivity-timeout",
                               "If greater than zero, specifies the number of seconds without any reads or writes that the copier will be timed out."),
 
-    ECORE_GETOPT_STORE_FALSE(0, "no-ssl-verify",
+    CORE_GETOPT_STORE_FALSE(0, "no-ssl-verify",
                              "Disables SSL verify, to use with self-signed certificates and the likes"),
 
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
 
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The input file name or:\n"
                                    ":stdin: to read from stdin.\n"
                                    "tcp://IP:PORT to connect using TCP and an IPv4 (A.B.C.D:PORT) or IPv6 ([A:B:C:D::E]:PORT).\n"
@@ -337,7 +337,7 @@ static const Ecore_Getopt options = {
                                    "ssl://IP:PORT to connect using TCP+SSL and an IPv4 (A.B.C.D:PORT) or IPv6 ([A:B:C:D::E]:PORT).\n"
                                    "",
                                    "input-file"),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The output file name or:\n"
                                    ":stdout: to write to stdout.\n"
                                    ":stderr: to write to stderr.\n"
@@ -356,7 +356,7 @@ static const Ecore_Getopt options = {
                                    "ssl://IP:PORT to connect using TCP+SSL and an IPv4 (A.B.C.D:PORT) or IPv6 ([A:B:C:D::E]:PORT).\n"
                                    "",
                                    "output-file"),
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -401,31 +401,31 @@ efl_main(void *data EFL_UNUSED,
    double timeout = 0.0;
    Efl_Bool ssl_verify = EFL_TRUE;
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_STR(line_delimiter),
-     ECORE_GETOPT_VALUE_ULONG(buffer_limit),
-     ECORE_GETOPT_VALUE_ULONG(read_chunk_size),
-     ECORE_GETOPT_VALUE_DOUBLE(timeout),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_STR(line_delimiter),
+     CORE_GETOPT_VALUE_ULONG(buffer_limit),
+     CORE_GETOPT_VALUE_ULONG(read_chunk_size),
+     CORE_GETOPT_VALUE_DOUBLE(timeout),
 
-     ECORE_GETOPT_VALUE_BOOL(ssl_verify),
+     CORE_GETOPT_VALUE_BOOL(ssl_verify),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(input_fname),
-     ECORE_GETOPT_VALUE_STR(output_fname),
+     CORE_GETOPT_VALUE_STR(input_fname),
+     CORE_GETOPT_VALUE_STR(output_fname),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eo *input, *output;
    Eina_Slice line_delm_slice = EINA_SLICE_STR_LITERAL("");
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -435,7 +435,7 @@ efl_main(void *data EFL_UNUSED,
 
    if (quit_option) goto end;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);

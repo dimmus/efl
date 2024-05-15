@@ -106,7 +106,7 @@ _resolved(void *data, const Eina_Value v,
 
  end:
    resolving = eina_list_remove(resolving, dead_future);
-   if (!resolving) ecore_main_loop_quit();
+   if (!resolving) core_main_loop_quit();
 
    return v;
 }
@@ -116,8 +116,8 @@ main(int argc, char *argv[])
 {
    int i;
 
-   ecore_init();
-   ecore_con_init();
+   core_init();
+   core_con_init();
 
    for (i = 1; i < argc; i++)
      {
@@ -137,10 +137,10 @@ main(int argc, char *argv[])
           }
      }
 
-   if (resolving) ecore_main_loop_begin();
+   if (resolving) core_main_loop_begin();
 
-   ecore_con_shutdown();
-   ecore_shutdown();
+   core_con_shutdown();
+   core_shutdown();
 
    return retval;
 }

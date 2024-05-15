@@ -1,20 +1,20 @@
 examples = [
-  'ecore_event_example_01',
-  'ecore_event_example_02',
-  'ecore_exe_example',
-  'ecore_exe_example_child',
-  'ecore_fd_handler_example',
-  'ecore_idler_example',
-  'ecore_job_example',
-  'ecore_poller_example',
-  'ecore_thread_example',
-  'ecore_time_functions_example',
-  'ecore_timer_example',
-  'ecore_getopt_example',
+  'core_event_example_01',
+  'core_event_example_02',
+  'core_exe_example',
+  'core_exe_example_child',
+  'core_fd_handler_example',
+  'core_idler_example',
+  'core_job_example',
+  'core_poller_example',
+  'core_thread_example',
+  'core_time_functions_example',
+  'core_timer_example',
+  'core_getopt_example',
 ]
 
 if efl_config.has('HAVE_FORK')
-  examples += 'ecore_pipe_simple_example'
+  examples += 'core_pipe_simple_example'
 endif
 
 foreach example : examples
@@ -22,78 +22,78 @@ foreach example : examples
 endforeach
 
 # examples = [
-#   'ecore_file_download_example',
+#   'core_file_download_example',
 # ]
 
 # foreach example : examples
-#   executable(example, example + '.c', dependencies: [shared, ecore, ecore_file])
+#   executable(example, example + '.c', dependencies: [shared, ecore, core_file])
 # endforeach
 
 # if get_option('gstreamer')
 #   examples = [
-#     'ecore_pipe_gstreamer_example',
+#     'core_pipe_gstreamer_example',
 #   ]
 #   gstreamer = dependency('gstreamer-1.0')
 #   foreach example : examples
-#     executable(example, example + '.c', dependencies: [shared, ecore, gstreamer, ecore_file])
+#     executable(example, example + '.c', dependencies: [shared, ecore, gstreamer, core_file])
 #   endforeach
 # endif
 
 # examples = [
-#   'ecore_ipc_client_example',
-#   'ecore_ipc_server_example',
+#   'core_ipc_client_example',
+#   'core_ipc_server_example',
 # ]
 
 # foreach example : examples
-#   executable(example, example + '.c', dependencies: [eina, ecore, ecore_ipc])
+#   executable(example, example + '.c', dependencies: [eina, ecore, core_ipc])
 # endforeach
 
 # examples = [
-#   'ecore_audio_custom',
-#   'ecore_audio_playback',
-#   'ecore_audio_to_ogg',
+#   'core_audio_custom',
+#   'core_audio_playback',
+#   'core_audio_to_ogg',
 # ]
 
 # foreach example : examples
-#   executable(example, example + '.c', dependencies: [eina, ecore, ecore_audio])
+#   executable(example, example + '.c', dependencies: [eina, ecore, core_audio])
 # endforeach
 
 
 # examples = [
-#   'ecore_con_client_example',
-#   'ecore_con_client_simple_example',
-#   'ecore_con_lookup_example',
-#   'ecore_con_server_example',
-#   'ecore_con_server_http_example',
-#   'ecore_con_server_simple_example',
-#   'ecore_con_url_cookies_example',
-#   'ecore_con_url_download_example',
-#   'ecore_con_url_headers_example',
-#   'ecore_client_bench',
-#   'ecore_server_bench',
+#   'core_con_client_example',
+#   'core_con_client_simple_example',
+#   'core_con_lookup_example',
+#   'core_con_server_example',
+#   'core_con_server_http_example',
+#   'core_con_server_simple_example',
+#   'core_con_url_cookies_example',
+#   'core_con_url_download_example',
+#   'core_con_url_headers_example',
+#   'core_client_bench',
+#   'core_server_bench',
 # ]
 
 # foreach example : examples
-#   executable(example, example + '.c', dependencies: [eina, ecore, ecore_con])
+#   executable(example, example + '.c', dependencies: [eina, ecore, core_con])
 # endforeach
 
 # examples = [
-#   'ecore_animator_example',
-#   'ecore_evas_basics_example',
-#   'ecore_evas_buffer_example_01',
-#   'ecore_evas_buffer_example_02',
-#   'ecore_evas_callbacks',
-#   'ecore_evas_object_example',
-#   'ecore_evas_window_sizes_example',
-#   'ecore_buffer_consumer_example',
-#   'ecore_buffer_example',
-#   'ecore_buffer_provider_example',
-#   'ecore_compose_get_example',
+#   'core_animator_example',
+#   'core_evas_basics_example',
+#   'core_evas_buffer_example_01',
+#   'core_evas_buffer_example_02',
+#   'core_evas_callbacks',
+#   'core_evas_object_example',
+#   'core_evas_window_sizes_example',
+#   'core_buffer_consumer_example',
+#   'core_buffer_example',
+#   'core_buffer_provider_example',
+#   'core_compose_get_example',
 # ]
 
 # foreach example : examples
 #   executable(example, example + '.c',
-#     dependencies: [eina, ecore_evas],
+#     dependencies: [eina, core_evas],
 #     c_args : [
 #       '-DPACKAGE_EXAMPLES_DIR="'+meson.current_source_dir()+'"']
 #   )
@@ -105,8 +105,8 @@ examples = [
 ]
 
 foreach example : examples
-  # executable(example, example + '.c', dependencies: [eina, ecore, ecore_con])
+  # executable(example, example + '.c', dependencies: [eina, ecore, core_con])
   executable(example, example + '.c', dependencies: [shared, core])
 endforeach
 
-#  'ecore_imf_example',
+#  'core_imf_example',

@@ -164,7 +164,7 @@ static const char *ciphers_strs[] = {
   NULL
 };
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_socket_ssl_server_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -174,24 +174,24 @@ static const Ecore_Getopt options = {
   "Example of 'upgrading' a regular Efl.Net.Socket received from an Efl.Net.Server.Tcp to a SSL socket, then serving as 'echo' server.",
   EFL_FALSE,
   {
-    ECORE_GETOPT_CHOICE('c', "cipher", "Cipher to use, defaults to 'auto'", ciphers_strs),
+    CORE_GETOPT_CHOICE('c', "cipher", "Cipher to use, defaults to 'auto'", ciphers_strs),
 
-    ECORE_GETOPT_APPEND(0, "certificate", "certificate path to use.", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_APPEND(0, "private-key", "private key path to use.", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_APPEND(0, "crl", "certificate revocation list to use.", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_APPEND(0, "ca", "certificate authorities path to use.", ECORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND(0, "certificate", "certificate path to use.", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND(0, "private-key", "private key path to use.", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND(0, "crl", "certificate revocation list to use.", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND(0, "ca", "certificate authorities path to use.", CORE_GETOPT_TYPE_STR),
 
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
 
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The server address to listen, such as "
                                    "IPv4:PORT, [IPv6]:PORT, Unix socket path...",
                                    "address"),
 
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -248,30 +248,30 @@ efl_main(void *data EFL_UNUSED,
    char *str;
    Efl_Net_Ssl_Cipher cipher = EFL_NET_SSL_CIPHER_AUTO;
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_STR(cipher_choice),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_STR(cipher_choice),
 
-     ECORE_GETOPT_VALUE_LIST(certificates),
-     ECORE_GETOPT_VALUE_LIST(private_keys),
-     ECORE_GETOPT_VALUE_LIST(crls),
-     ECORE_GETOPT_VALUE_LIST(cas),
+     CORE_GETOPT_VALUE_LIST(certificates),
+     CORE_GETOPT_VALUE_LIST(private_keys),
+     CORE_GETOPT_VALUE_LIST(crls),
+     CORE_GETOPT_VALUE_LIST(cas),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_STR(address),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eina_Iterator *it;
    Eina_Error err;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -280,7 +280,7 @@ efl_main(void *data EFL_UNUSED,
 
    if (quit_option) goto end;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);

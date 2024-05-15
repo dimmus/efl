@@ -278,7 +278,7 @@ static const char *ciphers_strs[] = {
   NULL
 };
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_server_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -290,48 +290,48 @@ static const Ecore_Getopt options = {
   "This example spawns a server of the given protocol at the given address.",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_TRUE('e', "echo",
+    CORE_GETOPT_STORE_TRUE('e', "echo",
                             "Behave as 'echo' server, send back to client all the data receive"),
-    ECORE_GETOPT_STORE_TRUE(0, "socket-activated",
+    CORE_GETOPT_STORE_TRUE(0, "socket-activated",
                             "Try to use $LISTEN_FDS from systemd, if not do a regular serve()"),
-    ECORE_GETOPT_STORE_UINT('l', "clients-limit",
+    CORE_GETOPT_STORE_UINT('l', "clients-limit",
                             "If set will limit number of clients to accept"),
-    ECORE_GETOPT_STORE_TRUE('r', "clients-reject-excess",
+    CORE_GETOPT_STORE_TRUE('r', "clients-reject-excess",
                             "Immediately reject excess clients (over limit)"),
-    ECORE_GETOPT_STORE_FALSE(0, "ipv4-on-ipv6",
+    CORE_GETOPT_STORE_FALSE(0, "ipv4-on-ipv6",
                             "IPv4 clients will be automatically converted into IPv6 and handled transparently."),
-    ECORE_GETOPT_STORE_DOUBLE('t', "inactivity-timeout",
+    CORE_GETOPT_STORE_DOUBLE('t', "inactivity-timeout",
                               "The timeout in seconds to disconnect a client. The timeout is restarted for each client when there is some activity. It's particularly useful for UDP where there is no disconnection event."),
 
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
 
-    ECORE_GETOPT_CATEGORY("udp", "UDP options"),
-    ECORE_GETOPT_STORE_TRUE(0, "udp-dont-route",
+    CORE_GETOPT_CATEGORY("udp", "UDP options"),
+    CORE_GETOPT_STORE_TRUE(0, "udp-dont-route",
                             "If true, datagrams won't be routed using a gateway, being restricted to the local network."),
-    ECORE_GETOPT_STORE_UINT(0, "udp-multicast-ttl",
+    CORE_GETOPT_STORE_UINT(0, "udp-multicast-ttl",
                             "Multicast time to live in number of hops from 0-255. Defaults to 1 (only local network)."),
-    ECORE_GETOPT_STORE_FALSE(0, "udp-multicast-noloopback",
+    CORE_GETOPT_STORE_FALSE(0, "udp-multicast-noloopback",
                             "Disable multicast loopback."),
-    ECORE_GETOPT_APPEND('M', "udp-multicast-group", "Join a multicast group in the form 'IP@INTERFACE', with optional '@INTERFACE', where INTERFACE is the IP address of the interface to join the multicast.", ECORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND('M', "udp-multicast-group", "Join a multicast group in the form 'IP@INTERFACE', with optional '@INTERFACE', where INTERFACE is the IP address of the interface to join the multicast.", CORE_GETOPT_TYPE_STR),
 
-    ECORE_GETOPT_CATEGORY("ssl", "SSL options"),
-    ECORE_GETOPT_CHOICE('c', "ssl-cipher", "Cipher to use, defaults to 'auto'", ciphers_strs),
-    ECORE_GETOPT_APPEND(0, "ssl-certificate", "certificate path to use.", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_APPEND(0, "ssl-private-key", "private key path to use.", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_APPEND(0, "ssl-crl", "certificate revocation list to use.", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_APPEND(0, "ssl-ca", "certificate authorities path to use.", ECORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_CATEGORY("ssl", "SSL options"),
+    CORE_GETOPT_CHOICE('c', "ssl-cipher", "Cipher to use, defaults to 'auto'", ciphers_strs),
+    CORE_GETOPT_APPEND(0, "ssl-certificate", "certificate path to use.", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND(0, "ssl-private-key", "private key path to use.", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND(0, "ssl-crl", "certificate revocation list to use.", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_APPEND(0, "ssl-ca", "certificate authorities path to use.", CORE_GETOPT_TYPE_STR),
 
-    ECORE_GETOPT_CHOICE_METAVAR(0, NULL, "The server protocol.", "protocol",
+    CORE_GETOPT_CHOICE_METAVAR(0, NULL, "The server protocol.", "protocol",
                                 protocols),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The server address to listen, such as "
                                    "IPv4:PORT, [IPv6]:PORT, Unix socket path...",
                                    "address"),
 
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -387,44 +387,44 @@ efl_main(void *data EFL_UNUSED,
    char *cipher_choice = NULL;
    Efl_Bool socket_activated = EFL_FALSE;
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_BOOL(echo),
-     ECORE_GETOPT_VALUE_BOOL(socket_activated),
-     ECORE_GETOPT_VALUE_UINT(clients_limit),
-     ECORE_GETOPT_VALUE_BOOL(clients_reject_excess),
-     ECORE_GETOPT_VALUE_BOOL(ipv6_only),
-     ECORE_GETOPT_VALUE_DOUBLE(timeout),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_BOOL(echo),
+     CORE_GETOPT_VALUE_BOOL(socket_activated),
+     CORE_GETOPT_VALUE_UINT(clients_limit),
+     CORE_GETOPT_VALUE_BOOL(clients_reject_excess),
+     CORE_GETOPT_VALUE_BOOL(ipv6_only),
+     CORE_GETOPT_VALUE_DOUBLE(timeout),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* category: udp */
-     ECORE_GETOPT_VALUE_BOOL(udp_dont_route),
-     ECORE_GETOPT_VALUE_UINT(udp_mcast_ttl),
-     ECORE_GETOPT_VALUE_BOOL(udp_mcast_loopback),
-     ECORE_GETOPT_VALUE_LIST(udp_mcast_groups),
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* category: udp */
+     CORE_GETOPT_VALUE_BOOL(udp_dont_route),
+     CORE_GETOPT_VALUE_UINT(udp_mcast_ttl),
+     CORE_GETOPT_VALUE_BOOL(udp_mcast_loopback),
+     CORE_GETOPT_VALUE_LIST(udp_mcast_groups),
 
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* category: ssl */
-     ECORE_GETOPT_VALUE_STR(cipher_choice),
-     ECORE_GETOPT_VALUE_LIST(certificates),
-     ECORE_GETOPT_VALUE_LIST(private_keys),
-     ECORE_GETOPT_VALUE_LIST(crls),
-     ECORE_GETOPT_VALUE_LIST(cas),
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* category: ssl */
+     CORE_GETOPT_VALUE_STR(cipher_choice),
+     CORE_GETOPT_VALUE_LIST(certificates),
+     CORE_GETOPT_VALUE_LIST(private_keys),
+     CORE_GETOPT_VALUE_LIST(crls),
+     CORE_GETOPT_VALUE_LIST(cas),
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(protocol),
-     ECORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_STR(protocol),
+     CORE_GETOPT_VALUE_STR(address),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eo *server;
    Eina_Error err;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -433,7 +433,7 @@ efl_main(void *data EFL_UNUSED,
 
    if (quit_option) goto end;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);

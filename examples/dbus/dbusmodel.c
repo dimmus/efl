@@ -149,7 +149,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(event_cbs,
                            { EFL_MODEL_EVENT_CHILD_ADDED, _on_child_added },
                            { EFL_MODEL_EVENT_CHILD_REMOVED, _on_child_removed });
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "dbusmodel", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -159,18 +159,18 @@ static const Ecore_Getopt options = {
   "Example of Eldbus.Model.Object to fetch children and properties.\n",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_TRUE('s', "system", "connect to the system bus, not user session."),
-    ECORE_GETOPT_STORE_FALSE('w', "wait", "after done, wait for events (monitoring)"),
+    CORE_GETOPT_STORE_TRUE('s', "system", "connect to the system bus, not user session."),
+    CORE_GETOPT_STORE_FALSE('w', "wait", "after done, wait for events (monitoring)"),
 
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
 
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL, "The bus name to connect.", "bus_name"),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL, "The path to explore.", "path"),
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL, "The bus name to connect.", "bus_name"),
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL, "The path to explore.", "path"),
 
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -182,29 +182,29 @@ main(int argc, char **argv EFL_UNUSED)
    char *bus_name = DEFAULT_BUS_NAME;
    char *path = DEFAULT_PATH;
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_BOOL(is_system),
-     ECORE_GETOPT_VALUE_BOOL(quit_on_done),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_BOOL(is_system),
+     CORE_GETOPT_VALUE_BOOL(quit_on_done),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(bus_name),
-     ECORE_GETOPT_VALUE_STR(path),
+     CORE_GETOPT_VALUE_STR(bus_name),
+     CORE_GETOPT_VALUE_STR(path),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eo *root;
 
-   ecore_init();
+   core_init();
    eldbus_init();
 
-   args = ecore_getopt_parse(&options, values, argc, argv);
+   args = core_getopt_parse(&options, values, argc, argv);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -214,7 +214,7 @@ main(int argc, char **argv EFL_UNUSED)
 
    if (quit_option) goto end;
 
-   args = ecore_getopt_parse_positional(&options, values, argc, argv, args);
+   args = core_getopt_parse_positional(&options, values, argc, argv, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);
@@ -236,11 +236,11 @@ main(int argc, char **argv EFL_UNUSED)
      eina_future_then(efl_model_children_slice_get(root, 0, efl_model_children_count_get(root)),
                       _slice, NULL);
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
    efl_del(root);
 
  end:
    eldbus_shutdown();
-   ecore_shutdown();
+   core_shutdown();
    return retval;
 }

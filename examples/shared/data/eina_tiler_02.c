@@ -225,7 +225,7 @@ _on_key_down(void *data EFL_UNUSED,
 
   if(strcmp(ev->key,"Escape") == 0)
     {
-       ecore_main_loop_quit();
+       core_main_loop_quit();
     }
   else if(strcmp(ev->key, "u") == 0)
     {
@@ -283,12 +283,12 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
 
    printf("Usage.\nCommands:%s", commands);
 
-   ecore_evas_init();
-   ecore_init();
+   core_evas_init();
+   core_init();
    evas_init();
    eina_init();
 
-   ee = ecore_evas_new(NULL, 0, 0, WIN_W, WIN_H, NULL);
+   ee = core_evas_new(NULL, 0, 0, WIN_W, WIN_H, NULL);
    if (!ee)
      {
         fputs("ERROR: Could not create window. Check ecore-evas install.\n",
@@ -296,7 +296,7 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
         goto end;
      }
 
-   evas = ecore_evas_get(ee);
+   evas = core_evas_get(ee);
 
    /* window bg */
    o = evas_object_rectangle_add(evas);
@@ -330,21 +330,21 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
 
    evas_object_event_callback_add(bg, EVAS_CALLBACK_KEY_DOWN, _on_key_down, NULL);
 
-   ecore_evas_show(ee);
-   ecore_main_loop_begin();
+   core_evas_show(ee);
+   core_main_loop_begin();
 
    eina_list_free(tiler_objs);
    eina_list_free(t1_objs);
    eina_list_free(t2_objs);
    eina_tiler_free(tiler1);
    eina_tiler_free(tiler2);
-   ecore_evas_free(ee);
+   core_evas_free(ee);
 
  end:
    eina_shutdown();
    evas_shutdown();
-   ecore_shutdown();
-   ecore_evas_shutdown();
+   core_shutdown();
+   core_evas_shutdown();
 
    return 0;
 }

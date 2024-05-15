@@ -284,7 +284,7 @@ main(void)
    Eldbus_Proxy *proxy;
    Eldbus_Message *msg;
 
-   ecore_init();
+   core_init();
    eldbus_init();
 
    conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
@@ -308,17 +308,17 @@ main(void)
                                   _property_removed, NULL);
 
    eldbus_proxy_properties_monitor(proxy, EFL_TRUE);
-   ecore_timer_add(10, _read_cache, proxy);
+   core_timer_add(10, _read_cache, proxy);
 
    eldbus_proxy_call(proxy, "ReceiveVariantData", receive_variant_cb, NULL, -1, "");
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
 
    eldbus_proxy_event_callback_del(proxy, ELDBUS_PROXY_EVENT_PROPERTY_CHANGED,
                                   _property_changed, NULL);
    eldbus_connection_unref(conn);
 
    eldbus_shutdown();
-   ecore_shutdown();
+   core_shutdown();
    return 0;
 }

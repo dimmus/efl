@@ -69,7 +69,7 @@ _changed(void *data EFL_UNUSED, const Efl_Event *event)
 EFL_CALLBACKS_ARRAY_DEFINE(session_events_cbs,
                            { EFL_NET_SESSION_EVENT_CHANGED, _changed });
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_session_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -79,15 +79,15 @@ static const Ecore_Getopt options = {
   "Example of Efl_Net_Session to request or monitor a network session for an application.\n",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_TRUE('c', "connect", "Require a connection to the internet (See -o/--require-online)."),
-    ECORE_GETOPT_STORE_TRUE('o', "require-online", "When connecting (-c/--connect), require connection to the internet. Otherwise a local network connection is enough"),
-    ECORE_GETOPT_APPEND('t', "technology", "Bearer technologies to use when connecting (ethernet, wifi, bluetooth, cellular, vpn, gadget or all)", ECORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_STORE_TRUE('c', "connect", "Require a connection to the internet (See -o/--require-online)."),
+    CORE_GETOPT_STORE_TRUE('o', "require-online", "When connecting (-c/--connect), require connection to the internet. Otherwise a local network connection is enough"),
+    CORE_GETOPT_APPEND('t', "technology", "Bearer technologies to use when connecting (ethernet, wifi, bluetooth, cellular, vpn, gadget or all)", CORE_GETOPT_TYPE_STR),
 
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -131,21 +131,21 @@ efl_main(void *data EFL_UNUSED,
    Efl_Bool require_online = EFL_FALSE;
    Efl_Bool quit_option = EFL_FALSE;
    Efl_Net_Session_Technology technologies = EFL_NET_SESSION_TECHNOLOGY_ALL;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_BOOL(do_connect),
-     ECORE_GETOPT_VALUE_BOOL(require_online),
-     ECORE_GETOPT_VALUE_LIST(techs),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_BOOL(do_connect),
+     CORE_GETOPT_VALUE_BOOL(require_online),
+     CORE_GETOPT_VALUE_LIST(techs),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);

@@ -163,7 +163,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(dialer_cbs,
                            { EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED, _can_write }
                            );
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_dialer_udp_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -173,23 +173,23 @@ static const Ecore_Getopt options = {
   "Example of Efl_Net_Dialer_Udp usage, sending a message and receiving a reply\n",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_STR('b', "bind", "Bind to a particular address in the format IP:PORT."),
-    ECORE_GETOPT_STORE_TRUE('r', "read-after-write", "Do a read after writes are done."),
-    ECORE_GETOPT_STORE_TRUE('c', "cork", "use UDP_CORK around messages to generate a single datagram."),
-    ECORE_GETOPT_STORE_TRUE('R', "dont-route", "Do not route packets via a gateway."),
-    ECORE_GETOPT_STORE_DOUBLE('t', "connect-timeout", "timeout in seconds for the connection phase"),
-    ECORE_GETOPT_STORE_UINT(0, "multicast-ttl",
+    CORE_GETOPT_STORE_STR('b', "bind", "Bind to a particular address in the format IP:PORT."),
+    CORE_GETOPT_STORE_TRUE('r', "read-after-write", "Do a read after writes are done."),
+    CORE_GETOPT_STORE_TRUE('c', "cork", "use UDP_CORK around messages to generate a single datagram."),
+    CORE_GETOPT_STORE_TRUE('R', "dont-route", "Do not route packets via a gateway."),
+    CORE_GETOPT_STORE_DOUBLE('t', "connect-timeout", "timeout in seconds for the connection phase"),
+    CORE_GETOPT_STORE_UINT(0, "multicast-ttl",
                             "Multicast time to live in number of hops from 0-255. Defaults to 1 (only local network)."),
-    ECORE_GETOPT_STORE_FALSE(0, "multicast-noloopback",
+    CORE_GETOPT_STORE_FALSE(0, "multicast-noloopback",
                             "Disable multicast loopback."),
-    ECORE_GETOPT_APPEND('M', "multicast-group", "Join a multicast group in the form 'IP@INTERFACE', with optional '@INTERFACE', where INTERFACE is the IP address of the interface to join the multicast.", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_APPEND('M', "multicast-group", "Join a multicast group in the form 'IP@INTERFACE', with optional '@INTERFACE', where INTERFACE is the IP address of the interface to join the multicast.", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The address (URL) to dial", "address"),
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -238,32 +238,32 @@ efl_main(void *data EFL_UNUSED,
    Efl_Bool mcast_loopback = EFL_TRUE;
    Efl_Bool quit_option = EFL_FALSE;
    double timeout_dial = 30.0;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_STR(bind_address),
-     ECORE_GETOPT_VALUE_BOOL(do_read),
-     ECORE_GETOPT_VALUE_BOOL(cork),
-     ECORE_GETOPT_VALUE_BOOL(dont_route),
-     ECORE_GETOPT_VALUE_DOUBLE(timeout_dial),
-     ECORE_GETOPT_VALUE_UINT(mcast_ttl),
-     ECORE_GETOPT_VALUE_BOOL(mcast_loopback),
-     ECORE_GETOPT_VALUE_LIST(mcast_groups),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_STR(bind_address),
+     CORE_GETOPT_VALUE_BOOL(do_read),
+     CORE_GETOPT_VALUE_BOOL(cork),
+     CORE_GETOPT_VALUE_BOOL(dont_route),
+     CORE_GETOPT_VALUE_DOUBLE(timeout_dial),
+     CORE_GETOPT_VALUE_UINT(mcast_ttl),
+     CORE_GETOPT_VALUE_BOOL(mcast_loopback),
+     CORE_GETOPT_VALUE_LIST(mcast_groups),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_STR(address),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eo *loop;
    Eina_Error err;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -274,7 +274,7 @@ efl_main(void *data EFL_UNUSED,
 
    loop = ev->object;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);

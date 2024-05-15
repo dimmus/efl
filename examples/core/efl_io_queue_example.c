@@ -134,7 +134,7 @@ _unescape(const char *str)
    return ret;
 }
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_io_queue_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -147,24 +147,24 @@ static const Ecore_Getopt options = {
   "send commands to a TCP server.",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_STR('d', "line-delimiter",
+    CORE_GETOPT_STORE_STR('d', "line-delimiter",
                            "Changes the line delimiter to be used in both send and receive. Defaults to \\r\\n"),
-    ECORE_GETOPT_STORE_ULONG('l', "buffer-limit",
+    CORE_GETOPT_STORE_ULONG('l', "buffer-limit",
                              "If set will limit buffer size to this limit of bytes. If used alongside with --line-delimiter and that delimiter was not found but bffer limit was reached, the line event will be triggered without the delimiter at the end."),
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
 
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The server address as\n"
                                    "IP:PORT to connect using TCP and an IPv4 (A.B.C.D:PORT) or IPv6 ([A:B:C:D::E]:PORT).\n",
                                    "server_address"),
-    ECORE_GETOPT_APPEND_METAVAR(0, NULL,
+    CORE_GETOPT_APPEND_METAVAR(0, NULL,
                                 "Commands to send",
                                 "commands",
-                                ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_SENTINEL
+                                CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -202,27 +202,27 @@ efl_main(void *data EFL_UNUSED,
    char *cmd;
    unsigned long buffer_limit = 0;
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_STR(line_delimiter_str),
-     ECORE_GETOPT_VALUE_ULONG(buffer_limit),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_STR(line_delimiter_str),
+     CORE_GETOPT_VALUE_ULONG(buffer_limit),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(address),
-     ECORE_GETOPT_VALUE_LIST(commands),
+     CORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_LIST(commands),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    Eina_Error err;
    int args;
    Eo *dialer, *sender, *receiver, *loop;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -231,7 +231,7 @@ efl_main(void *data EFL_UNUSED,
 
    if (quit_option) goto end;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);

@@ -37,7 +37,7 @@ _task_exit(void *data EFL_UNUSED, const Efl_Event *ev)
    efl_loop_quit(efl_provider_find(obj, EFL_LOOP_CLASS), eina_value_int_init(99));
    // exe auto deleted at this point like efl threads. more convenient as
    // you don't need to remember to delete them yourself if launching
-   // lots of commands - this is how ecore_exe worked. so listen to the
+   // lots of commands - this is how core_exe worked. so listen to the
    // exit event (or del event) if you care about this... or ref it to keep
    // it around longer.
 }

@@ -24,7 +24,7 @@ static Eldbus_Message *
 _quit(const Eldbus_Service_Interface *iface EFL_UNUSED, const Eldbus_Message *message)
 {
    printf("Quit\n");
-   ecore_main_loop_quit();
+   core_main_loop_quit();
    return eldbus_message_method_return_new(message);
 }
 
@@ -39,7 +39,7 @@ send_signal_alive(void *data)
 {
    Eldbus_Service_Interface *iface = data;
    eldbus_service_signal_emit(iface, TEST_SIGNAL_ALIVE);
-   return ECORE_CALLBACK_RENEW;
+   return CORE_CALLBACK_RENEW;
 }
 
 static Efl_Bool
@@ -47,7 +47,7 @@ send_signal_hello(void *data)
 {
    Eldbus_Service_Interface *iface = data;
    eldbus_service_signal_emit(iface, TEST_SIGNAL_HELLO, "Hello World");
-   return ECORE_CALLBACK_RENEW;
+   return CORE_CALLBACK_RENEW;
 }
 
 static Eldbus_Message *
@@ -133,7 +133,7 @@ _resp_async(void *data)
    Eldbus_Message *msg = data;
    eldbus_message_arguments_append(msg, "s", "Async test ok");
    eldbus_connection_send(conn, msg, NULL, NULL, -1);
-   return ECORE_CALLBACK_CANCEL;
+   return CORE_CALLBACK_CANCEL;
 }
 
 static Eldbus_Message *
@@ -142,7 +142,7 @@ _async_test(const Eldbus_Service_Interface *iface EFL_UNUSED, const Eldbus_Messa
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);
    printf("Received a call to AsyncTest.\n");
    printf("Response will be send in 5 seconds.\n");
-   ecore_timer_add(5, _resp_async, reply);
+   core_timer_add(5, _resp_async, reply);
    return NULL;
 }
 
@@ -217,8 +217,8 @@ on_name_request(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending E
         return;
      }
 
-   ecore_timer_add(5, send_signal_alive, iface);
-   ecore_timer_add(6, send_signal_hello, iface);
+   core_timer_add(5, send_signal_alive, iface);
+   core_timer_add(6, send_signal_hello, iface);
 }
 
 int
@@ -226,7 +226,7 @@ main(void)
 {
    Eldbus_Service_Interface *iface;
 
-   ecore_init();
+   core_init();
    eldbus_init();
 
    conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
@@ -237,11 +237,11 @@ main(void)
 
    eldbus_service_interface_register(conn, PATH_TEST_SON, &iface_desc);
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
 
    eldbus_connection_unref(conn);
 
    eldbus_shutdown();
-   ecore_shutdown();
+   core_shutdown();
    return 0;
 }

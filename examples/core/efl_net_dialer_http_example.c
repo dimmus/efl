@@ -160,7 +160,7 @@ _parse_authentication_method(const char *str)
    return EFL_NET_HTTP_AUTHENTICATION_METHOD_NONE;
 }
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_dialer_http_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -170,29 +170,29 @@ static const Ecore_Getopt options = {
   "Example of Efl_Net_Dialer_Http usage.\n",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_STR('m', "method", "HTTP method such as GET, POST, PUT..."),
-    ECORE_GETOPT_CHOICE('M', "primary-mode", "Define primary operation mode.", primary_mode_choices),
-    ECORE_GETOPT_CHOICE('v', "http-version", "HTTP protocol version to use", http_version_choices),
-    ECORE_GETOPT_STORE_STR('U', "username", "Authentication username"),
-    ECORE_GETOPT_STORE_STR('P', "password", "Authentication password"),
-    ECORE_GETOPT_CHOICE('A', "authentication-method", "Authentication method", authentication_method_choices),
-    ECORE_GETOPT_STORE_TRUE('R', "authentication-restricted", "Authentication method must be restricted"),
-    ECORE_GETOPT_STORE_FALSE('r', "disallow-redirects", "disallow redirections by following 'Location:' headers. Allowed by default."),
-    ECORE_GETOPT_STORE_DOUBLE('t', "connect-timeout", "timeout in seconds for the connection phase"),
-    ECORE_GETOPT_APPEND('H', "header", "Add custom headers. Format must be 'Key: Value'", ECORE_GETOPT_TYPE_STR),
-    ECORE_GETOPT_STORE_STR('X', "proxy", "Set a specific proxy for the connection"),
-    ECORE_GETOPT_STORE_STR('c', "cookie-jar", "Set the cookie-jar file to read/save cookies from. Empty means an in-memory cookie-jar"),
-    ECORE_GETOPT_STORE_STR('i', "input-file", "Input file to use when uploading"),
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_STR('m', "method", "HTTP method such as GET, POST, PUT..."),
+    CORE_GETOPT_CHOICE('M', "primary-mode", "Define primary operation mode.", primary_mode_choices),
+    CORE_GETOPT_CHOICE('v', "http-version", "HTTP protocol version to use", http_version_choices),
+    CORE_GETOPT_STORE_STR('U', "username", "Authentication username"),
+    CORE_GETOPT_STORE_STR('P', "password", "Authentication password"),
+    CORE_GETOPT_CHOICE('A', "authentication-method", "Authentication method", authentication_method_choices),
+    CORE_GETOPT_STORE_TRUE('R', "authentication-restricted", "Authentication method must be restricted"),
+    CORE_GETOPT_STORE_FALSE('r', "disallow-redirects", "disallow redirections by following 'Location:' headers. Allowed by default."),
+    CORE_GETOPT_STORE_DOUBLE('t', "connect-timeout", "timeout in seconds for the connection phase"),
+    CORE_GETOPT_APPEND('H', "header", "Add custom headers. Format must be 'Key: Value'", CORE_GETOPT_TYPE_STR),
+    CORE_GETOPT_STORE_STR('X', "proxy", "Set a specific proxy for the connection"),
+    CORE_GETOPT_STORE_STR('c', "cookie-jar", "Set the cookie-jar file to read/save cookies from. Empty means an in-memory cookie-jar"),
+    CORE_GETOPT_STORE_STR('i', "input-file", "Input file to use when uploading"),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The address (URL) to dial", "address"),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The output file name or :stdout:",
                                    "output-file"),
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -256,32 +256,32 @@ efl_main(void *data EFL_UNUSED,
    Efl_Bool allow_redirects = EFL_TRUE;
    double timeout_dial = 30.0;
    Eina_List *headers = NULL;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_STR(method),
-     ECORE_GETOPT_VALUE_STR(primary_mode_str),
-     ECORE_GETOPT_VALUE_STR(http_version_str),
-     ECORE_GETOPT_VALUE_STR(username),
-     ECORE_GETOPT_VALUE_STR(password),
-     ECORE_GETOPT_VALUE_STR(authentication_method_str),
-     ECORE_GETOPT_VALUE_BOOL(authentication_restricted),
-     ECORE_GETOPT_VALUE_BOOL(allow_redirects),
-     ECORE_GETOPT_VALUE_DOUBLE(timeout_dial),
-     ECORE_GETOPT_VALUE_LIST(headers),
-     ECORE_GETOPT_VALUE_STR(proxy),
-     ECORE_GETOPT_VALUE_STR(cookie_jar),
-     ECORE_GETOPT_VALUE_STR(input_fname),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_STR(method),
+     CORE_GETOPT_VALUE_STR(primary_mode_str),
+     CORE_GETOPT_VALUE_STR(http_version_str),
+     CORE_GETOPT_VALUE_STR(username),
+     CORE_GETOPT_VALUE_STR(password),
+     CORE_GETOPT_VALUE_STR(authentication_method_str),
+     CORE_GETOPT_VALUE_BOOL(authentication_restricted),
+     CORE_GETOPT_VALUE_BOOL(allow_redirects),
+     CORE_GETOPT_VALUE_DOUBLE(timeout_dial),
+     CORE_GETOPT_VALUE_LIST(headers),
+     CORE_GETOPT_VALUE_STR(proxy),
+     CORE_GETOPT_VALUE_STR(cookie_jar),
+     CORE_GETOPT_VALUE_STR(input_fname),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(address),
-     ECORE_GETOPT_VALUE_STR(output_fname),
+     CORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_STR(output_fname),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eo *input, *output, *loop;
@@ -293,7 +293,7 @@ efl_main(void *data EFL_UNUSED,
    Eina_Error err;
    char *str;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -304,7 +304,7 @@ efl_main(void *data EFL_UNUSED,
 
    loop = ev->object;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);

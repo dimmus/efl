@@ -18,8 +18,8 @@ static Eldbus_Signal_Handler *state_changed2;
 static Efl_Bool
 _timeout_application(void *data EFL_UNUSED)
 {
-   printf("\n## ecore_main_loop_quit()\n");
-   ecore_main_loop_quit();
+   printf("\n## core_main_loop_quit()\n");
+   core_main_loop_quit();
    return EFL_TRUE;
 }
 
@@ -181,7 +181,7 @@ main(void)
    Eldbus_Proxy *engine, *controler, *playlists;
    Eldbus_Signal_Handler *sh;
 
-   ecore_init();
+   core_init();
    eldbus_init();
 
    conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
@@ -223,9 +223,9 @@ main(void)
                                  on_banshee_startup, NULL);
    eldbus_signal_handler_match_extra_set(sh, "arg0", BUS, "arg1", "", NULL);
 
-   ecore_timer_add(50, _timeout_application, NULL);
+   core_timer_add(50, _timeout_application, NULL);
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
 
 end:
    /**
@@ -236,6 +236,6 @@ end:
    eldbus_connection_unref(conn);
 
    eldbus_shutdown();
-   ecore_shutdown();
+   core_shutdown();
    return 0;
 }

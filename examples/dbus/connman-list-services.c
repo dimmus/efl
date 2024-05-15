@@ -64,7 +64,7 @@ main(void)
    Eldbus_Proxy *manager;
    Eldbus_Pending *pending;
 
-   ecore_init();
+   core_init();
    eldbus_init();
 
    conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SYSTEM);
@@ -97,14 +97,14 @@ main(void)
         return EXIT_FAILURE;
      }
 
-   ecore_main_loop_begin();
+   core_main_loop_begin();
 
    eldbus_proxy_unref(manager);
    eldbus_object_unref(obj);
    eldbus_connection_unref(conn);
 
    eldbus_shutdown();
-   ecore_shutdown();
+   core_shutdown();
    return 0;
 }
 

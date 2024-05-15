@@ -116,7 +116,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(dialer_cbs,
                            { EFL_IO_WRITER_EVENT_CAN_WRITE_CHANGED, _can_write }
                            );
 
-static const Ecore_Getopt options = {
+static const Core_Getopt options = {
   "efl_net_dialer_unix_example", /* program name */
   NULL, /* usage line */
   "1", /* version */
@@ -126,14 +126,14 @@ static const Ecore_Getopt options = {
   "Example of Efl_Net_Dialer_Unix usage, sending a message and receiving a reply\n",
   EFL_FALSE,
   {
-    ECORE_GETOPT_STORE_TRUE('r', "read-after-write", "Do a read after writes are done."),
-    ECORE_GETOPT_VERSION('V', "version"),
-    ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-    ECORE_GETOPT_LICENSE('L', "license"),
-    ECORE_GETOPT_HELP('h', "help"),
-    ECORE_GETOPT_STORE_METAVAR_STR(0, NULL,
+    CORE_GETOPT_STORE_TRUE('r', "read-after-write", "Do a read after writes are done."),
+    CORE_GETOPT_VERSION('V', "version"),
+    CORE_GETOPT_COPYRIGHT('C', "copyright"),
+    CORE_GETOPT_LICENSE('L', "license"),
+    CORE_GETOPT_HELP('h', "help"),
+    CORE_GETOPT_STORE_METAVAR_STR(0, NULL,
                                    "The address (URL) to dial", "address"),
-    ECORE_GETOPT_SENTINEL
+    CORE_GETOPT_SENTINEL
   }
 };
 
@@ -173,25 +173,25 @@ efl_main(void *data EFL_UNUSED,
 {
    char *address = NULL;
    Efl_Bool quit_option = EFL_FALSE;
-   Ecore_Getopt_Value values[] = {
-     ECORE_GETOPT_VALUE_BOOL(do_read),
+   Core_Getopt_Value values[] = {
+     CORE_GETOPT_VALUE_BOOL(do_read),
 
      /* standard block to provide version, copyright, license and help */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
-     ECORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -V/--version quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -C/--copyright quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -L/--license quits */
+     CORE_GETOPT_VALUE_BOOL(quit_option), /* -h/--help quits */
 
      /* positional argument */
-     ECORE_GETOPT_VALUE_STR(address),
+     CORE_GETOPT_VALUE_STR(address),
 
-     ECORE_GETOPT_VALUE_NONE /* sentinel */
+     CORE_GETOPT_VALUE_NONE /* sentinel */
    };
    int args;
    Eo *loop;
    Eina_Error err;
 
-   args = ecore_getopt_parse(&options, values, 0, NULL);
+   args = core_getopt_parse(&options, values, 0, NULL);
    if (args < 0)
      {
         fputs("ERROR: Could not parse command line options.\n", stderr);
@@ -202,7 +202,7 @@ efl_main(void *data EFL_UNUSED,
 
    loop = ev->object;
 
-   args = ecore_getopt_parse_positional(&options, values, 0, NULL, args);
+   args = core_getopt_parse_positional(&options, values, 0, NULL, args);
    if (args < 0)
      {
         fputs("ERROR: Could not parse positional arguments.\n", stderr);
