@@ -39,4 +39,32 @@ To understand something i should brake it! So, to begin with ..
 
 # Current tasks
 
-See [TODO](./TODO) file. PRs, sugestions and any discussion are wellcome.
+See [TODO](./TODO) file. 
+
+Pull requests, sugestions and any discussions are wellcome.
+
+# Build
+
+To build i use helper script `tools/utils_maintenance/build.sh`.
+For convinience create symlink to `run` in source root folder:
+```bash
+ln -s tools/utils_maintenance/build.sh run
+```
+
+Basic usage: 
+
+`./run`       — run without arguments to show all options
+
+`./run s`     — run meson default setup
+
+`./run s dev` — run meson setup with dev options (see build.sh)
+
+`./run c`     — compile with default setup
+
+`./run c dev` — compile with dev options
+
+`./run cc`    — continue compilation (without build clean and reconfigure)
+
+`./run t`     — run tests
+
+`./run f`     — apply formating
