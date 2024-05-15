@@ -2,10 +2,11 @@
 EFL 2.0.99
 ==========
 
-Changes since 1.26.3 (2023-12-23):
----------------------------------
+Changes in 1.27.0 (2023-12-23)
+------------------------------
 
 Features:
+
    * new eina APIS (releative path and sha1)
    * add URI List to elm cnp
    * add JXL Evas loader/saver
@@ -14,17 +15,19 @@ Features:
    * add QOI Evas image loader/saver
 
 Fixes:
-   * Lots of minor bug fixes (too many to summarize here - see git log)
-   * Support ecore exe terminate with parent on windows
-   * Removed GNUTLS support now openssl3 is out
-   * Elementary icons - policy change to use theme icons for std icons
-   * Elementary entry - allow past into password entries
+
+   * lots of minor bug fixes (too many to summarize here - see git log)
+   * support ecore exe terminate with parent on windows
+   * removed GNUTLS support now openssl3 is out
+   * elementary icons - policy change to use theme icons for std icons
+   * elementary entry - allow past into password entries
 
 
-Changes since 1.26.2 (2022-09-16):
----------------------------------
+Changes in-1.26.3 (2022-09-16)
+------------------------------
 
 Fixes:
+
    * fix theme issues
    * fix edje calc internal return values in some cases
    * fix ecore-x netwm moveresize request handling
@@ -46,10 +49,11 @@ Fixes:
    * work around xwayland issue where synthetic events are not sent
 
 
-Changes since 1.26.1 (2022-02-07) :
-----------------------------------
+Changes in 1.26.2 (2022-02-07)
+------------------------------
 
 Fixes:
+
    * Fix crash when doing wierd combinations of eet_write and eet_read
    * fix elementary tests to pass
    * fix portability of putenv/setenv for niche OS's
@@ -60,10 +64,11 @@ Fixes:
    * fix ecore x - ensure pointer on screen when setting bounds
 
 
-Changes since 1.26.0 (2022-01-03) :
-----------------------------------
+Changes in 1.26.1 (2022-01-03)
+------------------------------
 
 Fixes:
+
    * elm theme - win - fix mystery off-by-1 resize of content
    * elm theme - fix mis-named colorclass for inwin bg
    * edje entry - fix past to use shft+ins for paste and no ctl
@@ -71,14 +76,16 @@ Fixes:
    * elm theme - fix placement of procstats and volume so they dont fight
 
 
-Changes since 1.25.1 (2021-12-26) :
-----------------------------------
+Changes in 1.26.0 (2021-12-26)
+------------------------------
 
 Features:
-   * Default theme is now the flat theme
-   * New color palette files and API
+
+   * default theme is now the flat theme
+   * new color palette files and API
 
 Fixes:
+
    * lots of minor bug fixes (too many to summarize here - see git log)
    * evas GL dithers by default for better quality (but it's a bit slower)
    * to disable: export EVAS_GL_RENDER_DISABLE_DITHER=1
@@ -87,12 +94,20 @@ Fixes:
    * improved performance by not rendering invisible windows
 
 
-Changes since 1.25.0 (2020-09-28) :
-----------------------------------
+Changes in 1.25.1 (2020-10-08)
+------------------------------
 
 Fixes:
+
    * evas: sw font draw - protect against null pointer access
    * efreet - windows - still call stat but skip lstat/readlink
+
+
+Changes in 1.24.4 (2020-09-28)
+-----------------------------
+
+Fixes:
+
    * efreetd - cache - add more statinfo work around 0 mtime distros
    * edje - fix edje_cc mis-re-iding images in image sets
    * evas - render - dont crash is private data is null
