@@ -106,7 +106,7 @@ examples = [
 
 foreach example : examples
   # executable(example, example + '.c', dependencies: [eina, ecore, core_con])
-  executable(example, example + '.c', dependencies: [shared, core])
+  executable(example, example + '.c', dependencies: [ shared, core ])
 endforeach
 
 #  'core_imf_example',
