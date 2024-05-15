@@ -13,8 +13,8 @@
 
 - huge problem with development documentation. It's mainly outdated 
   and user level.
-- some libs naming is too esoteric. Most of the names (lib purpose) are 
-  intransparent for necomers. In combination with the lack of development
+- some libs naming is too esoteric. Most of the names (understand like a lib purpose) are 
+  non-transparent for newcomers. In combination with the lack of development
   documentation, the start of EFL development becomes a swamp.
 
 # So, ... intermidiate goal
