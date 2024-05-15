@@ -1,25 +1,25 @@
 # Main goals (wishes :)
 
 - complete `wayland` support in EFL
-- push forward EFL objects support (i mean `eo`)
+- push forward EFL objects support (i mean, `eo`)
 - documentation
 - speed and size optimization
 
 # Problems
 
-- hugh problem with development documentation. It's mainly outdated 
+- huge problem with development documentation. It's mainly outdated 
   and user level.
 - some libs naming is too esoteric. Most of the names (lib purpose) are 
-  intransparent for necomers. In combination with the lack of development 
-  documentation dev start becomes the swamp.
+  intransparent for necomers. In combination with the lack of development
+  documentation, the start of EFL development becomes a swamp.
 
 # So, ... intermidiate goal
 
-- deep dive and understand EFL internals
+- deep dive, understand and master EFL internals
 
 # Tasks
 
-To understand something i should brake it! So, to begin with ..
+To understand something, i should break it! So, to begin with ..
 
 - create **transparent** lib names. Systematic renaming.
 - general and consistent EFL_* (re)naming (like EFL_UNUSED, 
@@ -30,23 +30,23 @@ To understand something i should brake it! So, to begin with ..
 - make thorough **code analysis** system. Some templates from different 
   projects are provided.
 - optimization: flags, architectures, compilers, memory management. It needs 
-  detailed analysis of needness (by build and run times, sizes on  disk and 
+  detailed analysis of neediness (by build and run times, sizes on  disk and 
   in memory, etc).
-- make seperate development **tools**. Some templates provided.
+- make separate development **tools**. Some templates were provided.
 - **meson** build system update. It's too large, so, may be try to atomize it.
-- automatic and consistent formating: create rules and apply clang-format
-- use the power of github ci system
+- automatic and consistent formatting: create rules and apply clang-format
+- use the power of the github CI system
 
 # Current tasks
 
 See [TODO](./TODO) file. 
 
-Pull requests, sugestions and any discussions are wellcome.
+Pull requests, sugestions, and any discussions are welcome.
 
 # Build
 
-To build i use helper script `tools/utils_maintenance/build.sh`.
-For convinience create symlink to `run` in source root folder:
+To build, i use helper script `tools/utils_maintenance/build.sh`.
+For convenience, create a symlink to `run` in the source root folder:
 ```bash
 ln -s tools/utils_maintenance/build.sh run
 ```
@@ -63,8 +63,8 @@ Basic usage:
 
 `./run c dev` — compile with dev options
 
-`./run cc`    — continue compilation (without build clean and reconfigure)
+`./run cc`    — continue compilation (without build cleanup and reconfiguration)
 
 `./run t`     — run tests
 
-`./run f`     — apply formating
+`./run f`     — apply formatting
