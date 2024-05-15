@@ -1,39 +1,49 @@
-EINA_TRUE                    EFL_TRUE
-EINA_FALSE                   EFL_FALSE
-EINA_UNUSED                  EFL_UNUSED
-EINA_WARN_UNUSED_RESULT      EFL_WARN_UNUSED_RESULT
-
-Eina_Strbuf                  Efl_Strbuf
-Eina_Bool                    Efl_Bool
-
-PACKAGE_BUILD_DIR            EFL_BUILD_DIR
-PACKAGE_LIB_DIR              EFL_LIB_DIR
-MODULE_ARCH                  EFL_MODULE_ARCH
-
-config.h                     efl_config.h
-Eina.h                       Efl_Shared.h
-Efl.h                        Efl_Eo_Interfaces.h
-Eo.h                         Efl_Eo.h
-Eolian.h                     Efl_Eo_Gen.h
-Ecore_Wl2.h                  Efl_Core_Wl.h
-Eldbus.h                     Efl_Dbus.h
-Ecore.h                      Efl_Core.h
-
-Ecore_Wl2_Display            Ecore_Wl_Display
-Ecore_Wl2_Window             Ecore_Wl_Window
-Ecore_Wl2_Output             Ecore_Wl_Output 
-Ecore_Wl2_Input              Ecore_Wl_Input
-Ecore_Wl2_Window_Type        Ecore_Wl_Window_Type
-Ecore_Wl2_Seat_Capabilities  Ecore_Wl_Seat_Capabilities
-Ecore_Wl2_Global             Ecore_Wl_Global
-ecore_wl2_*                  ecore_wl_
-
-ck_assert                    efl_assert_true
-ck_assert_str_eq             efl_assert_str_eq
-ck_assert_int_ne             efl_assert_int_ne
-ck_assert_int_eq             efl_assert_int_eq
-ck_assert_ptr_ne             efl_assert_ptr_ne
-ck_assert_ptr_eq             efl_assert_ptr_eq
-ck_assert_uint_eq            efl_assert_uint_eq
-fail_unless                  efl_assert_true
-fail_if                      efl_assert_fail_if
+| Old                          |  New                   |
+| ---------------------------  |------------------------|
+| EINA_TRUE                    |  EFL_TRUE              |
+| EINA_FALSE                   |  EFL_FALSE             |
+| EINA_UNUSED                  |  EFL_UNUSED            |
+| EINA_WARN_UNUSED_RESULT      |  EFL_WARN_UNUSED_RESULT|
+| -                            | -                      |
+| Eina_Strbuf                  |  Efl_Strbuf            |
+| Eina_Bool                    |  Efl_Bool              |
+| -                            | -                      |
+| PACKAGE_BUILD_DIR            |  EFL_BUILD_DIR         |
+| PACKAGE_LIB_DIR              |  EFL_LIB_DIR           |
+| MODULE_ARCH                  |  EFL_MODULE_ARCH       |
+| -                            | -                      |
+| config.h                     | efl_config.h           |
+| Eina.h                       | Efl_Shared.h           |
+| Efl.h                        | Efl_Eo_Interfaces.h    |
+| Eo.h                         | Efl_Eo.h               |
+| Eolian.h                     | Efl_Eo_Gen.h           |
+| Ecore_Wl2.h                  | Efl_Core_Wl.h          |
+| Eldbus.h                     | Efl_Dbus.h             |
+| Ecore.h                      | Efl_Core.h             |
+| -                            | -                      |
+| Ecore_Wl2_Display            | Ecore_Wl_Display       |
+| Ecore_Wl2_Window             | Ecore_Wl_Window        |
+| Ecore_Wl2_Output             | Ecore_Wl_Output        |
+| Ecore_Wl2_Input              | Ecore_Wl_Input         |
+| Ecore_Wl2_Window_Type        | Ecore_Wl_Window_Type   |
+| Ecore_Wl2_Seat_Capabilities  | Ecore_Wl_Seat_Capabilities |
+| Ecore_Wl2_Global             | Ecore_Wl_Global        |
+| ecore_wl2_*                  | ecore_wl_              |
+| -                            | -                      |
+| ecore_internal.h             | core_internal.h        |
+| ecore_private.h              | core_private.h         |
+| Ecore_Common.h               | Efl_Core_Common.h      |
+| Ecore_Eo.h                   | Efl_Core_Eo.h          |
+| Ecore_Getopt.h               | Efl_Core_Getopt.h      |
+| Ecore_Legacy.h               | core_legacy.h          |
+| Ecore.h                      | core.h                 |
+| -                            | -                      |
+| ck_assert                    | efl_assert_true        |
+| ck_assert_str_eq             | efl_assert_str_eq      |
+| ck_assert_int_ne             | efl_assert_int_ne      |
+| ck_assert_int_eq             | efl_assert_int_eq      |
+| ck_assert_ptr_ne             | efl_assert_ptr_ne      |
+| ck_assert_ptr_eq             | efl_assert_ptr_eq      |
+| ck_assert_uint_eq            | efl_assert_uint_eq     |
+| fail_unless                  | efl_assert_true        |
+| fail_if                      | efl_assert_fail_if     |
