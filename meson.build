@@ -69,7 +69,7 @@ subprojects = [
   ['shared'             ,[]                 , false,   true,     true,    true,      true,        true,       true,   [],          []],
   ['eo_gen'             ,[]                 , false,   true,     true,   false,      true,       false,      false,   ['shared'],  []],
   ['eo'                 ,[]                 , false,   true,    false,    true,      true,       false,       true,   ['shared'],  []],
-  ['eo_interfaces'      ,[]                 , false,   true,    false,   false,     false,       false,       true,   ['eo'], []],
+  ['eo_interfaces'      ,[]                 , false,   true,    false,   false,      true,       false,       true,   ['eo'], []],
   ['core'               ,[]                 , false,   true,    false,   false,     false,       false,       true,   ['shared', 'eo', 'eo_interfaces'], []],
   ['dbus'               ,[]                 , false,   true,     true,   false,     false,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
   ['core'               ,[]                 ,  true,  false,    false,   false,     false,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], 
