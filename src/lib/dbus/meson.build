@@ -8,13 +8,13 @@ dep_dbus_ext = [ dependency('dbus-1') ]
 inc_dbus = include_directories('.')
 
 pub_eo_files = [
-  'eldbus_model_connection.eo',
-  'eldbus_model_object.eo',
-  'eldbus_model_proxy.eo',
-  'eldbus_model_method.eo',
-  'eldbus_model_arguments.eo',
-  'eldbus_model_signal.eo',
-  'eldbus_model.eo',
+  'efl_dbus_model_arguments.eo',
+  'efl_dbus_model_connection.eo',
+  'efl_dbus_model_method.eo',
+  'efl_dbus_model_object.eo',
+  'efl_dbus_model_proxy.eo',
+  'efl_dbus_model_signal.eo',
+  'efl_dbus_model.eo',
 ]
 
 pub_eo_file_target = []
@@ -33,7 +33,7 @@ foreach eo_file : pub_eo_files
 endforeach
 
 pub_eo_types_files = [
-  'eldbus_types.eot'
+  'efl_dbus_types.eot'
 ]
 
 foreach eo_file : pub_eo_types_files
@@ -54,49 +54,40 @@ eo_gen_include_directories += ['-I', dir_current_source]
 
 src_dbus_headers = files(
   'Efl_Dbus.h',
-  'eldbus_connection.h',
-  'eldbus_freedesktop.h',
-  'eldbus_message.h',
-  'eldbus_object.h',
-  'eldbus_pending.h',
-  'eldbus_proxy.h',
-  'eldbus_service.h',
-  'eldbus_signal_handler.h',
-  'eldbus_message_helper.h',
-  'eldbus_introspection.h',
-  'Eldbus_Model.h',
-  'eldbus_message_eina_value.h'
+  'Efl_Dbus_Model.h',
+  'efl_dbus_connection.h',
+  'efl_dbus_freedesktop.h',
+  'efl_dbus_message.h',
+  'efl_dbus_object.h',
+  'efl_dbus_pending.h',
+  'efl_dbus_proxy.h',
+  'efl_dbus_service.h',
+  'efl_dbus_signal_handler.h',
+  'efl_dbus_message_helper.h',
+  'efl_dbus_introspection.h',
+  'efl_dbus_message_eina_value.h'
 )
 
 src_dbus = files(
-  'eldbus_private.h',
-  'eldbus_private_types.h',
-  'eldbus_model_private.h',
-  'eldbus_model_proxy_private.h',
-  'eldbus_model_object_private.h',
-  'eldbus_model_arguments_private.h',
-  'eldbus_model_connection_private.h',
-  'eldbus_model_signal_private.h',
-  'eldbus_model_method_private.h',
-  'eldbus_proxy.c',
-  'eldbus_core.c',
-  'eldbus_message.c',
-  'eldbus_object.c',
-  'eldbus_pending.c',
-  'eldbus_freedesktop.c',
-  'eldbus_service.c',
-  'eldbus_signal_handler.c',
-  'eldbus_message_helper.c',
-  'eldbus_message_to_eina_value.c',
-  'eldbus_message_from_eina_value.c',
-  'eldbus_model.c',
-  'eldbus_model_connection.c',
-  'eldbus_model_object.c',
-  'eldbus_model_proxy.c',
-  'eldbus_model_method.c',
-  'eldbus_model_arguments.c',
-  'eldbus_model_signal.c',
-  'eldbus_introspection.c'
+  'efl_dbus_proxy.c',
+  'efl_dbus_core.c',
+  'efl_dbus_message.c',
+  'efl_dbus_object.c',
+  'efl_dbus_pending.c',
+  'efl_dbus_freedesktop.c',
+  'efl_dbus_service.c',
+  'efl_dbus_signal_handler.c',
+  'efl_dbus_message_helper.c',
+  'efl_dbus_message_to_eina_value.c',
+  'efl_dbus_message_from_eina_value.c',
+  'efl_dbus_model.c',
+  'efl_dbus_model_connection.c',
+  'efl_dbus_model_object.c',
+  'efl_dbus_model_proxy.c',
+  'efl_dbus_model_method.c',
+  'efl_dbus_model_arguments.c',
+  'efl_dbus_model_signal.c',
+  'efl_dbus_introspection.c'
 )
 
 lib_dbus = library('efl_dbus',

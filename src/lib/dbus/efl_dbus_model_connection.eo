@@ -1,0 +1,10 @@
+class @beta Efl.Dbus.Model.Connection extends Efl.Dbus.Model {
+    [[Efl.Dbus model connection class]]
+
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.invalidate;
+        Efl.Model.children_slice_get;
+        Efl.Model.children_count { get; }
+    }
+}

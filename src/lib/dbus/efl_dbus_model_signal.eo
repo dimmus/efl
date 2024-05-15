@@ -1,0 +1,22 @@
+class @beta Efl.Dbus.Model.Signal extends Efl.Dbus.Model.Arguments {
+    [[Efl.Dbus model signal class]]
+
+    methods {
+        signal_constructor {
+              [[Custom Efl_Dbus_Model_Signal constructor.
+
+                @since 1.16]]
+            params {
+                @in proxy: ptr(Efl.Dbus.Proxy); [[Efl.Dbus proxy]]
+                @in signal: ptr(const(Efl.Dbus.Introspection.Signal)); [[The introspected method]]
+            }
+        }
+    }
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.invalidate;
+    }
+    constructors {
+        .signal_constructor;
+    }
+}

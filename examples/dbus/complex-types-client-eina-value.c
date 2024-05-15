@@ -36,7 +36,7 @@ _type_offset(unsigned base, unsigned size)
 }
 
 static void
-_fill_receive_array_of_string_int_with_size(Eldbus_Message *msg, int size, const char *array[])
+_fill_receive_array_of_string_int_with_size(Efl_Dbus_Message *msg, int size, const char *array[])
 {
    Eina_Value *value_struct, *value_array;
    int i;
@@ -86,27 +86,27 @@ _fill_receive_array_of_string_int_with_size(Eldbus_Message *msg, int size, const
      }
    eina_value_struct_value_set(value_struct, "array", value_array);
 
-   eldbus_message_from_eina_value("ia(si)", msg, value_struct);
+   efl_dbus_message_from_eina_value("ia(si)", msg, value_struct);
 
    eina_value_free(value_struct);
    eina_value_free(value_array);
 }
 
 static void
-on_send_array(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+on_send_array(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    Eina_Value *v, array;
    const char *txt;
    unsigned i;
    printf("2 - on_send_array()\n");
 
-   if (eldbus_message_error_get(msg, NULL, NULL))
+   if (efl_dbus_message_error_get(msg, NULL, NULL))
      {
         printf("Message error\n\n");
         return;
      }
 
-   v = eldbus_message_to_eina_value(msg);
+   v = efl_dbus_message_to_eina_value(msg);
    eina_value_struct_value_get(v, "arg0", &array);
    for (i = 0; i < eina_value_array_count(&array); i++)
      {
@@ -119,31 +119,31 @@ on_send_array(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *
 }
 
 static void
-on_receive_array_with_size(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+on_receive_array_with_size(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname;
    const char *errmsg;
 
    printf("1 - on_receive_array_with_size()\n");
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         fprintf(stderr, "Error: %s %s\n", errname, errmsg);
      }
 }
 
 static void
-on_plus_one(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+on_plus_one(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    Eina_Value *v;
    int num2;
 
-   if (eldbus_message_error_get(msg, NULL, NULL))
+   if (efl_dbus_message_error_get(msg, NULL, NULL))
      {
         printf("Message error\n\n");
         return;
      }
 
-   v = eldbus_message_to_eina_value(msg);
+   v = efl_dbus_message_to_eina_value(msg);
    eina_value_struct_get(v, "arg0", &num2);
 
    printf("3 - on_plus_one() %d\n", num2);
@@ -151,19 +151,19 @@ on_plus_one(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pe
 }
 
 static void
-receive_variant_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+receive_variant_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    Eina_Value *v, variant, array;
    unsigned i;
 
    printf("4 - receive a variant with an array of strings\n");
-   if (eldbus_message_error_get(msg, NULL, NULL))
+   if (efl_dbus_message_error_get(msg, NULL, NULL))
      {
         printf("Message error\n\n");
         return;
      }
 
-   v = eldbus_message_to_eina_value(msg);
+   v = efl_dbus_message_to_eina_value(msg);
 
    eina_value_struct_value_get(v, "arg0", &variant);
    eina_value_struct_value_get(&variant, "arg0", &array);
@@ -180,17 +180,17 @@ receive_variant_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pend
 }
 
 static void
-_property_removed(void *data EFL_UNUSED, Eldbus_Proxy *proxy EFL_UNUSED, void *event_info)
+_property_removed(void *data EFL_UNUSED, Efl_Dbus_Proxy *proxy EFL_UNUSED, void *event_info)
 {
-   Eldbus_Proxy_Event_Property_Removed *event = event_info;
+   Efl_Dbus_Proxy_Event_Property_Removed *event = event_info;
 
    printf("\nproperty removed: %s", event->name);
 }
 
 static void
-_property_changed(void *data EFL_UNUSED, Eldbus_Proxy *proxy EFL_UNUSED, void *event_info)
+_property_changed(void *data EFL_UNUSED, Efl_Dbus_Proxy *proxy EFL_UNUSED, void *event_info)
 {
-   Eldbus_Proxy_Event_Property_Changed *event = event_info;
+   Efl_Dbus_Proxy_Event_Property_Changed *event = event_info;
    const char *name;
    const Eina_Value *value;
    printf("\nproperty changed\n");
@@ -223,26 +223,26 @@ _property_changed(void *data EFL_UNUSED, Eldbus_Proxy *proxy EFL_UNUSED, void *e
 static Efl_Bool
 _read_cache(void *data)
 {
-   Eldbus_Proxy *proxy = data;
+   Efl_Dbus_Proxy *proxy = data;
    const char *txt;
    int num;
    Eina_Value *v;
 
-   v = eldbus_proxy_property_local_get(proxy, "text");
+   v = efl_dbus_proxy_property_local_get(proxy, "text");
    if (v)
      {
         eina_value_get(v, &txt);
         printf("Read cache: [txt] = %s\n", txt);
      }
 
-   v = eldbus_proxy_property_local_get(proxy, "int32");
+   v = efl_dbus_proxy_property_local_get(proxy, "int32");
    if (v)
      {
         eina_value_get(v, &num);
         printf("Read cache: [int32] = %d\n", num);
      }
 
-   v = eldbus_proxy_property_local_get(proxy, "st");
+   v = efl_dbus_proxy_property_local_get(proxy, "st");
    if (v)
      {
         eina_value_struct_get(v, "arg0", &txt);
@@ -255,7 +255,7 @@ _read_cache(void *data)
 }
 
 static void
-_fill_plus_one(Eldbus_Message *msg, int num)
+_fill_plus_one(Efl_Dbus_Message *msg, int num)
 {
    Eina_Value *v;
    Eina_Value_Struct_Member main_members[] = {
@@ -271,7 +271,7 @@ _fill_plus_one(Eldbus_Message *msg, int num)
    v = eina_value_struct_new(&desc_struct);
    eina_value_struct_set(v, "num", num);
 
-   eldbus_message_from_eina_value("i", msg, v);
+   efl_dbus_message_from_eina_value("i", msg, v);
 
    eina_value_free(v);
 }
@@ -279,46 +279,46 @@ _fill_plus_one(Eldbus_Message *msg, int num)
 int
 main(void)
 {
-   Eldbus_Connection *conn;
-   Eldbus_Object *obj;
-   Eldbus_Proxy *proxy;
-   Eldbus_Message *msg;
+   Efl_Dbus_Connection *conn;
+   Efl_Dbus_Object *obj;
+   Efl_Dbus_Proxy *proxy;
+   Efl_Dbus_Message *msg;
 
    core_init();
-   eldbus_init();
+   efl_dbus_init();
 
-   conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
-   obj = eldbus_object_get(conn, BUS, PATH);
-   proxy = eldbus_proxy_get(obj, IFACE);
+   conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+   obj = efl_dbus_object_get(conn, BUS, PATH);
+   proxy = efl_dbus_proxy_get(obj, IFACE);
 
-   msg = eldbus_proxy_method_call_new(proxy, "ReceiveArrayOfStringIntWithSize");
+   msg = efl_dbus_proxy_method_call_new(proxy, "ReceiveArrayOfStringIntWithSize");
    _fill_receive_array_of_string_int_with_size(msg, size_of_array, array_string);
-   eldbus_proxy_send(proxy, msg, on_receive_array_with_size, NULL, -1);
+   efl_dbus_proxy_send(proxy, msg, on_receive_array_with_size, NULL, -1);
 
-   eldbus_proxy_call(proxy, "SendArray", on_send_array, NULL, -1 , "");
+   efl_dbus_proxy_call(proxy, "SendArray", on_send_array, NULL, -1 , "");
 
-   msg = eldbus_proxy_method_call_new(proxy, "PlusOne");
+   msg = efl_dbus_proxy_method_call_new(proxy, "PlusOne");
    _fill_plus_one(msg, 14);
-   eldbus_proxy_send(proxy, msg, on_plus_one, NULL, -1);
+   efl_dbus_proxy_send(proxy, msg, on_plus_one, NULL, -1);
 
-   eldbus_proxy_event_callback_add(proxy,
-                                  ELDBUS_PROXY_EVENT_PROPERTY_CHANGED,
+   efl_dbus_proxy_event_callback_add(proxy,
+                                  EFL_DBUS_PROXY_EVENT_PROPERTY_CHANGED,
                                   _property_changed, NULL);
-   eldbus_proxy_event_callback_add(proxy, ELDBUS_PROXY_EVENT_PROPERTY_REMOVED,
+   efl_dbus_proxy_event_callback_add(proxy, EFL_DBUS_PROXY_EVENT_PROPERTY_REMOVED,
                                   _property_removed, NULL);
 
-   eldbus_proxy_properties_monitor(proxy, EFL_TRUE);
+   efl_dbus_proxy_properties_monitor(proxy, EFL_TRUE);
    core_timer_add(10, _read_cache, proxy);
 
-   eldbus_proxy_call(proxy, "ReceiveVariantData", receive_variant_cb, NULL, -1, "");
+   efl_dbus_proxy_call(proxy, "ReceiveVariantData", receive_variant_cb, NULL, -1, "");
 
    core_main_loop_begin();
 
-   eldbus_proxy_event_callback_del(proxy, ELDBUS_PROXY_EVENT_PROPERTY_CHANGED,
+   efl_dbus_proxy_event_callback_del(proxy, EFL_DBUS_PROXY_EVENT_PROPERTY_CHANGED,
                                   _property_changed, NULL);
-   eldbus_connection_unref(conn);
+   efl_dbus_connection_unref(conn);
 
-   eldbus_shutdown();
+   efl_dbus_shutdown();
    core_shutdown();
    return 0;
 }

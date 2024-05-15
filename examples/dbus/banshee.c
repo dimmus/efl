@@ -13,7 +13,7 @@
 #define CONTROLLER_IFACE "org.bansheeproject.Banshee.PlaybackController"
 #define MPRIS_IFACE "org.mpris.MediaPlayer2.Playlists"
 
-static Eldbus_Signal_Handler *state_changed2;
+static Efl_Dbus_Signal_Handler *state_changed2;
 
 static Efl_Bool
 _timeout_application(void *data EFL_UNUSED)
@@ -24,25 +24,25 @@ _timeout_application(void *data EFL_UNUSED)
 }
 
 static void
-on_get_playlists(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+on_get_playlists(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
-   Eldbus_Message_Iter *array, *struct_entry;
+   Efl_Dbus_Message_Iter *array, *struct_entry;
    const char *path, *name, *image;
    int i = 0;
 
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
 
-   if (!eldbus_message_arguments_get(msg, "a(oss)", &array))
+   if (!efl_dbus_message_arguments_get(msg, "a(oss)", &array))
      {
         fprintf(stderr, "Error: could not get entry contents\n");
         return;
      }
    printf("on_get_playlists() \n\n");
-   while (eldbus_message_iter_get_and_next(array, 'r', &struct_entry))
+   while (efl_dbus_message_iter_get_and_next(array, 'r', &struct_entry))
      {
-        if (!eldbus_message_iter_arguments_get(struct_entry, "oss", &path, &name, &image))
+        if (!efl_dbus_message_iter_arguments_get(struct_entry, "oss", &path, &name, &image))
           {
-             printf("error on eldbus_massage_iterator_arguments_get()");
+             printf("error on efl_dbus_massage_iterator_arguments_get()");
              return;
           }
         i++;
@@ -52,47 +52,47 @@ on_get_playlists(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pendin
 }
 
 static void
-iterate_dict(void *data EFL_UNUSED, const void *key, Eldbus_Message_Iter *var)
+iterate_dict(void *data EFL_UNUSED, const void *key, Efl_Dbus_Message_Iter *var)
 {
    const char *skey = key;
 
    if (!strcmp(skey, "PlaylistCount"))
      {
         unsigned count;
-        if (!eldbus_message_iter_arguments_get(var, "u", &count))
+        if (!efl_dbus_message_iter_arguments_get(var, "u", &count))
           printf("error2\n");
         printf("PlaylistCount=%u\n", count);
      }
    else if (!strcmp(skey, "Orderings"))
      {
-        Eldbus_Message_Iter *as;
+        Efl_Dbus_Message_Iter *as;
         const char *txt;
         printf("- Orderings\n");
-        if (!eldbus_message_iter_arguments_get(var, "as", &as))
+        if (!efl_dbus_message_iter_arguments_get(var, "as", &as))
           printf("error1\n");
-        while (eldbus_message_iter_get_and_next(as, 's', &txt))
+        while (efl_dbus_message_iter_get_and_next(as, 's', &txt))
           printf("\t%s\n", txt);
      }
 }
 
 static void
-playlist_get_all_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+playlist_get_all_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
-   Eldbus_Message_Iter *array;
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
+   Efl_Dbus_Message_Iter *array;
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
 
-   if (eldbus_message_arguments_get(msg, "a{sv}", &array))
-     eldbus_message_iter_dict_iterate(array, "sv", iterate_dict, NULL);
+   if (efl_dbus_message_arguments_get(msg, "a{sv}", &array))
+     efl_dbus_message_iter_dict_iterate(array, "sv", iterate_dict, NULL);
 }
 
 static void
-on_introspect(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+on_introspect(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *string;
 
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
 
-   if (!eldbus_message_arguments_get(msg, "s", &string))
+   if (!efl_dbus_message_arguments_get(msg, "s", &string))
      {
         fprintf(stderr, "Error: could not get entry contents\n");
         return;
@@ -102,22 +102,22 @@ on_introspect(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *
 }
 
 static void
-on_next_or_pause(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+on_next_or_pause(void *data, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *status = data;
 
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
 
    printf("%s\n", status);
 }
 
 static void
-on_state_changed(void *data EFL_UNUSED, const Eldbus_Message *msg)
+on_state_changed(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
    const char *status;
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
 
-   if (!eldbus_message_arguments_get(msg, "s", &status))
+   if (!efl_dbus_message_arguments_get(msg, "s", &status))
      {
         fprintf(stderr, "Error: could not get entry contents\n");
         return;
@@ -127,29 +127,29 @@ on_state_changed(void *data EFL_UNUSED, const Eldbus_Message *msg)
 }
 
 static void
-on_state_changed2(void *data EFL_UNUSED, const Eldbus_Message *msg)
+on_state_changed2(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
    const char *status;
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
 
-   if (!eldbus_message_arguments_get(msg, "s", &status))
+   if (!efl_dbus_message_arguments_get(msg, "s", &status))
      {
         fprintf(stderr, "Error: could not get entry contents\n");
         return;
      }
 
    printf("on_state_changed2 = %s\n", status);
-   eldbus_signal_handler_unref(state_changed2);
+   efl_dbus_signal_handler_unref(state_changed2);
    state_changed2 = NULL;
 }
 
 static void
-on_banshee_startup(void *data EFL_UNUSED, const Eldbus_Message *msg)
+on_banshee_startup(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
    const char *bus, *older_id, *new_id;
 
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
-   if (!eldbus_message_arguments_get(msg, "sss", &bus, &older_id, &new_id))
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
+   if (!efl_dbus_message_arguments_get(msg, "sss", &bus, &older_id, &new_id))
      {
         printf("Error getting arguments from NameOwnerChanged");
         return;
@@ -159,12 +159,12 @@ on_banshee_startup(void *data EFL_UNUSED, const Eldbus_Message *msg)
 }
 
 static void
-on_name_owner_changed(void *data EFL_UNUSED, const Eldbus_Message *msg)
+on_name_owner_changed(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
    const char *bus, *older_id, *new_id;
 
-   EINA_SAFETY_ON_TRUE_RETURN(eldbus_message_error_get(msg, NULL, NULL));
-   if (!eldbus_message_arguments_get(msg, "sss", &bus, &older_id, &new_id))
+   EINA_SAFETY_ON_TRUE_RETURN(efl_dbus_message_error_get(msg, NULL, NULL));
+   if (!efl_dbus_message_arguments_get(msg, "sss", &bus, &older_id, &new_id))
      {
         printf("Error getting arguments from NameOwnerChanged");
         return;
@@ -176,52 +176,52 @@ on_name_owner_changed(void *data EFL_UNUSED, const Eldbus_Message *msg)
 int
 main(void)
 {
-   Eldbus_Connection *conn;
-   Eldbus_Object *engine_obj, *controller_obj, *mpris_obj;
-   Eldbus_Proxy *engine, *controler, *playlists;
-   Eldbus_Signal_Handler *sh;
+   Efl_Dbus_Connection *conn;
+   Efl_Dbus_Object *engine_obj, *controller_obj, *mpris_obj;
+   Efl_Dbus_Proxy *engine, *controler, *playlists;
+   Efl_Dbus_Signal_Handler *sh;
 
    core_init();
-   eldbus_init();
+   efl_dbus_init();
 
-   conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
+   conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
 
-   engine_obj = eldbus_object_get(conn, BUS, ENGINE_PATH);
-   controller_obj = eldbus_object_get(conn, BUS, CONTROLLER_PATH);
-   mpris_obj = eldbus_object_get(conn, BUS, MPRIS_PATH);
+   engine_obj = efl_dbus_object_get(conn, BUS, ENGINE_PATH);
+   controller_obj = efl_dbus_object_get(conn, BUS, CONTROLLER_PATH);
+   mpris_obj = efl_dbus_object_get(conn, BUS, MPRIS_PATH);
 
-   engine = eldbus_proxy_get(engine_obj, ENGINE_IFACE);
+   engine = efl_dbus_proxy_get(engine_obj, ENGINE_IFACE);
    EINA_SAFETY_ON_NULL_GOTO(engine, end);
-   controler = eldbus_proxy_get(controller_obj, CONTROLLER_IFACE);
+   controler = efl_dbus_proxy_get(controller_obj, CONTROLLER_IFACE);
    EINA_SAFETY_ON_NULL_GOTO(controler, end);
-   playlists = eldbus_proxy_get(mpris_obj, MPRIS_IFACE);
+   playlists = efl_dbus_proxy_get(mpris_obj, MPRIS_IFACE);
    EINA_SAFETY_ON_NULL_GOTO(playlists, end);
 
-   eldbus_object_introspect(engine_obj, on_introspect, NULL);
+   efl_dbus_object_introspect(engine_obj, on_introspect, NULL);
 
-   eldbus_proxy_signal_handler_add(engine, "StateChanged", on_state_changed, NULL);
-   eldbus_proxy_call(engine, "Pause", on_next_or_pause, "Pause", -1, "");
+   efl_dbus_proxy_signal_handler_add(engine, "StateChanged", on_state_changed, NULL);
+   efl_dbus_proxy_call(engine, "Pause", on_next_or_pause, "Pause", -1, "");
 
-   eldbus_proxy_call(controler, "Next", on_next_or_pause, "Next", -1, "b", EFL_TRUE);
+   efl_dbus_proxy_call(controler, "Next", on_next_or_pause, "Next", -1, "b", EFL_TRUE);
 
-   eldbus_proxy_property_get_all(playlists, playlist_get_all_cb, NULL);
-   eldbus_proxy_call(playlists, "GetPlaylists", on_get_playlists, NULL, -1,
+   efl_dbus_proxy_property_get_all(playlists, playlist_get_all_cb, NULL);
+   efl_dbus_proxy_call(playlists, "GetPlaylists", on_get_playlists, NULL, -1,
                     "uusb", (unsigned)0, (unsigned)30, "asc", EFL_FALSE);
 
-   eldbus_signal_handler_add(conn, BUS, ENGINE_PATH, ENGINE_IFACE,
+   efl_dbus_signal_handler_add(conn, BUS, ENGINE_PATH, ENGINE_IFACE,
                             "StateChanged", on_state_changed, NULL);
-   state_changed2 = eldbus_signal_handler_add(conn, BUS, ENGINE_PATH, ENGINE_IFACE,
+   state_changed2 = efl_dbus_signal_handler_add(conn, BUS, ENGINE_PATH, ENGINE_IFACE,
                                              "StateChanged", on_state_changed2, NULL);
 
-   sh = eldbus_signal_handler_add(conn, ELDBUS_FDO_BUS, ELDBUS_FDO_PATH,
-                                 ELDBUS_FDO_INTERFACE, "NameOwnerChanged",
+   sh = efl_dbus_signal_handler_add(conn, EFL_DBUS_FDO_BUS, EFL_DBUS_FDO_PATH,
+                                 EFL_DBUS_FDO_INTERFACE, "NameOwnerChanged",
                                  on_name_owner_changed, NULL);
-   eldbus_signal_handler_match_extra_set(sh, "arg0", BUS, NULL);
+   efl_dbus_signal_handler_match_extra_set(sh, "arg0", BUS, NULL);
 
-   sh = eldbus_signal_handler_add(conn, ELDBUS_FDO_BUS, ELDBUS_FDO_PATH,
-                                 ELDBUS_FDO_INTERFACE, "NameOwnerChanged",
+   sh = efl_dbus_signal_handler_add(conn, EFL_DBUS_FDO_BUS, EFL_DBUS_FDO_PATH,
+                                 EFL_DBUS_FDO_INTERFACE, "NameOwnerChanged",
                                  on_banshee_startup, NULL);
-   eldbus_signal_handler_match_extra_set(sh, "arg0", BUS, "arg1", "", NULL);
+   efl_dbus_signal_handler_match_extra_set(sh, "arg0", BUS, "arg1", "", NULL);
 
    core_timer_add(50, _timeout_application, NULL);
 
@@ -233,9 +233,9 @@ end:
     *  When a parent have ref = 0, it will unref all your childrens
     *  before free it self.
     **/
-   eldbus_connection_unref(conn);
+   efl_dbus_connection_unref(conn);
 
-   eldbus_shutdown();
+   efl_dbus_shutdown();
    core_shutdown();
    return 0;
 }

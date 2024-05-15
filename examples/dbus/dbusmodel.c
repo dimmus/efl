@@ -6,7 +6,7 @@
 #endif
 
 #include <Efl_Dbus.h>
-#include <Eldbus_Model.h>
+#include <Efl_Dbus_Model.h>
 #include <Efl_Eo_Interfaces.h>
 #include <Efl_Core.h>
 #include <Efl_Core_Getopt.h>
@@ -71,7 +71,7 @@ process(Eo *child, unsigned int index)
 
    buf = eina_strbuf_new();
 
-   const char *name = eldbus_model_proxy_name_get(child);
+   const char *name = efl_dbus_model_proxy_name_get(child);
 
    EINA_ITERATOR_FOREACH(properties, property)
      {
@@ -177,7 +177,7 @@ static const Core_Getopt options = {
 int
 main(int argc, char **argv EFL_UNUSED)
 {
-   Eldbus_Connection_Type conn_type;
+   Efl_Dbus_Connection_Type conn_type;
    Efl_Bool is_system = EFL_FALSE;
    char *bus_name = DEFAULT_BUS_NAME;
    char *path = DEFAULT_PATH;
@@ -202,7 +202,7 @@ main(int argc, char **argv EFL_UNUSED)
    Eo *root;
 
    core_init();
-   eldbus_init();
+   efl_dbus_init();
 
    args = core_getopt_parse(&options, values, argc, argv);
    if (args < 0)
@@ -223,13 +223,13 @@ main(int argc, char **argv EFL_UNUSED)
      }
 
    conn_type = (is_system ?
-                ELDBUS_CONNECTION_TYPE_SYSTEM :
-                ELDBUS_CONNECTION_TYPE_SESSION);
+                EFL_DBUS_CONNECTION_TYPE_SYSTEM :
+                EFL_DBUS_CONNECTION_TYPE_SESSION);
 
-   root = efl_add_ref(ELDBUS_MODEL_OBJECT_CLASS, efl_main_loop_get(),
-                      eldbus_model_connect(efl_added, conn_type, NULL, EFL_FALSE),
-                      eldbus_model_object_bus_set(efl_added, bus_name),
-                      eldbus_model_object_path_set(efl_added, path),
+   root = efl_add_ref(EFL_DBUS_MODEL_OBJECT_CLASS, efl_main_loop_get(),
+                      efl_dbus_model_connect(efl_added, conn_type, NULL, EFL_FALSE),
+                      efl_dbus_model_object_bus_set(efl_added, bus_name),
+                      efl_dbus_model_object_path_set(efl_added, path),
                       efl_event_callback_array_add(efl_added, event_cbs(), NULL));
 
    if (efl_model_children_count_get(root))
@@ -240,7 +240,7 @@ main(int argc, char **argv EFL_UNUSED)
    efl_del(root);
 
  end:
-   eldbus_shutdown();
+   efl_dbus_shutdown();
    core_shutdown();
    return retval;
 }

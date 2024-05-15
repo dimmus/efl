@@ -561,8 +561,8 @@ _joystick_unregister(const char *syspath)
 static void
 _watch_cb(const char        *syspath,
           Eeze_Udev_Event    event,
-          void *data         EINA_UNUSED,
-          Eeze_Udev_Watch *w EINA_UNUSED)
+          void *data         EFL_UNUSED,
+          Eeze_Udev_Watch *w EFL_UNUSED)
 {
     switch (event)
     {

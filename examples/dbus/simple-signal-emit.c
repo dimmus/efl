@@ -9,18 +9,18 @@ enum {
    TEST_SIGNAL_NAME,
 };
 
-static const Eldbus_Signal test_signals[] = {
+static const Efl_Dbus_Signal test_signals[] = {
    [TEST_SIGNAL_ALIVE] = { "Alive" },
-   [TEST_SIGNAL_PROP] = { "Properties", ELDBUS_ARGS({ "a{ss}", "properties"}) },
-   [TEST_SIGNAL_NAME] = { "Name", ELDBUS_ARGS({ "s", "name"}) },
+   [TEST_SIGNAL_PROP] = { "Properties", EFL_DBUS_ARGS({ "a{ss}", "properties"}) },
+   [TEST_SIGNAL_NAME] = { "Name", EFL_DBUS_ARGS({ "s", "name"}) },
    { }
 };
 
 /* signal with complex arguments (a dict) */
-static void emit_properties(Eldbus_Service_Interface *iface)
+static void emit_properties(Efl_Dbus_Service_Interface *iface)
 {
-   Eldbus_Message *alive2;
-   Eldbus_Message_Iter *iter, *dict;
+   Efl_Dbus_Message *alive2;
+   Efl_Dbus_Message_Iter *iter, *dict;
    struct keyval {
       const char *key;
       const char *val;
@@ -31,56 +31,56 @@ static void emit_properties(Eldbus_Service_Interface *iface)
    };
    struct keyval *k;
 
-   alive2 = eldbus_service_signal_new(iface, TEST_SIGNAL_PROP);
-   iter = eldbus_message_iter_get(alive2);
-   dict = eldbus_message_iter_container_new(iter, 'a', "{ss}");
+   alive2 = efl_dbus_service_signal_new(iface, TEST_SIGNAL_PROP);
+   iter = efl_dbus_message_iter_get(alive2);
+   dict = efl_dbus_message_iter_container_new(iter, 'a', "{ss}");
 
    for (k = keyval; k && k->key; k++)
      {
-        Eldbus_Message_Iter *entry = eldbus_message_iter_container_new(dict, 'e',
+        Efl_Dbus_Message_Iter *entry = efl_dbus_message_iter_container_new(dict, 'e',
                                                                      NULL);
-        eldbus_message_iter_arguments_append(entry, "ss", k->key, k->val);
-        eldbus_message_iter_container_close(dict, entry);
+        efl_dbus_message_iter_arguments_append(entry, "ss", k->key, k->val);
+        efl_dbus_message_iter_container_close(dict, entry);
      }
 
-   eldbus_message_iter_container_close(iter, dict);
-   eldbus_service_signal_send(iface, alive2);
+   efl_dbus_message_iter_container_close(iter, dict);
+   efl_dbus_service_signal_send(iface, alive2);
 }
 
 /* signal with basic args */
-static void emit_name(Eldbus_Service_Interface *iface)
+static void emit_name(Efl_Dbus_Service_Interface *iface)
 {
-   eldbus_service_signal_emit(iface, TEST_SIGNAL_NAME, "TEST");
+   efl_dbus_service_signal_emit(iface, TEST_SIGNAL_NAME, "TEST");
 }
 
 /* simple signal example */
-static void emit_alive(Eldbus_Service_Interface *iface)
+static void emit_alive(Efl_Dbus_Service_Interface *iface)
 {
-   eldbus_service_signal_emit(iface, TEST_SIGNAL_ALIVE);
+   efl_dbus_service_signal_emit(iface, TEST_SIGNAL_ALIVE);
 }
 
-static const Eldbus_Service_Interface_Desc iface_desc = {
+static const Efl_Dbus_Service_Interface_Desc iface_desc = {
    "org.enlightenment.Test", NULL, test_signals, NULL, NULL, NULL
 };
 
 int main(void)
 {
-   Eldbus_Connection *conn;
-   Eldbus_Service_Interface *iface;
+   Efl_Dbus_Connection *conn;
+   Efl_Dbus_Service_Interface *iface;
 
-   eldbus_init();
+   efl_dbus_init();
 
-   conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
-   iface = eldbus_service_interface_register(conn, "/org/enlightenment",
+   conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+   iface = efl_dbus_service_interface_register(conn, "/org/enlightenment",
                                             &iface_desc);
 
    emit_alive(iface);
    emit_name(iface);
    emit_properties(iface);
 
-   eldbus_connection_unref(conn);
+   efl_dbus_connection_unref(conn);
 
-   eldbus_shutdown();
+   efl_dbus_shutdown();
 
    return 0;
 }

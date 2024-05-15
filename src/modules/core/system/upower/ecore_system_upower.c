@@ -8,13 +8,13 @@
 #include "Efl_Core.h"
 
 static int                _log_dom = -1;
-static Eldbus_Connection *_conn    = NULL;
+static Efl_Dbus_Connection *_conn    = NULL;
 
-static Eldbus_Object *_obj   = NULL;
-static Eldbus_Proxy  *_proxy = NULL;
+static Efl_Dbus_Object *_obj   = NULL;
+static Efl_Dbus_Proxy  *_proxy = NULL;
 
-static Eldbus_Object *_disp_obj   = NULL;
-static Eldbus_Proxy  *_disp_proxy = NULL;
+static Efl_Dbus_Object *_disp_obj   = NULL;
+static Efl_Dbus_Proxy  *_disp_proxy = NULL;
 
 typedef enum
 {
@@ -48,7 +48,7 @@ static Efl_Bool _core_on_battery    = EFL_FALSE;
 static Efl_Bool _core_low_battery   = EFL_FALSE;
 static int      _core_battery_level = -1;
 
-static Eina_List *_eldbus_pending = NULL;
+static Eina_List *_efl_dbus_pending = NULL;
 
 static Efl_Bool _core_system_upower_display_device_init(void);
 static void     _core_system_upower_shutdown(void);
@@ -77,11 +77,11 @@ _battery_eval(void)
 }
 
 static void
-_warning_level_from_variant(Eldbus_Message_Iter *variant)
+_warning_level_from_variant(Efl_Dbus_Message_Iter *variant)
 {
     unsigned int val;
 
-    if (!eldbus_message_iter_get_and_next(variant, 'u', &val))
+    if (!efl_dbus_message_iter_get_and_next(variant, 'u', &val))
     {
         ERR("Error getting WarningLevel.");
         return;
@@ -93,21 +93,21 @@ _warning_level_from_variant(Eldbus_Message_Iter *variant)
 
 static void
 _warning_level_get_cb(void *data            EFL_UNUSED,
-                      const Eldbus_Message *msg,
-                      Eldbus_Pending       *pending)
+                      const Efl_Dbus_Message *msg,
+                      Efl_Dbus_Pending       *pending)
 {
-    Eldbus_Message_Iter *variant;
+    Efl_Dbus_Message_Iter *variant;
     const char          *errname, *errmsg;
 
-    _eldbus_pending = eina_list_remove(_eldbus_pending, pending);
-    if (eldbus_message_error_get(msg, &errname, &errmsg))
+    _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
+    if (efl_dbus_message_error_get(msg, &errname, &errmsg))
     {
         // don't print errors because this results in complaints about upower not
         // existing and it's OK if it doesn't exist. just no feature enabled then
         //        ERR("Message error %s - %s", errname, errmsg);
         return;
     }
-    if (!eldbus_message_arguments_get(msg, "v", &variant))
+    if (!efl_dbus_message_arguments_get(msg, "v", &variant))
     {
         ERR("Error getting arguments.");
         return;
@@ -117,23 +117,23 @@ _warning_level_get_cb(void *data            EFL_UNUSED,
 }
 
 static void
-_warning_level_get(Eldbus_Proxy *proxy)
+_warning_level_get(Efl_Dbus_Proxy *proxy)
 {
-    Eldbus_Pending *pend;
+    Efl_Dbus_Pending *pend;
 
-    pend            = eldbus_proxy_property_get(proxy,
+    pend            = efl_dbus_proxy_property_get(proxy,
                                      "WarningLevel",
                                      _warning_level_get_cb,
                                      NULL);
-    _eldbus_pending = eina_list_append(_eldbus_pending, pend);
+    _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
 static void
-_on_low_battery_from_variant(Eldbus_Message_Iter *variant)
+_on_low_battery_from_variant(Efl_Dbus_Message_Iter *variant)
 {
     Efl_Bool val;
 
-    if (!eldbus_message_iter_get_and_next(variant, 'b', &val))
+    if (!efl_dbus_message_iter_get_and_next(variant, 'b', &val))
     {
         ERR("Error getting OnLowBattery.");
         return;
@@ -146,20 +146,20 @@ _on_low_battery_from_variant(Eldbus_Message_Iter *variant)
 
 static void
 _on_low_battery_get_cb(void *data            EFL_UNUSED,
-                       const Eldbus_Message *msg,
-                       Eldbus_Pending       *pending)
+                       const Efl_Dbus_Message *msg,
+                       Efl_Dbus_Pending       *pending)
 {
-    Eldbus_Message_Iter *variant;
+    Efl_Dbus_Message_Iter *variant;
     const char          *errname, *errmsg;
 
-    _eldbus_pending = eina_list_remove(_eldbus_pending, pending);
-    if (eldbus_message_error_get(msg, &errname, &errmsg))
+    _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
+    if (efl_dbus_message_error_get(msg, &errname, &errmsg))
     {
         if (strcmp(errname, "org.enlightenment.DBus.Canceled"))
             ERR("Message error %s - %s", errname, errmsg);
         return;
     }
-    if (!eldbus_message_arguments_get(msg, "v", &variant))
+    if (!efl_dbus_message_arguments_get(msg, "v", &variant))
     {
         ERR("Error getting arguments.");
         return;
@@ -169,23 +169,23 @@ _on_low_battery_get_cb(void *data            EFL_UNUSED,
 }
 
 static void
-_on_low_battery_get(Eldbus_Proxy *proxy)
+_on_low_battery_get(Efl_Dbus_Proxy *proxy)
 {
-    Eldbus_Pending *pend;
+    Efl_Dbus_Pending *pend;
 
-    pend            = eldbus_proxy_property_get(proxy,
+    pend            = efl_dbus_proxy_property_get(proxy,
                                      "OnLowBattery",
                                      _on_low_battery_get_cb,
                                      NULL);
-    _eldbus_pending = eina_list_append(_eldbus_pending, pend);
+    _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
 static void
-_on_battery_from_variant(Eldbus_Message_Iter *variant)
+_on_battery_from_variant(Efl_Dbus_Message_Iter *variant)
 {
     Efl_Bool val;
 
-    if (!eldbus_message_iter_get_and_next(variant, 'b', &val))
+    if (!efl_dbus_message_iter_get_and_next(variant, 'b', &val))
     {
         ERR("Error getting OnBattery.");
         return;
@@ -198,20 +198,20 @@ _on_battery_from_variant(Eldbus_Message_Iter *variant)
 
 static void
 _on_battery_get_cb(void *data            EFL_UNUSED,
-                   const Eldbus_Message *msg,
-                   Eldbus_Pending       *pending)
+                   const Efl_Dbus_Message *msg,
+                   Efl_Dbus_Pending       *pending)
 {
-    Eldbus_Message_Iter *variant;
+    Efl_Dbus_Message_Iter *variant;
     const char          *errname, *errmsg;
 
-    _eldbus_pending = eina_list_remove(_eldbus_pending, pending);
-    if (eldbus_message_error_get(msg, &errname, &errmsg))
+    _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
+    if (efl_dbus_message_error_get(msg, &errname, &errmsg))
     {
         if (strcmp(errname, "org.enlightenment.DBus.Canceled"))
             ERR("Message error %s - %s", errname, errmsg);
         return;
     }
-    if (!eldbus_message_arguments_get(msg, "v", &variant))
+    if (!efl_dbus_message_arguments_get(msg, "v", &variant))
     {
         ERR("Error getting arguments.");
         return;
@@ -221,13 +221,13 @@ _on_battery_get_cb(void *data            EFL_UNUSED,
 }
 
 static void
-_on_battery_get(Eldbus_Proxy *proxy)
+_on_battery_get(Efl_Dbus_Proxy *proxy)
 {
-    Eldbus_Pending *pend;
+    Efl_Dbus_Pending *pend;
 
     pend =
-        eldbus_proxy_property_get(proxy, "OnBattery", _on_battery_get_cb, NULL);
-    _eldbus_pending = eina_list_append(_eldbus_pending, pend);
+        efl_dbus_proxy_property_get(proxy, "OnBattery", _on_battery_get_cb, NULL);
+    _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
 static void
@@ -248,7 +248,7 @@ _battery_state_get(void)
 }
 
 static void
-_daemon_version_from_variant(Eldbus_Message_Iter *variant)
+_daemon_version_from_variant(Efl_Dbus_Message_Iter *variant)
 {
     const char *val;
     char      **version;
@@ -259,7 +259,7 @@ _daemon_version_from_variant(Eldbus_Message_Iter *variant)
     };  // upower >= 0.99.0 provides WarningLevel instead of OnLowBattery
     int i;
 
-    if (!eldbus_message_iter_get_and_next(variant, 's', &val))
+    if (!efl_dbus_message_iter_get_and_next(variant, 's', &val))
     {
         ERR("Error getting DaemonVersion.");
         return;
@@ -292,20 +292,20 @@ _daemon_version_from_variant(Eldbus_Message_Iter *variant)
 
 static void
 _daemon_version_get_cb(void *data            EFL_UNUSED,
-                       const Eldbus_Message *msg,
-                       Eldbus_Pending       *pending)
+                       const Efl_Dbus_Message *msg,
+                       Efl_Dbus_Pending       *pending)
 {
-    Eldbus_Message_Iter *variant;
+    Efl_Dbus_Message_Iter *variant;
     const char          *errname, *errmsg;
 
-    _eldbus_pending = eina_list_remove(_eldbus_pending, pending);
-    if (eldbus_message_error_get(msg, &errname, &errmsg))
+    _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
+    if (efl_dbus_message_error_get(msg, &errname, &errmsg))
     {
         if (strcmp(errname, "org.enlightenment.DBus.Canceled"))
             ERR("Message error %s - %s", errname, errmsg);
         return;
     }
-    if (!eldbus_message_arguments_get(msg, "v", &variant))
+    if (!efl_dbus_message_arguments_get(msg, "v", &variant))
     {
         ERR("Error getting arguments.");
         return;
@@ -315,25 +315,25 @@ _daemon_version_get_cb(void *data            EFL_UNUSED,
 }
 
 static void
-_daemon_version_get(Eldbus_Proxy *proxy)
+_daemon_version_get(Efl_Dbus_Proxy *proxy)
 {
-    Eldbus_Pending *pend;
+    Efl_Dbus_Pending *pend;
 
-    pend            = eldbus_proxy_property_get(proxy,
+    pend            = efl_dbus_proxy_property_get(proxy,
                                      "DaemonVersion",
                                      _daemon_version_get_cb,
                                      NULL);
-    _eldbus_pending = eina_list_append(_eldbus_pending, pend);
+    _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
 static void
-_props_changed(void *data, const Eldbus_Message *msg)
+_props_changed(void *data, const Efl_Dbus_Message *msg)
 {
-    Eldbus_Proxy        *proxy = data;
-    Eldbus_Message_Iter *changed, *entry, *invalidated;
+    Efl_Dbus_Proxy        *proxy = data;
+    Efl_Dbus_Message_Iter *changed, *entry, *invalidated;
     const char          *iface, *prop;
 
-    if (!eldbus_message_arguments_get(msg,
+    if (!efl_dbus_message_arguments_get(msg,
                                       "sa{sv}as",
                                       &iface,
                                       &changed,
@@ -343,18 +343,18 @@ _props_changed(void *data, const Eldbus_Message *msg)
         return;
     }
 
-    while (eldbus_message_iter_get_and_next(changed, 'e', &entry))
+    while (efl_dbus_message_iter_get_and_next(changed, 'e', &entry))
     {
         const void          *key;
-        Eldbus_Message_Iter *var;
-        if (!eldbus_message_iter_arguments_get(entry, "sv", &key, &var))
+        Efl_Dbus_Message_Iter *var;
+        if (!efl_dbus_message_iter_arguments_get(entry, "sv", &key, &var))
             continue;
         if (strcmp(key, "OnBattery") == 0) _on_battery_from_variant(var);
         if (strcmp(key, "OnLowBattery") == 0) _on_low_battery_from_variant(var);
         if (strcmp(key, "WarningLevel") == 0) _warning_level_from_variant(var);
     }
 
-    while (eldbus_message_iter_get_and_next(invalidated, 's', &prop))
+    while (efl_dbus_message_iter_get_and_next(invalidated, 's', &prop))
     {
         if (strcmp(prop, "OnBattery") == 0) _on_battery_get(proxy);
         if (strcmp(prop, "OnLowBattery") == 0) _on_low_battery_get(proxy);
@@ -368,7 +368,7 @@ _upower_name_owner_cb(void           *data,
                       const char     *old_id,
                       const char     *new_id)
 {
-    Eldbus_Proxy *proxy = data;
+    Efl_Dbus_Proxy *proxy = data;
 
     DBG("org.freedesktop.UPower name owner changed from '%s' to '%s'",
         old_id,
@@ -383,10 +383,10 @@ _upower_name_owner_cb(void           *data,
 static Efl_Bool
 _core_system_upower_display_device_init(void)
 {
-    Eldbus_Signal_Handler *s;
+    Efl_Dbus_Signal_Handler *s;
 
     _disp_obj =
-        eldbus_object_get(_conn,
+        efl_dbus_object_get(_conn,
                           "org.freedesktop.UPower",
                           "/org/freedesktop/UPower/devices/DisplayDevice");
     if (!_disp_obj)
@@ -396,7 +396,7 @@ _core_system_upower_display_device_init(void)
         goto disp_error;
     }
 
-    _disp_proxy = eldbus_proxy_get(_disp_obj, "org.freedesktop.UPower");
+    _disp_proxy = efl_dbus_proxy_get(_disp_obj, "org.freedesktop.UPower");
     if (!_disp_proxy)
     {
         ERR("could not get proxy interface=org.freedesktop.UPower, "
@@ -405,7 +405,7 @@ _core_system_upower_display_device_init(void)
         goto disp_error;
     }
 
-    s = eldbus_proxy_properties_changed_callback_add(_disp_proxy,
+    s = efl_dbus_proxy_properties_changed_callback_add(_disp_proxy,
                                                      _props_changed,
                                                      _disp_proxy);
     if (!s)
@@ -440,9 +440,9 @@ _core_system_upower_reset(void)
 static Efl_Bool
 _core_system_upower_init(void)
 {
-    Eldbus_Signal_Handler *s;
+    Efl_Dbus_Signal_Handler *s;
 
-    eldbus_init();
+    efl_dbus_init();
     if (!reseting)
         core_fork_reset_callback_add((Core_Cb)_core_system_upower_reset,
                                       NULL);
@@ -454,9 +454,9 @@ _core_system_upower_init(void)
         goto error;
     }
 
-    _conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SYSTEM);
+    _conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SYSTEM);
 
-    _obj = eldbus_object_get(_conn,
+    _obj = efl_dbus_object_get(_conn,
                              "org.freedesktop.UPower",
                              "/org/freedesktop/UPower");
     if (!_obj)
@@ -466,7 +466,7 @@ _core_system_upower_init(void)
         goto error;
     }
 
-    _proxy = eldbus_proxy_get(_obj, "org.freedesktop.UPower");
+    _proxy = efl_dbus_proxy_get(_obj, "org.freedesktop.UPower");
     if (!_proxy)
     {
         ERR("could not get proxy interface=org.freedesktop.UPower, "
@@ -474,7 +474,7 @@ _core_system_upower_init(void)
         goto error;
     }
 
-    s = eldbus_proxy_properties_changed_callback_add(_proxy,
+    s = efl_dbus_proxy_properties_changed_callback_add(_proxy,
                                                      _props_changed,
                                                      _proxy);
     if (!s)
@@ -485,7 +485,7 @@ _core_system_upower_init(void)
         goto error;
     }
 
-    eldbus_name_owner_changed_callback_add(_conn,
+    efl_dbus_name_owner_changed_callback_add(_conn,
                                            "org.freedesktop.UPower",
                                            _upower_name_owner_cb,
                                            _proxy,
@@ -502,49 +502,49 @@ error:
 static void
 _core_system_upower_shutdown(void)
 {
-    Eldbus_Pending *pend;
+    Efl_Dbus_Pending *pend;
 
     DBG("ecore system 'upower' unloaded");
     if (!reseting)
         core_fork_reset_callback_del((Core_Cb)_core_system_upower_reset,
                                       NULL);
 
-    eldbus_name_owner_changed_callback_del(_conn,
+    efl_dbus_name_owner_changed_callback_del(_conn,
                                            "org.freedesktop.UPower",
                                            _upower_name_owner_cb,
                                            NULL);
     if (_disp_proxy)
     {
-        eldbus_proxy_unref(_disp_proxy);
+        efl_dbus_proxy_unref(_disp_proxy);
         _disp_proxy = NULL;
     }
 
     if (_disp_obj)
     {
-        eldbus_object_unref(_disp_obj);
+        efl_dbus_object_unref(_disp_obj);
         _disp_obj = NULL;
     }
 
     if (_proxy)
     {
-        eldbus_proxy_unref(_proxy);
+        efl_dbus_proxy_unref(_proxy);
         _proxy = NULL;
     }
 
     if (_obj)
     {
-        eldbus_object_unref(_obj);
+        efl_dbus_object_unref(_obj);
         _obj = NULL;
     }
 
-    EINA_LIST_FREE(_eldbus_pending, pend)
+    EINA_LIST_FREE(_efl_dbus_pending, pend)
     {
-        eldbus_pending_cancel(pend);
+        efl_dbus_pending_cancel(pend);
     }
 
     if (_conn)
     {
-        eldbus_connection_unref(_conn);
+        efl_dbus_connection_unref(_conn);
         _conn = NULL;
     }
 
@@ -554,7 +554,7 @@ _core_system_upower_shutdown(void)
         _log_dom = -1;
     }
 
-    eldbus_shutdown();
+    efl_dbus_shutdown();
 }
 
 EINA_MODULE_INIT(_core_system_upower_init);

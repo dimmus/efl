@@ -1,0 +1,44 @@
+import efl_dbus_types;
+
+class @beta Efl.Dbus.Model.Method extends Efl.Dbus.Model.Arguments {
+    [[Efl.Dbus model method class]]
+    methods {
+        @property proxy {
+            [[Custom Efl_Dbus_Model_Method constructor.
+
+              @since 1.21]]
+	    set {}
+            values {
+                proxy: ptr(Efl.Dbus.Proxy); [[Efl.Dbus proxy]]
+            }
+        }
+        @property method {
+            [[Object]]
+            set {}
+            values {
+                method: ptr(const(Efl.Dbus.Introspection.Method)); [[The introspected interface]]
+            }
+        }
+        call {
+            [[Calls the method. The properties must have been set.
+
+              The event EMODEL_EVENT_PROPERTIES_CHANGED is raised for output arguments (properties).
+
+              The event EFL_DBUS_MODEL_METHOD_EVENT_METHOD_CALLED is raised for a successful call. Otherwise
+
+              @since 1.16]]
+        }
+    }
+    implements {
+        Efl.Object.constructor;
+        Efl.Object.finalize;
+    }
+    constructors {
+        .proxy;
+        .method;
+    }
+    events {
+      successful,call: void; [[Event dispatched for a successful method call.]]
+   }
+
+}

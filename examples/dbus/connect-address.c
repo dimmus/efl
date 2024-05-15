@@ -38,9 +38,9 @@ static int _conn_addr_log_dom = -1;
 #define INF(...) EINA_LOG_DOM_INFO(_conn_addr_log_dom, __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_conn_addr_log_dom, __VA_ARGS__)
 
-static Eldbus_Connection *conn;
-static Eldbus_Signal_Handler *acquired;
-static Eldbus_Signal_Handler *lost;
+static Efl_Dbus_Connection *conn;
+static Efl_Dbus_Signal_Handler *acquired;
+static Efl_Dbus_Signal_Handler *lost;
 
 static void
 on_name_owner_changed(void *data EFL_UNUSED, const char *bus, const char *old_id, const char *new_id EFL_UNUSED)
@@ -49,17 +49,17 @@ on_name_owner_changed(void *data EFL_UNUSED, const char *bus, const char *old_id
 }
 
 static void
-on_name_acquired(void *data EFL_UNUSED, const Eldbus_Message *msg)
+on_name_acquired(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
    const char *error, *error_msg, *name;
 
-   if (eldbus_message_error_get(msg, &error, &error_msg))
+   if (efl_dbus_message_error_get(msg, &error, &error_msg))
      {
         ERR("Name acquired message error: %s: %s\n", error, error_msg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "s", &name))
+   if (!efl_dbus_message_arguments_get(msg, "s", &name))
      {
         ERR("Error reading message arguments");
         return;
@@ -69,17 +69,17 @@ on_name_acquired(void *data EFL_UNUSED, const Eldbus_Message *msg)
 }
 
 static void
-on_name_lost(void *data EFL_UNUSED, const Eldbus_Message *msg)
+on_name_lost(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
    const char *error, *error_msg, *name;
 
-   if (eldbus_message_error_get(msg, &error, &error_msg))
+   if (efl_dbus_message_error_get(msg, &error, &error_msg))
      {
         ERR("Name lost message error: %s: %s\n", error, error_msg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "s", &name))
+   if (!efl_dbus_message_arguments_get(msg, "s", &name))
      {
         ERR("Error reading message arguments");
         return;
@@ -89,18 +89,18 @@ on_name_lost(void *data EFL_UNUSED, const Eldbus_Message *msg)
 }
 
 static void
-name_request_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+name_request_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *error, *error_msg;
    unsigned int reply;
 
-   if (eldbus_message_error_get(msg, &error, &error_msg))
+   if (efl_dbus_message_error_get(msg, &error, &error_msg))
      {
         ERR("Name request message error: %s: %s\n", error, error_msg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "u", &reply))
+   if (!efl_dbus_message_arguments_get(msg, "u", &reply))
      {
         ERR("Error reading message arguments");
         return;
@@ -108,16 +108,16 @@ name_request_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
 
    switch (reply)
      {
-      case ELDBUS_NAME_REQUEST_REPLY_PRIMARY_OWNER:
+      case EFL_DBUS_NAME_REQUEST_REPLY_PRIMARY_OWNER:
          INF("Got primary ownership");
          break;
-      case ELDBUS_NAME_REQUEST_REPLY_IN_QUEUE:
+      case EFL_DBUS_NAME_REQUEST_REPLY_IN_QUEUE:
          INF("Got queued for ownership");
          break;
-      case ELDBUS_NAME_REQUEST_REPLY_EXISTS:
+      case EFL_DBUS_NAME_REQUEST_REPLY_EXISTS:
          INF("Already in queue for ownership");
          break;
-      case ELDBUS_NAME_REQUEST_REPLY_ALREADY_OWNER:
+      case EFL_DBUS_NAME_REQUEST_REPLY_ALREADY_OWNER:
          INF("Already primary owner");
          break;
       default:
@@ -129,9 +129,9 @@ name_request_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
 static Efl_Bool
 main_loop_quit_idler(void *data EFL_UNUSED)
 {
-   eldbus_signal_handler_del(acquired);
-   eldbus_signal_handler_del(lost);
-   eldbus_connection_unref(conn);
+   efl_dbus_signal_handler_del(acquired);
+   efl_dbus_signal_handler_del(lost);
+   efl_dbus_connection_unref(conn);
 
    INF("Finishing");
    core_main_loop_quit();
@@ -139,18 +139,18 @@ main_loop_quit_idler(void *data EFL_UNUSED)
 }
 
 static void
-name_release_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+name_release_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *error, *error_msg;
    unsigned int reply;
 
-   if (eldbus_message_error_get(msg, &error, &error_msg))
+   if (efl_dbus_message_error_get(msg, &error, &error_msg))
      {
         ERR("Name release message error: %s: %s\n", error, error_msg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "u", &reply))
+   if (!efl_dbus_message_arguments_get(msg, "u", &reply))
      {
         ERR("Error reading message arguments");
         return;
@@ -158,13 +158,13 @@ name_release_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
 
    switch (reply)
      {
-      case ELDBUS_NAME_RELEASE_REPLY_RELEASED:
+      case EFL_DBUS_NAME_RELEASE_REPLY_RELEASED:
          INF("Name released");
          break;
-      case ELDBUS_NAME_RELEASE_REPLY_NON_EXISTENT:
+      case EFL_DBUS_NAME_RELEASE_REPLY_NON_EXISTENT:
          INF("Name non existent");
          break;
-      case ELDBUS_NAME_RELEASE_REPLY_NOT_OWNER:
+      case EFL_DBUS_NAME_RELEASE_REPLY_NOT_OWNER:
          INF("Not owner");
          break;
       default:
@@ -178,7 +178,7 @@ name_release_cb(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
 static void
 finish(int foo EFL_UNUSED)
 {
-   eldbus_name_release(conn, PANEL_BUS, name_release_cb, NULL);
+   efl_dbus_name_release(conn, PANEL_BUS, name_release_cb, NULL);
 }
 
 int
@@ -213,7 +213,7 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
         goto exit_eina;
      }
 
-   if (!eldbus_init())
+   if (!efl_dbus_init())
      {
         EINA_LOG_ERR("Failed to initialize Eldbus");
         goto exit_ecore;
@@ -224,7 +224,7 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
 
    /* Connect */
    printf("Connecting to IBus with address: %s\n", address);
-   conn = eldbus_address_connection_get(address);
+   conn = efl_dbus_address_connection_get(address);
 
    if (!conn)
      {
@@ -232,37 +232,37 @@ main(int argc EFL_UNUSED, char *argv[] EFL_UNUSED)
         goto end;
      }
 
-   eldbus_name_owner_changed_callback_add(conn, IBUS_BUS, on_name_owner_changed,
+   efl_dbus_name_owner_changed_callback_add(conn, IBUS_BUS, on_name_owner_changed,
                                          conn, EFL_TRUE);
 
-   eldbus_name_owner_changed_callback_add(conn, PANEL_BUS, on_name_owner_changed,
+   efl_dbus_name_owner_changed_callback_add(conn, PANEL_BUS, on_name_owner_changed,
                                          conn, EFL_TRUE);
 
-   acquired = eldbus_signal_handler_add(conn,
-                                        ELDBUS_FDO_BUS,
-                                        ELDBUS_FDO_PATH,
+   acquired = efl_dbus_signal_handler_add(conn,
+                                        EFL_DBUS_FDO_BUS,
+                                        EFL_DBUS_FDO_PATH,
                                         PANEL_INTERFACE,
                                         "NameAcquired",
                                         on_name_acquired,
                                         NULL);
 
-   lost = eldbus_signal_handler_add(conn,
-                                    ELDBUS_FDO_BUS,
-                                    ELDBUS_FDO_PATH,
+   lost = efl_dbus_signal_handler_add(conn,
+                                    EFL_DBUS_FDO_BUS,
+                                    EFL_DBUS_FDO_PATH,
                                     PANEL_INTERFACE,
                                     "NameLost",
                                     on_name_lost,
                                     NULL);
 
    /* Request ownership of PANEL_BUS */
-   eldbus_name_request(conn, PANEL_BUS,
-                       ELDBUS_NAME_REQUEST_FLAG_REPLACE_EXISTING | ELDBUS_NAME_REQUEST_FLAG_ALLOW_REPLACEMENT,
+   efl_dbus_name_request(conn, PANEL_BUS,
+                       EFL_DBUS_NAME_REQUEST_FLAG_REPLACE_EXISTING | EFL_DBUS_NAME_REQUEST_FLAG_ALLOW_REPLACEMENT,
                        name_request_cb, NULL);
 
    core_main_loop_begin();
 
 end:
-   eldbus_shutdown();
+   efl_dbus_shutdown();
 
 exit_ecore:
    core_shutdown();

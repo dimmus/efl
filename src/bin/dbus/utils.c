@@ -154,7 +154,7 @@ string_build(const char *fmt, ...)
 
 #define UTIL_H \
     "\
-#ifndef ELDBUS_UTILS_H\n\
+#ifndef EFL_DBUS_UTILS_H\n\
 #define ELDBUS_UTILS_H 1\n\
 \n\
 typedef struct _Eldbus_Error_Info\n\

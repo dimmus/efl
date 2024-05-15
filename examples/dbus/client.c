@@ -12,20 +12,20 @@
 static int _client_log_dom = -1;
 #define ERR(...)      EINA_LOG_DOM_ERR(_client_log_dom, __VA_ARGS__)
 
-static Eldbus_Connection *conn = NULL;
+static Efl_Dbus_Connection *conn = NULL;
 static Core_Timer *timeout = NULL;
 
 static void
-_on_alive(void *context EFL_UNUSED, const Eldbus_Message *msg EFL_UNUSED)
+_on_alive(void *context EFL_UNUSED, const Efl_Dbus_Message *msg EFL_UNUSED)
 {
    printf("Alive\n\n");
 }
 
 static void
-_on_hello(void *context EFL_UNUSED, const Eldbus_Message *msg)
+_on_hello(void *context EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
    const char *txt;
-   if (eldbus_message_arguments_get(msg, "s", &txt))
+   if (efl_dbus_message_arguments_get(msg, "s", &txt))
      printf("%s\n", txt);
 }
 
@@ -58,7 +58,7 @@ test(void)
    if (n >= NTESTS)
      {
         printf("Passed in all tests\nExiting...\n");
-        eldbus_connection_unref(conn);
+        efl_dbus_connection_unref(conn);
         conn = NULL;
         core_main_loop_quit();
      }
@@ -67,18 +67,18 @@ test(void)
 }
 
 static void
-_on_send_bool(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_send_bool(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
    Efl_Bool b;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "b", &b))
+   if (!efl_dbus_message_arguments_get(msg, "b", &b))
      {
         ERR("Could not get entry contents");
         return;
@@ -94,18 +94,18 @@ _on_send_bool(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *
 }
 
 static void
-_on_send_byte(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_send_byte(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
    uint8_t y;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "y", &y))
+   if (!efl_dbus_message_arguments_get(msg, "y", &y))
      {
         ERR("Could not get entry contents");
         return;
@@ -121,18 +121,18 @@ _on_send_byte(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *
 }
 
 static void
-_on_send_uint32(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_send_uint32(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
    unsigned int u;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "u", &u))
+   if (!efl_dbus_message_arguments_get(msg, "u", &u))
      {
         ERR("Could not get entry contents");
         return;
@@ -148,18 +148,18 @@ _on_send_uint32(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
 }
 
 static void
-_on_send_int32(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_send_int32(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
    int32_t i;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "i", &i))
+   if (!efl_dbus_message_arguments_get(msg, "i", &i))
      {
         ERR("Could not get entry contents");
         return;
@@ -175,18 +175,18 @@ _on_send_int32(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending 
 }
 
 static void
-_on_send_int16(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_send_int16(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
    int16_t n;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "n", &n))
+   if (!efl_dbus_message_arguments_get(msg, "n", &n))
      {
         ERR("Could not get entry contents");
         return;
@@ -202,18 +202,18 @@ _on_send_int16(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending 
 }
 
 static void
-_on_send_double(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_send_double(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
    double d;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "d", &d))
+   if (!efl_dbus_message_arguments_get(msg, "d", &d))
      {
         ERR("Could not get entry contents");
         return;
@@ -229,18 +229,18 @@ _on_send_double(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
 }
 
 static void
-_on_send_string(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_send_string(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
    char *s;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
      }
 
-   if (!eldbus_message_arguments_get(msg, "s", &s))
+   if (!efl_dbus_message_arguments_get(msg, "s", &s))
      {
         ERR("Could not get entry contents");
         return;
@@ -256,11 +256,11 @@ _on_send_string(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending
 }
 
 static void
-_on_async_test(void *data EFL_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EFL_UNUSED)
+_on_async_test(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
 {
    const char *errname, *errmsg;
 
-   if (eldbus_message_error_get(msg, &errname, &errmsg))
+   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
      {
         ERR("%s %s", errname, errmsg);
         return;
@@ -287,8 +287,8 @@ finish(void *data EFL_UNUSED)
 int
 main(void)
 {
-   Eldbus_Object *obj;
-   Eldbus_Proxy *proxy;
+   Efl_Dbus_Object *obj;
+   Efl_Dbus_Proxy *proxy;
 
    eina_init();
    _client_log_dom = eina_log_domain_register("client", EINA_COLOR_CYAN);
@@ -299,32 +299,32 @@ main(void)
      }
 
    core_init();
-   eldbus_init();
+   efl_dbus_init();
 
-   conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SESSION);
+   conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
 
-   obj = eldbus_object_get(conn, BUS, PATH);
-   proxy = eldbus_proxy_get(obj, INTERFACE);
-   eldbus_proxy_signal_handler_add(proxy, "Alive", _on_alive, NULL);
-   eldbus_proxy_signal_handler_add(proxy, "Hello", _on_hello, NULL);
+   obj = efl_dbus_object_get(conn, BUS, PATH);
+   proxy = efl_dbus_proxy_get(obj, INTERFACE);
+   efl_dbus_proxy_signal_handler_add(proxy, "Alive", _on_alive, NULL);
+   efl_dbus_proxy_signal_handler_add(proxy, "Hello", _on_hello, NULL);
 
-   eldbus_proxy_call(proxy, "SendBool", _on_send_bool, NULL, -1, "b",
+   efl_dbus_proxy_call(proxy, "SendBool", _on_send_bool, NULL, -1, "b",
                     expected.b);
-   eldbus_proxy_call(proxy, "SendByte", _on_send_byte, NULL, -1, "y",
+   efl_dbus_proxy_call(proxy, "SendByte", _on_send_byte, NULL, -1, "y",
                     expected.y);
-   eldbus_proxy_call(proxy, "SendUint32", _on_send_uint32, NULL, -1, "u",
+   efl_dbus_proxy_call(proxy, "SendUint32", _on_send_uint32, NULL, -1, "u",
                     expected.u);
-   eldbus_proxy_call(proxy, "SendInt32", _on_send_int32, NULL, -1, "i",
+   efl_dbus_proxy_call(proxy, "SendInt32", _on_send_int32, NULL, -1, "i",
                     expected.i);
-   eldbus_proxy_call(proxy, "SendInt16", _on_send_int16, NULL, -1, "n",
+   efl_dbus_proxy_call(proxy, "SendInt16", _on_send_int16, NULL, -1, "n",
                     expected.n);
-   eldbus_proxy_call(proxy, "SendDouble", _on_send_double, NULL, -1, "d",
+   efl_dbus_proxy_call(proxy, "SendDouble", _on_send_double, NULL, -1, "d",
                     expected.d);
-   eldbus_proxy_call(proxy, "SendString", _on_send_string, NULL, -1, "s",
+   efl_dbus_proxy_call(proxy, "SendString", _on_send_string, NULL, -1, "s",
                     expected.s);
-   eldbus_proxy_call(proxy, "AsyncTest", _on_async_test, NULL, -1, "");
+   efl_dbus_proxy_call(proxy, "AsyncTest", _on_async_test, NULL, -1, "");
 
-   eldbus_name_owner_changed_callback_add(conn, BUS, on_name_owner_changed,
+   efl_dbus_name_owner_changed_callback_add(conn, BUS, on_name_owner_changed,
                                          conn, EFL_TRUE);
    timeout = core_timer_add(30, finish, NULL);
 
@@ -333,9 +333,9 @@ main(void)
    if (timeout)
       core_timer_del(timeout);
    if (conn)
-      eldbus_connection_unref(conn);
+      efl_dbus_connection_unref(conn);
 
-   eldbus_shutdown();
+   efl_dbus_shutdown();
    core_shutdown();
 
    eina_log_domain_unregister(_client_log_dom);
