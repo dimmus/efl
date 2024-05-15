@@ -1,36 +1,61 @@
-![Enlightenment Foundation Library](data/images/efl-logo.png)
+<h1 align="center"> Enlightenment Founation Library </h1>
 
-System and Service Manager
+[![Latest release](https://img.shields.io/github/v/release/dimmus/efl-dimmus?label=Latest%20release&style=social)](https://github.com/dimmus/efl-dimmus/releases/tag/v1.26.3)
+[![GitHub commits](https://img.shields.io/github/commits-since/dimmus/efl-dimmus/v1.26.3.svg?style=social)](https://GitHub.com/dimmus/efl-dimmus/commit/)
+[![Stars](https://img.shields.io/github/stars/dimmus/efl-dimmus?style=social)](https://github.com/dimmus/efl-dimmus/stargazers)
+[![Fork](https://img.shields.io/github/forks/dimmus/efl-dimmus?style=social)](https://github.com/dimmus/efl-dimmus/network/members)
+[![Watchers](https://img.shields.io/github/watchers/dimmus/efl-dimmus?style=social)](https://github.com/dimmus/efl-dimmus/watchers)
 
-<!-- [![Semaphore CI 2.0 Build Status](https://the-real-systemd.semaphoreci.com/badges/systemd/branches/main.svg?style=shields)](https://the-real-systemd.semaphoreci.com/projects/systemd)<br/>
-[![Coverity Scan Status](https://scan.coverity.com/projects/350/badge.svg)](https://scan.coverity.com/projects/350)<br/>
-[![OSS-Fuzz Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/systemd.svg)](https://oss-fuzz-build-logs.storage.googleapis.com/index.html#systemd)<br/>
-[![CIFuzz](https://github.com/systemd/systemd/workflows/CIFuzz/badge.svg)](https://github.com/systemd/systemd/actions)<br/>
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1369/badge)](https://bestpractices.coreinfrastructure.org/projects/1369)<br/>
-[![Fossies codespell report](https://fossies.org/linux/test/systemd-main.tar.gz/codespell.svg)](https://fossies.org/linux/test/systemd-main.tar.gz/codespell.html)</br>
-[![Weblate](https://translate.fedoraproject.org/widgets/systemd/-/master/svg-badge.svg)](https://translate.fedoraproject.org/engage/systemd/)</br>
-[![Coverage Status](https://coveralls.io/repos/github/systemd/systemd/badge.svg?branch=main)](https://coveralls.io/github/systemd/systemd?branch=main)</br>
-[![Packaging status](https://repology.org/badge/tiny-repos/systemd.svg)](https://repology.org/project/systemd/versions)</br>
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/systemd/systemd/badge)](https://securityscorecards.dev/viewer/?platform=github.com&org=systemd&repo=systemd) -->
+<img src="https://raw.githubusercontent.com/Dimmus/efl/master/doc/assets/efl.png" align="right"/>
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Platforms](#platforms)
+- [Requirements](#requirements)
+- [Compiling and Installing](#compiling-and-installing)
+- [Quick build help](#quick-build-help)
+- [Discussions](#discussions)
+
+## Introduction
+[![Packaging status](https://repology.org/badge/tiny-repos/efl.svg)](https://repology.org/project/efl/versions)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6640/badge)](https://bestpractices.coreinfrastructure.org/projects/6640)
+[![TODO](https://img.shields.io/github/search/dimmus/efl/TODO.svg)](https://github.com/dimmus/efl/search?q=TODO) 
+[![XXX](https://img.shields.io/github/search/dimmus/efl/XXX.svg)](https://github.com/dimmus/efl/search?q=XXX)
+
+[API/ABI changes review for EFL](https://abi-laboratory.pro/index.php?view=timeline&l=efl)
+
+*Enlightenment Founation Library (EFL)* is a collection of libraries for handling many common tasks a
+developer may have such as data structures, communication, rendering, widgets and more.
 
 ## Details
-
 Most documentation is available on [enlightenments's web site](https://www.enlightenment.org/).
 
 Information about build requirements is provided in the [README file](README).
 
 Consult our [NEWS file](NEWS) for information about what's new in the most recent EFL versions.
 
-Please see the [Code Map](docs/ARCHITECTURE.md) for information about this repository's layout and content.
+Please see the [Code Map](doc/manual/ARCHITECTURE.md) for information about this repository's layout and content.
 
-Please see the [Hacking guide](docs/HACKING.md) for information on how to hack on systemd and test your modifications.
+Please see the [Hacking guide](doc/manual/HACKING.md) for information on how to hack on systemd and test your modifications.
 
-Please see our [Contribution Guidelines](docs/CONTRIBUTING.md) for more information about filing GitHub Issues and posting GitHub Pull Requests.
+Please see our [Contribution Guidelines](doc/manual/CONTRIBUTING.md) for more information about filing GitHub Issues and posting GitHub Pull Requests.
 
-When preparing patches for systemd, please follow our [Coding Style Guidelines](docs/CODING_STYLE.md).
+When preparing patches for EFL, please follow our [Coding Style Guidelines](doc/manual/CODING_STYLE.md).
 
 If you are looking for support, please contact our [mailing list](https://lists.freedesktop.org/mailman/listinfo/enlightenment-devel), join our [IRC channel #e on libera.chat](https://web.libera.chat/#e) or [Matrix channel](https://matrix.to/#/#e-project:matrix.org)
 
-Stable branches with backported patches are available in the [stable repo](https://github.com/dimmus/efl-stable).
+Stable branches with backported patches are available in the [stable repo](https://git.enlightenment.org/enlightenment/efl-stable).
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/efl.svg)](https://repology.org/project/efl/versions)
+
+## Discussions
+
+[GitHub Discussions](https://docs.github.com/discussions/quickstart) is a feature to enable fluid and open discussions within the community
+for topics that are not related to code, unlike issues.
+
+This is an experiment we are trying in our repositories to see if it helps move discussions out of issues so that issues remain actionable by the team or members of the community. There should be no expectation that EFL development team members are regular participants in the discussions. Individual EFL development team members may choose to participate in discussions, but the expectation is that community members help drive discussions so that team members can focus on issues.
+
+Create or join a [discussion](https://github.com/dimmus/efl/discussions).
 
 <!-- We have a security bug bounty program sponsored by the [Sovereign Tech Fund](https://www.sovereigntechfund.de/) hosted on [YesWeHack](https://yeswehack.com/programs/systemd-bug-bounty-program) -->
