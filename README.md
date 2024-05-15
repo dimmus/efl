@@ -2,9 +2,9 @@
     <a href=https://www.enlightenment.org/about-efl>Enlightenment Foundation Library</a>
 </div>
 
-# Main goals (wishes :)
+# Personal goals (wishes :)
 
-- complete `wayland` support in EFL
+- get complete `wayland` support in EFL
 - push forward EFL objects support (i mean, `eo`)
 - documentation
 - speed and size optimization
