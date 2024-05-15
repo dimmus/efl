@@ -9,7 +9,7 @@
 #ifdef HAVE_CRT_EXTERNS_H
 #  include <crt_externs.h>
 #endif
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_CORE_PROC_ENV_CLASS
 

@@ -4,7 +4,7 @@
 
 #include <Efl_Core.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 #include "eo_internal.h"
 
 #ifndef _WIN32

@@ -514,7 +514,7 @@ struct _Eina_Future_Desc {
  * {
  *   Ctx *ctx = data;
  *   // In case the promise is canceled we must stop the timer!
- *   ecore_timer_del(ctx->timer);
+ *   core_timer_del(ctx->timer);
  *   free(ctx);
  * }
  *
@@ -535,7 +535,7 @@ struct _Eina_Future_Desc {
  * {
  *    Ctx *ctx = malloc(sizeof(Ctx));
  *    // A timer is scheduled in order to resolve the promise
- *    ctx->timer = ecore_timer_add(122, _promise_resolve, ctx);
+ *    ctx->timer = core_timer_add(122, _promise_resolve, ctx);
  *    // The _promise_cancel() will be used to clean ctx if the promise is canceled.
  *    ctx->p = eina_promise_new(scheduler, _promise_cancel, ctx);
  *    return ctx->p;
@@ -568,7 +568,7 @@ EINA_API extern const Eina_Value_Type EINA_VALUE_TYPE_PROMISE;
  * however you may not be aware of that. Some common sources
  * of indirect cancellations:
  *
- * @li A subsystem was shutdown, canceling all pending futures (i.e.: ecore_shutdown())
+ * @li A subsystem was shutdown, canceling all pending futures (i.e.: core_shutdown())
  *
  * @li An EO object was linked to the promise or future, then if the object dies (last reference
  * is gone), then the pending promises and futures will be canceled.
@@ -619,7 +619,7 @@ EINA_API Eina_Promise *eina_promise_new(Eina_Future_Scheduler *scheduler, Eina_P
  * however you may not be aware of that. Some common sources
  * of indirect cancellations:
  *
- * @li A subsystem was shutdown, canceling all pending futures (i.e.: ecore_shutdown())
+ * @li A subsystem was shutdown, canceling all pending futures (i.e.: core_shutdown())
  *
  * @li An EO object was linked to the promise or future, then if the object dies (last reference
  * is gone), then the pending promises and futures will be canceled.

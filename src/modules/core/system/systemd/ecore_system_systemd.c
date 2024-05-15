@@ -67,7 +67,7 @@ _props_changed_hostname(void *data EFL_UNUSED, const Eldbus_Message *msg)
     return;
 
 changed_hostname:
-    ecore_event_add(ECORE_EVENT_HOSTNAME_CHANGED, NULL, NULL, NULL);
+    core_event_add(CORE_EVENT_HOSTNAME_CHANGED, NULL, NULL, NULL);
 }
 
 static void
@@ -103,7 +103,7 @@ _props_changed_timedate(void *data EFL_UNUSED, const Eldbus_Message *msg)
     return;
 
 changed_timedate:
-    ecore_event_add(ECORE_EVENT_SYSTEM_TIMEDATE_CHANGED, NULL, NULL, NULL);
+    core_event_add(CORE_EVENT_SYSTEM_TIMEDATE_CHANGED, NULL, NULL, NULL);
 }
 
 static void
@@ -170,7 +170,7 @@ _locale_get(void *data            EFL_UNUSED,
     setlocale(LC_ALL, "");
 
 end:
-    ecore_event_add(ECORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
+    core_event_add(CORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
 }
 
 static void
@@ -258,31 +258,31 @@ _property_change_monitor(const char      *name,
     return EFL_TRUE;
 }
 
-static void         _ecore_system_systemd_shutdown(void);
-static Efl_Bool     _ecore_system_systemd_init(void);
+static void         _core_system_systemd_shutdown(void);
+static Efl_Bool     _core_system_systemd_init(void);
 static unsigned int reseting = 0;
 
 static void
-_ecore_system_systemd_reset(void)
+_core_system_systemd_reset(void)
 {
     reseting = 1;
-    _ecore_system_systemd_shutdown();
-    _ecore_system_systemd_init();
+    _core_system_systemd_shutdown();
+    _core_system_systemd_init();
     reseting = 0;
 }
 
 static Efl_Bool
-_ecore_system_systemd_init(void)
+_core_system_systemd_init(void)
 {
     eldbus_init();
     if (!reseting)
-        ecore_fork_reset_callback_add((Ecore_Cb)_ecore_system_systemd_reset,
+        core_fork_reset_callback_add((Core_Cb)_core_system_systemd_reset,
                                       NULL);
 
-    _log_dom = eina_log_domain_register("ecore_system_systemd", NULL);
+    _log_dom = eina_log_domain_register("core_system_systemd", NULL);
     if (_log_dom < 0)
     {
-        EINA_LOG_ERR("Could not register log domain: ecore_system_systemd");
+        EINA_LOG_ERR("Could not register log domain: core_system_systemd");
         goto error;
     }
 
@@ -310,18 +310,18 @@ _ecore_system_systemd_init(void)
     return EFL_TRUE;
 
 error:
-    _ecore_system_systemd_shutdown();
+    _core_system_systemd_shutdown();
     return EFL_FALSE;
 }
 
 static void
-_ecore_system_systemd_shutdown(void)
+_core_system_systemd_shutdown(void)
 {
     Eldbus_Pending *pend;
 
     DBG("ecore system 'systemd' unloaded");
     if (!reseting)
-        ecore_fork_reset_callback_del((Ecore_Cb)_ecore_system_systemd_reset,
+        core_fork_reset_callback_del((Core_Cb)_core_system_systemd_reset,
                                       NULL);
 
     while (_proxies)
@@ -356,5 +356,5 @@ _ecore_system_systemd_shutdown(void)
     eldbus_shutdown();
 }
 
-EINA_MODULE_INIT(_ecore_system_systemd_init);
-EINA_MODULE_SHUTDOWN(_ecore_system_systemd_shutdown);
+EINA_MODULE_INIT(_core_system_systemd_init);
+EINA_MODULE_SHUTDOWN(_core_system_systemd_shutdown);

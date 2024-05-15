@@ -9,11 +9,11 @@
 #include <math.h>
 
 #include "Efl_Core.h"
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_LOOP_MESSAGE_HANDLER_CLASS
 
-#include "ecore_main_common.h"
+#include "core_main_common.h"
 
 typedef struct _Efl_Loop_Message_Handler_Data Efl_Loop_Message_Handler_Data;
 

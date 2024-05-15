@@ -3,7 +3,8 @@
 #endif
 
 #include "Efl_Core_Wl.h"
-#include "ecore_wl_internal.h"
+
+#include "core_wl_internal.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>

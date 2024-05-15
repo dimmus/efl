@@ -8,7 +8,7 @@
 
 #include <Efl_Core.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 
 #ifdef _WIN32
 #else
@@ -198,11 +198,11 @@ _cb_exe_exit_read(void *data, const Efl_Event *event EFL_UNUSED)
 {
     Eo                   *obj = data;
     Efl_Exe_Data         *pd  = efl_data_scope_get(obj, MY_CLASS);
-    Ecore_Signal_Pid_Info pinfo;
+    Core_Signal_Pid_Info pinfo;
 
     if (!pd) return;
-    if (read(pd->fd.exited_read, &pinfo, sizeof(Ecore_Signal_Pid_Info)) ==
-        sizeof(Ecore_Signal_Pid_Info))
+    if (read(pd->fd.exited_read, &pinfo, sizeof(Core_Signal_Pid_Info)) ==
+        sizeof(Core_Signal_Pid_Info))
     {
         Efl_Task_Data *td = efl_data_scope_get(obj, EFL_TASK_CLASS);
         if (td)
@@ -459,7 +459,7 @@ _efl_exe_efl_task_run(Eo *obj, Efl_Exe_Data *pd)
                                                 EFL_LOOP_HANDLER_FLAGS_READ));
     }
 
-    _ecore_signal_pid_lock();
+    _core_signal_pid_lock();
     // get these before the fork to avoid heap malloc deadlocks
     loop = efl_provider_find(obj, EFL_LOOP_CLASS);
     if (loop) tdl = efl_data_scope_get(loop, EFL_TASK_CLASS);
@@ -518,11 +518,11 @@ _efl_exe_efl_task_run(Eo *obj, Efl_Exe_Data *pd)
         if (pd->pid == -1)
         {
             _close_fds(pd);
-            _ecore_signal_pid_unlock();
+            _core_signal_pid_unlock();
             return EFL_FALSE;
         }
         // register this pid in the core sigchild/pid exit code watcher
-        _ecore_signal_pid_register(pd->pid, pd->fd.exited_write);
+        _core_signal_pid_register(pd->pid, pd->fd.exited_write);
         pd->exit_handler =
             efl_add(EFL_LOOP_HANDLER_CLASS,
                     obj,
@@ -533,7 +533,7 @@ _efl_exe_efl_task_run(Eo *obj, Efl_Exe_Data *pd)
                                            obj),
                     efl_loop_handler_active_set(efl_added,
                                                 EFL_LOOP_HANDLER_FLAGS_READ));
-        _ecore_signal_pid_unlock();
+        _core_signal_pid_unlock();
         pd->run = EFL_TRUE;
         return EFL_TRUE;
     }
@@ -739,9 +739,9 @@ _efl_exe_efl_object_destructor(Eo *obj, Efl_Exe_Data *pd)
         ERR("Exe being destroyed while child has not exited yet.");
     if (pd->fd.exited_read >= 0)
     {
-        _ecore_signal_pid_lock();
-        _ecore_signal_pid_unregister(pd->pid, pd->fd.exited_read);
-        _ecore_signal_pid_unlock();
+        _core_signal_pid_lock();
+        _core_signal_pid_unregister(pd->pid, pd->fd.exited_read);
+        _core_signal_pid_unlock();
         close(pd->fd.exited_read);
         pd->fd.exited_read = -1;
         efl_del(pd->exit_handler);

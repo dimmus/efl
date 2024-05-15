@@ -4,7 +4,7 @@
 
 #include <Efl_Core.h>
 
-#include "ecore_internal.h"
+#include "core_internal.h"
 
 typedef struct _Efl_Boolean_Model_Data          Efl_Boolean_Model_Data;
 typedef struct _Efl_Boolean_Model_Value         Efl_Boolean_Model_Value;

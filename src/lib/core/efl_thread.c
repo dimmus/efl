@@ -11,7 +11,7 @@
 #endif
 #include <Efl_Core.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -581,7 +581,7 @@ _child_thread_del_cb(void *data, const Efl_Event *event)
     if (!loop_data->quit_on_last_thread_child_del) return;
     if (loop_data->thread_children) return;
    // no more children waiting exits - quit the loop
-    _ecore_main_loop_quit(loop, loop_data);
+    _core_main_loop_quit(loop, loop_data);
 }
 
 EFL_CALLBACKS_ARRAY_DEFINE(thread_child_del,

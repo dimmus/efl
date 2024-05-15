@@ -9,11 +9,9 @@ src_core_input_header = [
 ]
 
 src_core_input = files(
-  'ecore_input.c',
-  'ecore_input_compose.c',
-  'ecore_input_joystick.c',
-  'ecore_input_compose.h',
-  'ecore_input_private.h'
+  'core_input.c',
+  'core_input_compose.c',
+  'core_input_joystick.c',
 )
 
 # if get_option('eeze')

@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #include <Efl_Core.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 
 typedef struct
 {

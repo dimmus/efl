@@ -5,7 +5,7 @@
 #endif
 
 #include <Efl_Core.h>
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_IO_SIZER_FD_CLASS
 

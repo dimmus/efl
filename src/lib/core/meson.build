@@ -3,13 +3,13 @@ dir_current_build  = meson.current_build_dir()
 
 dep_core_pub = [ shared, eo, eo_interfaces ]
 dep_core_ext = [ intl, dep_libm ]
-# dep_ecore_ext = [intl, m, buildsystem]
+# dep_core_ext = [intl, m, buildsystem]
 
 inc_core = include_directories('.')
 
 legacy_eo_files = [
-  'ecore_event_message.eo',
-  'ecore_event_message_handler.eo',
+  'core_event_message.eo',
+  'core_event_message_handler.eo',
 ]
 
 eo_file_target = []
@@ -92,34 +92,42 @@ eo_types_files = []
 eo_gen_include_directories += ['-I', dir_current_source]
 
 src_core_header = [
-  'Ecore.h',
-  'Ecore_Common.h',
-  'Ecore_Legacy.h',
-  'Ecore_Eo.h',
   'Efl_Core.h',
+  'Efl_Core_Common.h',
+  'Efl_Core_Eo.h',
+  'Efl_Core_Getopt.h',
+  'core.h',
+  'core_legacy.h',
+  'core_exe_eo.h',
+  'core_exe_eo.legacy.h',
   'efl_general.h',
-  'Ecore_Getopt.h',
-  'ecore_exe_eo.h',
-  'ecore_exe_eo.legacy.h',
   'efl_loop_timer_eo.legacy.h',
 ]
 
 src_core = files(
+  'core.c',
+  'core_alloc.c',
+  'core_anim.c',
+  'core_app.c',
+  'core_events.c',
+  'core_getopt.c',
+  'core_glib.c',
+  'core_idle_enterer.c',
+  'core_idle_exiter.c',
+  'core_idler.c',
+  'core_job.c',
+  'core_main.c',
+  'core_event_message.c',
+  'core_event_message_handler.c',
+  'core_main_timechanges.c',
+  'core_pipe.c',
+  'core_poller.c',
+  'core_time.c',
+  'core_timer.c',
+  'core_thread.c',
+  'core_throttle.c',
+  'core_exe.c',
   'efl_app.c',
-  'ecore.c',
-  'ecore_alloc.c',
-  'ecore_anim.c',
-  'ecore_app.c',
-  'ecore_events.c',
-  'ecore_getopt.c',
-  'ecore_glib.c',
-  'ecore_idle_enterer.c',
-  'ecore_idle_exiter.c',
-  'ecore_idler.c',
-  'ecore_job.c',
-  'ecore_main.c',
-  'ecore_event_message.c',
-  'ecore_event_message_handler.c',
   'efl_loop.c',
   'efl_loop_consumer.c',
   'efl_loop_fd.c',
@@ -154,18 +162,6 @@ src_core = files(
   'efl_bounce_interpolator.c',
   'efl_spring_interpolator.c',
   'efl_cubic_bezier_interpolator.c',
-  'ecore_main_timechanges.c',
-  'ecore_pipe.c',
-  'ecore_poller.c',
-  'ecore_time.c',
-  'ecore_timer.c',
-  'ecore_thread.c',
-  'ecore_throttle.c',
-  'ecore_exe.c',
-  'ecore_exe_private.h',
-  'ecore_private.h',
-  'ecore_internal.h',
-  'ecore_main_common.h',
   'efl_exe.c',
   'efl_thread.c',
   'efl_appthread.c',
@@ -178,14 +174,14 @@ src_core = files(
 
 if sys_windows
   #nothing for now ... needs testing
-  src_core += files('ecore_exe_win32.c')
+  src_core += files('core_exe_win32.c')
 else
-  src_core += files('ecore_signal.c', 'ecore_exe_posix.c')
+  src_core += files('core_signal.c', 'core_exe_posix.c')
 endif
 
 # if get_option('glib') and not sys_windows
-#   ecore_ext_deps += dependency('glib-2.0')
-#   ecore_ext_deps += dependency('gthread-2.0')
+#   core_ext_deps += dependency('glib-2.0')
+#   core_ext_deps += dependency('gthread-2.0')
 #   config_h.set('GLIB_INTEGRATION_ALWAYS', '1')
 #   config_h.set('HAVE_GLIB', '1')
 # endif

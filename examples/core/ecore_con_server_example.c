@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <Efl_Core.h>
 #include <Ecore_Con.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 
 /* Ecore_Con server example
  * 2010 Mike Blumenkrantz

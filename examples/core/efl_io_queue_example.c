@@ -1,6 +1,6 @@
 #define EFL_BETA_API_SUPPORT
 #include <Efl_Net.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 
 static Eina_List *waiting = NULL;
 static Eina_List *commands = NULL;

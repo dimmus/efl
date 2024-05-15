@@ -68,14 +68,14 @@
 #endif
 
 #define __EFL_MAIN_CONSTRUCTOR                  \
-  __EFL_NET(ecore_con_init();)                  \
-  __EFL_NET(ecore_con_url_init();)              \
+  __EFL_NET(Core_con_init();)                  \
+  __EFL_NET(Core_con_url_init();)              \
   __EFL_UI(elm_init(argc, argv);)
 
 #define __EFL_MAIN_DESTRUCTOR                   \
   __EFL_UI(elm_shutdown();)                     \
-  __EFL_NET(ecore_con_url_shutdown();)          \
-  __EFL_NET(ecore_con_shutdown();)
+  __EFL_NET(Core_con_url_shutdown();)          \
+  __EFL_NET(Core_con_shutdown();)
 
 #define _EFL_APP_VERSION_SET()                                          \
   do {                                                                  \
@@ -88,17 +88,17 @@
   {                                                                     \
      Eina_Value *ret__;                                                 \
      int real__;                                                        \
-     _efl_startup_time = ecore_time_unix_get();                         \
+     _efl_startup_time = core_time_unix_get();                         \
      _EFL_APP_VERSION_SET();                                            \
-     ecore_init();                                                      \
+     Core_init();                                                      \
      efl_event_callback_add(efl_main_loop_get(), EFL_LOOP_EVENT_ARGUMENTS, efl_main, NULL); \
-     ecore_init_ex(argc, argv);                                         \
+     Core_init_ex(argc, argv);                                         \
      __EFL_MAIN_CONSTRUCTOR;                                            \
      ret__ = efl_loop_begin(efl_main_loop_get());                     \
      real__ = efl_loop_exit_code_process(ret__);                        \
      __EFL_MAIN_DESTRUCTOR;                                             \
-     ecore_shutdown_ex();                                               \
-     ecore_shutdown();                                                  \
+     Core_shutdown_ex();                                               \
+     Core_shutdown();                                                  \
      return real__;                                                     \
   }
 
@@ -112,16 +112,16 @@
   {                                                                     \
      Eina_Value *ret__;                                                 \
      int real__;                                                        \
-     _efl_startup_time = ecore_time_unix_get();                         \
+     _efl_startup_time = core_time_unix_get();                         \
      _EFL_APP_VERSION_SET();                                            \
-     ecore_init();                                                      \
+     Core_init();                                                      \
      efl_event_callback_array_add(efl_main_loop_get(), _efl_main_ex(), NULL); \
-     ecore_init_ex(argc, argv);                                         \
+     Core_init_ex(argc, argv);                                         \
      __EFL_MAIN_CONSTRUCTOR;                                            \
      ret__ = efl_loop_begin(efl_main_loop_get());                     \
      real__ = efl_loop_exit_code_process(ret__);                        \
      __EFL_MAIN_DESTRUCTOR;                                             \
-     ecore_shutdown_ex();                                               \
-     ecore_shutdown();                                                  \
+     Core_shutdown_ex();                                               \
+     Core_shutdown();                                                  \
      return real__;                                                     \
   }

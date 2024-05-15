@@ -13,9 +13,9 @@
 #include <errno.h>
 
 #include "Efl_Core.h"
-#include "ecore_private.h"
+#include "core_private.h"
 
-#include "ecore_main_common.h"
+#include "core_main_common.h"
 
 typedef struct _Efl_Loop_Promise_Simple_Data Efl_Loop_Promise_Simple_Data;
 typedef struct _Efl_Internal_Promise         Efl_Internal_Promise;
@@ -24,7 +24,7 @@ struct _Efl_Loop_Promise_Simple_Data
 {
     union {
         Efl_Loop_Timer *timer;
-        Ecore_Idler    *idler;
+        Core_Idler    *idler;
     };
 
     Eina_Promise *promise;
@@ -44,19 +44,19 @@ efl_main_loop_get(void)
 EOLIAN static void
 _efl_loop_iterate(Eo *obj, Efl_Loop_Data *pd)
 {
-    _ecore_main_loop_iterate(obj, pd);
+    _core_main_loop_iterate(obj, pd);
 }
 
 EOLIAN static int
 _efl_loop_iterate_may_block(Eo *obj, Efl_Loop_Data *pd, int may_block)
 {
-    return _ecore_main_loop_iterate_may_block(obj, pd, may_block);
+    return _core_main_loop_iterate_may_block(obj, pd, may_block);
 }
 
 EOLIAN static Eina_Value *
 _efl_loop_begin(Eo *obj, Efl_Loop_Data *pd)
 {
-    _ecore_main_loop_begin(obj, pd);
+    _core_main_loop_begin(obj, pd);
     if (pd->thread_children)
     {
         Eina_List *l, *ll;
@@ -74,7 +74,7 @@ _efl_loop_begin(Eo *obj, Efl_Loop_Data *pd)
                 efl_task_end(child);
             else _efl_thread_child_remove(obj, pd, child);
         }
-        if (pd->thread_children) _ecore_main_loop_begin(obj, pd);
+        if (pd->thread_children) _core_main_loop_begin(obj, pd);
     }
     return &(pd->exit_code);
 }
@@ -82,7 +82,7 @@ _efl_loop_begin(Eo *obj, Efl_Loop_Data *pd)
 EOLIAN static void
 _efl_loop_quit(Eo *obj, Efl_Loop_Data *pd, Eina_Value exit_code)
 {
-    _ecore_main_loop_quit(obj, pd);
+    _core_main_loop_quit(obj, pd);
     pd->exit_code = exit_code;
 }
 
@@ -178,7 +178,7 @@ _check_event_catcher_add(void *data, const Efl_Event *event)
         {
             ++pd->idlers;
         }
-        // XXX: all the below are kind of bad. ecore_pollers were special.
+        // XXX: all the below are kind of bad. Core_pollers were special.
         // they all woke up at the SAME time based on interval, (all pollers
         // of interval 1 woke up together, those with 2 woke up when 1 and
         // 2 woke up, 4 woke up together along with 1 and 2 etc.
@@ -293,7 +293,7 @@ _efl_loop_efl_object_constructor(Eo *obj, Efl_Loop_Data *pd)
 
     efl_event_callback_array_add(obj, event_catcher_watch(), pd);
 
-    pd->loop_time = ecore_time_get();
+    pd->loop_time = core_time_get();
     pd->epoll_fd  = -1;
     pd->timer_fd  = -1;
     pd->future_message_handler =
@@ -310,7 +310,7 @@ _efl_loop_efl_object_invalidate(Eo *obj, Efl_Loop_Data *pd)
 {
     efl_invalidate(efl_super(obj, EFL_LOOP_CLASS));
 
-    _ecore_main_content_clear(obj, pd);
+    _core_main_content_clear(obj, pd);
 
     pd->poll_low    = NULL;
     pd->poll_medium = NULL;
@@ -368,7 +368,7 @@ _efl_loop_arguments_cleanup(Eo *o                          EFL_UNUSED,
 // As it also doesn't make sense to allow anyone to override this, so
 // should be internal for sure, not even protected.
 EAPI void
-ecore_loop_arguments_send(int argc, const char **argv)
+core_loop_arguments_send(int argc, const char **argv)
 {
     Eina_Array *arga, *cml;
     int         i = 0;
@@ -420,7 +420,7 @@ _efl_loop_idle_cancel(void *data, const Eina_Promise *dead_ptr EFL_UNUSED)
 {
     Efl_Loop_Promise_Simple_Data *d = data;
 
-    ecore_idler_del(d->idler);
+    core_idler_del(d->idler);
     d->idler   = NULL;
     d->promise = NULL;
     efl_loop_promise_simple_data_mp_free(d);
@@ -447,7 +447,7 @@ _efl_loop_idle(Eo *obj, Efl_Loop_Data *pd EFL_UNUSED)
     d = efl_loop_promise_simple_data_calloc(1);
     EINA_SAFETY_ON_NULL_RETURN_VAL(d, NULL);
 
-    d->idler = ecore_idler_add(_efl_loop_idle_done, d);
+    d->idler = core_idler_add(_efl_loop_idle_done, d);
     EINA_SAFETY_ON_NULL_GOTO(d->idler, idler_error);
 
     p = eina_promise_new(sched, _efl_loop_idle_cancel, d);
@@ -575,7 +575,7 @@ _efl_loop_messages_filter(Eo *obj        EFL_UNUSED,
     {
         if ((msg->handler) && (msg->message) && (!msg->delete_me))
         {
-            if (!_ecore_event_do_filter(handler_pd, msg->handler, msg->message))
+            if (!_core_event_do_filter(handler_pd, msg->handler, msg->message))
             {
                 efl_del(msg->message);
                 msg->handler   = NULL;
@@ -620,7 +620,7 @@ _efl_loop_message_process(Eo *obj, Efl_Loop_Data *pd)
 {
     if (!pd->message_queue) return EFL_FALSE;
     pd->message_walking++;
-    _ecore_event_filters_call(obj, pd);
+    _core_event_filters_call(obj, pd);
     while (pd->message_queue)
     {
         Message *msg = (Message *)pd->message_queue;

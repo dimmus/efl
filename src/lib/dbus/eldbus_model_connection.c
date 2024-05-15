@@ -2,7 +2,7 @@
 #  include <efl_config.h>
 #endif
 
-#include <Ecore.h>
+#include <core.h>
 #include "eldbus_model_connection_private.h"
 #include "eldbus_model_private.h"
 

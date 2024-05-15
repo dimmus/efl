@@ -1,6 +1,6 @@
 #define EFL_BETA_API_SUPPORT
 #include <Efl_Net.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 
 static const char *
 _state_str(Efl_Net_Session_State state)

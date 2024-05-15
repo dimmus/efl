@@ -7,7 +7,7 @@
 #define EFL_IO_CLOSER_PROTECTED 1
 
 #include <Efl_Core.h>
-#include "ecore_private.h"
+#include "core_private.h"
 
 typedef struct
 {

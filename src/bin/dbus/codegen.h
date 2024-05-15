@@ -1,6 +1,6 @@
 #include <Efl_Shared.h>
-#include <Ecore.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core.h>
+#include <Efl_Core_Getopt.h>
 #include <ctype.h>
 
 #define ACCESS_READ 1 << 0

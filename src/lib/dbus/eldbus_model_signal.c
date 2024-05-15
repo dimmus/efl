@@ -6,7 +6,7 @@
 #include "eldbus_model_signal_private.h"
 #include "eldbus_model_private.h"
 
-#include <Ecore.h>
+#include <core.h>
 #include <Efl_Shared.h>
 
 #define MY_CLASS      ELDBUS_MODEL_SIGNAL_CLASS

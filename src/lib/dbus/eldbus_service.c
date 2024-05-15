@@ -868,7 +868,7 @@ _eldbus_service_interface_add(Eldbus_Service_Object *obj, const char *interface)
 
     if (!obj->idle_enterer_iface_changed)
         obj->idle_enterer_iface_changed =
-            ecore_idle_enterer_add(_object_manager_changes_process, obj);
+            core_idle_enterer_add(_object_manager_changes_process, obj);
     obj->iface_added = eina_list_append(obj->iface_added, iface);
 
     return iface;
@@ -1169,7 +1169,7 @@ error:
     if (added) eina_hash_free(added);
     if (iface->props_changed) eina_array_flush(iface->props_changed);
     if (iface->prop_invalidated) eina_array_flush(iface->prop_invalidated);
-    return ECORE_CALLBACK_CANCEL;
+    return CORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1188,7 +1188,7 @@ _interface_free(Eldbus_Service_Interface *interface)
     */
     if (interface->idle_enterer_propschanged)
     {
-        ecore_idle_enterer_del(interface->idle_enterer_propschanged);
+        core_idle_enterer_del(interface->idle_enterer_propschanged);
         _idle_enterer_propschanged(interface);
     }
 
@@ -1211,7 +1211,7 @@ _interface_free(Eldbus_Service_Interface *interface)
         if (!obj->iface_added && !obj->iface_removed &&
             obj->idle_enterer_iface_changed)
         {
-            ecore_idle_enterer_del(obj->idle_enterer_iface_changed);
+            core_idle_enterer_del(obj->idle_enterer_iface_changed);
             obj->idle_enterer_iface_changed = NULL;
         }
     }
@@ -1220,7 +1220,7 @@ _interface_free(Eldbus_Service_Interface *interface)
         if (!obj->idle_enterer_iface_changed)
         {
             obj->idle_enterer_iface_changed =
-                ecore_idle_enterer_add(_object_manager_changes_process, obj);
+                core_idle_enterer_add(_object_manager_changes_process, obj);
         }
 
         obj->iface_removed =
@@ -1249,7 +1249,7 @@ _children_ifaces_add_removed_flush(Eldbus_Service_Object *obj)
 
     if (obj->idle_enterer_iface_changed)
     {
-        ecore_idle_enterer_del(obj->idle_enterer_iface_changed);
+        core_idle_enterer_del(obj->idle_enterer_iface_changed);
         _object_manager_changes_process(obj);
     }
 }
@@ -1282,7 +1282,7 @@ _object_free(Eldbus_Service_Object *obj)
     */
     if (obj->idle_enterer_iface_changed)
     {
-        ecore_idle_enterer_del(obj->idle_enterer_iface_changed);
+        core_idle_enterer_del(obj->idle_enterer_iface_changed);
         _object_manager_changes_process(obj);
     }
 
@@ -1560,7 +1560,7 @@ eldbus_service_property_changed(const Eldbus_Service_Interface *interface,
 
     if (!iface->idle_enterer_propschanged)
         iface->idle_enterer_propschanged =
-            ecore_idle_enterer_add(_idle_enterer_propschanged, iface);
+            core_idle_enterer_add(_idle_enterer_propschanged, iface);
     if (!iface->props_changed) iface->props_changed = eina_array_new(1);
 
     return eina_array_push(iface->props_changed, prop);
@@ -1587,7 +1587,7 @@ eldbus_service_property_invalidate_set(
 
     if (!iface->idle_enterer_propschanged)
         iface->idle_enterer_propschanged =
-            ecore_idle_enterer_add(_idle_enterer_propschanged, iface);
+            core_idle_enterer_add(_idle_enterer_propschanged, iface);
 
     if (is_invalidate)
     {
@@ -1622,7 +1622,7 @@ eldbus_service_object_manager_attach(Eldbus_Service_Interface *iface)
     * ObjectManager
     */
     if (obj->idle_enterer_iface_changed)
-        ecore_idle_enterer_del(obj->idle_enterer_iface_changed);
+        core_idle_enterer_del(obj->idle_enterer_iface_changed);
     _object_manager_changes_process(obj);
 
     obj->objmanager          = objmanager;

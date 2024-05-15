@@ -9,7 +9,7 @@
 #include <Eldbus_Model.h>
 #include <Efl_Eo_Interfaces.h>
 #include <Efl_Core.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 
 #define DEFAULT_BUS_NAME  "org.freedesktop.DBus"
 #define DEFAULT_PATH "/"

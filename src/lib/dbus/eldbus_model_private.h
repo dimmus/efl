@@ -3,12 +3,12 @@
 
 #include "eldbus_private.h"
 
-#include <Ecore.h>
+#include <core.h>
 #include <Efl_Shared.h>
 #include <Efl_Eo.h>
 #include <Efl_Eo_Interfaces.h>
 
-#include "ecore_internal.h"
+#include "core_internal.h"
 
 typedef struct _Eldbus_Children_Slice_Promise Eldbus_Children_Slice_Promise;
 typedef struct _Eldbus_Model_Data Eldbus_Model_Data;

@@ -5,7 +5,7 @@
 #include <Efl_Eo_Interfaces.h>
 #include <Efl_Core.h>
 
-#include "ecore_internal.h"
+#include "core_internal.h"
 
 #define MY_CLASS EFL_GENERIC_MODEL_CLASS
 

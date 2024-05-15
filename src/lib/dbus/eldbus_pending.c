@@ -229,7 +229,7 @@ _eldbus_connection_send_and_block(Eldbus_Connection *conn,
     DBusError       err;
     DBusMessage    *dbus_msg;
 
-    if (ecore_main_loop_nested_get())
+    if (core_main_loop_nested_get())
         WRN("Calling this function may result in dropped frames because the "
             "main loop is running");
 

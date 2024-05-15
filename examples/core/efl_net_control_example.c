@@ -3,7 +3,7 @@
 #endif
 #define EFL_BETA_API_SUPPORT
 #include <Efl_Net.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 #include <ctype.h>
 
 static Efl_Bool monitoring = EFL_TRUE;

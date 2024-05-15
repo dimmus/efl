@@ -4,7 +4,7 @@
 
 #include "eldbus_model_private.h"
 
-#include <Ecore.h>
+#include <core.h>
 #include <Efl_Shared.h>
 #include <Efl_Dbus.h>
 

@@ -545,11 +545,11 @@ typedef struct _Efl_Future_Cb_Desc {
  * static void
  * _downlader_free(Eo *o, void *data EFL_UNUSED, const Eina_Future *dead_future EFL_UNUSED)
  * {
- *    Ecore_Timer *t = efl_key_data_get(o, "timer");
+ *    Core_Timer *t = efl_key_data_get(o, "timer");
  *    //The download finished before the timer expired. Cancel it...
  *    if (t)
  *    {
- *      ecore_timer_del(t);
+ *      core_timer_del(t);
  *      efl_unref(o); //Delete the object
  *    } //else - In this case the future was canceled due efl_unref() in _timeout - No need to call efl_unref()
  * }
@@ -559,7 +559,7 @@ typedef struct _Efl_Future_Cb_Desc {
  *   //This could be rewritten using eina_future_race()
  *   Eo *downloader = efl_add(MY_DOWNLOADER_CLASS, NULL);
  *   Eina_Future *f = downloader_download_file(downloader, file);
- *   timer = ecore_timer_add(30, _timeout, downloader);
+ *   timer = core_timer_add(30, _timeout, downloader);
  *   //Usually this would be done with an eina_future_race() of the download promise and a timeout promise,
  *   //however the following example is useful to illustrate efl_key_data_set() usage.
  *   efl_key_data_set(downloader, "timer", timer);

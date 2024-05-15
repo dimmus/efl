@@ -1,6 +1,6 @@
 #include <Efl_Core.h>
 #include <Ecore_Ipc.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 
 static int retval = EXIT_SUCCESS;
 static Ecore_Ipc_Server *server = NULL;

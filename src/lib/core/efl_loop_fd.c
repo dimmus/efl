@@ -4,7 +4,7 @@
 
 #include <Efl_Core.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_LOOP_FD_CLASS
 
@@ -12,7 +12,7 @@ typedef struct _Efl_Loop_Fd_Data Efl_Loop_Fd_Data;
 
 struct _Efl_Loop_Fd_Data
 {
-    Ecore_Fd_Handler *handler;
+    Core_Fd_Handler *handler;
 
     struct
     {
@@ -27,24 +27,24 @@ struct _Efl_Loop_Fd_Data
 };
 
 static Efl_Bool
-_efl_loop_fd_read_cb(void *data, Ecore_Fd_Handler *fd_handler)
+_efl_loop_fd_read_cb(void *data, Core_Fd_Handler *fd_handler)
 {
     Eo *obj = data;
 
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_READ))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_READ))
     {
         efl_event_callback_call(obj, EFL_LOOP_FD_EVENT_READ, NULL);
     }
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_WRITE))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_WRITE))
     {
         efl_event_callback_call(obj, EFL_LOOP_FD_EVENT_WRITE, NULL);
     }
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_ERROR))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_ERROR))
     {
         efl_event_callback_call(obj, EFL_LOOP_FD_EVENT_ERROR, NULL);
     }
 
-    return ECORE_CALLBACK_RENEW;
+    return CORE_CALLBACK_RENEW;
 }
 
 static void
@@ -56,34 +56,34 @@ _efl_loop_fd_reset(Eo *obj, Efl_Loop_Fd_Data *pd)
     {
         if (pd->handler)
         {
-            ecore_main_fd_handler_del(pd->handler);
+            core_main_fd_handler_del(pd->handler);
             pd->handler = NULL;
         }
         return;
     }
-    flags |= pd->references.read > 0 ? ECORE_FD_READ : 0;
-    flags |= pd->references.write > 0 ? ECORE_FD_WRITE : 0;
-    flags |= pd->references.error > 0 ? ECORE_FD_ERROR : 0;
+    flags |= pd->references.read > 0 ? CORE_FD_READ : 0;
+    flags |= pd->references.write > 0 ? CORE_FD_WRITE : 0;
+    flags |= pd->references.error > 0 ? CORE_FD_ERROR : 0;
     if (flags == 0)
     {
         if (pd->handler)
         {
-            ecore_main_fd_handler_del(pd->handler);
+            core_main_fd_handler_del(pd->handler);
             pd->handler = NULL;
         }
         return;
     }
 
-    if (pd->handler) ecore_main_fd_handler_active_set(pd->handler, flags);
+    if (pd->handler) core_main_fd_handler_active_set(pd->handler, flags);
     else if (pd->file)
-        pd->handler = ecore_main_fd_handler_file_add(pd->fd,
+        pd->handler = core_main_fd_handler_file_add(pd->fd,
                                                      flags,
                                                      _efl_loop_fd_read_cb,
                                                      obj,
                                                      NULL,
                                                      NULL);
     else
-        pd->handler = ecore_main_fd_handler_add(pd->fd,
+        pd->handler = core_main_fd_handler_add(pd->fd,
                                                 flags,
                                                 _efl_loop_fd_read_cb,
                                                 obj,
@@ -202,7 +202,7 @@ _efl_loop_fd_efl_object_parent_set(Eo               *obj,
                                    Efl_Loop_Fd_Data *pd,
                                    Efl_Object       *parent)
 {
-    if (pd->handler) ecore_main_fd_handler_del(pd->handler);
+    if (pd->handler) core_main_fd_handler_del(pd->handler);
     pd->handler = NULL;
 
     efl_parent_set(efl_super(obj, MY_CLASS), parent);
@@ -215,7 +215,7 @@ _efl_loop_fd_efl_object_parent_set(Eo               *obj,
 static void
 _efl_loop_fd_efl_object_invalidate(Eo *obj, Efl_Loop_Fd_Data *pd)
 {
-    ecore_main_fd_handler_del(pd->handler);
+    core_main_fd_handler_del(pd->handler);
 
     efl_invalidate(efl_super(obj, MY_CLASS));
 }

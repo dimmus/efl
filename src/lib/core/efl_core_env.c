@@ -5,7 +5,7 @@
 #include <Efl_Core.h>
 #include <ctype.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_CORE_ENV_CLASS
 

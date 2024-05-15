@@ -44,36 +44,36 @@ static Ecore_System_Upower_Version _version = 0;
 #endif
 #define DBG(...) EINA_LOG_DOM_DBG(_log_dom, __VA_ARGS__)
 
-static Efl_Bool _ecore_on_battery    = EFL_FALSE;
-static Efl_Bool _ecore_low_battery   = EFL_FALSE;
-static int      _ecore_battery_level = -1;
+static Efl_Bool _core_on_battery    = EFL_FALSE;
+static Efl_Bool _core_low_battery   = EFL_FALSE;
+static int      _core_battery_level = -1;
 
 static Eina_List *_eldbus_pending = NULL;
 
-static Efl_Bool _ecore_system_upower_display_device_init(void);
-static void     _ecore_system_upower_shutdown(void);
+static Efl_Bool _core_system_upower_display_device_init(void);
+static void     _core_system_upower_shutdown(void);
 
 static void
 _battery_eval(void)
 {
-    Ecore_Power_State power_state = ECORE_POWER_STATE_MAINS;
+    Core_Power_State power_state = CORE_POWER_STATE_MAINS;
 
-    if (_ecore_low_battery)
+    if (_core_low_battery)
     {
-        power_state = ECORE_POWER_STATE_LOW;
+        power_state = CORE_POWER_STATE_LOW;
     }
-    else if (_ecore_on_battery)
+    else if (_core_on_battery)
     {
-        power_state = ECORE_POWER_STATE_BATTERY;
+        power_state = CORE_POWER_STATE_BATTERY;
 
         /* FIXME: get level value from libupower? */
-        if (_ecore_battery_level >= 3)
+        if (_core_battery_level >= 3)
         {
-            power_state = ECORE_POWER_STATE_LOW;
+            power_state = CORE_POWER_STATE_LOW;
         }
     }
 
-    ecore_power_state_set(power_state);
+    core_power_state_set(power_state);
 }
 
 static void
@@ -87,7 +87,7 @@ _warning_level_from_variant(Eldbus_Message_Iter *variant)
         return;
     }
 
-    _ecore_battery_level = val;
+    _core_battery_level = val;
     _battery_eval();
 }
 
@@ -140,7 +140,7 @@ _on_low_battery_from_variant(Eldbus_Message_Iter *variant)
     }
 
     DBG("OnLowBattery=%hhu", val);
-    _ecore_low_battery = val;
+    _core_low_battery = val;
     _battery_eval();
 }
 
@@ -192,7 +192,7 @@ _on_battery_from_variant(Eldbus_Message_Iter *variant)
     }
 
     DBG("OnBattery=%hhu", val);
-    _ecore_on_battery = val;
+    _core_on_battery = val;
     _battery_eval();
 }
 
@@ -239,7 +239,7 @@ _battery_state_get(void)
             _on_low_battery_get(_proxy);
             break;
         case VERSION_WARNING_LEVEL:
-            if (_ecore_system_upower_display_device_init())
+            if (_core_system_upower_display_device_init())
                 _warning_level_get(_disp_proxy);
             break;
         default:
@@ -381,7 +381,7 @@ _upower_name_owner_cb(void           *data,
 }
 
 static Efl_Bool
-_ecore_system_upower_display_device_init(void)
+_core_system_upower_display_device_init(void)
 {
     Eldbus_Signal_Handler *s;
 
@@ -420,37 +420,37 @@ _ecore_system_upower_display_device_init(void)
     return EFL_TRUE;
 
 disp_error:
-    _ecore_system_upower_shutdown();
+    _core_system_upower_shutdown();
     return EFL_FALSE;
 }
 
-static Efl_Bool     _ecore_system_upower_init(void);
-static void         _ecore_system_upower_shutdown(void);
+static Efl_Bool     _core_system_upower_init(void);
+static void         _core_system_upower_shutdown(void);
 static unsigned int reseting;
 
 static void
-_ecore_system_upower_reset(void)
+_core_system_upower_reset(void)
 {
     reseting = 1;
-    _ecore_system_upower_shutdown();
-    _ecore_system_upower_init();
+    _core_system_upower_shutdown();
+    _core_system_upower_init();
     reseting = 0;
 }
 
 static Efl_Bool
-_ecore_system_upower_init(void)
+_core_system_upower_init(void)
 {
     Eldbus_Signal_Handler *s;
 
     eldbus_init();
     if (!reseting)
-        ecore_fork_reset_callback_add((Ecore_Cb)_ecore_system_upower_reset,
+        core_fork_reset_callback_add((Core_Cb)_core_system_upower_reset,
                                       NULL);
 
-    _log_dom = eina_log_domain_register("ecore_system_upower", NULL);
+    _log_dom = eina_log_domain_register("core_system_upower", NULL);
     if (_log_dom < 0)
     {
-        EINA_LOG_ERR("Could not register log domain: ecore_system_upower");
+        EINA_LOG_ERR("Could not register log domain: core_system_upower");
         goto error;
     }
 
@@ -495,18 +495,18 @@ _ecore_system_upower_init(void)
     return EFL_TRUE;
 
 error:
-    _ecore_system_upower_shutdown();
+    _core_system_upower_shutdown();
     return EFL_FALSE;
 }
 
 static void
-_ecore_system_upower_shutdown(void)
+_core_system_upower_shutdown(void)
 {
     Eldbus_Pending *pend;
 
     DBG("ecore system 'upower' unloaded");
     if (!reseting)
-        ecore_fork_reset_callback_del((Ecore_Cb)_ecore_system_upower_reset,
+        core_fork_reset_callback_del((Core_Cb)_core_system_upower_reset,
                                       NULL);
 
     eldbus_name_owner_changed_callback_del(_conn,
@@ -557,5 +557,5 @@ _ecore_system_upower_shutdown(void)
     eldbus_shutdown();
 }
 
-EINA_MODULE_INIT(_ecore_system_upower_init);
-EINA_MODULE_SHUTDOWN(_ecore_system_upower_shutdown);
+EINA_MODULE_INIT(_core_system_upower_init);
+EINA_MODULE_SHUTDOWN(_core_system_upower_shutdown);

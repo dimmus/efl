@@ -80,7 +80,7 @@ _lang_key_changed_cb(keynode_t *node EFL_UNUSED, void *first)
     setenv("LC_MESSAGES", lang, 1);
     setlocale(__LC_ALL, "");
 
-    if (!first) ecore_event_add(ECORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
+    if (!first) ecore_event_add(CORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
     free(lang);
 }
 
@@ -105,14 +105,14 @@ _region_fmt_key_changed_cb(keynode_t *node EFL_UNUSED, void *first)
     setenv("LC_IDENTIFICATION", region, 1);
     setlocale(__LC_ALL, "");
 
-    if (!first) ecore_event_add(ECORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
+    if (!first) ecore_event_add(CORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
     free(region);
 }
 
 static void
 _time_fmt_key_changed_cb(keynode_t *node EFL_UNUSED, void *data EFL_UNUSED)
 {
-    ecore_event_add(ECORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
+    ecore_event_add(CORE_EVENT_LOCALE_CHANGED, NULL, NULL, NULL);
 }
 
 static Eina_Bool

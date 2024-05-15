@@ -6,7 +6,7 @@
 
 #include <Efl_Core.h>
 #include <fcntl.h>
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_IO_CLOSER_FD_MIXIN
 

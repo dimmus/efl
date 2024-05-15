@@ -7,7 +7,7 @@
 #include <Efl_Eo.h>
 #include <Efl_Core.h>
 
-#include "ecore_internal.h"
+#include "core_internal.h"
 
 typedef struct _Efl_Container_Property_Data Efl_Container_Property_Data;
 typedef struct _Efl_Container_Model_Data    Efl_Container_Model_Data;

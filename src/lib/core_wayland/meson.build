@@ -14,15 +14,15 @@ src_core_wayland_header = [
 ]
 
 src_core_wayland = files(
-  'ecore_wl_subsurf.c',
-  'ecore_wl_dnd.c',
-  'ecore_wl_window.c',
-  'ecore_wl_input.c',
-  'ecore_wl_output.c',
-  'ecore_wl_display.c',
-  'ecore_wl.c',
-  'ecore_wl_buffer.c',
-  'ecore_wl_surface.c'
+  'core_wl_subsurf.c',
+  'core_wl_dnd.c',
+  'core_wl_window.c',
+  'core_wl_input.c',
+  'core_wl_output.c',
+  'core_wl_display.c',
+  'core_wl.c',
+  'core_wl_buffer.c',
+  'core_wl_surface.c'
 )
 
 lib_core_wayland = library('efl_core_wayland',

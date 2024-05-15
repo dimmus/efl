@@ -4,7 +4,7 @@
 
 #include <Efl_Core.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 
 typedef struct _Efl_Loop_Consumer_Data Efl_Loop_Consumer_Data;
 

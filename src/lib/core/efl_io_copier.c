@@ -5,7 +5,7 @@
 #endif
 
 #include <Efl_Core.h>
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS            EFL_IO_COPIER_CLASS
 #define DEF_READ_CHUNK_SIZE 4096
@@ -40,7 +40,7 @@ static void _efl_io_copier_read(Eo *o, Efl_Io_Copier_Data *pd);
 #define _COPIER_DBG(o, pd)                                                     \
     do                                                                         \
     {                                                                          \
-        if (eina_log_domain_level_check(_ecore_log_dom, EINA_LOG_LEVEL_DBG))   \
+        if (eina_log_domain_level_check(_core_log_dom, EINA_LOG_LEVEL_DBG))   \
         {                                                                      \
             DBG("copier={%p %s, refs=%d, closed=%d, done=%d, buf=%zd}",        \
                 o,                                                             \

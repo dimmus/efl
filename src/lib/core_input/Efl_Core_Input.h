@@ -47,30 +47,30 @@ extern "C" {
  *
  *@{
  */
-   EAPI extern int ECORE_EVENT_KEY_DOWN;
-   EAPI extern int ECORE_EVENT_KEY_UP;
-   EAPI extern int ECORE_EVENT_MOUSE_BUTTON_DOWN;
-   EAPI extern int ECORE_EVENT_MOUSE_BUTTON_UP;
-   EAPI extern int ECORE_EVENT_MOUSE_MOVE;
-   EAPI extern int ECORE_EVENT_MOUSE_WHEEL;
-   EAPI extern int ECORE_EVENT_MOUSE_IN;
-   EAPI extern int ECORE_EVENT_MOUSE_OUT;
-   EAPI extern int ECORE_EVENT_AXIS_UPDATE; /**< @since 1.13 */
-   EAPI extern int ECORE_EVENT_MOUSE_BUTTON_CANCEL; /**< @since 1.15 */
-   EAPI extern int ECORE_EVENT_JOYSTICK; /**< @since 1.18 */
+   EAPI extern int CORE_EVENT_KEY_DOWN;
+   EAPI extern int CORE_EVENT_KEY_UP;
+   EAPI extern int CORE_EVENT_MOUSE_BUTTON_DOWN;
+   EAPI extern int CORE_EVENT_MOUSE_BUTTON_UP;
+   EAPI extern int CORE_EVENT_MOUSE_MOVE;
+   EAPI extern int CORE_EVENT_MOUSE_WHEEL;
+   EAPI extern int CORE_EVENT_MOUSE_IN;
+   EAPI extern int CORE_EVENT_MOUSE_OUT;
+   EAPI extern int CORE_EVENT_AXIS_UPDATE; /**< @since 1.13 */
+   EAPI extern int CORE_EVENT_MOUSE_BUTTON_CANCEL; /**< @since 1.15 */
+   EAPI extern int CORE_EVENT_JOYSTICK; /**< @since 1.18 */
 
-#define ECORE_EVENT_MODIFIER_SHIFT      0x0001
-#define ECORE_EVENT_MODIFIER_CTRL       0x0002
-#define ECORE_EVENT_MODIFIER_ALT        0x0004
-#define ECORE_EVENT_MODIFIER_WIN        0x0008
-#define ECORE_EVENT_MODIFIER_SCROLL     0x0010
-#define ECORE_EVENT_MODIFIER_NUM        0x0020
-#define ECORE_EVENT_MODIFIER_CAPS       0x0040
-#define ECORE_EVENT_LOCK_SCROLL         0x0080
-#define ECORE_EVENT_LOCK_NUM            0x0100
-#define ECORE_EVENT_LOCK_CAPS           0x0200
-#define ECORE_EVENT_LOCK_SHIFT          0x0300
-#define ECORE_EVENT_MODIFIER_ALTGR      0x0400 /**< @since 1.7 */
+#define CORE_EVENT_MODIFIER_SHIFT      0x0001
+#define CORE_EVENT_MODIFIER_CTRL       0x0002
+#define CORE_EVENT_MODIFIER_ALT        0x0004
+#define CORE_EVENT_MODIFIER_WIN        0x0008
+#define CORE_EVENT_MODIFIER_SCROLL     0x0010
+#define CORE_EVENT_MODIFIER_NUM        0x0020
+#define CORE_EVENT_MODIFIER_CAPS       0x0040
+#define CORE_EVENT_LOCK_SCROLL         0x0080
+#define CORE_EVENT_LOCK_NUM            0x0100
+#define CORE_EVENT_LOCK_CAPS           0x0200
+#define CORE_EVENT_LOCK_SHIFT          0x0300
+#define CORE_EVENT_MODIFIER_ALTGR      0x0400 /**< @since 1.7 */
 
 #ifndef _ECORE_WINDOW_PREDEF
    typedef uintptr_t                        Ecore_Window;
@@ -142,19 +142,19 @@ extern "C" {
     */
    typedef enum _Ecore_Event_Joystick_Button
      {
-        ECORE_EVENT_JOYSTICK_BUTTON_NONE,
-        ECORE_EVENT_JOYSTICK_BUTTON_FACE_0,
-        ECORE_EVENT_JOYSTICK_BUTTON_FACE_1,
-        ECORE_EVENT_JOYSTICK_BUTTON_FACE_2,
-        ECORE_EVENT_JOYSTICK_BUTTON_FACE_3,
-        ECORE_EVENT_JOYSTICK_BUTTON_LEFT_SHOULDER,
-        ECORE_EVENT_JOYSTICK_BUTTON_RIGHT_SHOULDER,
-        ECORE_EVENT_JOYSTICK_BUTTON_SELECT,
-        ECORE_EVENT_JOYSTICK_BUTTON_START,
-        ECORE_EVENT_JOYSTICK_BUTTON_LEFT_ANALOG_STICK,
-        ECORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK,
-        ECORE_EVENT_JOYSTICK_BUTTON_META,
-        ECORE_EVENT_JOYSTICK_BUTTON_LAST
+        CORE_EVENT_JOYSTICK_BUTTON_NONE,
+        CORE_EVENT_JOYSTICK_BUTTON_FACE_0,
+        CORE_EVENT_JOYSTICK_BUTTON_FACE_1,
+        CORE_EVENT_JOYSTICK_BUTTON_FACE_2,
+        CORE_EVENT_JOYSTICK_BUTTON_FACE_3,
+        CORE_EVENT_JOYSTICK_BUTTON_LEFT_SHOULDER,
+        CORE_EVENT_JOYSTICK_BUTTON_RIGHT_SHOULDER,
+        CORE_EVENT_JOYSTICK_BUTTON_SELECT,
+        CORE_EVENT_JOYSTICK_BUTTON_START,
+        CORE_EVENT_JOYSTICK_BUTTON_LEFT_ANALOG_STICK,
+        CORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK,
+        CORE_EVENT_JOYSTICK_BUTTON_META,
+        CORE_EVENT_JOYSTICK_BUTTON_LAST
      } Ecore_Event_Joystick_Button; /**< @since 1.18 */
 
    /**
@@ -163,16 +163,16 @@ extern "C" {
     */
    typedef enum _Ecore_Event_Joystick_Axis
      {
-        ECORE_EVENT_JOYSTICK_AXIS_NONE,
-        ECORE_EVENT_JOYSTICK_AXIS_HAT_X,
-        ECORE_EVENT_JOYSTICK_AXIS_HAT_Y,
-        ECORE_EVENT_JOYSTICK_AXIS_LEFT_SHOULDER,
-        ECORE_EVENT_JOYSTICK_AXIS_RIGHT_SHOULDER,
-        ECORE_EVENT_JOYSTICK_AXIS_LEFT_ANALOG_HOR,
-        ECORE_EVENT_JOYSTICK_AXIS_LEFT_ANALOG_VER,
-        ECORE_EVENT_JOYSTICK_AXIS_RIGHT_ANALOG_HOR,
-        ECORE_EVENT_JOYSTICK_AXIS_RIGHT_ANALOG_VER,
-        ECORE_EVENT_JOYSTICK_AXIS_LAST
+        CORE_EVENT_JOYSTICK_AXIS_NONE,
+        CORE_EVENT_JOYSTICK_AXIS_HAT_X,
+        CORE_EVENT_JOYSTICK_AXIS_HAT_Y,
+        CORE_EVENT_JOYSTICK_AXIS_LEFT_SHOULDER,
+        CORE_EVENT_JOYSTICK_AXIS_RIGHT_SHOULDER,
+        CORE_EVENT_JOYSTICK_AXIS_LEFT_ANALOG_HOR,
+        CORE_EVENT_JOYSTICK_AXIS_LEFT_ANALOG_VER,
+        CORE_EVENT_JOYSTICK_AXIS_RIGHT_ANALOG_HOR,
+        CORE_EVENT_JOYSTICK_AXIS_RIGHT_ANALOG_VER,
+        CORE_EVENT_JOYSTICK_AXIS_LAST
      } Ecore_Event_Joystick_Axis; /**< @since 1.18 */
 
    /**
@@ -181,12 +181,12 @@ extern "C" {
     */
    typedef enum _Ecore_Event_Joystick_Event
      {
-        ECORE_EVENT_JOYSTICK_EVENT_TYPE_NONE,
-        ECORE_EVENT_JOYSTICK_EVENT_TYPE_CONNECTED,
-        ECORE_EVENT_JOYSTICK_EVENT_TYPE_DISCONNECTED,
-        ECORE_EVENT_JOYSTICK_EVENT_TYPE_BUTTON,
-        ECORE_EVENT_JOYSTICK_EVENT_TYPE_AXIS,
-        ECORE_EVENT_JOYSTICK_EVENT_TYPE_LAST
+        CORE_EVENT_JOYSTICK_EVENT_TYPE_NONE,
+        CORE_EVENT_JOYSTICK_EVENT_TYPE_CONNECTED,
+        CORE_EVENT_JOYSTICK_EVENT_TYPE_DISCONNECTED,
+        CORE_EVENT_JOYSTICK_EVENT_TYPE_BUTTON,
+        CORE_EVENT_JOYSTICK_EVENT_TYPE_AXIS,
+        CORE_EVENT_JOYSTICK_EVENT_TYPE_LAST
      } Ecore_Event_Joystick_Event_Type; /**< @since 1.18 */
 
    /**
@@ -418,11 +418,11 @@ extern "C" {
    /**
     * Initializes the Ecore Event system.
     */
-   EAPI int                  ecore_event_init(void);
+   EAPI int                  core_event_init(void);
    /**
     * Shutdowns the Ecore Event system.
     */
-   EAPI int                  ecore_event_shutdown(void);
+   EAPI int                  core_event_shutdown(void);
 
    /**
     * Returns the Ecore modifier event integer associated to a
@@ -432,7 +432,7 @@ extern "C" {
     * @return A event_modifier integer that matches with the provided modifier
     * event.
     */
-   EAPI unsigned int         ecore_event_modifier_mask(Ecore_Event_Modifier modifier);
+   EAPI unsigned int         core_event_modifier_mask(Ecore_Event_Modifier modifier);
 
    /**
     * Update a Ecore_Event_Modifiers array with "key" modifier.
@@ -444,7 +444,7 @@ extern "C" {
     * @return ECORE_NONE if the key does not match with an existing one, else
     * the corresponding Ecore_Event_Modifier.
     */
-   EAPI Ecore_Event_Modifier ecore_event_update_modifier(const char *key, Ecore_Event_Modifiers *modifiers, int inc);
+   EAPI Ecore_Event_Modifier core_event_update_modifier(const char *key, Ecore_Event_Modifiers *modifiers, int inc);
 
    /**
     * Handles a sequence of key symbols to make a final compose string.

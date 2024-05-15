@@ -6,7 +6,7 @@
 
 char *output_dir = NULL;
 
-static const Ecore_Getopt optdesc = {
+static const Core_Getopt optdesc = {
     "eldbus_codegen",
     "%prog [options] <file.xml>",
     "1.0",
@@ -14,20 +14,20 @@ static const Ecore_Getopt optdesc = {
     "BSD",
     "Generate DBUS code, making write DBus client applications easy\n",
     0,
-    {ECORE_GETOPT_STORE_STR('p',
+    {CORE_GETOPT_STORE_STR('p',
       "prefix", "The prefix for the generated code."),
-      ECORE_GETOPT_STORE_STR('i',
+      CORE_GETOPT_STORE_STR('i',
       "interface", "To generate code of only one interface of xml."),
-      ECORE_GETOPT_STORE_STR(
+      CORE_GETOPT_STORE_STR(
       'o', "output file name",
       "The name of output files, only used if a interface is selected."),
-      ECORE_GETOPT_STORE_STR('O',
+      CORE_GETOPT_STORE_STR('O',
       "output dir", "The directory to output files to."),
-      ECORE_GETOPT_LICENSE('L', "license"),
-      ECORE_GETOPT_COPYRIGHT('C', "copyright"),
-      ECORE_GETOPT_VERSION('V', "version"),
-      ECORE_GETOPT_HELP('h', "help"),
-      ECORE_GETOPT_SENTINEL}
+      CORE_GETOPT_LICENSE('L', "license"),
+      CORE_GETOPT_COPYRIGHT('C', "copyright"),
+      CORE_GETOPT_VERSION('V', "version"),
+      CORE_GETOPT_HELP('h', "help"),
+      CORE_GETOPT_SENTINEL}
 };
 
 int
@@ -38,19 +38,19 @@ main(int argc, char **argv)
     char              *prefix = NULL, *interface = NULL, *output = NULL;
     Efl_Bool           quit_option = EFL_FALSE;
     int                arg_index;
-    Ecore_Getopt_Value values[] = { ECORE_GETOPT_VALUE_STR(prefix),
-                                    ECORE_GETOPT_VALUE_STR(interface),
-                                    ECORE_GETOPT_VALUE_STR(output),
-                                    ECORE_GETOPT_VALUE_STR(output_dir),
-                                    ECORE_GETOPT_VALUE_BOOL(quit_option),
-                                    ECORE_GETOPT_VALUE_BOOL(quit_option),
-                                    ECORE_GETOPT_VALUE_BOOL(quit_option),
-                                    ECORE_GETOPT_VALUE_BOOL(quit_option),
-                                    ECORE_GETOPT_VALUE_NONE };
+    Core_Getopt_Value values[] = { CORE_GETOPT_VALUE_STR(prefix),
+                                    CORE_GETOPT_VALUE_STR(interface),
+                                    CORE_GETOPT_VALUE_STR(output),
+                                    CORE_GETOPT_VALUE_STR(output_dir),
+                                    CORE_GETOPT_VALUE_BOOL(quit_option),
+                                    CORE_GETOPT_VALUE_BOOL(quit_option),
+                                    CORE_GETOPT_VALUE_BOOL(quit_option),
+                                    CORE_GETOPT_VALUE_BOOL(quit_option),
+                                    CORE_GETOPT_VALUE_NONE };
 
     eina_init();
 
-    arg_index = ecore_getopt_parse(&optdesc, values, argc, argv);
+    arg_index = core_getopt_parse(&optdesc, values, argc, argv);
     if (arg_index == -1)
     {
         printf("Error: parsing arguments.\n");

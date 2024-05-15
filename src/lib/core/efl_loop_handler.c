@@ -4,7 +4,7 @@
 
 #include <Efl_Core.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_LOOP_HANDLER_CLASS
 
@@ -16,8 +16,8 @@ struct _Efl_Loop_Handler_Data
 {
     Eo                  *loop;
     Efl_Loop_Data       *loop_data;
-    Ecore_Fd_Handler    *handler_fd;
-    Ecore_Win32_Handler *handler_win32;
+    Core_Fd_Handler    *handler_fd;
+    Core_Win32_Handler *handler_win32;
 
     void *win32;
     int   fd;
@@ -40,11 +40,11 @@ struct _Efl_Loop_Handler_Data
 
 //////////////////////////////////////////////////////////////////////////
 
-static Efl_Bool _cb_handler_fd(void *data, Ecore_Fd_Handler *fd_handler);
-static Efl_Bool _cb_handler_buffer(void *data, Ecore_Fd_Handler *fd_handler);
+static Efl_Bool _cb_handler_fd(void *data, Core_Fd_Handler *fd_handler);
+static Efl_Bool _cb_handler_buffer(void *data, Core_Fd_Handler *fd_handler);
 static Efl_Bool _cb_handler_win32(void                *data,
-                                  Ecore_Win32_Handler *win32_handler);
-static void     _cb_handler_prepare(void *data, Ecore_Fd_Handler *fd_handler);
+                                  Core_Win32_Handler *win32_handler);
+static void     _cb_handler_prepare(void *data, Core_Fd_Handler *fd_handler);
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -56,44 +56,44 @@ _handler_clear(Efl_Loop_Handler_Data *pd)
 
     if (pd->handler_fd)
     {
-        _ecore_main_fd_handler_del(obj, loop, pd->handler_fd);
+        _core_main_fd_handler_del(obj, loop, pd->handler_fd);
         pd->handler_fd = NULL;
     }
     else if (pd->handler_win32)
     {
-        _ecore_main_win32_handler_del(obj, loop, pd->handler_win32);
+        _core_main_win32_handler_del(obj, loop, pd->handler_win32);
         pd->handler_win32 = NULL;
     }
 }
 
-static Ecore_Fd_Handler_Flags
+static Core_Fd_Handler_Flags
 _handler_flags_get(Efl_Loop_Handler_Data *pd)
 {
     return (((pd->flags & EFL_LOOP_HANDLER_FLAGS_READ) &&
              (pd->references.read > 0))
-                ? ECORE_FD_READ
+                ? CORE_FD_READ
                 : 0) |
            (((pd->flags & EFL_LOOP_HANDLER_FLAGS_WRITE) &&
              (pd->references.write > 0))
-                ? ECORE_FD_WRITE
+                ? CORE_FD_WRITE
                 : 0) |
            (((pd->flags & EFL_LOOP_HANDLER_FLAGS_ERROR) &&
              (pd->references.error > 0))
-                ? ECORE_FD_ERROR
+                ? CORE_FD_ERROR
                 : 0);
 }
 
 static void
 _handler_active_update(Eo *obj, Efl_Loop_Handler_Data *pd)
 {
-    Ecore_Fd_Handler_Flags flags = _handler_flags_get(pd);
+    Core_Fd_Handler_Flags flags = _handler_flags_get(pd);
 
-    ecore_main_fd_handler_active_set(pd->handler_fd, flags);
+    core_main_fd_handler_active_set(pd->handler_fd, flags);
     if (pd->references.prepare)
-        ecore_main_fd_handler_prepare_callback_set(pd->handler_fd,
+        core_main_fd_handler_prepare_callback_set(pd->handler_fd,
                                                    _cb_handler_prepare,
                                                    obj);
-    else ecore_main_fd_handler_prepare_callback_set(pd->handler_fd, NULL, NULL);
+    else core_main_fd_handler_prepare_callback_set(pd->handler_fd, NULL, NULL);
 }
 
 static void
@@ -109,7 +109,7 @@ _handler_reset(Eo *obj, Efl_Loop_Handler_Data *pd)
 
     if (pd->fd >= 0)
     {
-        Ecore_Fd_Cb buffer_func = NULL;
+        Core_Fd_Cb buffer_func = NULL;
         void       *buffer_data = NULL;
 
         if (pd->references.buffer > 0)
@@ -122,7 +122,7 @@ _handler_reset(Eo *obj, Efl_Loop_Handler_Data *pd)
         else if (pd->loop_data)
         {
             pd->handler_fd =
-                _ecore_main_fd_handler_add(pd->loop,
+                _core_main_fd_handler_add(pd->loop,
                                            pd->loop_data,
                                            obj,
                                            pd->fd,
@@ -137,7 +137,7 @@ _handler_reset(Eo *obj, Efl_Loop_Handler_Data *pd)
     }
     else if (pd->win32 && pd->loop_data)
     {
-        pd->handler_win32 = _ecore_main_win32_handler_add(pd->loop,
+        pd->handler_win32 = _core_main_win32_handler_add(pd->loop,
                                                           pd->loop_data,
                                                           obj,
                                                           pd->win32,
@@ -176,41 +176,41 @@ _event_references_update(Efl_Loop_Handler_Data *pd,
 //////////////////////////////////////////////////////////////////////////
 
 static Efl_Bool
-_cb_handler_fd(void *data, Ecore_Fd_Handler *fd_handler EFL_UNUSED)
+_cb_handler_fd(void *data, Core_Fd_Handler *fd_handler EFL_UNUSED)
 {
     Eo *obj = data;
 
     efl_ref(obj);
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_READ))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_READ))
         efl_event_callback_call(obj, EFL_LOOP_HANDLER_EVENT_READ, NULL);
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_WRITE))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_WRITE))
         efl_event_callback_call(obj, EFL_LOOP_HANDLER_EVENT_WRITE, NULL);
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_ERROR))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_ERROR))
         efl_event_callback_call(obj, EFL_LOOP_HANDLER_EVENT_ERROR, NULL);
     efl_unref(obj);
-    return ECORE_CALLBACK_RENEW;
+    return CORE_CALLBACK_RENEW;
 }
 
 static Efl_Bool
-_cb_handler_buffer(void *data, Ecore_Fd_Handler *fd_handler EFL_UNUSED)
+_cb_handler_buffer(void *data, Core_Fd_Handler *fd_handler EFL_UNUSED)
 {
     Eo *obj = data;
 
     efl_event_callback_call(obj, EFL_LOOP_HANDLER_EVENT_BUFFER, NULL);
-    return ECORE_CALLBACK_RENEW;
+    return CORE_CALLBACK_RENEW;
 }
 
 static Efl_Bool
-_cb_handler_win32(void *data, Ecore_Win32_Handler *win32_handler EFL_UNUSED)
+_cb_handler_win32(void *data, Core_Win32_Handler *win32_handler EFL_UNUSED)
 {
     Eo *obj = data;
 
     efl_event_callback_call(obj, EFL_LOOP_HANDLER_EVENT_READ, NULL);
-    return ECORE_CALLBACK_RENEW;
+    return CORE_CALLBACK_RENEW;
 }
 
 static void
-_cb_handler_prepare(void *data, Ecore_Fd_Handler *fd_handler EFL_UNUSED)
+_cb_handler_prepare(void *data, Core_Fd_Handler *fd_handler EFL_UNUSED)
 {
     Eo *obj = data;
 

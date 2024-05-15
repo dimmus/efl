@@ -7,7 +7,7 @@
 #include <Efl_Shared.h>
 #include <Ecore_Evas.h>
 #include <Ecore_Input.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 
 static int width = 800;
 

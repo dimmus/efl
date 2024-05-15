@@ -7,7 +7,7 @@
 #include <Efl_Core.h>
 #include <Efl_Eo.h>
 
-#include "ecore_private.h"
+#include "core_private.h"
 #include "efl_loop_model.eo.h"
 
 typedef struct _Efl_Loop_Model_Watcher_Data Efl_Loop_Model_Watcher_Data;

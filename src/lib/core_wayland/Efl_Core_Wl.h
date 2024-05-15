@@ -3,7 +3,7 @@
 
 # include <Efl_Shared.h>
 # include <Efl_Core.h>
-# include <Ecore.h> /* use old api here. should be removed later */
+# include <core.h> /* use old api here. should be removed later */
 # include <wayland-client.h>
 # include <wayland-cursor.h>
 # include <xkbcommon/xkbcommon.h>

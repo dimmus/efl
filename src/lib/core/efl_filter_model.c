@@ -4,7 +4,7 @@
 
 #include <Efl_Core.h>
 
-#include "ecore_internal.h"
+#include "core_internal.h"
 
 typedef struct _Efl_Filter_Model_Mapping Efl_Filter_Model_Mapping;
 

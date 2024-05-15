@@ -3,7 +3,7 @@
 #endif
 
 #include "Efl_Core.h"
-#include "ecore_private.h"
+#include "core_private.h"
 
 #define MY_CLASS EFL_DECELERATE_INTERPOLATOR_CLASS
 
@@ -23,8 +23,8 @@ _efl_decelerate_interpolator_efl_interpolator_interpolate(
 {
     if ((progress < 0.0) || (progress > 1.0)) return progress;
 
-    return ecore_animator_pos_map(progress,
-                                  ECORE_POS_MAP_DECELERATE_FACTOR,
+    return core_animator_pos_map(progress,
+                                  CORE_POS_MAP_DECELERATE_FACTOR,
                                   pd->slope,
                                   0);
 }

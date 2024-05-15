@@ -4,7 +4,7 @@
 #endif
 #include <Efl_Core.h>
 #include <Ecore_Con.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 #ifdef HAVE_NETINET_IN_H
 # include <netinet/in.h>
 #endif

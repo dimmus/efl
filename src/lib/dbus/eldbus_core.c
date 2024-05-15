@@ -45,7 +45,7 @@ typedef struct _Eldbus_Connection_Context_NOC_Cb
     Eldbus_Name_Owner_Changed_Cb cb;
     const void                  *cb_data;
     Efl_Bool                     deleted : 1;
-    Ecore_Idle_Enterer          *idle_enterer;
+    Core_Idle_Enterer          *idle_enterer;
     Efl_Bool                     allow_initial : 1;
 } Eldbus_Connection_Context_NOC_Cb;
 
@@ -53,7 +53,7 @@ typedef struct _Eldbus_Handler_Data
 {
     EINA_INLIST;
     int                fd;
-    Ecore_Fd_Handler  *fd_handler;
+    Core_Fd_Handler  *fd_handler;
     Eldbus_Connection *conn;
     DBusWatch         *watch;
     int                enabled;
@@ -62,7 +62,7 @@ typedef struct _Eldbus_Handler_Data
 typedef struct _Eldbus_Timeout_Data
 {
     EINA_INLIST;
-    Ecore_Timer       *handler;
+    Core_Timer       *handler;
     DBusTimeout       *timeout;
     Eldbus_Connection *conn;
     int                interval;
@@ -101,7 +101,7 @@ eldbus_fd_handler_del(Eldbus_Handler_Data *hd)
         eina_inlist_remove(hd->conn->fd_handlers, EINA_INLIST_GET(hd));
     if (hd->fd_handler)
     {
-        ecore_main_fd_handler_del(hd->fd_handler);
+        core_main_fd_handler_del(hd->fd_handler);
         hd->fd_handler = NULL;
     }
 
@@ -141,7 +141,7 @@ eldbus_init(void)
         return 0;
     }
 
-    if (!ecore_init())
+    if (!core_init())
     {
         fputs("Eldbus: Unable to initialize ecore\n", stderr);
         eina_shutdown();
@@ -152,7 +152,7 @@ eldbus_init(void)
     if (_eldbus_log_dom < 0)
     {
         EINA_LOG_ERR("Unable to create an 'eldbus' log domain");
-        ecore_shutdown();
+        core_shutdown();
         eina_shutdown();
         return 0;
     }
@@ -164,7 +164,7 @@ eldbus_init(void)
         EINA_LOG_ERR("Unable to create an 'eldbus_model' log domain");
         eina_log_domain_unregister(_eldbus_log_dom);
         _eldbus_log_dom = -1;
-        ecore_shutdown();
+        core_shutdown();
         eina_shutdown();
         return 0;
     }
@@ -186,7 +186,7 @@ eldbus_init(void)
     if (!eldbus_object_init()) goto object_failed;
     if (!eldbus_proxy_init()) goto proxy_failed;
     if (!eldbus_service_init()) goto service_failed;
-    ecore_fork_reset_callback_add((Ecore_Cb)_eldbus_fork_reset, NULL);
+    core_fork_reset_callback_add((Core_Cb)_eldbus_fork_reset, NULL);
     return _eldbus_init_count;
 
 service_failed:
@@ -204,7 +204,7 @@ message_failed:
     eldbus_model_log_dom = -1;
     eina_log_domain_unregister(_eldbus_log_dom);
     _eldbus_log_dom = -1;
-    ecore_shutdown();
+    core_shutdown();
     eina_shutdown();
 
     return 0;
@@ -262,7 +262,7 @@ eldbus_shutdown(void)
     }
     if (--_eldbus_init_count) return _eldbus_init_count;
 
-    ecore_fork_reset_callback_del((Ecore_Cb)_eldbus_fork_reset, NULL);
+    core_fork_reset_callback_del((Core_Cb)_eldbus_fork_reset, NULL);
     if (shared_connections[ELDBUS_CONNECTION_TYPE_SESSION - 1])
     {
         CRI("Alive TYPE_SESSION connection");
@@ -309,7 +309,7 @@ eldbus_shutdown(void)
     eldbus_signal_handler_shutdown();
     eldbus_message_shutdown();
 
-    ecore_shutdown();
+    core_shutdown();
 
     eina_log_domain_unregister(eldbus_model_log_dom);
     eldbus_model_log_dom = -1;
@@ -617,18 +617,18 @@ eldbus_connection_name_object_get(Eldbus_Connection *conn,
 }
 
 static Efl_Bool
-eldbus_fd_handler(void *data, Ecore_Fd_Handler *fd_handler)
+eldbus_fd_handler(void *data, Core_Fd_Handler *fd_handler)
 {
     Eldbus_Handler_Data *hd        = data;
     unsigned int         condition = 0;
 
-    DBG("Got Ecore_Fd_Handle@%p", fd_handler);
+    DBG("Got Core_Fd_Handle@%p", fd_handler);
 
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_READ))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_READ))
         condition |= DBUS_WATCH_READABLE;
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_WRITE))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_WRITE))
         condition |= DBUS_WATCH_WRITABLE;
-    if (ecore_main_fd_handler_active_get(fd_handler, ECORE_FD_ERROR))
+    if (core_main_fd_handler_active_get(fd_handler, CORE_FD_ERROR))
         condition |= DBUS_WATCH_ERROR;
 
     DBG("dbus connection@%p fdh=%d flags: [%s%s%s]",
@@ -640,27 +640,27 @@ eldbus_fd_handler(void *data, Ecore_Fd_Handler *fd_handler)
 
     dbus_watch_handle(hd->watch, condition);
 
-    return ECORE_CALLBACK_RENEW;
+    return CORE_CALLBACK_RENEW;
 }
 
 static void
 eldbus_fd_handler_add(Eldbus_Handler_Data *hd)
 {
     unsigned int           dflags;
-    Ecore_Fd_Handler_Flags eflags;
+    Core_Fd_Handler_Flags eflags;
 
     if (hd->fd_handler) return;
     dflags = dbus_watch_get_flags(hd->watch);
-    eflags = ECORE_FD_ERROR;
-    if (dflags & DBUS_WATCH_READABLE) eflags |= ECORE_FD_READ;
-    if (dflags & DBUS_WATCH_WRITABLE) eflags |= ECORE_FD_WRITE;
+    eflags = CORE_FD_ERROR;
+    if (dflags & DBUS_WATCH_READABLE) eflags |= CORE_FD_READ;
+    if (dflags & DBUS_WATCH_WRITABLE) eflags |= CORE_FD_WRITE;
 
     DBG("Watching fd %d with flags: [%s%serror]",
         hd->fd,
-        (eflags & ECORE_FD_READ) ? "read " : "",
-        (eflags & ECORE_FD_WRITE) ? "write " : "");
+        (eflags & CORE_FD_READ) ? "read " : "",
+        (eflags & CORE_FD_WRITE) ? "write " : "");
 
-    hd->fd_handler = ecore_main_fd_handler_add(hd->fd,
+    hd->fd_handler = core_main_fd_handler_add(hd->fd,
                                                eflags,
                                                eldbus_fd_handler,
                                                hd,
@@ -725,7 +725,7 @@ cb_watch_toggle(DBusWatch *watch, void *data EFL_UNUSED)
     }
     else
     {
-        ecore_main_fd_handler_del(hd->fd_handler);
+        core_main_fd_handler_del(hd->fd_handler);
         hd->fd_handler = NULL;
     }
 }
@@ -737,7 +737,7 @@ eldbus_timeout_data_free(void *timeout_data)
     td->conn->timeouts =
         eina_inlist_remove(td->conn->timeouts, EINA_INLIST_GET(td));
     DBG("Timeout -- freeing timeout_data %p", td);
-    if (td->handler) ecore_timer_del(td->handler);
+    if (td->handler) core_timer_del(td->handler);
     free(td);
 }
 
@@ -750,12 +750,12 @@ eldbus_timeout_handler(void *data)
     if (!dbus_timeout_get_enabled(td->timeout))
     {
         DBG("timeout_handler (not enabled, ending)");
-        return ECORE_CALLBACK_CANCEL;
+        return CORE_CALLBACK_CANCEL;
     }
 
     DBG("Telling dbus to handle timeout with data %p", data);
     dbus_timeout_handle(td->timeout);
-    return ECORE_CALLBACK_CANCEL;
+    return CORE_CALLBACK_CANCEL;
 }
 
 static dbus_bool_t
@@ -775,7 +775,7 @@ cb_timeout_add(DBusTimeout *timeout, void *data)
     td->timeout  = timeout;
 
     td->handler =
-        ecore_timer_add(td->interval / 1000.0, eldbus_timeout_handler, td);
+        core_timer_add(td->interval / 1000.0, eldbus_timeout_handler, td);
     conn->timeouts = eina_inlist_append(conn->timeouts, EINA_INLIST_GET(td));
 
     return EFL_TRUE;
@@ -800,7 +800,7 @@ cb_timeout_toggle(DBusTimeout *timeout, void *data EFL_UNUSED)
     if (dbus_timeout_get_enabled(td->timeout))
     {
         td->interval = dbus_timeout_get_interval(timeout);
-        td->handler = ecore_timer_add(td->interval, eldbus_timeout_handler, td);
+        td->handler = core_timer_add(td->interval, eldbus_timeout_handler, td);
 
         DBG("Timeout is enabled with interval %d, timer@%p",
             td->interval,
@@ -809,7 +809,7 @@ cb_timeout_toggle(DBusTimeout *timeout, void *data EFL_UNUSED)
     else
     {
         DBG("Timeout is disabled, destroying timer@%p", td->handler);
-        ecore_timer_del(td->handler);
+        core_timer_del(td->handler);
         td->handler = NULL;
     }
 }
@@ -830,7 +830,7 @@ eldbus_idle_enterer(void *data)
             conn,
             conn->idle_enterer);
         conn->idle_enterer = NULL;
-        return ECORE_CALLBACK_CANCEL;
+        return CORE_CALLBACK_CANCEL;
     }
     DBG("Connection@%p: Dispatching", conn);
     eldbus_init();
@@ -845,7 +845,7 @@ eldbus_idle_enterer(void *data)
 
     eldbus_connection_unref(conn);
     eldbus_shutdown();
-    return ECORE_CALLBACK_RENEW;
+    return CORE_CALLBACK_RENEW;
 }
 
 static void
@@ -865,7 +865,7 @@ cb_dispatch_status(DBusConnection *dbus_conn EFL_UNUSED,
 
     if ((new_status == DBUS_DISPATCH_DATA_REMAINS) && (!conn->idle_enterer))
     {
-        conn->idle_enterer = ecore_idle_enterer_add(eldbus_idle_enterer, conn);
+        conn->idle_enterer = core_idle_enterer_add(eldbus_idle_enterer, conn);
         DBG("Connection@%p: Adding idle_enterer@%p to handle remaining "
             "dispatch data",
             conn,
@@ -878,7 +878,7 @@ cb_dispatch_status(DBusConnection *dbus_conn EFL_UNUSED,
             conn,
             conn->idle_enterer);
 
-        ecore_idle_enterer_del(conn->idle_enterer);
+        core_idle_enterer_del(conn->idle_enterer);
         conn->idle_enterer = NULL;
     }
 }
@@ -1048,18 +1048,18 @@ static void
 _disconnected(void *data, const Eldbus_Message *msg EFL_UNUSED)
 {
     Eldbus_Connection       *conn = data;
-    Ecore_Event_Signal_Exit *ev;
+    Core_Event_Signal_Exit *ev;
 
     _eldbus_connection_event_callback_call(conn,
                                            ELDBUS_CONNECTION_EVENT_DISCONNECTED,
                                            NULL);
     if (conn->type != ELDBUS_CONNECTION_TYPE_SESSION) return;
 
-    ev = calloc(1, sizeof(Ecore_Event_Signal_Exit));
+    ev = calloc(1, sizeof(Core_Event_Signal_Exit));
     if (!ev) return;
 
     ev->quit = EFL_TRUE;
-    ecore_event_add(ECORE_EVENT_SIGNAL_EXIT, ev, NULL, NULL);
+    core_event_add(CORE_EVENT_SIGNAL_EXIT, ev, NULL, NULL);
 }
 
 /* Param address is only used for ELDBUS_CONNECTION_TYPE_ADDRESS type */
@@ -1337,7 +1337,7 @@ _eldbus_connection_free(Eldbus_Connection *conn)
 
     eldbus_data_del_all(&conn->data);
 
-    if (conn->idle_enterer) ecore_idle_enterer_del(conn->idle_enterer);
+    if (conn->idle_enterer) core_idle_enterer_del(conn->idle_enterer);
     if (conn->type && conn->shared)
     {
         if (conn->type == ELDBUS_CONNECTION_TYPE_ADDRESS)
@@ -1447,7 +1447,7 @@ dispach_name_owner_cb(void *context)
                   data->cn->unique_id);
     data->ctx->idle_enterer = NULL;
     free(data);
-    return ECORE_CALLBACK_CANCEL;
+    return CORE_CALLBACK_CANCEL;
 }
 
 EAPI void
@@ -1482,7 +1482,7 @@ eldbus_name_owner_changed_callback_add(Eldbus_Connection           *conn,
         dispatch_data->cn  = cn;
         dispatch_data->ctx = ctx;
         ctx->idle_enterer =
-            ecore_idle_enterer_add(dispach_name_owner_cb, dispatch_data);
+            core_idle_enterer_add(dispach_name_owner_cb, dispatch_data);
     }
     return;
 
@@ -1531,7 +1531,7 @@ eldbus_name_owner_changed_callback_del(Eldbus_Connection           *conn,
     if (found->idle_enterer)
     {
         dispatch_name_owner_data *data;
-        data = ecore_idle_enterer_del(found->idle_enterer);
+        data = core_idle_enterer_del(found->idle_enterer);
         free(data);
     }
     free(found);

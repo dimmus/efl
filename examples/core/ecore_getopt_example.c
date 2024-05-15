@@ -2,7 +2,7 @@
 // gcc -o ecore_getopt_example ecore_getopt_example.c `pkg-config --libs --cflags ecore eina`
 
 #include <Efl_Core.h>
-#include <Ecore_Getopt.h>
+#include <Efl_Core_Getopt.h>
 #include <assert.h>
 
 /* if defined will end the positional arguments with the special

@@ -230,7 +230,7 @@ eina_thread_queue_parent_get(const Eina_Thread_Queue *thq) EINA_ARG_NONNULL(1);
  *
  * This sets a file descriptor to write to when a message is written to the
  * thread queue. This can be used to glue a thread queue to something like
- * an Ecore_Pipe that can wake up the mainloop and call a callback whenever
+ * an ECore_Pipe that can wake up the mainloop and call a callback whenever
  * data is available on the pipe. The number of bytes available will be
  * the number of messages to fetch from the associated thread queue.
  *
