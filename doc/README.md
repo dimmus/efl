@@ -1,1 +1,1 @@
-Here is the detailed end user documentation.
+EFL Developer Documentation
