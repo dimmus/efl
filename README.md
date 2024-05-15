@@ -1,3 +1,7 @@
+<div align="center">
+    <a href=https://www.enlightenment.org/about-efl>Enlightenment Foundation Library</a>
+</div>
+
 # Main goals (wishes :)
 
 - complete `wayland` support in EFL
