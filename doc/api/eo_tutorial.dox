@@ -263,7 +263,7 @@
    }
 
    static void
-   _constructor(Eo *eo_obj, void *class_data, va_list *list EINA_UNUSED)
+   _constructor(Eo *eo_obj, void *class_data, va_list *list EFL_UNUSED)
    {
       eo_do_super(eo_obj, eo_constructor());
 
