@@ -21,7 +21,7 @@
  * {
  *   if (!core_init())
  *   {
- *     printf("ERROR: Cannot init Ecore!\n");
+ *     printf("ERROR: Cannot init Efl_Core!\n");
  *     return -1;
  *   }
  *   core_main_loop_begin();
