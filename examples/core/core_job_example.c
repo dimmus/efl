@@ -28,7 +28,7 @@ main(void)
 
    if (!core_init())
      {
-        printf("ERROR: Cannot init Ecore!\n");
+        printf("ERROR: Cannot init Efl_Core!\n");
         return -1;
      }
 
@@ -57,4 +57,3 @@ main(void)
 
    return 0;
 }
-

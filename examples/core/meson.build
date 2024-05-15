@@ -5,8 +5,8 @@ examples = [
   'core_exe_example_child',
   'core_fd_handler_example',
   'core_idler_example',
-  'core_job_example',
-  'core_poller_example',
+  # 'core_job_example',    # legacy
+  # 'core_poller_example', # legacy
   'core_thread_example',
   'core_time_functions_example',
   'core_timer_example',
