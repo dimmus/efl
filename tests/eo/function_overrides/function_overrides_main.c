@@ -25,7 +25,7 @@ TEST(function_override)
 
    simple_a_set(obj, 1);
    Simple_Public_Data *pd = efl_data_scope_get(obj, SIMPLE_CLASS);
-   fail_if(pd->a != 2);
+   efl_assert_fail_if(pd->a != 2);
 
    efl_unref(obj);
 
@@ -33,42 +33,42 @@ TEST(function_override)
 
    simple_a_set(obj, 1);
    pd = efl_data_scope_get(obj, SIMPLE_CLASS);
-   fail_if(pd->a != 3);
+   efl_assert_fail_if(pd->a != 3);
 
    efl_unref(obj);
 
    obj = efl_add_ref(INHERIT2_CLASS, NULL);
    called = inherit2_print(obj);
-   fail_if(!called);
+   efl_assert_fail_if(!called);
    called = inherit2_print(obj);
    called = inherit2_print(obj);
-   fail_if(!called);
+   efl_assert_fail_if(!called);
    efl_unref(obj);
 
    obj = efl_add_ref(SIMPLE_CLASS, NULL);
    called = inherit2_print(obj);
-   fail_if(called);
+   efl_assert_fail_if(called);
 
 #ifdef EO_DEBUG
    called = simple_class_print(obj);
-   fail_if(!called);
+   efl_assert_fail_if(!called);
 #endif
 
    called = simple_class_print(SIMPLE_CLASS);
-   fail_if(called);
+   efl_assert_fail_if(called);
 
    called = simple_class_print(INHERIT_CLASS);
-   fail_if(called);
+   efl_assert_fail_if(called);
 
    called = simple_class_print(INHERIT2_CLASS);
-   fail_if(called);
+   efl_assert_fail_if(called);
 
    called = simple_class_print(INHERIT3_CLASS);
-   fail_if(called);
+   efl_assert_fail_if(called);
 
 #ifdef EO_DEBUG
    called = simple_a_print(SIMPLE_CLASS);
-   fail_if(called);
+   efl_assert_fail_if(called);
 #endif
 
    efl_constructor(efl_super(obj, SIMPLE_CLASS));

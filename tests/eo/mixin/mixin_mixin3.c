@@ -27,7 +27,7 @@ _ab_sum_get(Eo *obj, void *class_data EFL_UNUSED)
         int _a = 0, _b = 0;
         _a = simple_a_get(obj);
         _b = simple_b_get(obj);
-        fail_if(sum != _a + _b + 2);
+        efl_assert_fail_if(sum != _a + _b + 2);
      }
 
    return sum;

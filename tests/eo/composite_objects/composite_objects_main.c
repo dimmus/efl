@@ -34,27 +34,27 @@ TEST(composite_objects)
    Eo *obj = efl_add_ref(COMP_CLASS, NULL);
    efl_event_callback_add(obj, EV_A_CHANGED, _a_changed_cb, NULL);
 
-   fail_if(!efl_isa(obj, COMP_CLASS));
-   fail_if(!efl_isa(obj, SIMPLE_CLASS));
+   efl_assert_fail_if(!efl_isa(obj, COMP_CLASS));
+   efl_assert_fail_if(!efl_isa(obj, SIMPLE_CLASS));
 
    int a = 0;
    cb_called = EFL_FALSE;
    simple_a_set(obj, 1);
-   fail_if(!cb_called);
+   efl_assert_fail_if(!cb_called);
 
    /* Test functions from all across the chain. */
    cb_called = EFL_FALSE;
    simple_a_set1(obj, 1);
-   fail_if(!cb_called);
+   efl_assert_fail_if(!cb_called);
    cb_called = EFL_FALSE;
    simple_a_set15(obj, 1);
-   fail_if(!cb_called);
+   efl_assert_fail_if(!cb_called);
    cb_called = EFL_FALSE;
    simple_a_set32(obj, 1);
-   fail_if(!cb_called);
+   efl_assert_fail_if(!cb_called);
 
    a = simple_a_get(obj);
-   fail_if(a != 1);
+   efl_assert_fail_if(a != 1);
 
    /* disable the callback forwarder, and fail if it's still called. */
    Eo *simple = NULL;
@@ -64,15 +64,15 @@ TEST(composite_objects)
 
    cb_called = EFL_FALSE;
    simple_a_set(obj, 2);
-   fail_if(cb_called);
+   efl_assert_fail_if(cb_called);
 
-   fail_if(!efl_composite_part_is(simple));
-   fail_if(!efl_composite_detach(obj, simple));
-   fail_if(efl_composite_detach(obj, simple));
-   fail_if(efl_composite_part_is(simple));
-   fail_if(!efl_composite_attach(obj, simple));
-   fail_if(!efl_composite_part_is(simple));
-   fail_if(efl_composite_attach(obj, simple));
+   efl_assert_fail_if(!efl_composite_part_is(simple));
+   efl_assert_fail_if(!efl_composite_detach(obj, simple));
+   efl_assert_fail_if(efl_composite_detach(obj, simple));
+   efl_assert_fail_if(efl_composite_part_is(simple));
+   efl_assert_fail_if(!efl_composite_attach(obj, simple));
+   efl_assert_fail_if(!efl_composite_part_is(simple));
+   efl_assert_fail_if(efl_composite_attach(obj, simple));
 
    efl_unref(simple);
    efl_unref(obj);

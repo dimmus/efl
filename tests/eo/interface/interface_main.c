@@ -32,23 +32,23 @@ TEST(interface)
    a = simple_a_get(obj);
    b = simple_b_get(obj);
    sum = interface_ab_sum_get(obj);
-   fail_if(sum != a + b);
+   efl_assert_fail_if(sum != a + b);
 
    sum = 0;
    sum = interface_ab_sum_get(obj);
    sum = interface_ab_sum_get(obj);
-   fail_if(sum != a + b);
+   efl_assert_fail_if(sum != a + b);
    sum = interface2_ab_sum_get2(obj);
    sum = interface2_ab_sum_get2(obj);
-   fail_if(sum != a + b + 1);
+   efl_assert_fail_if(sum != a + b + 1);
 
-   fail_if(!efl_isa(obj, INTERFACE_CLASS));
-   fail_if(!efl_isa(obj, INTERFACE2_CLASS));
-   fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE_CLASS));
-   fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE2_CLASS));
-   fail_if(efl_isa(INTERFACE_CLASS, INTERFACE2_CLASS));
+   efl_assert_fail_if(!efl_isa(obj, INTERFACE_CLASS));
+   efl_assert_fail_if(!efl_isa(obj, INTERFACE2_CLASS));
+   efl_assert_fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE_CLASS));
+   efl_assert_fail_if(!efl_isa(SIMPLE_CLASS, INTERFACE2_CLASS));
+   efl_assert_fail_if(efl_isa(INTERFACE_CLASS, INTERFACE2_CLASS));
 
-   fail_if(efl_class_type_get(INTERFACE_CLASS) != EFL_CLASS_TYPE_INTERFACE);
+   efl_assert_fail_if(efl_class_type_get(INTERFACE_CLASS) != EFL_CLASS_TYPE_INTERFACE);
 
    efl_unref(obj);
    efl_object_shutdown();

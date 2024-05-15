@@ -31,10 +31,10 @@ _class_print(Efl_Class *klass, void *class_data EFL_UNUSED)
    testlog("Print %s-%s\n", efl_class_name_get(klass), efl_class_name_get(MY_CLASS));
    Efl_Bool called = EFL_FALSE;
    called = simple_class_print(efl_super(klass, MY_CLASS));
-   fail_if(called);
+   efl_assert_fail_if(called);
 
    called = simple_class_print2(efl_super(klass, MY_CLASS));
-   fail_if(called);
+   efl_assert_fail_if(called);
 
    return EFL_TRUE;
 }

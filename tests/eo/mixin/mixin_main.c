@@ -30,16 +30,16 @@ TEST(mixin)
    a = simple_a_get(obj);
    b = simple_b_get(obj);
    sum = mixin_ab_sum_get(obj);
-   fail_if(sum != a + b + 2); /* 2 for the two mixins... */
+   efl_assert_fail_if(sum != a + b + 2); /* 2 for the two mixins... */
 
    sum = mixin_ab_sum_get(obj);
    sum = mixin_ab_sum_get(obj);
 
    Mixin2_Public_Data *pd2 = efl_data_scope_get(obj, MIXIN2_CLASS);
-   fail_if(pd2->count != 6);
+   efl_assert_fail_if(pd2->count != 6);
 
    Mixin3_Public_Data *pd3 = efl_data_scope_get(obj, MIXIN3_CLASS);
-   fail_if(pd3->count != 9);
+   efl_assert_fail_if(pd3->count != 9);
 
    efl_unref(obj);
 
@@ -47,9 +47,9 @@ TEST(mixin)
    simple_a_set(obj, 5);
    a = simple_a_get(obj);
    testlog("%d\n", a);
-   fail_if(a != 5);
+   efl_assert_fail_if(a != 5);
 
-   fail_if(efl_class_type_get(MIXIN_CLASS) != EFL_CLASS_TYPE_MIXIN);
+   efl_assert_fail_if(efl_class_type_get(MIXIN_CLASS) != EFL_CLASS_TYPE_MIXIN);
 
 
    efl_unref(obj);

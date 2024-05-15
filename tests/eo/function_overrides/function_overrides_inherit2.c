@@ -16,7 +16,7 @@ _a_set(Eo *obj, void *class_data EFL_UNUSED, int a)
 
    Efl_Bool called = EFL_FALSE;
    called = simple_a_print(efl_super(obj, MY_CLASS));
-   fail_if(!called);
+   efl_assert_fail_if(!called);
 }
 
 static Efl_Bool
@@ -25,7 +25,7 @@ _print(Eo *obj, void *class_data EFL_UNUSED)
    Efl_Bool called = EFL_FALSE;
    testlog("Hey\n");
    called = inherit2_print(efl_super(obj, MY_CLASS));
-   fail_if(called);
+   efl_assert_fail_if(called);
 
    return EFL_TRUE;
 }
