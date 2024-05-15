@@ -16,7 +16,7 @@ body:
         If there have been multiple stable releases for that major version, please consider updating to a recent one before reporting an issue.
         When using a distro package, please make sure that the version reported is meaningful for upstream.
         If a distro build is used, please just paste the package version, e.g. `efl-2.0.1.x86_64`.
-        See https://github.com/dimmus/efl-stable/tags for the list of most recent releases.
+        See https://github.com/dimmus/efl/tags for the list of most recent releases.
       placeholder: '2.0.1'
     validations:
       required: true

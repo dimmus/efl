@@ -1,0 +1,14 @@
+---
+# syntax - https://github.com/redhat-plumbers-in-action/advanced-issue-labeler#policy
+
+policy:
+  - template: [bug_report.yml, feature_request.yml]
+    section:
+      - id: [component]
+        block-list: [other]
+        label:
+          - name: core
+            keys: ['libefl-core']
+
+          - name: wayland
+            keys: ['libefl-wayland']
