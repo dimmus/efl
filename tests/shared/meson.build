@@ -66,8 +66,6 @@ tests += [
 		'sources' : test_source,
 		'dep_objs': [ shared, dep_libm ],
 		'inc_dirs': inc_shared,
-		'c_args'  : [
-			'-DTESTS_WD="`pwd`"',
-		]
+		'c_args'  : [ '-DTESTS_WD="`pwd`"' ]
 	},
 ]

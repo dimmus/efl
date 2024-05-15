@@ -1,11 +1,7 @@
 lib_test_runner = static_library(
 	'test-runner',
 	'efl-test-runner.c',
-	dependencies: [
-                dep_libdl,
-                dep_threads,
-				shared
-	],
+	dependencies: [ dep_libdl, dep_threads, shared ],
 	include_directories: [ inc_config, include_directories('.'), inc_shared ],
 	install: false,
 )
@@ -14,14 +10,6 @@ dep_test_runner = declare_dependency(
 	dependencies: shared,
 	link_with: lib_test_runner
 )
-
-# test_config_h = configuration_data()
-# test_config_h.set_quoted('WESTON_TEST_REFERENCE_PATH', meson.current_source_dir() + '/reference')
-# test_config_h.set_quoted('WESTON_MODULE_MAP', env_modmap)
-# test_config_h.set_quoted('WESTON_DATA_DIR', join_paths(meson.current_source_dir(), '..', 'data'))
-# test_config_h.set_quoted('TESTSUITE_PLUGIN_PATH', exe_plugin_test.full_path())
-# # test_config_h.set10('WESTON_TEST_SKIP_IS_FAILURE', get_option('test-skip-is-failure'))
-# configure_file(output: 'test-config.h', configuration: test_config_h)
 
 test_env = environment()
 test_env.set('EFL_RUN_IN_TREE', '1')
@@ -45,23 +33,25 @@ foreach dir : dir_test
 	subdir(dir)
 endforeach
 
+# Template with all possible values 
+# (all can be null except 'name' and 'sources')
 # tests = [
-	# { 'name': 'assert', },
-	# { 'name': 'color-metadata-errors', 'dep_objs': dep_libexec_weston, },
-	# { 'name': 'constraints', 'sources': [ 'constraints-test.c',
-	# 									  pointer_constraints_unstable_v1_protocol_c, ]},  
-	# {	'name': 'drm-smoke', 'run_exclusive': true },
-	# {
-	# 	'name': 'output-capture-protocol',
-	# 	'sources': [
-	# 		'output-capture-protocol-test.c',
-	# 		weston_output_capture_protocol_c,
-	# 		weston_output_capture_client_protocol_h,
-	# 	],
-	# 	'dep_objs': [ dep_libdrm_headers ],
-	# },
+#	 {
+#	 	'name': 'output-capture-protocol',
+#	 	'sources': [
+#	 		'output-capture-protocol-test.c',
+#	 		weston_output_capture_protocol_c,
+#	 		weston_output_capture_client_protocol_h,
+#	 	],
+#	 	'dep_objs' : [ dep_libdrm_headers ],
+#	 	'test_deps': [ ivi_layout_test_plugin ],
+#		'c_args'   : [
+#			'-DTESTS_WD="`pwd`"',
+#		]
+#	 	'run_exclusive': true
+#	 },
 # ]
-
+#
 # tests_standalone = [
 # 	['config-parser', [], [ dep_zucmain ]],
 # 	['timespec', [], [ dep_zucmain ]],
@@ -73,43 +63,6 @@ endforeach
 # 		[ dep_zucmain ]
 # 	],
 # ]
-
-# if get_option('shell-ivi')
-# 	ivi_layout_test_plugin = shared_library(
-# 		'test-ivi-layout',
-# 		[
-# 			'ivi-layout-test-plugin.c',
-# 			weston_test_server_protocol_h,
-# 			weston_test_protocol_c,
-# 		],
-# 		include_directories: common_inc,
-# 		dependencies: [ dep_libweston_private, dep_libexec_weston ],
-# 		name_prefix: '',
-# 		install: false,
-# 	)
-# 	env_modmap += 'test-ivi-layout.so=' + ivi_layout_test_plugin.full_path() + ';'
-
-# 	tests += [
-# 		{
-# 			'name': 'ivi-layout-client',
-# 			'sources': [
-# 				'ivi-layout-test-client.c',
-# 				ivi_application_client_protocol_h,
-# 				ivi_application_protocol_c,
-# 			],
-# 			'test_deps': [ ivi_layout_test_plugin ],
-# 		},
-# 		{	'name': 'ivi-layout-internal', },
-# 		{
-# 			'name': 'ivi-shell-app',
-# 			'sources': [
-# 				'ivi-shell-app-test.c',
-# 				ivi_application_client_protocol_h,
-# 				ivi_application_protocol_c,
-# 			],
-# 		},
-# 	]
-# endif
 
 foreach t : tests
 	t_name = 'efl_' + t.get('name')

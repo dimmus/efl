@@ -37,7 +37,7 @@ tests += [
 		'inc_dirs': [ inc_shared, inc_eo_gen ],
 		'c_args'  : [
 			'-DEOLIAN_GEN="' + eo_gen_path + '"',
-			'-DEO_SRC_DIR="' + join_paths(meson.source_root(), 'src/lib') + '"',
+			'-DEO_SRC_DIR="' + join_paths(meson.project_source_root(), 'src/lib') + '"',
 		]
 	},
 ]
