@@ -9,15 +9,15 @@
 - documentation
 - speed and size optimization
 
-# Problems
+# Actual problems (my personal drivers :)
 
-- huge problem with development documentation. It's mainly outdated 
-  and user level.
+- huge problem with existing development documentation (see [doc](https://www.enlightenment.org/develop/start.md) here).
+  It's in some places outdated and user level only.
 - some libs naming is too esoteric. Most of the names (understand like a lib purpose) are 
   non-transparent for newcomers. In combination with the lack of development
   documentation, the start of EFL development becomes a swamp.
 
-# So, ... intermidiate goal
+# So, ... my intermidiate goal
 
 - deep dive, understand and master EFL internals
 
