@@ -1,0 +1,47 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [next]
+  pull_request:
+    branches: [next]
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['cpp', 'python']
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        # We must fetch at least the immediate parents so that if this is
+        # a pull request then we can checkout the head.
+        fetch-depth: 2
+
+    # If this run was triggered by a pull request event, then checkout
+    # the head of the pull request instead of the merge commit.
+    - run: git checkout HEAD^2
+      if: ${{ github.event_name == 'pull_request' }}
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+
+    # Install dependencies
+    - run: sudo apt update && sudo apt install meson ninja-build binutils ccache dbus-x11 doxygen gettext imagemagick libbrotli-dev libasound2-dev libavahi-client-dev libblkid-dev libbluetooth-dev libbullet-dev libc6-dev libcogl-dev libcurl4-openssl-dev libdbus-1-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libgif-dev libgl1-mesa-dev libglib2.0-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libharfbuzz-dev libibus-1.0-dev libiconv-hook-dev libjpeg-dev libjpeg-turbo8-dev luajit libluajit-5.1-dev liblua5.2-dev liblz4-dev libmount-dev libopenjp2-7-dev libpam0g-dev libpcre3-dev libpng-dev libpoppler-cpp-dev libpoppler-dev libpoppler-private-dev libproxy-dev libpulse-dev libraw-dev librsvg2-dev libscim-dev libsndfile1-dev libspectre-dev libssl-dev libsystemd-dev libtiff5-dev libtool libudev-dev libunwind-dev libudisks2-dev libunibreak-dev libwebp-dev libxcb-keysyms1-dev libx11-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxext-dev libxinerama-dev libxkbfile-dev libxrandr-dev libxrender-dev libxss-dev libxtst-dev linux-tools-common python3-pip python3-setuptools systemd libxpresent-dev libsdl2-dev cmake libinput-dev libheif-dev librlottie-dev libxkbcommon-x11-dev valgrind libvncserver-dev libexif-dev xwayland libhyphen-dev
+      if: ${{ matrix.language == 'cpp' }}
+
+    # Autobuild
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
