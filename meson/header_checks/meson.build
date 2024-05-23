@@ -56,69 +56,63 @@ header_checks = [
   'pthread.h'
 ]
 
-#### The below is logically broken
-#### the declaration of symbol + headers when you look the symbols up
-#### in man pages you'll find that, for example, kevent needs you to
-#### include ALL of the headers listed below. same for setxattr,
-#### listxattr, pthread_getcpuclockid ... i stopped looking at this
-#### point because it seems this is the pattern, but the foreach below
-#### does not do this. it includes one header at a time from the list
-#### then checks to see if the symbol exists. this leads to failures
-#### in the checks (specifically i noticed kevent on bsd). so the whole
-#### construct for this is wrong. it needs a rethink. i'm putting this
-#### comment here as a note that this is the case for now as i'm just
-#### trying to fix the meson build on freebsd for now
-
 function_checks = [
-# | function name    | headers that are needed     | libraries to include | Defines that are needed
-  ['alloca',         ['alloca.h'                  ]],
-  ['backtrace',      ['execinfo.h'                ]],
-  ['backtrace_symbols', ['execinfo.h'             ]],
-  ['chown',          ['unistd.h'                  ]],
-  ['clock_gettime',  ['time.h'                    ]],
-  ['dirfd',          ['dirent.h sys/types.h'      ]],
-  ['fchmod',         ['sys/stat.h'                ]],
-  ['fcntl',          ['fcntl.h'                   ]],
-  ['fork',           ['unistd.h'                  ]],
-  ['fpathconf',      ['unistd.h'                  ]],
-  ['geteuid',        ['unistd.h'                  ]],
-  ['getpagesize',    ['unistd.h'                  ]],
-  ['getpwent',       ['sys/types.h', 'pwd.h'      ]],
-  ['getuid',         ['unistd.h'                  ]],
-  ['getxattr',       ['sys/types.h', 'sys/xattr.h']],
-  ['iconv',          ['iconv.h'                   ]],
-  ['listxattr',      ['sys/types.h', 'sys/xattr.h']],
-  ['malloc_info',    ['malloc.h'                  ]],
-  ['malloc_usable_size', ['malloc.h'              ]],
-  ['mkdirat',        ['sys/stat.h'                ]],
-  ['mmap',           ['sys/mman.h'                ]],
-  ['mtrace',         ['mcheck.h'                  ]],
-  ['prctl',          ['sys/prctl.h'               ]],
-  ['procctl',        ['sys/procctl.h'             ]],
-  ['realpath',       ['stdlib.h'                  ]],
-  ['setxattr',       ['sys/types.h', 'sys/xattr.h']],
-  ['siglongjmp',     ['setjmp.h'                  ]],
-  ['strerror_r',     ['string.h'                  ]],
-  ['gettimeofday',   ['sys/time.h'                ]],
-  ['execvp',         ['unistd.h'                  ]],
-  ['pause',          ['unistd.h'                  ]],
-  ['isfinite',       ['math.h'                    ]],
-  ['strlcpy',        ['string.h'                  ]],
-  ['siginfo_t',      ['signal.h'                  ]],
-  ['pthread_getcpuclockid', ['pthread.h', 'time.h']],
-  ['timerfd_create', ['sys/timerfd.h'             ]],
-  ['kevent',         ['sys/types.h', 'sys/event.h', 'sys/time.h']],
-#from here on we specify the dependencies
-  ['dlopen',         ['dlfcn.h'                   ],  ['dl'    ]                    ],
-  ['dlsym',          ['dlfcn.h'                   ],  ['dl'    ]                    ],
-  ['lround',         ['math.h'                    ],  ['m'     ]                    ],
-  ['mallinfo2',      ['malloc.h'                  ],  ['malloc']                    ],
-  ['mallinfo',       ['malloc.h'                  ],  ['malloc']                    ],
-  ['shm_open',       ['sys/mman.h', 'sys/stat.h', 'fcntl.h'], ['rt']               ],
-#from here on we specify arguments
-  ['splice',         ['fcntl.h'                   ],  [        ],  '-D_GNU_SOURCE=1'],
-  ['sched_getcpu',   ['sched.h'                   ],  [        ],  '-D_GNU_SOURCE=1'],
-  ['dladdr',         ['dlfcn.h'                   ],  ['dl'    ],  '-D_GNU_SOURCE=1']
+  { 'name' : 'alloca',                'head' : ['alloca.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'backtrace',             'head' : ['execinfo.h'   ],   'deps' : [],          'args' : [] },
+  { 'name' : 'backtrace_symbols',     'head' : ['execinfo.h'   ],   'deps' : [],          'args' : [] },
+  { 'name' : 'chown',                 'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'clock_gettime',         'head' : ['time.h'       ],   'deps' : [],          'args' : [] },
+  { 'name' : 'dirfd',                 'head' : ['dirent.h',    
+                                                'sys/types.h'  ],   'deps' : [],          'args' : [] },
+  { 'name' : 'fchmod',                'head' : ['sys/stat.h'   ],   'deps' : [],          'args' : [] },
+  { 'name' : 'fcntl',                 'head' : ['fcntl.h'      ],   'deps' : [],          'args' : [] },
+  { 'name' : 'fork',                  'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'fpathconf',             'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'geteuid',               'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'getpagesize',           'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'getpwent',              'head' : ['sys/types.h'   ,
+                                                'pwd.h'        ],   'deps' : [],          'args' : [] },
+  { 'name' : 'getuid',                'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'getxattr',              'head' : ['sys/types.h'   ,
+                                                'sys/xattr.h'  ],   'deps' : [],          'args' : [] },
+  { 'name' : 'iconv',                 'head' : ['iconv.h'      ],   'deps' : [],          'args' : [] },
+  { 'name' : 'listxattr',             'head' : ['sys/types.h'   ,
+                                                'sys/xattr.h'  ],   'deps' : [],          'args' : [] },
+  { 'name' : 'malloc_info',           'head' : ['malloc.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'malloc_usable_size',    'head' : ['malloc.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'mkdirat',               'head' : ['sys/stat.h'   ],   'deps' : [],          'args' : [] },
+  { 'name' : 'mmap',                  'head' : ['sys/mman.h'   ],   'deps' : [],          'args' : [] },
+  { 'name' : 'mtrace',                'head' : ['mcheck.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'prctl',                 'head' : ['sys/prctl.h'  ],   'deps' : [],          'args' : [] },
+  { 'name' : 'procctl',               'head' : ['sys/procctl.h'],   'deps' : [],          'args' : [] },
+  { 'name' : 'realpath',              'head' : ['stdlib.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'setxattr',              'head' : ['sys/types.h'   ,
+                                                'sys/xattr.h'  ],   'deps' : [],          'args' : [] },
+  { 'name' : 'siglongjmp',            'head' : ['setjmp.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'strerror_r',            'head' : ['string.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'gettimeofday',          'head' : ['sys/time.h'   ],   'deps' : [],          'args' : [] },
+  { 'name' : 'execvp',                'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'pause',                 'head' : ['unistd.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'isfinite',              'head' : ['math.h'       ],   'deps' : [],          'args' : [] },
+  { 'name' : 'strlcpy',               'head' : ['string.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'siginfo_t',             'head' : ['signal.h'     ],   'deps' : [],          'args' : [] },
+  { 'name' : 'timerfd_create',        'head' : ['sys/timerfd.h'],   'deps' : [],          'args' : [] },
+  { 'name' : 'kevent',                'head' : ['sys/types.h'   , 
+                                                'sys/event.h'   ,  
+                                                'sys/time.h'   ],   'deps' : [],          'args' : [] },
+  { 'name' : 'dlopen',                'head' : ['dlfcn.h'      ],   'deps' : ['dl'],      'args' : [] },
+  { 'name' : 'dlsym',                 'head' : ['dlfcn.h'      ],   'deps' : ['dl'],      'args' : [] },
+  { 'name' : 'lround',                'head' : ['math.h'       ],   'deps' : ['m' ],      'args' : [] },
+  { 'name' : 'mallinfo2',             'head' : ['malloc.h'     ],   'deps' : ['malloc'],  'args' : [] },
+  { 'name' : 'mallinfo',              'head' : ['malloc.h'     ],   'deps' : ['malloc'],  'args' : [] },
+  { 'name' : 'shm_open',              'head' : ['sys/mman.h'    , 
+                                                'sys/stat.h'    , 
+                                                'fcntl.h'      ],   'deps' : ['rt'],      'args' : [] },
+  { 'name' : 'splice',                'head' : ['fcntl.h'      ],   'deps' : [],          'args' : ['-D_GNU_SOURCE=1']},
+  { 'name' : 'sched_getcpu',          'head' : ['sched.h'      ],   'deps' : [],          'args' : ['-D_GNU_SOURCE=1']},
+  { 'name' : 'dladdr',                'head' : ['dlfcn.h'      ],   'deps' : ['dl'],      'args' : ['-D_GNU_SOURCE=1']},
+  { 'name' : 'pthread_getcpuclockid', 'head' : ['pthread.h'     ,
+                                                'time.h'        ],  'deps' : [],          'args' : [] },
 ]
 
 open_cloexec = cc.compiles('''#include <sys/types.h>
@@ -151,7 +145,6 @@ if strerror_r_char_p
   efl_config.set('STRERROR_R_CHAR_P', '1')
 endif
 
-#for later use, a bunch of librarie findings
 dep_libm = cc.find_library('m')
 #just keep this here as required false, if it is not inplace the library rt will just be linked as NOP
 dep_libdl = cc.find_library('dl', required: false)
@@ -167,24 +160,19 @@ foreach header : header_checks
 endforeach
 
 foreach function : function_checks
-  function_name = function[0]
-  headers_to_search = function[1]
+  function_name = function['name']
+  headers_to_search = function['head']
+  args = function['args']
   dependencies = []
-  args = []
 
   # if there is a library, make sure they exist
-  if function.length() > 2
-    foreach library : function[2]
+  if function['deps'].length() > 0
+    foreach library : function['deps']
       lib = cc.find_library(library, required : false)
       if lib.found()
         dependencies += lib
       endif
     endforeach
-  endif
-
-  #check if there are args
-  if function.length() > 3
-    args = function[3]
   endif
 
   # Only check the header if the dependencies are ready
