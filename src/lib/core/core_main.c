@@ -1527,7 +1527,7 @@ _core_main_win32_handler_add(Eo                   *obj,
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
     if (!h || !func) return NULL;
 
-    wh = Core_win32_handler_calloc(1);
+    wh = core_win32_handler_calloc(1);
     if (!wh) return NULL;
     CORE_MAGIC_SET(wh, CORE_MAGIC_WIN32_HANDLER);
     wh->loop           = obj;
@@ -1757,7 +1757,7 @@ _core_main_content_clear(Eo *obj, Efl_Loop_Data *pd)
         else
         {
             CORE_MAGIC_SET(wh, CORE_MAGIC_NONE);
-            Core_win32_handler_mp_free(wh);
+            core_win32_handler_mp_free(wh);
         }
     }
     if (pd->win32_handlers_to_delete)
@@ -2153,7 +2153,7 @@ _core_main_win32_handlers_cleanup(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
             EINA_INLIST_GET(pd->win32_handlers),
             EINA_INLIST_GET(wh));
         CORE_MAGIC_SET(wh, CORE_MAGIC_NONE);
-        Core_win32_handler_mp_free(wh);
+        core_win32_handler_mp_free(wh);
         pd->win32_handlers_to_delete =
             eina_list_remove_list(pd->win32_handlers_to_delete, l);
     }

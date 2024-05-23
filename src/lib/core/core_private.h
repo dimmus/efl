@@ -521,21 +521,21 @@ void core_mempool_shutdown(void);
 #define GENERIC_ALLOC_SIZE_DECLARE(TYPE)      \
   size_t _core_sizeof_##TYPE = sizeof (TYPE);
 
-//GENERIC_ALLOC_FREE_HEADER(Core_Animator, Core_animator);
+//GENERIC_ALLOC_FREE_HEADER(Core_Animator, core_animator);
 //GENERIC_ALLOC_FREE_HEADER(Core_Event_Handler, core_event_handler);
 //GENERIC_ALLOC_FREE_HEADER(Core_Event_Filter, core_event_filter);
 //GENERIC_ALLOC_FREE_HEADER(Core_Event, core_event);
-//GENERIC_ALLOC_FREE_HEADER(Core_Idle_Exiter, Core_idle_exiter);
-//GENERIC_ALLOC_FREE_HEADER(Core_Idle_Enterer, Core_idle_enterer);
-//GENERIC_ALLOC_FREE_HEADER(Core_Idler, Core_idler);
-//GENERIC_ALLOC_FREE_HEADER(Core_Job, Core_job);
+//GENERIC_ALLOC_FREE_HEADER(Core_Idle_Exiter, core_idler_exiter);
+//GENERIC_ALLOC_FREE_HEADER(Core_Idle_Enterer, core_idler_enterer);
+//GENERIC_ALLOC_FREE_HEADER(Core_Idler, core_idler);
+//GENERIC_ALLOC_FREE_HEADER(Core_Job, core_job);
 //GENERIC_ALLOC_FREE_HEADER(Core_Timer, core_timer);
-//GENERIC_ALLOC_FREE_HEADER(Core_Poller, Core_poller);
+//GENERIC_ALLOC_FREE_HEADER(Core_Poller, core_poller);
 GENERIC_ALLOC_FREE_HEADER(Core_Pipe, core_pipe);
 GENERIC_ALLOC_FREE_HEADER(Core_Fd_Handler, core_fd_handler);
 GENERIC_ALLOC_FREE_HEADER(Efl_Loop_Promise_Simple_Data, efl_loop_promise_simple_data);
 #ifdef _WIN32
-GENERIC_ALLOC_FREE_HEADER(Core_Win32_Handler, Core_win32_handler);
+GENERIC_ALLOC_FREE_HEADER(Core_Win32_Handler, core_win32_handler);
 #endif
 
 #undef GENERIC_ALLOC_FREE_HEADER

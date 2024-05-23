@@ -42,11 +42,11 @@ static Core_Poller  *pollers[16] = { NULL, NULL, NULL, NULL, NULL, NULL,
 static unsigned short poller_counters[16] = { 0, 0, 0, 0, 0, 0, 0, 0,
                                               0, 0, 0, 0, 0, 0, 0, 0 };
 
-static void     _Core_poller_next_tick_eval(void);
-static Efl_Bool _Core_poller_cb_timer(void *data);
+static void     _core_poller_next_tick_eval(void);
+static Efl_Bool _core_poller_cb_timer(void *data);
 
 static void *
-_Core_poller_cleanup(Core_Poller *poller)
+_core_poller_cleanup(Core_Poller *poller)
 {
     void *data;
 
@@ -61,7 +61,7 @@ _Core_poller_cleanup(Core_Poller *poller)
 }
 
 static void
-_Core_poller_next_tick_eval(void)
+_core_poller_next_tick_eval(void)
 {
     int    i;
     double interval;
@@ -94,14 +94,14 @@ _Core_poller_next_tick_eval(void)
     if (at_tick)
     {
         if (!timer)
-            timer = core_timer_add(interval, _Core_poller_cb_timer, NULL);
+            timer = core_timer_add(interval, _core_poller_cb_timer, NULL);
     }
     else
     {
         double t;
 
         if (!timer)
-            timer = core_timer_add(interval, _Core_poller_cb_timer, NULL);
+            timer = core_timer_add(interval, _core_poller_cb_timer, NULL);
         else
         {
             t = core_loop_time_get();
@@ -112,7 +112,7 @@ _Core_poller_next_tick_eval(void)
       * time interval. at the tick this will be adjusted */
                 core_timer_del(timer);
                 timer = core_timer_loop_add(interval - t,
-                                             _Core_poller_cb_timer,
+                                             _core_poller_cb_timer,
                                              NULL);
             }
         }
@@ -121,7 +121,7 @@ _Core_poller_next_tick_eval(void)
 }
 
 static Efl_Bool
-_Core_poller_cb_timer(void *data EFL_UNUSED)
+_core_poller_cb_timer(void *data EFL_UNUSED)
 {
     Core_Poller *poller;
     int           i;
@@ -178,7 +178,7 @@ _Core_poller_cb_timer(void *data EFL_UNUSED)
             {
                 if (poller->delete_me)
                 {
-                    _Core_poller_cleanup(poller);
+                    _core_poller_cleanup(poller);
 
                     poller_delete_count--;
                     changes++;
@@ -191,7 +191,7 @@ _Core_poller_cb_timer(void *data EFL_UNUSED)
     /* if we deleted or added any pollers, then we need to re-evaluate our
     * minimum poll interval */
     if ((changes > 0) || (just_added_poller > 0))
-        _Core_poller_next_tick_eval();
+        _core_poller_next_tick_eval();
 
     just_added_poller   = 0;
     poller_delete_count = 0;
@@ -209,7 +209,7 @@ _Core_poller_cb_timer(void *data EFL_UNUSED)
 }
 
 EAPI void
-Core_poller_poll_interval_set(Core_Poller_Type type EFL_UNUSED,
+core_poller_poll_interval_set(Core_Poller_Type type EFL_UNUSED,
                                double                 poll_time)
 {
     EINA_MAIN_LOOP_CHECK_RETURN;
@@ -221,11 +221,11 @@ Core_poller_poll_interval_set(Core_Poller_Type type EFL_UNUSED,
     }
 
     poll_interval = poll_time;
-    _Core_poller_next_tick_eval();
+    _core_poller_next_tick_eval();
 }
 
 EAPI double
-Core_poller_poll_interval_get(Core_Poller_Type type EFL_UNUSED)
+core_poller_poll_interval_get(Core_Poller_Type type EFL_UNUSED)
 {
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(0.0);
     return poll_interval;
@@ -272,14 +272,14 @@ core_poller_add(Core_Poller_Type type EFL_UNUSED,
         EINA_INLIST_GET(pollers[poller->ibit]),
         EINA_INLIST_GET(poller));
     if (poller_walking) just_added_poller++;
-    else _Core_poller_next_tick_eval();
+    else _core_poller_next_tick_eval();
 
     return poller;
 }
 #endif
 
 EAPI Efl_Bool
-Core_poller_poller_interval_set(Core_Poller *poller, int interval)
+core_poller_poller_interval_set(Core_Poller *poller, int interval)
 {
     int ibit;
 
@@ -307,13 +307,13 @@ Core_poller_poller_interval_set(Core_Poller *poller, int interval)
         EINA_INLIST_GET(pollers[poller->ibit]),
         EINA_INLIST_GET(poller));
     if (poller_walking) just_added_poller++;
-    else _Core_poller_next_tick_eval();
+    else _core_poller_next_tick_eval();
 
     return EFL_TRUE;
 }
 
 EAPI int
-Core_poller_poller_interval_get(const Core_Poller *poller)
+core_poller_poller_interval_get(const Core_Poller *poller)
 {
     int ibit, interval = 1;
 
@@ -331,7 +331,7 @@ Core_poller_poller_interval_get(const Core_Poller *poller)
 }
 
 EAPI void *
-Core_poller_del(Core_Poller *poller)
+core_poller_del(Core_Poller *poller)
 {
     void *data;
 
@@ -347,9 +347,9 @@ Core_poller_del(Core_Poller *poller)
         return poller->data;
     }
     /* not in loop so safe - delete immediately */
-    data = _Core_poller_cleanup(poller);
+    data = _core_poller_cleanup(poller);
 
-    _Core_poller_next_tick_eval();
+    _core_poller_next_tick_eval();
 
     return data;
 }
@@ -363,7 +363,7 @@ _core_poller_shutdown(void)
     for (i = 0; i < 15; i++)
     {
         while ((poller = pollers[i]))
-            _Core_poller_cleanup(poller);
+            _core_poller_cleanup(poller);
         poller_counters[i] = 0;
     }
 

@@ -222,7 +222,7 @@ _timer_tick_core(void *data EFL_UNUSED, Core_Thread *thread)
                 t_gap = t_out - t0;
                 if (t_gap > (ft * 2.0))
                     fprintf(stderr,
-                            "ERROR: Core_animator thread - epoll_wait(..., "
+                            "ERROR: core_animator thread - epoll_wait(..., "
                             "200) at %1.5f should have slept ~ %1.5fs but took "
                             "%1.5fs!\n",
                             t0,
@@ -297,7 +297,7 @@ _timer_tick_core(void *data EFL_UNUSED, Core_Thread *thread)
                 t_gap = t_out - t0;
                 if (t_gap > (ft * 2.0))
                     fprintf(stderr,
-                            "ERROR: Core_animator thread - select() at %1.5f "
+                            "ERROR: core_animator thread - select() at %1.5f "
                             "should have slept ~ %1.5fs but took %1.5fs!\n",
                             t0,
                             ft,
@@ -1047,7 +1047,7 @@ void
 _core_animator_init(void)
 {
     _Core_anim_log_dom =
-        eina_log_domain_register("Core_animator", CORE_DEFAULT_LOG_COLOR);
+        eina_log_domain_register("core_animator", CORE_DEFAULT_LOG_COLOR);
     if (_Core_anim_log_dom < 0)
     {
         EINA_LOG_ERR("Ecore was unable to create a log domain.");

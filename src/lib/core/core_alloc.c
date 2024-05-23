@@ -44,7 +44,7 @@ GENERIC_ALLOC_FREE(Core_Pipe, core_pipe);
 GENERIC_ALLOC_FREE(Core_Fd_Handler, core_fd_handler);
 GENERIC_ALLOC_FREE(Efl_Loop_Promise_Simple_Data, efl_loop_promise_simple_data);
 #ifdef _WIN32
-GENERIC_ALLOC_FREE(Core_Win32_Handler, Core_win32_handler);
+GENERIC_ALLOC_FREE(Core_Win32_Handler, core_win32_handler);
 #endif
 
 static Core_Mempool *mempool_array[] = {
@@ -62,7 +62,7 @@ static Core_Mempool *mempool_array[] = {
     &core_fd_handler_mp,
     &efl_loop_promise_simple_data_mp,
 #ifdef _WIN32
-    &Core_win32_handler_mp
+    &core_win32_handler_mp
 #endif
 };
 
@@ -75,21 +75,21 @@ core_mempool_init(void)
 #define MP_SIZE_INIT(TYPE, Type) \
     Type##_mp.size = _core_sizeof_##TYPE
 
-//   MP_SIZE_INIT(Core_Animator, Core_animator);
+//   MP_SIZE_INIT(Core_Animator, core_animator);
 //   MP_SIZE_INIT(Core_Event_Handler, core_event_handler);
 //   MP_SIZE_INIT(Core_Event_Filter, core_event_filter);
 //   MP_SIZE_INIT(Core_Event, core_event);
-//   MP_SIZE_INIT(Core_Idle_Exiter, Core_idle_exiter);
-//   MP_SIZE_INIT(Core_Idle_Enterer, Core_idle_enterer);
-//   MP_SIZE_INIT(Core_Idler, Core_idler);
-//   MP_SIZE_INIT(Core_Job, Core_job);
+//   MP_SIZE_INIT(Core_Idle_Exiter, core_idler_exiter);
+//   MP_SIZE_INIT(Core_Idle_Enterer, core_idler_enterer);
+//   MP_SIZE_INIT(Core_Idler, core_idler);
+//   MP_SIZE_INIT(Core_Job, core_job);
 //   MP_SIZE_INIT(Core_Timer, core_timer);
-//   MP_SIZE_INIT(Core_Poller, Core_poller);
+//   MP_SIZE_INIT(Core_Poller, core_poller);
     MP_SIZE_INIT(Core_Pipe, core_pipe);
     MP_SIZE_INIT(Core_Fd_Handler, core_fd_handler);
     MP_SIZE_INIT(Efl_Loop_Promise_Simple_Data, efl_loop_promise_simple_data);
 #ifdef _WIN32
-    MP_SIZE_INIT(Core_Win32_Handler, Core_win32_handler);
+    MP_SIZE_INIT(Core_Win32_Handler, core_win32_handler);
 #endif
 #undef MP_SIZE_INIT
 
