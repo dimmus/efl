@@ -16,6 +16,8 @@ project('efl', ['c','cpp'],
   meson_version : '>=0.63'
 )
 
+warnings = []
+
 subdir('meson/arrays')
 subdir('meson/constants')
 subdir('meson/cflags')
@@ -43,21 +45,7 @@ subdir('meson/system')
 
 subdir('po')
 
-inc_config = [ include_directories('.') ]
-
-if get_option('crypto') == 'openssl'
-  crypto = dependency('openssl')
-endif
-if crypto.found()
-  efl_config.set('HAVE_OPENSSL', '1')
-endif
-if get_option('crypto') != ''
-  efl_config.set('HAVE_CIPHER', '1')
-  efl_config.set('HAVE_SIGNATURE', '1')
-endif
-
-efl_config.set_quoted('SHARED_LIB_SUFFIX', '.' + sys_lib_extension) # eina_module
-efl_config.set_quoted('MOD_SUFFIX', '.' + sys_mod_extension) # ecore
+inc_config = include_directories('.')
 
 # we have to do that first, shared modules are required by shared
 # the other modules require theire package
@@ -71,8 +59,8 @@ subprojects = [
   ['eo'                 ,[]                 , false,   true,    false,    true,      true,       false,       true,   ['shared'],  []],
   ['eo_interfaces'      ,[]                 , false,   true,    false,   false,      true,       false,       true,   ['eo'], []],
   ['core'               ,[]                 , false,   true,    false,   false,     false,       false,       true,   ['shared', 'eo', 'eo_interfaces'], []],
-  ['dbus'               ,[]                 , false,   true,     true,   false,     false,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
-  ['core'               ,[]                 ,  true,  false,    false,   false,     false,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], 
+  ['dbus'               ,[]                 , false,   true,     true,   false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
+  ['core'               ,[]                 ,  true,  false,    false,   false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], 
   ['core_input'         ,[]                 , false,   true,    false,   false,     false,       false,       true,   ['shared', 'eo'], []],
   ['core_wayland'       ,['wl']             ,  true,   true,    false,   false,     false,       false,       true,   ['shared'], ['libdrm']],
   # ['emile'            ,[]                 , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
@@ -310,11 +298,38 @@ endif
 # subdir('src/generic/evas')
 # subdir('cmakeconfig')
 # subdir('src/bindings')
-# subdir('src/edje_external')
+# subdir('src/edje_external') 
 # subdir('data')
 
 if get_option('build-tests')
+  dep_check = dependency('check')
+
+  if (dep_check.version() == '0.15.1')
+    efl_tests_warning = '\n     '.join(['',
+      'There is a bug in check@0.15.1, which',
+      'does not allow efl to be compiled with it.',
+      'Please downgrade / upgrade or disable tests',
+      'with -Dbuild-tests=false'
+    ])
+    warning(efl_tests_warning)
+    warnings += efl_tests_warning
+  endif
+
+  test_env = environment()
+  test_env.set('EFL_RUN_IN_TREE', '1')
+
+  if get_option('b_sanitize') == 'address'
+    test_env.set('ASAN_OPTIONS', 'detect_leaks=0:detect_odr_violation=0')
+  endif
+
   subdir('tests')
+  foreach test : dir_test
+    package_c_args = [
+      '-DPACKAGE_DATA_DIR="'+ join_paths(dir_data, test)+'"',
+      '-DNEED_RUN_IN_TREE=1',
+    ]
+    subdir(join_paths(local_tests, test))
+  endforeach
 endif
 
 if get_option('build-examples')
@@ -338,34 +353,24 @@ if get_option('docs')
   doxygen = find_program('doxygen', required : false)
   if doxygen.found()
     subdir('doc/api')
+  else
+    efl_docs_warning = '\n     '.join(['',
+      'Your meson configuration assumes to build EFL documentaion,',
+      'but pkg-config does\'t found installed dependency:',
+      '   doxygen',
+      'So, install doxygen package, or',
+      'reconfigure meson with option: -Ddocs=false'
+    ])
+    warning(efl_docs_warning)
+    warnings += efl_docs_warning
   endif
 endif
 summary_info += {'Documentation': get_option('docs') and doxygen.found()}
-
-#
-# Configure files
-#
-
-# efl_one_config_h = configuration_data()
-# efl_one_config_h.set('EFL_VERSION_MAJOR', version_major)
-# efl_one_config_h.set('EFL_VERSION_MINOR', version_minor)
-# efl_one_config_h.set('EFL_VERSION_MICRO', version_micro)
-
-# FIXME placeholder
-# efl_one_config_h.set('EFL_API_LEGACY_DEF', '#define EFL_API_LEGACY_DEF "FIXME NOT IMPLEMENTED"')
-# efl_one_config_h.set('EFL_MAX_FD_SIZE', get_option('max-fd-size'))
 
 configure_file(
   output: 'efl_config.h',
   configuration: efl_config
 )
-
-# configure_file(
-#   input: 'src/lib/efl/Efl_One_Config.h.in',
-#   output: 'Efl_One_Config.h',
-#   install_dir : join_paths(dir_include,'eina-'+version_major),
-#   configuration: efl_one_config_h
-# )
 
 # configure_file(
 #   input: 'elm_intro.h.in',
@@ -397,3 +402,10 @@ summary(summary_mem,  bool_yn: true, section: 'Memory configuration')
 summary(summary_opt,  bool_yn: true, section: 'Optimization')
 summary(summary_efl,  bool_yn: true, section: 'EFL tools')
 summary(summary_info, bool_yn: true, section: 'Information')
+
+if warnings.length() > 0
+  warning('Warnings occured during configuration')
+  foreach warning : warnings
+    warning(warning)
+  endforeach
+endif
