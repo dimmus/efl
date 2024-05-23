@@ -429,7 +429,7 @@ public_headers += shared_config_file
 unwind = dependency('libunwind-generic', required: false)
 if unwind.found()
    efl_config.set('HAVE_UNWIND', 1)
-   dep_shared += unwind
+   dep_shared += [ unwind ]
    efl_config.set('EINA_LOG_BACKTRACE_ENABLE', 1)
 endif
 
@@ -441,15 +441,14 @@ dep_shared += [ execinfo ]
 
 lib_shared = library('efl_shared', src_shared,
   c_args : [package_c_args, '-DEINA_BUILD'],
-  include_directories : inc_config + inc_shared,
-#   dependencies: dep_shared + [eina_deps, evil],
+  include_directories : [ inc_config, inc_shared ],
   dependencies: dep_shared,
   install: true,
   version : version
 )
 
 shared = declare_dependency(
-  include_directories: inc_config + inc_shared,
+  include_directories: [ inc_config, inc_shared ],
   dependencies :       dep_shared,
   link_with:           lib_shared,
 )

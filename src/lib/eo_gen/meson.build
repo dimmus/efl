@@ -33,7 +33,7 @@ src_eo_gen = files(
 )
 
 lib_eo_gen = library('efl_eo_gen', src_eo_gen,
-    include_directories: inc_config + inc_shared,
+    include_directories: [ inc_config, inc_shared ],
     dependencies: shared,
     install: true,
     c_args : [ package_c_args, '-DEOLIAN_BUILD' ],
