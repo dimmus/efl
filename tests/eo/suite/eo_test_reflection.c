@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include <stdio.h>
 
 #include <Efl_Eo.h>
@@ -7,17 +11,18 @@
 #include "eo_test_reflection_complex_class_structure.h"
 
 
-TEST(eo_test_reflection_invalid)
+EFL_START_TEST(eo_test_reflection_invalid)
 {
    Eina_Value numb_val = eina_value_int_init(1337);
    Eo *simple = efl_new(SIMPLE_CLASS);
 
    simple_a_set(simple, 22);
    efl_property_reflection_set(simple, "simple_a_asdf", numb_val);
-   efl_assert_fail_if(efl_property_reflection_get(simple, "simple_a_invalid").type != EINA_VALUE_TYPE_ERROR);
+   fail_if(efl_property_reflection_get(simple, "simple_a_invalid").type != EINA_VALUE_TYPE_ERROR);
 }
+EFL_END_TEST
 
-TEST(eo_test_reflection_inherited)
+EFL_START_TEST(eo_test_reflection_inherited)
 {
    const int numb = 42;
    int number_ref;
@@ -26,16 +31,17 @@ TEST(eo_test_reflection_inherited)
 
    simple_a_set(simple, 22);
    efl_property_reflection_set(simple, "simple_a", numb_val);
-   efl_assert_int_eq(simple_a_get(simple), numb);
+   ck_assert_int_eq(simple_a_get(simple), numb);
 
    simple_a_set(simple, 22);
    Eina_Value res = efl_property_reflection_get(simple, "simple_a");
    eina_value_int_convert(&res, &number_ref);
-   efl_assert_int_eq(number_ref, 22);
+   ck_assert_int_eq(number_ref, 22);
 
 }
+EFL_END_TEST
 
-TEST(eo_test_reflection_simple)
+EFL_START_TEST(eo_test_reflection_simple)
 {
    const int numb = 42;
    int number_ref;
@@ -45,22 +51,23 @@ TEST(eo_test_reflection_simple)
 
    simple_a_set(simple, 22);
    efl_property_reflection_set(simple, "simple_a", numb_val);
-   efl_assert_int_eq(simple_a_get(simple), numb);
+   ck_assert_int_eq(simple_a_get(simple), numb);
 
-   efl_assert_int_eq(efl_property_reflection_exist(simple, "simple_a"), EFL_TRUE);
+   ck_assert_int_eq(efl_property_reflection_exist(simple, "simple_a"), EFL_TRUE);
 
-   efl_assert_int_eq(efl_property_reflection_set(simple, "should_fail", useless_val),
+   ck_assert_int_eq(efl_property_reflection_set(simple, "should_fail", useless_val),
                     EINA_ERROR_NOT_IMPLEMENTED);
 
-   efl_assert_int_eq(efl_property_reflection_exist(simple, "should_fail"), EFL_FALSE);
+   ck_assert_int_eq(efl_property_reflection_exist(simple, "should_fail"), EFL_FALSE);
 
    simple_a_set(simple, 22);
    Eina_Value res = efl_property_reflection_get(simple, "simple_a");
    eina_value_int_convert(&res, &number_ref);
-   efl_assert_int_eq(number_ref, 22);
+   ck_assert_int_eq(number_ref, 22);
 }
+EFL_END_TEST
 
-TEST(eo_test_reflection_complex_class_structure)
+EFL_START_TEST(eo_test_reflection_complex_class_structure)
 {
    const int numb = 42;
    Eina_Value numb_val = eina_value_int_init(numb);
@@ -69,8 +76,16 @@ TEST(eo_test_reflection_complex_class_structure)
    efl_property_reflection_set(simple, "m_test", numb_val);
    efl_property_reflection_set(simple, "i_test", numb_val);
 
-   efl_assert_int_eq(complex_mixin_m_test_get(simple), numb);
-   efl_assert_int_eq(complex_interface_i_test_get(simple), numb);
+   ck_assert_int_eq(complex_mixin_m_test_get(simple), numb);
+   ck_assert_int_eq(complex_interface_i_test_get(simple), numb);
 }
+EFL_END_TEST
 
+void eo_test_reflection(TCase *tc)
+{
+   tcase_add_test(tc, eo_test_reflection_simple);
+   tcase_add_test(tc, eo_test_reflection_inherited);
+   tcase_add_test(tc, eo_test_reflection_invalid);
+   tcase_add_test(tc, eo_test_reflection_complex_class_structure);
+}
 #include "eo_test_reflection_complex_class_structure.c"

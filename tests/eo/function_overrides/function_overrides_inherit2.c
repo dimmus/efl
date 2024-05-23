@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "function_overrides_simple.h"
 #include "function_overrides_inherit.h"
@@ -10,22 +14,22 @@
 static void
 _a_set(Eo *obj, void *class_data EFL_UNUSED, int a)
 {
-   testlog("%s %d\n", efl_class_name_get(MY_CLASS), a);
+   printf("%s %d\n", efl_class_name_get(MY_CLASS), a);
    simple_a_print(obj);
    simple_a_set(efl_super(obj, MY_CLASS), a + 1);
 
    Efl_Bool called = EFL_FALSE;
    called = simple_a_print(efl_super(obj, MY_CLASS));
-   efl_assert_fail_if(!called);
+   fail_if(!called);
 }
 
 static Efl_Bool
 _print(Eo *obj, void *class_data EFL_UNUSED)
 {
    Efl_Bool called = EFL_FALSE;
-   testlog("Hey\n");
+   printf("Hey\n");
    called = inherit2_print(efl_super(obj, MY_CLASS));
-   efl_assert_fail_if(called);
+   fail_if(called);
 
    return EFL_TRUE;
 }
@@ -33,7 +37,7 @@ _print(Eo *obj, void *class_data EFL_UNUSED)
 static Efl_Bool
 _print2(Eo *obj EFL_UNUSED, void *class_data EFL_UNUSED)
 {
-   testlog("Hey2\n");
+   printf("Hey2\n");
 
    return EFL_TRUE;
 }

@@ -1,19 +1,13 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "signals_simple.h"
 
 #include "../eunit_tests.h"
 
 static int cb_count = 0;
-
-static enum test_result_code
-fixture_setup(struct efl_test_harness *harness)
-{
-   efl_object_init();
-
-   return efl_test_harness_execute_standalone(harness);
-}
-
-DECLARE_FIXTURE_SETUP(fixture_setup);
 
 static void
 _null_cb(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
@@ -24,7 +18,7 @@ static void
 _a_changed_cb(void *data, const Efl_Event *event)
 {
    int new_a = *((int *) event->info);
-   testlog("%s event_info:'%d' data:'%d'\n", __func__, new_a, (int) (intptr_t) data);
+   printf("%s event_info:'%d' data:'%d'\n", __func__, new_a, (int) (intptr_t) data);
 
    cb_count++;
 
@@ -43,7 +37,7 @@ static void
 _restart_1_cb(void *data EFL_UNUSED, const Efl_Event *event EFL_UNUSED)
 {
    fprintf(stderr, "restart 1 inside: %i\n", inside);
-   efl_assert_fail_if(!inside);
+   fail_if(!inside);
    called++;
    efl_event_callback_stop(event->object);
 }
@@ -52,7 +46,7 @@ static void
 _restart_2_cb(void *data, const Efl_Event *event)
 {
    fprintf(stderr, "restart 2 inside: %i\n", inside);
-   efl_assert_fail_if(inside);
+   fail_if(inside);
 
    inside = EFL_TRUE;
    efl_event_callback_legacy_call(event->object, event->desc, data);
@@ -68,7 +62,7 @@ static void
 _restart_3_cb(void *data, const Efl_Event *event)
 {
    fprintf(stderr, "restart 3 inside: %i\n", inside);
-   efl_assert_fail_if(!inside);
+   fail_if(!inside);
 
    fprintf(stderr, "restart 3 exit inside: %i (%i)\n", inside, called);
    efl_event_callback_stop(event->object);
@@ -96,8 +90,11 @@ _restart_3_no_stop_cb(void *data, const Efl_Event *event)
    called++;
 }
 
-TEST(signals)
+int
+main(int argc, char *argv[])
 {
+   (void) argc;
+   (void) argv;
    efl_object_init();
 
    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
@@ -113,131 +110,131 @@ TEST(signals)
 
    simple_a_set(obj, 1);
 
-   efl_assert_fail_if(cb_count != 3);
+   fail_if(cb_count != 3);
 
    efl_event_callback_del(obj, EV_A_CHANGED, _a_changed_cb, (void *) 3);
-   efl_assert_fail_if(pd->cb_count != 3);
+   fail_if(pd->cb_count != 3);
 
    efl_event_callback_del(obj, EV_A_CHANGED, _a_changed_cb, (void *) 12);
-   efl_assert_fail_if(pd->cb_count != 3);
+   fail_if(pd->cb_count != 3);
 
    efl_event_callback_del(obj, EV_A_CHANGED, _a_changed_cb, (void *) 4);
-   efl_assert_fail_if(pd->cb_count != 2);
+   fail_if(pd->cb_count != 2);
 
    efl_event_callback_del(obj, EV_A_CHANGED, _a_changed_cb, (void *) 2);
-   efl_assert_fail_if(pd->cb_count != 1);
+   fail_if(pd->cb_count != 1);
 
    efl_event_callback_del(obj, EV_A_CHANGED, _a_changed_cb, (void *) 1);
-   efl_assert_fail_if(pd->cb_count != 0);
+   fail_if(pd->cb_count != 0);
 
    /* Freeze/thaw. */
    int fcount = 0;
    cb_count = 0;
    efl_event_callback_priority_add(obj, EV_A_CHANGED, EFL_CALLBACK_PRIORITY_BEFORE, _a_changed_cb, (void *) 1);
-   efl_assert_fail_if(pd->cb_count != 1);
+   fail_if(pd->cb_count != 1);
 
    fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 0);
-
-   efl_event_freeze(obj);
-   fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 1);
+   fail_if(fcount != 0);
 
    efl_event_freeze(obj);
    fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 2);
+   fail_if(fcount != 1);
+
+   efl_event_freeze(obj);
+   fcount = efl_event_freeze_count_get(obj);
+   fail_if(fcount != 2);
 
    efl_event_callback_priority_add(obj, EV_A_CHANGED, EFL_CALLBACK_PRIORITY_BEFORE, _a_changed_cb, (void *) 2);
-   efl_assert_fail_if(pd->cb_count != 2);
+   fail_if(pd->cb_count != 2);
 
    simple_a_set(obj, 2);
-   efl_assert_fail_if(cb_count != 0);
+   fail_if(cb_count != 0);
    efl_event_thaw(obj);
    fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 1);
+   fail_if(fcount != 1);
 
    efl_event_thaw(obj);
    fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 0);
+   fail_if(fcount != 0);
 
    simple_a_set(obj, 3);
-   efl_assert_fail_if(cb_count != 2);
+   fail_if(cb_count != 2);
 
    cb_count = 0;
    efl_event_thaw(obj);
    fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 0);
+   fail_if(fcount != 0);
 
    efl_event_freeze(obj);
    fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 1);
+   fail_if(fcount != 1);
 
    simple_a_set(obj, 2);
-   efl_assert_fail_if(cb_count != 0);
+   fail_if(cb_count != 0);
    efl_event_thaw(obj);
    fcount = efl_event_freeze_count_get(obj);
-   efl_assert_fail_if(fcount != 0);
+   fail_if(fcount != 0);
 
    efl_event_callback_del(obj, EV_A_CHANGED, _a_changed_cb, (void *) 1);
-   efl_assert_fail_if(pd->cb_count != 1);
+   fail_if(pd->cb_count != 1);
    efl_event_callback_del(obj, EV_A_CHANGED, _a_changed_cb, (void *) 2);
-   efl_assert_fail_if(pd->cb_count != 0);
+   fail_if(pd->cb_count != 0);
 
    /* Global Freeze/thaw. */
    fcount = 0;
    cb_count = 0;
    pd->cb_count = 0;
    efl_event_callback_priority_add(obj, EV_A_CHANGED, EFL_CALLBACK_PRIORITY_BEFORE, _a_changed_cb, (void *) 1);
-   efl_assert_fail_if(pd->cb_count != 1);
+   fail_if(pd->cb_count != 1);
 
    fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 0);
-
-   efl_event_global_freeze();
-   fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 1);
+   fail_if(fcount != 0);
 
    efl_event_global_freeze();
    fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 2);
+   fail_if(fcount != 1);
+
+   efl_event_global_freeze();
+   fcount = efl_event_global_freeze_count_get();
+   fail_if(fcount != 2);
 
    efl_event_callback_priority_add(obj, EV_A_CHANGED, EFL_CALLBACK_PRIORITY_BEFORE, _a_changed_cb, (void *) 2);
-   efl_assert_fail_if(pd->cb_count != 2);
+   fail_if(pd->cb_count != 2);
 
    simple_a_set(obj, 2);
-   efl_assert_fail_if(cb_count != 0);
+   fail_if(cb_count != 0);
    efl_event_global_thaw();
    fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 1);
+   fail_if(fcount != 1);
 
    efl_event_global_thaw();
    fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 0);
+   fail_if(fcount != 0);
 
    simple_a_set(obj, 3);
-   efl_assert_fail_if(cb_count != 2);
+   fail_if(cb_count != 2);
 
    cb_count = 0;
    efl_event_global_thaw();
    fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 0);
+   fail_if(fcount != 0);
 
    efl_event_global_freeze();
    fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 1);
+   fail_if(fcount != 1);
 
    simple_a_set(obj, 2);
-   efl_assert_fail_if(cb_count != 0);
+   fail_if(cb_count != 0);
    efl_event_global_thaw();
    fcount = efl_event_global_freeze_count_get();
-   efl_assert_fail_if(fcount != 0);
+   fail_if(fcount != 0);
 
    efl_event_callback_priority_add(obj, EV_RESTART, EFL_CALLBACK_PRIORITY_DEFAULT, _restart_1_cb, NULL);
    efl_event_callback_priority_add(obj, EV_RESTART, EFL_CALLBACK_PRIORITY_BEFORE, _restart_3_cb, NULL);
    efl_event_callback_priority_add(obj, EV_RESTART, EFL_CALLBACK_PRIORITY_BEFORE, _restart_2_cb, NULL);
    efl_event_callback_legacy_call(obj, EV_RESTART, NULL);
-   efl_assert_fail_if(inside);
-   efl_assert_fail_if(called != 3);
+   fail_if(inside);
+   fail_if(called != 3);
    efl_unref(obj);
 
    pd = NULL;
@@ -249,9 +246,10 @@ TEST(signals)
    efl_event_callback_add(obj, EV_RESTART, _null_cb, NULL);
    efl_event_callback_add(obj, EV_RESTART, _restart_3_no_stop_cb, NULL);
    efl_event_callback_call(obj, EV_RESTART, NULL);
-   efl_assert_fail_if(inside);
-   efl_assert_fail_if(called != 2);
+   fail_if(inside);
+   fail_if(called != 2);
 
 
    efl_object_shutdown();
+   return 0;
 }

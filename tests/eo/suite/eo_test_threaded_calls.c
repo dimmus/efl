@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include <stdio.h>
 
 #include <Efl_Eo.h>
@@ -35,14 +39,14 @@ _try_swap_stack(Eo *obj EFL_UNUSED, void *class_data)
 
    if (pd->v == 0 )
      {
-        efl_assert_fail_if(EINA_LOCK_SUCCEED != eina_spinlock_release(&locks[0]));
-        efl_assert_fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[1]));
+        fail_if(EINA_LOCK_SUCCEED != eina_spinlock_release(&locks[0]));
+        fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[1]));
         eina_barrier_wait(&barrier);
      }
    else if (pd->v == 1 )
      {
         eina_barrier_wait(&barrier);
-        efl_assert_fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[1]));
+        fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[1]));
      }
 }
 
@@ -87,12 +91,12 @@ _thread_job(void *data, Eina_Thread t EFL_UNUSED)
    int v = (int) (uintptr_t) data;
 
    if (v == 0) {
-     efl_assert_fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[0]));
+     fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[0]));
      eina_barrier_wait(&barrier0);
    }
    else {
      eina_barrier_wait(&barrier0);
-     efl_assert_fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[0]));
+     fail_if(EINA_LOCK_SUCCEED != eina_spinlock_take(&locks[0]));
    }
 
    obj = efl_add_ref(THREAD_TEST_CLASS, NULL, thread_test_constructor(efl_added, v));
@@ -100,31 +104,38 @@ _thread_job(void *data, Eina_Thread t EFL_UNUSED)
    thread_test_try_swap_stack(obj);
    v = thread_test_v_get(obj);
 
-   efl_assert_fail_if(EINA_LOCK_SUCCEED != eina_spinlock_release(&locks[1]));
+   fail_if(EINA_LOCK_SUCCEED != eina_spinlock_release(&locks[1]));
 
    efl_unref(obj);
 
    return (void *) (uintptr_t) v;
 }
 
-TEST(eo_threaded_calls_test)
+EFL_START_TEST(eo_threaded_calls_test)
 {
    Eina_Thread threads[2];
 
-   efl_assert_fail_if(!eina_spinlock_new(&locks[0]));
-   efl_assert_fail_if(!eina_spinlock_new(&locks[1]));
-   efl_assert_fail_if(!eina_barrier_new(&barrier, 2));
-   efl_assert_fail_if(!eina_barrier_new(&barrier0, 2));
 
-   efl_assert_fail_if(!eina_thread_create(&threads[0], EINA_THREAD_NORMAL, -1, _thread_job, (void *) (uintptr_t)0));
-   efl_assert_fail_if(!eina_thread_create(&threads[1], EINA_THREAD_NORMAL, -1, _thread_job, (void *) (uintptr_t)1));
+   fail_if(!eina_spinlock_new(&locks[0]));
+   fail_if(!eina_spinlock_new(&locks[1]));
+   fail_if(!eina_barrier_new(&barrier, 2));
+   fail_if(!eina_barrier_new(&barrier0, 2));
 
-   efl_assert_fail_if(0 != (int)(uintptr_t)eina_thread_join(threads[0]));
-   efl_assert_fail_if(1 != (int)(uintptr_t)eina_thread_join(threads[1]));
+   fail_if(!eina_thread_create(&threads[0], EINA_THREAD_NORMAL, -1, _thread_job, (void *) (uintptr_t)0));
+   fail_if(!eina_thread_create(&threads[1], EINA_THREAD_NORMAL, -1, _thread_job, (void *) (uintptr_t)1));
+
+   fail_if(0 != (int)(uintptr_t)eina_thread_join(threads[0]));
+   fail_if(1 != (int)(uintptr_t)eina_thread_join(threads[1]));
 
    eina_spinlock_free(&locks[0]);
    eina_spinlock_free(&locks[1]);
    eina_barrier_free(&barrier);
    eina_barrier_free(&barrier0);
 
+}
+EFL_END_TEST
+
+void eo_test_threaded_calls(TCase *tc)
+{
+   tcase_add_test(tc, eo_threaded_calls_test);
 }

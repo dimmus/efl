@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include <stdio.h>
 
 #include <Efl_Eo.h>

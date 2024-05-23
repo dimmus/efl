@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <efl_config.h>
+# include "efl_config.h"
 #endif
 
 #include "Efl_Eo.h"
@@ -23,7 +23,7 @@ _a_set(Eo *obj, void *class_data, int a)
 {
    Private_Data *pd = class_data;
    pd->a = a;
-   testlog("%s %d\n", __func__, pd->a);
+   printf("%s %d\n", __func__, pd->a);
 
    efl_event_callback_legacy_call(obj, EV_A_CHANGED, &pd->a);
 }
@@ -39,7 +39,7 @@ _cb_added(void *data EFL_UNUSED, const Efl_Event *event)
 
    pd->cb_count++;
 
-   testlog("Added EV_A_CHANGED callback to %p. Count: %d\n", event->object, pd->cb_count);
+   printf("Added EV_A_CHANGED callback to %p. Count: %d\n", event->object, pd->cb_count);
 }
 
 void
@@ -53,7 +53,7 @@ _cb_deled(void *data EFL_UNUSED, const Efl_Event *event)
 
    pd->cb_count--;
 
-   testlog("Removed EV_A_CHANGED callback from %p. Count: %d\n", event->object, pd->cb_count);
+   printf("Removed EV_A_CHANGED callback from %p. Count: %d\n", event->object, pd->cb_count);
 }
 
 static Eo *

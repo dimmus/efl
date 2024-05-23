@@ -1,4 +1,7 @@
-test_source = files(
+dir_current_source = meson.current_source_dir()
+dir_current_build  = meson.current_build_dir()
+
+eo_constructors_src = files(
   'constructors_main.c',
   'constructors_mixin.c',
   'constructors_mixin.h',
@@ -18,20 +21,22 @@ test_source = files(
   'constructors_simple7.h'
 )
 
-tests += [
-	{	
-		'name'    : 'eo_constructors',
-		'sources' : test_source,
-		'dep_objs': [ eo ],
-		'inc_dirs': inc_eo,
-	},
-]
+eo_constructors = executable('efl_eo_constructors',
+  eo_constructors_src,
+  dependencies: [ eo ],
+  c_args      : [ '-DTESTS_BUILD_DIR="'+dir_current_build+'"',
+                  '-DTESTS_SRC_DIR="'+dir_current_source+'"'] )
 
-tests += [
-	{	
-		'name'    : 'eo_constructors_dbg',
-		'sources' : test_source,
-		'dep_objs': [ eo_dbg ],
-		'inc_dirs': inc_eo,
-	},
-]
+test('efl_eo-constructors', eo_constructors,
+  env : test_env
+)
+
+eo_constructors = executable('efl_eo_constructors_dbg',
+  eo_constructors_src,
+  dependencies: [ eo_dbg ],
+  c_args      : [ '-DTESTS_BUILD_DIR="'+dir_current_build+'"',
+                  '-DTESTS_SRC_DIR="'+dir_current_source+'"'] )
+
+test('efl_eo-constructors-dbg', eo_constructors,
+  env : test_env
+)

@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Shared.h"
 #include "Efl_Eo.h"
 #include "eo_test_domain.h"
@@ -11,19 +15,19 @@ static void
 _a_set(Eo *obj EFL_UNUSED, void *class_data, int a)
 {
    Domain_Public_Data *pd = class_data;
-   testlog("Set Begin\n");
+   printf("Set Begin\n");
    pd->a = a;
-   testlog("Set End\n");
-   testlog("Call Events\n");
+   printf("Set End\n");
+   printf("Call Events\n");
    efl_event_callback_legacy_call(obj, EV_DOMAIN_A_CHANGED, &pd->a);
-   testlog("Call Events End\n");
+   printf("Call Events End\n");
 }
 
 static int
 _a_get(Eo *obj EFL_UNUSED, void *class_data)
 {
    Domain_Public_Data *pd = class_data;
-   testlog("Get Begin\n");
+   printf("Get Begin\n");
    return pd->a;
 }
 

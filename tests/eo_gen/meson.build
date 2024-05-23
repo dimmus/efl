@@ -1,5 +1,4 @@
-# eo generation
-dir_current_source = meson.current_build_dir()
+dir_current_source = meson.current_source_dir()
 dir_current_build  = meson.current_build_dir()
 
 priv_eo_files = [
@@ -20,24 +19,24 @@ foreach eo_file : priv_eo_files
                            '-gchd', '@INPUT@'])
 endforeach
 
-# test
-test_source = files(
-	'eolian_aux.c',
-	'eolian_generated_future.c',
-	# 'eolian_generation.c', # TODO: bug here
-	'eolian_parsing.c',
-	'eolian_static.c'
+test_efl_eo_gen_src = files(
+  'efl_eo_gen_suite.c',
+  'test_efl_eo_gen_parsing.c',
+  'test_efl_eo_gen_aux.c',
+  'test_efl_eo_gen_generation.c',
+  'test_efl_eo_gen_generated_future.c',
+  'test_efl_eo_gen_static.c'
 )
 
-tests += [
-	{	
-		'name'    : 'eo_gen',
-		'sources' : test_source + priv_eo_file_target,
-		'dep_objs': [ eo_gen, eo ],
-		'inc_dirs': [ inc_shared, inc_eo_gen ],
-		'c_args'  : [
-			'-DEOLIAN_GEN="' + eo_gen_path + '"',
-			'-DEO_SRC_DIR="' + join_paths(meson.project_source_root(), 'src/lib') + '"',
-		]
-	},
-]
+efl_eo_gen_suite = executable('efl_eo_gen_suite',
+  test_efl_eo_gen_src, priv_eo_file_target,
+  dependencies: [ eo_gen, eo, dep_check],
+  c_args      : [ '-DEOLIAN_GEN="'+eo_gen_path+'"',
+                  '-DTESTS_BUILD_DIR="'+dir_current_build+'"',
+                  '-DEO_SRC_DIR="'+join_paths(meson.project_source_root(), 'src/lib')+'"',
+                  '-DTESTS_SRC_DIR="'+dir_current_source+'"' ]
+)
+
+test('efl_eo_gen-suite', efl_eo_gen_suite,
+  env : test_env
+)

@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <efl_config.h>
+# include "efl_config.h"
 #endif
 
 #include "Efl_Eo.h"
@@ -17,7 +17,7 @@ _ab_sum_get(Eo *obj, void *class_data)
    /* This cast is a hack just for the tests... */
    Mixin2_Public_Data *pd = (Mixin2_Public_Data *) class_data;
    int sum = 0;
-   testlog("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
+   printf("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
    sum = mixin_ab_sum_get(efl_super(obj, MY_CLASS));
 
    ++sum;
@@ -27,7 +27,7 @@ _ab_sum_get(Eo *obj, void *class_data)
         int _a = 0, _b = 0;
         _a = simple_a_get(obj);
         _b = simple_b_get(obj);
-        efl_assert_fail_if(sum != _a + _b + 1);
+        fail_if(sum != _a + _b + 1);
      }
 
    return sum;

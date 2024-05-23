@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "constructors_mixin.h"
 #include "constructors_simple2.h"

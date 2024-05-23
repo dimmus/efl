@@ -1,7 +1,9 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "composite_objects_simple.h"
-
-#include "efl-test-runner.h"
 
 const Efl_Event_Description _EV_A_CHANGED =
         EFL_EVENT_DESCRIPTION("a,changed");
@@ -12,7 +14,7 @@ static void
 _a_set(Eo *obj, void *class_data, int a)
 {
    Simple_Public_Data *pd = class_data;
-   testlog("%s %d\n", efl_class_name_get(MY_CLASS), a);
+   printf("%s %d\n", efl_class_name_get(MY_CLASS), a);
    pd->a = a;
 
    efl_event_callback_legacy_call(obj, EV_A_CHANGED, &pd->a);

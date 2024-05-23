@@ -1,8 +1,6 @@
 #ifndef SIMPLE_H
 #define SIMPLE_H
 
-#include "efl-test-runner.h"
-
 void simple_a_set(Eo *obj, int a);
 int simple_a_get(Eo *obj);
 void simple_b_set(Eo *obj, int b);

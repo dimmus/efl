@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "mixin_simple.h"
 #include "mixin_inherit.h"
@@ -7,18 +11,11 @@
 
 #include "../eunit_tests.h"
 
-static enum test_result_code
-fixture_setup(struct efl_test_harness *harness)
+int
+main(int argc, char *argv[])
 {
-   efl_object_init();
-
-   return efl_test_harness_execute_standalone(harness);
-}
-
-DECLARE_FIXTURE_SETUP(fixture_setup);
-
-TEST(mixin)
-{
+   (void) argc;
+   (void) argv;
    efl_object_init();
 
    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
@@ -30,29 +27,30 @@ TEST(mixin)
    a = simple_a_get(obj);
    b = simple_b_get(obj);
    sum = mixin_ab_sum_get(obj);
-   efl_assert_fail_if(sum != a + b + 2); /* 2 for the two mixins... */
+   fail_if(sum != a + b + 2); /* 2 for the two mixins... */
 
    sum = mixin_ab_sum_get(obj);
    sum = mixin_ab_sum_get(obj);
 
    Mixin2_Public_Data *pd2 = efl_data_scope_get(obj, MIXIN2_CLASS);
-   efl_assert_fail_if(pd2->count != 6);
+   fail_if(pd2->count != 6);
 
    Mixin3_Public_Data *pd3 = efl_data_scope_get(obj, MIXIN3_CLASS);
-   efl_assert_fail_if(pd3->count != 9);
+   fail_if(pd3->count != 9);
 
    efl_unref(obj);
 
    obj = efl_add_ref(INHERIT_CLASS, NULL);
    simple_a_set(obj, 5);
    a = simple_a_get(obj);
-   testlog("%d\n", a);
-   efl_assert_fail_if(a != 5);
+   printf("%d\n", a);
+   fail_if(a != 5);
 
-   efl_assert_fail_if(efl_class_type_get(MIXIN_CLASS) != EFL_CLASS_TYPE_MIXIN);
+   fail_if(efl_class_type_get(MIXIN_CLASS) != EFL_CLASS_TYPE_MIXIN);
 
 
    efl_unref(obj);
    efl_object_shutdown();
+   return 0;
 }
 

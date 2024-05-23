@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "function_overrides_simple.h"
 #include "function_overrides_inherit2.h"
@@ -8,7 +12,7 @@
 static void
 _a_set(Eo *obj, void *class_data EFL_UNUSED, int a)
 {
-   testlog("%s %d\n", efl_class_name_get(MY_CLASS), a);
+   printf("%s %d\n", efl_class_name_get(MY_CLASS), a);
    simple_a_set(efl_super(obj, MY_CLASS), a + 1);
 }
 

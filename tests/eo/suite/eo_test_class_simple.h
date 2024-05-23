@@ -1,10 +1,6 @@
 #ifndef SIMPLE_H
 #define SIMPLE_H
 
-#include "Efl_Eo.h"
-
-#include "efl-test-runner.h"
-
 typedef struct
 {
    int a;

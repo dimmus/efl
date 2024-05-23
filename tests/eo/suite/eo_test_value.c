@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include <stdio.h>
 
 #include <Efl_Eo.h>
@@ -5,7 +9,7 @@
 #include "eo_suite.h"
 #include "eo_test_class_simple.h"
 
-TEST(eo_value)
+EFL_START_TEST(eo_value)
 {
    char *str, *str2;
 
@@ -16,23 +20,23 @@ TEST(eo_value)
 
    eo_dbg_info = EFL_DBG_INFO_LIST_APPEND(NULL, "Root");
    efl_dbg_info_get(obj, eo_dbg_info);
-   efl_assert_fail_if(!eo_dbg_info);
-   efl_assert_str_eq(eo_dbg_info->name, "Root");
+   fail_if(!eo_dbg_info);
+   ck_assert_str_eq(eo_dbg_info->name, "Root");
    str = eina_value_to_string(&eo_dbg_info->value);
-   efl_assert_str_eq(str, "[[8]]");
+   ck_assert_str_eq(str, "[[8]]");
 
    eina_value_setup(&val2, EFL_DBG_INFO_TYPE);
    eina_value_copy(&eo_dbg_info->value, &val2);
    str2 = eina_value_to_string(&val2);
-   efl_assert_str_eq(str, str2);
+   ck_assert_str_eq(str, str2);
 
    eina_value_get(&val2, &eo_val);
    eina_value_pget(&eo_val, &tmpp);
-   efl_assert_fail_if(!tmpp);
+   fail_if(!tmpp);
    eina_value_flush(&val2);
 
    eina_value_setup(&val2, EINA_VALUE_TYPE_INT);
-   efl_assert_fail_if(eina_value_convert(&eo_dbg_info->value, &val2));
+   fail_if(eina_value_convert(&eo_dbg_info->value, &val2));
    eina_value_flush(&val2);
 
    free(str);
@@ -40,4 +44,10 @@ TEST(eo_value)
    efl_dbg_info_free(eo_dbg_info);
    efl_unref(obj);
 
+}
+EFL_END_TEST
+
+void eo_test_value(TCase *tc)
+{
+   tcase_add_test(tc, eo_value);
 }

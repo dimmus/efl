@@ -1,8 +1,6 @@
 #ifndef SIMPLE_H
 #define SIMPLE_H
 
-#include "efl-test-runner.h"
-
 typedef struct
 {
    int cb_count;

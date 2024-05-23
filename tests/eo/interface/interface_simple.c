@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <efl_config.h>
+# include "efl_config.h"
 #endif
 
 #include "Efl_Eo.h"
@@ -20,7 +20,7 @@ static int \
 _##name##_get(Eo *obj EFL_UNUSED, void *class_data) \
 { \
    const Private_Data *pd = class_data; \
-   testlog("%s %d\n", __func__, pd->name); \
+   printf("%s %d\n", __func__, pd->name); \
    return pd->name; \
 } \
 static void \
@@ -28,7 +28,7 @@ _##name##_set(Eo *obj EFL_UNUSED, void *class_data, int name) \
 { \
    Private_Data *pd = class_data; \
    pd->name = name; \
-   testlog("%s %d\n", __func__, pd->name); \
+   printf("%s %d\n", __func__, pd->name); \
 } \
 EFL_VOID_FUNC_BODYV(simple_##name##_set, EFL_FUNC_CALL(name), int name); \
 EFL_FUNC_BODY(simple_##name##_get, int, 0);
@@ -42,7 +42,7 @@ _ab_sum_get(Eo *obj, void *class_data EFL_UNUSED)
    int a = 0, b = 0;
    a = simple_a_get(obj);
    b = simple_b_get(obj);
-   testlog("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
+   printf("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
    return a + b;
 }
 
@@ -52,7 +52,7 @@ _ab_sum_get2(Eo *obj, void *class_data EFL_UNUSED)
    int a = 0, b = 0;
    a = simple_a_get(obj);
    b = simple_b_get(obj);
-   testlog("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
+   printf("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
    return a + b + 1;
 }
 

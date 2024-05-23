@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <efl_config.h>
+# include "efl_config.h"
 #endif
 
 #include "Efl_Eo.h"
@@ -14,7 +14,7 @@ _a_get(Eo *obj, void *class_data EFL_UNUSED)
 {
    int ret = 0;
    ret = simple_a_get(efl_super(obj, MY_CLASS));
-   testlog("%s %d\n", __func__, ret);
+   printf("%s %d\n", __func__, ret);
 
    return ret;
 }

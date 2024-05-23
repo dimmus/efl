@@ -1,3 +1,6 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
 
 #include <stdio.h>
 
@@ -29,7 +32,7 @@ _destructor_unref_class_initializer(Efl_Class *klass2)
    return efl_class_functions_set(klass2, &ops, NULL);
 }
 
-TEST(efl_destructor_unref)
+EFL_START_TEST(efl_destructor_unref)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
@@ -44,10 +47,10 @@ TEST(efl_destructor_unref)
    };
 
    klass = efl_class_new(&class_desc, SIMPLE_CLASS, NULL);
-   efl_assert_fail_if(!klass);
+   fail_if(!klass);
 
    Eo *obj = efl_add_ref(klass, NULL);
-   efl_assert_fail_if(!obj);
+   fail_if(!obj);
 
    DISABLE_ABORT_ON_CRITICAL_START;
    TEST_EO_ERROR("efl_unref", "Obj:%s@%p. User refcount (%d) < 0. Too many unrefs.");
@@ -57,8 +60,9 @@ TEST(efl_destructor_unref)
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
 }
+EFL_END_TEST
 
-TEST(efl_destructor_double_del)
+EFL_START_TEST(efl_destructor_double_del)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
@@ -73,11 +77,11 @@ TEST(efl_destructor_double_del)
    };
 
    klass = efl_class_new(&class_desc, SIMPLE_CLASS, NULL);
-   efl_assert_fail_if(!klass);
+   fail_if(!klass);
 
    Eo *obj = efl_add_ref(klass, NULL);
    efl_manual_free_set(obj, EFL_TRUE);
-   efl_assert_fail_if(!obj);
+   fail_if(!obj);
 
    TEST_EO_ERROR("efl_unref", "Obj:%s@%p. User refcount (%d) < 0. Too many unrefs.");
    efl_unref(obj);
@@ -87,4 +91,11 @@ TEST(efl_destructor_double_del)
 
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
+}
+EFL_END_TEST
+
+void eo_test_class_behaviour_errors(TCase *tc)
+{
+   tcase_add_test(tc, efl_destructor_unref);
+   tcase_add_test(tc, efl_destructor_double_del);
 }

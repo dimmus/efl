@@ -57,7 +57,7 @@ _cb1(void *data, const Efl_Event *event)
    efl_event_callback_add(event->object, EFL_TEST_EVENT_EVENT_TESTER, _cb3, data);
 }
 
-TEST(eo_event)
+EFL_START_TEST(eo_event)
 {
    Test_Data data;
    Eo *obj;
@@ -68,23 +68,24 @@ TEST(eo_event)
 
    memset(&data, 0, sizeof(Test_Data));
    efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
-   efl_assert_int_ne(data.event1, 0);
-   efl_assert_int_ne(data.event2, 0);
-   efl_assert_int_eq(data.event3, 0);
+   ck_assert_int_ne(data.event1, 0);
+   ck_assert_int_ne(data.event2, 0);
+   ck_assert_int_eq(data.event3, 0);
 
    memset(&data, 0, sizeof(Test_Data));
    efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
-   efl_assert_int_ne(data.event1, 0);
-   efl_assert_int_ne(data.event2, 0);
-   efl_assert_int_ne(data.event3, 0);
+   ck_assert_int_ne(data.event1, 0);
+   ck_assert_int_ne(data.event2, 0);
+   ck_assert_int_ne(data.event3, 0);
 
 }
+EFL_END_TEST
 
 static void
 _cb_rec_3(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Test_Data *d = event->info;
-   efl_assert_int_eq(d->event3, 0);
+   ck_assert_int_eq(d->event3, 0);
    d->event3 = EFL_TRUE;
 }
 
@@ -92,7 +93,7 @@ static void
 _cb_rec_2(void *data EFL_UNUSED, const Efl_Event *event)
 {
    Test_Data *d = event->info;
-   efl_assert_int_eq(d->event2, 0);
+   ck_assert_int_eq(d->event2, 0);
    d->event2 = EFL_TRUE;
 }
 
@@ -103,7 +104,7 @@ _cb_rec_1(void *data, const Efl_Event *event)
 
    if (event->info)
      {
-        efl_assert_int_eq(d->event1, 0);
+        ck_assert_int_eq(d->event1, 0);
         d->event1 = EFL_TRUE;
      }
    else
@@ -114,7 +115,7 @@ _cb_rec_1(void *data, const Efl_Event *event)
      }
 }
 
-TEST(eo_event_call_in_call)
+EFL_START_TEST(eo_event_call_in_call)
 {
    Test_Data data;
    Eo *obj;
@@ -124,11 +125,12 @@ TEST(eo_event_call_in_call)
 
    memset(&data, 0, sizeof(Test_Data));
    efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
-   efl_assert_int_ne(data.event1, 0);
-   efl_assert_int_ne(data.event2, 0);
-   efl_assert_int_ne(data.event3, 0);
+   ck_assert_int_ne(data.event1, 0);
+   ck_assert_int_ne(data.event2, 0);
+   ck_assert_int_ne(data.event3, 0);
 
 }
+EFL_END_TEST
 
 static Efl_Bool emitted = 0;
 
@@ -155,7 +157,8 @@ _generation_clamp_step1(void *data EFL_UNUSED, const Efl_Event *e)
    efl_event_callback_call(e->object, EFL_TEST_EVENT_EVENT_TESTER_CLAMP_TEST, NULL);
 }
 
-TEST(eo_event_generation_bug)
+
+EFL_START_TEST(eo_event_generation_bug)
 {
 
    /*
@@ -177,9 +180,10 @@ TEST(eo_event_generation_bug)
    efl_event_callback_priority_add(obj, EFL_TEST_EVENT_EVENT_TESTER_SUBSCRIBE, EFL_CALLBACK_PRIORITY_BEFORE, _generation_clamp_subscribe, NULL);
    efl_event_callback_call(obj, EFL_TEST_EVENT_EVENT_TESTER, NULL);
 
-   efl_assert_int_ne(emitted, 0);
+   ck_assert_int_ne(emitted, 0);
 
 }
+EFL_END_TEST
 
 static void
 _inc_when_called(void *data, const Efl_Event *ev EFL_UNUSED)
@@ -188,7 +192,7 @@ _inc_when_called(void *data, const Efl_Event *ev EFL_UNUSED)
    *called += 1;
 }
 
-TEST(eo_event_fowarder_test)
+EFL_START_TEST(eo_event_fowarder_test)
 {
    Eo *obj1, *obj2;
    int called = 0;
@@ -199,21 +203,32 @@ TEST(eo_event_fowarder_test)
 
    efl_event_callback_forwarder_priority_add(obj1, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, obj2);
    efl_event_callback_call(obj1, EFL_TEST_EVENT_EVENT_TESTER, NULL);
-   efl_assert_int_eq(called, 1);
+   ck_assert_int_eq(called, 1);
    called = 0;
 
    //call it a second time with another forwarder
    efl_event_callback_forwarder_priority_add(obj1, EFL_TEST_EVENT_EVENT_TESTER, EFL_CALLBACK_PRIORITY_BEFORE, obj2);
    efl_event_callback_call(obj1, EFL_TEST_EVENT_EVENT_TESTER, NULL);
-   efl_assert_int_eq(called, 1); //we still should only emit it once
+   ck_assert_int_eq(called, 1); //we still should only emit it once
    called = 0;
 
    //delete it, nothing should happen now
    efl_event_callback_forwarder_del(obj1, EFL_TEST_EVENT_EVENT_TESTER, obj2);
    efl_event_callback_call(obj1, EFL_TEST_EVENT_EVENT_TESTER, NULL);
-   efl_assert_int_eq(called, 0);
+   ck_assert_int_eq(called, 0);
 
 }
+EFL_END_TEST
+
+void eo_test_event(TCase *tc)
+{
+   tcase_add_test(tc, eo_event);
+   tcase_add_test(tc, eo_event_call_in_call);
+   tcase_add_test(tc, eo_event_generation_bug);
+   tcase_add_test(tc, eo_event_fowarder_test);
+}
+
+
 
 //class implementation
 

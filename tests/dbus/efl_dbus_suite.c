@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "efl_config.h"
 #endif
 
 #include "efl_dbus_suite.h"
@@ -23,12 +23,12 @@ static const Efl_Test_Case etc[] = {
   { NULL, NULL }
 };
 
-SUITE_INIT(eldbus)
+SUITE_INIT(efl_dbus)
 {
    ck_assert_int_eq(efl_dbus_init(), 1);
 }
 
-SUITE_SHUTDOWN(eldbus)
+SUITE_SHUTDOWN(efl_dbus)
 {
    //T6814
    ck_assert_int_eq(efl_dbus_shutdown(), 0);
@@ -47,7 +47,7 @@ main(int argc, char **argv)
 #endif
 
    failed_count = _efl_suite_build_and_run(argc - 1, (const char **)argv + 1,
-                                           "Eldbus", etc, SUITE_INIT_FN(eldbus), SUITE_SHUTDOWN_FN(eldbus));
+                                           "Efl_Dbus", etc, SUITE_INIT_FN(efl_dbus), SUITE_SHUTDOWN_FN(efl_dbus));
 
    return (failed_count == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

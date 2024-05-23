@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include <stdio.h>
 
 #include <Efl_Eo.h>
@@ -8,60 +12,53 @@
 
 static struct log_ctx ctx;
 
-static enum test_result_code
-fixture_setup(struct efl_test_harness *harness)
-{
-   efl_object_init();
-
-   return efl_test_harness_execute_standalone(harness);
-}
-
-DECLARE_FIXTURE_SETUP(fixture_setup);
-
-TEST(eo_pure_virtual_fct_call)
+EFL_START_TEST(eo_pure_virtual_fct_call)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
-   efl_assert_fail_if(!obj);
+   fail_if(!obj);
 
    TEST_EO_ERROR("_efl_object_call_resolve", "in %s:%d: you called a pure virtual func '%s' (%d) of class '%s'.");
    simple_pure_virtual(obj);
-   assert(ctx.did);
+   fail_unless(ctx.did);
 
    efl_unref(obj);
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
+EFL_END_TEST
 
-TEST(eo_api_not_implemented_call)
+EFL_START_TEST(eo_api_not_implemented_call)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
-   efl_assert_fail_if(!obj);
+   fail_if(!obj);
 
    TEST_EO_ERROR("simple_no_implementation", "Unable to resolve op for api func %p for obj=%p (%s)");
    simple_no_implementation(obj);
-   assert(ctx.did);
+   fail_unless(ctx.did);
 
    efl_unref(obj);
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
+EFL_END_TEST
 
-TEST(eo_op_not_found_in_super)
+EFL_START_TEST(eo_op_not_found_in_super)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
-   efl_assert_fail_if(!obj);
+   fail_if(!obj);
 
    TEST_EO_ERROR("_efl_object_call_resolve", "in %s:%d: func '%s' (%d) could not be resolved on %s for class '%s' for super of '%s'.");
    simple_a_set(efl_super(obj, SIMPLE_CLASS), 10);
-   assert(ctx.did);
+   fail_unless(ctx.did);
 
    efl_unref(obj);
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 }
+EFL_END_TEST
 
 //the fallback code that will be called
 
@@ -107,17 +104,26 @@ static const Efl_Class_Description errorcase_class_desc = {
 
 EFL_DEFINE_CLASS(simple_errorcase_class_get, &errorcase_class_desc, EO_CLASS, NULL)
 
-TEST(eo_fallbackcall_execute)
+EFL_START_TEST(eo_fallbackcall_execute)
 {
 
    Eo *obj = efl_add_ref(SIMPLE_CLASS, NULL);
 
    fallback_called = EFL_FALSE;
    simple_error_test(NULL);
-   efl_assert_int_eq(fallback_called, 1);
+   ck_assert_int_eq(fallback_called, 1);
 
    fallback_called = EFL_FALSE;
    simple_error_test(obj);
-   efl_assert_int_eq(fallback_called, 1);
+   ck_assert_int_eq(fallback_called, 1);
 
+}
+EFL_END_TEST
+
+void eo_test_call_errors(TCase *tc)
+{
+   tcase_add_test(tc, eo_pure_virtual_fct_call);
+   tcase_add_test(tc, eo_api_not_implemented_call);
+   tcase_add_test(tc, eo_op_not_found_in_super);
+   tcase_add_test(tc, eo_fallbackcall_execute);
 }

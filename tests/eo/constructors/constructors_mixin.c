@@ -1,8 +1,10 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "constructors_mixin.h"
 #include "constructors_simple.h"
-
-#include "efl-test-runner.h"
 
 #define MY_CLASS MIXIN_CLASS
 
@@ -12,7 +14,7 @@ _add_and_print_set(Eo *obj, void *class_data EFL_UNUSED, int x)
    int a = 0, b = 0;
    a = simple_a_get(obj);
    b = simple_b_get(obj);
-   testlog("%s %d\n", __func__, a + b + x);
+   printf("%s %d\n", __func__, a + b + x);
 }
 
 extern int my_init_count;

@@ -1,9 +1,11 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "access_simple.h"
 #include "access_simple_protected.h"
 #include "access_inherit.h"
-
-#include "efl-test-runner.h"
 
 #define MY_CLASS INHERIT_CLASS
 
@@ -11,7 +13,7 @@ static void
 _prot_print(Eo *obj, void *class_data EFL_UNUSED)
 {
    Simple_Protected_Data *pd = efl_data_scope_get(obj, SIMPLE_CLASS);
-   testlog("%s %d\n", __func__, pd->protected_x1);
+   printf("%s %d\n", __func__, pd->protected_x1);
 }
 
 EFL_VOID_FUNC_BODY(inherit_prot_print);

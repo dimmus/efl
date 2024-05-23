@@ -16,10 +16,10 @@ eo_test_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *fil
    (void)line;
 #endif
 
-   efl_assert_int_eq(level, myctx->expected_level);
+   ck_assert_int_eq(level, myctx->expected_level);
    if (myctx->msg)
-      efl_assert_str_eq(myctx->msg, fmt);
-   efl_assert_str_eq(myctx->fnc, fnc);
+      ck_assert_str_eq(myctx->msg, fmt);
+   ck_assert_str_eq(myctx->fnc, fnc);
    myctx->did = EFL_TRUE;
 }
 
@@ -45,9 +45,9 @@ eo_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const ch
    str = va_arg(cp_args, const char *);
    va_end(cp_args);
 
-   efl_assert_int_eq(level, myctx->expected_level);
-   efl_assert_str_eq(fmt, "%s");
-   efl_assert_str_eq(myctx->msg, str);
-   efl_assert_str_eq(myctx->fnc, fnc);
+   ck_assert_int_eq(level, myctx->expected_level);
+   ck_assert_str_eq(fmt, "%s");
+   ck_assert_str_eq(myctx->msg, str);
+   ck_assert_str_eq(myctx->fnc, fnc);
    myctx->did = EFL_TRUE;
 }

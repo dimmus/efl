@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include <efl_config.h>
+# include "efl_config.h"
 #endif
 
 #include "Efl_Eo.h"
@@ -17,7 +17,7 @@ static void
 _a_set(Eo *obj EFL_UNUSED, void *class_data, int a)
 {
    Simple_Public_Data *pd = class_data;
-   testlog("%s %d\n", efl_class_name_get(MY_CLASS), a);
+   printf("%s %d\n", efl_class_name_get(MY_CLASS), a);
    pd->a = a;
 
    efl_event_callback_legacy_call(obj, EV_A_CHANGED, &pd->a);
@@ -62,7 +62,7 @@ static Efl_Bool
 _a_print(Eo *obj EFL_UNUSED, void *class_data)
 {
    const Simple_Public_Data *pd = class_data;
-   testlog("Print %s %d\n", efl_class_name_get(MY_CLASS), pd->a);
+   printf("Print %s %d\n", efl_class_name_get(MY_CLASS), pd->a);
 
    return EFL_TRUE;
 }

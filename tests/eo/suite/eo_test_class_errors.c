@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include <stdio.h>
 
 #include <Efl_Eo.h>
@@ -8,7 +12,7 @@
 
 static struct log_ctx ctx;
 
-TEST(eo_inherit_errors)
+EFL_START_TEST(eo_inherit_errors)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
@@ -47,29 +51,30 @@ TEST(eo_inherit_errors)
    };
 
    klass_mixin = efl_class_new(&class_desc_mixin, NULL, NULL);
-   efl_assert_fail_if(!klass_mixin);
+   fail_if(!klass_mixin);
 
    klass_simple = efl_class_new(&class_desc_simple, EO_CLASS, NULL);
-   efl_assert_fail_if(!klass_simple);
+   fail_if(!klass_simple);
 
    TEST_EO_ERROR("efl_class_new", "Non-regular classes ('%s') aren't allowed to inherit from regular classes ('%s').");
    klass = efl_class_new(&class_desc, klass_simple, NULL);
-   efl_assert_fail_if(klass);
-   assert(ctx.did);
+   fail_if(klass);
+   fail_unless(ctx.did);
 
    class_desc.type = EFL_CLASS_TYPE_REGULAR;
 
    TEST_EO_ERROR("efl_class_new", "Regular classes ('%s') aren't allowed to inherit from non-regular classes ('%s').");
    klass = efl_class_new(&class_desc, klass_mixin, NULL);
-   efl_assert_fail_if(klass);
-   assert(ctx.did);
+   fail_if(klass);
+   fail_unless(ctx.did);
 
    (void) klass;
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
 }
+EFL_END_TEST
 
-TEST(eo_inconsistent_mro)
+EFL_START_TEST(eo_inconsistent_mro)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
@@ -119,32 +124,33 @@ TEST(eo_inconsistent_mro)
    };
 
    klass_mixin = efl_class_new(&class_desc_mixin, NULL, NULL);
-   efl_assert_fail_if(!klass_mixin);
+   fail_if(!klass_mixin);
 
    klass_mixin2 = efl_class_new(&class_desc_mixin2, klass_mixin, NULL);
-   efl_assert_fail_if(!klass_mixin2);
+   fail_if(!klass_mixin2);
 
    klass_mixin3 = efl_class_new(&class_desc_mixin3, klass_mixin, NULL);
-   efl_assert_fail_if(!klass_mixin3);
+   fail_if(!klass_mixin3);
 
    TEST_EO_ERROR("_eo_class_mro_init", "Cannot create a consistent method resolution order for class '%s' because of '%s'.");
    klass = efl_class_new(&class_desc_simple, EO_CLASS, klass_mixin, klass_mixin2, NULL);
-   efl_assert_fail_if(klass);
-   assert(ctx.did);
+   fail_if(klass);
+   fail_unless(ctx.did);
 
    klass = efl_class_new(&class_desc_simple, EO_CLASS, klass_mixin2, klass_mixin, NULL);
-   efl_assert_fail_if(!klass);
+   fail_if(!klass);
 
    klass = efl_class_new(&class_desc_simple, EO_CLASS, klass_mixin2, klass_mixin3, NULL);
-   efl_assert_fail_if(!klass);
+   fail_if(!klass);
 
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
 }
+EFL_END_TEST
 
 static void _stub_class_constructor(Efl_Class *klass EFL_UNUSED) {}
 
-TEST(eo_bad_interface)
+EFL_START_TEST(eo_bad_interface)
 {
    eina_log_print_cb_set(eo_test_safety_print_cb, &ctx);
 
@@ -162,29 +168,30 @@ TEST(eo_bad_interface)
 
    TEST_EO_ERROR("efl_class_new", "safety check failed: !desc->data_size is false");
    klass = efl_class_new(&class_desc, NULL, NULL);
-   efl_assert_fail_if(klass);
-   assert(ctx.did);
+   fail_if(klass);
+   fail_unless(ctx.did);
 
    class_desc.data_size = 0;
    class_desc.class_constructor = _stub_class_constructor;
 
    klass = efl_class_new(&class_desc, NULL, NULL);
-   efl_assert_fail_if(!klass);
+   fail_if(!klass);
 
    class_desc.class_constructor = NULL;
    class_desc.class_destructor = _stub_class_constructor;
 
    klass = efl_class_new(&class_desc, NULL, NULL);
-   efl_assert_fail_if(!klass);
+   fail_if(!klass);
 
    class_desc.class_destructor = NULL;
 
    klass = efl_class_new(&class_desc, NULL, NULL);
-   efl_assert_fail_if(!klass);
+   fail_if(!klass);
 
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
 }
+EFL_END_TEST
 
 static void _null_fct(Eo *eo_obj EFL_UNUSED, void *d EFL_UNUSED) { }
 void null_fct (void) {}
@@ -201,7 +208,7 @@ _null_class_initializer(Efl_Class *klass)
    return efl_class_functions_set(klass, &ops, NULL);
 }
 
-TEST(eo_null_api)
+EFL_START_TEST(eo_null_api)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
@@ -219,12 +226,13 @@ TEST(eo_null_api)
 
    TEST_EO_ERROR("_eo_class_funcs_set", "Class '%s': NULL API not allowed (NULL->%p '%s').");
    klass = efl_class_new(&class_desc, NULL, NULL);
-   efl_assert_fail_if(klass);
-   assert(ctx.did);
+   fail_if(klass);
+   fail_unless(ctx.did);
 
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
 }
+EFL_END_TEST
 #endif
 
 static Efl_Bool
@@ -238,7 +246,7 @@ _redefined_class_initializer(Efl_Class *klass)
    return efl_class_functions_set(klass, &ops, NULL);
 }
 
-TEST(eo_api_redefined)
+EFL_START_TEST(eo_api_redefined)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
@@ -256,12 +264,13 @@ TEST(eo_api_redefined)
 
    TEST_EO_ERROR("_eo_class_funcs_set", "Class '%s': API previously defined (%p->%p '%s').");
    klass = efl_class_new(&class_desc, NULL, NULL);
-   efl_assert_fail_if(klass);
-   assert(ctx.did);
+   fail_if(klass);
+   fail_unless(ctx.did);
 
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
 }
+EFL_END_TEST
 
 static Efl_Bool
 _dich_func_class_initializer(Efl_Class *klass)
@@ -274,7 +283,7 @@ _dich_func_class_initializer(Efl_Class *klass)
    return efl_class_functions_set(klass, &ops, NULL);
 }
 
-TEST(eo_dich_func_override)
+EFL_START_TEST(eo_dich_func_override)
 {
    eina_log_print_cb_set(eo_test_print_cb, &ctx);
 
@@ -292,9 +301,23 @@ TEST(eo_dich_func_override)
 
    TEST_EO_ERROR("_eo_class_funcs_set", "Class '%s': API previously defined (%p->%p '%s').");
    klass = efl_class_new(&class_desc, SIMPLE_CLASS, NULL);
-   efl_assert_fail_if(klass);
-   assert(ctx.did);
+   fail_if(klass);
+   fail_unless(ctx.did);
 
    eina_log_print_cb_set(eina_log_print_cb_stderr, NULL);
 
+}
+EFL_END_TEST
+
+void eo_test_class_errors(TCase *tc)
+{
+   tcase_add_test(tc, eo_inherit_errors);
+   tcase_add_test(tc, eo_inconsistent_mro);
+   tcase_add_test(tc, eo_bad_interface);
+#ifndef _WIN32
+   /* This test is not relevant for WIN32. */
+   tcase_add_test(tc, eo_null_api);
+#endif
+   tcase_add_test(tc, eo_api_redefined);
+   tcase_add_test(tc, eo_dich_func_override);
 }

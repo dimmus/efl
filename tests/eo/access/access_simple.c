@@ -1,8 +1,10 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "access_simple.h"
 #include "access_simple_protected.h"
-
-#include "efl-test-runner.h"
 
 typedef struct
 {
@@ -20,7 +22,7 @@ _a_set(Eo *obj, void *class_data, int a)
 {
    Private_Data *pd = class_data;
    pd->a = a;
-   testlog("%s %d\n", __func__, pd->a);
+   printf("%s %d\n", __func__, pd->a);
 
    pd->protected.protected_x1 = a + 1;
    pd->protected.public.public_x2 = a + 2;

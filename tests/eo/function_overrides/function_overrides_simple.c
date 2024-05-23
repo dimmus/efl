@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include "efl_config.h"
+#endif
+
 #include "Efl_Eo.h"
 #include "function_overrides_simple.h"
 
@@ -12,7 +16,7 @@ static void
 _a_set(Eo *obj EFL_UNUSED, void *class_data, int a)
 {
    Simple_Public_Data *pd = class_data;
-   testlog("%s %d\n", efl_class_name_get(MY_CLASS), a);
+   printf("%s %d\n", efl_class_name_get(MY_CLASS), a);
    pd->a = a;
 }
 
@@ -20,7 +24,7 @@ static Efl_Bool
 _a_print(Eo *obj EFL_UNUSED, void *class_data)
 {
    Simple_Public_Data *pd = class_data;
-   testlog("Print %s %d\n", efl_class_name_get(MY_CLASS), pd->a);
+   printf("Print %s %d\n", efl_class_name_get(MY_CLASS), pd->a);
 
    return EFL_TRUE;
 }
@@ -28,13 +32,13 @@ _a_print(Eo *obj EFL_UNUSED, void *class_data)
 static Efl_Bool
 _class_print(Efl_Class *klass, void *class_data EFL_UNUSED)
 {
-   testlog("Print %s-%s\n", efl_class_name_get(klass), efl_class_name_get(MY_CLASS));
+   printf("Print %s-%s\n", efl_class_name_get(klass), efl_class_name_get(MY_CLASS));
    Efl_Bool called = EFL_FALSE;
    called = simple_class_print(efl_super(klass, MY_CLASS));
-   efl_assert_fail_if(called);
+   fail_if(called);
 
    called = simple_class_print2(efl_super(klass, MY_CLASS));
-   efl_assert_fail_if(called);
+   fail_if(called);
 
    return EFL_TRUE;
 }
@@ -42,7 +46,7 @@ _class_print(Efl_Class *klass, void *class_data EFL_UNUSED)
 static Efl_Bool
 _class_print2(Efl_Class *klass, void *class_data EFL_UNUSED)
 {
-   testlog("Print %s-%s\n", efl_class_name_get(klass), efl_class_name_get(MY_CLASS));
+   printf("Print %s-%s\n", efl_class_name_get(klass), efl_class_name_get(MY_CLASS));
 
    return EFL_TRUE;
 }
