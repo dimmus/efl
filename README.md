@@ -25,7 +25,7 @@
 
 To understand something, i should break it! So, to begin with ..
 
-- create **transparent** lib names. Systematic renaming. See [changelog_api](./changelog_api)
+- create **transparent** lib names. Systematic renaming. See [changelog_api](./changelog_api.md)
 - general and consistent EFL_* (re)naming (like EFL_UNUSED, 
   Efl_Bool, libefl_core_*, libefl_shared, etc).
 - create test system **without** `check` usage
