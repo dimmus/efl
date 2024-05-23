@@ -1,120 +1,29 @@
-option('build-tests',
-        type  : 'boolean',
-        value : false,
-        description : 'Compile tests')
+option('build-tests',              type: 'boolean',  value: false,     description: 'Compile tests')
+option('build-examples',           type: 'boolean',  value: false,     description: 'Compile examples')
+option('build-benchmarks',         type: 'boolean',  value: false,     description: 'Compile benchmarks')
+option('efl-one',                  type: 'boolean',  value: true,      description: 'Build all EFL packages as a single .so')
+option('native-arch-optimization', type: 'boolean',  value: true,      description: 'Enable architecture native optimizations')
+option('nls',                      type: 'boolean',  value: true,      description: 'Localization')
+option('eina-magic-debug',         type: 'boolean',  value: false,     description: 'Magic number checking of eina structures')
+option('debug-threads',            type: 'boolean',  value: false,     description: 'Thread debugging in EFL')
+option('systemd',                  type: 'boolean',  value: true,      description: 'Systemd and Elogind support at runtime')
+option('stack_protector',          type: 'feature',  value: 'auto',    description: 'compiler-provided stack protection')
+option('sanitizers',               type: 'boolean',  value: false,     description: 'enable default sanitizers')
+option('tsan',                     type: 'boolean',  value: false,     description: 'enable thread sanitizer')
+option('malloc_trim',              type: 'feature',  value: 'auto',    description: 'enable libc malloc_trim() for memory optimization')
+option('malloc',                   type: 'combo',    value: 'system',  description: 'choose memory allocator to use', 
+                                                     choices: ['system', 'tcmalloc', 'jemalloc'],)
+option('debug_graph_lock',         type: 'boolean',  value: false,     description: 'graph lock debugging support')
+option('debug_mutex',              type: 'boolean',  value: false,     description: 'mutex debugging support')
+option('debug_stack_usage',        type: 'boolean',  value: false,     description: 'measure coroutine stack usage')
+option('install-eo-files',         type: 'boolean',  value: true,      description: 'Install any eo file')
+option('docs',                     type: 'boolean',  value: true,      description: 'Enable building C of documentation (requires doxygen)')
+option('wl',                       type: 'boolean',  value: true,      description: 'Wayland client support in efl')
+option('opengl',                   type: 'combo',    value: 'es-egl',  description: 'Type of OpenGL support in efl', 
+                                                     choices: ['full', 'es-egl', 'none'])
 
-option('build-examples',
-        type : 'boolean',
-        value : false,
-        description : 'Compile examples')
-
-option('build-benchmarks',
-        type : 'boolean',
-        value : false,
-        description : 'Compile benchmarks')
-
-option('efl-one',
-        type: 'boolean',
-        value : true,
-        description : 'Build all EFL packages as a single .so')
-
-option('native-arch-optimization',
-        type: 'boolean',
-        value: true,
-        description: 'Enable architecture native optimizations in EFL')
-
-option('nls',
-        type: 'boolean',
-        value: true,
-        description: 'Localization')
-
-option('eina-magic-debug',
-        type : 'boolean',
-        value : false,
-        description : 'Magic number checking of eina structures in EFL')
-
-option('debug-threads',
-        type : 'boolean',
-        value : false,
-        description : 'Thread debugging in EFL')
-
-option('crypto',
-        type : 'combo',
-        choices : ['openssl'],
-        value : 'openssl',
-        description : 'Which SSL Crypto library used in EFL')
-
-option('systemd',
-        type : 'boolean',
-        value : true,
-        description : 'Systemd and Elogind support at runtime in EFL')
-
-option('stack_protector',
-        type: 'feature',
-        value: 'auto',
-        description: 'compiler-provided stack protection')
-
-option('sanitizers',
-        type: 'boolean',
-        value: false,
-        description: 'enable default sanitizers')
-
-option('tsan',
-        type: 'boolean',
-        value: false,
-        description: 'enable thread sanitizer')
-
-option('malloc_trim',
-        type : 'feature',
-        value : 'auto',
-        description: 'enable libc malloc_trim() for memory optimization')
-
-option('malloc', 
-        type : 'combo',
-        choices : ['system', 'tcmalloc', 'jemalloc'],
-        value: 'system', 
-        description: 'choose memory allocator to use')
-
-option('debug_graph_lock', 
-        type: 'boolean',
-        value: false,
-        description: 'graph lock debugging support')
-
-option('debug_mutex', 
-        type: 'boolean',
-        value: false,
-        description: 'mutex debugging support')
-
-option('debug_stack_usage',
-        type: 'boolean',
-        value: false,
-        description: 'measure coroutine stack usage')
-
-option('install-eo-files',
-        type: 'boolean',
-        value: true,
-        description : 'Install any eo file')
-
-option('build-id',
-        type : 'string',
-        value : '',
-        description : 'The build id string for efl set as the EFL_BUILD_ID define')
-
-option('docs',
-        type: 'boolean',
-        value: true,
-        description: 'Enable building C of documentation (requires doxygen)')
-
-option('wl',
-        type : 'boolean',
-        value : true,
-        description : 'Wayland client support in efl')
-
- option('opengl',
-        type : 'combo',
-        choices : ['full', 'es-egl', 'none'],
-        value : 'es-egl',
-        description : 'Type of OpenGL support in efl')
+# option('cocoa',                    type: 'boolean',  value: false,     description : 'Apple MacOS cocoa support in efl')
+# option('build-id',                 type: 'string',   value: '',        description: 'The build id string for efl set as the EFL_BUILD_ID define')
 
 # option('eeze',
 #   type : 'boolean',
@@ -124,7 +33,7 @@ option('wl',
 
 # option('audio',
 #   type : 'boolean',
-#   value : true,
+#   value : true,f
 #   description : 'Audio support in efl'
 # )
 
@@ -169,12 +78,6 @@ option('wl',
 #   value : true,
 #   description : 'libinput abstraction in efl'
 # )
-
-option('cocoa',
-  type : 'boolean',
-  value : false,
-  description : 'Apple MacOS cocoa support in efl'
-)
 
 # option('physics',
 #   type : 'boolean',
