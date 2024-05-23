@@ -37,6 +37,12 @@
 | Ecore_Getopt.h               | Efl_Core_Getopt.h      |
 | Ecore_Legacy.h               | core_legacy.h          |
 | Ecore.h                      | core.h                 |
+| ecore_*                      | core_*                 |
+| ECORE_*                      | ECORE_*                |
+| -                            | -                      |
+| Eldbus_*                     | Efl_Dbus_*             |
+| eldbus_*                     | efl_dbus_*             |
+| ELDBUS_*                     | EFL_DBUS_*             |
 | -                            | -                      |
 | ck_assert                    | efl_assert_true        |
 | ck_assert_str_eq             | efl_assert_str_eq      |
