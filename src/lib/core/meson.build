@@ -14,7 +14,7 @@ legacy_eo_files = [
 
 eo_file_target = []
 foreach eo_file : legacy_eo_files
-  eo_file_target += custom_target('eo_gen_' + eo_file,
+  eo_file_target += custom_target(eo_file,
     input :       eo_file,
     output :      eo_file + '.h',
     depfile :     eo_file + '.d',
@@ -74,7 +74,7 @@ eo_files = [
 ]
 
 foreach eo_file : eo_files
-  eo_file_target += custom_target('eo_gen_' + eo_file,
+  eo_file_target += custom_target(eo_file,
     input :       eo_file,
     output :      eo_file + '.h',
     depfile :     eo_file + '.d',
@@ -197,7 +197,7 @@ endif
 lib_core = library('efl_core',
   src_core, eo_file_target,
   dependencies:         [ dep_core_pub, dep_core_ext ],
-  include_directories : inc_config,
+  include_directories : [ inc_config, include_directories('../..')],
   install:              true,
   c_args :              package_c_args,
   version :             version

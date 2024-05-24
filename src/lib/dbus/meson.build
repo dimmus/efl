@@ -19,7 +19,7 @@ pub_eo_files = [
 
 pub_eo_file_target = []
 foreach eo_file : pub_eo_files
-  pub_eo_file_target += custom_target('eo_gen_' + eo_file,
+  pub_eo_file_target += custom_target(eo_file,
     input :       eo_file,
     output :      eo_file + '.h',
     depfile :     eo_file + '.d',
@@ -37,7 +37,7 @@ pub_eo_types_files = [
 ]
 
 foreach eo_file : pub_eo_types_files
-  eo_file_target += custom_target('eo_gen_' + eo_file,
+  eo_file_target += custom_target(eo_file,
     input : eo_file,
     output : [eo_file + '.h'],
     depfile : eo_file + '.d',

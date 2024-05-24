@@ -7,7 +7,7 @@ priv_eo_files = [
 
 priv_eo_file_target = []
 foreach eo_file : priv_eo_files
-  priv_eo_file_target += custom_target('eo_gen_' + eo_file,
+  priv_eo_file_target += custom_target(eo_file,
     input   : eo_file,
     output  : eo_file + '.h',
     depfile : eo_file + '.d',
