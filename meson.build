@@ -13,7 +13,7 @@ project('efl', ['c','cpp'],
     # 'b_lundef=true',
     'c_std=gnu99'
   ],
-  meson_version : '>=0.63'
+  meson_version : '>=0.61' # support ubuntu 22.04
 )
 
 warnings = []
