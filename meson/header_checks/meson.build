@@ -202,10 +202,10 @@ efl_config.set('VREV', '0')
 
 #jpeg detection ... life is a bit more complex there
 
-jpeg = dependency('libjpeg', required: false)
-if jpeg.found()
-  jpeg = cc.find_library('jpeg')
-endif
+# jpeg = dependency('libjpeg', required: false)
+# if jpeg.found()
+#   jpeg = cc.find_library('jpeg')
+# endif
 
 efl_config.set('SIZEOF_INT', cc.sizeof('int'))
 efl_config.set('SIZEOF_LONG', cc.sizeof('long'))
