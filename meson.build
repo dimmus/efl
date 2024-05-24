@@ -379,7 +379,7 @@ configure_file(
 #   install_dir : join_paths(dir_include,'elementary-'+version_major)
 # )
 
-subdir('services')
+# subdir('services')
 
 #output the three new efl-* .pc files
 # efl_20_pc_files = {
