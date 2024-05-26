@@ -24,5 +24,6 @@
 
 /build*
 .vscode*
+.cache*
 checks.json
 run
