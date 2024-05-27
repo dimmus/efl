@@ -1,0 +1,53 @@
+name: CI Build Setup
+description: Sets up build dependencies
+
+runs:
+  using: composite
+  steps:
+    - id: python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - id: apt
+      run: |
+        # check             \ tests
+        # scdoc             \ doc/man/scdoc/meson.build
+        # gstreamer-1.0     \ examples/core/meson.build
+        # threads           \ src/lib/shared/meson.build
+        # libjpeg           \ meson/header_checks/meson.build
+        # luajit            \ meson/lua/meson.build
+        # dbus-1            \ src/lib/dbus/meson.build + [ethumb]
+        # systemd           \ [ethumb] services/systemd/meson.build
+        # libdrm            \ src/lib/core_wayland/meson.build
+        # wayland-client    \ src/lib/core_wayland/meson.build
+        # wayland-server    \ src/lib/core_wayland/meson.build
+        # wayland-protocols \ src/lib/core_wayland/protocols/meson.build
+        # wayland-scanner   \ src/lib/core_wayland/protocols/gamescope/meson.build
+        # xkbcommon         \ src/lib/core_wayland/meson.build
+        # valgrind          \ src/lib/shared/meson.build
+        # libunwind-generic \ [eina_str] src/lib/shared/meson.build
+        # iconv             \ [eina_debug] src/lib/shared/meson.build
+        sudo apt-get update
+        sudo apt-get install -y \
+          meson \
+          check \
+          libdrm-dev \
+          libwayland-dev \
+          wayland-protocols \
+          libxkbcommon-dev \
+          libdbus-1-dev \
+          # libunwind-dev \
+          # libiconv-hook-dev \
+      shell: bash
+    # - id: doxy
+    #   run: git clone https://github.com/davatorium/doxy-coverage
+    #   shell: bash
+    # - id: check
+    #   run: |
+    #     curl -L https://github.com/libcheck/check/releases/download/0.14.0/check-0.14.0.tar.gz | tar xzf -
+    #     cd check-0.14.0
+    #     ./configure
+    #     make
+    #     sudo make install
+    #     sudo ldconfig
+    #   shell: bash
