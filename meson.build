@@ -54,15 +54,15 @@ subdir(join_paths(local_module,'shared'))
 subprojects = [
   # [0]name            | [1]option          | [2]mod | [3]lib | [4]bin | [5]bench | [6]tests | [7]examples | [8]true if build in efl-one | [9]pkg-config options | [10]name of static libs
   # ['evil'             ,[]                 , false,   true, false,  false,  false,     false,  true, [], []],
-  ['shared'             ,[]                 , false,   true,     true,    true,      true,        true,       true,   [],          []],
-  ['eo_gen'             ,[]                 , false,   true,     true,   false,      true,       false,      false,   ['shared'],  []],
-  ['eo'                 ,[]                 , false,   true,    false,    true,      true,       false,       true,   ['shared'],  []],
-  ['eo_interfaces'      ,[]                 , false,   true,    false,   false,      true,       false,       true,   ['eo'], []],
-  ['core'               ,[]                 , false,   true,    false,   false,     false,       false,       true,   ['shared', 'eo', 'eo_interfaces'], []],
-  ['dbus'               ,[]                 , false,   true,     true,   false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
-  ['core'               ,[]                 ,  true,  false,    false,   false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], 
-  ['core_input'         ,[]                 , false,   true,    false,   false,     false,       false,       true,   ['shared', 'eo'], []],
-  ['core_wayland'       ,['wl']             ,  true,   true,    false,   false,     false,       false,       true,   ['shared'], ['libdrm']],
+  ['shared'             ,[]                 , false,   true,     true,      true,      true,        true,       true,   [],          []],
+  ['eo_gen'             ,[]                 , false,   true,     true,     false,      true,       false,      false,   ['shared'],  []],
+  ['eo'                 ,[]                 , false,   true,    false,      true,      true,       false,       true,   ['shared'],  []],
+  ['eo_interfaces'      ,[]                 , false,   true,    false,     false,      true,       false,       true,   ['eo'], []],
+  ['core'               ,[]                 , false,   true,    false,     false,     false,       false,       true,   ['shared', 'eo', 'eo_interfaces'], []],
+  ['dbus'               ,[]                 , false,   true,     true,     false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
+  ['core'               ,[]                 ,  true,  false,    false,     false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], 
+  ['core_input'         ,[]                 , false,   true,    false,     false,     false,       false,       true,   ['shared', 'eo'], []],
+  ['core_wayland'       ,['wl']             ,  true,   true,    false,     false,      true,       false,       true,   ['shared'], ['libdrm']],
   # ['emile'            ,[]                 , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
   # ['eet'              ,[]                 , false,  true,  true,  false,   true,      true,  true, ['eina', 'emile', 'efl'], []],
   # ['ecore_audio'      ,['audio']          , false,  true, false,  false,  false,     false,  true, ['eina', 'eo'], []],
