@@ -24,9 +24,9 @@ _efl_cubic_bezier_interpolator_efl_interpolator_interpolate(
     if ((progress < 0.0) || (progress > 1.0)) return progress;
 
     return core_animator_pos_map_n(progress,
-                                    CORE_POS_MAP_CUBIC_BEZIER,
-                                    4,
-                                    pd->control_points);
+                                   CORE_POS_MAP_CUBIC_BEZIER,
+                                   4,
+                                   pd->control_points);
 }
 
 EOLIAN static void

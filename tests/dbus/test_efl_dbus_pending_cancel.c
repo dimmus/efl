@@ -10,14 +10,14 @@ static Efl_Bool is_success_cb = EFL_FALSE;
 
 static Core_Timer *timeout = NULL;
 
-static Efl_Dbus_Connection *conn = NULL;
-static Efl_Dbus_Object *obj = NULL;
-static Efl_Dbus_Message *message = NULL;
+static Efl_Dbus_Connection *conn    = NULL;
+static Efl_Dbus_Object     *obj     = NULL;
+static Efl_Dbus_Message    *message = NULL;
 
-const char *bus = "org.freedesktop.DBus";
-const char *path = "/org/freedesktop/DBus";
+const char *bus       = "org.freedesktop.DBus";
+const char *path      = "/org/freedesktop/DBus";
 const char *interface = "org.freedesktop.DBus";
-const char *member = "GetId";
+const char *member    = "GetId";
 
 /**
 * @addtogroup eldbus
@@ -36,97 +36,103 @@ const char *member = "GetId";
 static Efl_Bool
 _core_loop_close(void *data EFL_UNUSED)
 {
-   core_main_loop_quit();
+    core_main_loop_quit();
 
-   return CORE_CALLBACK_CANCEL;
+    return CORE_CALLBACK_CANCEL;
 }
 
 static void
-_response_message_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending)
+_response_message_cb(void *data              EFL_UNUSED,
+                     const Efl_Dbus_Message *msg,
+                     Efl_Dbus_Pending       *pending)
 {
-   if (timeout != NULL)
-     {
+    if (timeout != NULL)
+    {
         core_timer_del(timeout);
         timeout = NULL;
-     }
+    }
 
-   if (!pending)
-     {
+    if (!pending)
+    {
         core_main_loop_quit();
         return;
-     }
+    }
 
-   const char *pending_path = efl_dbus_pending_path_get(pending);
-   if ((!pending_path) || (strcmp(pending_path, path)))
-     {
+    const char *pending_path = efl_dbus_pending_path_get(pending);
+    if ((!pending_path) || (strcmp(pending_path, path)))
+    {
         core_main_loop_quit();
         return;
-     }
+    }
 
-   const char *pending_method = efl_dbus_pending_method_get(pending);
-   if ((!pending_method) || (strcmp(pending_method, member)))
-     {
+    const char *pending_method = efl_dbus_pending_method_get(pending);
+    if ((!pending_method) || (strcmp(pending_method, member)))
+    {
         core_main_loop_quit();
         return;
-     }
+    }
 
-   const char *pending_interface = efl_dbus_pending_interface_get(pending);
-   if ((!pending_interface) || (strcmp(pending_interface, interface)))
-     {
+    const char *pending_interface = efl_dbus_pending_interface_get(pending);
+    if ((!pending_interface) || (strcmp(pending_interface, interface)))
+    {
         core_main_loop_quit();
         return;
-     }
+    }
 
-   const char *pending_destination = efl_dbus_pending_destination_get(pending);
-   if ((!pending_destination) || (strcmp(pending_destination, bus)))
-     {
+    const char *pending_destination = efl_dbus_pending_destination_get(pending);
+    if ((!pending_destination) || (strcmp(pending_destination, bus)))
+    {
         core_main_loop_quit();
         return;
-     }
+    }
 
-   const char *errname, *errmsg;
+    const char *errname, *errmsg;
 
-   if (efl_dbus_message_error_get(msg, &errname, &errmsg))
-     {
+    if (efl_dbus_message_error_get(msg, &errname, &errmsg))
+    {
         is_success_cb = EFL_TRUE;
-     }
+    }
 
-   core_main_loop_quit();
+    core_main_loop_quit();
 }
 
 static Efl_Dbus_Pending *
 _pending_connection_get(void)
 {
-   const int send_timeout_ms = 500;
+    const int send_timeout_ms = 500;
 
-   conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   if (!conn)
-     {
+    conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    if (!conn)
+    {
         return NULL;
-     }
+    }
 
-   obj = efl_dbus_object_get(conn, bus, path);
-   if (!obj)
-     {
+    obj = efl_dbus_object_get(conn, bus, path);
+    if (!obj)
+    {
         efl_dbus_connection_unref(conn);
         return NULL;
-     }
+    }
 
-   message = efl_dbus_object_method_call_new(obj, interface, member);
-   if (!message)
-     {
+    message = efl_dbus_object_method_call_new(obj, interface, member);
+    if (!message)
+    {
         efl_dbus_connection_unref(conn);
         return NULL;
-     }
+    }
 
-   Efl_Dbus_Pending *pending = efl_dbus_connection_send(conn, message, _response_message_cb, NULL, send_timeout_ms);
-   if (!pending)
-     {
+    Efl_Dbus_Pending *pending = efl_dbus_connection_send(conn,
+                                                         message,
+                                                         _response_message_cb,
+                                                         NULL,
+                                                         send_timeout_ms);
+    if (!pending)
+    {
         efl_dbus_connection_unref(conn);
         return NULL;
-     }
+    }
 
-   return pending;
+    return pending;
 }
 
 /**
@@ -163,24 +169,25 @@ _pending_connection_get(void)
 
 EFL_START_TEST(utc_efl_dbus_pending_info_get_cancel_p)
 {
-   Efl_Dbus_Pending *pending = _pending_connection_get();
-   ck_assert_ptr_ne(NULL, pending);
+    Efl_Dbus_Pending *pending = _pending_connection_get();
+    ck_assert_ptr_ne(NULL, pending);
 
-   efl_dbus_pending_cancel(pending);
+    efl_dbus_pending_cancel(pending);
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   ck_assert_ptr_ne(NULL, timeout);
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    ck_assert_ptr_ne(NULL, timeout);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert(is_success_cb == EFL_TRUE);
+    ck_assert(is_success_cb == EFL_TRUE);
 
-   efl_dbus_connection_unref(conn);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 void
 efl_dbus_test_efl_dbus_pending_cancel(TCase *tc)
 {
-   tcase_add_test(tc, utc_efl_dbus_pending_info_get_cancel_p);
+    tcase_add_test(tc, utc_efl_dbus_pending_info_get_cancel_p);
 }

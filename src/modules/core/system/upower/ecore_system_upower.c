@@ -7,7 +7,7 @@
 #include "Efl_Dbus.h"
 #include "Efl_Core.h"
 
-static int                _log_dom = -1;
+static int                  _log_dom = -1;
 static Efl_Dbus_Connection *_conn    = NULL;
 
 static Efl_Dbus_Object *_obj   = NULL;
@@ -92,12 +92,12 @@ _warning_level_from_variant(Efl_Dbus_Message_Iter *variant)
 }
 
 static void
-_warning_level_get_cb(void *data            EFL_UNUSED,
+_warning_level_get_cb(void *data              EFL_UNUSED,
                       const Efl_Dbus_Message *msg,
                       Efl_Dbus_Pending       *pending)
 {
     Efl_Dbus_Message_Iter *variant;
-    const char          *errname, *errmsg;
+    const char            *errname, *errmsg;
 
     _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
     if (efl_dbus_message_error_get(msg, &errname, &errmsg))
@@ -121,10 +121,10 @@ _warning_level_get(Efl_Dbus_Proxy *proxy)
 {
     Efl_Dbus_Pending *pend;
 
-    pend            = efl_dbus_proxy_property_get(proxy,
-                                     "WarningLevel",
-                                     _warning_level_get_cb,
-                                     NULL);
+    pend              = efl_dbus_proxy_property_get(proxy,
+                                       "WarningLevel",
+                                       _warning_level_get_cb,
+                                       NULL);
     _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
@@ -145,12 +145,12 @@ _on_low_battery_from_variant(Efl_Dbus_Message_Iter *variant)
 }
 
 static void
-_on_low_battery_get_cb(void *data            EFL_UNUSED,
+_on_low_battery_get_cb(void *data              EFL_UNUSED,
                        const Efl_Dbus_Message *msg,
                        Efl_Dbus_Pending       *pending)
 {
     Efl_Dbus_Message_Iter *variant;
-    const char          *errname, *errmsg;
+    const char            *errname, *errmsg;
 
     _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
     if (efl_dbus_message_error_get(msg, &errname, &errmsg))
@@ -173,10 +173,10 @@ _on_low_battery_get(Efl_Dbus_Proxy *proxy)
 {
     Efl_Dbus_Pending *pend;
 
-    pend            = efl_dbus_proxy_property_get(proxy,
-                                     "OnLowBattery",
-                                     _on_low_battery_get_cb,
-                                     NULL);
+    pend              = efl_dbus_proxy_property_get(proxy,
+                                       "OnLowBattery",
+                                       _on_low_battery_get_cb,
+                                       NULL);
     _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
@@ -197,12 +197,12 @@ _on_battery_from_variant(Efl_Dbus_Message_Iter *variant)
 }
 
 static void
-_on_battery_get_cb(void *data            EFL_UNUSED,
+_on_battery_get_cb(void *data              EFL_UNUSED,
                    const Efl_Dbus_Message *msg,
                    Efl_Dbus_Pending       *pending)
 {
     Efl_Dbus_Message_Iter *variant;
-    const char          *errname, *errmsg;
+    const char            *errname, *errmsg;
 
     _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
     if (efl_dbus_message_error_get(msg, &errname, &errmsg))
@@ -225,8 +225,10 @@ _on_battery_get(Efl_Dbus_Proxy *proxy)
 {
     Efl_Dbus_Pending *pend;
 
-    pend =
-        efl_dbus_proxy_property_get(proxy, "OnBattery", _on_battery_get_cb, NULL);
+    pend              = efl_dbus_proxy_property_get(proxy,
+                                       "OnBattery",
+                                       _on_battery_get_cb,
+                                       NULL);
     _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
@@ -291,12 +293,12 @@ _daemon_version_from_variant(Efl_Dbus_Message_Iter *variant)
 }
 
 static void
-_daemon_version_get_cb(void *data            EFL_UNUSED,
+_daemon_version_get_cb(void *data              EFL_UNUSED,
                        const Efl_Dbus_Message *msg,
                        Efl_Dbus_Pending       *pending)
 {
     Efl_Dbus_Message_Iter *variant;
-    const char          *errname, *errmsg;
+    const char            *errname, *errmsg;
 
     _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
     if (efl_dbus_message_error_get(msg, &errname, &errmsg))
@@ -319,10 +321,10 @@ _daemon_version_get(Efl_Dbus_Proxy *proxy)
 {
     Efl_Dbus_Pending *pend;
 
-    pend            = efl_dbus_proxy_property_get(proxy,
-                                     "DaemonVersion",
-                                     _daemon_version_get_cb,
-                                     NULL);
+    pend              = efl_dbus_proxy_property_get(proxy,
+                                       "DaemonVersion",
+                                       _daemon_version_get_cb,
+                                       NULL);
     _efl_dbus_pending = eina_list_append(_efl_dbus_pending, pend);
 }
 
@@ -331,13 +333,13 @@ _props_changed(void *data, const Efl_Dbus_Message *msg)
 {
     Efl_Dbus_Proxy        *proxy = data;
     Efl_Dbus_Message_Iter *changed, *entry, *invalidated;
-    const char          *iface, *prop;
+    const char            *iface, *prop;
 
     if (!efl_dbus_message_arguments_get(msg,
-                                      "sa{sv}as",
-                                      &iface,
-                                      &changed,
-                                      &invalidated))
+                                        "sa{sv}as",
+                                        &iface,
+                                        &changed,
+                                        &invalidated))
     {
         ERR("Error getting data from properties changed signal.");
         return;
@@ -345,7 +347,7 @@ _props_changed(void *data, const Efl_Dbus_Message *msg)
 
     while (efl_dbus_message_iter_get_and_next(changed, 'e', &entry))
     {
-        const void          *key;
+        const void            *key;
         Efl_Dbus_Message_Iter *var;
         if (!efl_dbus_message_iter_arguments_get(entry, "sv", &key, &var))
             continue;
@@ -387,8 +389,8 @@ _core_system_upower_display_device_init(void)
 
     _disp_obj =
         efl_dbus_object_get(_conn,
-                          "org.freedesktop.UPower",
-                          "/org/freedesktop/UPower/devices/DisplayDevice");
+                            "org.freedesktop.UPower",
+                            "/org/freedesktop/UPower/devices/DisplayDevice");
     if (!_disp_obj)
     {
         ERR("could not get object name=org.freedesktop.UPower, "
@@ -406,8 +408,8 @@ _core_system_upower_display_device_init(void)
     }
 
     s = efl_dbus_proxy_properties_changed_callback_add(_disp_proxy,
-                                                     _props_changed,
-                                                     _disp_proxy);
+                                                       _props_changed,
+                                                       _disp_proxy);
     if (!s)
     {
         ERR("could not add signal handler for properties changed for proxy "
@@ -444,8 +446,7 @@ _core_system_upower_init(void)
 
     efl_dbus_init();
     if (!reseting)
-        core_fork_reset_callback_add((Core_Cb)_core_system_upower_reset,
-                                      NULL);
+        core_fork_reset_callback_add((Core_Cb)_core_system_upower_reset, NULL);
 
     _log_dom = eina_log_domain_register("core_system_upower", NULL);
     if (_log_dom < 0)
@@ -457,8 +458,8 @@ _core_system_upower_init(void)
     _conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SYSTEM);
 
     _obj = efl_dbus_object_get(_conn,
-                             "org.freedesktop.UPower",
-                             "/org/freedesktop/UPower");
+                               "org.freedesktop.UPower",
+                               "/org/freedesktop/UPower");
     if (!_obj)
     {
         ERR("could not get object name=org.freedesktop.UPower, "
@@ -475,8 +476,8 @@ _core_system_upower_init(void)
     }
 
     s = efl_dbus_proxy_properties_changed_callback_add(_proxy,
-                                                     _props_changed,
-                                                     _proxy);
+                                                       _props_changed,
+                                                       _proxy);
     if (!s)
     {
         ERR("could not add signal handler for properties changed for proxy "
@@ -486,10 +487,10 @@ _core_system_upower_init(void)
     }
 
     efl_dbus_name_owner_changed_callback_add(_conn,
-                                           "org.freedesktop.UPower",
-                                           _upower_name_owner_cb,
-                                           _proxy,
-                                           EFL_TRUE);
+                                             "org.freedesktop.UPower",
+                                             _upower_name_owner_cb,
+                                             _proxy,
+                                             EFL_TRUE);
 
     DBG("ecore system 'upower' loaded");
     return EFL_TRUE;
@@ -506,13 +507,12 @@ _core_system_upower_shutdown(void)
 
     DBG("ecore system 'upower' unloaded");
     if (!reseting)
-        core_fork_reset_callback_del((Core_Cb)_core_system_upower_reset,
-                                      NULL);
+        core_fork_reset_callback_del((Core_Cb)_core_system_upower_reset, NULL);
 
     efl_dbus_name_owner_changed_callback_del(_conn,
-                                           "org.freedesktop.UPower",
-                                           _upower_name_owner_cb,
-                                           NULL);
+                                             "org.freedesktop.UPower",
+                                             _upower_name_owner_cb,
+                                             NULL);
     if (_disp_proxy)
     {
         efl_dbus_proxy_unref(_disp_proxy);

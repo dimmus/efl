@@ -1,20 +1,20 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdio.h>
 
 #include <Efl_Shared.h>
 
-Efl_Bool dummy_module_init(void)
+Efl_Bool
+dummy_module_init(void)
 {
-   return EFL_TRUE;
+    return EFL_TRUE;
 }
 
-void dummy_module_shutdown(void)
-{
-
-}
+void
+dummy_module_shutdown(void)
+{}
 
 EINA_API int dummy_symbol = 0xbad;
 

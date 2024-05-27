@@ -40,7 +40,7 @@
 #  define O_BINARY 0
 #endif
 
-static Core_Version _version      = { VMAJ, VMIN, VMIC, VREV };
+static Core_Version _version     = { VMAJ, VMIN, VMIC, VREV };
 EAPI Core_Version  *core_version = &_version;
 
 EAPI double _efl_startup_time = 0;
@@ -98,10 +98,10 @@ struct _core_Safe_Call
 static void _core_main_loop_thread_safe_call(core_Safe_Call *order);
 static void _thread_safe_cleanup(void *data);
 static void _thread_callback(void *data, void *buffer, unsigned int nbyte);
-static Eina_List  *_thread_cb   = NULL;
+static Eina_List *_thread_cb   = NULL;
 static Core_Pipe *_thread_call = NULL;
-static Eina_Lock   _thread_safety;
-static const int   wakeup = 42;
+static Eina_Lock  _thread_safety;
+static const int  wakeup = 42;
 
 static int            _thread_loop = 0;
 static Eina_Lock      _thread_mutex;
@@ -134,7 +134,7 @@ int       _core_main_lock_count;
 #  define CODESET "INVALID"
 #endif
 
-static Eina_Prefix *_core_pfx  = NULL;
+static Eina_Prefix *_core_pfx   = NULL;
 static Eina_Array  *module_list = NULL;
 
 static void
@@ -273,14 +273,14 @@ core_init(void)
     _core_animator_init();
 
     _core_pfx = eina_prefix_new(NULL,
-                                 core_init,
-                                 "ECORE",
-                                 "ecore",
-                                 "checkme",
-                                 EFL_BIN_DIR,
-                                 EFL_LIB_DIR,
-                                 PACKAGE_DATA_DIR,
-                                 PACKAGE_DATA_DIR);
+                                core_init,
+                                "ECORE",
+                                "ecore",
+                                "checkme",
+                                EFL_BIN_DIR,
+                                EFL_LIB_DIR,
+                                PACKAGE_DATA_DIR,
+                                PACKAGE_DATA_DIR);
     if (!_core_pfx)
     {
         ERR("Could not get ecore installation prefix");
@@ -525,7 +525,7 @@ core_shutdown_ex(void)
 
 struct _core_Fork_Cb
 {
-    Core_Cb func;
+    Core_Cb  func;
     void    *data;
     Efl_Bool delete_me : 1;
 };
@@ -552,7 +552,7 @@ core_fork_reset_callback_add(Core_Cb func, const void *data)
 EAPI Efl_Bool
 core_fork_reset_callback_del(Core_Cb func, const void *data)
 {
-    Eina_List     *l;
+    Eina_List    *l;
     core_Fork_Cb *fcb;
 
     EINA_LIST_FOREACH(fork_cbs, l, fcb)
@@ -574,7 +574,7 @@ core_fork_reset_callback_del(Core_Cb func, const void *data)
 EAPI void
 core_fork_reset(void)
 {
-    Eina_List     *l, *ln;
+    Eina_List    *l, *ln;
     core_Fork_Cb *fcb;
 
     eina_debug_fork_reset();
@@ -655,7 +655,7 @@ EAPI void *
 core_main_loop_thread_safe_call_sync(Core_Data_Cb callback, void *data)
 {
     core_Safe_Call *order;
-    void            *ret;
+    void           *ret;
 
     if (!callback) return NULL;
 
@@ -792,7 +792,7 @@ core_thread_main_loop_end(void)
 
 EAPI void
 core_print_warning(const char *function EFL_UNUSED,
-                    const char *sparam   EFL_UNUSED)
+                   const char *sparam   EFL_UNUSED)
 {
     WRN("***** Developer Warning ***** :\n"
         "\tThis program is calling:\n\n"
@@ -807,9 +807,9 @@ core_print_warning(const char *function EFL_UNUSED,
 
 EAPI void
 _core_magic_fail(const void       *d,
-                  Core_Magic       m,
-                  Core_Magic       req_m,
-                  const char *fname EFL_UNUSED)
+                 Core_Magic        m,
+                 Core_Magic        req_m,
+                 const char *fname EFL_UNUSED)
 {
     ERR("*** ECORE ERROR: Ecore Magic Check Failed!!! in: %s()", fname);
     if (!d) ERR("    Input handle pointer is NULL!");
@@ -898,8 +898,7 @@ _core_fps_debug_init(void)
     tmp = eina_environment_tmp_get();
     pid = (int)getpid();
     snprintf(buf, sizeof(buf), "%s/.core_fps_debug-%i", tmp, pid);
-    _core_fps_debug_fd =
-        open(buf, O_CREAT | O_BINARY | O_TRUNC | O_RDWR, 0644);
+    _core_fps_debug_fd = open(buf, O_CREAT | O_BINARY | O_TRUNC | O_RDWR, 0644);
     if (_core_fps_debug_fd < 0)
     {
         unlink(buf);
@@ -933,13 +932,12 @@ _core_fps_debug_init(void)
             }
         }
         _core_fps_runtime_mmap = mmap(NULL,
-                                       sizeof(unsigned int),
-                                       PROT_READ | PROT_WRITE,
-                                       MAP_SHARED,
-                                       _core_fps_debug_fd,
-                                       0);
-        if (_core_fps_runtime_mmap == MAP_FAILED)
-            _core_fps_runtime_mmap = NULL;
+                                      sizeof(unsigned int),
+                                      PROT_READ | PROT_WRITE,
+                                      MAP_SHARED,
+                                      _core_fps_debug_fd,
+                                      0);
+        if (_core_fps_runtime_mmap == MAP_FAILED) _core_fps_runtime_mmap = NULL;
     }
 }
 
@@ -1092,7 +1090,7 @@ void
 _core_main_call_flush(void)
 {
     core_Safe_Call *call;
-    Eina_List       *callback;
+    Eina_List      *callback;
 
     eina_lock_take(&_thread_safety);
     callback   = _thread_cb;

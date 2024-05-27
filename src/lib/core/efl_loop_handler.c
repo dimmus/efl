@@ -14,8 +14,8 @@ typedef struct _Efl_Loop_Handler_Data Efl_Loop_Handler_Data;
 
 struct _Efl_Loop_Handler_Data
 {
-    Eo                  *loop;
-    Efl_Loop_Data       *loop_data;
+    Eo                 *loop;
+    Efl_Loop_Data      *loop_data;
     Core_Fd_Handler    *handler_fd;
     Core_Win32_Handler *handler_win32;
 
@@ -42,7 +42,7 @@ struct _Efl_Loop_Handler_Data
 
 static Efl_Bool _cb_handler_fd(void *data, Core_Fd_Handler *fd_handler);
 static Efl_Bool _cb_handler_buffer(void *data, Core_Fd_Handler *fd_handler);
-static Efl_Bool _cb_handler_win32(void                *data,
+static Efl_Bool _cb_handler_win32(void               *data,
                                   Core_Win32_Handler *win32_handler);
 static void     _cb_handler_prepare(void *data, Core_Fd_Handler *fd_handler);
 
@@ -91,8 +91,8 @@ _handler_active_update(Eo *obj, Efl_Loop_Handler_Data *pd)
     core_main_fd_handler_active_set(pd->handler_fd, flags);
     if (pd->references.prepare)
         core_main_fd_handler_prepare_callback_set(pd->handler_fd,
-                                                   _cb_handler_prepare,
-                                                   obj);
+                                                  _cb_handler_prepare,
+                                                  obj);
     else core_main_fd_handler_prepare_callback_set(pd->handler_fd, NULL, NULL);
 }
 
@@ -110,7 +110,7 @@ _handler_reset(Eo *obj, Efl_Loop_Handler_Data *pd)
     if (pd->fd >= 0)
     {
         Core_Fd_Cb buffer_func = NULL;
-        void       *buffer_data = NULL;
+        void      *buffer_data = NULL;
 
         if (pd->references.buffer > 0)
         {
@@ -123,26 +123,26 @@ _handler_reset(Eo *obj, Efl_Loop_Handler_Data *pd)
         {
             pd->handler_fd =
                 _core_main_fd_handler_add(pd->loop,
-                                           pd->loop_data,
-                                           obj,
-                                           pd->fd,
-                                           _handler_flags_get(pd),
-                                           _cb_handler_fd,
-                                           obj,
-                                           buffer_func,
-                                           buffer_data,
-                                           pd->file ? EFL_TRUE : EFL_FALSE);
+                                          pd->loop_data,
+                                          obj,
+                                          pd->fd,
+                                          _handler_flags_get(pd),
+                                          _cb_handler_fd,
+                                          obj,
+                                          buffer_func,
+                                          buffer_data,
+                                          pd->file ? EFL_TRUE : EFL_FALSE);
             if (pd->handler_fd) _handler_active_update(obj, pd);
         }
     }
     else if (pd->win32 && pd->loop_data)
     {
         pd->handler_win32 = _core_main_win32_handler_add(pd->loop,
-                                                          pd->loop_data,
-                                                          obj,
-                                                          pd->win32,
-                                                          _cb_handler_win32,
-                                                          obj);
+                                                         pd->loop_data,
+                                                         obj,
+                                                         pd->win32,
+                                                         _cb_handler_win32,
+                                                         obj);
     }
 }
 

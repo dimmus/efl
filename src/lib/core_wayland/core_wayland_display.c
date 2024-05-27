@@ -153,9 +153,9 @@ _aux_hints_supported_aux_hints(void                           *data,
     ev->display = ewd;
     ewd->refs++;
     core_event_add(ECORE_WL2_EVENT_AUX_HINT_SUPPORTED,
-                    ev,
-                    _display_event_free,
-                    ewd);
+                   ev,
+                   _display_event_free,
+                   ewd);
 }
 
 static void
@@ -179,9 +179,9 @@ _aux_hints_allowed_aux_hint(void                           *data,
     ev->display = ewd;
     ewd->refs++;
     core_event_add(ECORE_WL2_EVENT_AUX_HINT_ALLOWED,
-                    ev,
-                    _display_event_free,
-                    ewd);
+                   ev,
+                   _display_event_free,
+                   ewd);
 }
 
 static void
@@ -237,10 +237,7 @@ _aux_hints_aux_message(void                           *data,
     ev->display = ewd;
     ewd->refs++;
 
-    core_event_add(ECORE_WL2_EVENT_AUX_MESSAGE,
-                    ev,
-                    _cb_aux_message_free,
-                    NULL);
+    core_event_add(ECORE_WL2_EVENT_AUX_MESSAGE, ev, _cb_aux_message_free, NULL);
 }
 
 static const struct efl_aux_hints_listener _aux_hints_listener = {
@@ -399,9 +396,9 @@ event:
 
    /* raise an event saying a new global has been added */
     core_event_add(ECORE_WL2_EVENT_GLOBAL_ADDED,
-                    ev,
-                    _cb_global_event_free,
-                    NULL);
+                   ev,
+                   _cb_global_event_free,
+                   NULL);
 }
 
 static void
@@ -431,9 +428,9 @@ _cb_global_remove(void                        *data,
 
    /* raise an event saying a global has been removed */
     core_event_add(ECORE_WL2_EVENT_GLOBAL_REMOVED,
-                    ev,
-                    _cb_global_event_free,
-                    NULL);
+                   ev,
+                   _cb_global_event_free,
+                   NULL);
 
    /* delete this global from our hash */
     if (ewd->globals) eina_hash_del_by_key(ewd->globals, &id);
@@ -599,8 +596,7 @@ _cb_connect_data(void *data, Core_Fd_Handler *hdl)
         ret  = wl_display_flush(ewd->wl.display);
         code = errno;
         if (ret >= 0)
-            core_main_fd_handler_active_set(hdl,
-                                             CORE_FD_READ | CORE_FD_ALWAYS);
+            core_main_fd_handler_active_set(hdl, CORE_FD_READ | CORE_FD_ALWAYS);
 
         if ((ret < 0) && (code != EAGAIN)) goto err;
     }
@@ -762,17 +758,17 @@ _ecore_wl_display_connect(Ecore_Wl_Display *ewd, Efl_Bool sync)
         }
     }
 
-    ewd->fd_hdl = core_main_fd_handler_add(
-        wl_display_get_fd(ewd->wl.display),
-        CORE_FD_READ | CORE_FD_WRITE | CORE_FD_ERROR | CORE_FD_ALWAYS,
-        _cb_connect_data,
-        ewd,
-        NULL,
-        ewd);
+    ewd->fd_hdl = core_main_fd_handler_add(wl_display_get_fd(ewd->wl.display),
+                                           CORE_FD_READ | CORE_FD_WRITE |
+                                               CORE_FD_ERROR | CORE_FD_ALWAYS,
+                                           _cb_connect_data,
+                                           ewd,
+                                           NULL,
+                                           ewd);
 
     core_main_fd_handler_prepare_callback_set(ewd->fd_hdl,
-                                               _cb_connect_pre,
-                                               ewd);
+                                              _cb_connect_pre,
+                                              ewd);
 
     _ecore_wl_display_event(ewd, ECORE_WL2_EVENT_CONNECT);
     return EFL_TRUE;
@@ -881,15 +877,15 @@ ecore_wl_display_create(const char *name)
     loop = wl_display_get_event_loop(ewd->wl.display);
 
     ewd->fd_hdl = core_main_fd_handler_add(wl_event_loop_get_fd(loop),
-                                            CORE_FD_READ | CORE_FD_ERROR,
-                                            _cb_create_data,
-                                            ewd,
-                                            NULL,
-                                            NULL);
+                                           CORE_FD_READ | CORE_FD_ERROR,
+                                           _cb_create_data,
+                                           ewd,
+                                           NULL,
+                                           NULL);
 
     core_main_fd_handler_prepare_callback_set(ewd->fd_hdl,
-                                               _cb_create_prepare,
-                                               ewd);
+                                              _cb_create_prepare,
+                                              ewd);
 
     /* add this new server display to hash */
     eina_hash_add(_server_displays, ewd->name, ewd);

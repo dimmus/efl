@@ -45,21 +45,20 @@
  * appended with a preceding space.  The first is the command off course.
  */
 
-static inline void _core_exe_exec_it(const char     *exe_cmd,
-                                      Core_Exe_Flags flags);
-static Efl_Bool    _core_exe_data_generic_handler(void             *data,
-                                                   Core_Fd_Handler *fd_handler,
-                                                   Core_Exe_Flags   flags);
-static Efl_Bool    _core_exe_data_error_handler(void             *data,
-                                                 Core_Fd_Handler *fd_handler);
-static Efl_Bool    _core_exe_data_read_handler(void             *data,
+static inline void _core_exe_exec_it(const char *exe_cmd, Core_Exe_Flags flags);
+static Efl_Bool    _core_exe_data_generic_handler(void            *data,
+                                                  Core_Fd_Handler *fd_handler,
+                                                  Core_Exe_Flags   flags);
+static Efl_Bool    _core_exe_data_error_handler(void            *data,
                                                 Core_Fd_Handler *fd_handler);
-static Efl_Bool    _core_exe_data_write_handler(void             *data,
-                                                 Core_Fd_Handler *fd_handler);
+static Efl_Bool    _core_exe_data_read_handler(void            *data,
+                                               Core_Fd_Handler *fd_handler);
+static Efl_Bool    _core_exe_data_write_handler(void            *data,
+                                                Core_Fd_Handler *fd_handler);
 static void        _core_exe_flush(Core_Exe *obj);
 static void _core_exe_make_sure_its_dead(void *data, const Efl_Event *event);
 static void _core_exe_make_sure_its_really_dead(void            *data,
-                                                 const Efl_Event *event);
+                                                const Efl_Event *event);
 static void _core_exe_dead_attach(Core_Exe *obj);
 
 static const char *shell = NULL;
@@ -69,17 +68,17 @@ static const char *shell = NULL;
  */
 static int _core_exe_check_errno(int result, const char *file, int line);
 
-#define E_IF_NO_ERRNO(result, foo, ok)                      \
+#define E_IF_NO_ERRNO(result, foo, ok)                     \
     while (((ok) = _core_exe_check_errno((result) = (foo), \
-                                          __FILE__,         \
-                                          __LINE__)) == -1) \
-        sleep(1);                                           \
+                                         __FILE__,         \
+                                         __LINE__)) == -1) \
+        sleep(1);                                          \
     if (ok)
 
-#define E_NO_ERRNO(result, foo, ok)                         \
+#define E_NO_ERRNO(result, foo, ok)                        \
     while (((ok) = _core_exe_check_errno((result) = (foo), \
-                                          __FILE__,         \
-                                          __LINE__)) == -1) \
+                                         __FILE__,         \
+                                         __LINE__)) == -1) \
     sleep(1)
 
 #define E_IF_NO_ERRNO_NOLOOP(result, foo, ok) \
@@ -87,8 +86,8 @@ static int _core_exe_check_errno(int result, const char *file, int line);
 
 static int
 _core_exe_check_errno(int              result,
-                       const char *file EFL_UNUSED,
-                       int line         EFL_UNUSED)
+                      const char *file EFL_UNUSED,
+                      int line         EFL_UNUSED)
 {
     int saved_errno = errno;
 
@@ -248,7 +247,7 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
 
     if (!exe->cmd) return NULL;
 
-    const char     *exe_cmd = exe->cmd;
+    const char    *exe_cmd = exe->cmd;
     Core_Exe_Flags flags   = exe->flags;
 
     if ((flags & CORE_EXE_PIPE_AUTO) && (!(flags & CORE_EXE_PIPE_ERROR)) &&
@@ -643,9 +642,9 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
             // XXX: eoify core_event_add
             /* Send the event. */
             core_event_add(CORE_EXE_EVENT_ADD,
-                            e,
-                            _core_exe_event_add_free,
-                            NULL);
+                           e,
+                           _core_exe_event_add_free,
+                           NULL);
         }
         /* INF("Running as %d for %s.\n", exe->pid, exe->cmd); */
     }
@@ -656,9 +655,9 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
 
 Efl_Bool
 _impl_core_exe_send(Core_Exe *obj  EFL_UNUSED,
-                     Core_Exe_Data *exe,
-                     const void     *data,
-                     int             size)
+                    Core_Exe_Data *exe,
+                    const void    *data,
+                    int            size)
 {
     void *buf;
 
@@ -688,11 +687,11 @@ _impl_core_exe_send(Core_Exe *obj  EFL_UNUSED,
 
 void
 _impl_core_exe_auto_limits_set(Core_Exe *obj  EFL_UNUSED,
-                                Core_Exe_Data *exe,
-                                int             start_bytes,
-                                int             end_bytes,
-                                int             start_lines,
-                                int             end_lines)
+                               Core_Exe_Data *exe,
+                               int            start_bytes,
+                               int            end_bytes,
+                               int            start_lines,
+                               int            end_lines)
 {
     /* FIXME: sanitize the input. */
     exe->start_bytes = start_bytes;
@@ -742,13 +741,13 @@ _impl_core_exe_auto_limits_set(Core_Exe *obj  EFL_UNUSED,
 
 Core_Exe_Event_Data *
 _impl_core_exe_event_data_get(Core_Exe      *obj,
-                               Core_Exe_Data *exe,
-                               Core_Exe_Flags flags)
+                              Core_Exe_Data *exe,
+                              Core_Exe_Flags flags)
 {
     Core_Exe_Event_Data *e           = NULL;
-    int                   is_buffered = 0;
-    unsigned char        *inbuf;
-    int                   inbuf_num;
+    int                  is_buffered = 0;
+    unsigned char       *inbuf;
+    int                  inbuf_num;
 
     /* Sort out what sort of event we are. */
     if (flags & CORE_EXE_PIPE_READ)
@@ -988,7 +987,7 @@ _impl_core_exe_hup(Core_Exe *obj EFL_UNUSED, Core_Exe_Data *exe)
 static void
 _core_exe_make_sure_its_dead(void *data, const Efl_Event *event)
 {
-    Eo             *exe_obj = data;
+    Eo            *exe_obj = data;
     Core_Exe_Data *exe     = efl_data_scope_get(exe_obj, MY_CLASS);
     if (exe)
     {
@@ -1013,7 +1012,7 @@ _core_exe_make_sure_its_dead(void *data, const Efl_Event *event)
 static void
 _core_exe_make_sure_its_really_dead(void *data, const Efl_Event *event)
 {
-    Eo             *exe_obj = data;
+    Eo            *exe_obj = data;
     Core_Exe_Data *exe     = efl_data_scope_get(exe_obj, MY_CLASS);
     if (exe)
     {
@@ -1150,11 +1149,11 @@ _core_exe_exec_it(const char *exe_cmd, Core_Exe_Flags flags)
 }
 
 static Efl_Bool
-_core_exe_data_generic_handler(void             *data,
-                                Core_Fd_Handler *fd_handler,
-                                Core_Exe_Flags   flags)
+_core_exe_data_generic_handler(void            *data,
+                               Core_Fd_Handler *fd_handler,
+                               Core_Exe_Flags   flags)
 {
-    Core_Exe                   *obj = data;
+    Core_Exe                    *obj = data;
     int                          child_fd;
     int                          event_type;
     const Efl_Event_Description *eo_event = NULL;
@@ -1259,9 +1258,9 @@ _core_exe_data_generic_handler(void             *data,
                         {
                             // XXX: eoify ecore event
                             core_event_add(event_type,
-                                            e,
-                                            _core_exe_event_exe_data_free,
-                                            NULL);
+                                           e,
+                                           _core_exe_event_exe_data_free,
+                                           NULL);
                             efl_event_callback_call(obj, eo_event, e);
                         }
                     }
@@ -1306,21 +1305,18 @@ static Efl_Bool
 _core_exe_data_error_handler(void *data, Core_Fd_Handler *fd_handler)
 {
     return _core_exe_data_generic_handler(data,
-                                           fd_handler,
-                                           CORE_EXE_PIPE_ERROR);
+                                          fd_handler,
+                                          CORE_EXE_PIPE_ERROR);
 }
 
 static Efl_Bool
 _core_exe_data_read_handler(void *data, Core_Fd_Handler *fd_handler)
 {
-    return _core_exe_data_generic_handler(data,
-                                           fd_handler,
-                                           CORE_EXE_PIPE_READ);
+    return _core_exe_data_generic_handler(data, fd_handler, CORE_EXE_PIPE_READ);
 }
 
 static Efl_Bool
-_core_exe_data_write_handler(void                        *data,
-                              Core_Fd_Handler *fd_handler EFL_UNUSED)
+_core_exe_data_write_handler(void *data, Core_Fd_Handler *fd_handler EFL_UNUSED)
 {
     Core_Exe      *obj = data;
     Core_Exe_Data *exe = efl_data_scope_get(obj, MY_CLASS);
@@ -1329,8 +1325,7 @@ _core_exe_data_write_handler(void                        *data,
 
     // XXX: use eo method
     if ((exe->write_fd_handler) &&
-        (core_main_fd_handler_active_get(exe->write_fd_handler,
-                                          CORE_FD_WRITE)))
+        (core_main_fd_handler_active_get(exe->write_fd_handler, CORE_FD_WRITE)))
         _core_exe_flush(obj);
 
     /* If we have sent all there is to send, and we need to close the pipe, then close it. */
@@ -1355,7 +1350,7 @@ _core_exe_data_write_handler(void                        *data,
 static void
 _core_exe_flush(Core_Exe *obj)
 {
-    int             count;
+    int            count;
     Core_Exe_Data *exe = efl_data_scope_get(obj, MY_CLASS);
 
     if (!exe) return;

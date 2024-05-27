@@ -78,16 +78,16 @@ core_exe_pipe_run(const char *exe_cmd, Core_Exe_Flags flags, const void *data)
     if (ret)
     {
         Core_Exe_Data *pd = efl_data_scope_get(ret, MY_CLASS);
-        pd->data           = (void *)data;
+        pd->data          = (void *)data;
     }
     return ret;
 }
 
 EOLIAN static void
-_core_exe_command_set(Eo *obj         EFL_UNUSED,
-                       Core_Exe_Data *pd,
-                       const char     *cmd,
-                       Core_Exe_Flags flags)
+_core_exe_command_set(Eo *obj        EFL_UNUSED,
+                      Core_Exe_Data *pd,
+                      const char    *cmd,
+                      Core_Exe_Flags flags)
 {
     if (!cmd) return;
     pd->cmd   = strdup(cmd);
@@ -95,10 +95,10 @@ _core_exe_command_set(Eo *obj         EFL_UNUSED,
 }
 
 EOLIAN static void
-_core_exe_command_get(const Eo *obj    EFL_UNUSED,
-                       Core_Exe_Data  *pd,
-                       const char     **cmd,
-                       Core_Exe_Flags *flags)
+_core_exe_command_get(const Eo *obj   EFL_UNUSED,
+                      Core_Exe_Data  *pd,
+                      const char    **cmd,
+                      Core_Exe_Flags *flags)
 {
     if (cmd) *cmd = pd->cmd;
     if (flags) *flags = pd->flags;
@@ -152,20 +152,20 @@ core_exe_close_stdin(Core_Exe *obj)
 
 EAPI void
 core_exe_auto_limits_set(Core_Exe *obj,
-                          int        start_bytes,
-                          int        end_bytes,
-                          int        start_lines,
-                          int        end_lines)
+                         int       start_bytes,
+                         int       end_bytes,
+                         int       start_lines,
+                         int       end_lines)
 {
     EINA_MAIN_LOOP_CHECK_RETURN;
     Core_Exe_Data *exe = efl_data_scope_get(obj, MY_CLASS);
     if (!efl_isa(obj, MY_CLASS)) return;
     _impl_core_exe_auto_limits_set(obj,
-                                    exe,
-                                    start_bytes,
-                                    end_bytes,
-                                    start_lines,
-                                    end_lines);
+                                   exe,
+                                   start_bytes,
+                                   end_bytes,
+                                   start_lines,
+                                   end_lines);
 }
 
 EAPI Core_Exe_Event_Data *
@@ -285,9 +285,9 @@ core_exe_continue(Core_Exe *obj)
 }
 
 EOLIAN static void
-_core_exe_efl_control_suspend_set(Eo *obj         EFL_UNUSED,
-                                   Core_Exe_Data *exe,
-                                   Efl_Bool        suspend)
+_core_exe_efl_control_suspend_set(Eo *obj        EFL_UNUSED,
+                                  Core_Exe_Data *exe,
+                                  Efl_Bool       suspend)
 {
     EINA_MAIN_LOOP_CHECK_RETURN;
     if (suspend) _impl_core_exe_pause(obj, exe);
@@ -379,7 +379,7 @@ _core_exe_init(void)
 void
 _core_exe_shutdown(void)
 {
-    Core_Exe     *exe = NULL;
+    Core_Exe      *exe = NULL;
     Eina_List     *l1, *l2;
     Efl_Loop_Data *loop = EFL_LOOP_DATA;
 
@@ -387,9 +387,9 @@ _core_exe_shutdown(void)
     core_exe_free(exe);
 
     core_event_type_flush(CORE_EXE_EVENT_ADD,
-                           CORE_EXE_EVENT_DEL,
-                           CORE_EXE_EVENT_DATA,
-                           CORE_EXE_EVENT_ERROR);
+                          CORE_EXE_EVENT_DEL,
+                          CORE_EXE_EVENT_DATA,
+                          CORE_EXE_EVENT_ERROR);
 
 #ifdef _WIN32
     if (_core_exe_win32_job) CloseHandle(_core_exe_win32_job);
@@ -400,7 +400,7 @@ Core_Exe *
 _core_exe_find(pid_t pid)
 {
     Eina_List     *itr;
-    Core_Exe     *obj;
+    Core_Exe      *obj;
     Efl_Loop_Data *loop = EFL_LOOP_DATA;
 
     EINA_LIST_FOREACH(loop->exes, itr, obj)

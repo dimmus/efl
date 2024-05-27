@@ -12,9 +12,9 @@ static Core_Timer *timeout = NULL;
 
 static const char *empty_string = "";
 
-static const char *bus = "org.freedesktop.DBus";
-static const char *interface = "org.freedesktop.DBus";
-static const char *path = "/org/freedesktop/DBus";
+static const char *bus         = "org.freedesktop.DBus";
+static const char *interface   = "org.freedesktop.DBus";
+static const char *path        = "/org/freedesktop/DBus";
 static const char *method_name = "GetId";
 
 static int cb_data = 5;
@@ -35,37 +35,38 @@ static int proxy_data_stored = 5;
 static Efl_Bool
 _core_loop_close(void *data EFL_UNUSED)
 {
-   core_main_loop_quit();
+    core_main_loop_quit();
 
-   return CORE_CALLBACK_CANCEL;
+    return CORE_CALLBACK_CANCEL;
 }
 
 static void
-_proxy_message_cb(void *data, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending EFL_UNUSED)
+_proxy_message_cb(void                     *data,
+                  const Efl_Dbus_Message   *msg,
+                  Efl_Dbus_Pending *pending EFL_UNUSED)
 {
-   if (timeout != NULL)
-     {
+    if (timeout != NULL)
+    {
         core_timer_del(timeout);
         timeout = NULL;
-     }
+    }
 
-   const char *errname, *errmsg;
-   int *user_data = data;
+    const char *errname, *errmsg;
+    int        *user_data = data;
 
-   if ((user_data) && (*user_data == cb_data))
-     {
+    if ((user_data) && (*user_data == cb_data))
+    {
         if (!efl_dbus_message_error_get(msg, &errname, &errmsg))
-          {
-             char *txt = NULL;
-             if (efl_dbus_message_arguments_get(msg, "s", &txt))
-               {
-                  if ((txt) && strcmp(txt, empty_string))
-                    is_success = EFL_TRUE;
-               }
-          }
-     }
+        {
+            char *txt = NULL;
+            if (efl_dbus_message_arguments_get(msg, "s", &txt))
+            {
+                if ((txt) && strcmp(txt, empty_string)) is_success = EFL_TRUE;
+            }
+        }
+    }
 
-   core_main_loop_quit();
+    core_main_loop_quit();
 }
 
 /**
@@ -120,43 +121,50 @@ _proxy_message_cb(void *data, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pen
 
 EFL_START_TEST(utc_efl_dbus_proxy_info_get_call_p)
 {
-   is_success = EFL_FALSE;
+    is_success = EFL_FALSE;
 
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
-   ck_assert_ptr_ne(NULL, obj);
+    Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
+    ck_assert_ptr_ne(NULL, obj);
 
-   Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
-   ck_assert_ptr_ne(NULL, proxy);
+    Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
+    ck_assert_ptr_ne(NULL, proxy);
 
-   Efl_Dbus_Object *proxy_obj = efl_dbus_proxy_object_get(proxy);
-   ck_assert_ptr_eq(proxy_obj, obj);
+    Efl_Dbus_Object *proxy_obj = efl_dbus_proxy_object_get(proxy);
+    ck_assert_ptr_eq(proxy_obj, obj);
 
-   ck_assert_str_eq(interface, efl_dbus_proxy_interface_get(proxy)); 
+    ck_assert_str_eq(interface, efl_dbus_proxy_interface_get(proxy));
 
-   Efl_Dbus_Proxy *proxy_ref = efl_dbus_proxy_ref(proxy);
-   ck_assert_ptr_eq(proxy_ref, proxy);
+    Efl_Dbus_Proxy *proxy_ref = efl_dbus_proxy_ref(proxy);
+    ck_assert_ptr_eq(proxy_ref, proxy);
 
-   efl_dbus_proxy_unref(proxy_ref);
+    efl_dbus_proxy_unref(proxy_ref);
 
-   ck_assert(efl_dbus_proxy_interface_get(proxy) != NULL);
+    ck_assert(efl_dbus_proxy_interface_get(proxy) != NULL);
 
-   Efl_Dbus_Pending *pending = efl_dbus_proxy_call(proxy, method_name, _proxy_message_cb, &cb_data, -1, empty_string);
-   ck_assert_ptr_ne(NULL, pending);
+    Efl_Dbus_Pending *pending = efl_dbus_proxy_call(proxy,
+                                                    method_name,
+                                                    _proxy_message_cb,
+                                                    &cb_data,
+                                                    -1,
+                                                    empty_string);
+    ck_assert_ptr_ne(NULL, pending);
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   ck_assert_ptr_ne(NULL, timeout);
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    ck_assert_ptr_ne(NULL, timeout);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert_msg(is_success, "Method GetId is not call");
+    ck_assert_msg(is_success, "Method GetId is not call");
 
-   efl_dbus_proxy_unref(proxy);
-   efl_dbus_object_unref(obj);
-   efl_dbus_connection_unref(conn);
+    efl_dbus_proxy_unref(proxy);
+    efl_dbus_object_unref(obj);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -202,34 +210,37 @@ EFL_END_TEST
 
 EFL_START_TEST(utc_efl_dbus_proxy_send_call_p)
 {
-   is_success = EFL_FALSE;
+    is_success = EFL_FALSE;
 
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
-   ck_assert_ptr_ne(NULL, obj);
+    Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
+    ck_assert_ptr_ne(NULL, obj);
 
-   Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
-   ck_assert_ptr_ne(NULL, proxy);
+    Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
+    ck_assert_ptr_ne(NULL, proxy);
 
-   Efl_Dbus_Message *msg = efl_dbus_proxy_method_call_new(proxy, method_name);
-   ck_assert_ptr_ne(NULL, msg);
+    Efl_Dbus_Message *msg = efl_dbus_proxy_method_call_new(proxy, method_name);
+    ck_assert_ptr_ne(NULL, msg);
 
-   Efl_Dbus_Pending *pending = efl_dbus_proxy_send(proxy, msg, _proxy_message_cb, &cb_data, -1);
-   ck_assert_ptr_ne(NULL, pending);
+    Efl_Dbus_Pending *pending =
+        efl_dbus_proxy_send(proxy, msg, _proxy_message_cb, &cb_data, -1);
+    ck_assert_ptr_ne(NULL, pending);
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   ck_assert_ptr_ne(NULL, timeout);
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    ck_assert_ptr_ne(NULL, timeout);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert_msg(is_success, "Method GetId is not call");
+    ck_assert_msg(is_success, "Method GetId is not call");
 
-   efl_dbus_proxy_unref(proxy);
-   efl_dbus_object_unref(obj);
-   efl_dbus_connection_unref(conn);
+    efl_dbus_proxy_unref(proxy);
+    efl_dbus_object_unref(obj);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -272,47 +283,50 @@ EFL_END_TEST
 
 EFL_START_TEST(utc_efl_dbus_proxy_send_and_block_p)
 {
-   const int local_timeout = 1000;
-   is_success = EFL_FALSE;
-   const char *errname, *errmsg;
-   char *text_reply = NULL;
+    const int local_timeout = 1000;
+    is_success              = EFL_FALSE;
+    const char *errname, *errmsg;
+    char       *text_reply = NULL;
 
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
-   ck_assert_ptr_ne(NULL, obj);
+    Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
+    ck_assert_ptr_ne(NULL, obj);
 
-   Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
-   ck_assert_ptr_ne(NULL, proxy);
+    Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
+    ck_assert_ptr_ne(NULL, proxy);
 
-   Efl_Dbus_Message *msg = efl_dbus_proxy_method_call_new(proxy, method_name);
-   ck_assert_ptr_ne(NULL, msg);
+    Efl_Dbus_Message *msg = efl_dbus_proxy_method_call_new(proxy, method_name);
+    ck_assert_ptr_ne(NULL, msg);
 
-   Efl_Dbus_Message *message_reply = efl_dbus_proxy_send_and_block(proxy, msg, local_timeout);
-   ck_assert_ptr_ne(NULL, message_reply);
+    Efl_Dbus_Message *message_reply =
+        efl_dbus_proxy_send_and_block(proxy, msg, local_timeout);
+    ck_assert_ptr_ne(NULL, message_reply);
 
    //efl_dbus_message_error_get(message_reply, &errname, &errmsg)
-   ck_assert(efl_dbus_message_error_get(message_reply, &errname, &errmsg) == EFL_FALSE);
+    ck_assert(efl_dbus_message_error_get(message_reply, &errname, &errmsg) ==
+              EFL_FALSE);
 
-   ck_assert(efl_dbus_message_arguments_get(message_reply, "s", &text_reply) == EFL_TRUE);
+    ck_assert(efl_dbus_message_arguments_get(message_reply, "s", &text_reply) ==
+              EFL_TRUE);
 
-   if (text_reply)
-     printf("is reply message is not null\n");
-   else
-     printf("is reply message is null\n");
+    if (text_reply) printf("is reply message is not null\n");
+    else printf("is reply message is null\n");
 
-   printf("message %s\n", text_reply);
+    printf("message %s\n", text_reply);
 
-   ck_assert_ptr_ne(NULL, text_reply);
+    ck_assert_ptr_ne(NULL, text_reply);
 
-   ck_assert_str_ne(text_reply, empty_string);
+    ck_assert_str_ne(text_reply, empty_string);
 
-   efl_dbus_message_unref(message_reply);
-   efl_dbus_proxy_unref(proxy);
-   efl_dbus_object_unref(obj);
-   efl_dbus_connection_unref(conn);
+    efl_dbus_message_unref(message_reply);
+    efl_dbus_proxy_unref(proxy);
+    efl_dbus_object_unref(obj);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -357,34 +371,36 @@ EFL_END_TEST
 
 EFL_START_TEST(utc_efl_dbus_proxy_data_p)
 {
-   is_success = EFL_FALSE;
+    is_success = EFL_FALSE;
 
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
-   ck_assert_ptr_ne(NULL, obj);
+    Efl_Dbus_Object *obj = efl_dbus_object_get(conn, bus, path);
+    ck_assert_ptr_ne(NULL, obj);
 
-   Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
-   ck_assert_ptr_ne(NULL, proxy);
+    Efl_Dbus_Proxy *proxy = efl_dbus_proxy_get(obj, interface);
+    ck_assert_ptr_ne(NULL, proxy);
 
-   efl_dbus_proxy_data_set(proxy, DATA_KEY, &proxy_data_stored);
+    efl_dbus_proxy_data_set(proxy, DATA_KEY, &proxy_data_stored);
 
-   int *proxy_data_get = efl_dbus_proxy_data_get(proxy, DATA_KEY);
-   ck_assert_ptr_ne(NULL, proxy_data_get);
-   ck_assert_int_eq((*proxy_data_get), proxy_data_stored);
+    int *proxy_data_get = efl_dbus_proxy_data_get(proxy, DATA_KEY);
+    ck_assert_ptr_ne(NULL, proxy_data_get);
+    ck_assert_int_eq((*proxy_data_get), proxy_data_stored);
 
-   int *proxy_data_del = efl_dbus_proxy_data_del(proxy, DATA_KEY);
-   ck_assert_ptr_ne(NULL, proxy_data_del);
-   ck_assert_int_eq((*proxy_data_del), proxy_data_stored);
+    int *proxy_data_del = efl_dbus_proxy_data_del(proxy, DATA_KEY);
+    ck_assert_ptr_ne(NULL, proxy_data_del);
+    ck_assert_int_eq((*proxy_data_del), proxy_data_stored);
 
-   int *proxy_data_null = efl_dbus_proxy_data_get(proxy, DATA_KEY);
-   ck_assert_ptr_eq(NULL, proxy_data_null);
+    int *proxy_data_null = efl_dbus_proxy_data_get(proxy, DATA_KEY);
+    ck_assert_ptr_eq(NULL, proxy_data_null);
 
-   efl_dbus_proxy_unref(proxy);
-   efl_dbus_object_unref(obj);
-   efl_dbus_connection_unref(conn);
+    efl_dbus_proxy_unref(proxy);
+    efl_dbus_object_unref(obj);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -393,8 +409,8 @@ EFL_END_TEST
 void
 efl_dbus_test_efl_dbus_proxy(TCase *tc)
 {
-   tcase_add_test(tc, utc_efl_dbus_proxy_info_get_call_p);
-   tcase_add_test(tc, utc_efl_dbus_proxy_send_call_p);
-   tcase_add_test(tc, utc_efl_dbus_proxy_send_and_block_p);
-   tcase_add_test(tc, utc_efl_dbus_proxy_data_p);
+    tcase_add_test(tc, utc_efl_dbus_proxy_info_get_call_p);
+    tcase_add_test(tc, utc_efl_dbus_proxy_send_call_p);
+    tcase_add_test(tc, utc_efl_dbus_proxy_send_and_block_p);
+    tcase_add_test(tc, utc_efl_dbus_proxy_data_p);
 }

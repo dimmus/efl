@@ -24,9 +24,9 @@ _efl_bounce_interpolator_efl_interpolator_interpolate(
     if ((progress < 0.0) || (progress > 1.0)) return progress;
 
     return core_animator_pos_map(progress,
-                                  CORE_POS_MAP_BOUNCE,
-                                  pd->rigidness,
-                                  (double)pd->bounces);
+                                 CORE_POS_MAP_BOUNCE,
+                                 pd->rigidness,
+                                 (double)pd->bounces);
 }
 
 EOLIAN static void

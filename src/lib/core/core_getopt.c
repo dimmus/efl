@@ -39,14 +39,14 @@ static Efl_Bool _core_getopt_desc_is_sentinel(const Core_Getopt_Desc *desc);
 static Core_Getopt_Desc_Arg_Requirement
             _core_getopt_desc_arg_requirement(const Core_Getopt_Desc *desc);
 static void _core_getopt_help_desc_setup_metavar(const Core_Getopt_Desc *desc,
-                                                  char *metavar,
-                                                  int  *metavarlen,
-                                                  int   maxsize);
+                                                 char *metavar,
+                                                 int  *metavarlen,
+                                                 int   maxsize);
 
 static void
-_core_getopt_help_print_replace_program(FILE                      *fp,
-                                         const Core_Getopt *parser EFL_UNUSED,
-                                         const char                *text)
+_core_getopt_help_print_replace_program(FILE                     *fp,
+                                        const Core_Getopt *parser EFL_UNUSED,
+                                        const char               *text)
 {
     do
     {
@@ -106,14 +106,14 @@ _core_getopt_help_usage(FILE *fp, const Core_Getopt *parser)
             for (; d->metavar != NULL; d++)
             {
                 Core_Getopt_Desc_Arg_Requirement ar;
-                char                              metavar[32];
-                int                               metavarlen = 0;
+                char                             metavar[32];
+                int                              metavarlen = 0;
 
                 ar = _core_getopt_desc_arg_requirement(d);
                 _core_getopt_help_desc_setup_metavar(d,
-                                                      metavar,
-                                                      &metavarlen,
-                                                      sizeof(metavar));
+                                                     metavar,
+                                                     &metavarlen,
+                                                     sizeof(metavar));
 
                 fputc(' ', fp);
                 if (ar != CORE_GETOPT_DESC_ARG_REQUIREMENT_YES) fputc('[', fp);
@@ -133,18 +133,16 @@ _core_getopt_help_usage(FILE *fp, const Core_Getopt *parser)
         return;
     }
 
-    _core_getopt_help_print_replace_program(fp,
-                                             parser,
-                                             gettext(parser->usage));
+    _core_getopt_help_print_replace_program(fp, parser, gettext(parser->usage));
 }
 
 static int
 _core_getopt_help_line(FILE       *fp,
-                        const int   base,
-                        const int   total,
-                        int         used,
-                        const char *text,
-                        int         len)
+                       const int   base,
+                       const int   total,
+                       int         used,
+                       const char *text,
+                       int         len)
 {
     int linebreak = 0;
     do
@@ -348,9 +346,9 @@ _core_getopt_desc_arg_requirement(const Core_Getopt_Desc *desc)
 
 static void
 _core_getopt_help_desc_setup_metavar(const Core_Getopt_Desc *desc,
-                                      char                    *metavar,
-                                      int                     *metavarlen,
-                                      int                      maxsize)
+                                     char                   *metavar,
+                                     int                    *metavarlen,
+                                     int                     maxsize)
 {
     if (desc->metavar)
     {
@@ -375,11 +373,11 @@ _core_getopt_help_desc_setup_metavar(const Core_Getopt_Desc *desc,
 }
 
 static int
-_core_getopt_help_desc_show_arg(FILE                             *fp,
-                                 Core_Getopt_Desc_Arg_Requirement requirement,
-                                 const char                       *metavar,
-                                 int                               metavarlen,
-                                 Efl_Bool                          show_attr)
+_core_getopt_help_desc_show_arg(FILE                            *fp,
+                                Core_Getopt_Desc_Arg_Requirement requirement,
+                                const char                      *metavar,
+                                int                              metavarlen,
+                                Efl_Bool                         show_attr)
 {
     int used;
 
@@ -414,16 +412,16 @@ _core_getopt_help_desc_show_arg(FILE                             *fp,
 }
 
 static int
-_core_getopt_help_desc_store(FILE                    *fp,
-                              const int                base,
-                              const int                total,
-                              int                      used,
-                              const Core_Getopt_Desc *desc)
+_core_getopt_help_desc_store(FILE                   *fp,
+                             const int               base,
+                             const int               total,
+                             int                     used,
+                             const Core_Getopt_Desc *desc)
 {
     const Core_Getopt_Desc_Store *store = &desc->action_param.store;
-    char                           buf[64];
-    const char                    *str;
-    size_t                         len;
+    char                          buf[64];
+    const char                   *str;
+    size_t                        len;
 
     fputc('\n', fp);
     for (used = 0; used < base; used++)
@@ -482,11 +480,11 @@ _core_getopt_help_desc_store(FILE                    *fp,
     }
 
     used = _core_getopt_help_line(fp,
-                                   base,
-                                   total,
-                                   used,
-                                   _("Type: "),
-                                   strlen(_("Type: ")));
+                                  base,
+                                  total,
+                                  used,
+                                  _("Type: "),
+                                  strlen(_("Type: ")));
     used = _core_getopt_help_line(fp, base, total, used, str, len);
 
     if (store->arg_req == CORE_GETOPT_DESC_ARG_REQUIREMENT_YES) goto end;
@@ -554,11 +552,11 @@ _core_getopt_help_desc_store(FILE                    *fp,
     }
 
     used = _core_getopt_help_line(fp,
-                                   base,
-                                   total,
-                                   used,
-                                   _("Default: "),
-                                   strlen(_("Default: ")));
+                                  base,
+                                  total,
+                                  used,
+                                  _("Default: "),
+                                  strlen(_("Default: ")));
     used = _core_getopt_help_line(fp, base, total, used, str, len);
 
 end:
@@ -566,11 +564,11 @@ end:
 }
 
 static int
-_core_getopt_help_desc_choices(FILE                    *fp,
-                                const int                base,
-                                const int                total,
-                                int                      used,
-                                const Core_Getopt_Desc *desc)
+_core_getopt_help_desc_choices(FILE                   *fp,
+                               const int               base,
+                               const int               total,
+                               int                     used,
+                               const Core_Getopt_Desc *desc)
 {
     const char *const *itr;
     const char         sep[]  = ", ";
@@ -585,11 +583,11 @@ _core_getopt_help_desc_choices(FILE                    *fp,
         fputc(' ', fp);
 
     used = _core_getopt_help_line(fp,
-                                   base,
-                                   total,
-                                   used,
-                                   _("Choices: "),
-                                   strlen(_("Choices: ")));
+                                  base,
+                                  total,
+                                  used,
+                                  _("Choices: "),
+                                  strlen(_("Choices: ")));
 
     for (itr = desc->action_param.choices; *itr; itr++)
     {
@@ -603,11 +601,11 @@ _core_getopt_help_desc_choices(FILE                    *fp,
 }
 
 static int
-_core_getopt_help_desc_categories(FILE                    *fp,
-                                   const int                base,
-                                   const int                total,
-                                   int                      used,
-                                   const Core_Getopt_Desc *desc)
+_core_getopt_help_desc_categories(FILE                   *fp,
+                                  const int               base,
+                                  const int               total,
+                                  int                     used,
+                                  const Core_Getopt_Desc *desc)
 {
     const char sep[]      = ", ";
     const int  seplen     = sizeof(sep) - 1;
@@ -627,19 +625,19 @@ _core_getopt_help_desc_categories(FILE                    *fp,
             goto hascat;
 
     return _core_getopt_help_line(fp,
-                                   base,
-                                   total,
-                                   used,
-                                   _("No categories available."),
-                                   strlen(_("No categories available.")));
+                                  base,
+                                  total,
+                                  used,
+                                  _("No categories available."),
+                                  strlen(_("No categories available.")));
 
 hascat:
     used = _core_getopt_help_line(fp,
-                                   base,
-                                   total,
-                                   used,
-                                   _("Categories: "),
-                                   strlen(_("Categories: ")));
+                                  base,
+                                  total,
+                                  used,
+                                  _("Categories: "),
+                                  strlen(_("Categories: ")));
 
     for (; !_core_getopt_desc_is_sentinel(desc); desc++)
     {
@@ -648,11 +646,11 @@ hascat:
         if (cat_before)
             used = _core_getopt_help_line(fp, base, total, used, sep, seplen);
         used       = _core_getopt_help_line(fp,
-                                       base,
-                                       total,
-                                       used,
-                                       desc->longname,
-                                       strlen(desc->longname));
+                                      base,
+                                      total,
+                                      used,
+                                      desc->longname,
+                                      strlen(desc->longname));
         cat_before = EFL_TRUE;
     }
 
@@ -660,14 +658,14 @@ hascat:
 }
 
 static void
-_core_getopt_help_desc(FILE                    *fp,
-                        const Core_Getopt_Desc *desc,
-                        const Core_Getopt      *parser)
+_core_getopt_help_desc(FILE                   *fp,
+                       const Core_Getopt_Desc *desc,
+                       const Core_Getopt      *parser)
 {
     Core_Getopt_Desc_Arg_Requirement arg_req;
-    char                              metavar[32] = "ARG";
-    int                               metavarlen  = 3;
-    int                               used;
+    char                             metavar[32] = "ARG";
+    int                              metavarlen  = 3;
+    int                              used;
 
     if (desc->action == CORE_GETOPT_ACTION_CATEGORY)
     {
@@ -678,9 +676,9 @@ _core_getopt_help_desc(FILE                    *fp,
     arg_req = _core_getopt_desc_arg_requirement(desc);
     if (arg_req != CORE_GETOPT_DESC_ARG_REQUIREMENT_NO)
         _core_getopt_help_desc_setup_metavar(desc,
-                                              metavar,
-                                              &metavarlen,
-                                              sizeof(metavar));
+                                             metavar,
+                                             &metavarlen,
+                                             sizeof(metavar));
 
     fputs("  ", fp);
     used = 2;
@@ -691,10 +689,10 @@ _core_getopt_help_desc(FILE                    *fp,
         fputc(desc->shortname, fp);
         used += 2;
         used += _core_getopt_help_desc_show_arg(fp,
-                                                 arg_req,
-                                                 metavar,
-                                                 metavarlen,
-                                                 EFL_TRUE);
+                                                arg_req,
+                                                metavar,
+                                                metavarlen,
+                                                EFL_TRUE);
     }
 
     if (desc->shortname && desc->longname)
@@ -711,18 +709,18 @@ _core_getopt_help_desc(FILE                    *fp,
         fputs(desc->longname, fp);
         used += 2 + namelen;
         used += _core_getopt_help_desc_show_arg(fp,
-                                                 arg_req,
-                                                 metavar,
-                                                 metavarlen,
-                                                 EFL_TRUE);
+                                                arg_req,
+                                                metavar,
+                                                metavarlen,
+                                                EFL_TRUE);
     }
     else if ((!desc->shortname) && (desc->metavar))
     {
         used += _core_getopt_help_desc_show_arg(fp,
-                                                 arg_req,
-                                                 metavar,
-                                                 metavarlen,
-                                                 EFL_FALSE);
+                                                arg_req,
+                                                metavar,
+                                                metavarlen,
+                                                EFL_FALSE);
     }
 
     if (!desc->help) goto end;
@@ -737,11 +735,11 @@ _core_getopt_help_desc(FILE                    *fp,
         fputc(' ', fp);
 
     used = _core_getopt_help_line(fp,
-                                   helpcol,
-                                   cols,
-                                   used,
-                                   desc->help,
-                                   strlen(desc->help));
+                                  helpcol,
+                                  cols,
+                                  used,
+                                  desc->help,
+                                  strlen(desc->help));
 
     switch (desc->action)
     {
@@ -755,10 +753,10 @@ _core_getopt_help_desc(FILE                    *fp,
 
         case CORE_GETOPT_ACTION_HELP:
             _core_getopt_help_desc_categories(fp,
-                                               helpcol,
-                                               cols,
-                                               used,
-                                               parser->descs);
+                                              helpcol,
+                                              cols,
+                                              used,
+                                              parser->descs);
             break;
 
         default:
@@ -835,12 +833,12 @@ Core_getopt_help(FILE *fp, const Core_Getopt *parser)
 }
 
 EAPI Efl_Bool
-Core_getopt_help_category(FILE               *fp,
-                           const Core_Getopt *parser,
-                           const char         *category)
+Core_getopt_help_category(FILE              *fp,
+                          const Core_Getopt *parser,
+                          const char        *category)
 {
     const Core_Getopt_Desc *desc;
-    Efl_Bool                 found = EFL_FALSE;
+    Efl_Bool                found = EFL_FALSE;
 
     if (!category || !_core_getopt_help_prepare(parser)) return EFL_FALSE;
     for (desc = parser->descs; !_core_getopt_desc_is_sentinel(desc); desc++)
@@ -873,8 +871,8 @@ static const Core_Getopt_Desc *
 _core_getopt_parse_find_long(const Core_Getopt *parser, const char *name)
 {
     const Core_Getopt_Desc *desc = parser->descs;
-    const char              *p    = strchr(name, '=');
-    int                      len  = 0;
+    const char             *p    = strchr(name, '=');
+    int                     len  = 0;
 
     if (p) len = p - name;
 
@@ -909,8 +907,8 @@ _core_getopt_parse_find_short(const Core_Getopt *parser, char name)
 
 static int
 _core_getopt_parse_find_nonargs_base(const Core_Getopt *parser,
-                                      int                 argc,
-                                      char              **argv)
+                                     int                argc,
+                                     char             **argv)
 {
     char **nonargs;
     int    src, dst, used, base, abreak;
@@ -925,7 +923,7 @@ _core_getopt_parse_find_nonargs_base(const Core_Getopt *parser,
     {
         const Core_Getopt_Desc          *desc;
         Core_Getopt_Desc_Arg_Requirement arg_req;
-        char                             *arg = argv[src];
+        char                            *arg = argv[src];
 
         if (abreak)
         {
@@ -998,8 +996,8 @@ found_nonarg:
 
 static void
 _core_getopt_desc_print_error(const Core_Getopt_Desc *desc,
-                               const char              *fmt,
-                               ...)
+                              const char             *fmt,
+                              ...)
 {
     va_list ap;
 
@@ -1023,9 +1021,9 @@ _core_getopt_desc_print_error(const Core_Getopt_Desc *desc,
         char metavar[32];
         int  metavarlen = 0;
         _core_getopt_help_desc_setup_metavar(desc,
-                                              metavar,
-                                              &metavarlen,
-                                              sizeof(metavar));
+                                             metavar,
+                                             &metavarlen,
+                                             sizeof(metavar));
         fputs(metavar, stderr);
     }
 
@@ -1079,14 +1077,14 @@ _core_getopt_parse_double(const char *str, double *v)
 
 static Efl_Bool
 _core_getopt_parse_store(const Core_Getopt *parser EFL_UNUSED,
-                          const Core_Getopt_Desc   *desc,
-                          Core_Getopt_Value        *value,
-                          const char                *arg_val)
+                         const Core_Getopt_Desc   *desc,
+                         Core_Getopt_Value        *value,
+                         const char               *arg_val)
 {
     const Core_Getopt_Desc_Store *store = &desc->action_param.store;
-    long int                       v;
-    double                         d;
-    Efl_Bool                       b;
+    long int                      v;
+    double                        d;
+    Efl_Bool                      b;
 
     if (!value->ptrp)
     {
@@ -1121,8 +1119,8 @@ _core_getopt_parse_store(const Core_Getopt *parser EFL_UNUSED,
             else
             {
                 _core_getopt_desc_print_error(desc,
-                                               _("unknown boolean value %s.\n"),
-                                               arg_val);
+                                              _("unknown boolean value %s.\n"),
+                                              arg_val);
                 return EFL_FALSE;
             }
 
@@ -1166,8 +1164,8 @@ _core_getopt_parse_store(const Core_Getopt *parser EFL_UNUSED,
 
 error:
     _core_getopt_desc_print_error(desc,
-                                   _("invalid number format %s\n"),
-                                   arg_val);
+                                  _("invalid number format %s\n"),
+                                  arg_val);
     return EFL_FALSE;
 
 use_optional:
@@ -1215,9 +1213,9 @@ use_optional:
 
 static Efl_Bool
 _core_getopt_parse_store_const(const Core_Getopt *parser EFL_UNUSED,
-                                const Core_Getopt_Desc   *desc,
-                                Core_Getopt_Value        *val,
-                                const char *arg_val        EFL_UNUSED)
+                               const Core_Getopt_Desc   *desc,
+                               Core_Getopt_Value        *val,
+                               const char *arg_val       EFL_UNUSED)
 {
     if (!val->ptrp)
     {
@@ -1231,9 +1229,9 @@ _core_getopt_parse_store_const(const Core_Getopt *parser EFL_UNUSED,
 
 static Efl_Bool
 _core_getopt_parse_store_true(const Core_Getopt *parser EFL_UNUSED,
-                               const Core_Getopt_Desc   *desc,
-                               Core_Getopt_Value        *val,
-                               const char *arg_val        EFL_UNUSED)
+                              const Core_Getopt_Desc   *desc,
+                              Core_Getopt_Value        *val,
+                              const char *arg_val       EFL_UNUSED)
 {
     if (!val->boolp)
     {
@@ -1246,9 +1244,9 @@ _core_getopt_parse_store_true(const Core_Getopt *parser EFL_UNUSED,
 
 static Efl_Bool
 _core_getopt_parse_store_false(const Core_Getopt *parser EFL_UNUSED,
-                                const Core_Getopt_Desc   *desc,
-                                Core_Getopt_Value        *val,
-                                const char *arg_val        EFL_UNUSED)
+                               const Core_Getopt_Desc   *desc,
+                               Core_Getopt_Value        *val,
+                               const char *arg_val       EFL_UNUSED)
 {
     if (!val->boolp)
     {
@@ -1261,9 +1259,9 @@ _core_getopt_parse_store_false(const Core_Getopt *parser EFL_UNUSED,
 
 static Efl_Bool
 _core_getopt_parse_choice(const Core_Getopt *parser EFL_UNUSED,
-                           const Core_Getopt_Desc   *desc,
-                           Core_Getopt_Value        *val,
-                           const char                *arg_val)
+                          const Core_Getopt_Desc   *desc,
+                          Core_Getopt_Value        *val,
+                          const char               *arg_val)
 {
     const char *const *pchoice;
 
@@ -1301,9 +1299,9 @@ _core_getopt_parse_choice(const Core_Getopt *parser EFL_UNUSED,
 
 static Efl_Bool
 _core_getopt_parse_append(const Core_Getopt *parser EFL_UNUSED,
-                           const Core_Getopt_Desc   *desc,
-                           Core_Getopt_Value        *val,
-                           const char                *arg_val)
+                          const Core_Getopt_Desc   *desc,
+                          Core_Getopt_Value        *val,
+                          const char               *arg_val)
 {
     void    *data;
     long int v;
@@ -1313,7 +1311,7 @@ _core_getopt_parse_append(const Core_Getopt *parser EFL_UNUSED,
     if (!arg_val)
     {
         _core_getopt_desc_print_error(desc,
-                                       _("missing parameter to append.\n"));
+                                      _("missing parameter to append.\n"));
         return EFL_FALSE;
     }
 
@@ -1406,7 +1404,7 @@ _core_getopt_parse_append(const Core_Getopt *parser EFL_UNUSED,
         default:
             {
                 _core_getopt_desc_print_error(desc,
-                                               _("could not parse value.\n"));
+                                              _("could not parse value.\n"));
                 return EFL_FALSE;
             }
     }
@@ -1416,16 +1414,16 @@ _core_getopt_parse_append(const Core_Getopt *parser EFL_UNUSED,
 
 error:
     _core_getopt_desc_print_error(desc,
-                                   _("invalid number format %s\n"),
-                                   arg_val);
+                                  _("invalid number format %s\n"),
+                                  arg_val);
     return EFL_FALSE;
 }
 
 static Efl_Bool
 _core_getopt_parse_count(const Core_Getopt *parser EFL_UNUSED,
-                          const Core_Getopt_Desc   *desc,
-                          Core_Getopt_Value        *val,
-                          const char *arg_val        EFL_UNUSED)
+                         const Core_Getopt_Desc   *desc,
+                         Core_Getopt_Value        *val,
+                         const char *arg_val       EFL_UNUSED)
 {
     if (!val->intp)
     {
@@ -1439,9 +1437,9 @@ _core_getopt_parse_count(const Core_Getopt *parser EFL_UNUSED,
 
 static Efl_Bool
 _core_getopt_parse_callback(const Core_Getopt      *parser,
-                             const Core_Getopt_Desc *desc,
-                             Core_Getopt_Value      *val,
-                             const char              *arg_val)
+                            const Core_Getopt_Desc *desc,
+                            Core_Getopt_Value      *val,
+                            const char             *arg_val)
 {
     const Core_Getopt_Desc_Callback *cb = &desc->action_param.callback;
 
@@ -1470,7 +1468,7 @@ _core_getopt_parse_callback(const Core_Getopt      *parser,
         if (!val->ptrp)
         {
             _core_getopt_desc_print_error(desc,
-                                           _("value has no pointer set.\n"));
+                                          _("value has no pointer set.\n"));
             return EFL_FALSE;
         }
     }
@@ -1486,9 +1484,9 @@ _core_getopt_parse_callback(const Core_Getopt      *parser,
 
 static Efl_Bool
 _core_getopt_parse_help(const Core_Getopt           *parser,
-                         const Core_Getopt_Desc *desc EFL_UNUSED,
-                         Core_Getopt_Value           *val,
-                         const char                   *arg_val)
+                        const Core_Getopt_Desc *desc EFL_UNUSED,
+                        Core_Getopt_Value           *val,
+                        const char                  *arg_val)
 {
     if (val->boolp) (*val->boolp) = EFL_TRUE;
     if (arg_val) return Core_getopt_help_category(stdout, parser, arg_val);
@@ -1498,9 +1496,9 @@ _core_getopt_parse_help(const Core_Getopt           *parser,
 
 static Efl_Bool
 _core_getopt_parse_version(const Core_Getopt      *parser,
-                            const Core_Getopt_Desc *desc,
-                            Core_Getopt_Value      *val,
-                            const char *arg_val      EFL_UNUSED)
+                           const Core_Getopt_Desc *desc,
+                           Core_Getopt_Value      *val,
+                           const char *arg_val     EFL_UNUSED)
 {
     if (val->boolp) (*val->boolp) = EFL_TRUE;
     if (!parser->version)
@@ -1514,9 +1512,9 @@ _core_getopt_parse_version(const Core_Getopt      *parser,
 
 static Efl_Bool
 _core_getopt_parse_copyright(const Core_Getopt      *parser,
-                              const Core_Getopt_Desc *desc,
-                              Core_Getopt_Value      *val,
-                              const char *arg_val      EFL_UNUSED)
+                             const Core_Getopt_Desc *desc,
+                             Core_Getopt_Value      *val,
+                             const char *arg_val     EFL_UNUSED)
 {
     if (val->boolp) (*val->boolp) = EFL_TRUE;
     if (!parser->copyright)
@@ -1530,9 +1528,9 @@ _core_getopt_parse_copyright(const Core_Getopt      *parser,
 
 static Efl_Bool
 _core_getopt_parse_license(const Core_Getopt      *parser,
-                            const Core_Getopt_Desc *desc,
-                            Core_Getopt_Value      *val,
-                            const char *arg_val      EFL_UNUSED)
+                           const Core_Getopt_Desc *desc,
+                           Core_Getopt_Value      *val,
+                           const char *arg_val     EFL_UNUSED)
 {
     if (val->boolp) (*val->boolp) = EFL_TRUE;
     if (!parser->license)
@@ -1546,9 +1544,9 @@ _core_getopt_parse_license(const Core_Getopt      *parser,
 
 static Efl_Bool
 _core_getopt_parse_break(const Core_Getopt *parser    EFL_UNUSED,
-                          const Core_Getopt_Desc *desc EFL_UNUSED,
-                          Core_Getopt_Value           *val,
-                          const char *arg_val           EFL_UNUSED)
+                         const Core_Getopt_Desc *desc EFL_UNUSED,
+                         Core_Getopt_Value           *val,
+                         const char *arg_val          EFL_UNUSED)
 {
     if (val->boolp) (*val->boolp) = EFL_TRUE;
 
@@ -1557,9 +1555,9 @@ _core_getopt_parse_break(const Core_Getopt *parser    EFL_UNUSED,
 
 static Efl_Bool
 _core_getopt_desc_handle(const Core_Getopt      *parser,
-                          const Core_Getopt_Desc *desc,
-                          Core_Getopt_Value      *value,
-                          const char              *arg_val)
+                         const Core_Getopt_Desc *desc,
+                         Core_Getopt_Value      *value,
+                         const char             *arg_val)
 {
     switch (desc->action)
     {
@@ -1567,19 +1565,13 @@ _core_getopt_desc_handle(const Core_Getopt      *parser,
             return _core_getopt_parse_store(parser, desc, value, arg_val);
 
         case CORE_GETOPT_ACTION_STORE_CONST:
-            return _core_getopt_parse_store_const(parser,
-                                                   desc,
-                                                   value,
-                                                   arg_val);
+            return _core_getopt_parse_store_const(parser, desc, value, arg_val);
 
         case CORE_GETOPT_ACTION_STORE_TRUE:
             return _core_getopt_parse_store_true(parser, desc, value, arg_val);
 
         case CORE_GETOPT_ACTION_STORE_FALSE:
-            return _core_getopt_parse_store_false(parser,
-                                                   desc,
-                                                   value,
-                                                   arg_val);
+            return _core_getopt_parse_store_false(parser, desc, value, arg_val);
 
         case CORE_GETOPT_ACTION_CHOICE:
             return _core_getopt_parse_choice(parser, desc, value, arg_val);
@@ -1615,19 +1607,19 @@ _core_getopt_desc_handle(const Core_Getopt      *parser,
 
 static Efl_Bool
 _core_getopt_parse_arg_long(const Core_Getopt *parser,
-                             Core_Getopt_Value *values,
-                             int argc            EFL_UNUSED,
-                             char              **argv,
-                             int                *idx,
-                             int                *nonargs,
-                             const char         *arg)
+                            Core_Getopt_Value *values,
+                            int argc           EFL_UNUSED,
+                            char             **argv,
+                            int               *idx,
+                            int               *nonargs,
+                            const char        *arg)
 {
     const Core_Getopt_Desc          *desc;
     Core_Getopt_Desc_Arg_Requirement arg_req;
-    const char                       *arg_val;
-    int                               desc_idx;
+    const char                      *arg_val;
+    int                              desc_idx;
     Core_Getopt_Value               *value;
-    Efl_Bool                          ret;
+    Efl_Bool                         ret;
 
     desc = _core_getopt_parse_find_long(parser, arg);
     if (!desc)
@@ -1686,23 +1678,23 @@ _core_getopt_parse_arg_long(const Core_Getopt *parser,
 
 static Efl_Bool
 _core_getopt_parse_arg_short(const Core_Getopt *parser,
-                              Core_Getopt_Value *values,
-                              int argc            EFL_UNUSED,
-                              char              **argv,
-                              int                *idx,
-                              int                *nonargs,
-                              const char         *arg)
+                             Core_Getopt_Value *values,
+                             int argc           EFL_UNUSED,
+                             char             **argv,
+                             int               *idx,
+                             int               *nonargs,
+                             const char        *arg)
 {
     int run = 1;
     while (run && (arg[0] != '\0'))
     {
-        int                               opt = arg[0];
+        int                              opt = arg[0];
         const Core_Getopt_Desc          *desc;
         Core_Getopt_Desc_Arg_Requirement arg_req;
-        const char                       *arg_val;
-        int                               desc_idx;
+        const char                      *arg_val;
+        int                              desc_idx;
         Core_Getopt_Value               *value;
-        Efl_Bool                          ret;
+        Efl_Bool                         ret;
 
         desc = _core_getopt_parse_find_short(parser, arg[0]);
         if (!desc)
@@ -1743,8 +1735,7 @@ _core_getopt_parse_arg_short(const Core_Getopt *parser,
                 if (arg_val && arg_val[0] == '\0') arg_val = NULL;
             }
 
-            if ((!arg_val) &&
-                (arg_req == CORE_GETOPT_DESC_ARG_REQUIREMENT_YES))
+            if ((!arg_val) && (arg_req == CORE_GETOPT_DESC_ARG_REQUIREMENT_YES))
             {
                 fprintf(stderr,
                         _("ERROR: option -%c requires an argument!\n"),
@@ -1768,11 +1759,11 @@ _core_getopt_parse_arg_short(const Core_Getopt *parser,
 
 static Efl_Bool
 _core_getopt_parse_arg(const Core_Getopt *parser,
-                        Core_Getopt_Value *values,
-                        int                 argc,
-                        char              **argv,
-                        int                *idx,
-                        int                *nonargs)
+                       Core_Getopt_Value *values,
+                       int                argc,
+                       char             **argv,
+                       int               *idx,
+                       int               *nonargs)
 {
     char *arg = argv[*idx];
 
@@ -1794,44 +1785,44 @@ _core_getopt_parse_arg(const Core_Getopt *parser,
 
     if (arg[1] == '-')
         return _core_getopt_parse_arg_long(parser,
+                                           values,
+                                           argc,
+                                           argv,
+                                           idx,
+                                           nonargs,
+                                           arg + 2);
+    else
+        return _core_getopt_parse_arg_short(parser,
                                             values,
                                             argc,
                                             argv,
                                             idx,
                                             nonargs,
-                                            arg + 2);
-    else
-        return _core_getopt_parse_arg_short(parser,
-                                             values,
-                                             argc,
-                                             argv,
-                                             idx,
-                                             nonargs,
-                                             arg + 1);
+                                            arg + 1);
 }
 
 static Efl_Bool
 _core_getopt_parse_pos(const Core_Getopt       *parser,
-                        const Core_Getopt_Desc **p_desc,
-                        Core_Getopt_Value       *values,
-                        int                       argc,
-                        char                    **argv,
-                        int                      *idx,
-                        int                      *nonargs)
+                       const Core_Getopt_Desc **p_desc,
+                       Core_Getopt_Value       *values,
+                       int                      argc,
+                       char                   **argv,
+                       int                     *idx,
+                       int                     *nonargs)
 {
     const Core_Getopt_Desc          *desc = *p_desc;
     Core_Getopt_Desc_Arg_Requirement arg_req;
-    char                              metavar[32];
-    int                               metavarlen = 0;
-    const char                       *arg_val;
-    int                               desc_idx;
+    char                             metavar[32];
+    int                              metavarlen = 0;
+    const char                      *arg_val;
+    int                              desc_idx;
     Core_Getopt_Value               *value;
-    Efl_Bool                          ret;
+    Efl_Bool                         ret;
 
     _core_getopt_help_desc_setup_metavar(desc,
-                                          metavar,
-                                          &metavarlen,
-                                          sizeof(metavar));
+                                         metavar,
+                                         &metavarlen,
+                                         sizeof(metavar));
 
     desc_idx = desc - parser->descs;
     value    = values + desc_idx;
@@ -1843,8 +1834,8 @@ _core_getopt_parse_pos(const Core_Getopt       *parser,
         if (arg_req == CORE_GETOPT_DESC_ARG_REQUIREMENT_YES)
         {
             /* TODO: should we consider callback here as well? */
-            if ((desc->action == CORE_GETOPT_ACTION_APPEND) &&
-                (value->listp) && (*value->listp))
+            if ((desc->action == CORE_GETOPT_ACTION_APPEND) && (value->listp) &&
+                (*value->listp))
             {
                 printf("append desc: %s (%d), value: %p\n",
                        desc->metavar,
@@ -1909,10 +1900,10 @@ _core_getopt_parse_pos(const Core_Getopt       *parser,
 
 static const Core_Getopt_Desc *
 _core_getopt_parse_find_short_other(const Core_Getopt      *parser,
-                                     const Core_Getopt_Desc *orig)
+                                    const Core_Getopt_Desc *orig)
 {
     const Core_Getopt_Desc *desc = parser->descs;
-    const char               c    = orig->shortname;
+    const char              c    = orig->shortname;
 
     for (; !_core_getopt_desc_is_sentinel(desc); desc++)
     {
@@ -1926,10 +1917,10 @@ _core_getopt_parse_find_short_other(const Core_Getopt      *parser,
 
 static const Core_Getopt_Desc *
 _core_getopt_parse_find_long_other(const Core_Getopt      *parser,
-                                    const Core_Getopt_Desc *orig)
+                                   const Core_Getopt_Desc *orig)
 {
     const Core_Getopt_Desc *desc = parser->descs;
-    const char              *name = orig->longname;
+    const char             *name = orig->longname;
 
     for (; !_core_getopt_desc_is_sentinel(desc); desc++)
     {
@@ -1955,8 +1946,8 @@ core_getopt_parser_has_duplicates(const Core_Getopt *parser)
             if (other)
             {
                 _core_getopt_desc_print_error(desc,
-                                               "short name -%c already exists.",
-                                               desc->shortname);
+                                              "short name -%c already exists.",
+                                              desc->shortname);
 
                 if (other->longname)
                     fprintf(stderr, " Other is --%s.\n", other->longname);
@@ -1972,8 +1963,8 @@ core_getopt_parser_has_duplicates(const Core_Getopt *parser)
             if (other)
             {
                 _core_getopt_desc_print_error(desc,
-                                               "long name --%s already exists.",
-                                               desc->longname);
+                                              "long name --%s already exists.",
+                                              desc->longname);
 
                 if (other->shortname)
                     fprintf(stderr, " Other is -%c.\n", other->shortname);
@@ -1996,9 +1987,9 @@ _core_getopt_find_help(const Core_Getopt *parser)
 
 EAPI int
 core_getopt_parse(const Core_Getopt *parser,
-                   Core_Getopt_Value *values,
-                   int                 argc,
-                   char              **argv)
+                  Core_Getopt_Value *values,
+                  int                argc,
+                  char             **argv)
 {
     int i, nonargs;
 
@@ -2053,13 +2044,13 @@ error:
 
 EAPI int
 core_getopt_parse_positional(const Core_Getopt *parser,
-                              Core_Getopt_Value *values,
-                              int                 argc,
-                              char              **argv,
-                              int                 start)
+                             Core_Getopt_Value *values,
+                             int                argc,
+                             char             **argv,
+                             int                start)
 {
     const Core_Getopt_Desc *desc;
-    int                      nonargs;
+    int                     nonargs;
 
     if (!parser)
     {
@@ -2093,12 +2084,12 @@ core_getopt_parse_positional(const Core_Getopt *parser,
         ;
     while (desc->metavar)
         if (!_core_getopt_parse_pos(parser,
-                                     &desc,
-                                     values,
-                                     argc,
-                                     argv,
-                                     &start,
-                                     &nonargs))
+                                    &desc,
+                                    values,
+                                    argc,
+                                    argv,
+                                    &start,
+                                    &nonargs))
             goto error;
 
     return nonargs;
@@ -2130,10 +2121,10 @@ Core_getopt_list_free(Eina_List *list)
 
 EAPI Efl_Bool
 Core_getopt_callback_geometry_parse(const Core_Getopt *parser    EFL_UNUSED,
-                                     const Core_Getopt_Desc *desc EFL_UNUSED,
-                                     const char                   *str,
-                                     void *data                    EFL_UNUSED,
-                                     Core_Getopt_Value           *storage)
+                                    const Core_Getopt_Desc *desc EFL_UNUSED,
+                                    const char                  *str,
+                                    void *data                   EFL_UNUSED,
+                                    Core_Getopt_Value           *storage)
 {
     Eina_Rectangle *v = (Eina_Rectangle *)storage->ptrp;
 
@@ -2148,10 +2139,10 @@ Core_getopt_callback_geometry_parse(const Core_Getopt *parser    EFL_UNUSED,
 
 EAPI Efl_Bool
 Core_getopt_callback_size_parse(const Core_Getopt *parser    EFL_UNUSED,
-                                 const Core_Getopt_Desc *desc EFL_UNUSED,
-                                 const char                   *str,
-                                 void *data                    EFL_UNUSED,
-                                 Core_Getopt_Value           *storage)
+                                const Core_Getopt_Desc *desc EFL_UNUSED,
+                                const char                  *str,
+                                void *data                   EFL_UNUSED,
+                                Core_Getopt_Value           *storage)
 {
     Eina_Rectangle *v = (Eina_Rectangle *)storage->ptrp;
 

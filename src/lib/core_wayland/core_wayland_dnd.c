@@ -33,7 +33,7 @@
 
 struct _dnd_task
 {
-    void       *data;
+    void      *data;
     Core_Fd_Cb cb;
 };
 
@@ -102,9 +102,9 @@ data_source_target(void                         *data,
     if (mime_type) ev->type = strdup(mime_type);
 
     core_event_add(ECORE_WL2_EVENT_DATA_SOURCE_TARGET,
-                    ev,
-                    data_source_target_free,
-                    NULL);
+                   ev,
+                   data_source_target_free,
+                   NULL);
 }
 
 static void
@@ -145,9 +145,9 @@ data_source_send(void                  *data,
     ev->display->refs++;
 
     core_event_add(ECORE_WL2_EVENT_DATA_SOURCE_SEND,
-                    ev,
-                    data_source_send_free,
-                    NULL);
+                   ev,
+                   data_source_send_free,
+                   NULL);
 }
 
 static void
@@ -294,9 +294,9 @@ _ecore_wl_dnd_enter(Ecore_Wl_Input       *input,
     ev->display->refs++;
 
     core_event_add(ECORE_WL2_EVENT_DND_ENTER,
-                    ev,
-                    _unset_serial,
-                    input->drag.offer);
+                   ev,
+                   _unset_serial,
+                   input->drag.offer);
 }
 
 static void
@@ -333,9 +333,9 @@ _ecore_wl_dnd_leave(Ecore_Wl_Input *input)
     input->drag.enter_serial = 0;
     input->drag.offer        = NULL;
     core_event_add(ECORE_WL2_EVENT_DND_LEAVE,
-                    ev,
-                    _delay_offer_destroy,
-                    ev->offer);
+                   ev,
+                   _delay_offer_destroy,
+                   ev->offer);
 }
 
 void
@@ -362,9 +362,9 @@ _ecore_wl_dnd_motion(Ecore_Wl_Input *input, int x, int y, uint32_t serial)
     ev->display->refs++;
 
     core_event_add(ECORE_WL2_EVENT_DND_MOTION,
-                    ev,
-                    _unset_serial,
-                    input->drag.offer);
+                   ev,
+                   _unset_serial,
+                   input->drag.offer);
 }
 
 void
@@ -386,9 +386,9 @@ _ecore_wl_dnd_drop(Ecore_Wl_Input *input)
     ev->display->refs++;
 
     core_event_add(ECORE_WL2_EVENT_DND_DROP,
-                    ev,
-                    _display_event_free,
-                    ev->display);
+                   ev,
+                   _display_event_free,
+                   ev->display);
 }
 
 void
@@ -407,9 +407,9 @@ _ecore_wl_dnd_selection(Ecore_Wl_Input *input, struct wl_data_offer *offer)
     ev->display = input->display;
     ev->display->refs++;
     core_event_add(ECORE_WL2_EVENT_SEAT_SELECTION,
-                    ev,
-                    _display_event_free,
-                    ev->display);
+                   ev,
+                   _display_event_free,
+                   ev->display);
 }
 
 void
@@ -556,9 +556,9 @@ ecore_wl_dnd_drag_end(Ecore_Wl_Input *input)
     ev->display->refs++;
 
     core_event_add(ECORE_WL2_EVENT_DND_END,
-                    ev,
-                    _display_event_free,
-                    ev->display);
+                   ev,
+                   _display_event_free,
+                   ev->display);
 }
 
 EAPI Ecore_Wl_Offer *
@@ -868,9 +868,9 @@ _offer_receive_fd_cb(void *data, Core_Fd_Handler *fdh)
 EAPI void
 ecore_wl_offer_receive(Ecore_Wl_Offer *offer, char *mime)
 {
-    Read_Buffer      *buffer;
+    Read_Buffer     *buffer;
     Core_Fd_Handler *handler;
-    int               pipe[2];
+    int              pipe[2];
 
     EINA_SAFETY_ON_NULL_RETURN(offer);
 
@@ -890,11 +890,11 @@ ecore_wl_offer_receive(Ecore_Wl_Offer *offer, char *mime)
     close(pipe[1]);
 
     handler = core_main_fd_handler_file_add(pipe[0],
-                                             CORE_FD_READ | CORE_FD_ERROR,
-                                             _offer_receive_fd_cb,
-                                             buffer,
-                                             NULL,
-                                             NULL);
+                                            CORE_FD_READ | CORE_FD_ERROR,
+                                            _offer_receive_fd_cb,
+                                            buffer,
+                                            NULL,
+                                            NULL);
 
     offer->reads = eina_list_append(offer->reads, handler);
     return;

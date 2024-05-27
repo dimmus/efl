@@ -100,9 +100,10 @@ _ecore_wl_surface_modules_init(void)
         }
     }
 #endif
-    supplied_modules = eina_module_arch_list_get(NULL,
-                                                 EFL_LIB_DIR "/core_wayland/engines",
-                                                 EFL_MODULE_ARCH);
+    supplied_modules =
+        eina_module_arch_list_get(NULL,
+                                  EFL_LIB_DIR "/core_wayland/engines",
+                                  EFL_MODULE_ARCH);
     eina_module_list_load(supplied_modules);
 
     mod_dir = getenv("ECORE_WL2_SURFACE_MODULE_DIR");
@@ -171,53 +172,52 @@ ecore_wl_init(void)
     printf("-> phase 6 ");
 
    /* handle creating new Ecore_Wl event types */
-    ECORE_WL2_EVENT_CONNECT                        = core_event_type_new();
-    ECORE_WL2_EVENT_DISCONNECT                     = core_event_type_new();
-    ECORE_WL2_EVENT_GLOBAL_ADDED                   = core_event_type_new();
-    ECORE_WL2_EVENT_GLOBAL_REMOVED                 = core_event_type_new();
-    ECORE_WL2_EVENT_FOCUS_IN                       = core_event_type_new();
-    ECORE_WL2_EVENT_FOCUS_OUT                      = core_event_type_new();
-    ECORE_WL2_EVENT_DND_ENTER                      = core_event_type_new();
-    ECORE_WL2_EVENT_DND_LEAVE                      = core_event_type_new();
-    ECORE_WL2_EVENT_DND_MOTION                     = core_event_type_new();
-    ECORE_WL2_EVENT_DND_DROP                       = core_event_type_new();
-    ECORE_WL2_EVENT_DND_END                        = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_END                = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_DROP               = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_ACTION             = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_TARGET             = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_SEND               = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_CONFIGURE               = core_event_type_new();
-    ECORE_WL2_EVENT_SYNC_DONE                      = core_event_type_new();
-    ECORE_WL2_EVENT_OFFER_DATA_READY               = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_NAME_CHANGED              = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED      = core_event_type_new();
-    ECORE_WL2_EVENT_DEVICE_ADDED                   = core_event_type_new();
-    ECORE_WL2_EVENT_DEVICE_REMOVED                 = core_event_type_new();
-    _ecore_wl_event_window_www                     = core_event_type_new();
-    _ecore_wl_event_window_www_drag                = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE      = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED            = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED   = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_SELECTION                 = core_event_type_new();
-    ECORE_WL2_EVENT_OUTPUT_TRANSFORM               = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATE                  = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE =
-        core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE    = core_event_type_new();
-    ECORE_WL2_EVENT_AUX_HINT_ALLOWED               = core_event_type_new();
-    ECORE_WL2_EVENT_AUX_HINT_SUPPORTED             = core_event_type_new();
-    ECORE_WL2_EVENT_AUX_MESSAGE                    = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_SHOW                    = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_HIDE                    = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ACTIVATE                = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_DEACTIVATE              = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ICONIFY_STATE_CHANGE    = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_OFFSCREEN               = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_CREATE                  = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_DESTROY                 = core_event_type_new();
+    ECORE_WL2_EVENT_CONNECT                             = core_event_type_new();
+    ECORE_WL2_EVENT_DISCONNECT                          = core_event_type_new();
+    ECORE_WL2_EVENT_GLOBAL_ADDED                        = core_event_type_new();
+    ECORE_WL2_EVENT_GLOBAL_REMOVED                      = core_event_type_new();
+    ECORE_WL2_EVENT_FOCUS_IN                            = core_event_type_new();
+    ECORE_WL2_EVENT_FOCUS_OUT                           = core_event_type_new();
+    ECORE_WL2_EVENT_DND_ENTER                           = core_event_type_new();
+    ECORE_WL2_EVENT_DND_LEAVE                           = core_event_type_new();
+    ECORE_WL2_EVENT_DND_MOTION                          = core_event_type_new();
+    ECORE_WL2_EVENT_DND_DROP                            = core_event_type_new();
+    ECORE_WL2_EVENT_DND_END                             = core_event_type_new();
+    ECORE_WL2_EVENT_DATA_SOURCE_END                     = core_event_type_new();
+    ECORE_WL2_EVENT_DATA_SOURCE_DROP                    = core_event_type_new();
+    ECORE_WL2_EVENT_DATA_SOURCE_ACTION                  = core_event_type_new();
+    ECORE_WL2_EVENT_DATA_SOURCE_TARGET                  = core_event_type_new();
+    ECORE_WL2_EVENT_DATA_SOURCE_SEND                    = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_CONFIGURE                    = core_event_type_new();
+    ECORE_WL2_EVENT_SYNC_DONE                           = core_event_type_new();
+    ECORE_WL2_EVENT_OFFER_DATA_READY                    = core_event_type_new();
+    ECORE_WL2_EVENT_SEAT_NAME_CHANGED                   = core_event_type_new();
+    ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED           = core_event_type_new();
+    ECORE_WL2_EVENT_DEVICE_ADDED                        = core_event_type_new();
+    ECORE_WL2_EVENT_DEVICE_REMOVED                      = core_event_type_new();
+    _ecore_wl_event_window_www                          = core_event_type_new();
+    _ecore_wl_event_window_www_drag                     = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE           = core_event_type_new();
+    ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED                 = core_event_type_new();
+    ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED        = core_event_type_new();
+    ECORE_WL2_EVENT_SEAT_SELECTION                      = core_event_type_new();
+    ECORE_WL2_EVENT_OUTPUT_TRANSFORM                    = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_ROTATE                       = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE      = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST      = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE         = core_event_type_new();
+    ECORE_WL2_EVENT_AUX_HINT_ALLOWED                    = core_event_type_new();
+    ECORE_WL2_EVENT_AUX_HINT_SUPPORTED                  = core_event_type_new();
+    ECORE_WL2_EVENT_AUX_MESSAGE                         = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_SHOW                         = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_HIDE                         = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_ACTIVATE                     = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_DEACTIVATE                   = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_ICONIFY_STATE_CHANGE         = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_OFFSCREEN                    = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_CREATE                       = core_event_type_new();
+    ECORE_WL2_EVENT_WINDOW_DESTROY                      = core_event_type_new();
 
     if (!no_session_recovery)
         no_session_recovery = !!getenv("EFL_NO_WAYLAND_SESSION_RECOVERY");
@@ -253,49 +253,49 @@ ecore_wl_shutdown(void)
 
    /* reset events */
     core_event_type_flush(ECORE_WL2_EVENT_CONNECT,
-                           ECORE_WL2_EVENT_DISCONNECT,
-                           ECORE_WL2_EVENT_GLOBAL_ADDED,
-                           ECORE_WL2_EVENT_GLOBAL_REMOVED,
-                           ECORE_WL2_EVENT_FOCUS_IN,
-                           ECORE_WL2_EVENT_FOCUS_OUT,
-                           ECORE_WL2_EVENT_DND_ENTER,
-                           ECORE_WL2_EVENT_DND_LEAVE,
-                           ECORE_WL2_EVENT_DND_MOTION,
-                           ECORE_WL2_EVENT_DND_DROP,
-                           ECORE_WL2_EVENT_DND_END,
-                           ECORE_WL2_EVENT_DATA_SOURCE_END,
-                           ECORE_WL2_EVENT_DATA_SOURCE_DROP,
-                           ECORE_WL2_EVENT_DATA_SOURCE_ACTION,
-                           ECORE_WL2_EVENT_DATA_SOURCE_TARGET,
-                           ECORE_WL2_EVENT_DATA_SOURCE_SEND,
-                           ECORE_WL2_EVENT_WINDOW_CONFIGURE,
-                           ECORE_WL2_EVENT_SYNC_DONE,
-                           ECORE_WL2_EVENT_OFFER_DATA_READY,
-                           ECORE_WL2_EVENT_SEAT_NAME_CHANGED,
-                           ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED,
-                           ECORE_WL2_EVENT_DEVICE_ADDED,
-                           ECORE_WL2_EVENT_DEVICE_REMOVED,
-                           ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE,
-                           ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED,
-                           ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED,
-                           ECORE_WL2_EVENT_SEAT_SELECTION,
-                           ECORE_WL2_EVENT_OUTPUT_TRANSFORM,
-                           ECORE_WL2_EVENT_WINDOW_ROTATE,
-                           ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE,
-                           ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE,
-                           ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST,
-                           ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE,
-                           ECORE_WL2_EVENT_AUX_HINT_ALLOWED,
-                           ECORE_WL2_EVENT_AUX_HINT_SUPPORTED,
-                           ECORE_WL2_EVENT_AUX_MESSAGE,
-                           ECORE_WL2_EVENT_WINDOW_SHOW,
-                           ECORE_WL2_EVENT_WINDOW_HIDE,
-                           ECORE_WL2_EVENT_WINDOW_ACTIVATE,
-                           ECORE_WL2_EVENT_WINDOW_DEACTIVATE,
-                           ECORE_WL2_EVENT_WINDOW_ICONIFY_STATE_CHANGE,
-                           ECORE_WL2_EVENT_WINDOW_OFFSCREEN,
-                           ECORE_WL2_EVENT_WINDOW_CREATE,
-                           ECORE_WL2_EVENT_WINDOW_DESTROY);
+                          ECORE_WL2_EVENT_DISCONNECT,
+                          ECORE_WL2_EVENT_GLOBAL_ADDED,
+                          ECORE_WL2_EVENT_GLOBAL_REMOVED,
+                          ECORE_WL2_EVENT_FOCUS_IN,
+                          ECORE_WL2_EVENT_FOCUS_OUT,
+                          ECORE_WL2_EVENT_DND_ENTER,
+                          ECORE_WL2_EVENT_DND_LEAVE,
+                          ECORE_WL2_EVENT_DND_MOTION,
+                          ECORE_WL2_EVENT_DND_DROP,
+                          ECORE_WL2_EVENT_DND_END,
+                          ECORE_WL2_EVENT_DATA_SOURCE_END,
+                          ECORE_WL2_EVENT_DATA_SOURCE_DROP,
+                          ECORE_WL2_EVENT_DATA_SOURCE_ACTION,
+                          ECORE_WL2_EVENT_DATA_SOURCE_TARGET,
+                          ECORE_WL2_EVENT_DATA_SOURCE_SEND,
+                          ECORE_WL2_EVENT_WINDOW_CONFIGURE,
+                          ECORE_WL2_EVENT_SYNC_DONE,
+                          ECORE_WL2_EVENT_OFFER_DATA_READY,
+                          ECORE_WL2_EVENT_SEAT_NAME_CHANGED,
+                          ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED,
+                          ECORE_WL2_EVENT_DEVICE_ADDED,
+                          ECORE_WL2_EVENT_DEVICE_REMOVED,
+                          ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE,
+                          ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED,
+                          ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED,
+                          ECORE_WL2_EVENT_SEAT_SELECTION,
+                          ECORE_WL2_EVENT_OUTPUT_TRANSFORM,
+                          ECORE_WL2_EVENT_WINDOW_ROTATE,
+                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE,
+                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE,
+                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST,
+                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE,
+                          ECORE_WL2_EVENT_AUX_HINT_ALLOWED,
+                          ECORE_WL2_EVENT_AUX_HINT_SUPPORTED,
+                          ECORE_WL2_EVENT_AUX_MESSAGE,
+                          ECORE_WL2_EVENT_WINDOW_SHOW,
+                          ECORE_WL2_EVENT_WINDOW_HIDE,
+                          ECORE_WL2_EVENT_WINDOW_ACTIVATE,
+                          ECORE_WL2_EVENT_WINDOW_DEACTIVATE,
+                          ECORE_WL2_EVENT_WINDOW_ICONIFY_STATE_CHANGE,
+                          ECORE_WL2_EVENT_WINDOW_OFFSCREEN,
+                          ECORE_WL2_EVENT_WINDOW_CREATE,
+                          ECORE_WL2_EVENT_WINDOW_DESTROY);
 
    /* shutdown Ecore_Event */
     core_event_shutdown();

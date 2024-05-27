@@ -196,8 +196,8 @@ _exe_exit_eval(Eo *obj, Efl_Exe_Data *pd)
 static void
 _cb_exe_exit_read(void *data, const Efl_Event *event EFL_UNUSED)
 {
-    Eo                   *obj = data;
-    Efl_Exe_Data         *pd  = efl_data_scope_get(obj, MY_CLASS);
+    Eo                  *obj = data;
+    Efl_Exe_Data        *pd  = efl_data_scope_get(obj, MY_CLASS);
     Core_Signal_Pid_Info pinfo;
 
     if (!pd) return;

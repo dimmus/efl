@@ -24,9 +24,9 @@ _efl_divisor_interpolator_efl_interpolator_interpolate(
     if ((progress < 0.0) || (progress > 1.0)) return progress;
 
     return core_animator_pos_map(progress,
-                                  CORE_POS_MAP_DIVISOR_INTERP,
-                                  pd->divisor,
-                                  (double)pd->power);
+                                 CORE_POS_MAP_DIVISOR_INTERP,
+                                 pd->divisor,
+                                 (double)pd->power);
 }
 
 EOLIAN static void

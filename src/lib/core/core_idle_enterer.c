@@ -17,9 +17,7 @@ EFL_CALLBACKS_ARRAY_DEFINE(core_idle_enterer_callbacks,
 EAPI Core_Idle_Enterer *
 core_idle_enterer_add(Core_Task_Cb func, const void *data)
 {
-    return _core_factorized_idle_add(core_idle_enterer_callbacks(),
-                                      func,
-                                      data);
+    return _core_factorized_idle_add(core_idle_enterer_callbacks(), func, data);
 }
 
 EAPI Core_Idle_Enterer *

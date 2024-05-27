@@ -1,1 +1,2 @@
 *.h
+tests/eo_gen/data/*.c

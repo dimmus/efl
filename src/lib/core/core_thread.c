@@ -54,7 +54,7 @@ struct _Core_Thread_Waiter
 {
     Core_Thread_Cb func_cancel;
     Core_Thread_Cb func_end;
-    Efl_Bool        waiting;
+    Efl_Bool       waiting;
 };
 
 struct _Core_Thread_Data
@@ -124,7 +124,7 @@ typedef struct _Core_Pthread_Notify Core_Pthread_Notify;
 struct _Core_Pthread_Notify
 {
     Core_Pthread_Worker *work;
-    const void           *user_data;
+    const void          *user_data;
 };
 
 typedef void *(*Core_Thread_Sync_Cb)(void *data, Core_Thread *thread);
@@ -169,7 +169,7 @@ static Efl_Bool have_main_loop_thread = 0;
 static Eina_Trash *_core_thread_worker_trash = NULL;
 static int         _core_thread_worker_count = 0;
 
-static void                 *_core_thread_worker(void *, Eina_Thread);
+static void                *_core_thread_worker(void *, Eina_Thread);
 static Core_Pthread_Worker *_core_thread_worker_new(void);
 
 static PH(get_main_loop_thread)(void)
@@ -275,7 +275,7 @@ _Core_notify_handler(void *data)
 {
     Core_Pthread_Notify *notify    = data;
     Core_Pthread_Worker *work      = notify->work;
-    void                 *user_data = (void *)notify->user_data;
+    void                *user_data = (void *)notify->user_data;
 
     work->u.feedback_run.received++;
 
@@ -300,7 +300,7 @@ _Core_message_notify_handler(void *data)
     Core_Pthread_Notify  *notify    = data;
     Core_Pthread_Worker  *work      = notify->work;
     Core_Pthread_Message *user_data = (void *)notify->user_data;
-    Efl_Bool delete                  = EFL_TRUE;
+    Efl_Bool delete                 = EFL_TRUE;
 
     work->u.message_run.from.received++;
 
@@ -315,13 +315,13 @@ _Core_message_notify_handler(void *data)
     {
         if (user_data->sync)
         {
-            user_data->data     = user_data->u.sync((void *)user_data->data,
-                                                (Core_Thread *)work);
+            user_data->data =
+                user_data->u.sync((void *)user_data->data, (Core_Thread *)work);
             user_data->callback = EFL_FALSE;
             user_data->code     = INT_MAX;
             core_pipe_write(work->u.message_run.send,
-                             &user_data,
-                             sizeof(Core_Pthread_Message *));
+                            &user_data,
+                            sizeof(Core_Pthread_Message *));
 
             delete = EFL_FALSE;
         }
@@ -375,7 +375,7 @@ static void
 _Core_short_job(PH(thread))
 {
     Core_Pthread_Worker *work;
-    int                   cancel;
+    int                  cancel;
 
     SLKL(_Core_pending_job_threads_mutex);
 
@@ -438,7 +438,7 @@ static void
 _Core_feedback_job(PH(thread))
 {
     Core_Pthread_Worker *work;
-    int                   cancel;
+    int                  cancel;
 
     SLKL(_Core_pending_job_threads_mutex);
 
@@ -484,7 +484,7 @@ _Core_direct_worker_cleanup(void *data)
     core_main_loop_thread_safe_call_async(_core_thread_handler, work);
 
     core_main_loop_thread_safe_call_async((Core_Cb)_core_thread_join,
-                                           (void *)(intptr_t)PHS());
+                                          (void *)(intptr_t)PHS());
     SLKU(_Core_pending_job_threads_mutex);
 }
 
@@ -515,7 +515,7 @@ _core_thread_worker_cleanup(void *data EFL_UNUSED)
     SLKL(_Core_pending_job_threads_mutex);
     _core_thread_count--;
     core_main_loop_thread_safe_call_async((Core_Cb)_core_thread_join,
-                                           (void *)(intptr_t)PHS());
+                                          (void *)(intptr_t)PHS());
     SLKU(_Core_pending_job_threads_mutex);
 }
 
@@ -605,9 +605,9 @@ _core_thread_shutdown(void)
 {
     /* FIXME: If function are still running in the background, should we kill them ? */
     Core_Pthread_Worker *work;
-    Eina_List            *l;
-    Efl_Bool              test;
-    int                   iteration = 0;
+    Eina_List           *l;
+    Efl_Bool             test;
+    int                  iteration = 0;
 
     SLKL(_Core_pending_job_threads_mutex);
 
@@ -678,12 +678,12 @@ _core_thread_shutdown(void)
 
 EAPI Core_Thread *
 core_thread_run(Core_Thread_Cb func_blocking,
-                 Core_Thread_Cb func_end,
-                 Core_Thread_Cb func_cancel,
-                 const void     *data)
+                Core_Thread_Cb func_end,
+                Core_Thread_Cb func_cancel,
+                const void    *data)
 {
     Core_Pthread_Worker *work;
-    Efl_Bool              tried = EFL_FALSE;
+    Efl_Bool             tried = EFL_FALSE;
     PH(thread);
 
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
@@ -839,8 +839,7 @@ on_exit:
 }
 
 static void
-_core_thread_wait_reset(Core_Thread_Waiter  *waiter,
-                         Core_Pthread_Worker *worker)
+_core_thread_wait_reset(Core_Thread_Waiter *waiter, Core_Pthread_Worker *worker)
 {
     worker->func_cancel = waiter->func_cancel;
     worker->func_end    = waiter->func_end;
@@ -934,14 +933,14 @@ core_thread_check(Core_Thread *thread)
 
 EAPI Core_Thread *
 core_thread_feedback_run(Core_Thread_Cb        func_heavy,
-                          Core_Thread_Notify_Cb func_notify,
-                          Core_Thread_Cb        func_end,
-                          Core_Thread_Cb        func_cancel,
-                          const void            *data,
-                          Efl_Bool               try_no_queue)
+                         Core_Thread_Notify_Cb func_notify,
+                         Core_Thread_Cb        func_end,
+                         Core_Thread_Cb        func_cancel,
+                         const void           *data,
+                         Efl_Bool              try_no_queue)
 {
     Core_Pthread_Worker *worker;
-    Efl_Bool              tried = EFL_FALSE;
+    Efl_Bool             tried = EFL_FALSE;
     PH(thread);
 
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
@@ -1103,7 +1102,7 @@ core_thread_feedback(Core_Thread *thread, const void *data)
 
         worker->u.message_run.from.send++;
         core_main_loop_thread_safe_call_async(_Core_message_notify_handler,
-                                               notify);
+                                              notify);
     }
     else return EFL_FALSE;
 
@@ -1277,14 +1276,14 @@ core_thread_name_set(Core_Thread *thread, const char *name)
 
 EAPI Efl_Bool
 core_thread_local_data_add(Core_Thread *thread,
-                            const char   *key,
-                            void         *value,
-                            Eina_Free_Cb  cb,
-                            Efl_Bool      direct)
+                           const char  *key,
+                           void        *value,
+                           Eina_Free_Cb cb,
+                           Efl_Bool     direct)
 {
     Core_Pthread_Worker *worker = (Core_Pthread_Worker *)thread;
     Core_Thread_Data    *d;
-    Efl_Bool              ret;
+    Efl_Bool             ret;
 
     if ((!thread) || (!key) || (!value)) return EFL_FALSE;
 
@@ -1310,13 +1309,13 @@ core_thread_local_data_add(Core_Thread *thread,
 
 EAPI void *
 core_thread_local_data_set(Core_Thread *thread,
-                            const char   *key,
-                            void         *value,
-                            Eina_Free_Cb  cb)
+                           const char  *key,
+                           void        *value,
+                           Eina_Free_Cb cb)
 {
     Core_Pthread_Worker *worker = (Core_Pthread_Worker *)thread;
     Core_Thread_Data    *d, *r;
-    void                 *ret;
+    void                *ret;
 
     if ((!thread) || (!key) || (!value)) return NULL;
 
@@ -1367,7 +1366,7 @@ EAPI Efl_Bool
 core_thread_local_data_del(Core_Thread *thread, const char *key)
 {
     Core_Pthread_Worker *worker = (Core_Pthread_Worker *)thread;
-    Efl_Bool              r;
+    Efl_Bool             r;
 
     if ((!thread) || (!key)) return EFL_FALSE;
 
@@ -1381,12 +1380,12 @@ core_thread_local_data_del(Core_Thread *thread, const char *key)
 
 EAPI Efl_Bool
 core_thread_global_data_add(const char  *key,
-                             void        *value,
-                             Eina_Free_Cb cb,
-                             Efl_Bool     direct)
+                            void        *value,
+                            Eina_Free_Cb cb,
+                            Efl_Bool     direct)
 {
     Core_Thread_Data *d;
-    Efl_Bool           ret;
+    Efl_Bool          ret;
 
     if ((!key) || (!value)) return EFL_FALSE;
 
@@ -1419,7 +1418,7 @@ EAPI void *
 core_thread_global_data_set(const char *key, void *value, Eina_Free_Cb cb)
 {
     Core_Thread_Data *d, *r;
-    void              *ret;
+    void             *ret;
 
     if ((!key) || (!value)) return NULL;
 
@@ -1484,7 +1483,7 @@ core_thread_global_data_del(const char *key)
 EAPI void *
 core_thread_global_data_wait(const char *key, double seconds)
 {
-    double             tm  = 0;
+    double            tm  = 0;
     Core_Thread_Data *ret = NULL;
 
     if (!key) return NULL;

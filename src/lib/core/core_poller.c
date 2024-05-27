@@ -22,11 +22,11 @@ struct _Core_Poller
     CORE_MAGIC;
     int           ibit;
     unsigned char delete_me : 1;
-    Core_Task_Cb func;
+    Core_Task_Cb  func;
     void         *data;
 };
 
-static Core_Timer   *timer               = NULL;
+static Core_Timer    *timer               = NULL;
 static int            min_interval        = -1;
 static int            interval_incr       = 0;
 static int            at_tick             = 0;
@@ -36,7 +36,7 @@ static int            poller_walking      = 0;
 static double         poll_interval       = 0.125;
 static double         poll_cur_interval   = 0.0;
 static double         last_tick           = 0.0;
-static Core_Poller  *pollers[16] = { NULL, NULL, NULL, NULL, NULL, NULL,
+static Core_Poller   *pollers[16] = { NULL, NULL, NULL, NULL, NULL, NULL,
                                       NULL, NULL, NULL, NULL, NULL, NULL,
                                       NULL, NULL, NULL, NULL };
 static unsigned short poller_counters[16] = { 0, 0, 0, 0, 0, 0, 0, 0,
@@ -112,8 +112,8 @@ _core_poller_next_tick_eval(void)
       * time interval. at the tick this will be adjusted */
                 core_timer_del(timer);
                 timer = core_timer_loop_add(interval - t,
-                                             _core_poller_cb_timer,
-                                             NULL);
+                                            _core_poller_cb_timer,
+                                            NULL);
             }
         }
     }
@@ -124,8 +124,8 @@ static Efl_Bool
 _core_poller_cb_timer(void *data EFL_UNUSED)
 {
     Core_Poller *poller;
-    int           i;
-    int           changes = 0;
+    int          i;
+    int          changes = 0;
 
     at_tick++;
     last_tick = core_loop_time_get();
@@ -190,8 +190,7 @@ _core_poller_cb_timer(void *data EFL_UNUSED)
     }
     /* if we deleted or added any pollers, then we need to re-evaluate our
     * minimum poll interval */
-    if ((changes > 0) || (just_added_poller > 0))
-        _core_poller_next_tick_eval();
+    if ((changes > 0) || (just_added_poller > 0)) _core_poller_next_tick_eval();
 
     just_added_poller   = 0;
     poller_delete_count = 0;
@@ -210,7 +209,7 @@ _core_poller_cb_timer(void *data EFL_UNUSED)
 
 EAPI void
 core_poller_poll_interval_set(Core_Poller_Type type EFL_UNUSED,
-                               double                 poll_time)
+                              double                poll_time)
 {
     EINA_MAIN_LOOP_CHECK_RETURN;
 
@@ -234,12 +233,12 @@ core_poller_poll_interval_get(Core_Poller_Type type EFL_UNUSED)
 #ifndef EFL_NOLEGACY_API_SUPPORT
 EAPI Core_Poller *
 core_poller_add(Core_Poller_Type type EFL_UNUSED,
-                 int                    interval,
-                 Core_Task_Cb          func,
-                 const void            *data)
+                int                   interval,
+                Core_Task_Cb          func,
+                const void           *data)
 {
     Core_Poller *poller;
-    int           ibit;
+    int          ibit;
 
     poller = calloc(1, sizeof(Core_Poller));
     if (!poller) return NULL;
@@ -358,7 +357,7 @@ void
 _core_poller_shutdown(void)
 {
     Core_Poller *poller;
-    int           i;
+    int          i;
 
     for (i = 0; i < 15; i++)
     {

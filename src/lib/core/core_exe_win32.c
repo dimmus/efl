@@ -56,7 +56,7 @@ _core_exe_close_cb(void *data, Core_Win32_Handler *wh EFL_UNUSED)
     Core_Exe_Event_Del *e;
     Core_Exe           *obj       = data;
     Core_Exe_Data      *exe       = efl_data_scope_get(obj, CORE_EXE_CLASS);
-    DWORD                exit_code = 0;
+    DWORD               exit_code = 0;
 
     if (!exe) return 0;
 
@@ -82,15 +82,15 @@ _core_exe_close_cb(void *data, Core_Win32_Handler *wh EFL_UNUSED)
 typedef struct
 {
     Core_Exe *obj;
-    HANDLE     read_pipe;
-    HANDLE     error_pipe;
-    Efl_Bool   read  : 1;
-    Efl_Bool   error : 1;
+    HANDLE    read_pipe;
+    HANDLE    error_pipe;
+    Efl_Bool  read  : 1;
+    Efl_Bool  error : 1;
 } Threaddata;
 
 typedef struct
 {
-    Core_Exe     *obj;
+    Core_Exe      *obj;
     unsigned char *buf;
     int            buf_size;
     Efl_Bool       read  : 1;
@@ -190,14 +190,14 @@ _core_exe_win32_io_poll_thread(void *data, Core_Thread *th)
 }
 
 static void
-_core_exe_win32_io_poll_notify(void *data       EFL_UNUSED,
-                                Core_Thread *th EFL_UNUSED,
-                                void            *msg)
+_core_exe_win32_io_poll_notify(void *data      EFL_UNUSED,
+                               Core_Thread *th EFL_UNUSED,
+                               void           *msg)
 {
-    Threadreply    *trep = msg;
+    Threadreply   *trep = msg;
     Core_Exe      *obj  = trep->obj;
     Core_Exe_Data *exe  = efl_data_scope_get(obj, CORE_EXE_CLASS);
-    unsigned char  *b;
+    unsigned char *b;
 
     if (exe)
     {
@@ -229,9 +229,9 @@ _core_exe_win32_io_poll_notify(void *data       EFL_UNUSED,
             if (event_data)
             {
                 core_event_add(CORE_EXE_EVENT_DATA,
-                                event_data,
-                                _core_exe_event_exe_data_free,
-                                NULL);
+                               event_data,
+                               _core_exe_event_exe_data_free,
+                               NULL);
                 efl_event_callback_call(obj,
                                         CORE_EXE_EVENT_DATA_GET,
                                         event_data);
@@ -263,9 +263,9 @@ _core_exe_win32_io_poll_notify(void *data       EFL_UNUSED,
             if (event_data)
             {
                 core_event_add(CORE_EXE_EVENT_ERROR,
-                                event_data,
-                                _core_exe_event_exe_data_free,
-                                NULL);
+                               event_data,
+                               _core_exe_event_exe_data_free,
+                               NULL);
                 efl_event_callback_call(obj,
                                         CORE_EXE_EVENT_DATA_ERROR,
                                         event_data);
@@ -297,8 +297,8 @@ _core_exe_enum_windows_procedure(HWND window, LPARAM data)
 {
     Core_Exe      *obj = (Core_Exe *)data;
     Core_Exe_Data *exe = efl_data_scope_get(obj, CORE_EXE_CLASS);
-    DWORD           thread_id;
-    UINT            code = 0;
+    DWORD          thread_id;
+    UINT           code = 0;
 
     if (!exe) return EFL_FALSE;
     thread_id = GetWindowThreadProcessId(window, NULL);
@@ -416,16 +416,16 @@ _impl_core_exe_run_priority_get(void)
 Eo *
 _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
 {
-    char                 exe_cmd_buf[32768];
-    SECURITY_ATTRIBUTES  sa;
-    STARTUPINFO          si;
-    PROCESS_INFORMATION  pi;
-    HANDLE               child_pipe_read  = NULL;
-    HANDLE               child_pipe_error = NULL;
-    const char          *shell            = NULL;
+    char                exe_cmd_buf[32768];
+    SECURITY_ATTRIBUTES sa;
+    STARTUPINFO         si;
+    PROCESS_INFORMATION pi;
+    HANDLE              child_pipe_read  = NULL;
+    HANDLE              child_pipe_error = NULL;
+    const char         *shell            = NULL;
     Core_Exe_Event_Add *e;
     Core_Exe_Flags      flags;
-    Efl_Bool             use_sh = EFL_FALSE;
+    Efl_Bool            use_sh = EFL_FALSE;
 
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
 
@@ -465,8 +465,7 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
     sa.bInheritHandle       = EFL_TRUE;
     sa.lpSecurityDescriptor = NULL;
 
-    if ((exe->flags & CORE_EXE_PIPE_READ) ||
-        (exe->flags & CORE_EXE_PIPE_ERROR))
+    if ((exe->flags & CORE_EXE_PIPE_READ) || (exe->flags & CORE_EXE_PIPE_ERROR))
     {
         Threaddata *tdat;
 
@@ -505,11 +504,11 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
                 tdat->error_pipe = exe->pipe_error.child_pipe;
             }
             exe->th = core_thread_feedback_run(_core_exe_win32_io_poll_thread,
-                                                _core_exe_win32_io_poll_notify,
-                                                NULL,
-                                                NULL,
-                                                tdat,
-                                                EFL_TRUE);
+                                               _core_exe_win32_io_poll_notify,
+                                               NULL,
+                                               NULL,
+                                               tdat,
+                                               EFL_TRUE);
             if (!exe->th)
             {
                 free(tdat);
@@ -614,9 +613,9 @@ error:
 
 Efl_Bool
 _impl_core_exe_send(Core_Exe      *obj,
-                     Core_Exe_Data *exe,
-                     const void     *data,
-                     int             size)
+                    Core_Exe_Data *exe,
+                    const void    *data,
+                    int            size)
 {
     DWORD num_exe;
     BOOL  res;
@@ -636,13 +635,13 @@ _impl_core_exe_send(Core_Exe      *obj,
 
 Core_Exe_Event_Data *
 _impl_core_exe_event_data_get(Core_Exe      *obj,
-                               Core_Exe_Data *exe,
-                               Core_Exe_Flags flags)
+                              Core_Exe_Data *exe,
+                              Core_Exe_Flags flags)
 {
     Core_Exe_Event_Data *e = NULL;
-    unsigned char        *inbuf;
-    DWORD                 inbuf_num;
-    Efl_Bool              is_buffered = EFL_FALSE;
+    unsigned char       *inbuf;
+    DWORD                inbuf_num;
+    Efl_Bool             is_buffered = EFL_FALSE;
 
     /* Sort out what sort of event we are. */
     if (flags & CORE_EXE_PIPE_READ)
@@ -857,19 +856,19 @@ _impl_core_exe_kill(Core_Exe *obj, Core_Exe_Data *exe)
 
 void
 _impl_core_exe_auto_limits_set(Core_Exe *obj      EFL_UNUSED,
-                                Core_Exe_Data *exe EFL_UNUSED,
-                                int start_bytes     EFL_UNUSED,
-                                int end_bytes       EFL_UNUSED,
-                                int start_lines     EFL_UNUSED,
-                                int end_lines       EFL_UNUSED)
+                               Core_Exe_Data *exe EFL_UNUSED,
+                               int start_bytes    EFL_UNUSED,
+                               int end_bytes      EFL_UNUSED,
+                               int start_lines    EFL_UNUSED,
+                               int end_lines      EFL_UNUSED)
 {
     ERR("Not implemented on windows!");
 }
 
 void
 _impl_core_exe_signal(Core_Exe *obj      EFL_UNUSED,
-                       Core_Exe_Data *exe EFL_UNUSED,
-                       int num             EFL_UNUSED)
+                      Core_Exe_Data *exe EFL_UNUSED,
+                      int num            EFL_UNUSED)
 {
     ERR("Not implemented on windows!");
 }

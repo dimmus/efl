@@ -40,7 +40,7 @@ static void _efl_io_copier_read(Eo *o, Efl_Io_Copier_Data *pd);
 #define _COPIER_DBG(o, pd)                                                     \
     do                                                                         \
     {                                                                          \
-        if (eina_log_domain_level_check(_core_log_dom, EINA_LOG_LEVEL_DBG))   \
+        if (eina_log_domain_level_check(_core_log_dom, EINA_LOG_LEVEL_DBG))    \
         {                                                                      \
             DBG("copier={%p %s, refs=%d, closed=%d, done=%d, buf=%zd}",        \
                 o,                                                             \

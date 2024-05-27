@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include "Efl_Eo.h"
@@ -13,22 +13,14 @@ EFL_FUNC_BODY(interface_ab_sum_get, int, 0);
 static Efl_Bool
 _class_initializer(Efl_Class *klass)
 {
-   EFL_OPS_DEFINE(ops,
-         EFL_OBJECT_OP_FUNC(interface_ab_sum_get, NULL),
-   );
+    EFL_OPS_DEFINE(ops, EFL_OBJECT_OP_FUNC(interface_ab_sum_get, NULL), );
 
-   return efl_class_functions_set(klass, &ops, NULL);
+    return efl_class_functions_set(klass, &ops, NULL);
 }
 
 static const Efl_Class_Description class_desc = {
-     EO_VERSION,
-     "Interface",
-     EFL_CLASS_TYPE_INTERFACE,
-     0,
-     _class_initializer,
-     NULL,
-     NULL
+    EO_VERSION, "Interface", EFL_CLASS_TYPE_INTERFACE, 0, _class_initializer,
+    NULL,       NULL
 };
 
 EFL_DEFINE_CLASS(interface_class_get, &class_desc, NULL, NULL)
-

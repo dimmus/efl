@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <Efl_Core.h>
@@ -26,37 +26,40 @@
 #include "../efl_check.h"
 
 static const Efl_Test_Case etc[] = {
-   { "Efl_Container_Model", efl_test_case_container_model },
-   { "Efl_Boolean_Model", efl_test_case_boolean_model },
-   { NULL, NULL }
+    {"Efl_Container_Model", efl_test_case_container_model},
+    {  "Efl_Boolean_Model",   efl_test_case_boolean_model},
+    {                 NULL,                          NULL}
 };
 
 SUITE_INIT(efl)
 {
-   ck_assert_int_eq(core_init(), 1);
+    ck_assert_int_eq(core_init(), 1);
 }
 
 SUITE_SHUTDOWN(efl)
 {
-   ck_assert_int_eq(core_shutdown(), 0);
+    ck_assert_int_eq(core_shutdown(), 0);
 }
 
 int
 main(int argc, char **argv)
 {
-   int failed_count;
+    int failed_count;
 
-   if (!_efl_test_option_disp(argc, argv, etc))
-     return 0;
+    if (!_efl_test_option_disp(argc, argv, etc)) return 0;
 
-   putenv("EFL_RUN_IN_TREE=1");
+    putenv("EFL_RUN_IN_TREE=1");
 
-   eina_init();
+    eina_init();
 
-   failed_count = _efl_suite_build_and_run(argc - 1, (const char **)argv + 1,
-                                           "Efl", etc, SUITE_INIT_FN(efl), SUITE_SHUTDOWN_FN(efl));
+    failed_count = _efl_suite_build_and_run(argc - 1,
+                                            (const char **)argv + 1,
+                                            "Efl",
+                                            etc,
+                                            SUITE_INIT_FN(efl),
+                                            SUITE_SHUTDOWN_FN(efl));
 
-   eina_shutdown();
+    eina_shutdown();
 
-   return (failed_count == 0) ? 0 : 255;
+    return (failed_count == 0) ? 0 : 255;
 }

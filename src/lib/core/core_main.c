@@ -125,18 +125,18 @@ struct _Core_Fd_Handler
     EINA_INLIST;
     CORE_MAGIC;
     Core_Fd_Handler      *next_ready;
-    int                    fd;
+    int                   fd;
     Core_Fd_Handler_Flags flags;
-    Eo                    *handler;
-    Eo                    *loop;
-    Efl_Loop_Data         *loop_data;
+    Eo                   *handler;
+    Eo                   *loop;
+    Efl_Loop_Data        *loop_data;
     Core_Fd_Cb            func;
-    void                  *data;
+    void                 *data;
     Core_Fd_Cb            buf_func;
-    void                  *buf_data;
+    void                 *buf_data;
     Core_Fd_Prep_Cb       prep_func;
-    void                  *prep_data;
-    int                    references;
+    void                 *prep_data;
+    int                   references;
 #if defined(USE_G_MAIN_LOOP)
     GPollFD gfd;
 #endif
@@ -158,14 +158,14 @@ struct _Core_Win32_Handler
 {
     EINA_INLIST;
     CORE_MAGIC;
-    HANDLE                h;
-    Eo                   *handler;
-    Eo                   *loop;
-    Efl_Loop_Data        *loop_data;
+    HANDLE               h;
+    Eo                  *handler;
+    Eo                  *loop;
+    Efl_Loop_Data       *loop_data;
     Core_Win32_Handle_Cb func;
-    void                 *data;
-    int                   references;
-    Efl_Bool              delete_me : 1;
+    void                *data;
+    int                  references;
+    Efl_Bool             delete_me : 1;
 };
 
 GENERIC_ALLOC_SIZE_DECLARE(Core_Win32_Handler);
@@ -190,10 +190,10 @@ _core_main_loop_iterate_internal(Eo *obj, Efl_Loop_Data *pd, int once_only);
 
 #ifdef _WIN32
 static int  _core_main_win32_select(int             nfds,
-                                     fd_set         *readfds,
-                                     fd_set         *writefds,
-                                     fd_set         *exceptfds,
-                                     struct timeval *timeout);
+                                    fd_set         *readfds,
+                                    fd_set         *writefds,
+                                    fd_set         *exceptfds,
+                                    struct timeval *timeout);
 static void _core_main_win32_handlers_cleanup(Eo *obj, Efl_Loop_Data *pd);
 #endif
 
@@ -262,9 +262,9 @@ _core_fd_valid(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd EFL_UNUSED)
 #endif
 
 static inline void
-_Core_try_add_to_call_list(Eo *obj           EFL_UNUSED,
-                            Efl_Loop_Data    *pd,
-                            Core_Fd_Handler *fdh)
+_Core_try_add_to_call_list(Eo *obj          EFL_UNUSED,
+                           Efl_Loop_Data   *pd,
+                           Core_Fd_Handler *fdh)
 {
     // check if this fdh is already in the list
     if (fdh->next_ready)
@@ -416,9 +416,9 @@ _core_main_fdh_poll_add(Efl_Loop_Data *pd EFL_UNUSED, Core_Fd_Handler *fdh)
     {
         if ((!fdh->file) && (pd->epoll_fd >= 0))
             r = _Core_epoll_add(_Core_get_epoll_fd(fdh->loop, pd),
-                                 fdh->fd,
-                                 _Core_poll_events_from_fdh(fdh),
-                                 fdh);
+                                fdh->fd,
+                                _Core_poll_events_from_fdh(fdh),
+                                fdh);
     }
 #  ifdef HAVE_LIBUV
     else
@@ -606,8 +606,8 @@ _core_main_fdh_epoll_mark_active(Eo *obj, Efl_Loop_Data *pd)
         if (!CORE_MAGIC_CHECK(fdh, CORE_MAGIC_FD_HANDLER))
         {
             CORE_MAGIC_FAIL(fdh,
-                             CORE_MAGIC_FD_HANDLER,
-                             "_core_main_fdh_epoll_mark_active");
+                            CORE_MAGIC_FD_HANDLER,
+                            "_core_main_fdh_epoll_mark_active");
             continue;
         }
         if (fdh->delete_me)
@@ -641,7 +641,7 @@ static inline int
 _core_main_fdh_glib_mark_active(Eo *obj, Efl_Loop_Data *pd)
 {
     Core_Fd_Handler *fdh;
-    int               ret = 0;
+    int              ret = 0;
 
     // call the prepare callback for all handlers
     EINA_INLIST_FOREACH(pd->fd_handlers, fdh)
@@ -810,8 +810,8 @@ _core_main_gsource_check(GSource *source EFL_UNUSED)
 // like we just came out of main_loop_select in  _core_main_select
 static gboolean
 _core_main_gsource_dispatch(GSource *source      EFL_UNUSED,
-                             GSourceFunc callback EFL_UNUSED,
-                             gpointer user_data   EFL_UNUSED)
+                            GSourceFunc callback EFL_UNUSED,
+                            gpointer user_data   EFL_UNUSED)
 {
     Eo            *obj = ML_OBJ;
     Efl_Loop_Data *pd  = ML_DAT;
@@ -1020,8 +1020,7 @@ _core_main_loop_setup(Eo *obj, Efl_Loop_Data *pd)
             DBG("_dl_uv_check_init");
             _dl_uv_check_init(_dl_uv_default_loop(), &_core_main_uv_check);
             DBG("_dl_uv_check_start");
-            _dl_uv_check_start(&_core_main_uv_check,
-                               &_core_main_loop_uv_check);
+            _dl_uv_check_start(&_core_main_uv_check, &_core_main_loop_uv_check);
             DBG("_dl_uv_check_started");
 
             _dl_uv_timer_init(_dl_uv_default_loop(),
@@ -1085,9 +1084,9 @@ _core_main_loop_setup(Eo *obj, Efl_Loop_Data *pd)
         {
             if (fdh->delete_me) continue;
             _Core_epoll_add(pd->epoll_fd,
-                             fdh->fd,
-                             _Core_poll_events_from_fdh(fdh),
-                             fdh);
+                            fdh->fd,
+                            _Core_poll_events_from_fdh(fdh),
+                            fdh);
             _core_main_fdh_poll_add(pd, fdh);
         }
     }
@@ -1243,8 +1242,7 @@ _core_main_loop_begin(Eo *obj, Efl_Loop_Data *pd)
 #else
         if (!pd->do_quit)
         {
-            if (!core_main_loop)
-                core_main_loop = g_main_loop_new(NULL, FALSE);
+            if (!core_main_loop) core_main_loop = g_main_loop_new(NULL, FALSE);
             g_main_loop_run(core_main_loop);
         }
         pd->do_quit = 0;
@@ -1363,16 +1361,16 @@ core_main_loop_select_func_get(void)
 }
 
 Core_Fd_Handler *
-_core_main_fd_handler_add(Eo                    *obj,
-                           Efl_Loop_Data         *pd,
-                           Eo                    *handler,
-                           int                    fd,
-                           Core_Fd_Handler_Flags flags,
-                           Core_Fd_Cb            func,
-                           const void            *data,
-                           Core_Fd_Cb            buf_func,
-                           const void            *buf_data,
-                           Efl_Bool               is_file)
+_core_main_fd_handler_add(Eo                   *obj,
+                          Efl_Loop_Data        *pd,
+                          Eo                   *handler,
+                          int                   fd,
+                          Core_Fd_Handler_Flags flags,
+                          Core_Fd_Cb            func,
+                          const void           *data,
+                          Core_Fd_Cb            buf_func,
+                          const void           *buf_data,
+                          Efl_Bool              is_file)
 {
     DBG("_core_main_fd_handler_add");
     Core_Fd_Handler *fdh = NULL;
@@ -1411,14 +1409,14 @@ _core_main_fd_handler_add(Eo                    *obj,
         pd->always_fd_handlers = eina_list_append(pd->always_fd_handlers, fdh);
     pd->fd_handlers =
         (Core_Fd_Handler *)eina_inlist_append(EINA_INLIST_GET(pd->fd_handlers),
-                                               EINA_INLIST_GET(fdh));
+                                              EINA_INLIST_GET(fdh));
     return fdh;
 }
 
 void *
-_core_main_fd_handler_del(Eo *obj           EFL_UNUSED,
-                           Efl_Loop_Data    *pd,
-                           Core_Fd_Handler *fd_handler)
+_core_main_fd_handler_del(Eo *obj          EFL_UNUSED,
+                          Efl_Loop_Data   *pd,
+                          Core_Fd_Handler *fd_handler)
 {
     void *r = fd_handler->data;
 
@@ -1453,16 +1451,39 @@ _core_main_fd_handler_del(Eo *obj           EFL_UNUSED,
 }
 
 EAPI Core_Fd_Handler *
-core_main_fd_handler_add(int                    fd,
-                          Core_Fd_Handler_Flags flags,
-                          Core_Fd_Cb            func,
-                          const void            *data,
-                          Core_Fd_Cb            buf_func,
-                          const void            *buf_data)
+core_main_fd_handler_add(int                   fd,
+                         Core_Fd_Handler_Flags flags,
+                         Core_Fd_Cb            func,
+                         const void           *data,
+                         Core_Fd_Cb            buf_func,
+                         const void           *buf_data)
 {
     Core_Fd_Handler *fdh = NULL;
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
     fdh = _core_main_fd_handler_add(efl_main_loop_get(),
+                                    ML_DAT,
+                                    NULL,
+                                    fd,
+                                    flags,
+                                    func,
+                                    data,
+                                    buf_func,
+                                    buf_data,
+                                    EFL_FALSE);
+    if (fdh) fdh->legacy = EFL_TRUE;
+    return fdh;
+}
+
+EAPI Core_Fd_Handler *
+core_main_fd_handler_file_add(int                   fd,
+                              Core_Fd_Handler_Flags flags,
+                              Core_Fd_Cb            func,
+                              const void           *data,
+                              Core_Fd_Cb            buf_func,
+                              const void           *buf_data)
+{
+    EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
+    return _core_main_fd_handler_add(efl_main_loop_get(),
                                      ML_DAT,
                                      NULL,
                                      fd,
@@ -1471,30 +1492,7 @@ core_main_fd_handler_add(int                    fd,
                                      data,
                                      buf_func,
                                      buf_data,
-                                     EFL_FALSE);
-    if (fdh) fdh->legacy = EFL_TRUE;
-    return fdh;
-}
-
-EAPI Core_Fd_Handler *
-core_main_fd_handler_file_add(int                    fd,
-                               Core_Fd_Handler_Flags flags,
-                               Core_Fd_Cb            func,
-                               const void            *data,
-                               Core_Fd_Cb            buf_func,
-                               const void            *buf_data)
-{
-    EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
-    return _core_main_fd_handler_add(efl_main_loop_get(),
-                                      ML_DAT,
-                                      NULL,
-                                      fd,
-                                      flags,
-                                      func,
-                                      data,
-                                      buf_func,
-                                      buf_data,
-                                      EFL_TRUE);
+                                     EFL_TRUE);
 }
 
 EAPI void *
@@ -1506,8 +1504,8 @@ core_main_fd_handler_del(Core_Fd_Handler *fd_handler)
     if (!CORE_MAGIC_CHECK(fd_handler, CORE_MAGIC_FD_HANDLER))
     {
         CORE_MAGIC_FAIL(fd_handler,
-                         CORE_MAGIC_FD_HANDLER,
-                         "core_main_fd_handler_del");
+                        CORE_MAGIC_FD_HANDLER,
+                        "core_main_fd_handler_del");
         return NULL;
     }
     return _core_main_fd_handler_del(ML_OBJ, ML_DAT, fd_handler);
@@ -1515,12 +1513,12 @@ core_main_fd_handler_del(Core_Fd_Handler *fd_handler)
 
 #ifdef _WIN32
 EAPI Core_Win32_Handler *
-_core_main_win32_handler_add(Eo                   *obj,
-                              Efl_Loop_Data        *pd,
-                              Eo                   *handler,
-                              void                 *h,
-                              Core_Win32_Handle_Cb func,
-                              const void           *data)
+_core_main_win32_handler_add(Eo                  *obj,
+                             Efl_Loop_Data       *pd,
+                             Eo                  *handler,
+                             void                *h,
+                             Core_Win32_Handle_Cb func,
+                             const void          *data)
 {
     Core_Win32_Handler *wh;
 
@@ -1543,9 +1541,9 @@ _core_main_win32_handler_add(Eo                   *obj,
 }
 
 void *
-_core_main_win32_handler_del(Eo *obj              EFL_UNUSED,
-                              Efl_Loop_Data       *pd,
-                              Core_Win32_Handler *win32_handler)
+_core_main_win32_handler_del(Eo *obj             EFL_UNUSED,
+                             Efl_Loop_Data      *pd,
+                             Core_Win32_Handler *win32_handler)
 {
     if (win32_handler->delete_me)
     {
@@ -1561,9 +1559,9 @@ _core_main_win32_handler_del(Eo *obj              EFL_UNUSED,
 }
 
 EAPI Core_Win32_Handler *
-core_main_win32_handler_add(void                 *h,
-                             Core_Win32_Handle_Cb func,
-                             const void           *data)
+core_main_win32_handler_add(void                *h,
+                            Core_Win32_Handle_Cb func,
+                            const void          *data)
 {
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
     return _core_main_win32_handler_add(ML_OBJ, ML_DAT, NULL, h, func, data);
@@ -1579,8 +1577,8 @@ core_main_win32_handler_del(Core_Win32_Handler *win32_handler)
     if (!CORE_MAGIC_CHECK(win32_handler, CORE_MAGIC_WIN32_HANDLER))
     {
         CORE_MAGIC_FAIL(win32_handler,
-                         CORE_MAGIC_WIN32_HANDLER,
-                         "core_main_win32_handler_del");
+                        CORE_MAGIC_WIN32_HANDLER,
+                        "core_main_win32_handler_del");
         return NULL;
     }
     ret = _core_main_win32_handler_del(ML_OBJ, ML_DAT, win32_handler);
@@ -1588,28 +1586,28 @@ core_main_win32_handler_del(Core_Win32_Handler *win32_handler)
 }
 #else
 EAPI Core_Win32_Handler *
-_core_main_win32_handler_add(Eo *obj                    EFL_UNUSED,
-                              Efl_Loop_Data *pd          EFL_UNUSED,
-                              Eo *handler                EFL_UNUSED,
-                              void *h                    EFL_UNUSED,
-                              Core_Win32_Handle_Cb func EFL_UNUSED,
-                              const void *data           EFL_UNUSED)
+_core_main_win32_handler_add(Eo *obj                   EFL_UNUSED,
+                             Efl_Loop_Data *pd         EFL_UNUSED,
+                             Eo *handler               EFL_UNUSED,
+                             void *h                   EFL_UNUSED,
+                             Core_Win32_Handle_Cb func EFL_UNUSED,
+                             const void *data          EFL_UNUSED)
 {
     return NULL;
 }
 
 void *
-_core_main_win32_handler_del(Eo *obj                            EFL_UNUSED,
-                              Efl_Loop_Data *pd                  EFL_UNUSED,
-                              Core_Win32_Handler *win32_handler EFL_UNUSED)
+_core_main_win32_handler_del(Eo *obj                           EFL_UNUSED,
+                             Efl_Loop_Data *pd                 EFL_UNUSED,
+                             Core_Win32_Handler *win32_handler EFL_UNUSED)
 {
     return NULL;
 }
 
 EAPI Core_Win32_Handler *
-core_main_win32_handler_add(void *h                    EFL_UNUSED,
-                             Core_Win32_Handle_Cb func EFL_UNUSED,
-                             const void *data           EFL_UNUSED)
+core_main_win32_handler_add(void *h                   EFL_UNUSED,
+                            Core_Win32_Handle_Cb func EFL_UNUSED,
+                            const void *data          EFL_UNUSED)
 {
     return NULL;
 }
@@ -1623,8 +1621,8 @@ core_main_win32_handler_del(Core_Win32_Handler *win32_handler EFL_UNUSED)
 
 EAPI void
 core_main_fd_handler_prepare_callback_set(Core_Fd_Handler *fd_handler,
-                                           Core_Fd_Prep_Cb  func,
-                                           const void       *data)
+                                          Core_Fd_Prep_Cb  func,
+                                          const void      *data)
 {
     if (!fd_handler) return;
     Efl_Loop_Data *pd = fd_handler->loop_data;
@@ -1633,8 +1631,8 @@ core_main_fd_handler_prepare_callback_set(Core_Fd_Handler *fd_handler,
     if (!CORE_MAGIC_CHECK(fd_handler, CORE_MAGIC_FD_HANDLER))
     {
         CORE_MAGIC_FAIL(fd_handler,
-                         CORE_MAGIC_FD_HANDLER,
-                         "core_main_fd_handler_prepare_callback_set");
+                        CORE_MAGIC_FD_HANDLER,
+                        "core_main_fd_handler_prepare_callback_set");
         return;
     }
     fd_handler->prep_func = func;
@@ -1657,8 +1655,8 @@ core_main_fd_handler_fd_get(Core_Fd_Handler *fd_handler)
     if (!CORE_MAGIC_CHECK(fd_handler, CORE_MAGIC_FD_HANDLER))
     {
         CORE_MAGIC_FAIL(fd_handler,
-                         CORE_MAGIC_FD_HANDLER,
-                         "core_main_fd_handler_fd_get");
+                        CORE_MAGIC_FD_HANDLER,
+                        "core_main_fd_handler_fd_get");
         return -1;
     }
     return fd_handler->fd;
@@ -1666,7 +1664,7 @@ core_main_fd_handler_fd_get(Core_Fd_Handler *fd_handler)
 
 EAPI Efl_Bool
 core_main_fd_handler_active_get(Core_Fd_Handler      *fd_handler,
-                                 Core_Fd_Handler_Flags flags)
+                                Core_Fd_Handler_Flags flags)
 {
     int ret = EFL_FALSE;
 
@@ -1675,8 +1673,8 @@ core_main_fd_handler_active_get(Core_Fd_Handler      *fd_handler,
     if (!CORE_MAGIC_CHECK(fd_handler, CORE_MAGIC_FD_HANDLER))
     {
         CORE_MAGIC_FAIL(fd_handler,
-                         CORE_MAGIC_FD_HANDLER,
-                         "core_main_fd_handler_active_get");
+                        CORE_MAGIC_FD_HANDLER,
+                        "core_main_fd_handler_active_get");
         return EFL_FALSE;
     }
     if ((flags & CORE_FD_READ) && (fd_handler->read_active)) ret = EFL_TRUE;
@@ -1687,15 +1685,15 @@ core_main_fd_handler_active_get(Core_Fd_Handler      *fd_handler,
 
 EAPI void
 core_main_fd_handler_active_set(Core_Fd_Handler      *fd_handler,
-                                 Core_Fd_Handler_Flags flags)
+                                Core_Fd_Handler_Flags flags)
 {
     int ret = -1;
 
     if (!CORE_MAGIC_CHECK(fd_handler, CORE_MAGIC_FD_HANDLER))
     {
         CORE_MAGIC_FAIL(fd_handler,
-                         CORE_MAGIC_FD_HANDLER,
-                         "core_main_fd_handler_active_set");
+                        CORE_MAGIC_FD_HANDLER,
+                        "core_main_fd_handler_active_set");
         return;
     }
     fd_handler->flags = flags;
@@ -1783,7 +1781,7 @@ static void
 _core_main_prepare_handlers(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
     Core_Fd_Handler *fdh;
-    Eina_List        *l, *l2;
+    Eina_List       *l, *l2;
 
     // call the prepare callback for all handlers with prep functions
     EINA_LIST_FOREACH_SAFE(pd->fd_handlers_with_prep, l, l2, fdh)
@@ -1831,11 +1829,11 @@ _core_main_select_fd_too_big_check(int fd)
 static int
 _core_main_select(Eo *obj, Efl_Loop_Data *pd, double timeout)
 {
-    struct timeval    tv, *t;
-    fd_set            rfds, wfds, exfds;
+    struct timeval   tv, *t;
+    fd_set           rfds, wfds, exfds;
     Core_Fd_Handler *fdh;
-    Eina_List        *l;
-    int               max_fd, ret, outval;
+    Eina_List       *l;
+    int              max_fd, ret, outval;
 #  ifndef _WIN32
     int err_no;
 #  endif
@@ -2011,8 +2009,8 @@ static void
 _core_main_fd_handlers_bads_rem(Eo *obj, Efl_Loop_Data *pd)
 {
     Core_Fd_Handler *fdh;
-    Eina_Inlist      *l;
-    int               found = 0;
+    Eina_Inlist     *l;
+    int              found = 0;
 
     ERR("Removing bad fds");
     for (l = EINA_INLIST_GET(pd->fd_handlers); l;)
@@ -2076,7 +2074,7 @@ static void
 _core_main_fd_handlers_cleanup(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
     Core_Fd_Handler *fdh, *last;
-    Eina_List        *l, *l2;
+    Eina_List       *l, *l2;
 
     // Cleanup deleted caller from the list
     last = NULL;
@@ -2136,7 +2134,7 @@ static void
 _core_main_win32_handlers_cleanup(Eo *obj EFL_UNUSED, Efl_Loop_Data *pd)
 {
     Core_Win32_Handler *wh;
-    Eina_List           *l, *l2;
+    Eina_List          *l, *l2;
 
     if (!pd->win32_handlers_to_delete) return;
     EINA_LIST_FOREACH_SAFE(pd->win32_handlers_to_delete, l, l2, wh)
@@ -2221,8 +2219,8 @@ static int
 _core_main_fd_handlers_buf_call(Eo *obj, Efl_Loop_Data *pd)
 {
     Core_Fd_Handler *fdh;
-    Eina_List        *l, *l2;
-    int               ret;
+    Eina_List       *l, *l2;
+    int              ret;
 
     if (!pd->fd_handlers_with_buffer) return 0;
     eina_evlog("+fd_handlers_buf", NULL, 0.0, NULL);
@@ -2270,7 +2268,7 @@ _core_main_loop_uv_prepare(uv_prepare_t *handle EFL_UNUSED)
         while (pd->fd_handlers)
         {
             Core_Fd_Handler *fdh = pd->fd_handlers;
-            pd->fd_handlers       = (Core_Fd_Handler *)eina_inlist_remove(
+            pd->fd_handlers      = (Core_Fd_Handler *)eina_inlist_remove(
                 EINA_INLIST_GET(pd->fd_handlers),
                 EINA_INLIST_GET(fdh));
             fdh->delete_me = 1;
@@ -2541,8 +2539,7 @@ start_loop:  //-*************************************************************
             int action = LOOP_CONTINUE;
 
             // no timers - spin
-            if (next_time < 0)
-                action = _core_main_loop_spin_no_timers(obj, pd);
+            if (next_time < 0) action = _core_main_loop_spin_no_timers(obj, pd);
             // timers - spin
             else action = _core_main_loop_spin_timers(obj, pd);
             if (action == SPIN_RESTART) goto start_loop;
@@ -2614,11 +2611,11 @@ static unsigned int __stdcall _core_main_win32_objects_wait_thread(void *data)
 
 static DWORD
 _core_main_win32_objects_wait(DWORD         objects_nbr,
-                               const HANDLE *objects,
-                               DWORD         timeout)
+                              const HANDLE *objects,
+                              DWORD         timeout)
 {
     Core_Main_Win32_Thread_Data *threads_data;
-    HANDLE                       *threads_handles;
+    HANDLE                      *threads_handles;
     DWORD threads_nbr, threads_remain, objects_idx, result, i;
 
     if (objects_nbr < MAXIMUM_WAIT_OBJECTS)
@@ -2747,26 +2744,26 @@ _stdin_wait_thread(void *data EFL_UNUSED)
 
 static int
 _core_main_win32_select(int nfds        EFL_UNUSED,
-                         fd_set         *readfds,
-                         fd_set         *writefds,
-                         fd_set         *exceptfds,
-                         struct timeval *tv)
+                        fd_set         *readfds,
+                        fd_set         *writefds,
+                        fd_set         *exceptfds,
+                        struct timeval *tv)
 {
-    Efl_Loop_Data       *pd = ML_DAT;
-    HANDLE              *objects;
-    int                 *sockets;
+    Efl_Loop_Data      *pd = ML_DAT;
+    HANDLE             *objects;
+    int                *sockets;
     Core_Fd_Handler    *fdh;
     Core_Win32_Handler *wh;
-    static HANDLE        stdin_wait_thread = INVALID_HANDLE_VALUE;
-    HANDLE               stdin_handle;
-    DWORD                result, timeout;
-    MSG                  msg;
-    unsigned int         fds_nbr     = 0;
-    unsigned int         objects_nbr = 0;
-    unsigned int         events_nbr  = 0;
-    unsigned int         i;
-    int                  res;
-    Efl_Bool             stdin_thread_done = EFL_FALSE;
+    static HANDLE       stdin_wait_thread = INVALID_HANDLE_VALUE;
+    HANDLE              stdin_handle;
+    DWORD               result, timeout;
+    MSG                 msg;
+    unsigned int        fds_nbr     = 0;
+    unsigned int        objects_nbr = 0;
+    unsigned int        events_nbr  = 0;
+    unsigned int        i;
+    int                 res;
+    Efl_Bool            stdin_thread_done = EFL_FALSE;
 
     fds_nbr = eina_inlist_count(EINA_INLIST_GET(pd->fd_handlers));
     sockets = (int *)malloc(fds_nbr * sizeof(int));
@@ -2851,8 +2848,8 @@ _core_main_win32_select(int nfds        EFL_UNUSED,
     }
 
     result = _core_main_win32_objects_wait(objects_nbr,
-                                            (const HANDLE *)objects,
-                                            timeout);
+                                           (const HANDLE *)objects,
+                                           timeout);
     if (readfds) FD_ZERO(readfds);
     if (writefds) FD_ZERO(writefds);
     if (exceptfds) FD_ZERO(exceptfds);
@@ -2899,9 +2896,9 @@ _core_main_win32_select(int nfds        EFL_UNUSED,
             pd->win32_handler_current = pd->win32_handlers;
         else
             // recursive main loop, continue from where we were
-            pd->win32_handler_current = (Core_Win32_Handler *)EINA_INLIST_GET(
-                                            pd->win32_handler_current)
-                                            ->next;
+            pd->win32_handler_current =
+                (Core_Win32_Handler *)EINA_INLIST_GET(pd->win32_handler_current)
+                    ->next;
 
         if (objects[result - WAIT_OBJECT_0] == stdin_wait_thread)
             stdin_thread_done = EFL_TRUE;

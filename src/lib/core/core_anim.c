@@ -44,7 +44,7 @@
 #include "core.h"
 #include "core_private.h"
 
-static int      _Core_anim_log_dom = -1;
+static int      _Core_anim_log_dom  = -1;
 static Efl_Bool _ee_animators_setup = EFL_FALSE;
 
 #ifdef ERR
@@ -76,21 +76,21 @@ static void     _do_tick(void);
 static Efl_Bool _core_animator_run(void *data);
 
 static int             animators_delete_me = 0;
-static Core_Animator *animators           = NULL;
+static Core_Animator  *animators           = NULL;
 static volatile double animators_frametime = 1.0 / 60.0;
 static unsigned int    animators_suspended = 0;
 
 static Core_Animator_Source src             = CORE_ANIMATOR_SOURCE_TIMER;
-static int                   ticking         = 0;
+static int                  ticking         = 0;
 static Core_Cb              begin_tick_cb   = NULL;
-static const void           *begin_tick_data = NULL;
+static const void          *begin_tick_data = NULL;
 static Core_Cb              end_tick_cb     = NULL;
-static const void           *end_tick_data   = NULL;
-static Efl_Bool              animator_ran    = EFL_FALSE;
+static const void          *end_tick_data   = NULL;
+static Efl_Bool             animator_ran    = EFL_FALSE;
 
 static volatile int  timer_fd_read       = -1;
 static volatile int  timer_fd_write      = -1;
-static Core_Thread *timer_thread        = NULL;
+static Core_Thread  *timer_thread        = NULL;
 static volatile int  timer_event_is_busy = 0;
 static Eina_Spinlock tick_queue_lock;
 static int           tick_queue_count = 0;
@@ -344,9 +344,9 @@ done:
 }
 
 static void
-_timer_tick_notify(void *data           EFL_UNUSED,
+_timer_tick_notify(void *data          EFL_UNUSED,
                    Core_Thread *thread EFL_UNUSED,
-                   void                *msg)
+                   void               *msg)
 {
     int tick_queued;
 
@@ -409,11 +409,11 @@ _timer_tick_begin(void)
         tick_queue_count = 0;
         eina_spinlock_new(&tick_queue_lock);
         timer_thread = core_thread_feedback_run(_timer_tick_core,
-                                                 _timer_tick_notify,
-                                                 _timer_tick_finished,
-                                                 _timer_tick_finished,
-                                                 NULL,
-                                                 EFL_TRUE);
+                                                _timer_tick_notify,
+                                                _timer_tick_finished,
+                                                _timer_tick_finished,
+                                                NULL,
+                                                EFL_TRUE);
     }
     timer_event_is_busy = 1;
     _tick_send(1);
@@ -487,7 +487,7 @@ static void
 _do_tick(void)
 {
     Core_Animator *animator;
-    Eina_Inlist    *tmp;
+    Eina_Inlist   *tmp;
 
     DBG("General animator tick.");
     EINA_INLIST_FOREACH(animators, animator)
@@ -533,7 +533,7 @@ _core_animator_add(Core_Task_Cb func, const void *data)
     animator->data       = (void *)data;
     animator->just_added = EFL_TRUE;
     animators = (Core_Animator *)eina_inlist_append(EINA_INLIST_GET(animators),
-                                                     EINA_INLIST_GET(animator));
+                                                    EINA_INLIST_GET(animator));
     _begin_tick();
 
     return animator;
@@ -546,9 +546,9 @@ core_animator_add(Core_Task_Cb func, const void *data)
 }
 
 EAPI Core_Animator *
-core_animator_timeline_add(double            runtime,
-                            Core_Timeline_Cb func,
-                            const void       *data)
+core_animator_timeline_add(double           runtime,
+                           Core_Timeline_Cb func,
+                           const void      *data)
 {
     Core_Animator *animator;
 
@@ -724,9 +724,9 @@ _pos_map_cubic_bezier(double pos, double x1, double y1, double x2, double y2)
 
 EAPI double
 core_animator_pos_map_n(double        pos,
-                         Core_Pos_Map map,
-                         int           v_size,
-                         const double *v)
+                        Core_Pos_Map  map,
+                        int           v_size,
+                        const double *v)
 {
     double v0 = 0, v1 = 0, v2 = 0, v3 = 0;
 
@@ -910,7 +910,7 @@ core_animator_source_set(Core_Animator_Source source)
     DBG("New source set to %s.",
         source == CORE_ANIMATOR_SOURCE_TIMER    ? "TIMER"
         : source == CORE_ANIMATOR_SOURCE_CUSTOM ? "CUSTOM"
-                                                 : "UNKNOWN");
+                                                : "UNKNOWN");
     if (_have_animators()) _begin_tick();
 }
 
@@ -922,8 +922,8 @@ core_animator_source_get(void)
 }
 
 EAPI void
-core_animator_custom_source_tick_begin_callback_set(Core_Cb    func,
-                                                     const void *data)
+core_animator_custom_source_tick_begin_callback_set(Core_Cb     func,
+                                                    const void *data)
 {
     EINA_MAIN_LOOP_CHECK_RETURN;
     _end_tick();
@@ -933,8 +933,8 @@ core_animator_custom_source_tick_begin_callback_set(Core_Cb    func,
 }
 
 EAPI void
-core_animator_custom_source_tick_end_callback_set(Core_Cb    func,
-                                                   const void *data)
+core_animator_custom_source_tick_end_callback_set(Core_Cb     func,
+                                                  const void *data)
 {
     EINA_MAIN_LOOP_CHECK_RETURN;
     _end_tick();
@@ -970,7 +970,7 @@ _core_animator_shutdown(void)
 
         animators =
             (Core_Animator *)eina_inlist_remove(EINA_INLIST_GET(animators),
-                                                 EINA_INLIST_GET(animator));
+                                                EINA_INLIST_GET(animator));
         free(animator);
     }
 
@@ -994,8 +994,8 @@ static Efl_Bool
 _core_animator_run(void *data)
 {
     Core_Animator *animator = data;
-    double          pos      = 0.0, t;
-    Efl_Bool        run_ret;
+    double         pos      = 0.0, t;
+    Efl_Bool       run_ret;
 
     t = core_loop_time_get();
     if (animator->run > 0.0)
@@ -1062,10 +1062,10 @@ Core_evas_object_animator_init(Core_Evas_Object_Animator_Interface *iface)
 }
 
 Core_Animator *
-Core_evas_animator_timeline_add(void             *evo,
-                                 double            runtime,
-                                 Core_Timeline_Cb func,
-                                 const void       *data)
+Core_evas_animator_timeline_add(void            *evo,
+                                double           runtime,
+                                Core_Timeline_Cb func,
+                                const void      *data)
 {
     Core_Animator *anim = NULL;
 

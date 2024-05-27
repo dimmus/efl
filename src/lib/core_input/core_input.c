@@ -69,16 +69,16 @@ core_event_shutdown(void)
     if (--_core_event_init_count != 0) return _core_event_init_count;
 
     core_event_type_flush(CORE_EVENT_KEY_DOWN,
-                           CORE_EVENT_KEY_UP,
-                           CORE_EVENT_MOUSE_BUTTON_DOWN,
-                           CORE_EVENT_MOUSE_BUTTON_UP,
-                           CORE_EVENT_MOUSE_MOVE,
-                           CORE_EVENT_MOUSE_WHEEL,
-                           CORE_EVENT_MOUSE_IN,
-                           CORE_EVENT_MOUSE_OUT,
-                           CORE_EVENT_AXIS_UPDATE,
-                           CORE_EVENT_MOUSE_BUTTON_CANCEL,
-                           CORE_EVENT_JOYSTICK);
+                          CORE_EVENT_KEY_UP,
+                          CORE_EVENT_MOUSE_BUTTON_DOWN,
+                          CORE_EVENT_MOUSE_BUTTON_UP,
+                          CORE_EVENT_MOUSE_MOVE,
+                          CORE_EVENT_MOUSE_WHEEL,
+                          CORE_EVENT_MOUSE_IN,
+                          CORE_EVENT_MOUSE_OUT,
+                          CORE_EVENT_AXIS_UPDATE,
+                          CORE_EVENT_MOUSE_BUTTON_CANCEL,
+                          CORE_EVENT_JOYSTICK);
     ecore_input_joystick_shutdown();
     eina_log_domain_unregister(_core_input_log_dom);
     _core_input_log_dom = -1;
@@ -122,8 +122,8 @@ core_event_modifier_mask(Ecore_Event_Modifier modifier)
 
 EAPI Ecore_Event_Modifier
 core_event_update_modifier(const char            *key,
-                            Ecore_Event_Modifiers *modifiers,
-                            int                    inc)
+                           Ecore_Event_Modifiers *modifiers,
+                           int                    inc)
 {
     size_t i;
 

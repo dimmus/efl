@@ -12,7 +12,7 @@
 struct _Core_Factorized_Idle
 {
     Core_Task_Cb func;
-    void         *data;
+    void        *data;
 
     const Efl_Callback_Array_Item *desc;
 
@@ -65,8 +65,8 @@ _core_factorized_idle_del(Core_Idler *idler)
 
 Core_Factorized_Idle *
 _core_factorized_idle_add(const Efl_Callback_Array_Item *desc,
-                           Core_Task_Cb                  func,
-                           const void                    *data)
+                          Core_Task_Cb                   func,
+                          const void                    *data)
 {
     Core_Factorized_Idle *ret;
 

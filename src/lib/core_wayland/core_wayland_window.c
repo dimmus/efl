@@ -1324,9 +1324,9 @@ ecore_wl_window_rotation_change_prepare_send(Ecore_Wl_Window *window,
     ev->resize   = resize;
 
     core_event_add(ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE,
-                    ev,
-                    NULL,
-                    NULL);
+                   ev,
+                   NULL,
+                   NULL);
 }
 
 EAPI void
@@ -1347,9 +1347,9 @@ ecore_wl_window_rotation_change_prepare_done_send(Ecore_Wl_Window *window,
     ev->resize   = 0;
 
     core_event_add(ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE,
-                    ev,
-                    NULL,
-                    NULL);
+                   ev,
+                   NULL,
+                   NULL);
 }
 
 EAPI void
@@ -1369,9 +1369,9 @@ ecore_wl_window_rotation_change_request_send(Ecore_Wl_Window *window, int rot)
     ev->resize   = 0;
 
     core_event_add(ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST,
-                    ev,
-                    NULL,
-                    NULL);
+                   ev,
+                   NULL,
+                   NULL);
 }
 
 EAPI void
@@ -1393,10 +1393,7 @@ ecore_wl_window_rotation_change_done_send(Ecore_Wl_Window *window,
     ev->h        = h;
     ev->resize   = 0;
 
-    core_event_add(ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE,
-                    ev,
-                    NULL,
-                    NULL);
+    core_event_add(ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE, ev, NULL, NULL);
 }
 
 EAPI Eina_List *

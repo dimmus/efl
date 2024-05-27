@@ -42,9 +42,9 @@ struct _Efl_Loop_Timer_Data
 {
     EINA_INLIST;
 
-    Eo                 *object;
-    Eo                 *loop;
-    Efl_Loop_Data      *loop_data;
+    Eo                *object;
+    Eo                *loop;
+    Efl_Loop_Data     *loop_data;
     Core_Timer_Legacy *legacy;
 
     double in;
@@ -147,8 +147,7 @@ _efl_loop_timer_efl_object_finalize(Eo *obj, Efl_Loop_Timer_Data *pd)
     pd->loop      = efl_provider_find(obj, EFL_LOOP_CLASS);
     pd->loop_data = efl_data_scope_get(pd->loop, EFL_LOOP_CLASS);
 
-    if (pd->at < efl_loop_time_get(pd->loop))
-        pd->at = core_time_get() + pd->in;
+    if (pd->at < efl_loop_time_get(pd->loop)) pd->at = core_time_get() + pd->in;
     else pd->at += pd->in;
 
     if (pd->in < 0.0)
@@ -173,7 +172,7 @@ static void
 _core_timer_legacy_tick(void *data, const Efl_Event *event)
 {
     Core_Timer_Legacy *legacy      = data;
-    Efl_Bool            inside_call = legacy->inside_call;
+    Efl_Bool           inside_call = legacy->inside_call;
 
     legacy->inside_call = 1;
     if (!_core_call_task_cb(legacy->func, (void *)legacy->data) ||
@@ -196,7 +195,7 @@ EAPI Core_Timer *
 core_timer_add(double in, Core_Task_Cb func, const void *data)
 {
     Core_Timer_Legacy *legacy;
-    Eo                 *timer;
+    Eo                *timer;
 
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
     if (!func)
@@ -222,7 +221,7 @@ EAPI Core_Timer *
 core_timer_loop_add(double in, Core_Task_Cb func, const void *data)
 {
     Core_Timer_Legacy *legacy;
-    Eo                 *timer;
+    Eo                *timer;
 
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
     if (!func)
@@ -591,7 +590,7 @@ _efl_loop_timer_after_get(Efl_Loop_Timer_Data *base)
 double
 _efl_loop_timer_next_get(Eo *obj, Efl_Loop_Data *pd)
 {
-    Core_Timer         *object;
+    Core_Timer          *object;
     Efl_Loop_Timer_Data *first;
     double               now;
     double               in;

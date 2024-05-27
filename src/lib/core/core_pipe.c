@@ -68,16 +68,16 @@
 struct _Core_Pipe
 {
     CORE_MAGIC;
-    int               fd_read;
-    int               fd_write;
+    int              fd_read;
+    int              fd_write;
     Core_Fd_Handler *fd_handler;
-    const void       *data;
+    const void      *data;
     Core_Pipe_Cb     handler;
-    unsigned int      len;
-    int               handling;
-    unsigned int      already_read;
-    void             *passed_data;
-    int               message;
+    unsigned int     len;
+    int              handling;
+    unsigned int     already_read;
+    void            *passed_data;
+    int              message;
 #ifndef _WIN32
     int pollfd;
     int timerfd;
@@ -159,11 +159,11 @@ core_pipe_thaw(Core_Pipe *p)
     }
     if ((!p->fd_handler) && (p->fd_read != PIPE_FD_INVALID))
         p->fd_handler = core_main_fd_handler_add(p->fd_read,
-                                                  CORE_FD_READ,
-                                                  _core_pipe_read,
-                                                  p,
-                                                  NULL,
-                                                  NULL);
+                                                 CORE_FD_READ,
+                                                 _core_pipe_read,
+                                                 p,
+                                                 NULL,
+                                                 NULL);
 }
 
 EAPI int
@@ -291,14 +291,14 @@ out:
 
 EAPI Core_Pipe *
 core_pipe_full_add(Core_Pipe_Cb handler,
-                    const void   *data,
-                    int           fd_read,
-                    int           fd_write,
-                    Efl_Bool      read_survive_fork,
-                    Efl_Bool      write_survive_fork)
+                   const void  *data,
+                   int          fd_read,
+                   int          fd_write,
+                   Efl_Bool     read_survive_fork,
+                   Efl_Bool     write_survive_fork)
 {
     Core_Pipe *p = NULL;
-    int         fds[2];
+    int        fds[2];
 
     EINA_MAIN_LOOP_CHECK_RETURN_VAL(NULL);
     if (!handler) return NULL;
@@ -349,11 +349,11 @@ core_pipe_full_add(Core_Pipe_Cb handler,
     if (fcntl(p->fd_read, F_SETFL, O_NONBLOCK) < 0)
         ERR("can't set pipe to NONBLOCK");
     p->fd_handler = core_main_fd_handler_add(p->fd_read,
-                                              CORE_FD_READ,
-                                              _core_pipe_read,
-                                              p,
-                                              NULL,
-                                              NULL);
+                                             CORE_FD_READ,
+                                             _core_pipe_read,
+                                             p,
+                                             NULL,
+                                             NULL);
     return p;
 }
 
@@ -384,8 +384,7 @@ _core_pipe_del(Core_Pipe *p)
 #endif
     p->delete_me = EFL_TRUE;
     if (p->handling > 0) return (void *)p->data;
-    if (p->fd_handler)
-        _core_main_fd_handler_del(ML_OBJ, ML_DAT, p->fd_handler);
+    if (p->fd_handler) _core_main_fd_handler_del(ML_OBJ, ML_DAT, p->fd_handler);
     if (p->fd_read != PIPE_FD_INVALID) pipe_close(p->fd_read);
     if (p->fd_write != PIPE_FD_INVALID) pipe_close(p->fd_write);
     p->fd_handler = NULL;
@@ -599,7 +598,7 @@ static Efl_Bool
 _core_pipe_read(void *data, Core_Fd_Handler *fd_handler EFL_UNUSED)
 {
     Core_Pipe *p = (Core_Pipe *)data;
-    int         i;
+    int        i;
 
     p->handling++;
     for (i = 0; i < 16; i++)

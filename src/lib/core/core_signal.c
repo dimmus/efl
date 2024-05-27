@@ -85,9 +85,9 @@ _Core_signal_pipe_read(Eo *obj)
                             else e->number = 2;
                             e->data = sdata.info;
                             core_event_add(CORE_EVENT_SIGNAL_USER,
-                                            e,
-                                            _Core_signal_generic_free,
-                                            NULL);
+                                           e,
+                                           _Core_signal_generic_free,
+                                           NULL);
                         }
                         Eo *loop = efl_provider_find(obj, EFL_LOOP_CLASS);
                         if (loop)
@@ -107,15 +107,14 @@ _Core_signal_pipe_read(Eo *obj)
                     break;
                 case SIGHUP:
                     {
-                        Core_Event_Signal_Hup *e =
-                            _core_event_signal_hup_new();
+                        Core_Event_Signal_Hup *e = _core_event_signal_hup_new();
                         if (e)
                         {
                             e->data = sdata.info;
                             core_event_add(CORE_EVENT_SIGNAL_HUP,
-                                            e,
-                                            _Core_signal_generic_free,
-                                            NULL);
+                                           e,
+                                           _Core_signal_generic_free,
+                                           NULL);
                         }
                         Eo *loop = efl_provider_find(obj, EFL_LOOP_CLASS);
                         if (loop)
@@ -137,9 +136,9 @@ _Core_signal_pipe_read(Eo *obj)
                             else e->terminate = 1;
                             e->data = sdata.info;
                             core_event_add(CORE_EVENT_SIGNAL_EXIT,
-                                            e,
-                                            _Core_signal_generic_free,
-                                            NULL);
+                                           e,
+                                           _Core_signal_generic_free,
+                                           NULL);
                         }
                         Eo *loop = efl_provider_find(obj, EFL_LOOP_CLASS);
                         if (loop)
@@ -157,9 +156,9 @@ _Core_signal_pipe_read(Eo *obj)
                         {
                             e->data = sdata.info;
                             core_event_add(CORE_EVENT_SIGNAL_POWER,
-                                            e,
-                                            _Core_signal_generic_free,
-                                            NULL);
+                                           e,
+                                           _Core_signal_generic_free,
+                                           NULL);
                         }
                     }
                     break;
@@ -501,9 +500,9 @@ _Core_signal_waitpid(Efl_Bool once, siginfo_t info)
             }
             else
                 core_event_add(CORE_EXE_EVENT_DEL,
-                                e,
-                                _core_exe_event_del_free,
-                                NULL);
+                               e,
+                               _core_exe_event_del_free,
+                               NULL);
         }
 
         // XXX: this is not brilliant. this ends up running from the main loop

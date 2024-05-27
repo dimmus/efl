@@ -77,18 +77,18 @@ _efl_loop_fd_reset(Eo *obj, Efl_Loop_Fd_Data *pd)
     if (pd->handler) core_main_fd_handler_active_set(pd->handler, flags);
     else if (pd->file)
         pd->handler = core_main_fd_handler_file_add(pd->fd,
-                                                     flags,
-                                                     _efl_loop_fd_read_cb,
-                                                     obj,
-                                                     NULL,
-                                                     NULL);
+                                                    flags,
+                                                    _efl_loop_fd_read_cb,
+                                                    obj,
+                                                    NULL,
+                                                    NULL);
     else
         pd->handler = core_main_fd_handler_add(pd->fd,
-                                                flags,
-                                                _efl_loop_fd_read_cb,
-                                                obj,
-                                                NULL,
-                                                NULL);
+                                               flags,
+                                               _efl_loop_fd_read_cb,
+                                               obj,
+                                               NULL,
+                                               NULL);
 }
 
 static void

@@ -18,16 +18,16 @@ struct _Core_Mempool
     size_t        size;
 };
 
-#define GENERIC_ALLOC_FREE(TYPE, Type)                                        \
+#define GENERIC_ALLOC_FREE(TYPE, Type)                                       \
     extern size_t _core_sizeof_##TYPE;                                       \
-    Core_Mempool Type##_mp = { #TYPE, NULL, 0 };                             \
-    TYPE         *Type##_calloc(unsigned int num)                             \
-    {                                                                         \
+    Core_Mempool  Type##_mp = { #TYPE, NULL, 0 };                            \
+    TYPE         *Type##_calloc(unsigned int num)                            \
+    {                                                                        \
         return eina_mempool_calloc(Type##_mp.mp, num * _core_sizeof_##TYPE); \
-    }                                                                         \
-    void Type##_mp_free(TYPE *e)                                              \
-    {                                                                         \
-        eina_mempool_free(Type##_mp.mp, e);                                   \
+    }                                                                        \
+    void Type##_mp_free(TYPE *e)                                             \
+    {                                                                        \
+        eina_mempool_free(Type##_mp.mp, e);                                  \
     }
 
 //GENERIC_ALLOC_FREE(Core_Animator, core_animator);
@@ -72,8 +72,7 @@ core_mempool_init(void)
     const char  *choice;
     unsigned int i;
 
-#define MP_SIZE_INIT(TYPE, Type) \
-    Type##_mp.size = _core_sizeof_##TYPE
+#define MP_SIZE_INIT(TYPE, Type) Type##_mp.size = _core_sizeof_##TYPE
 
 //   MP_SIZE_INIT(Core_Animator, core_animator);
 //   MP_SIZE_INIT(Core_Event_Handler, core_event_handler);

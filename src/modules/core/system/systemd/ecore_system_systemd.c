@@ -7,11 +7,11 @@
 #include "Efl_Dbus.h"
 #include "Efl_Core.h"
 
-static int                _log_dom = -1;
+static int                  _log_dom = -1;
 static Efl_Dbus_Connection *_conn    = NULL;
 
-static Eina_List *_objs           = NULL;
-static Eina_List *_proxies        = NULL;
+static Eina_List *_objs             = NULL;
+static Eina_List *_proxies          = NULL;
 static Eina_List *_efl_dbus_pending = NULL;
 
 #ifdef CRI
@@ -38,13 +38,13 @@ static void
 _props_changed_hostname(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
     Efl_Dbus_Message_Iter *changed, *entry, *invalidated;
-    const char          *iface, *prop;
+    const char            *iface, *prop;
 
     if (!efl_dbus_message_arguments_get(msg,
-                                      "sa{sv}as",
-                                      &iface,
-                                      &changed,
-                                      &invalidated))
+                                        "sa{sv}as",
+                                        &iface,
+                                        &changed,
+                                        &invalidated))
     {
         ERR("Error getting data from properties changed signal.");
         return;
@@ -52,7 +52,7 @@ _props_changed_hostname(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 
     while (efl_dbus_message_iter_get_and_next(changed, 'e', &entry))
     {
-        const void          *key;
+        const void            *key;
         Efl_Dbus_Message_Iter *var;
         if (!efl_dbus_message_iter_arguments_get(entry, "sv", &key, &var))
             continue;
@@ -74,13 +74,13 @@ static void
 _props_changed_timedate(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 {
     Efl_Dbus_Message_Iter *changed, *entry, *invalidated;
-    const char          *iface, *prop;
+    const char            *iface, *prop;
 
     if (!efl_dbus_message_arguments_get(msg,
-                                      "sa{sv}as",
-                                      &iface,
-                                      &changed,
-                                      &invalidated))
+                                        "sa{sv}as",
+                                        &iface,
+                                        &changed,
+                                        &invalidated))
     {
         ERR("Error getting data from properties changed signal.");
         return;
@@ -88,7 +88,7 @@ _props_changed_timedate(void *data EFL_UNUSED, const Efl_Dbus_Message *msg)
 
     while (efl_dbus_message_iter_get_and_next(changed, 'e', &entry))
     {
-        const void          *key;
+        const void            *key;
         Efl_Dbus_Message_Iter *var;
         if (!efl_dbus_message_iter_arguments_get(entry, "sv", &key, &var))
             continue;
@@ -125,12 +125,12 @@ _locale_envs_unset(void)
 }
 
 static void
-_locale_get(void *data            EFL_UNUSED,
+_locale_get(void *data              EFL_UNUSED,
             const Efl_Dbus_Message *msg,
             Efl_Dbus_Pending       *pending)
 {
     Efl_Dbus_Message_Iter *variant, *array;
-    const char          *errname, *errmsg, *val;
+    const char            *errname, *errmsg, *val;
 
     _efl_dbus_pending = eina_list_remove(_efl_dbus_pending, pending);
     if (efl_dbus_message_error_get(msg, &errname, &errmsg))
@@ -178,14 +178,14 @@ _props_changed_locale(void *data, const Efl_Dbus_Message *msg)
 {
     Efl_Dbus_Proxy        *proxy = data;
     Efl_Dbus_Message_Iter *changed, *entry, *invalidated;
-    const char          *iface, *prop;
+    const char            *iface, *prop;
     Efl_Dbus_Pending      *pend;
 
     if (!efl_dbus_message_arguments_get(msg,
-                                      "sa{sv}as",
-                                      &iface,
-                                      &changed,
-                                      &invalidated))
+                                        "sa{sv}as",
+                                        &iface,
+                                        &changed,
+                                        &invalidated))
     {
         ERR("Error getting data from properties changed signal.");
         return;
@@ -193,7 +193,7 @@ _props_changed_locale(void *data, const Efl_Dbus_Message *msg)
 
     while (efl_dbus_message_iter_get_and_next(changed, 'e', &entry))
     {
-        const void          *key;
+        const void            *key;
         Efl_Dbus_Message_Iter *var;
         if (!efl_dbus_message_iter_arguments_get(entry, "sv", &key, &var))
             continue;
@@ -213,9 +213,9 @@ changed_locale:
 }
 
 static Efl_Bool
-_property_change_monitor(const char      *name,
-                         const char      *path,
-                         const char      *iface,
+_property_change_monitor(const char        *name,
+                         const char        *path,
+                         const char        *iface,
                          Efl_Dbus_Signal_Cb cb)
 {
     Efl_Dbus_Object         *o;
@@ -276,8 +276,7 @@ _core_system_systemd_init(void)
 {
     efl_dbus_init();
     if (!reseting)
-        core_fork_reset_callback_add((Core_Cb)_core_system_systemd_reset,
-                                      NULL);
+        core_fork_reset_callback_add((Core_Cb)_core_system_systemd_reset, NULL);
 
     _log_dom = eina_log_domain_register("core_system_systemd", NULL);
     if (_log_dom < 0)
@@ -321,8 +320,7 @@ _core_system_systemd_shutdown(void)
 
     DBG("ecore system 'systemd' unloaded");
     if (!reseting)
-        core_fork_reset_callback_del((Core_Cb)_core_system_systemd_reset,
-                                      NULL);
+        core_fork_reset_callback_del((Core_Cb)_core_system_systemd_reset, NULL);
 
     while (_proxies)
     {

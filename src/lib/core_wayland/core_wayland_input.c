@@ -373,9 +373,9 @@ _ecore_wl_input_mouse_down_send(Ecore_Wl_Input  *input,
     }
 
     core_event_add(CORE_EVENT_MOUSE_BUTTON_DOWN,
-                    ev,
-                    _input_event_cb_free,
-                    ev->dev);
+                   ev,
+                   _input_event_cb_free,
+                   ev->dev);
 
     if ((info) && (!info->triple_click))
     {
@@ -450,9 +450,9 @@ _ecore_wl_input_mouse_up_send(Ecore_Wl_Input  *input,
         ev->dev = _ecore_wl_mouse_dev_get(input, window);
 
     core_event_add(CORE_EVENT_MOUSE_BUTTON_UP,
-                    ev,
-                    _input_event_cb_free,
-                    ev->dev);
+                   ev,
+                   _input_event_cb_free,
+                   ev->dev);
 }
 
 static void
@@ -478,9 +478,9 @@ _ecore_wl_input_focus_in_send(Ecore_Wl_Window *window, Ecore_Wl_Input *input)
     ev->display   = input->display;
     ev->display->refs++;
     core_event_add(ECORE_WL2_EVENT_FOCUS_IN,
-                    ev,
-                    _input_event_focus_cb_free,
-                    ev->dev);
+                   ev,
+                   _input_event_focus_cb_free,
+                   ev->dev);
 }
 
 static void
@@ -497,9 +497,9 @@ _ecore_wl_input_focus_out_send(Ecore_Wl_Window *window, Ecore_Wl_Input *input)
     ev->display   = input->display;
     ev->display->refs++;
     core_event_add(ECORE_WL2_EVENT_FOCUS_OUT,
-                    ev,
-                    _input_event_focus_cb_free,
-                    ev->dev);
+                   ev,
+                   _input_event_focus_cb_free,
+                   ev->dev);
 }
 
 static int
@@ -665,10 +665,7 @@ _ecore_wl_input_key_send(Ecore_Wl_Input  *input,
     /* DBG("Emitting Key event (%s,%s,%s,%s)\n", ev->keyname, ev->key, ev->compose, ev->string); */
 
     if (state)
-        core_event_add(CORE_EVENT_KEY_DOWN,
-                        ev,
-                        _input_event_cb_free,
-                        ev->dev);
+        core_event_add(CORE_EVENT_KEY_DOWN, ev, _input_event_cb_free, ev->dev);
     else core_event_add(CORE_EVENT_KEY_UP, ev, _input_event_cb_free, ev->dev);
 }
 
@@ -967,9 +964,9 @@ _keyboard_cb_keymap(void                        *data,
         ev->display = input->display;
         input->display->refs++;
         core_event_add(ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED,
-                        ev,
-                        _display_event_free,
-                        ev->display);
+                       ev,
+                       _display_event_free,
+                       ev->display);
     }
 
     input->xkb.control_mask =
@@ -1179,9 +1176,8 @@ _keyboard_cb_key(void                        *data,
         if (!input->repeat.timer)
         {
             input->repeat.repeating = EFL_FALSE;
-            input->repeat.timer     = core_timer_add(input->repeat.delay,
-                                                  _keyboard_cb_repeat,
-                                                  input);
+            input->repeat.timer =
+                core_timer_add(input->repeat.delay, _keyboard_cb_repeat, input);
         }
     }
 }
@@ -1276,9 +1272,9 @@ _keyboard_cb_repeat_setup(void                        *data,
         ev->display = input->display;
         ev->display->refs++;
         core_event_add(ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED,
-                        ev,
-                        _display_event_free,
-                        ev->display);
+                       ev,
+                       _display_event_free,
+                       ev->display);
     }
 }
 
@@ -1565,9 +1561,9 @@ _seat_cb_capabilities(void                   *data,
     ev->display->refs++;
 
     core_event_add(ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED,
-                    ev,
-                    _display_event_free,
-                    ev->display);
+                   ev,
+                   _display_event_free,
+                   ev->display);
 }
 
 static void
@@ -1599,9 +1595,9 @@ _seat_cb_name(void *data, struct wl_seat *seat EFL_UNUSED, const char *name)
     ev->display->refs++;
 
     core_event_add(ECORE_WL2_EVENT_SEAT_NAME_CHANGED,
-                    ev,
-                    _cb_seat_event_free,
-                    NULL);
+                   ev,
+                   _cb_seat_event_free,
+                   NULL);
 }
 
 static const struct wl_seat_listener _seat_listener = {
@@ -1761,13 +1757,13 @@ _ecore_wl_input_add(Ecore_Wl_Display *display,
 
     input->dev_add_handler =
         core_event_handler_add(ECORE_WL2_EVENT_DEVICE_ADDED,
-                                _ecore_wl_cb_device_event,
-                                input);
+                               _ecore_wl_cb_device_event,
+                               input);
 
     input->dev_remove_handler =
         core_event_handler_add(ECORE_WL2_EVENT_DEVICE_REMOVED,
-                                _ecore_wl_cb_device_event,
-                                input);
+                               _ecore_wl_cb_device_event,
+                               input);
 
     if (!display->wl.data_device_manager) return;
 

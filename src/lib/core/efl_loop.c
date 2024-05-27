@@ -24,7 +24,7 @@ struct _Efl_Loop_Promise_Simple_Data
 {
     union {
         Efl_Loop_Timer *timer;
-        Core_Idler    *idler;
+        Core_Idler     *idler;
     };
 
     Eina_Promise *promise;

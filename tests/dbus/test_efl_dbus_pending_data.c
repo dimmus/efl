@@ -11,12 +11,12 @@ static Efl_Bool is_response_cb = EFL_FALSE;
 
 static Core_Timer *timeout = NULL;
 
-static int pending_data_stored = 5;
-const char *pending_key_store = "pending_data";
+static int  pending_data_stored = 5;
+const char *pending_key_store   = "pending_data";
 
-static Efl_Dbus_Connection *conn = NULL;
-static Efl_Dbus_Object *obj = NULL;
-static Efl_Dbus_Message *message = NULL;
+static Efl_Dbus_Connection *conn    = NULL;
+static Efl_Dbus_Object     *obj     = NULL;
+static Efl_Dbus_Message    *message = NULL;
 
 /**
 * @addtogroup eldbus
@@ -33,35 +33,39 @@ static Efl_Dbus_Message *message = NULL;
 static Efl_Bool
 _core_loop_close(void *data EFL_UNUSED)
 {
-   core_main_loop_quit();
+    core_main_loop_quit();
 
-   return CORE_CALLBACK_CANCEL;
+    return CORE_CALLBACK_CANCEL;
 }
 
 static void
-_response_message_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg EFL_UNUSED, Efl_Dbus_Pending *pending)
+_response_message_cb(void *data                  EFL_UNUSED,
+                     const Efl_Dbus_Message *msg EFL_UNUSED,
+                     Efl_Dbus_Pending           *pending)
 {
-   ck_assert_ptr_ne(NULL, pending);
+    ck_assert_ptr_ne(NULL, pending);
 
-   int *pending_data_get = efl_dbus_pending_data_get(pending, pending_key_store);
+    int *pending_data_get =
+        efl_dbus_pending_data_get(pending, pending_key_store);
 
-   ck_assert_ptr_ne(NULL, pending_data_get);
-   ck_assert_int_eq((*pending_data_get), pending_data_stored);
+    ck_assert_ptr_ne(NULL, pending_data_get);
+    ck_assert_int_eq((*pending_data_get), pending_data_stored);
 
-   int *pending_data_del = efl_dbus_pending_data_del(pending, pending_key_store);
+    int *pending_data_del =
+        efl_dbus_pending_data_del(pending, pending_key_store);
 
-   ck_assert_ptr_ne(NULL, pending_data_del);
-   ck_assert_int_eq((*pending_data_del), pending_data_stored);
+    ck_assert_ptr_ne(NULL, pending_data_del);
+    ck_assert_int_eq((*pending_data_del), pending_data_stored);
 
-   is_response_cb = EFL_TRUE;
+    is_response_cb = EFL_TRUE;
 
-   if (timeout != NULL)
-     {
+    if (timeout != NULL)
+    {
         core_timer_del(timeout);
         timeout = NULL;
-     }
+    }
 
-   core_main_loop_quit();
+    core_main_loop_quit();
 }
 
 /**
@@ -104,41 +108,46 @@ _response_message_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg EFL_UNUS
 
 EFL_START_TEST(utc_efl_dbus_pending_data_p)
 {
-   const char *bus = "org.freedesktop.DBus";
-   const char *path = "/org/freedesktop/DBus";
-   const char *interface = "org.freedesktop.DBus";
-   const char *member = "GetId";
-   const int send_timeout_ms = 500;
+    const char *bus             = "org.freedesktop.DBus";
+    const char *path            = "/org/freedesktop/DBus";
+    const char *interface       = "org.freedesktop.DBus";
+    const char *member          = "GetId";
+    const int   send_timeout_ms = 500;
 
-   conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   obj = efl_dbus_object_get(conn, bus, path);
-   ck_assert_ptr_ne(NULL, obj);
+    obj = efl_dbus_object_get(conn, bus, path);
+    ck_assert_ptr_ne(NULL, obj);
 
-   message = efl_dbus_object_method_call_new(obj, interface, member);
-   ck_assert_ptr_ne(NULL, message);
+    message = efl_dbus_object_method_call_new(obj, interface, member);
+    ck_assert_ptr_ne(NULL, message);
 
-   Efl_Dbus_Pending *pending = efl_dbus_connection_send(conn, message, _response_message_cb, NULL, send_timeout_ms);
-   ck_assert_ptr_ne(NULL, pending);
+    Efl_Dbus_Pending *pending = efl_dbus_connection_send(conn,
+                                                         message,
+                                                         _response_message_cb,
+                                                         NULL,
+                                                         send_timeout_ms);
+    ck_assert_ptr_ne(NULL, pending);
 
-   efl_dbus_pending_data_set(pending, pending_key_store, &pending_data_stored);
+    efl_dbus_pending_data_set(pending, pending_key_store, &pending_data_stored);
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   ck_assert_ptr_ne(NULL, timeout);
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    ck_assert_ptr_ne(NULL, timeout);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert(is_response_cb == EFL_TRUE);
+    ck_assert(is_response_cb == EFL_TRUE);
 
-   efl_dbus_message_unref(message);
-   efl_dbus_object_unref(obj);
-   efl_dbus_connection_unref(conn);
+    efl_dbus_message_unref(message);
+    efl_dbus_object_unref(obj);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 void
 efl_dbus_test_efl_dbus_pending_data(TCase *tc)
 {
-   tcase_add_test(tc, utc_efl_dbus_pending_data_p);
+    tcase_add_test(tc, utc_efl_dbus_pending_data_p);
 }

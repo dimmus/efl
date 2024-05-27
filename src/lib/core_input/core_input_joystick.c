@@ -32,7 +32,7 @@ static void _joystick_ps4_mapper(struct js_event      *event,
 
 struct _Joystick_Info
 {
-    Core_Fd_Handler *fd_handler;
+    Core_Fd_Handler  *fd_handler;
     Eina_Stringshare *system_path;
     int               index;
     Joystick_Mapper   mapper;
@@ -116,8 +116,7 @@ _joystick_ps4_mapper(struct js_event *event, Ecore_Event_Joystick *e)
                 break;
 
             case 11:
-                e->button.index =
-                    CORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK;
+                e->button.index = CORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK;
                 break;
 
             case 12:
@@ -225,8 +224,7 @@ _joystick_xbox360_mapper(struct js_event *event, Ecore_Event_Joystick *e)
                 break;
 
             case 10:
-                e->button.index =
-                    CORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK;
+                e->button.index = CORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK;
                 break;
 
             default:
@@ -330,8 +328,7 @@ _joystick_xboxone_mapper(struct js_event *event, Ecore_Event_Joystick *e)
                 break;
 
             case 10:
-                e->button.index =
-                    CORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK;
+                e->button.index = CORE_EVENT_JOYSTICK_BUTTON_RIGHT_ANALOG_STICK;
                 break;
 
             default:

@@ -17,11 +17,11 @@ struct _Handler
 {
     EINA_INLIST;
     Core_Event_Handler_Cb func;
-    void                  *data;
-    int                    type;
-    Efl_Bool               delete_me : 1;
-    Efl_Bool               to_add    : 1;
-    Efl_Bool               prepend   : 1;
+    void                 *data;
+    int                   type;
+    Efl_Bool              delete_me : 1;
+    Efl_Bool              to_add    : 1;
+    Efl_Bool              prepend   : 1;
 };
 
 struct _Filter
@@ -30,13 +30,12 @@ struct _Filter
     Core_Data_Cb   func_start;
     Core_Filter_Cb func_filter;
     Core_End_Cb    func_end;
-    void           *data;
-    void           *loop_data;
-    Efl_Bool        delete_me : 1;
+    void          *data;
+    void          *loop_data;
+    Efl_Bool       delete_me : 1;
 };
 
-typedef struct _Core_Event_Message_Handler_Data
-    Core_Event_Message_Handler_Data;
+typedef struct _Core_Event_Message_Handler_Data Core_Event_Message_Handler_Data;
 
 struct _Core_Event_Message_Handler_Data
 {
@@ -58,9 +57,9 @@ struct _Core_Event_Message_Handler_Data
 Efl_Bool
 _core_event_do_filter(void *handler_pd, Eo *msg_handler, Eo *msg)
 {
-    Filter                           *f;
-    void                             *ev;
-    int                               type;
+    Filter                          *f;
+    void                            *ev;
+    int                              type;
     Core_Event_Message_Handler_Data *eemhd = handler_pd;
 
     if (!eemhd->filters) return EFL_TRUE;
@@ -85,9 +84,9 @@ _core_event_do_filter(void *handler_pd, Eo *msg_handler, Eo *msg)
 void
 _core_event_filters_call(Eo *obj, Efl_Loop_Data *pd)
 {
-    Filter                           *f;
+    Filter                          *f;
     Core_Event_Message_Handler_Data *eemhd;
-    Eo                               *core_event_handler =
+    Eo                              *core_event_handler =
         efl_provider_find(obj, CORE_EVENT_MESSAGE_HANDLER_CLASS);
     /* If this is not != NULL, then _core_event_init was not called yet, which means,
       there cannot be any registered events yet
@@ -122,9 +121,9 @@ _core_event_filters_call(Eo *obj, Efl_Loop_Data *pd)
 //////////////////////////////////////////////////////////////////////////
 
 EOLIAN static Core_Event_Message *
-_core_event_message_handler_message_type_add(
-    Eo                                  *obj,
-    Core_Event_Message_Handler_Data *pd EFL_UNUSED)
+_core_event_message_handler_message_type_add(Eo *obj,
+                                             Core_Event_Message_Handler_Data *pd
+                                                 EFL_UNUSED)
 {
     // XXX: implemented event obj cache
     return efl_add(CORE_EVENT_MESSAGE_CLASS, obj);
@@ -132,7 +131,7 @@ _core_event_message_handler_message_type_add(
 
 EOLIAN static int
 _core_event_message_handler_type_new(Eo *obj EFL_UNUSED,
-                                      Core_Event_Message_Handler_Data *pd)
+                                     Core_Event_Message_Handler_Data *pd)
 {
     Eina_Inlist **tmp;
     int           evnum;
@@ -140,19 +139,19 @@ _core_event_message_handler_type_new(Eo *obj EFL_UNUSED,
     evnum = pd->event_type_count + 1;
     tmp   = realloc(pd->handlers, sizeof(Eina_Inlist *) * (evnum + 1));
     if (!tmp) return 0;
-    pd->handlers                   = tmp;
+    pd->handlers                  = tmp;
     pd->handlers[CORE_EVENT_NONE] = NULL;
-    pd->handlers[evnum]            = NULL;
-    pd->event_type_count           = evnum;
+    pd->handlers[evnum]           = NULL;
+    pd->event_type_count          = evnum;
     return evnum;
 }
 
 EOLIAN static void *
 _core_event_message_handler_handler_add(Eo *obj EFL_UNUSED,
-                                         Core_Event_Message_Handler_Data *pd,
-                                         int                               type,
-                                         void                             *func,
-                                         void                             *data)
+                                        Core_Event_Message_Handler_Data *pd,
+                                        int                              type,
+                                        void                            *func,
+                                        void                            *data)
 {
     Handler *h;
 
@@ -176,12 +175,11 @@ _core_event_message_handler_handler_add(Eo *obj EFL_UNUSED,
 }
 
 EOLIAN static void *
-_core_event_message_handler_handler_prepend(
-    Eo *obj                           EFL_UNUSED,
-    Core_Event_Message_Handler_Data *pd,
-    int                               type,
-    void                             *func,
-    void                             *data)
+_core_event_message_handler_handler_prepend(Eo *obj EFL_UNUSED,
+                                            Core_Event_Message_Handler_Data *pd,
+                                            int   type,
+                                            void *func,
+                                            void *data)
 {
     Handler *h;
 
@@ -205,8 +203,8 @@ _core_event_message_handler_handler_prepend(
 
 EOLIAN static void *
 _core_event_message_handler_handler_del(Eo *obj EFL_UNUSED,
-                                         Core_Event_Message_Handler_Data *pd,
-                                         void *handler)
+                                        Core_Event_Message_Handler_Data *pd,
+                                        void *handler)
 {
     Handler *h = handler;
     void    *data;
@@ -237,10 +235,10 @@ _core_event_message_handler_handler_del(Eo *obj EFL_UNUSED,
 }
 
 EOLIAN static void *
-_core_event_message_handler_handler_data_get(
-    Eo *obj                              EFL_UNUSED,
-    Core_Event_Message_Handler_Data *pd EFL_UNUSED,
-    void                                *handler)
+_core_event_message_handler_handler_data_get(Eo *obj EFL_UNUSED,
+                                             Core_Event_Message_Handler_Data *pd
+                                                   EFL_UNUSED,
+                                             void *handler)
 {
     Handler *h = handler;
 
@@ -249,11 +247,11 @@ _core_event_message_handler_handler_data_get(
 }
 
 EOLIAN static void *
-_core_event_message_handler_handler_data_set(
-    Eo *obj                              EFL_UNUSED,
-    Core_Event_Message_Handler_Data *pd EFL_UNUSED,
-    void                                *handler,
-    void                                *data)
+_core_event_message_handler_handler_data_set(Eo *obj EFL_UNUSED,
+                                             Core_Event_Message_Handler_Data *pd
+                                                   EFL_UNUSED,
+                                             void *handler,
+                                             void *data)
 {
     Handler *h = handler;
     void    *prev_data;
@@ -266,11 +264,11 @@ _core_event_message_handler_handler_data_set(
 
 EOLIAN static void *
 _core_event_message_handler_filter_add(Eo *obj EFL_UNUSED,
-                                        Core_Event_Message_Handler_Data *pd,
-                                        void *func_start,
-                                        void *func_filter,
-                                        void *func_end,
-                                        void *data)
+                                       Core_Event_Message_Handler_Data *pd,
+                                       void *func_start,
+                                       void *func_filter,
+                                       void *func_end,
+                                       void *data)
 {
     Filter *f;
 
@@ -287,8 +285,8 @@ _core_event_message_handler_filter_add(Eo *obj EFL_UNUSED,
 
 EOLIAN static void *
 _core_event_message_handler_filter_del(Eo *obj EFL_UNUSED,
-                                        Core_Event_Message_Handler_Data *pd,
-                                        void *filter)
+                                       Core_Event_Message_Handler_Data *pd,
+                                       void                            *filter)
 {
     Filter *f = filter;
     void   *data;
@@ -310,7 +308,7 @@ _core_event_message_handler_filter_del(Eo *obj EFL_UNUSED,
 
 EOLIAN static int
 _core_event_message_handler_current_type_get(
-    Eo *obj                           EFL_UNUSED,
+    Eo *obj                          EFL_UNUSED,
     Core_Event_Message_Handler_Data *pd)
 {
     return pd->current_event_type;
@@ -318,7 +316,7 @@ _core_event_message_handler_current_type_get(
 
 EOLIAN static void *
 _core_event_message_handler_current_event_get(
-    Eo *obj                           EFL_UNUSED,
+    Eo *obj                          EFL_UNUSED,
     Core_Event_Message_Handler_Data *pd)
 {
     return pd->current_event_data;
@@ -326,7 +324,7 @@ _core_event_message_handler_current_event_get(
 
 EOLIAN static Efl_Object *
 _core_event_message_handler_efl_object_constructor(
-    Eo                               *obj,
+    Eo                              *obj,
     Core_Event_Message_Handler_Data *pd)
 {
     obj                    = efl_constructor(efl_super(obj, MY_CLASS));
@@ -337,7 +335,7 @@ _core_event_message_handler_efl_object_constructor(
 
 EOLIAN static void
 _core_event_message_handler_efl_object_destructor(
-    Eo                               *obj,
+    Eo                              *obj,
     Core_Event_Message_Handler_Data *pd)
 {
     Handler *h;
@@ -376,23 +374,23 @@ _core_event_message_handler_efl_object_destructor(
 
 EOLIAN static void
 _core_event_message_handler_efl_loop_message_handler_message_call(
-    Eo                               *obj,
+    Eo                              *obj,
     Core_Event_Message_Handler_Data *pd,
-    Efl_Loop_Message                 *message)
+    Efl_Loop_Message                *message)
 {
-    Handler     *h;
-    int          type = -1;
-    void        *data = NULL, *free_func = NULL, *free_data = NULL;
+    Handler    *h;
+    int         type = -1;
+    void       *data = NULL, *free_func = NULL, *free_data = NULL;
     Core_End_Cb fn_free = NULL;
-    Eina_List   *l, *l2;
-    int          handled = 0;
+    Eina_List  *l, *l2;
+    int         handled = 0;
 
     // call legacy handlers which are controled by this class' custom api
     core_event_message_data_steal(message,
-                                   &type,
-                                   &data,
-                                   &free_func,
-                                   &free_data);
+                                  &type,
+                                  &data,
+                                  &free_func,
+                                  &free_data);
     if ((type >= 0) && (type <= pd->event_type_count))
     {
         if (free_func) fn_free = free_func;
@@ -469,9 +467,9 @@ _flush_cb(void *data, void *handler EFL_UNUSED, void *message)
 
 EOLIAN static void
 _core_event_message_handler_type_flush(Eo *obj,
-                                        Core_Event_Message_Handler_Data *pd
-                                            EFL_UNUSED,
-                                        int type)
+                                       Core_Event_Message_Handler_Data *pd
+                                           EFL_UNUSED,
+                                       int type)
 {
     Eo            *loop      = efl_provider_find(obj, EFL_LOOP_CLASS);
     Efl_Loop_Data *loop_data = efl_data_scope_get(loop, EFL_LOOP_CLASS);

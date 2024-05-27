@@ -33,20 +33,20 @@ static const Core_Getopt optdesc = {
 int
 main(int argc, char **argv)
 {
-    char              *xml_buf = NULL;
-    DBus_Object       *obj     = NULL;
-    char              *prefix = NULL, *interface = NULL, *output = NULL;
-    Efl_Bool           quit_option = EFL_FALSE;
-    int                arg_index;
+    char             *xml_buf = NULL;
+    DBus_Object      *obj     = NULL;
+    char             *prefix = NULL, *interface = NULL, *output = NULL;
+    Efl_Bool          quit_option = EFL_FALSE;
+    int               arg_index;
     Core_Getopt_Value values[] = { CORE_GETOPT_VALUE_STR(prefix),
-                                    CORE_GETOPT_VALUE_STR(interface),
-                                    CORE_GETOPT_VALUE_STR(output),
-                                    CORE_GETOPT_VALUE_STR(output_dir),
-                                    CORE_GETOPT_VALUE_BOOL(quit_option),
-                                    CORE_GETOPT_VALUE_BOOL(quit_option),
-                                    CORE_GETOPT_VALUE_BOOL(quit_option),
-                                    CORE_GETOPT_VALUE_BOOL(quit_option),
-                                    CORE_GETOPT_VALUE_NONE };
+                                   CORE_GETOPT_VALUE_STR(interface),
+                                   CORE_GETOPT_VALUE_STR(output),
+                                   CORE_GETOPT_VALUE_STR(output_dir),
+                                   CORE_GETOPT_VALUE_BOOL(quit_option),
+                                   CORE_GETOPT_VALUE_BOOL(quit_option),
+                                   CORE_GETOPT_VALUE_BOOL(quit_option),
+                                   CORE_GETOPT_VALUE_BOOL(quit_option),
+                                   CORE_GETOPT_VALUE_NONE };
 
     eina_init();
 

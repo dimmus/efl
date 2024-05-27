@@ -17,7 +17,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-# include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdlib.h>
@@ -28,88 +28,93 @@
 
 #include "efl_shared_suite.h"
 
-static const char *get_file_full_path(const char *filename)
+static const char *
+get_file_full_path(const char *filename)
 {
-   static char full_path[PATH_MAX] = "";
-   struct stat st;
+    static char full_path[PATH_MAX] = "";
+    struct stat st;
 
-   eina_str_join(full_path, sizeof(full_path), '/', TESTS_SRC_DIR, filename);
+    eina_str_join(full_path, sizeof(full_path), '/', TESTS_SRC_DIR, filename);
 
-   if (stat(full_path, &st) == 0)
-     return full_path;
+    if (stat(full_path, &st) == 0) return full_path;
 
-   if (full_path[0] != '/')
-     {
-        snprintf(full_path, sizeof(full_path), "%s/%s/%s", TESTS_WD, TESTS_SRC_DIR, filename);
+    if (full_path[0] != '/')
+    {
+        snprintf(full_path,
+                 sizeof(full_path),
+                 "%s/%s/%s",
+                 TESTS_WD,
+                 TESTS_SRC_DIR,
+                 filename);
 
-        if (stat(full_path, &st) == 0)
-          return full_path;
-     }
+        if (stat(full_path, &st) == 0) return full_path;
+    }
 
-   return NULL;
+    return NULL;
 }
 
 EFL_START_TEST(efl_shared_simple_xml_parser_node_dump)
 {
-   FILE *f;
+    FILE *f;
 
-   f = fopen(get_file_full_path("sample.gpx"), "rb");
-   if (f)
-     {
+    f = fopen(get_file_full_path("sample.gpx"), "rb");
+    if (f)
+    {
         long sz;
 
         fseek(f, 0, SEEK_END);
         sz = ftell(f);
         if (sz > 0)
-          {
-             char *buf;
+        {
+            char *buf;
 
-             fseek(f, 0, SEEK_SET);
-             buf = malloc(sz + 1);
-             if (buf)
-               {
-                  if (fread(buf, 1, sz, f))
-                    {
-                       Eina_Simple_XML_Node_Root *root = eina_simple_xml_node_load
-                         (buf, sz, EFL_TRUE);
-                       buf[sz] = '\0';
-                       char *out = eina_simple_xml_node_dump(&root->base, "  ");
+            fseek(f, 0, SEEK_SET);
+            buf = malloc(sz + 1);
+            if (buf)
+            {
+                if (fread(buf, 1, sz, f))
+                {
+                    Eina_Simple_XML_Node_Root *root =
+                        eina_simple_xml_node_load(buf, sz, EFL_TRUE);
+                    buf[sz]   = '\0';
+                    char *out = eina_simple_xml_node_dump(&root->base, "  ");
                        //puts(out);
-                       ck_assert_str_eq(out, buf);
-                       free(out);
-                       eina_simple_xml_node_root_free(root);
-                    }
-                  free(buf);
-               }
-          }
+                    ck_assert_str_eq(out, buf);
+                    free(out);
+                    eina_simple_xml_node_root_free(root);
+                }
+                free(buf);
+            }
+        }
         fclose(f);
-     }
-
+    }
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(efl_shared_simple_xml_parser_null_node_dump)
 {
-   
-   char *out = eina_simple_xml_node_dump(NULL, "  ");
-   fail_if(out != NULL);
-
+    char *out = eina_simple_xml_node_dump(NULL, "  ");
+    fail_if(out != NULL);
 }
+
 EFL_END_TEST
 
 EFL_START_TEST(efl_shared_simple_xml_parser_childs_count)
 {
-
-    const char *buf = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-	    "<test version=\"0.1\"><child>I'm a child.</child><child><![CDATA[I'm a 2-nd child.]]></child><!-- Some comment --></test>";
-    const int sz = strlen(buf);
-    Eina_Simple_XML_Node_Root *root = eina_simple_xml_node_load(buf, sz, EFL_TRUE);
+    const char *buf =
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+        "<test version=\"0.1\"><child>I'm a child.</child><child><![CDATA[I'm "
+        "a 2-nd child.]]></child><!-- Some comment --></test>";
+    const int                  sz = strlen(buf);
+    Eina_Simple_XML_Node_Root *root =
+        eina_simple_xml_node_load(buf, sz, EFL_TRUE);
     fail_if(root == NULL);
     fail_if(root->children == NULL);
     fail_if(eina_inlist_count(root->children) != 2);
     eina_simple_xml_node_root_free(root);
-
 }
+
 EFL_END_TEST
 
 enum simple_xml_parser_current_state
@@ -130,88 +135,102 @@ enum simple_xml_parser_current_state
 };
 
 static Efl_Bool
-eina_simple_xml_parser_parse_with_custom_callback_tag_cb(void *data,
-                                                         Eina_Simple_XML_Type type,
-                                                         const char *content,
-                                                         unsigned offset EFL_UNUSED,
-                                                         unsigned length EFL_UNUSED)
+eina_simple_xml_parser_parse_with_custom_callback_tag_cb(
+    void                *data,
+    Eina_Simple_XML_Type type,
+    const char          *content,
+    unsigned offset      EFL_UNUSED,
+    unsigned length      EFL_UNUSED)
 {
-    int* parse_current_state = (int*) data;
+    int *parse_current_state = (int *)data;
 
     if (type == EINA_SIMPLE_XML_OPEN)
-      {
+    {
         if (!strncmp("gpx ", content, strlen("gpx ")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_begin);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_begin);
             *parse_current_state = simple_xml_parser_current_state_gpx;
-          }
+        }
         else if (!strncmp("metadata>", content, strlen("metadata>")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_gpx);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_gpx);
             *parse_current_state = simple_xml_parser_current_state_metadata;
-          }
+        }
         else if (!strncmp("link ", content, strlen("link ")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_metadata);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_metadata);
             *parse_current_state = simple_xml_parser_current_state_link;
-          }
+        }
         else if (!strncmp("text>", content, strlen("text>")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_link);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_link);
             *parse_current_state = simple_xml_parser_current_state_text;
-          }
+        }
         else if (!strncmp("time>", content, strlen("time>")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_text);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_text);
             *parse_current_state = simple_xml_parser_current_state_time;
-          }
+        }
         else if (!strncmp("trk>", content, strlen("trk>")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_time);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_time);
             *parse_current_state = simple_xml_parser_current_state_trk;
-          }
+        }
         else if (!strncmp("name>", content, strlen("name>")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_trk);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_trk);
             *parse_current_state = simple_xml_parser_current_state_name;
-          }
+        }
         else if (!strncmp("trkseg>", content, strlen("trkseg>")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_name);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_name);
             *parse_current_state = simple_xml_parser_current_state_trkseg;
-          }
+        }
         else
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_trkpt);
-          }
-      }
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_trkpt);
+        }
+    }
     else if (type == EINA_SIMPLE_XML_OPEN_EMPTY)
-      {
+    {
         if (!strncmp("trkpt ", content, strlen("trkpt ")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_trkseg &&
-                    *parse_current_state != simple_xml_parser_current_state_trkpt);
+        {
+            fail_if(*parse_current_state !=
+                        simple_xml_parser_current_state_trkseg &&
+                    *parse_current_state !=
+                        simple_xml_parser_current_state_trkpt);
             *parse_current_state = simple_xml_parser_current_state_trkpt;
-          }
-      }
+        }
+    }
     else if (type == EINA_SIMPLE_XML_COMMENT)
-      {
+    {
         fail_if(*parse_current_state != simple_xml_parser_current_state_trkpt);
         *parse_current_state = simple_xml_parser_current_state_comment;
-      }
+    }
     else if (type == EINA_SIMPLE_XML_CDATA)
-      {
-        fail_if(*parse_current_state != simple_xml_parser_current_state_comment);
+    {
+        fail_if(*parse_current_state !=
+                simple_xml_parser_current_state_comment);
         *parse_current_state = simple_xml_parser_current_state_cdata;
-      }
+    }
     else if (type == EINA_SIMPLE_XML_CLOSE)
-      {
+    {
         if (!strncmp("gpx", content, strlen("gpx")))
-          {
-            fail_if(*parse_current_state != simple_xml_parser_current_state_cdata);
+        {
+            fail_if(*parse_current_state !=
+                    simple_xml_parser_current_state_cdata);
             *parse_current_state = simple_xml_parser_current_state_end;
-          }
-      }
+        }
+    }
     return EFL_TRUE;
 }
 
@@ -222,46 +241,49 @@ EFL_START_TEST(efl_shared_simple_xml_parser_parse_with_custom_callback)
     f = fopen(get_file_full_path("sample.gpx"), "rb");
 
     if (f)
-      {
+    {
         long sz;
 
         fseek(f, 0, SEEK_END);
         sz = ftell(f);
 
         if (sz > 0)
-          {
+        {
             char *buf;
 
             fseek(f, 0, SEEK_SET);
             buf = malloc(sz + 1);
 
             if (buf)
-              {
+            {
                 if (fread(buf, 1, sz, f) > 0)
-                  {
-                    int parse_current_state = simple_xml_parser_current_state_begin;
-                    eina_simple_xml_parse(buf,
-                                          sz,
-                                          EFL_TRUE,
-                                          eina_simple_xml_parser_parse_with_custom_callback_tag_cb,
-                                          &parse_current_state);
-                    fail_if(parse_current_state != simple_xml_parser_current_state_end);
-                  }
+                {
+                    int parse_current_state =
+                        simple_xml_parser_current_state_begin;
+                    eina_simple_xml_parse(
+                        buf,
+                        sz,
+                        EFL_TRUE,
+                        eina_simple_xml_parser_parse_with_custom_callback_tag_cb,
+                        &parse_current_state);
+                    fail_if(parse_current_state !=
+                            simple_xml_parser_current_state_end);
+                }
                 free(buf);
-              }
-          }
+            }
+        }
 
         fclose(f);
-      }
-
+    }
 }
+
 EFL_END_TEST
 
 void
 eina_test_simple_xml_parser(TCase *tc)
 {
-   tcase_add_test(tc, efl_shared_simple_xml_parser_node_dump);
-   tcase_add_test(tc, efl_shared_simple_xml_parser_null_node_dump);
-   tcase_add_test(tc, efl_shared_simple_xml_parser_childs_count);
-   tcase_add_test(tc, efl_shared_simple_xml_parser_parse_with_custom_callback);
+    tcase_add_test(tc, efl_shared_simple_xml_parser_node_dump);
+    tcase_add_test(tc, efl_shared_simple_xml_parser_null_node_dump);
+    tcase_add_test(tc, efl_shared_simple_xml_parser_childs_count);
+    tcase_add_test(tc, efl_shared_simple_xml_parser_parse_with_custom_callback);
 }

@@ -6,9 +6,9 @@
 
 #include "efl_dbus_suite.h"
 
-static const char *bus = "org.freedesktop.DBus";
-static const char *path = "/org/freedesktop/DBus";
-static const char *interface = "org.freedesktop.DBus";
+static const char *bus         = "org.freedesktop.DBus";
+static const char *path        = "/org/freedesktop/DBus";
+static const char *interface   = "org.freedesktop.DBus";
 static const char *signal_name = "NameOwnerChanged";
 
 static int cb_data = 5;
@@ -29,77 +29,83 @@ static Core_Timer *timeout = NULL;
 static Efl_Bool
 _core_loop_close(void *data EFL_UNUSED)
 {
-   core_main_loop_quit();
+    core_main_loop_quit();
 
-   return CORE_CALLBACK_CANCEL;
+    return CORE_CALLBACK_CANCEL;
 }
 
 static void
 _signal_name_owner_changed(void *data, const Efl_Dbus_Message *msg)
 {
-   const char *errname, *errmsg;
-   int *user_data = data;
+    const char *errname, *errmsg;
+    int        *user_data = data;
 
-   if (timeout != NULL)
-     {
+    if (timeout != NULL)
+    {
         core_timer_del(timeout);
         timeout = NULL;
-     }
+    }
 
-   if ((user_data) && (*user_data == cb_data))
-     {
+    if ((user_data) && (*user_data == cb_data))
+    {
         if (!efl_dbus_message_error_get(msg, &errname, &errmsg))
-          {
-             is_success_cb = EFL_TRUE;
-          }
-     }
+        {
+            is_success_cb = EFL_TRUE;
+        }
+    }
 
-   core_main_loop_quit();
+    core_main_loop_quit();
 }
 
 static void
-_response_message_cb(void *data EFL_UNUSED, const Efl_Dbus_Message *msg EFL_UNUSED, Efl_Dbus_Pending *pending EFL_UNUSED)
-{
-}
+_response_message_cb(void *data                  EFL_UNUSED,
+                     const Efl_Dbus_Message *msg EFL_UNUSED,
+                     Efl_Dbus_Pending *pending   EFL_UNUSED)
+{}
 
 static void
 _signal_handler_free_cb(void *data, const void *deadptr EFL_UNUSED)
 {
-   int *user_data = data;
+    int *user_data = data;
 
-   if (timeout != NULL)
-     {
+    if (timeout != NULL)
+    {
         core_timer_del(timeout);
         timeout = NULL;
-     }
+    }
 
-   if ((user_data) && (*user_data == cb_data))
-     is_success_cb = EFL_TRUE;
+    if ((user_data) && (*user_data == cb_data)) is_success_cb = EFL_TRUE;
 
-   core_main_loop_quit();
+    core_main_loop_quit();
 }
 
 static Efl_Dbus_Signal_Handler *
 _signal_handler_get(Efl_Dbus_Connection *conn)
 {
-   is_success_cb = EFL_FALSE;
+    is_success_cb = EFL_FALSE;
 
-   Efl_Dbus_Signal_Handler *signal_handler = efl_dbus_signal_handler_add(conn, NULL, path, interface,
-                                                                     signal_name, _signal_name_owner_changed, &cb_data);
+    Efl_Dbus_Signal_Handler *signal_handler =
+        efl_dbus_signal_handler_add(conn,
+                                    NULL,
+                                    path,
+                                    interface,
+                                    signal_name,
+                                    _signal_name_owner_changed,
+                                    &cb_data);
 
-   if (!signal_handler)
-     {
+    if (!signal_handler)
+    {
         return NULL;
-     }
+    }
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   if (!timeout)
-     {
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    if (!timeout)
+    {
         efl_dbus_signal_handler_unref(signal_handler);
         return NULL;
-     }
+    }
 
-   return signal_handler;
+    return signal_handler;
 }
 
 /**
@@ -139,32 +145,42 @@ _signal_handler_get(Efl_Dbus_Connection *conn)
  */
 EFL_START_TEST(utc_efl_dbus_signal_handler_add_p)
 {
-   is_success_cb = EFL_FALSE;
+    is_success_cb = EFL_FALSE;
 
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Signal_Handler *signal_handler = efl_dbus_signal_handler_add(conn, NULL, path, interface,
-                                                                     signal_name, _signal_name_owner_changed, &cb_data);
+    Efl_Dbus_Signal_Handler *signal_handler =
+        efl_dbus_signal_handler_add(conn,
+                                    NULL,
+                                    path,
+                                    interface,
+                                    signal_name,
+                                    _signal_name_owner_changed,
+                                    &cb_data);
 
-   ck_assert_ptr_ne(NULL, signal_handler);
+    ck_assert_ptr_ne(NULL, signal_handler);
 
-   Efl_Dbus_Message *msg = efl_dbus_message_signal_new(path, interface, signal_name);
-   ck_assert_ptr_ne(NULL, signal_handler);
+    Efl_Dbus_Message *msg =
+        efl_dbus_message_signal_new(path, interface, signal_name);
+    ck_assert_ptr_ne(NULL, signal_handler);
 
-   Efl_Dbus_Pending *pending = efl_dbus_connection_send(conn, msg, _response_message_cb, NULL, -1);
-   ck_assert_ptr_ne(NULL, pending);
+    Efl_Dbus_Pending *pending =
+        efl_dbus_connection_send(conn, msg, _response_message_cb, NULL, -1);
+    ck_assert_ptr_ne(NULL, pending);
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   ck_assert_ptr_ne(NULL, timeout);
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    ck_assert_ptr_ne(NULL, timeout);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert_msg(is_success_cb, "Signal %s is not call", signal_name);
+    ck_assert_msg(is_success_cb, "Signal %s is not call", signal_name);
 
-   efl_dbus_signal_handler_unref(signal_handler);
-   efl_dbus_connection_unref(conn);
+    efl_dbus_signal_handler_unref(signal_handler);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -205,33 +221,43 @@ EFL_END_TEST
  */
 EFL_START_TEST(utc_efl_dbus_signal_handler_del_p)
 {
-   is_success_cb = EFL_FALSE;
+    is_success_cb = EFL_FALSE;
 
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Signal_Handler *signal_handler = efl_dbus_signal_handler_add(conn, NULL, path, interface,
-                                                                     signal_name, _signal_name_owner_changed, &cb_data);
+    Efl_Dbus_Signal_Handler *signal_handler =
+        efl_dbus_signal_handler_add(conn,
+                                    NULL,
+                                    path,
+                                    interface,
+                                    signal_name,
+                                    _signal_name_owner_changed,
+                                    &cb_data);
 
-   ck_assert_ptr_ne(NULL, signal_handler);
+    ck_assert_ptr_ne(NULL, signal_handler);
 
-   efl_dbus_signal_handler_del(signal_handler);
+    efl_dbus_signal_handler_del(signal_handler);
 
-   Efl_Dbus_Message *msg = efl_dbus_message_signal_new(path, interface, signal_name);
-   ck_assert_ptr_ne(NULL, msg);
+    Efl_Dbus_Message *msg =
+        efl_dbus_message_signal_new(path, interface, signal_name);
+    ck_assert_ptr_ne(NULL, msg);
 
-   Efl_Dbus_Pending *pending = efl_dbus_connection_send(conn, msg, _response_message_cb, NULL, -1);
-   ck_assert_ptr_ne(NULL, pending);
+    Efl_Dbus_Pending *pending =
+        efl_dbus_connection_send(conn, msg, _response_message_cb, NULL, -1);
+    ck_assert_ptr_ne(NULL, pending);
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   ck_assert_ptr_ne(NULL, timeout);
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    ck_assert_ptr_ne(NULL, timeout);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert_msg(!is_success_cb, "Signal %s was called", signal_name);
+    ck_assert_msg(!is_success_cb, "Signal %s was called", signal_name);
 
-   efl_dbus_connection_unref(conn);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -272,35 +298,51 @@ EFL_END_TEST
  */
 EFL_START_TEST(utc_efl_dbus_signal_handler_get_p)
 {
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Signal_Handler *signal_handler = efl_dbus_signal_handler_add(conn, bus, path, interface,
-                                                                     signal_name, _signal_name_owner_changed, &cb_data);
-   ck_assert_ptr_ne(NULL, signal_handler);
+    Efl_Dbus_Signal_Handler *signal_handler =
+        efl_dbus_signal_handler_add(conn,
+                                    bus,
+                                    path,
+                                    interface,
+                                    signal_name,
+                                    _signal_name_owner_changed,
+                                    &cb_data);
+    ck_assert_ptr_ne(NULL, signal_handler);
 
-   Efl_Dbus_Connection *conn_get = efl_dbus_signal_handler_connection_get(signal_handler);
-   ck_assert_msg((conn_get == conn), "Connection objects are different");
+    Efl_Dbus_Connection *conn_get =
+        efl_dbus_signal_handler_connection_get(signal_handler);
+    ck_assert_msg((conn_get == conn), "Connection objects are different");
 
-   const char *signal_path = efl_dbus_signal_handler_path_get(signal_handler);
-   ck_assert_msg(NULL != signal_path, "Signal path is null");
-   ck_assert_msg((!strcmp(signal_path, path)), "Signal path is different than original");
+    const char *signal_path = efl_dbus_signal_handler_path_get(signal_handler);
+    ck_assert_msg(NULL != signal_path, "Signal path is null");
+    ck_assert_msg((!strcmp(signal_path, path)),
+                  "Signal path is different than original");
 
-   const char *signal_sender = efl_dbus_signal_handler_sender_get(signal_handler);
-   ck_assert_msg(NULL != signal_sender, "Signal sender is null");
-   ck_assert_msg((!strcmp(signal_sender, bus)), "Signal sender is different than original");
+    const char *signal_sender =
+        efl_dbus_signal_handler_sender_get(signal_handler);
+    ck_assert_msg(NULL != signal_sender, "Signal sender is null");
+    ck_assert_msg((!strcmp(signal_sender, bus)),
+                  "Signal sender is different than original");
 
-   const char *signal_interface = efl_dbus_signal_handler_interface_get(signal_handler);
-   ck_assert_msg(NULL != signal_interface, "Signal interface is null");
-   ck_assert_msg((!strcmp(signal_interface, interface)), "Signal interface is different than original");
+    const char *signal_interface =
+        efl_dbus_signal_handler_interface_get(signal_handler);
+    ck_assert_msg(NULL != signal_interface, "Signal interface is null");
+    ck_assert_msg((!strcmp(signal_interface, interface)),
+                  "Signal interface is different than original");
 
-   const char *signal_handler_name = efl_dbus_signal_handler_member_get(signal_handler);
-   ck_assert_msg(NULL != signal_handler_name, "Signal name is null");
-   ck_assert_msg((!strcmp(signal_handler_name, signal_name)), "Signal name is different than original");
+    const char *signal_handler_name =
+        efl_dbus_signal_handler_member_get(signal_handler);
+    ck_assert_msg(NULL != signal_handler_name, "Signal name is null");
+    ck_assert_msg((!strcmp(signal_handler_name, signal_name)),
+                  "Signal name is different than original");
 
-   efl_dbus_signal_handler_unref(signal_handler);
-   efl_dbus_connection_unref(conn);
+    efl_dbus_signal_handler_unref(signal_handler);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -344,36 +386,48 @@ EFL_END_TEST
 
 EFL_START_TEST(utc_efl_dbus_signal_handler_ref_unref_p)
 {
-   is_success_cb = EFL_FALSE;
+    is_success_cb = EFL_FALSE;
 
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Signal_Handler *signal_handler = efl_dbus_signal_handler_add(conn, NULL, path, interface,
-                                                                     signal_name, _signal_name_owner_changed, &cb_data);
-   ck_assert_ptr_ne(NULL, signal_handler);
+    Efl_Dbus_Signal_Handler *signal_handler =
+        efl_dbus_signal_handler_add(conn,
+                                    NULL,
+                                    path,
+                                    interface,
+                                    signal_name,
+                                    _signal_name_owner_changed,
+                                    &cb_data);
+    ck_assert_ptr_ne(NULL, signal_handler);
 
-   Efl_Dbus_Signal_Handler* signal_ref = efl_dbus_signal_handler_ref(signal_handler);
-   ck_assert_msg((signal_ref == signal_handler), "Signal references are different");
+    Efl_Dbus_Signal_Handler *signal_ref =
+        efl_dbus_signal_handler_ref(signal_handler);
+    ck_assert_msg((signal_ref == signal_handler),
+                  "Signal references are different");
 
-   efl_dbus_signal_handler_unref(signal_ref);
-   efl_dbus_signal_handler_unref(signal_handler);
+    efl_dbus_signal_handler_unref(signal_ref);
+    efl_dbus_signal_handler_unref(signal_handler);
 
-   Efl_Dbus_Message *msg = efl_dbus_message_signal_new(path, interface, signal_name);
-   ck_assert_ptr_ne(NULL, msg);
+    Efl_Dbus_Message *msg =
+        efl_dbus_message_signal_new(path, interface, signal_name);
+    ck_assert_ptr_ne(NULL, msg);
 
-   Efl_Dbus_Pending *pending = efl_dbus_connection_send(conn, msg, _response_message_cb, NULL, -1);
-   ck_assert_ptr_ne(NULL, pending);
+    Efl_Dbus_Pending *pending =
+        efl_dbus_connection_send(conn, msg, _response_message_cb, NULL, -1);
+    ck_assert_ptr_ne(NULL, pending);
 
-   timeout = core_timer_add(0.1, _core_loop_close, NULL);
-   ck_assert_ptr_ne(NULL, timeout);
+    timeout = core_timer_add(0.1, _core_loop_close, NULL);
+    ck_assert_ptr_ne(NULL, timeout);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert_msg(!is_success_cb, "Signal %s was called", signal_name);
+    ck_assert_msg(!is_success_cb, "Signal %s was called", signal_name);
 
-   efl_dbus_connection_unref(conn);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -417,32 +471,40 @@ EFL_END_TEST
 
 EFL_START_TEST(utc_efl_dbus_signal_handler_free_cb_add_del_p)
 {
-   Efl_Dbus_Connection *conn = efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
-   ck_assert_ptr_ne(NULL, conn);
+    Efl_Dbus_Connection *conn =
+        efl_dbus_connection_get(EFL_DBUS_CONNECTION_TYPE_SESSION);
+    ck_assert_ptr_ne(NULL, conn);
 
-   Efl_Dbus_Signal_Handler *signal_handler = _signal_handler_get(conn);
-   ck_assert_ptr_ne(NULL, signal_handler);
+    Efl_Dbus_Signal_Handler *signal_handler = _signal_handler_get(conn);
+    ck_assert_ptr_ne(NULL, signal_handler);
 
-   efl_dbus_signal_handler_free_cb_add(signal_handler, _signal_handler_free_cb, &cb_data);
+    efl_dbus_signal_handler_free_cb_add(signal_handler,
+                                        _signal_handler_free_cb,
+                                        &cb_data);
 
-   efl_dbus_signal_handler_unref(signal_handler);
+    efl_dbus_signal_handler_unref(signal_handler);
 
-   ck_assert_msg(is_success_cb, "Callback is not called");
+    ck_assert_msg(is_success_cb, "Callback is not called");
 
-   signal_handler = _signal_handler_get(conn);
-   ck_assert_ptr_ne(NULL, signal_handler);
+    signal_handler = _signal_handler_get(conn);
+    ck_assert_ptr_ne(NULL, signal_handler);
 
-   efl_dbus_signal_handler_free_cb_add(signal_handler, _signal_handler_free_cb, &cb_data);
-   efl_dbus_signal_handler_free_cb_del(signal_handler, _signal_handler_free_cb, &cb_data);
+    efl_dbus_signal_handler_free_cb_add(signal_handler,
+                                        _signal_handler_free_cb,
+                                        &cb_data);
+    efl_dbus_signal_handler_free_cb_del(signal_handler,
+                                        _signal_handler_free_cb,
+                                        &cb_data);
 
-   efl_dbus_signal_handler_unref(signal_handler);
+    efl_dbus_signal_handler_unref(signal_handler);
 
-   core_main_loop_begin();
+    core_main_loop_begin();
 
-   ck_assert_msg(!is_success_cb, "Callback was called");
+    ck_assert_msg(!is_success_cb, "Callback was called");
 
-   efl_dbus_connection_unref(conn);
+    efl_dbus_connection_unref(conn);
 }
+
 EFL_END_TEST
 
 /**
@@ -451,9 +513,9 @@ EFL_END_TEST
 void
 efl_dbus_test_efl_dbus_signal_handler(TCase *tc)
 {
-   tcase_add_test(tc, utc_efl_dbus_signal_handler_add_p);
-   tcase_add_test(tc, utc_efl_dbus_signal_handler_del_p);
-   tcase_add_test(tc, utc_efl_dbus_signal_handler_get_p);
-   tcase_add_test(tc, utc_efl_dbus_signal_handler_ref_unref_p);
-   tcase_add_test(tc, utc_efl_dbus_signal_handler_free_cb_add_del_p);
+    tcase_add_test(tc, utc_efl_dbus_signal_handler_add_p);
+    tcase_add_test(tc, utc_efl_dbus_signal_handler_del_p);
+    tcase_add_test(tc, utc_efl_dbus_signal_handler_get_p);
+    tcase_add_test(tc, utc_efl_dbus_signal_handler_ref_unref_p);
+    tcase_add_test(tc, utc_efl_dbus_signal_handler_free_cb_add_del_p);
 }

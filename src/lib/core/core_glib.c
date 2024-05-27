@@ -23,13 +23,13 @@
 #ifdef HAVE_GLIB
 #  include <glib.h>
 
-static Efl_Bool              _Core_glib_active = EFL_FALSE;
+static Efl_Bool             _Core_glib_active = EFL_FALSE;
 static Core_Select_Function _Core_glib_select_original;
-static GPollFD              *_Core_glib_fds         = NULL;
-static size_t                _Core_glib_fds_size    = 0;
-static const size_t          Core_GLIB_FDS_INITIAL  = 128;
-static const size_t          Core_GLIB_FDS_STEP     = 8;
-static const size_t          Core_GLIB_FDS_MAX_FREE = 256;
+static GPollFD             *_Core_glib_fds         = NULL;
+static size_t               _Core_glib_fds_size    = 0;
+static const size_t         Core_GLIB_FDS_INITIAL  = 128;
+static const size_t         Core_GLIB_FDS_STEP     = 8;
+static const size_t         Core_GLIB_FDS_MAX_FREE = 256;
 #  if GLIB_CHECK_VERSION(2, 32, 0)
 static GRecMutex *_Core_glib_select_lock;
 #  else
@@ -92,10 +92,10 @@ _Core_glib_context_query(GMainContext *ctx, int priority, int *p_timer)
 
 static int
 _Core_glib_context_poll_from(const GPollFD *pfds,
-                              int            count,
-                              fd_set        *rfds,
-                              fd_set        *wfds,
-                              fd_set        *efds)
+                             int            count,
+                             fd_set        *rfds,
+                             fd_set        *wfds,
+                             fd_set        *efds)
 {
     const GPollFD *itr = pfds, *itr_end = pfds + count;
     int            glib_fds = -1;
@@ -114,11 +114,11 @@ _Core_glib_context_poll_from(const GPollFD *pfds,
 
 static int
 _Core_glib_context_poll_to(GPollFD      *pfds,
-                            int           count,
-                            const fd_set *rfds,
-                            const fd_set *wfds,
-                            const fd_set *efds,
-                            int           ready)
+                           int           count,
+                           const fd_set *rfds,
+                           const fd_set *wfds,
+                           const fd_set *efds,
+                           int           ready)
 {
     GPollFD    *itr = pfds, *itr_end = pfds + count;
     struct stat st;
@@ -159,11 +159,11 @@ _Core_glib_context_poll_to(GPollFD      *pfds,
 
 static int
 _Core_glib_select__locked(GMainContext   *ctx,
-                           int             Core_fds,
-                           fd_set         *rfds,
-                           fd_set         *wfds,
-                           fd_set         *efds,
-                           struct timeval *core_timeout)
+                          int             Core_fds,
+                          fd_set         *rfds,
+                          fd_set         *wfds,
+                          fd_set         *efds,
+                          struct timeval *core_timeout)
 {
     int             priority, maxfds, glib_fds, reqfds, reqtimeout, ret;
     struct timeval *timeout, glib_timeout;
@@ -172,11 +172,8 @@ _Core_glib_select__locked(GMainContext   *ctx,
     reqfds = _Core_glib_context_query(ctx, priority, &reqtimeout);
     if (reqfds < 0) goto error;
 
-    glib_fds = _Core_glib_context_poll_from(_Core_glib_fds,
-                                             reqfds,
-                                             rfds,
-                                             wfds,
-                                             efds);
+    glib_fds =
+        _Core_glib_context_poll_from(_Core_glib_fds, reqfds, rfds, wfds, efds);
 
     if (reqtimeout == -1) timeout = core_timeout;
     else
@@ -193,11 +190,11 @@ _Core_glib_select__locked(GMainContext   *ctx,
     ret    = _Core_glib_select_original(maxfds, rfds, wfds, efds, timeout);
 
     ret = _Core_glib_context_poll_to(_Core_glib_fds,
-                                      reqfds,
-                                      rfds,
-                                      wfds,
-                                      efds,
-                                      ret);
+                                     reqfds,
+                                     rfds,
+                                     wfds,
+                                     efds,
+                                     ret);
 
     if (g_main_context_check(ctx, priority, _Core_glib_fds, reqfds))
         g_main_context_dispatch(ctx);
@@ -205,19 +202,15 @@ _Core_glib_select__locked(GMainContext   *ctx,
     return ret;
 
 error:
-    return _Core_glib_select_original(Core_fds,
-                                       rfds,
-                                       wfds,
-                                       efds,
-                                       core_timeout);
+    return _Core_glib_select_original(Core_fds, rfds, wfds, efds, core_timeout);
 }
 
 static int
 _Core_glib_select(int             Core_fds,
-                   fd_set         *rfds,
-                   fd_set         *wfds,
-                   fd_set         *efds,
-                   struct timeval *core_timeout)
+                  fd_set         *rfds,
+                  fd_set         *wfds,
+                  fd_set         *efds,
+                  struct timeval *core_timeout)
 {
     GMainContext *ctx;
     int           ret;
@@ -234,11 +227,11 @@ _Core_glib_select(int             Core_fds,
 #  endif
 
     ret = _Core_glib_select__locked(ctx,
-                                     Core_fds,
-                                     rfds,
-                                     wfds,
-                                     efds,
-                                     core_timeout);
+                                    Core_fds,
+                                    rfds,
+                                    wfds,
+                                    efds,
+                                    core_timeout);
 
 #  if GLIB_CHECK_VERSION(2, 32, 0)
     g_rec_mutex_unlock(_Core_glib_select_lock);

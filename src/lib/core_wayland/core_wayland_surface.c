@@ -117,8 +117,8 @@ ecore_wl_surface_create(Ecore_Wl_Window *win, Efl_Bool alpha)
             win->wl_surface = out;
             out->offscreen_handler =
                 core_event_handler_add(ECORE_WL2_EVENT_WINDOW_OFFSCREEN,
-                                        _ecore_wl_surface_cb_offscreen,
-                                        out);
+                                       _ecore_wl_surface_cb_offscreen,
+                                       out);
             /* Since we have loadable modules, we need to make sure this
               * surface keeps ecore_wl from de-initting and dlclose()ing
               * things until after it's destroyed

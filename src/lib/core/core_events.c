@@ -9,20 +9,20 @@ EAPI Core_Event_Handler *
 core_event_handler_add(int type, Core_Event_Handler_Cb func, const void *data)
 {
     return core_event_message_handler_add(_event_msg_handler,
-                                           type,
-                                           func,
-                                           (void *)data);
+                                          type,
+                                          func,
+                                          (void *)data);
 }
 
 EAPI Core_Event_Handler *
-core_event_handler_prepend(int                    type,
-                            Core_Event_Handler_Cb func,
-                            const void            *data)
+core_event_handler_prepend(int                   type,
+                           Core_Event_Handler_Cb func,
+                           const void           *data)
 {
     return core_event_message_handler_prepend(_event_msg_handler,
-                                               type,
-                                               func,
-                                               (void *)data);
+                                              type,
+                                              func,
+                                              (void *)data);
 }
 
 EAPI void *
@@ -41,8 +41,8 @@ EAPI void *
 core_event_handler_data_set(Core_Event_Handler *eh, const void *data)
 {
     return core_event_message_handler_data_set(_event_msg_handler,
-                                                eh,
-                                                (void *)data);
+                                               eh,
+                                               (void *)data);
 }
 
 EAPI Core_Event *
@@ -78,15 +78,15 @@ core_event_type_new(void)
 
 EAPI Core_Event_Filter *
 core_event_filter_add(Core_Data_Cb   func_start,
-                       Core_Filter_Cb func_filter,
-                       Core_End_Cb    func_end,
-                       const void     *data)
+                      Core_Filter_Cb func_filter,
+                      Core_End_Cb    func_end,
+                      const void    *data)
 {
     return core_event_message_handler_filter_add(_event_msg_handler,
-                                                  func_start,
-                                                  func_filter,
-                                                  func_end,
-                                                  (void *)data);
+                                                 func_start,
+                                                 func_filter,
+                                                 func_end,
+                                                 (void *)data);
 }
 
 EAPI void *

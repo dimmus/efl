@@ -3,33 +3,32 @@ EWAPI const Efl_Event_Description _CORE_EXE_EVENT_DATA_GET =
 EWAPI const Efl_Event_Description _CORE_EXE_EVENT_DATA_ERROR =
     EFL_EVENT_DESCRIPTION("data,error");
 
-void _core_exe_command_set(Eo             *obj,
-                            Core_Exe_Data *pd,
-                            const char     *exe_cmd,
-                            Core_Exe_Flags flags);
+void _core_exe_command_set(Eo            *obj,
+                           Core_Exe_Data *pd,
+                           const char    *exe_cmd,
+                           Core_Exe_Flags flags);
 
 EOAPI EFL_VOID_FUNC_BODYV(Core_obj_exe_command_set,
                           EFL_FUNC_CALL(exe_cmd, flags),
-                          const char     *exe_cmd,
+                          const char    *exe_cmd,
                           Core_Exe_Flags flags);
 
-void _core_exe_command_get(const Eo        *obj,
-                            Core_Exe_Data  *pd,
-                            const char     **exe_cmd,
-                            Core_Exe_Flags *flags);
+void _core_exe_command_get(const Eo       *obj,
+                           Core_Exe_Data  *pd,
+                           const char    **exe_cmd,
+                           Core_Exe_Flags *flags);
 
 EOAPI EFL_VOID_FUNC_BODYV_CONST(Core_obj_exe_command_get,
                                 EFL_FUNC_CALL(exe_cmd, flags),
-                                const char     **exe_cmd,
+                                const char    **exe_cmd,
                                 Core_Exe_Flags *flags);
 
 void _core_exe_efl_object_destructor(Eo *obj, Core_Exe_Data *pd);
 
 Efl_Object *_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *pd);
 
-void _core_exe_efl_control_suspend_set(Eo             *obj,
-                                        Core_Exe_Data *pd,
-                                        Efl_Bool        suspend);
+void
+_core_exe_efl_control_suspend_set(Eo *obj, Core_Exe_Data *pd, Efl_Bool suspend);
 
 static Efl_Bool
 _core_exe_class_initializer(Efl_Class *klass)

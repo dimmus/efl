@@ -12,14 +12,14 @@
 static Efl_Bool _core_job_event_handler(void *data, int type, void *ev);
 static void     _core_job_event_free(void *data, void *ev);
 
-static int                  core_event_job_type = 0;
+static int                 core_event_job_type = 0;
 static Core_Event_Handler *_core_job_handler   = NULL;
 
 struct _Core_Job
 {
     Core_Event *event;
     Core_Cb     func;
-    void        *data;
+    void       *data;
 };
 
 void
@@ -27,8 +27,8 @@ _core_job_init(void)
 {
     core_event_job_type = core_event_type_new();
     _core_job_handler   = core_event_handler_add(core_event_job_type,
-                                                 _core_job_event_handler,
-                                                 NULL);
+                                               _core_job_event_handler,
+                                               NULL);
 }
 
 void
