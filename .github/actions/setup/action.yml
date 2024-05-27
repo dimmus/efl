@@ -36,6 +36,8 @@ runs:
           wayland-protocols \
           libxkbcommon-dev \
           libdbus-1-dev \
+          libwayland-egl-backend-dev \
+          libegl1-mesa-dev \
           # libunwind-dev \
           # libiconv-hook-dev \
       shell: bash
