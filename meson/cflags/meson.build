@@ -290,7 +290,6 @@ endif
 
 summary_env += {'LTO':               get_option('b_lto')}
 summary_env += {'PIE':               get_option('b_pie')}
-summary_env += {'Static build':      get_option('prefer_static')}
 summary_env += {'Stack protector':   have_stack_protector}
 # summary_env += {'debug graph lock':  get_option('debug_graph_lock')}
 # summary_env += {'debug stack usage': get_option('debug_stack_usage')}
