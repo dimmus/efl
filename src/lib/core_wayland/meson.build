@@ -1,11 +1,13 @@
-libdrm = dependency('libdrm', required: true)
+dep_libdrm     = dependency('libdrm', required: true)
+dep_libwayland = [ dependency('wayland-client'), dependency('wayland-server') ]
+dep_libxkb     = dependency('xkbcommon')
 
 subdir('protocols')
+dep_libwayland += wayland_protocol
 
 dep_core_wayland     = [ core, core_input ]
 dep_core_wayland_pub = [ core, shared ]
-dep_core_wayland_ext = [ dependency('wayland-client'), dependency('wayland-server'), dependency('xkbcommon'),
-                         wayland_protocol, libdrm, dep_libdl, dep_libm]
+dep_core_wayland_ext = [ dep_libwayland, dep_libxkb, dep_libdrm, dep_libdl, dep_libm]
 
 inc_core_wayland = include_directories('.')
 
@@ -39,14 +41,6 @@ core_wayland = declare_dependency(
   link_with:              lib_core_wayland,
   sources :               pub_eo_file_target + priv_eo_file_target,
   dependencies:           dep_core_wayland_pub,
-)
-
-core_wl_internal_headers = declare_dependency(
-  include_directories:    inc_core_wayland,
-  dependencies:           [ wayland_protocol_simple, libdrm, \
-                            dependency('wayland-client'), \
-                            dependency('wayland-server'), \
-                            dependency('xkbcommon') ],
 )
 
 install_headers(src_core_wayland_header,
