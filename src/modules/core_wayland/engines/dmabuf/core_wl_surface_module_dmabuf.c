@@ -4,7 +4,7 @@
 
 #include "Efl_Core_Wl.h"
 
-#include "core_wl_internal.h"
+#include "core_wayland_internal.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
