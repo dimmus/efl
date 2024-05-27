@@ -16,15 +16,15 @@ src_core_wayland_header = [
 ]
 
 src_core_wayland = files(
-  'core_wl_subsurf.c',
-  'core_wl_dnd.c',
-  'core_wl_window.c',
-  'core_wl_input.c',
-  'core_wl_output.c',
-  'core_wl_display.c',
-  'core_wl.c',
-  'core_wl_buffer.c',
-  'core_wl_surface.c'
+  'core_wayland_subsurf.c',
+  'core_wayland_dnd.c',
+  'core_wayland_window.c',
+  'core_wayland_input.c',
+  'core_wayland_output.c',
+  'core_wayland_display.c',
+  'core_wayland.c',
+  'core_wayland_buffer.c',
+  'core_wayland_surface.c'
 )
 
 lib_core_wayland = library('efl_core_wayland',

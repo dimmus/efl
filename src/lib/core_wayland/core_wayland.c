@@ -7,7 +7,7 @@
 #  include "Efl_Core.h"
 #endif
 
-#include "core_wl_private.h"
+#include "core_wayland_private.h"
 
 /* local variables */
 static int _ecore_wl_init_count = 0;
@@ -83,7 +83,7 @@ _ecore_wl_surface_modules_init(void)
         //and just load the intree module that we have build
         if (eina_module_subsystem_lib_exist(path,
                                             sizeof(path),
-                                            "core_wl/engines",
+                                            "core_wayland/engines",
                                             "dmabuf"))
         {
             Eina_Module *local_module = eina_module_new(path);
@@ -101,7 +101,7 @@ _ecore_wl_surface_modules_init(void)
     }
 #endif
     supplied_modules = eina_module_arch_list_get(NULL,
-                                                 EFL_LIB_DIR "/core_wl/engines",
+                                                 EFL_LIB_DIR "/core_wayland/engines",
                                                  EFL_MODULE_ARCH);
     eina_module_list_load(supplied_modules);
 
@@ -129,13 +129,13 @@ _ecore_wl_surface_modules_unload(void)
 EAPI int
 ecore_wl_init(void)
 {
-    printf("WL-TEST: -> phase 0");
+    printf("WL-TEST: -> phase 0: %d", _ecore_wl_init_count);
     if (++_ecore_wl_init_count != 1) return _ecore_wl_init_count;
     printf("-> phase 1 ");
 
    /* try to initialize Eina */
     if (!eina_init()) return --_ecore_wl_init_count;
-    printf("-> phase 2 ");
+    printf("-> phase 2 %d", _ecore_wl_init_count);
 
    /* try to create Eina logging domain */
     _ecore_wl_log_dom =

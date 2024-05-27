@@ -41,7 +41,7 @@
 
 #include <unistd.h>
 #include <sys/mman.h>
-#include "core_wl_private.h"
+#include "core_wayland_private.h"
 
 typedef struct _Ecore_Wl_Mouse_Down_Info
 {

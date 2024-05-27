@@ -29,7 +29,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/epoll.h>
-#include "core_wl_private.h"
+#include "core_wayland_private.h"
 
 struct _dnd_task
 {

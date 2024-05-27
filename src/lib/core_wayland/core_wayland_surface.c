@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "core_wl_private.h"
+#include "core_wayland_private.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>

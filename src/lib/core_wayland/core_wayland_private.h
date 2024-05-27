@@ -8,7 +8,7 @@
 # include "Efl_Core_Wl.h"
 # include "Efl_Core_Input.h"
 
-# include "core_wl_internal.h"
+# include "core_wayland_internal.h"
 
 # include "session-recovery-client-protocol.h"
 # include "xdg-shell-client-protocol.h"

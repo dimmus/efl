@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "core_wl_private.h"
+#include "core_wayland_private.h"
 #include "efl-hints-client-protocol.h"
 
 static void _ecore_wl_window_hide_send(Ecore_Wl_Window *window);

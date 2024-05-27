@@ -2,7 +2,7 @@
 #  include "efl_config.h"
 #endif
 
-#include "core_wl_private.h"
+#include "core_wayland_private.h"
 
 void
 _ecore_wl_subsurf_unmap(Ecore_Wl_Subsurface *subsurf)
