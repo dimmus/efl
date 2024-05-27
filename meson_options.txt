@@ -18,7 +18,7 @@ option('debug_mutex',              type: 'boolean',  value: false,     descripti
 option('debug_stack_usage',        type: 'boolean',  value: false,     description: 'measure coroutine stack usage')
 option('install-eo-files',         type: 'boolean',  value: true,      description: 'Install any eo file')
 option('docs',                     type: 'boolean',  value: false,     description: 'Enable building C of documentation (requires doxygen)')
-option('wl',                       type: 'boolean',  value: true,      description: 'Wayland client support in efl')
+option('wayland',                  type: 'boolean',  value: true,      description: 'Wayland client support in efl')
 option('opengl',                   type: 'combo',    value: 'es-egl',  description: 'Type of OpenGL support in efl', 
                                                      choices: ['full', 'es-egl', 'none'])
 

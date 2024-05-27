@@ -62,7 +62,7 @@ subprojects = [
   ['dbus'               ,[]                 , false,   true,     true,     false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], #core modules depend on dbus
   ['core'               ,[]                 ,  true,  false,    false,     false,      true,        true,       true,   ['shared', 'eo', 'eo_interfaces'], []], 
   ['core_input'         ,[]                 , false,   true,    false,     false,     false,       false,       true,   ['shared', 'eo'], []],
-  ['core_wayland'       ,['wl']             ,  true,   true,    false,     false,      true,       false,       true,   ['shared'], ['libdrm']],
+  ['core_wayland'       ,['wayland']        ,  true,   true,    false,     false,      true,       false,       true,   ['shared'], ['libdrm']],
   # ['emile'            ,[]                 , false,  true, false,  false,   true,      true,  true, ['eina', 'efl'], ['lz4', 'rg_etc']],
   # ['eet'              ,[]                 , false,  true,  true,  false,   true,      true,  true, ['eina', 'emile', 'efl'], []],
   # ['ecore_audio'      ,['audio']          , false,  true, false,  false,  false,     false,  true, ['eina', 'eo'], []],
