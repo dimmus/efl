@@ -23,9 +23,9 @@ eo_suite_src = files(
 
 eo_suite = executable('efl_eo_suite',
   eo_suite_src,
-  dependencies: [eo, dep_check, valgrind],
+  dependencies: [ eo, dep_check, dep_valgrind ],
   c_args      : [ '-DTESTS_BUILD_DIR="'+dir_current_build+'"',
-                  '-DTESTS_SRC_DIR="'+dir_current_source+'"']
+                  '-DTESTS_SRC_DIR="'+dir_current_source+'"' ]
 )
 
 test('efl_eo-suite', eo_suite,
@@ -35,11 +35,10 @@ test('efl_eo-suite', eo_suite,
 
 eo_suite = executable('efl_eo_suite_dbg',
   eo_suite_src,
-  dependencies: [eo_dbg, dep_check, valgrind],
-  c_args : [
-  '-DTESTS_BUILD_DIR="'+dir_current_build+'"',
-  '-DEO_DEBUG=1',
-  '-DTESTS_SRC_DIR="'+dir_current_source+'"']
+  dependencies: [eo_dbg, dep_check, dep_valgrind],
+  c_args : [ '-DEO_DEBUG=1',
+             '-DTESTS_BUILD_DIR="'+dir_current_build+'"',
+             '-DTESTS_SRC_DIR="'+dir_current_source+'"' ]
 )
 
 test('efl_eo-suite-dbg', eo_suite,
@@ -49,7 +48,7 @@ test('efl_eo-suite-dbg', eo_suite,
 
 eo_suite = executable('efl_eo_suite_fallback',
   eo_suite_src,
-  dependencies: [eo_dbg, dep_check, valgrind],
+  dependencies: [eo_dbg, dep_check, dep_valgrind],
   c_args : [
   '-DTESTS_BUILD_DIR="'+dir_current_build+'"',
   '-DEO_DEBUG=1',
