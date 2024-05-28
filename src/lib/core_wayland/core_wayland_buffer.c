@@ -52,7 +52,7 @@ struct dma_buf_sync
 
 static int drm_fd = -1;
 
-typedef struct _Ecore_Wl_Buffer Ecore_Wl_Buffer;
+typedef struct _Efl_Core_Wayland_Buffer Efl_Core_Wayland_Buffer;
 typedef struct _Buffer_Handle   Buffer_Handle;
 typedef struct _Buffer_Manager  Buffer_Manager;
 
@@ -64,12 +64,12 @@ struct _Buffer_Manager
                             int             h,
                             unsigned long  *stride,
                             int32_t        *fd);
-    struct wl_buffer *(*to_buffer)(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer *db);
-    void *(*map)(Ecore_Wl_Buffer *buf);
-    void (*unmap)(Ecore_Wl_Buffer *buf);
-    void (*discard)(Ecore_Wl_Buffer *buf);
-    void (*lock)(Ecore_Wl_Buffer *buf);
-    void (*unlock)(Ecore_Wl_Buffer *buf);
+    struct wl_buffer *(*to_buffer)(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer *db);
+    void *(*map)(Efl_Core_Wayland_Buffer *buf);
+    void (*unmap)(Efl_Core_Wayland_Buffer *buf);
+    void (*discard)(Efl_Core_Wayland_Buffer *buf);
+    void (*lock)(Efl_Core_Wayland_Buffer *buf);
+    void (*unlock)(Efl_Core_Wayland_Buffer *buf);
     void (*manager_destroy)(void);
     void    *priv;
     void    *dl_handle;
@@ -110,16 +110,16 @@ static void (*sym_drm_intel_bufmgr_destroy)(drm_intel_bufmgr *) = NULL;
 static void
 buffer_release(void *data, struct wl_buffer *buffer EFL_UNUSED)
 {
-    Ecore_Wl_Buffer *b = data;
+    Efl_Core_Wayland_Buffer *b = data;
 
     b->busy = EFL_FALSE;
-    if (b->orphaned) ecore_wl_buffer_destroy(b);
+    if (b->orphaned) efl_core_wayland_buffer_destroy(b);
 }
 
 static const struct wl_buffer_listener buffer_listener = { buffer_release };
 
 static struct wl_buffer *
-_evas_dmabuf_wl_buffer_from_dmabuf(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer *db)
+_evas_dmabuf_wl_buffer_from_dmabuf(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer *db)
 {
     struct wl_buffer                  *buf;
     struct zwp_linux_dmabuf_v1        *dmabuf;
@@ -130,7 +130,7 @@ _evas_dmabuf_wl_buffer_from_dmabuf(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer *db)
     if (db->alpha) format = DRM_FORMAT_ARGB8888;
     else format = DRM_FORMAT_XRGB8888;
 
-    dmabuf = ecore_wl_display_dmabuf_get(ewd);
+    dmabuf = efl_core_wayland_display_dmabuf_get(ewd);
     dp     = zwp_linux_dmabuf_v1_create_params(dmabuf);
     zwp_linux_buffer_params_v1_add(dp, db->fd, 0, 0, db->stride, 0, 0);
     buf = zwp_linux_buffer_params_v1_create_immed(dp,
@@ -145,7 +145,7 @@ _evas_dmabuf_wl_buffer_from_dmabuf(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer *db)
 }
 
 static void
-_dmabuf_lock(Ecore_Wl_Buffer *b)
+_dmabuf_lock(Efl_Core_Wayland_Buffer *b)
 {
     int                 ret;
     struct dma_buf_sync s;
@@ -161,7 +161,7 @@ _dmabuf_lock(Ecore_Wl_Buffer *b)
 }
 
 static void
-_dmabuf_unlock(Ecore_Wl_Buffer *b)
+_dmabuf_unlock(Efl_Core_Wayland_Buffer *b)
 {
     int                 ret;
     struct dma_buf_sync s;
@@ -218,7 +218,7 @@ err:
 }
 
 static void *
-_intel_map(Ecore_Wl_Buffer *buf)
+_intel_map(Efl_Core_Wayland_Buffer *buf)
 {
     drm_intel_bo *bo;
 
@@ -228,7 +228,7 @@ _intel_map(Ecore_Wl_Buffer *buf)
 }
 
 static void
-_intel_unmap(Ecore_Wl_Buffer *buf)
+_intel_unmap(Efl_Core_Wayland_Buffer *buf)
 {
     drm_intel_bo *bo;
 
@@ -237,7 +237,7 @@ _intel_unmap(Ecore_Wl_Buffer *buf)
 }
 
 static void
-_intel_discard(Ecore_Wl_Buffer *buf)
+_intel_discard(Efl_Core_Wayland_Buffer *buf)
 {
     drm_intel_bo *bo;
 
@@ -324,7 +324,7 @@ err:
 }
 
 static void *
-_exynos_map(Ecore_Wl_Buffer *buf)
+_exynos_map(Efl_Core_Wayland_Buffer *buf)
 {
     struct exynos_bo *bo;
     void             *ptr;
@@ -336,7 +336,7 @@ _exynos_map(Ecore_Wl_Buffer *buf)
 }
 
 static void
-_exynos_unmap(Ecore_Wl_Buffer *buf)
+_exynos_unmap(Efl_Core_Wayland_Buffer *buf)
 {
     struct exynos_bo *bo;
 
@@ -345,7 +345,7 @@ _exynos_unmap(Ecore_Wl_Buffer *buf)
 }
 
 static void
-_exynos_discard(Ecore_Wl_Buffer *buf)
+_exynos_discard(Efl_Core_Wayland_Buffer *buf)
 {
     struct exynos_bo *bo;
 
@@ -440,19 +440,19 @@ err:
 }
 
 static void *
-_wl_shm_map(Ecore_Wl_Buffer *buf)
+_wl_shm_map(Efl_Core_Wayland_Buffer *buf)
 {
     return buf->bh;
 }
 
 static void
-_wl_shm_unmap(Ecore_Wl_Buffer *buf EFL_UNUSED)
+_wl_shm_unmap(Efl_Core_Wayland_Buffer *buf EFL_UNUSED)
 {
    /* wl_shm is mapped for its lifetime */
 }
 
 static void
-_wl_shm_discard(Ecore_Wl_Buffer *buf)
+_wl_shm_discard(Efl_Core_Wayland_Buffer *buf)
 {
     munmap(buf->bh, buf->size);
 }
@@ -464,7 +464,7 @@ _wl_shm_manager_destroy(void)
 }
 
 static struct wl_buffer *
-_wl_shm_to_buffer(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer *db)
+_wl_shm_to_buffer(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer *db)
 {
     struct wl_buffer   *buf;
     struct wl_shm_pool *pool;
@@ -474,7 +474,7 @@ _wl_shm_to_buffer(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer *db)
     if (db->alpha) format = WL_SHM_FORMAT_ARGB8888;
     else format = WL_SHM_FORMAT_XRGB8888;
 
-    shm  = ecore_wl_display_shm_get(ewd);
+    shm  = efl_core_wayland_display_shm_get(ewd);
     pool = wl_shm_create_pool(shm, db->fd, db->size);
     buf  = wl_shm_pool_create_buffer(pool, 0, db->w, db->h, db->stride, format);
     wl_shm_pool_destroy(pool);
@@ -562,7 +562,7 @@ err:
 }
 
 static void *
-_vc4_map(Ecore_Wl_Buffer *buf)
+_vc4_map(Efl_Core_Wayland_Buffer *buf)
 {
     struct drm_vc4_mmap_bo  map;
     struct internal_vc4_bo *bo;
@@ -588,7 +588,7 @@ _vc4_map(Ecore_Wl_Buffer *buf)
 }
 
 static void
-_vc4_unmap(Ecore_Wl_Buffer *buf)
+_vc4_unmap(Efl_Core_Wayland_Buffer *buf)
 {
     struct internal_vc4_bo *bo;
 
@@ -597,7 +597,7 @@ _vc4_unmap(Ecore_Wl_Buffer *buf)
 }
 
 static void
-_vc4_discard(Ecore_Wl_Buffer *buf)
+_vc4_discard(Efl_Core_Wayland_Buffer *buf)
 {
     struct drm_gem_close    cl;
     struct internal_vc4_bo *bo;
@@ -648,11 +648,11 @@ err:
 }
 
 EAPI Efl_Bool
-ecore_wl_buffer_init(Ecore_Wl_Display *ewd, Ecore_Wl_Buffer_Type types)
+efl_core_wayland_buffer_init(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer_Type types)
 {
     int      fd      = -1;
-    Efl_Bool dmabuf  = ewd->wl.dmabuf && (types & ECORE_WL2_BUFFER_DMABUF);
-    Efl_Bool shm     = ewd->wl.shm && (types & ECORE_WL2_BUFFER_SHM);
+    Efl_Bool dmabuf  = ewd->wl.dmabuf && (types & EFL_CORE_WAYLAND_BUFFER_DMABUF);
+    Efl_Bool shm     = ewd->wl.shm && (types & EFL_CORE_WAYLAND_BUFFER_SHM);
     Efl_Bool success = EFL_FALSE;
 
     if (buffer_manager)
@@ -736,13 +736,13 @@ _buffer_manager_alloc(const char    *name,
 }
 
 EAPI struct wl_buffer *
-ecore_wl_buffer_wl_buffer_get(Ecore_Wl_Buffer *buf)
+efl_core_wayland_buffer_wl_buffer_get(Efl_Core_Wayland_Buffer *buf)
 {
     return buf->wl_buffer;
 }
 
 EAPI void *
-ecore_wl_buffer_map(Ecore_Wl_Buffer *buf, int *w, int *h, int *stride)
+efl_core_wayland_buffer_map(Efl_Core_Wayland_Buffer *buf, int *w, int *h, int *stride)
 {
     void *out;
 
@@ -768,27 +768,27 @@ ecore_wl_buffer_map(Ecore_Wl_Buffer *buf, int *w, int *h, int *stride)
     if (h) *h = buf->h;
     if (stride) *stride = (int)buf->stride;
 
-    if (!buf->locked) ecore_wl_buffer_lock(buf);
+    if (!buf->locked) efl_core_wayland_buffer_lock(buf);
 
     return out;
 }
 
 EAPI void
-ecore_wl_buffer_unmap(Ecore_Wl_Buffer *buf)
+efl_core_wayland_buffer_unmap(Efl_Core_Wayland_Buffer *buf)
 {
     buffer_manager->unmap(buf);
     _buffer_manager_deref();
 }
 
 EAPI void
-ecore_wl_buffer_discard(Ecore_Wl_Buffer *buf)
+efl_core_wayland_buffer_discard(Efl_Core_Wayland_Buffer *buf)
 {
     buffer_manager->discard(buf);
     _buffer_manager_deref();
 }
 
 EAPI void
-ecore_wl_buffer_lock(Ecore_Wl_Buffer *b)
+efl_core_wayland_buffer_lock(Efl_Core_Wayland_Buffer *b)
 {
     if (b->locked) ERR("Buffer already locked\n");
     if (buffer_manager->lock) buffer_manager->lock(b);
@@ -796,7 +796,7 @@ ecore_wl_buffer_lock(Ecore_Wl_Buffer *b)
 }
 
 EAPI void
-ecore_wl_buffer_unlock(Ecore_Wl_Buffer *b)
+efl_core_wayland_buffer_unlock(Efl_Core_Wayland_Buffer *b)
 {
     if (!b->locked) ERR("Buffer already unlocked\n");
     if (buffer_manager->unlock) buffer_manager->unlock(b);
@@ -804,7 +804,7 @@ ecore_wl_buffer_unlock(Ecore_Wl_Buffer *b)
 }
 
 EAPI void
-ecore_wl_buffer_destroy(Ecore_Wl_Buffer *b)
+efl_core_wayland_buffer_destroy(Efl_Core_Wayland_Buffer *b)
 {
     if (!b) return;
 
@@ -814,15 +814,15 @@ ecore_wl_buffer_destroy(Ecore_Wl_Buffer *b)
         return;
     }
     if (b->fd != -1) close(b->fd);
-    if (b->mapping) ecore_wl_buffer_unmap(b);
-    ecore_wl_buffer_discard(b);
+    if (b->mapping) efl_core_wayland_buffer_unmap(b);
+    efl_core_wayland_buffer_discard(b);
     if (b->wl_buffer) wl_buffer_destroy(b->wl_buffer);
     b->wl_buffer = NULL;
     free(b);
 }
 
 EAPI Efl_Bool
-ecore_wl_buffer_busy_get(Ecore_Wl_Buffer *buffer)
+efl_core_wayland_buffer_busy_get(Efl_Core_Wayland_Buffer *buffer)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(buffer, EFL_FALSE);
 
@@ -830,7 +830,7 @@ ecore_wl_buffer_busy_get(Ecore_Wl_Buffer *buffer)
 }
 
 EAPI void
-ecore_wl_buffer_busy_set(Ecore_Wl_Buffer *buffer)
+efl_core_wayland_buffer_busy_set(Efl_Core_Wayland_Buffer *buffer)
 {
     EINA_SAFETY_ON_NULL_RETURN(buffer);
 
@@ -838,7 +838,7 @@ ecore_wl_buffer_busy_set(Ecore_Wl_Buffer *buffer)
 }
 
 EAPI int
-ecore_wl_buffer_age_get(Ecore_Wl_Buffer *buffer)
+efl_core_wayland_buffer_age_get(Efl_Core_Wayland_Buffer *buffer)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(buffer, 0);
 
@@ -846,7 +846,7 @@ ecore_wl_buffer_age_get(Ecore_Wl_Buffer *buffer)
 }
 
 EAPI void
-ecore_wl_buffer_age_set(Ecore_Wl_Buffer *buffer, int age)
+efl_core_wayland_buffer_age_set(Efl_Core_Wayland_Buffer *buffer, int age)
 {
     EINA_SAFETY_ON_NULL_RETURN(buffer);
 
@@ -854,7 +854,7 @@ ecore_wl_buffer_age_set(Ecore_Wl_Buffer *buffer, int age)
 }
 
 EAPI void
-ecore_wl_buffer_age_inc(Ecore_Wl_Buffer *buffer)
+efl_core_wayland_buffer_age_inc(Efl_Core_Wayland_Buffer *buffer)
 {
     EINA_SAFETY_ON_NULL_RETURN(buffer);
 
@@ -873,7 +873,7 @@ ecore_wl_buffer_age_inc(Ecore_Wl_Buffer *buffer)
  * with no users...
  */
 EAPI Efl_Bool
-ecore_wl_buffer_fit(Ecore_Wl_Buffer *b, int w, int h)
+efl_core_wayland_buffer_fit(Efl_Core_Wayland_Buffer *b, int w, int h)
 {
     int stride;
 
@@ -889,12 +889,12 @@ ecore_wl_buffer_fit(Ecore_Wl_Buffer *b, int w, int h)
     return EFL_FALSE;
 }
 
-static Ecore_Wl_Buffer *
-_ecore_wl_buffer_partial_create(int w, int h, Efl_Bool alpha)
+static Efl_Core_Wayland_Buffer *
+_efl_core_wayland_buffer_partial_create(int w, int h, Efl_Bool alpha)
 {
-    Ecore_Wl_Buffer *out;
+    Efl_Core_Wayland_Buffer *out;
 
-    out = calloc(1, sizeof(Ecore_Wl_Buffer));
+    out = calloc(1, sizeof(Efl_Core_Wayland_Buffer));
     if (!out) return NULL;
 
     out->fd    = -1;
@@ -912,12 +912,12 @@ _ecore_wl_buffer_partial_create(int w, int h, Efl_Bool alpha)
     return out;
 }
 
-EAPI Ecore_Wl_Buffer *
-ecore_wl_buffer_create(Ecore_Wl_Display *ewd, int w, int h, Efl_Bool alpha)
+EAPI Efl_Core_Wayland_Buffer *
+efl_core_wayland_buffer_create(Efl_Core_Wayland_Display *ewd, int w, int h, Efl_Bool alpha)
 {
-    Ecore_Wl_Buffer *out;
+    Efl_Core_Wayland_Buffer *out;
 
-    out = _ecore_wl_buffer_partial_create(w, h, alpha);
+    out = _efl_core_wayland_buffer_partial_create(w, h, alpha);
     if (!out) return NULL;
 
     out->wl_buffer = buffer_manager->to_buffer(ewd, out);
@@ -937,7 +937,7 @@ _create_succeeded(void *data                         EFL_UNUSED,
 static void
 _create_failed(void *data, struct zwp_linux_buffer_params_v1 *params)
 {
-    Ecore_Wl_Display *ewd = data;
+    Efl_Core_Wayland_Display *ewd = data;
 
     zwp_linux_buffer_params_v1_destroy(params);
     _buffer_manager_destroy();
@@ -950,14 +950,14 @@ static const struct zwp_linux_buffer_params_v1_listener params_listener = {
 };
 
 void
-_ecore_wl_buffer_test(Ecore_Wl_Display *ewd)
+_efl_core_wayland_buffer_test(Efl_Core_Wayland_Display *ewd)
 {
     struct zwp_linux_buffer_params_v1 *dp;
-    Ecore_Wl_Buffer                   *buf;
+    Efl_Core_Wayland_Buffer                   *buf;
 
-    if (!ecore_wl_buffer_init(ewd, ECORE_WL2_BUFFER_DMABUF)) return;
+    if (!efl_core_wayland_buffer_init(ewd, EFL_CORE_WAYLAND_BUFFER_DMABUF)) return;
 
-    buf = _ecore_wl_buffer_partial_create(1, 1, EFL_TRUE);
+    buf = _efl_core_wayland_buffer_partial_create(1, 1, EFL_TRUE);
     if (!buf) goto fail;
 
     dp = zwp_linux_dmabuf_v1_create_params(ewd->wl.dmabuf);
@@ -969,7 +969,7 @@ _ecore_wl_buffer_test(Ecore_Wl_Display *ewd)
                                       DRM_FORMAT_ARGB8888,
                                       0);
 
-    ecore_wl_buffer_destroy(buf);
+    efl_core_wayland_buffer_destroy(buf);
 
     return;
 

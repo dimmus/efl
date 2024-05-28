@@ -1,5 +1,5 @@
-#ifndef ECORE_WL2_TEST_HELPERS_H
-# define ECORE_WL2_TEST_HELPERS_H
+#ifndef EFL_CORE_WAYLAND_TEST_HELPERS_H
+# define EFL_CORE_WAYLAND_TEST_HELPERS_H
 
 #include <wayland-egl.h>
 
@@ -13,9 +13,9 @@
 
 typedef struct _Test_Data
 {
-   Ecore_Wl_Display *display;
-   Ecore_Wl_Window *win;
-   Ecore_Wl_Frame_Cb_Handle *frame_callback_handler;
+   Efl_Core_Wayland_Display *display;
+   Efl_Core_Wayland_Window *win;
+   Efl_Core_Wayland_Frame_Cb_Handle *frame_callback_handler;
    Core_Event_Handler *handler;
 
    struct wl_surface *surface;
@@ -33,16 +33,16 @@ typedef struct _Test_Data
 #endif
 } Test_Data;
 
-static Ecore_Wl_Display *
+static Efl_Core_Wayland_Display *
 _display_connect(void)
 {
-   return ecore_wl_display_connect(NULL);
+   return efl_core_wayland_display_connect(NULL);
 }
 
-static Ecore_Wl_Window *
-_window_create(Ecore_Wl_Display *disp)
+static Efl_Core_Wayland_Window *
+_window_create(Efl_Core_Wayland_Display *disp)
 {
-   return ecore_wl_window_new(disp, NULL, 100, 100, WIDTH, HEIGHT);
+   return efl_core_wayland_window_new(disp, NULL, 100, 100, WIDTH, HEIGHT);
 }
 
 #endif

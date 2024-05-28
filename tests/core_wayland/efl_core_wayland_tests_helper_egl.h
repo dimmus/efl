@@ -1,5 +1,5 @@
-#ifndef ECORE_WL2_TEST_HELPER_EGL_H
-# define ECORE_WL2_TEST_HELPER_EGL_H
+#ifndef EFL_CORE_WAYLAND_TEST_HELPER_EGL_H
+# define EFL_CORE_WAYLAND_TEST_HELPER_EGL_H
 
 #include <wayland-egl.h>
 #include <EGL/egl.h>

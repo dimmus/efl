@@ -14,30 +14,30 @@
 #define MAX_BUFFERS         4
 #define QUEUE_TRIM_DURATION 100
 
-int ECORE_WL2_SURFACE_DMABUF = 0;
+int EFL_CORE_WAYLAND_SURFACE_DMABUF = 0;
 
-typedef struct _Ecore_Wl_Dmabuf_Private
+typedef struct _Efl_Core_Wayland_Dmabuf_Private
 {
-    Ecore_Wl_Buffer *current;
+    Efl_Core_Wayland_Buffer *current;
     Eina_List       *buffers;
     int              unused_duration;
-} Ecore_Wl_Dmabuf_Private;
+} Efl_Core_Wayland_Dmabuf_Private;
 
 static void *
-_evas_dmabuf_surface_setup(Ecore_Wl_Window *win)
+_evas_dmabuf_surface_setup(Efl_Core_Wayland_Window *win)
 {
-    Ecore_Wl_Dmabuf_Private *priv;
-    Ecore_Wl_Display        *ewd;
-    Ecore_Wl_Buffer_Type     types = 0;
+    Efl_Core_Wayland_Dmabuf_Private *priv;
+    Efl_Core_Wayland_Display        *ewd;
+    Efl_Core_Wayland_Buffer_Type     types = 0;
 
     priv = calloc(1, sizeof(*priv));
     if (!priv) return NULL;
 
-    ewd = ecore_wl_window_display_get(win);
-    if (ecore_wl_display_shm_get(ewd)) types |= ECORE_WL2_BUFFER_SHM;
-    if (ecore_wl_display_dmabuf_get(ewd)) types |= ECORE_WL2_BUFFER_DMABUF;
+    ewd = efl_core_wayland_window_display_get(win);
+    if (efl_core_wayland_display_shm_get(ewd)) types |= EFL_CORE_WAYLAND_BUFFER_SHM;
+    if (efl_core_wayland_display_dmabuf_get(ewd)) types |= EFL_CORE_WAYLAND_BUFFER_DMABUF;
 
-    if (!ecore_wl_buffer_init(ewd, types))
+    if (!efl_core_wayland_buffer_init(ewd, types))
     {
         free(priv);
         return NULL;
@@ -47,43 +47,43 @@ _evas_dmabuf_surface_setup(Ecore_Wl_Window *win)
 }
 
 static void
-_evas_dmabuf_surface_reconfigure(Ecore_Wl_Surface *s EFL_UNUSED,
+_evas_dmabuf_surface_reconfigure(Efl_Core_Wayland_Surface *s EFL_UNUSED,
                                  void               *priv_data,
                                  int                 w,
                                  int                 h,
                                  uint32_t flags      EFL_UNUSED,
                                  Efl_Bool alpha      EFL_UNUSED)
 {
-    Ecore_Wl_Dmabuf_Private *p;
-    Ecore_Wl_Buffer         *b;
+    Efl_Core_Wayland_Dmabuf_Private *p;
+    Efl_Core_Wayland_Buffer         *b;
     Eina_List               *l, *tmp;
 //   Efl_Bool alpha_change;
 
     p = priv_data;
 
     if ((!w) || (!h)) return;
-//   alpha_change = ecore_wl_surface_alpha_get(s) != alpha;
+//   alpha_change = efl_core_wayland_surface_alpha_get(s) != alpha;
     EINA_LIST_FOREACH_SAFE(p->buffers, l, tmp, b)
     {
 /*      This would be nice, but requires a partial create to follow,
         and that partial create is buffer type specific.
 
-        if (!alpha_change && ecore_wl_buffer_fit(b, w, h))
+        if (!alpha_change && efl_core_wayland_buffer_fit(b, w, h))
           continue;
 */
-        ecore_wl_buffer_destroy(b);
+        efl_core_wayland_buffer_destroy(b);
         p->buffers = eina_list_remove_list(p->buffers, l);
     }
 }
 
 static void *
-_evas_dmabuf_surface_data_get(Ecore_Wl_Surface *s EFL_UNUSED,
+_evas_dmabuf_surface_data_get(Efl_Core_Wayland_Surface *s EFL_UNUSED,
                               void               *priv_data,
                               int                *w,
                               int                *h)
 {
-    Ecore_Wl_Dmabuf_Private *p;
-    Ecore_Wl_Buffer         *b;
+    Efl_Core_Wayland_Dmabuf_Private *p;
+    Efl_Core_Wayland_Buffer         *b;
     void                    *ptr;
     int                      stride;
 
@@ -92,7 +92,7 @@ _evas_dmabuf_surface_data_get(Ecore_Wl_Surface *s EFL_UNUSED,
     b = p->current;
     if (!b) return NULL;
 
-    ptr = ecore_wl_buffer_map(b, NULL, h, &stride);
+    ptr = efl_core_wayland_buffer_map(b, NULL, h, &stride);
     if (!ptr) return NULL;
 
    /* We return stride/bpp because it may not match the allocated
@@ -103,10 +103,10 @@ _evas_dmabuf_surface_data_get(Ecore_Wl_Surface *s EFL_UNUSED,
     return ptr;
 }
 
-static Ecore_Wl_Buffer *
-_evas_dmabuf_surface_wait(Ecore_Wl_Surface *s, Ecore_Wl_Dmabuf_Private *p)
+static Efl_Core_Wayland_Buffer *
+_evas_dmabuf_surface_wait(Efl_Core_Wayland_Surface *s, Efl_Core_Wayland_Dmabuf_Private *p)
 {
-    Ecore_Wl_Buffer *b, *best = NULL;
+    Efl_Core_Wayland_Buffer *b, *best = NULL;
     Eina_List       *l;
     int              best_age = -1;
     int              age;
@@ -115,12 +115,12 @@ _evas_dmabuf_surface_wait(Ecore_Wl_Surface *s, Ecore_Wl_Dmabuf_Private *p)
     EINA_LIST_FOREACH(p->buffers, l, b)
     {
         num_allocated++;
-        if (ecore_wl_buffer_busy_get(b))
+        if (efl_core_wayland_buffer_busy_get(b))
         {
             num_required++;
             continue;
         }
-        age = ecore_wl_buffer_age_get(b);
+        age = efl_core_wayland_buffer_age_get(b);
         if (age > best_age)
         {
             best     = b;
@@ -139,25 +139,25 @@ _evas_dmabuf_surface_wait(Ecore_Wl_Surface *s, Ecore_Wl_Dmabuf_Private *p)
     {
         p->unused_duration = 0;
         p->buffers         = eina_list_remove(p->buffers, best);
-        ecore_wl_buffer_destroy(best);
+        efl_core_wayland_buffer_destroy(best);
         best = _evas_dmabuf_surface_wait(s, p);
     }
 
     if (!best && (eina_list_count(p->buffers) < MAX_BUFFERS))
     {
-        best = ecore_wl_surface_buffer_create(s);
+        best = efl_core_wayland_surface_buffer_create(s);
         /* Start at -1 so it's age is incremented to 0 for first draw */
-        ecore_wl_buffer_age_set(best, -1);
+        efl_core_wayland_buffer_age_set(best, -1);
         p->buffers = eina_list_append(p->buffers, best);
     }
     return best;
 }
 
 static int
-_evas_dmabuf_surface_assign(Ecore_Wl_Surface *s, void *priv_data)
+_evas_dmabuf_surface_assign(Efl_Core_Wayland_Surface *s, void *priv_data)
 {
-    Ecore_Wl_Dmabuf_Private *p;
-    Ecore_Wl_Buffer         *b;
+    Efl_Core_Wayland_Dmabuf_Private *p;
+    Efl_Core_Wayland_Buffer         *b;
     Eina_List               *l;
 
     p          = priv_data;
@@ -171,24 +171,24 @@ _evas_dmabuf_surface_assign(Ecore_Wl_Surface *s, void *priv_data)
          */
         //        WRN("No free DMAbuf buffers, dropping a frame");
         EINA_LIST_FOREACH(p->buffers, l, b)
-            ecore_wl_buffer_age_set(b, 0);
+            efl_core_wayland_buffer_age_set(b, 0);
         return 0;
     }
     EINA_LIST_FOREACH(p->buffers, l, b)
-        ecore_wl_buffer_age_inc(b);
+        efl_core_wayland_buffer_age_inc(b);
 
-    return ecore_wl_buffer_age_get(p->current);
+    return efl_core_wayland_buffer_age_get(p->current);
 }
 
 static void
-_evas_dmabuf_surface_post(Ecore_Wl_Surface *s,
+_evas_dmabuf_surface_post(Efl_Core_Wayland_Surface *s,
                           void             *priv_data,
                           Eina_Rectangle   *rects,
                           unsigned int      count)
 {
-    Ecore_Wl_Dmabuf_Private *p;
-    Ecore_Wl_Buffer         *b;
-    Ecore_Wl_Window         *win;
+    Efl_Core_Wayland_Dmabuf_Private *p;
+    Efl_Core_Wayland_Buffer         *b;
+    Efl_Core_Wayland_Window         *win;
     struct wl_buffer        *wlb;
 
     p = priv_data;
@@ -196,56 +196,56 @@ _evas_dmabuf_surface_post(Ecore_Wl_Surface *s,
     b = p->current;
     if (!b) return;
 
-    ecore_wl_buffer_unlock(b);
+    efl_core_wayland_buffer_unlock(b);
 
     p->current = NULL;
-    ecore_wl_buffer_busy_set(b);
-    ecore_wl_buffer_age_set(b, 0);
+    efl_core_wayland_buffer_busy_set(b);
+    efl_core_wayland_buffer_age_set(b, 0);
 
-    win = ecore_wl_surface_window_get(s);
+    win = efl_core_wayland_surface_window_get(s);
 
-    wlb = ecore_wl_buffer_wl_buffer_get(b);
-    ecore_wl_window_buffer_attach(win, wlb, 0, 0, EFL_FALSE);
-    ecore_wl_window_damage(win, rects, count);
+    wlb = efl_core_wayland_buffer_wl_buffer_get(b);
+    efl_core_wayland_window_buffer_attach(win, wlb, 0, 0, EFL_FALSE);
+    efl_core_wayland_window_damage(win, rects, count);
 
-    ecore_wl_window_commit(win, EFL_TRUE);
+    efl_core_wayland_window_commit(win, EFL_TRUE);
 }
 
 static void
-_evas_dmabuf_surface_destroy(Ecore_Wl_Surface *s EFL_UNUSED, void *priv_data)
+_evas_dmabuf_surface_destroy(Efl_Core_Wayland_Surface *s EFL_UNUSED, void *priv_data)
 {
-    Ecore_Wl_Dmabuf_Private *p;
-    Ecore_Wl_Buffer         *b;
+    Efl_Core_Wayland_Dmabuf_Private *p;
+    Efl_Core_Wayland_Buffer         *b;
 
     p = priv_data;
 
     EINA_LIST_FREE(p->buffers, b)
-    ecore_wl_buffer_destroy(b);
+    efl_core_wayland_buffer_destroy(b);
 
     free(p);
 }
 
 static void
-_evas_dmabuf_surface_flush(Ecore_Wl_Surface *surface EFL_UNUSED,
+_evas_dmabuf_surface_flush(Efl_Core_Wayland_Surface *surface EFL_UNUSED,
                            void                     *priv_data,
                            Efl_Bool                  purge)
 {
-    Ecore_Wl_Dmabuf_Private *p;
-    Ecore_Wl_Buffer         *b;
+    Efl_Core_Wayland_Dmabuf_Private *p;
+    Efl_Core_Wayland_Buffer         *b;
 
     p = priv_data;
 
     EINA_LIST_FREE(p->buffers, b)
     {
-        if (purge || !ecore_wl_buffer_busy_get(b))
+        if (purge || !efl_core_wayland_buffer_busy_get(b))
         {
             if (p->current == b) p->current = NULL;
-            ecore_wl_buffer_destroy(b);
+            efl_core_wayland_buffer_destroy(b);
         }
     }
 }
 
-static Ecore_Wl_Surface_Interface dmabuf_smanager = {
+static Efl_Core_Wayland_Surface_Interface dmabuf_smanager = {
     .version     = 1,
     .setup       = _evas_dmabuf_surface_setup,
     .destroy     = _evas_dmabuf_surface_destroy,
@@ -257,20 +257,20 @@ static Ecore_Wl_Surface_Interface dmabuf_smanager = {
 };
 
 Efl_Bool
-ecore_wl_surface_module_dmabuf_init(void)
+efl_core_wayland_surface_module_dmabuf_init(void)
 {
-    ECORE_WL2_SURFACE_DMABUF = ecore_wl_surface_manager_add(&dmabuf_smanager);
+    EFL_CORE_WAYLAND_SURFACE_DMABUF = efl_core_wayland_surface_manager_add(&dmabuf_smanager);
 
-    if (ECORE_WL2_SURFACE_DMABUF < 1) return EFL_FALSE;
+    if (EFL_CORE_WAYLAND_SURFACE_DMABUF < 1) return EFL_FALSE;
 
     return EFL_TRUE;
 }
 
 void
-ecore_wl_surface_module_dmabuf_shutdown(void)
+efl_core_wayland_surface_module_dmabuf_shutdown(void)
 {
-    ecore_wl_surface_manager_del(&dmabuf_smanager);
+    efl_core_wayland_surface_manager_del(&dmabuf_smanager);
 }
 
-EINA_MODULE_INIT(ecore_wl_surface_module_dmabuf_init);
-EINA_MODULE_SHUTDOWN(ecore_wl_surface_module_dmabuf_shutdown);
+EINA_MODULE_INIT(efl_core_wayland_surface_module_dmabuf_init);
+EINA_MODULE_SHUTDOWN(efl_core_wayland_surface_module_dmabuf_shutdown);

@@ -21,14 +21,9 @@
 | Eldbus.h                     | Efl_Dbus.h             |
 | Ecore.h                      | Efl_Core.h             |
 | -                            | -                      |
-| Ecore_Wl2_Display            | Ecore_Wl_Display       |
-| Ecore_Wl2_Window             | Ecore_Wl_Window        |
-| Ecore_Wl2_Output             | Ecore_Wl_Output        |
-| Ecore_Wl2_Input              | Ecore_Wl_Input         |
-| Ecore_Wl2_Window_Type        | Ecore_Wl_Window_Type   |
-| Ecore_Wl2_Seat_Capabilities  | Ecore_Wl_Seat_Capabilities |
-| Ecore_Wl2_Global             | Ecore_Wl_Global        |
-| ecore_wl2_*                  | ecore_wl_              |
+| Ecore_Wl2_*                  | Efl_Core_Wayland_*     |
+| ecore_wl2_*                  | efl_core_wayland_*     |
+| ECORE_WL2_*                  | EFL_CORE_WAYLAND_*     |
 | -                            | -                      |
 | ecore_internal.h             | core_internal.h        |
 | ecore_private.h              | core_private.h         |

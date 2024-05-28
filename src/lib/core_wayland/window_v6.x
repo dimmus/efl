@@ -2,7 +2,7 @@
 static void
 _zxdg_surface_cb_configure(void *data, struct zxdg_surface_v6 *zxdg_surface EFL_UNUSED, uint32_t serial)
 {
-   Ecore_Wl_Window *window;
+   Efl_Core_Wayland_Window *window;
 
    window = data;
    window->def_config.serial = serial;
@@ -16,7 +16,7 @@ _zxdg_surface_cb_configure(void *data, struct zxdg_surface_v6 *zxdg_surface EFL_
      ERR("Window shouldn't be rendering before initial configure");
 
    if (!window->updating)
-     _ecore_wl_window_configure_send(window);
+     _efl_core_wayland_window_configure_send(window);
 
    if (window->pending.configure)
      _configure_complete(window);
@@ -30,7 +30,7 @@ static const struct zxdg_surface_v6_listener _zxdg_surface_listener =
 static void
 _zxdg_toplevel_cb_configure(void *data, struct zxdg_toplevel_v6 *zxdg_toplevel EFL_UNUSED, int32_t width, int32_t height, struct wl_array *states)
 {
-   Ecore_Wl_Window *win = data;
+   Efl_Core_Wayland_Window *win = data;
    uint32_t *s;
 
    win->def_config.maximized = EFL_FALSE;
@@ -64,12 +64,12 @@ _zxdg_toplevel_cb_configure(void *data, struct zxdg_toplevel_v6 *zxdg_toplevel E
 static void
 _zxdg_toplevel_cb_close(void *data, struct zxdg_toplevel_v6 *zxdg_toplevel EFL_UNUSED)
 {
-   Ecore_Wl_Window *win;
+   Efl_Core_Wayland_Window *win;
 
    win = data;
    if (!win) return;
 
-   ecore_wl_window_free(win);
+   efl_core_wayland_window_free(win);
 }
 
 static const struct zxdg_toplevel_v6_listener _zxdg_toplevel_listener =
@@ -81,7 +81,7 @@ static const struct zxdg_toplevel_v6_listener _zxdg_toplevel_listener =
 static void
 _zxdg_popup_cb_configure(void *data, struct zxdg_popup_v6 *zxdg_popup EFL_UNUSED, int32_t x EFL_UNUSED, int32_t y EFL_UNUSED, int32_t width, int32_t height)
 {
-   Ecore_Wl_Window *win = data;
+   Efl_Core_Wayland_Window *win = data;
    win->def_config.geometry.w = width;
    win->def_config.geometry.h = height;
 }
@@ -89,12 +89,12 @@ _zxdg_popup_cb_configure(void *data, struct zxdg_popup_v6 *zxdg_popup EFL_UNUSED
 static void
 _zxdg_popup_cb_done(void *data, struct zxdg_popup_v6 *zxdg_popup EFL_UNUSED)
 {
-   Ecore_Wl_Window *win;
+   Efl_Core_Wayland_Window *win;
 
    win = data;
    if (!win) return;
 
-   if (win->grab) _ecore_wl_input_ungrab(win->grab);
+   if (win->grab) _efl_core_wayland_input_ungrab(win->grab);
 }
 
 static const struct zxdg_popup_v6_listener _zxdg_popup_listener =
@@ -104,7 +104,7 @@ static const struct zxdg_popup_v6_listener _zxdg_popup_listener =
 };
 
 static void
-_window_v6_popup_create(Ecore_Wl_Window *win)
+_window_v6_popup_create(Efl_Core_Wayland_Window *win)
 {
    struct zxdg_positioner_v6 *pos;
    int ww, wh;
@@ -113,7 +113,7 @@ _window_v6_popup_create(Ecore_Wl_Window *win)
    pos = zxdg_shell_v6_create_positioner(win->display->wl.zxdg_shell);
    if (!pos) return;
 
-   ecore_wl_window_geometry_get(win, NULL, NULL, &ww, &wh);
+   efl_core_wayland_window_geometry_get(win, NULL, NULL, &ww, &wh);
 
    zxdg_positioner_v6_set_anchor_rect(pos, 0, 0, 1, 1);
    zxdg_positioner_v6_set_size(pos, ww, wh);
@@ -134,11 +134,11 @@ _window_v6_popup_create(Ecore_Wl_Window *win)
 
    win->pending.configure = EFL_TRUE;
 
-   ecore_wl_window_commit(win, EFL_TRUE);
+   efl_core_wayland_window_commit(win, EFL_TRUE);
 }
 
 static void
-_window_v6_shell_surface_create(Ecore_Wl_Window *window)
+_window_v6_shell_surface_create(Efl_Core_Wayland_Window *window)
 {
    if (window->zxdg_surface) return;
    window->zxdg_surface =
@@ -151,7 +151,7 @@ _window_v6_shell_surface_create(Ecore_Wl_Window *window)
    window->zxdg_configure_ack = zxdg_surface_v6_ack_configure;
    window->pending.configure = EFL_TRUE;
 
-   if (window->type == ECORE_WL2_WINDOW_TYPE_MENU)
+   if (window->type == EFL_CORE_WAYLAND_WINDOW_TYPE_MENU)
      _window_v6_popup_create(window);
    else
      {
@@ -188,5 +188,5 @@ _window_v6_shell_surface_create(Ecore_Wl_Window *window)
           zxdg_toplevel_v6_set_fullscreen(window->zxdg_toplevel, NULL);
      }
 
-   ecore_wl_window_commit(window, EFL_TRUE);
+   efl_core_wayland_window_commit(window, EFL_TRUE);
 }

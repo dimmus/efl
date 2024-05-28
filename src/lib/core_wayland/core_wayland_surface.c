@@ -11,7 +11,7 @@ static Eina_List *_smanagers      = NULL;
 static int        _smanager_count = 0;
 
 EAPI void
-ecore_wl_surface_destroy(Ecore_Wl_Surface *surface)
+efl_core_wayland_surface_destroy(Efl_Core_Wayland_Surface *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN(surface);
 
@@ -24,11 +24,11 @@ ecore_wl_surface_destroy(Ecore_Wl_Surface *surface)
    /* We took a reference to ecore_wl in surface create to prevent
     * modules unloading with surfaces in flight.  Release that now.
     */
-    ecore_wl_shutdown();
+    efl_core_wayland_shutdown();
 }
 
 EAPI void
-ecore_wl_surface_reconfigure(Ecore_Wl_Surface *surface,
+efl_core_wayland_surface_reconfigure(Efl_Core_Wayland_Surface *surface,
                              int               w,
                              int               h,
                              uint32_t          flags,
@@ -44,7 +44,7 @@ ecore_wl_surface_reconfigure(Ecore_Wl_Surface *surface,
 }
 
 EAPI void *
-ecore_wl_surface_data_get(Ecore_Wl_Surface *surface, int *w, int *h)
+efl_core_wayland_surface_data_get(Efl_Core_Wayland_Surface *surface, int *w, int *h)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(surface, NULL);
 
@@ -52,7 +52,7 @@ ecore_wl_surface_data_get(Ecore_Wl_Surface *surface, int *w, int *h)
 }
 
 EAPI int
-ecore_wl_surface_assign(Ecore_Wl_Surface *surface)
+efl_core_wayland_surface_assign(Efl_Core_Wayland_Surface *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(surface, 0);
 
@@ -60,7 +60,7 @@ ecore_wl_surface_assign(Ecore_Wl_Surface *surface)
 }
 
 EAPI void
-ecore_wl_surface_post(Ecore_Wl_Surface *surface,
+efl_core_wayland_surface_post(Efl_Core_Wayland_Surface *surface,
                       Eina_Rectangle   *rects,
                       unsigned int      count)
 {
@@ -70,7 +70,7 @@ ecore_wl_surface_post(Ecore_Wl_Surface *surface,
 }
 
 EAPI void
-ecore_wl_surface_flush(Ecore_Wl_Surface *surface, Efl_Bool purge)
+efl_core_wayland_surface_flush(Efl_Core_Wayland_Surface *surface, Efl_Bool purge)
 {
     EINA_SAFETY_ON_NULL_RETURN(surface);
 
@@ -78,22 +78,22 @@ ecore_wl_surface_flush(Ecore_Wl_Surface *surface, Efl_Bool purge)
 }
 
 static Efl_Bool
-_ecore_wl_surface_cb_offscreen(void *data, int type EFL_UNUSED, void *event)
+_efl_core_wayland_surface_cb_offscreen(void *data, int type EFL_UNUSED, void *event)
 {
-    Ecore_Wl_Event_Window_Offscreen *ev   = event;
-    Ecore_Wl_Surface                *surf = data;
+    Efl_Core_Wayland_Event_Window_Offscreen *ev   = event;
+    Efl_Core_Wayland_Surface                *surf = data;
 
-    if (surf->wl_win == ev->win) ecore_wl_surface_flush(surf, EFL_FALSE);
+    if (surf->wl_win == ev->win) efl_core_wayland_surface_flush(surf, EFL_FALSE);
 
     return CORE_CALLBACK_RENEW;
 }
 
-EAPI Ecore_Wl_Surface *
-ecore_wl_surface_create(Ecore_Wl_Window *win, Efl_Bool alpha)
+EAPI Efl_Core_Wayland_Surface *
+efl_core_wayland_surface_create(Efl_Core_Wayland_Window *win, Efl_Bool alpha)
 {
-    Ecore_Wl_Surface           *out;
+    Efl_Core_Wayland_Surface           *out;
     Eina_List                  *l;
-    Ecore_Wl_Surface_Interface *intf;
+    Efl_Core_Wayland_Surface_Interface *intf;
 
     EINA_SAFETY_ON_NULL_RETURN_VAL(win, NULL);
     EINA_SAFETY_ON_NULL_RETURN_VAL(_smanagers, NULL);
@@ -116,14 +116,14 @@ ecore_wl_surface_create(Ecore_Wl_Window *win, Efl_Bool alpha)
             out->funcs      = intf;
             win->wl_surface = out;
             out->offscreen_handler =
-                core_event_handler_add(ECORE_WL2_EVENT_WINDOW_OFFSCREEN,
-                                       _ecore_wl_surface_cb_offscreen,
+                core_event_handler_add(EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN,
+                                       _efl_core_wayland_surface_cb_offscreen,
                                        out);
             /* Since we have loadable modules, we need to make sure this
               * surface keeps ecore_wl from de-initting and dlclose()ing
               * things until after it's destroyed
               */
-            ecore_wl_init();
+            efl_core_wayland_init();
             return out;
         }
     }
@@ -132,23 +132,23 @@ ecore_wl_surface_create(Ecore_Wl_Window *win, Efl_Bool alpha)
     return NULL;
 }
 
-EAPI Ecore_Wl_Buffer *
-ecore_wl_surface_buffer_create(Ecore_Wl_Surface *surface)
+EAPI Efl_Core_Wayland_Buffer *
+efl_core_wayland_surface_buffer_create(Efl_Core_Wayland_Surface *surface)
 {
-    Ecore_Wl_Display *ewd;
+    Efl_Core_Wayland_Display *ewd;
 
     EINA_SAFETY_ON_NULL_RETURN_VAL(surface, NULL);
 
-    ewd = ecore_wl_window_display_get(surface->wl_win);
+    ewd = efl_core_wayland_window_display_get(surface->wl_win);
     EINA_SAFETY_ON_NULL_RETURN_VAL(ewd, NULL);
 
-    return ecore_wl_buffer_create(ewd, surface->w, surface->h, surface->alpha);
+    return efl_core_wayland_buffer_create(ewd, surface->w, surface->h, surface->alpha);
 }
 
 EAPI int
-ecore_wl_surface_manager_add(Ecore_Wl_Surface_Interface *intf)
+efl_core_wayland_surface_manager_add(Efl_Core_Wayland_Surface_Interface *intf)
 {
-    if (intf->version < ECORE_WL2_SURFACE_INTERFACE_VERSION) return 0;
+    if (intf->version < EFL_CORE_WAYLAND_SURFACE_INTERFACE_VERSION) return 0;
 
     _smanagers = eina_list_prepend(_smanagers, intf);
     intf->id   = ++_smanager_count;
@@ -156,13 +156,13 @@ ecore_wl_surface_manager_add(Ecore_Wl_Surface_Interface *intf)
 }
 
 EAPI void
-ecore_wl_surface_manager_del(Ecore_Wl_Surface_Interface *intf)
+efl_core_wayland_surface_manager_del(Efl_Core_Wayland_Surface_Interface *intf)
 {
     _smanagers = eina_list_remove(_smanagers, intf);
 }
 
-EAPI Ecore_Wl_Window *
-ecore_wl_surface_window_get(Ecore_Wl_Surface *surface)
+EAPI Efl_Core_Wayland_Window *
+efl_core_wayland_surface_window_get(Efl_Core_Wayland_Surface *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(surface, NULL);
 
@@ -170,7 +170,7 @@ ecore_wl_surface_window_get(Ecore_Wl_Surface *surface)
 }
 
 EAPI Efl_Bool
-ecore_wl_surface_alpha_get(Ecore_Wl_Surface *surface)
+efl_core_wayland_surface_alpha_get(Efl_Core_Wayland_Surface *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(surface, EFL_FALSE);
 

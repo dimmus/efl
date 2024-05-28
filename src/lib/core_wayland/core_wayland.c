@@ -10,66 +10,66 @@
 #include "core_wayland_private.h"
 
 /* local variables */
-static int _ecore_wl_init_count = 0;
+static int _efl_core_wayland_init_count = 0;
 
 /* external variables */
 Efl_Bool no_session_recovery;
-int      _ecore_wl_log_dom = -1;
+int      _efl_core_wayland_log_dom = -1;
 
 /* public API variables */
-EAPI int ECORE_WL2_EVENT_CONNECT                             = 0;
-EAPI int ECORE_WL2_EVENT_DISCONNECT                          = 0;
-EAPI int ECORE_WL2_EVENT_GLOBAL_ADDED                        = 0;
-EAPI int ECORE_WL2_EVENT_GLOBAL_REMOVED                      = 0;
-EAPI int ECORE_WL2_EVENT_FOCUS_IN                            = 0;
-EAPI int ECORE_WL2_EVENT_FOCUS_OUT                           = 0;
-EAPI int ECORE_WL2_EVENT_DND_ENTER                           = 0;
-EAPI int ECORE_WL2_EVENT_DND_LEAVE                           = 0;
-EAPI int ECORE_WL2_EVENT_DND_MOTION                          = 0;
-EAPI int ECORE_WL2_EVENT_DND_DROP                            = 0;
-EAPI int ECORE_WL2_EVENT_DND_END                             = 0;
-EAPI int ECORE_WL2_EVENT_DATA_SOURCE_END                     = 0;
-EAPI int ECORE_WL2_EVENT_DATA_SOURCE_DROP                    = 0;
-EAPI int ECORE_WL2_EVENT_DATA_SOURCE_ACTION                  = 0;
-EAPI int ECORE_WL2_EVENT_DATA_SOURCE_TARGET                  = 0;
-EAPI int ECORE_WL2_EVENT_DATA_SOURCE_SEND                    = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_CONFIGURE                    = 0;
-EAPI int ECORE_WL2_EVENT_SYNC_DONE                           = 0;
-EAPI int ECORE_WL2_EVENT_OFFER_DATA_READY                    = 0;
-EAPI int ECORE_WL2_EVENT_SEAT_NAME_CHANGED                   = 0;
-EAPI int ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED           = 0;
-EAPI int ECORE_WL2_EVENT_DEVICE_ADDED                        = 0;
-EAPI int ECORE_WL2_EVENT_DEVICE_REMOVED                      = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE           = 0;
-EAPI int ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED                 = 0;
-EAPI int ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED        = 0;
-EAPI int ECORE_WL2_EVENT_SEAT_SELECTION                      = 0;
-EAPI int ECORE_WL2_EVENT_OUTPUT_TRANSFORM                    = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_ROTATE                       = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE      = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST      = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE         = 0;
-EAPI int ECORE_WL2_EVENT_AUX_HINT_ALLOWED                    = 0;
-EAPI int ECORE_WL2_EVENT_AUX_HINT_SUPPORTED                  = 0;
-EAPI int ECORE_WL2_EVENT_AUX_MESSAGE                         = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_SHOW                         = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_HIDE                         = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_ACTIVATE                     = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_DEACTIVATE                   = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_ICONIFY_STATE_CHANGE         = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_OFFSCREEN                    = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_CREATE                       = 0;
-EAPI int ECORE_WL2_EVENT_WINDOW_DESTROY                      = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_CONNECT                             = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DISCONNECT                          = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_GLOBAL_ADDED                        = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_GLOBAL_REMOVED                      = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_FOCUS_IN                            = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_FOCUS_OUT                           = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DND_ENTER                           = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DND_LEAVE                           = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DND_MOTION                          = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DND_DROP                            = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DND_END                             = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END                     = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_DROP                    = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_ACTION                  = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_TARGET                  = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_SEND                    = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE                    = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_SYNC_DONE                           = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY                    = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED                   = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED           = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED                        = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED                      = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE           = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED                 = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED        = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION                      = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM                    = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE                       = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE      = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST      = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE         = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED                    = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED                  = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE                         = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW                         = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE                         = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE                     = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE                   = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE         = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN                    = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE                       = 0;
+EAPI int EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY                      = 0;
 
-EAPI int _ecore_wl_event_window_www      = -1;
-EAPI int _ecore_wl_event_window_www_drag = -1;
+EAPI int _efl_core_wayland_event_window_www      = -1;
+EAPI int _efl_core_wayland_event_window_www_drag = -1;
 
 static Eina_Array *supplied_modules = NULL;
 static Eina_Array *local_modules    = NULL;
 
 static Efl_Bool
-_ecore_wl_surface_modules_init(void)
+_efl_core_wayland_surface_modules_init(void)
 {
     const char *mod_dir;
 
@@ -106,7 +106,7 @@ _ecore_wl_surface_modules_init(void)
                                   EFL_MODULE_ARCH);
     eina_module_list_load(supplied_modules);
 
-    mod_dir = getenv("ECORE_WL2_SURFACE_MODULE_DIR");
+    mod_dir = getenv("EFL_CORE_WAYLAND_SURFACE_MODULE_DIR");
     if (mod_dir)
     {
         local_modules =
@@ -120,7 +120,7 @@ _ecore_wl_surface_modules_init(void)
 }
 
 static void
-_ecore_wl_surface_modules_unload(void)
+_efl_core_wayland_surface_modules_unload(void)
 {
     eina_module_list_unload(supplied_modules);
     eina_module_list_unload(local_modules);
@@ -128,25 +128,21 @@ _ecore_wl_surface_modules_unload(void)
 
 /* public API functions */
 EAPI int
-ecore_wl_init(void)
+efl_core_wayland_init(void)
 {
-    printf("WL-TEST: -> phase 0: %d", _ecore_wl_init_count);
-    if (++_ecore_wl_init_count != 1) return _ecore_wl_init_count;
-    printf("-> phase 1 ");
+    if (++_efl_core_wayland_init_count != 1) return _efl_core_wayland_init_count;
 
    /* try to initialize Eina */
-    if (!eina_init()) return --_ecore_wl_init_count;
-    printf("-> phase 2 %d", _ecore_wl_init_count);
+    if (!eina_init()) return --_efl_core_wayland_init_count;
 
    /* try to create Eina logging domain */
-    _ecore_wl_log_dom =
-        eina_log_domain_register("efl_core_wl", ECORE_WL2_DEFAULT_LOG_COLOR);
-    if (_ecore_wl_log_dom < 0)
+    _efl_core_wayland_log_dom =
+        eina_log_domain_register("efl_core_wl", EFL_CORE_WAYLAND_DEFAULT_LOG_COLOR);
+    if (_efl_core_wayland_log_dom < 0)
     {
         EINA_LOG_ERR("Cannot create a log domain for EFl_Core_Wl");
         goto eina_err;
     }
-    printf("-> phase 3 ");
 
    /* try to initialize Ecore */
     if (!core_init())
@@ -154,7 +150,6 @@ ecore_wl_init(void)
         ERR("Could not initialize Ecore");
         goto ecore_err;
     }
-    printf("-> phase 4 ");
 
    /* try to initialize Ecore_Event */
     if (!core_event_init())
@@ -162,68 +157,66 @@ ecore_wl_init(void)
         ERR("Could not initialize Ecore_Event");
         goto core_event_err;
     }
-    printf("-> phase 5 ");
 
-    if (!_ecore_wl_surface_modules_init())
+    if (!_efl_core_wayland_surface_modules_init())
     {
         ERR("Could not load surface modules");
         goto module_load_err;
     }
-    printf("-> phase 6 ");
 
-   /* handle creating new Ecore_Wl event types */
-    ECORE_WL2_EVENT_CONNECT                             = core_event_type_new();
-    ECORE_WL2_EVENT_DISCONNECT                          = core_event_type_new();
-    ECORE_WL2_EVENT_GLOBAL_ADDED                        = core_event_type_new();
-    ECORE_WL2_EVENT_GLOBAL_REMOVED                      = core_event_type_new();
-    ECORE_WL2_EVENT_FOCUS_IN                            = core_event_type_new();
-    ECORE_WL2_EVENT_FOCUS_OUT                           = core_event_type_new();
-    ECORE_WL2_EVENT_DND_ENTER                           = core_event_type_new();
-    ECORE_WL2_EVENT_DND_LEAVE                           = core_event_type_new();
-    ECORE_WL2_EVENT_DND_MOTION                          = core_event_type_new();
-    ECORE_WL2_EVENT_DND_DROP                            = core_event_type_new();
-    ECORE_WL2_EVENT_DND_END                             = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_END                     = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_DROP                    = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_ACTION                  = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_TARGET                  = core_event_type_new();
-    ECORE_WL2_EVENT_DATA_SOURCE_SEND                    = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_CONFIGURE                    = core_event_type_new();
-    ECORE_WL2_EVENT_SYNC_DONE                           = core_event_type_new();
-    ECORE_WL2_EVENT_OFFER_DATA_READY                    = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_NAME_CHANGED                   = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED           = core_event_type_new();
-    ECORE_WL2_EVENT_DEVICE_ADDED                        = core_event_type_new();
-    ECORE_WL2_EVENT_DEVICE_REMOVED                      = core_event_type_new();
-    _ecore_wl_event_window_www                          = core_event_type_new();
-    _ecore_wl_event_window_www_drag                     = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE           = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED                 = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED        = core_event_type_new();
-    ECORE_WL2_EVENT_SEAT_SELECTION                      = core_event_type_new();
-    ECORE_WL2_EVENT_OUTPUT_TRANSFORM                    = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATE                       = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE      = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST      = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE         = core_event_type_new();
-    ECORE_WL2_EVENT_AUX_HINT_ALLOWED                    = core_event_type_new();
-    ECORE_WL2_EVENT_AUX_HINT_SUPPORTED                  = core_event_type_new();
-    ECORE_WL2_EVENT_AUX_MESSAGE                         = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_SHOW                         = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_HIDE                         = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ACTIVATE                     = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_DEACTIVATE                   = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_ICONIFY_STATE_CHANGE         = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_OFFSCREEN                    = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_CREATE                       = core_event_type_new();
-    ECORE_WL2_EVENT_WINDOW_DESTROY                      = core_event_type_new();
+    /* handle creating new Efl_Core_Wayland event types */
+    EFL_CORE_WAYLAND_EVENT_CONNECT                             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DISCONNECT                          = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_GLOBAL_ADDED                        = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_GLOBAL_REMOVED                      = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_FOCUS_IN                            = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_FOCUS_OUT                           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_ENTER                           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_LEAVE                           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_MOTION                          = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_DROP                            = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_END                             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END                     = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_DROP                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_ACTION                  = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_TARGET                  = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_SEND                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SYNC_DONE                           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED                   = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED                        = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED                      = core_event_type_new();
+    _efl_core_wayland_event_window_www                          = core_event_type_new();
+    _efl_core_wayland_event_window_www_drag                     = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED                 = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED        = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION                      = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE                       = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE      = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST      = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE         = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED                  = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE                         = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW                         = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE                         = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE                     = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE                   = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE         = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE                       = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY                      = core_event_type_new();
 
     if (!no_session_recovery)
         no_session_recovery = !!getenv("EFL_NO_WAYLAND_SESSION_RECOVERY");
 
-    printf("-> phase 7 (out: %d )\n", _ecore_wl_init_count);
-    return _ecore_wl_init_count;
+    printf("-> phase 7 (out: %d )\n", _efl_core_wayland_init_count);
+    return _efl_core_wayland_init_count;
 
 module_load_err:
     core_event_shutdown();
@@ -232,70 +225,70 @@ core_event_err:
     core_shutdown();
 
 ecore_err:
-    eina_log_domain_unregister(_ecore_wl_log_dom);
-    _ecore_wl_log_dom = -1;
+    eina_log_domain_unregister(_efl_core_wayland_log_dom);
+    _efl_core_wayland_log_dom = -1;
 
 eina_err:
     eina_shutdown();
-    return --_ecore_wl_init_count;
+    return --_efl_core_wayland_init_count;
 }
 
 EAPI int
-ecore_wl_shutdown(void)
+efl_core_wayland_shutdown(void)
 {
-    if (_ecore_wl_init_count < 1)
+    if (_efl_core_wayland_init_count < 1)
     {
-        EINA_LOG_ERR("Ecore_Wl shutdown called without Ecore_Wl Init");
+        EINA_LOG_ERR("Efl_Core_Wayland shutdown called without Efl_Core_Wayland Init");
         return 0;
     }
 
-    if (--_ecore_wl_init_count != 0) return _ecore_wl_init_count;
+    if (--_efl_core_wayland_init_count != 0) return _efl_core_wayland_init_count;
 
    /* reset events */
-    core_event_type_flush(ECORE_WL2_EVENT_CONNECT,
-                          ECORE_WL2_EVENT_DISCONNECT,
-                          ECORE_WL2_EVENT_GLOBAL_ADDED,
-                          ECORE_WL2_EVENT_GLOBAL_REMOVED,
-                          ECORE_WL2_EVENT_FOCUS_IN,
-                          ECORE_WL2_EVENT_FOCUS_OUT,
-                          ECORE_WL2_EVENT_DND_ENTER,
-                          ECORE_WL2_EVENT_DND_LEAVE,
-                          ECORE_WL2_EVENT_DND_MOTION,
-                          ECORE_WL2_EVENT_DND_DROP,
-                          ECORE_WL2_EVENT_DND_END,
-                          ECORE_WL2_EVENT_DATA_SOURCE_END,
-                          ECORE_WL2_EVENT_DATA_SOURCE_DROP,
-                          ECORE_WL2_EVENT_DATA_SOURCE_ACTION,
-                          ECORE_WL2_EVENT_DATA_SOURCE_TARGET,
-                          ECORE_WL2_EVENT_DATA_SOURCE_SEND,
-                          ECORE_WL2_EVENT_WINDOW_CONFIGURE,
-                          ECORE_WL2_EVENT_SYNC_DONE,
-                          ECORE_WL2_EVENT_OFFER_DATA_READY,
-                          ECORE_WL2_EVENT_SEAT_NAME_CHANGED,
-                          ECORE_WL2_EVENT_SEAT_CAPABILITIES_CHANGED,
-                          ECORE_WL2_EVENT_DEVICE_ADDED,
-                          ECORE_WL2_EVENT_DEVICE_REMOVED,
-                          ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE,
-                          ECORE_WL2_EVENT_SEAT_KEYMAP_CHANGED,
-                          ECORE_WL2_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED,
-                          ECORE_WL2_EVENT_SEAT_SELECTION,
-                          ECORE_WL2_EVENT_OUTPUT_TRANSFORM,
-                          ECORE_WL2_EVENT_WINDOW_ROTATE,
-                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE,
-                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE,
-                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_REQUEST,
-                          ECORE_WL2_EVENT_WINDOW_ROTATION_CHANGE_DONE,
-                          ECORE_WL2_EVENT_AUX_HINT_ALLOWED,
-                          ECORE_WL2_EVENT_AUX_HINT_SUPPORTED,
-                          ECORE_WL2_EVENT_AUX_MESSAGE,
-                          ECORE_WL2_EVENT_WINDOW_SHOW,
-                          ECORE_WL2_EVENT_WINDOW_HIDE,
-                          ECORE_WL2_EVENT_WINDOW_ACTIVATE,
-                          ECORE_WL2_EVENT_WINDOW_DEACTIVATE,
-                          ECORE_WL2_EVENT_WINDOW_ICONIFY_STATE_CHANGE,
-                          ECORE_WL2_EVENT_WINDOW_OFFSCREEN,
-                          ECORE_WL2_EVENT_WINDOW_CREATE,
-                          ECORE_WL2_EVENT_WINDOW_DESTROY);
+    core_event_type_flush(EFL_CORE_WAYLAND_EVENT_CONNECT,
+                          EFL_CORE_WAYLAND_EVENT_DISCONNECT,
+                          EFL_CORE_WAYLAND_EVENT_GLOBAL_ADDED,
+                          EFL_CORE_WAYLAND_EVENT_GLOBAL_REMOVED,
+                          EFL_CORE_WAYLAND_EVENT_FOCUS_IN,
+                          EFL_CORE_WAYLAND_EVENT_FOCUS_OUT,
+                          EFL_CORE_WAYLAND_EVENT_DND_ENTER,
+                          EFL_CORE_WAYLAND_EVENT_DND_LEAVE,
+                          EFL_CORE_WAYLAND_EVENT_DND_MOTION,
+                          EFL_CORE_WAYLAND_EVENT_DND_DROP,
+                          EFL_CORE_WAYLAND_EVENT_DND_END,
+                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END,
+                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_DROP,
+                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_ACTION,
+                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_TARGET,
+                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_SEND,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE,
+                          EFL_CORE_WAYLAND_EVENT_SYNC_DONE,
+                          EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY,
+                          EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED,
+                          EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED,
+                          EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED,
+                          EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE,
+                          EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED,
+                          EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED,
+                          EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION,
+                          EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE,
+                          EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED,
+                          EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED,
+                          EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE,
+                          EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY);
 
    /* shutdown Ecore_Event */
     core_event_shutdown();
@@ -304,19 +297,19 @@ ecore_wl_shutdown(void)
     core_shutdown();
 
    /* unregister logging domain */
-    eina_log_domain_unregister(_ecore_wl_log_dom);
-    _ecore_wl_log_dom = -1;
+    eina_log_domain_unregister(_efl_core_wayland_log_dom);
+    _efl_core_wayland_log_dom = -1;
 
-    _ecore_wl_surface_modules_unload();
+    _efl_core_wayland_surface_modules_unload();
 
    /* shutdown eina */
     eina_shutdown();
 
-    return _ecore_wl_init_count;
+    return _efl_core_wayland_init_count;
 }
 
 EAPI void
-ecore_wl_session_recovery_disable(void)
+efl_core_wayland_session_recovery_disable(void)
 {
     no_session_recovery = EFL_TRUE;
 }

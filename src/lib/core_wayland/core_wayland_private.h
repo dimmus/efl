@@ -15,7 +15,7 @@
 # include "xdg-shell-unstable-v6-client-protocol.h"
 # include "efl-aux-hints-client-protocol.h"
 
-extern int _ecore_wl_log_dom;
+extern int _efl_core_wayland_log_dom;
 extern Efl_Bool no_session_recovery;
 
 # ifdef EAPI
@@ -32,46 +32,46 @@ extern Efl_Bool no_session_recovery;
 #  define EAPI
 # endif
 
-# ifdef ECORE_WL2_DEFAULT_LOG_COLOR
-#  undef ECORE_WL2_DEFAULT_LOG_COLOR
+# ifdef EFL_CORE_WAYLAND_DEFAULT_LOG_COLOR
+#  undef EFL_CORE_WAYLAND_DEFAULT_LOG_COLOR
 # endif
-# define ECORE_WL2_DEFAULT_LOG_COLOR EINA_COLOR_BLUE
+# define EFL_CORE_WAYLAND_DEFAULT_LOG_COLOR EINA_COLOR_BLUE
 
 # ifdef ERR
 #  undef ERR
 # endif
-# define ERR(...) EINA_LOG_DOM_ERR(_ecore_wl_log_dom, __VA_ARGS__)
+# define ERR(...) EINA_LOG_DOM_ERR(_efl_core_wayland_log_dom, __VA_ARGS__)
 
 # ifdef DBG
 #  undef DBG
 # endif
-# define DBG(...) EINA_LOG_DOM_DBG(_ecore_wl_log_dom, __VA_ARGS__)
+# define DBG(...) EINA_LOG_DOM_DBG(_efl_core_wayland_log_dom, __VA_ARGS__)
 
 # ifdef INF
 #  undef INF
 # endif
-# define INF(...) EINA_LOG_DOM_INFO(_ecore_wl_log_dom, __VA_ARGS__)
+# define INF(...) EINA_LOG_DOM_INFO(_efl_core_wayland_log_dom, __VA_ARGS__)
 
 # ifdef WRN
 #  undef WRN
 # endif
-# define WRN(...) EINA_LOG_DOM_WARN(_ecore_wl_log_dom, __VA_ARGS__)
+# define WRN(...) EINA_LOG_DOM_WARN(_efl_core_wayland_log_dom, __VA_ARGS__)
 
 # ifdef CRI
 #  undef CRI
 # endif
-# define CRI(...) EINA_LOG_DOM_CRIT(_ecore_wl_log_dom, __VA_ARGS__)
+# define CRI(...) EINA_LOG_DOM_CRIT(_efl_core_wayland_log_dom, __VA_ARGS__)
 
-typedef struct _Ecore_Wl_Input_Devices
+typedef struct _Efl_Core_Wayland_Input_Devices
 {
    Eo *pointer_dev;
    Eo *keyboard_dev;
    Eo *touch_dev;
    Eo *seat_dev;
-   Ecore_Wl_Window *window;
-} Ecore_Wl_Input_Devices;
+   Efl_Core_Wayland_Window *window;
+} Efl_Core_Wayland_Input_Devices;
 
-struct _Ecore_Wl_Display
+struct _Efl_Core_Wayland_Display
 {
    int refs;
    char *name;
@@ -116,13 +116,13 @@ struct _Ecore_Wl_Display
    Efl_Bool recovering : 1;
 };
 
-struct _Ecore_Wl_Subsurface
+struct _Efl_Core_Wayland_Subsurface
 {
    EINA_INLIST;
 
    int x, y;
 
-   Ecore_Wl_Window *parent;
+   Efl_Core_Wayland_Window *parent;
 
    struct
      {
@@ -133,7 +133,7 @@ struct _Ecore_Wl_Subsurface
    Efl_Bool sync : 1;
 };
 
-struct _Ecore_Wl_Aux_Hint
+struct _Efl_Core_Wayland_Aux_Hint
 {
    EINA_INLIST;
 
@@ -141,15 +141,15 @@ struct _Ecore_Wl_Aux_Hint
    const char *hint, *val;
 };
 
-struct _Ecore_Wl_Frame_Cb_Handle
+struct _Efl_Core_Wayland_Frame_Cb_Handle
 {
    EINA_INLIST;
-   Ecore_Wl_Window *win;
-   Ecore_Wl_Frame_Cb cb;
+   Efl_Core_Wayland_Window *win;
+   Efl_Core_Wayland_Frame_Cb cb;
    void *data;
 };
 
-typedef struct _Ecore_Wl_Window_Configure_State
+typedef struct _Efl_Core_Wayland_Window_Configure_State
 {
    uint32_t serial;
    Eina_Rectangle geometry;
@@ -157,18 +157,18 @@ typedef struct _Ecore_Wl_Window_Configure_State
    Efl_Bool fullscreen : 1;
    Efl_Bool focused : 1;
    Efl_Bool resizing : 1;
-} Ecore_Wl_Window_Configure_State;
+} Efl_Core_Wayland_Window_Configure_State;
 
-struct _Ecore_Wl_Window
+struct _Efl_Core_Wayland_Window
 {
    EINA_INLIST;
 
-   Ecore_Wl_Display *display;
+   Efl_Core_Wayland_Display *display;
 
-   Ecore_Wl_Window *parent;
-   Ecore_Wl_Input *grab;
+   Efl_Core_Wayland_Window *parent;
+   Efl_Core_Wayland_Input *grab;
 
-   Ecore_Wl_Surface *wl_surface;
+   Efl_Core_Wayland_Surface *wl_surface;
 
    int rotation, surface_id;
    const char *title;
@@ -186,7 +186,7 @@ struct _Ecore_Wl_Window
    struct zxdg_toplevel_v6 *zxdg_toplevel;
    struct zxdg_popup_v6 *zxdg_popup;
 
-   void (*cb_close) (void *data, Ecore_Wl_Window *win);
+   void (*cb_close) (void *data, Efl_Core_Wayland_Window *win);
    void  *cb_close_data;
 
    Eina_Stringshare *uuid;
@@ -203,7 +203,7 @@ struct _Ecore_Wl_Window
    Eina_Rectangle opaque;
    Eina_Rectangle input_rect;
 
-   Ecore_Wl_Window_Type type;
+   Efl_Core_Wayland_Window_Type type;
 
    struct
    {
@@ -224,9 +224,9 @@ struct _Ecore_Wl_Window
 
    Eina_List *outputs;
 
-   Ecore_Wl_Window_Configure_State set_config;
-   Ecore_Wl_Window_Configure_State req_config;
-   Ecore_Wl_Window_Configure_State def_config;
+   Efl_Core_Wayland_Window_Configure_State set_config;
+   Efl_Core_Wayland_Window_Configure_State req_config;
+   Efl_Core_Wayland_Window_Configure_State def_config;
 
    Efl_Bool alpha : 1;
 
@@ -265,11 +265,11 @@ struct _Ecore_Wl_Window
    Efl_Bool visible : 1;
 };
 
-struct _Ecore_Wl_Output
+struct _Efl_Core_Wayland_Output
 {
    EINA_INLIST;
 
-   Ecore_Wl_Display *display;
+   Efl_Core_Wayland_Display *display;
    struct wl_output *wl_output;
 
    int mw, mh, transform;
@@ -277,9 +277,9 @@ struct _Ecore_Wl_Output
    Eina_Rectangle geometry;
 };
 
-typedef struct _Ecore_Wl_Dnd_Source
+typedef struct _Efl_Core_Wayland_Dnd_Source
 {
-   Ecore_Wl_Input *input;
+   Efl_Core_Wayland_Input *input;
 
    int x, y;
    Core_Fd_Handler *fdh;
@@ -288,11 +288,11 @@ typedef struct _Ecore_Wl_Dnd_Source
    struct wl_array types;
    uint32_t dnd_action;
    uint32_t source_actions;
-   Ecore_Wl_Selection_Type sel_type;
+   Efl_Core_Wayland_Selection_Type sel_type;
    Efl_Bool active_read;
    void *read_data;
    unsigned int len;
-} Ecore_Wl_Dnd_Source;
+} Efl_Core_Wayland_Dnd_Source;
 
 
 /** TODO: Refactor ALL Input code :(
@@ -300,11 +300,11 @@ typedef struct _Ecore_Wl_Dnd_Source
  * wl_seat is a GROUP of Input Devices (such as):
  *      keyboards, pointers, touch devices
  */
-struct _Ecore_Wl_Pointer
+struct _Efl_Core_Wayland_Pointer
 {
    EINA_INLIST;
 
-   Ecore_Wl_Seat *seat;
+   Efl_Core_Wayland_Seat *seat;
 
    double sx, sy;
    unsigned int button;
@@ -313,19 +313,19 @@ struct _Ecore_Wl_Pointer
    struct
      {
         unsigned int button, count, timestamp;
-        Ecore_Wl_Window *window;
+        Efl_Core_Wayland_Window *window;
      } grab;
 
-   Ecore_Wl_Window *focus;
+   Efl_Core_Wayland_Window *focus;
 
    Eina_List *resources;
 };
 
-struct _Ecore_Wl_Keyboard
+struct _Efl_Core_Wayland_Keyboard
 {
    EINA_INLIST;
 
-   Ecore_Wl_Seat *seat;
+   Efl_Core_Wayland_Seat *seat;
 
    unsigned int modifiers;
 
@@ -358,26 +358,26 @@ struct _Ecore_Wl_Keyboard
    struct
      {
         unsigned int button, count, timestamp;
-        Ecore_Wl_Window *window;
+        Efl_Core_Wayland_Window *window;
      } grab;
 
-   Ecore_Wl_Window *focus;
+   Efl_Core_Wayland_Window *focus;
 
    Eina_List *resources;
 };
 
-struct _Ecore_Wl_Touch
+struct _Efl_Core_Wayland_Touch
 {
    EINA_INLIST;
 
    struct
      {
         unsigned int button, count, timestamp;
-        Ecore_Wl_Window *window;
+        Efl_Core_Wayland_Window *window;
      } grab;
 };
 
-struct _Ecore_Wl_Seat
+struct _Efl_Core_Wayland_Seat
 {
    EINA_INLIST;
 
@@ -393,26 +393,26 @@ struct _Ecore_Wl_Seat
         struct wl_resource *resource;
      } im;
 
-   Ecore_Wl_Bind_Cb bind_cb;
-   Ecore_Wl_Unbind_Cb unbind_cb;
+   Efl_Core_Wayland_Bind_Cb bind_cb;
+   Efl_Core_Wayland_Unbind_Cb unbind_cb;
 
-   Ecore_Wl_Pointer *pointer;
+   Efl_Core_Wayland_Pointer *pointer;
    int pointer_count;
 
-   Ecore_Wl_Keyboard *keyboard;
+   Efl_Core_Wayland_Keyboard *keyboard;
    int keyboard_count;
 
-   Ecore_Wl_Touch *touch;
+   Efl_Core_Wayland_Touch *touch;
    int touch_count;
 
    Eina_List *resources;
 };
 
-struct _Ecore_Wl_Input
+struct _Efl_Core_Wayland_Input
 {
    EINA_INLIST;
 
-   Ecore_Wl_Display *display;
+   Efl_Core_Wayland_Display *display;
 
    unsigned int timestamp;
 
@@ -464,16 +464,16 @@ struct _Ecore_Wl_Input
 
    struct
      {
-        Ecore_Wl_Window *pointer;
-        Ecore_Wl_Window *prev_pointer;
-        Ecore_Wl_Window *keyboard;
-        Ecore_Wl_Window *touch;
+        Efl_Core_Wayland_Window *pointer;
+        Efl_Core_Wayland_Window *prev_pointer;
+        Efl_Core_Wayland_Window *keyboard;
+        Efl_Core_Wayland_Window *touch;
      } focus;
 
    struct
      {
         unsigned int button, count, timestamp;
-        Ecore_Wl_Window *window;
+        Efl_Core_Wayland_Window *window;
         unsigned int touch_count;
      } grab;
 
@@ -510,9 +510,9 @@ struct _Ecore_Wl_Input
 
    struct
    {
-      Ecore_Wl_Offer *offer;
+      Efl_Core_Wayland_Offer *offer;
       uint32_t enter_serial;
-      Ecore_Wl_Window *window;
+      Efl_Core_Wayland_Window *window;
    } drag, selection;
 
    unsigned int seat_version;
@@ -525,7 +525,7 @@ struct _Ecore_Wl_Input
 };
 
 typedef struct _Buffer_Handle Buffer_Handle;
-typedef struct _Ecore_Wl_Buffer
+typedef struct _Efl_Core_Wayland_Buffer
 {
    struct wl_buffer *wl_buffer;
    int size;
@@ -541,57 +541,57 @@ typedef struct _Ecore_Wl_Buffer
    Efl_Bool busy : 1;
    Efl_Bool orphaned : 1;
    Efl_Bool alpha : 1;
-} Ecore_Wl_Buffer;
+} Efl_Core_Wayland_Buffer;
 
-typedef struct _Ecore_Wl_Surface
+typedef struct _Efl_Core_Wayland_Surface
 {
    void *private_data;
-   Ecore_Wl_Window *wl_win;
+   Efl_Core_Wayland_Window *wl_win;
 
    int w, h;
-   Ecore_Wl_Surface_Interface *funcs;
+   Efl_Core_Wayland_Surface_Interface *funcs;
    Core_Event_Handler *offscreen_handler;
    Efl_Bool alpha : 1;
-} Ecore_Wl_Surface;
+} Efl_Core_Wayland_Surface;
 
-Ecore_Wl_Window *_ecore_wl_display_window_surface_find(Ecore_Wl_Display *display, struct wl_surface *wl_surface);
+Efl_Core_Wayland_Window *_efl_core_wayland_display_window_surface_find(Efl_Core_Wayland_Display *display, struct wl_surface *wl_surface);
 void _display_event_free(void *d, void *event EFL_UNUSED);
 
-void _ecore_wl_output_add(Ecore_Wl_Display *display, unsigned int id);
-void _ecore_wl_output_del(Ecore_Wl_Output *output);
+void _efl_core_wayland_output_add(Efl_Core_Wayland_Display *display, unsigned int id);
+void _efl_core_wayland_output_del(Efl_Core_Wayland_Output *output);
 
-void _ecore_wl_input_add(Ecore_Wl_Display *display, unsigned int id, unsigned int version);
-void _ecore_wl_input_del(Ecore_Wl_Input *input);
+void _efl_core_wayland_input_add(Efl_Core_Wayland_Display *display, unsigned int id, unsigned int version);
+void _efl_core_wayland_input_del(Efl_Core_Wayland_Input *input);
 
-void _ecore_wl_input_ungrab(Ecore_Wl_Input *input);
-void _ecore_wl_input_grab(Ecore_Wl_Input *input, Ecore_Wl_Window *window, unsigned int button);
+void _efl_core_wayland_input_ungrab(Efl_Core_Wayland_Input *input);
+void _efl_core_wayland_input_grab(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window, unsigned int button);
 
-void _ecore_wl_input_cursor_set(Ecore_Wl_Input *input, const char *cursor);
-Efl_Bool _ecore_wl_input_cursor_update(void *data);
-void _ecore_wl_input_window_remove(Ecore_Wl_Input *input, Ecore_Wl_Window *window);
+void _efl_core_wayland_input_cursor_set(Efl_Core_Wayland_Input *input, const char *cursor);
+Efl_Bool _efl_core_wayland_input_cursor_update(void *data);
+void _efl_core_wayland_input_window_remove(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window);
 
-void _ecore_wl_dnd_add(Ecore_Wl_Input *input, struct wl_data_offer *offer);
-void _ecore_wl_dnd_enter(Ecore_Wl_Input *input, struct wl_data_offer *offer, struct wl_surface *surface, int x, int y, uint32_t serial);
-void _ecore_wl_dnd_leave(Ecore_Wl_Input *input);
-void _ecore_wl_dnd_motion(Ecore_Wl_Input *input, int x, int y, uint32_t serial);
-void _ecore_wl_dnd_drop(Ecore_Wl_Input *input);
-void _ecore_wl_dnd_selection(Ecore_Wl_Input *input, struct wl_data_offer *offer);
-void _ecore_wl_dnd_del(Ecore_Wl_Dnd_Source *source);
+void _efl_core_wayland_dnd_add(Efl_Core_Wayland_Input *input, struct wl_data_offer *offer);
+void _efl_core_wayland_dnd_enter(Efl_Core_Wayland_Input *input, struct wl_data_offer *offer, struct wl_surface *surface, int x, int y, uint32_t serial);
+void _efl_core_wayland_dnd_leave(Efl_Core_Wayland_Input *input);
+void _efl_core_wayland_dnd_motion(Efl_Core_Wayland_Input *input, int x, int y, uint32_t serial);
+void _efl_core_wayland_dnd_drop(Efl_Core_Wayland_Input *input);
+void _efl_core_wayland_dnd_selection(Efl_Core_Wayland_Input *input, struct wl_data_offer *offer);
+void _efl_core_wayland_dnd_del(Efl_Core_Wayland_Dnd_Source *source);
 
-void _ecore_wl_subsurf_unmap(Ecore_Wl_Subsurface *subsurf);
-void _ecore_wl_subsurf_free(Ecore_Wl_Subsurface *subsurf);
+void _efl_core_wayland_subsurf_unmap(Efl_Core_Wayland_Subsurface *subsurf);
+void _efl_core_wayland_subsurf_free(Efl_Core_Wayland_Subsurface *subsurf);
 
-void _ecore_wl_window_surface_create(Ecore_Wl_Window *window);
-void _ecore_wl_window_shell_surface_init(Ecore_Wl_Window *window);
-void _ecore_wl_window_semi_free(Ecore_Wl_Window *window);
+void _efl_core_wayland_window_surface_create(Efl_Core_Wayland_Window *window);
+void _efl_core_wayland_window_shell_surface_init(Efl_Core_Wayland_Window *window);
+void _efl_core_wayland_window_semi_free(Efl_Core_Wayland_Window *window);
 
-void _ecore_wl_offer_unref(Ecore_Wl_Offer *offer);
-Efl_Bool _ecore_wl_display_sync_get(void);
+void _efl_core_wayland_offer_unref(Efl_Core_Wayland_Offer *offer);
+Efl_Bool _efl_core_wayland_display_sync_get(void);
 
-void _ecore_wl_buffer_test(Ecore_Wl_Display *ewd);
+void _efl_core_wayland_buffer_test(Efl_Core_Wayland_Display *ewd);
 
-EAPI void ecore_wl_window_weight_set(Ecore_Wl_Window *window, double w, double h);
+EAPI void efl_core_wayland_window_weight_set(Efl_Core_Wayland_Window *window, double w, double h);
 
-Ecore_Wl_Output *_ecore_wl_output_find(Ecore_Wl_Display *dsp, struct wl_output *op);
+Efl_Core_Wayland_Output *_efl_core_wayland_output_find(Efl_Core_Wayland_Display *dsp, struct wl_output *op);
 
 #endif

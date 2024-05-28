@@ -16,7 +16,7 @@ _cb_geometry(void                       *data,
              const char                 *model,
              int                         transform)
 {
-    Ecore_Wl_Output *output;
+    Efl_Core_Wayland_Output *output;
     int              ot;
 
     output = data;
@@ -37,17 +37,17 @@ _cb_geometry(void                       *data,
     transform &= 0x3;
     if (output->transform != transform)
     {
-        Ecore_Wl_Event_Output_Transform *ev;
+        Efl_Core_Wayland_Event_Output_Transform *ev;
 
         output->transform = transform;
 
-        ev = calloc(1, sizeof(Ecore_Wl_Event_Output_Transform));
+        ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Output_Transform));
         if (ev)
         {
             ev->output        = output;
             ev->old_transform = ot;
             ev->transform     = transform;
-            core_event_add(ECORE_WL2_EVENT_OUTPUT_TRANSFORM, ev, NULL, NULL);
+            core_event_add(EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM, ev, NULL, NULL);
         }
     }
 }
@@ -60,7 +60,7 @@ _cb_mode(void                       *data,
          int                         h,
          int refresh                 EFL_UNUSED)
 {
-    Ecore_Wl_Output *output;
+    Efl_Core_Wayland_Output *output;
 
     output = data;
     if (!output) return;
@@ -90,11 +90,11 @@ static const struct wl_output_listener
                          NULL /* description */ };
 
 void
-_ecore_wl_output_add(Ecore_Wl_Display *display, unsigned int id)
+_efl_core_wayland_output_add(Efl_Core_Wayland_Display *display, unsigned int id)
 {
-    Ecore_Wl_Output *output;
+    Efl_Core_Wayland_Output *output;
 
-    output = calloc(1, sizeof(Ecore_Wl_Output));
+    output = calloc(1, sizeof(Efl_Core_Wayland_Output));
     if (!output) return;
 
     output->display = display;
@@ -109,9 +109,9 @@ _ecore_wl_output_add(Ecore_Wl_Display *display, unsigned int id)
 }
 
 void
-_ecore_wl_output_del(Ecore_Wl_Output *output)
+_efl_core_wayland_output_del(Efl_Core_Wayland_Output *output)
 {
-    Ecore_Wl_Display *display;
+    Efl_Core_Wayland_Display *display;
 
     if (!output) return;
 
@@ -127,10 +127,10 @@ _ecore_wl_output_del(Ecore_Wl_Output *output)
     free(output);
 }
 
-Ecore_Wl_Output *
-_ecore_wl_output_find(Ecore_Wl_Display *display, struct wl_output *op)
+Efl_Core_Wayland_Output *
+_efl_core_wayland_output_find(Efl_Core_Wayland_Display *display, struct wl_output *op)
 {
-    Ecore_Wl_Output *wlop;
+    Efl_Core_Wayland_Output *wlop;
 
     EINA_INLIST_FOREACH(display->outputs, wlop)
         if (wlop->wl_output == op) return wlop;
@@ -139,7 +139,7 @@ _ecore_wl_output_find(Ecore_Wl_Display *display, struct wl_output *op)
 }
 
 EAPI int
-ecore_wl_output_dpi_get(Ecore_Wl_Output *output)
+efl_core_wayland_output_dpi_get(Efl_Core_Wayland_Output *output)
 {
     int    w, h, mw, mh, dpi;
     double target;
@@ -162,7 +162,7 @@ ecore_wl_output_dpi_get(Ecore_Wl_Output *output)
 }
 
 EAPI int
-ecore_wl_output_transform_get(Ecore_Wl_Output *output)
+efl_core_wayland_output_transform_get(Efl_Core_Wayland_Output *output)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(output, 0);
     return output->transform;

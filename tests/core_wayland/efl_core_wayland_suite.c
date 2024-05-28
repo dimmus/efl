@@ -11,12 +11,12 @@ static const Efl_Test_Case etc[] = {
 
 SUITE_INIT(core_wl)
 {
-    ck_assert_int_eq(ecore_wl_init(), 1);
+    ck_assert_int_eq(efl_core_wayland_init(), 1);
 }
 
 SUITE_SHUTDOWN(core_wl)
 {
-    ck_assert_int_eq(ecore_wl_shutdown(), 0);
+    ck_assert_int_eq(efl_core_wayland_shutdown(), 0);
 }
 
 int

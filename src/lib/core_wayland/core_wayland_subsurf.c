@@ -5,7 +5,7 @@
 #include "core_wayland_private.h"
 
 void
-_ecore_wl_subsurf_unmap(Ecore_Wl_Subsurface *subsurf)
+_efl_core_wayland_subsurf_unmap(Efl_Core_Wayland_Subsurface *subsurf)
 {
     if (subsurf->wl.subsurface) wl_subsurface_destroy(subsurf->wl.subsurface);
     if (subsurf->wl.surface) wl_surface_destroy(subsurf->wl.surface);
@@ -14,11 +14,11 @@ _ecore_wl_subsurf_unmap(Ecore_Wl_Subsurface *subsurf)
 }
 
 void
-_ecore_wl_subsurf_free(Ecore_Wl_Subsurface *subsurf)
+_efl_core_wayland_subsurf_free(Efl_Core_Wayland_Subsurface *subsurf)
 {
-    Ecore_Wl_Window *parent;
+    Efl_Core_Wayland_Window *parent;
 
-    _ecore_wl_subsurf_unmap(subsurf);
+    _efl_core_wayland_subsurf_unmap(subsurf);
 
     parent = subsurf->parent;
     if (parent)
@@ -30,11 +30,11 @@ _ecore_wl_subsurf_free(Ecore_Wl_Subsurface *subsurf)
     free(subsurf);
 }
 
-EAPI Ecore_Wl_Subsurface *
-ecore_wl_subsurface_new(Ecore_Wl_Window *window)
+EAPI Efl_Core_Wayland_Subsurface *
+efl_core_wayland_subsurface_new(Efl_Core_Wayland_Window *window)
 {
-    Ecore_Wl_Display    *display;
-    Ecore_Wl_Subsurface *subsurf;
+    Efl_Core_Wayland_Display    *display;
+    Efl_Core_Wayland_Subsurface *subsurf;
 
     EINA_SAFETY_ON_NULL_RETURN_VAL(window, NULL);
     EINA_SAFETY_ON_NULL_RETURN_VAL(window->surface, NULL);
@@ -44,7 +44,7 @@ ecore_wl_subsurface_new(Ecore_Wl_Window *window)
     EINA_SAFETY_ON_NULL_RETURN_VAL(display->wl.compositor, NULL);
     EINA_SAFETY_ON_NULL_RETURN_VAL(display->wl.subcompositor, NULL);
 
-    subsurf = calloc(1, sizeof(Ecore_Wl_Subsurface));
+    subsurf = calloc(1, sizeof(Efl_Core_Wayland_Subsurface));
     if (!subsurf) return NULL;
 
     subsurf->parent = window;
@@ -83,15 +83,15 @@ surf_err:
 }
 
 EAPI void
-ecore_wl_subsurface_del(Ecore_Wl_Subsurface *subsurface)
+efl_core_wayland_subsurface_del(Efl_Core_Wayland_Subsurface *subsurface)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
 
-    _ecore_wl_subsurf_free(subsurface);
+    _efl_core_wayland_subsurf_free(subsurface);
 }
 
 EAPI struct wl_surface *
-ecore_wl_subsurface_surface_get(Ecore_Wl_Subsurface *subsurface)
+efl_core_wayland_subsurface_surface_get(Efl_Core_Wayland_Subsurface *subsurface)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(subsurface, NULL);
 
@@ -99,7 +99,7 @@ ecore_wl_subsurface_surface_get(Ecore_Wl_Subsurface *subsurface)
 }
 
 EAPI void
-ecore_wl_subsurface_position_set(Ecore_Wl_Subsurface *subsurface, int x, int y)
+efl_core_wayland_subsurface_position_set(Efl_Core_Wayland_Subsurface *subsurface, int x, int y)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(subsurface->wl.subsurface);
@@ -113,7 +113,7 @@ ecore_wl_subsurface_position_set(Ecore_Wl_Subsurface *subsurface, int x, int y)
 }
 
 EAPI void
-ecore_wl_subsurface_position_get(Ecore_Wl_Subsurface *subsurface,
+efl_core_wayland_subsurface_position_get(Efl_Core_Wayland_Subsurface *subsurface,
                                  int                 *x,
                                  int                 *y)
 {
@@ -124,7 +124,7 @@ ecore_wl_subsurface_position_get(Ecore_Wl_Subsurface *subsurface,
 }
 
 EAPI void
-ecore_wl_subsurface_place_above(Ecore_Wl_Subsurface *subsurface,
+efl_core_wayland_subsurface_place_above(Efl_Core_Wayland_Subsurface *subsurface,
                                 struct wl_surface   *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
@@ -134,7 +134,7 @@ ecore_wl_subsurface_place_above(Ecore_Wl_Subsurface *subsurface,
 }
 
 EAPI void
-ecore_wl_subsurface_place_below(Ecore_Wl_Subsurface *subsurface,
+efl_core_wayland_subsurface_place_below(Efl_Core_Wayland_Subsurface *subsurface,
                                 struct wl_surface   *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
@@ -144,7 +144,7 @@ ecore_wl_subsurface_place_below(Ecore_Wl_Subsurface *subsurface,
 }
 
 EAPI void
-ecore_wl_subsurface_sync_set(Ecore_Wl_Subsurface *subsurface, Efl_Bool sync)
+efl_core_wayland_subsurface_sync_set(Efl_Core_Wayland_Subsurface *subsurface, Efl_Bool sync)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(subsurface->wl.subsurface);
@@ -159,7 +159,7 @@ ecore_wl_subsurface_sync_set(Ecore_Wl_Subsurface *subsurface, Efl_Bool sync)
 }
 
 EAPI void
-ecore_wl_subsurface_opaque_region_set(Ecore_Wl_Subsurface *subsurface,
+efl_core_wayland_subsurface_opaque_region_set(Efl_Core_Wayland_Subsurface *subsurface,
                                       int                  x,
                                       int                  y,
                                       int                  w,
@@ -170,7 +170,7 @@ ecore_wl_subsurface_opaque_region_set(Ecore_Wl_Subsurface *subsurface,
 
     if ((w > 0) && (h > 0))
     {
-        Ecore_Wl_Window *parent;
+        Efl_Core_Wayland_Window *parent;
 
         parent = subsurface->parent;
         if (parent)

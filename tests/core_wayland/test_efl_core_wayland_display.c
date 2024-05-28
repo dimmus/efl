@@ -1,15 +1,15 @@
 #include "efl_core_wayland_suite.h"
 #include "efl_core_wayland_tests_helpers.h"
 
-static Ecore_Wl_Display *
+static Efl_Core_Wayland_Display *
 _display_setup(void)
 {
-    return ecore_wl_display_create(NULL);
+    return efl_core_wayland_display_create(NULL);
 }
 
 EFL_START_TEST(core_wayland_display_create)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
 
     disp = _display_setup();
     ck_assert(disp != NULL);
@@ -19,25 +19,25 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_destroy)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
 
     disp = _display_setup();
     ck_assert(disp != NULL);
 
-    ecore_wl_display_destroy(disp);
+    efl_core_wayland_display_destroy(disp);
 }
 
 EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_get)
 {
-    Ecore_Wl_Display  *disp;
+    Efl_Core_Wayland_Display  *disp;
     struct wl_display *wdisp;
 
     disp = _display_setup();
     ck_assert(disp != NULL);
 
-    wdisp = ecore_wl_display_get(disp);
+    wdisp = efl_core_wayland_display_get(disp);
     ck_assert(wdisp != NULL);
 }
 
@@ -45,19 +45,19 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_name_get)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
 
     disp = _display_setup();
     ck_assert(disp != NULL);
 
-    ck_assert(ecore_wl_display_name_get(disp) != NULL);
+    ck_assert(efl_core_wayland_display_name_get(disp) != NULL);
 }
 
 EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_connect)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -67,37 +67,37 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_disconnect)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    ecore_wl_display_disconnect(disp);
+    efl_core_wayland_display_disconnect(disp);
 }
 
 EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_registry_get)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    ck_assert(ecore_wl_display_registry_get(disp) != NULL);
+    ck_assert(efl_core_wayland_display_registry_get(disp) != NULL);
 }
 
 EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_shm_get)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
     struct wl_shm    *shm;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    shm = ecore_wl_display_shm_get(disp);
+    shm = efl_core_wayland_display_shm_get(disp);
     ck_assert(shm != NULL);
 }
 
@@ -105,13 +105,13 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_dmabuf_get)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
     void             *dma;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    dma = ecore_wl_display_dmabuf_get(disp);
+    dma = efl_core_wayland_display_dmabuf_get(disp);
     ck_assert(dma != NULL);
 }
 
@@ -119,20 +119,20 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_globals_get)
 {
-    Ecore_Wl_Display *disp;
-    Ecore_Wl_Global  *global;
+    Efl_Core_Wayland_Display *disp;
+    Efl_Core_Wayland_Global  *global;
     Eina_Iterator    *itr;
     void             *data;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    itr = ecore_wl_display_globals_get(disp);
+    itr = efl_core_wayland_display_globals_get(disp);
     ck_assert(itr != NULL);
 
     EINA_ITERATOR_FOREACH(itr, data)
     {
-        global = (Ecore_Wl_Global *)data;
+        global = (Efl_Core_Wayland_Global *)data;
         printf("Interface: <%s>\n", global->interface);
     }
 
@@ -143,13 +143,13 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_screen_size_get)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
     int               w, h;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    ecore_wl_display_screen_size_get(disp, &w, &h);
+    efl_core_wayland_display_screen_size_get(disp, &w, &h);
     ck_assert_int_ne(w, 0);
     ck_assert_int_ne(h, 0);
 }
@@ -158,13 +158,13 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_inputs_get)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
     Eina_Iterator    *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    itr = ecore_wl_display_inputs_get(disp);
+    itr = efl_core_wayland_display_inputs_get(disp);
     ck_assert(itr != NULL);
 
     eina_iterator_free(itr);
@@ -174,19 +174,19 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_compositor_version_get)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
     int               ver;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
-    ver = ecore_wl_display_compositor_version_get(disp);
+    ver = efl_core_wayland_display_compositor_version_get(disp);
     ck_assert_int_ne(ver, 0);
 }
 
 EFL_END_TEST
 
-Ecore_Wl_Input *test_wl_input;
+Efl_Core_Wayland_Input *test_wl_input;
 
 static Efl_Bool
 _test_input_find_configure_complete(void       *data,
@@ -198,17 +198,17 @@ _test_input_find_configure_complete(void       *data,
    /* NB: Enlightenment uses "seat0" here, but Weston uses "default" */
     if (getenv("E_START"))
         test_wl_input =
-            ecore_wl_display_input_find_by_name(td->display, "seat0");
+            efl_core_wayland_display_input_find_by_name(td->display, "seat0");
     else
         test_wl_input =
-            ecore_wl_display_input_find_by_name(td->display, "default");
+            efl_core_wayland_display_input_find_by_name(td->display, "default");
 
     ck_assert(test_wl_input != NULL);
     test_wl_input = NULL;
 
     if (getenv("E_START"))
     {
-        test_wl_input = ecore_wl_display_input_find(td->display, 13);
+        test_wl_input = efl_core_wayland_display_input_find(td->display, 13);
         ck_assert(test_wl_input != NULL);
     }
 
@@ -221,7 +221,7 @@ EFL_START_TEST(core_wayland_display_input_find)
 {
     Test_Data *td;
 
-    ecore_wl_init();
+    efl_core_wayland_init();
 
     td         = calloc(1, sizeof(Test_Data));
     td->width  = WIDTH;
@@ -233,16 +233,16 @@ EFL_START_TEST(core_wayland_display_input_find)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    ecore_wl_window_show(td->win);
+    efl_core_wayland_window_show(td->win);
 
     td->handler =
-        core_event_handler_add(ECORE_WL2_EVENT_WINDOW_CONFIGURE_COMPLETE,
+        core_event_handler_add(EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE,
                                _test_input_find_configure_complete,
                                td);
 
     core_main_loop_begin();
 
-    ecore_wl_shutdown();
+    efl_core_wayland_shutdown();
     free(td);
 }
 
@@ -250,14 +250,14 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_flush)
 {
-    Ecore_Wl_Display *disp;
+    Efl_Core_Wayland_Display *disp;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
 
     //FIXME: Ambiguous way to check with code to make sure flushing was successful.
     //       We might think it's being verified by another TC that actually draws to the screen buffer ...
-    ecore_wl_display_flush(disp);
+    efl_core_wayland_display_flush(disp);
 }
 
 EFL_END_TEST
@@ -268,7 +268,7 @@ _test_sync_done(void *data, int type EFL_UNUSED, void *event EFL_UNUSED)
     Test_Data *td = data;
     Efl_Bool   ret;
 
-    ret = ecore_wl_display_sync_is_done(td->display);
+    ret = efl_core_wayland_display_sync_is_done(td->display);
 
     fail_if(ret == EFL_FALSE);
 
@@ -281,7 +281,7 @@ EFL_START_TEST(core_wayland_display_sync_is_done)
 {
     Test_Data *td;
 
-    ecore_wl_init();
+    efl_core_wayland_init();
 
     td         = calloc(1, sizeof(Test_Data));
     td->width  = WIDTH;
@@ -293,13 +293,13 @@ EFL_START_TEST(core_wayland_display_sync_is_done)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    ecore_wl_window_show(td->win);
+    efl_core_wayland_window_show(td->win);
 
-    core_event_handler_add(ECORE_WL2_EVENT_SYNC_DONE, _test_sync_done, td);
+    core_event_handler_add(EFL_CORE_WAYLAND_EVENT_SYNC_DONE, _test_sync_done, td);
 
     core_main_loop_begin();
 
-    ecore_wl_shutdown();
+    efl_core_wayland_shutdown();
     free(td);
 }
 

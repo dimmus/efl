@@ -8,7 +8,7 @@ EFL_END_TEST
 EFL_START_TEST(core_wayland_session_recovery_disable)
 {
    //FIXME: Need some discussion about how to validate this API in TC.
-    ecore_wl_session_recovery_disable();
+    efl_core_wayland_session_recovery_disable();
 }
 
 EFL_END_TEST

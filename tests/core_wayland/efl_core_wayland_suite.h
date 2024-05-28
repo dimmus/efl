@@ -1,5 +1,5 @@
-#ifndef _ECORE_WL2_SUITE_H
-# define _ECORE_WL2_SUITE_H
+#ifndef _EFL_CORE_WAYLAND_SUITE_H
+# define _EFL_CORE_WAYLAND_SUITE_H
 
 #ifdef HAVE_CONFIG_H
 #include "efl_config.h"
