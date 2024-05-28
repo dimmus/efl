@@ -19,8 +19,8 @@ int EFL_CORE_WAYLAND_SURFACE_DMABUF = 0;
 typedef struct _Efl_Core_Wayland_Dmabuf_Private
 {
     Efl_Core_Wayland_Buffer *current;
-    Eina_List       *buffers;
-    int              unused_duration;
+    Eina_List               *buffers;
+    int                      unused_duration;
 } Efl_Core_Wayland_Dmabuf_Private;
 
 static void *
@@ -34,8 +34,10 @@ _evas_dmabuf_surface_setup(Efl_Core_Wayland_Window *win)
     if (!priv) return NULL;
 
     ewd = efl_core_wayland_window_display_get(win);
-    if (efl_core_wayland_display_shm_get(ewd)) types |= EFL_CORE_WAYLAND_BUFFER_SHM;
-    if (efl_core_wayland_display_dmabuf_get(ewd)) types |= EFL_CORE_WAYLAND_BUFFER_DMABUF;
+    if (efl_core_wayland_display_shm_get(ewd))
+        types |= EFL_CORE_WAYLAND_BUFFER_SHM;
+    if (efl_core_wayland_display_dmabuf_get(ewd))
+        types |= EFL_CORE_WAYLAND_BUFFER_DMABUF;
 
     if (!efl_core_wayland_buffer_init(ewd, types))
     {
@@ -48,15 +50,15 @@ _evas_dmabuf_surface_setup(Efl_Core_Wayland_Window *win)
 
 static void
 _evas_dmabuf_surface_reconfigure(Efl_Core_Wayland_Surface *s EFL_UNUSED,
-                                 void               *priv_data,
-                                 int                 w,
-                                 int                 h,
-                                 uint32_t flags      EFL_UNUSED,
-                                 Efl_Bool alpha      EFL_UNUSED)
+                                 void                       *priv_data,
+                                 int                         w,
+                                 int                         h,
+                                 uint32_t flags              EFL_UNUSED,
+                                 Efl_Bool alpha              EFL_UNUSED)
 {
     Efl_Core_Wayland_Dmabuf_Private *p;
     Efl_Core_Wayland_Buffer         *b;
-    Eina_List               *l, *tmp;
+    Eina_List                       *l, *tmp;
 //   Efl_Bool alpha_change;
 
     p = priv_data;
@@ -78,14 +80,14 @@ _evas_dmabuf_surface_reconfigure(Efl_Core_Wayland_Surface *s EFL_UNUSED,
 
 static void *
 _evas_dmabuf_surface_data_get(Efl_Core_Wayland_Surface *s EFL_UNUSED,
-                              void               *priv_data,
-                              int                *w,
-                              int                *h)
+                              void                       *priv_data,
+                              int                        *w,
+                              int                        *h)
 {
     Efl_Core_Wayland_Dmabuf_Private *p;
     Efl_Core_Wayland_Buffer         *b;
-    void                    *ptr;
-    int                      stride;
+    void                            *ptr;
+    int                              stride;
 
     p = priv_data;
 
@@ -104,13 +106,14 @@ _evas_dmabuf_surface_data_get(Efl_Core_Wayland_Surface *s EFL_UNUSED,
 }
 
 static Efl_Core_Wayland_Buffer *
-_evas_dmabuf_surface_wait(Efl_Core_Wayland_Surface *s, Efl_Core_Wayland_Dmabuf_Private *p)
+_evas_dmabuf_surface_wait(Efl_Core_Wayland_Surface        *s,
+                          Efl_Core_Wayland_Dmabuf_Private *p)
 {
     Efl_Core_Wayland_Buffer *b, *best = NULL;
-    Eina_List       *l;
-    int              best_age = -1;
-    int              age;
-    int              num_required = 1, num_allocated = 0;
+    Eina_List               *l;
+    int                      best_age = -1;
+    int                      age;
+    int                      num_required = 1, num_allocated = 0;
 
     EINA_LIST_FOREACH(p->buffers, l, b)
     {
@@ -158,7 +161,7 @@ _evas_dmabuf_surface_assign(Efl_Core_Wayland_Surface *s, void *priv_data)
 {
     Efl_Core_Wayland_Dmabuf_Private *p;
     Efl_Core_Wayland_Buffer         *b;
-    Eina_List               *l;
+    Eina_List                       *l;
 
     p          = priv_data;
     p->current = _evas_dmabuf_surface_wait(s, p);
@@ -182,14 +185,14 @@ _evas_dmabuf_surface_assign(Efl_Core_Wayland_Surface *s, void *priv_data)
 
 static void
 _evas_dmabuf_surface_post(Efl_Core_Wayland_Surface *s,
-                          void             *priv_data,
-                          Eina_Rectangle   *rects,
-                          unsigned int      count)
+                          void                     *priv_data,
+                          Eina_Rectangle           *rects,
+                          unsigned int              count)
 {
     Efl_Core_Wayland_Dmabuf_Private *p;
     Efl_Core_Wayland_Buffer         *b;
     Efl_Core_Wayland_Window         *win;
-    struct wl_buffer        *wlb;
+    struct wl_buffer                *wlb;
 
     p = priv_data;
 
@@ -212,7 +215,8 @@ _evas_dmabuf_surface_post(Efl_Core_Wayland_Surface *s,
 }
 
 static void
-_evas_dmabuf_surface_destroy(Efl_Core_Wayland_Surface *s EFL_UNUSED, void *priv_data)
+_evas_dmabuf_surface_destroy(Efl_Core_Wayland_Surface *s EFL_UNUSED,
+                             void                       *priv_data)
 {
     Efl_Core_Wayland_Dmabuf_Private *p;
     Efl_Core_Wayland_Buffer         *b;
@@ -227,8 +231,8 @@ _evas_dmabuf_surface_destroy(Efl_Core_Wayland_Surface *s EFL_UNUSED, void *priv_
 
 static void
 _evas_dmabuf_surface_flush(Efl_Core_Wayland_Surface *surface EFL_UNUSED,
-                           void                     *priv_data,
-                           Efl_Bool                  purge)
+                           void                             *priv_data,
+                           Efl_Bool                          purge)
 {
     Efl_Core_Wayland_Dmabuf_Private *p;
     Efl_Core_Wayland_Buffer         *b;
@@ -259,7 +263,8 @@ static Efl_Core_Wayland_Surface_Interface dmabuf_smanager = {
 Efl_Bool
 efl_core_wayland_surface_module_dmabuf_init(void)
 {
-    EFL_CORE_WAYLAND_SURFACE_DMABUF = efl_core_wayland_surface_manager_add(&dmabuf_smanager);
+    EFL_CORE_WAYLAND_SURFACE_DMABUF =
+        efl_core_wayland_surface_manager_add(&dmabuf_smanager);
 
     if (EFL_CORE_WAYLAND_SURFACE_DMABUF < 1) return EFL_FALSE;
 

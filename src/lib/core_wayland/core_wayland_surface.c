@@ -29,10 +29,10 @@ efl_core_wayland_surface_destroy(Efl_Core_Wayland_Surface *surface)
 
 EAPI void
 efl_core_wayland_surface_reconfigure(Efl_Core_Wayland_Surface *surface,
-                             int               w,
-                             int               h,
-                             uint32_t          flags,
-                             Efl_Bool          alpha)
+                                     int                       w,
+                                     int                       h,
+                                     uint32_t                  flags,
+                                     Efl_Bool                  alpha)
 {
     EINA_SAFETY_ON_NULL_RETURN(surface);
 
@@ -44,7 +44,9 @@ efl_core_wayland_surface_reconfigure(Efl_Core_Wayland_Surface *surface,
 }
 
 EAPI void *
-efl_core_wayland_surface_data_get(Efl_Core_Wayland_Surface *surface, int *w, int *h)
+efl_core_wayland_surface_data_get(Efl_Core_Wayland_Surface *surface,
+                                  int                      *w,
+                                  int                      *h)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(surface, NULL);
 
@@ -61,8 +63,8 @@ efl_core_wayland_surface_assign(Efl_Core_Wayland_Surface *surface)
 
 EAPI void
 efl_core_wayland_surface_post(Efl_Core_Wayland_Surface *surface,
-                      Eina_Rectangle   *rects,
-                      unsigned int      count)
+                              Eina_Rectangle           *rects,
+                              unsigned int              count)
 {
     EINA_SAFETY_ON_NULL_RETURN(surface);
 
@@ -70,7 +72,8 @@ efl_core_wayland_surface_post(Efl_Core_Wayland_Surface *surface,
 }
 
 EAPI void
-efl_core_wayland_surface_flush(Efl_Core_Wayland_Surface *surface, Efl_Bool purge)
+efl_core_wayland_surface_flush(Efl_Core_Wayland_Surface *surface,
+                               Efl_Bool                  purge)
 {
     EINA_SAFETY_ON_NULL_RETURN(surface);
 
@@ -78,12 +81,15 @@ efl_core_wayland_surface_flush(Efl_Core_Wayland_Surface *surface, Efl_Bool purge
 }
 
 static Efl_Bool
-_efl_core_wayland_surface_cb_offscreen(void *data, int type EFL_UNUSED, void *event)
+_efl_core_wayland_surface_cb_offscreen(void    *data,
+                                       int type EFL_UNUSED,
+                                       void    *event)
 {
     Efl_Core_Wayland_Event_Window_Offscreen *ev   = event;
     Efl_Core_Wayland_Surface                *surf = data;
 
-    if (surf->wl_win == ev->win) efl_core_wayland_surface_flush(surf, EFL_FALSE);
+    if (surf->wl_win == ev->win)
+        efl_core_wayland_surface_flush(surf, EFL_FALSE);
 
     return CORE_CALLBACK_RENEW;
 }
@@ -92,7 +98,7 @@ EAPI Efl_Core_Wayland_Surface *
 efl_core_wayland_surface_create(Efl_Core_Wayland_Window *win, Efl_Bool alpha)
 {
     Efl_Core_Wayland_Surface           *out;
-    Eina_List                  *l;
+    Eina_List                          *l;
     Efl_Core_Wayland_Surface_Interface *intf;
 
     EINA_SAFETY_ON_NULL_RETURN_VAL(win, NULL);
@@ -142,7 +148,10 @@ efl_core_wayland_surface_buffer_create(Efl_Core_Wayland_Surface *surface)
     ewd = efl_core_wayland_window_display_get(surface->wl_win);
     EINA_SAFETY_ON_NULL_RETURN_VAL(ewd, NULL);
 
-    return efl_core_wayland_buffer_create(ewd, surface->w, surface->h, surface->alpha);
+    return efl_core_wayland_buffer_create(ewd,
+                                          surface->w,
+                                          surface->h,
+                                          surface->alpha);
 }
 
 EAPI int

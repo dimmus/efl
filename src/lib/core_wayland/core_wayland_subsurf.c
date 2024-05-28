@@ -99,7 +99,10 @@ efl_core_wayland_subsurface_surface_get(Efl_Core_Wayland_Subsurface *subsurface)
 }
 
 EAPI void
-efl_core_wayland_subsurface_position_set(Efl_Core_Wayland_Subsurface *subsurface, int x, int y)
+efl_core_wayland_subsurface_position_set(
+    Efl_Core_Wayland_Subsurface *subsurface,
+    int                          x,
+    int                          y)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(subsurface->wl.subsurface);
@@ -113,9 +116,10 @@ efl_core_wayland_subsurface_position_set(Efl_Core_Wayland_Subsurface *subsurface
 }
 
 EAPI void
-efl_core_wayland_subsurface_position_get(Efl_Core_Wayland_Subsurface *subsurface,
-                                 int                 *x,
-                                 int                 *y)
+efl_core_wayland_subsurface_position_get(
+    Efl_Core_Wayland_Subsurface *subsurface,
+    int                         *x,
+    int                         *y)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
 
@@ -125,7 +129,7 @@ efl_core_wayland_subsurface_position_get(Efl_Core_Wayland_Subsurface *subsurface
 
 EAPI void
 efl_core_wayland_subsurface_place_above(Efl_Core_Wayland_Subsurface *subsurface,
-                                struct wl_surface   *surface)
+                                        struct wl_surface           *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(surface);
@@ -135,7 +139,7 @@ efl_core_wayland_subsurface_place_above(Efl_Core_Wayland_Subsurface *subsurface,
 
 EAPI void
 efl_core_wayland_subsurface_place_below(Efl_Core_Wayland_Subsurface *subsurface,
-                                struct wl_surface   *surface)
+                                        struct wl_surface           *surface)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(surface);
@@ -144,7 +148,8 @@ efl_core_wayland_subsurface_place_below(Efl_Core_Wayland_Subsurface *subsurface,
 }
 
 EAPI void
-efl_core_wayland_subsurface_sync_set(Efl_Core_Wayland_Subsurface *subsurface, Efl_Bool sync)
+efl_core_wayland_subsurface_sync_set(Efl_Core_Wayland_Subsurface *subsurface,
+                                     Efl_Bool                     sync)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(subsurface->wl.subsurface);
@@ -159,11 +164,12 @@ efl_core_wayland_subsurface_sync_set(Efl_Core_Wayland_Subsurface *subsurface, Ef
 }
 
 EAPI void
-efl_core_wayland_subsurface_opaque_region_set(Efl_Core_Wayland_Subsurface *subsurface,
-                                      int                  x,
-                                      int                  y,
-                                      int                  w,
-                                      int                  h)
+efl_core_wayland_subsurface_opaque_region_set(
+    Efl_Core_Wayland_Subsurface *subsurface,
+    int                          x,
+    int                          y,
+    int                          w,
+    int                          h)
 {
     EINA_SAFETY_ON_NULL_RETURN(subsurface);
     EINA_SAFETY_ON_NULL_RETURN(subsurface->wl.subsurface);

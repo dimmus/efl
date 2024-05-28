@@ -45,16 +45,16 @@ struct _dnd_read_ctx
 
 struct _Efl_Core_Wayland_Offer
 {
-    Efl_Core_Wayland_Input       *input;
-    struct wl_data_offer *offer;
-    Eina_Array           *mimetypes;
-    Efl_Core_Wayland_Drag_Action  actions;
-    Efl_Core_Wayland_Drag_Action  action;
-    uint32_t              serial;
-    Eina_List            *reads;
-    int                   ref;
-    Efl_Core_Wayland_Window      *window;
-    Efl_Bool              proxied : 1;
+    Efl_Core_Wayland_Input      *input;
+    struct wl_data_offer        *offer;
+    Eina_Array                  *mimetypes;
+    Efl_Core_Wayland_Drag_Action actions;
+    Efl_Core_Wayland_Drag_Action action;
+    uint32_t                     serial;
+    Eina_List                   *reads;
+    int                          ref;
+    Efl_Core_Wayland_Window     *window;
+    Efl_Bool                     proxied : 1;
 };
 
 Efl_Core_Wayland_Window *
@@ -151,7 +151,8 @@ data_source_send(void                  *data,
 }
 
 static void
-event_fill(struct _Efl_Core_Wayland_Event_Data_Source_Event *ev, Efl_Core_Wayland_Input *input)
+event_fill(struct _Efl_Core_Wayland_Event_Data_Source_Event *ev,
+           Efl_Core_Wayland_Input                           *input)
 {
     if (input->focus.keyboard) ev->source = input->focus.keyboard;
 
@@ -164,7 +165,9 @@ event_fill(struct _Efl_Core_Wayland_Event_Data_Source_Event *ev, Efl_Core_Waylan
 }
 
 static void
-data_source_event_emit(Efl_Core_Wayland_Input *input, int event, Efl_Bool cancel)
+data_source_event_emit(Efl_Core_Wayland_Input *input,
+                       int                     event,
+                       Efl_Bool                cancel)
 {
     struct _Efl_Core_Wayland_Event_Data_Source_Event *ev;
     Efl_Core_Wayland_Event_Data_Source_End           *ev2 = NULL;
@@ -174,11 +177,14 @@ data_source_event_emit(Efl_Core_Wayland_Input *input, int event, Efl_Bool cancel
         ev2 = calloc(1, sizeof(Efl_Core_Wayland_Event_Data_Source_End));
         ev  = (void *)ev2;
     }
-    else ev = calloc(1, sizeof(struct _Efl_Core_Wayland_Event_Data_Source_Event));
+    else
+        ev =
+            calloc(1, sizeof(struct _Efl_Core_Wayland_Event_Data_Source_Event));
     EINA_SAFETY_ON_NULL_RETURN(ev);
 
     event_fill((void *)ev, input);
-    if (event == EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END) ev2->cancelled = cancel;
+    if (event == EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END)
+        ev2->cancelled = cancel;
 
     core_event_add(event, ev, _display_event_free, ev->display);
 }
@@ -245,17 +251,18 @@ _unset_serial(void *user_data, void *event)
 }
 
 void
-_efl_core_wayland_dnd_enter(Efl_Core_Wayland_Input       *input,
-                    struct wl_data_offer *offer,
-                    struct wl_surface    *surface,
-                    int                   x,
-                    int                   y,
-                    uint32_t              serial)
+_efl_core_wayland_dnd_enter(Efl_Core_Wayland_Input *input,
+                            struct wl_data_offer   *offer,
+                            struct wl_surface      *surface,
+                            int                     x,
+                            int                     y,
+                            uint32_t                serial)
 {
     Efl_Core_Wayland_Window          *window;
     Efl_Core_Wayland_Event_Dnd_Enter *ev;
 
-    window = _efl_core_wayland_display_window_surface_find(input->display, surface);
+    window =
+        _efl_core_wayland_display_window_surface_find(input->display, surface);
     if (!window) return;
 
     if (offer)
@@ -269,10 +276,11 @@ _efl_core_wayland_dnd_enter(Efl_Core_Wayland_Input       *input,
 
             if (input->display->wl.data_device_manager_version >=
                 WL_DATA_OFFER_SET_ACTIONS_SINCE_VERSION)
-                efl_core_wayland_offer_actions_set(input->drag.offer,
-                                           EFL_CORE_WAYLAND_DRAG_ACTION_MOVE |
-                                               EFL_CORE_WAYLAND_DRAG_ACTION_COPY,
-                                           EFL_CORE_WAYLAND_DRAG_ACTION_MOVE);
+                efl_core_wayland_offer_actions_set(
+                    input->drag.offer,
+                    EFL_CORE_WAYLAND_DRAG_ACTION_MOVE |
+                        EFL_CORE_WAYLAND_DRAG_ACTION_COPY,
+                    EFL_CORE_WAYLAND_DRAG_ACTION_MOVE);
         }
     }
     else input->drag.offer = NULL;
@@ -339,7 +347,10 @@ _efl_core_wayland_dnd_leave(Efl_Core_Wayland_Input *input)
 }
 
 void
-_efl_core_wayland_dnd_motion(Efl_Core_Wayland_Input *input, int x, int y, uint32_t serial)
+_efl_core_wayland_dnd_motion(Efl_Core_Wayland_Input *input,
+                             int                     x,
+                             int                     y,
+                             uint32_t                serial)
 {
     Efl_Core_Wayland_Event_Dnd_Motion *ev;
 
@@ -392,11 +403,13 @@ _efl_core_wayland_dnd_drop(Efl_Core_Wayland_Input *input)
 }
 
 void
-_efl_core_wayland_dnd_selection(Efl_Core_Wayland_Input *input, struct wl_data_offer *offer)
+_efl_core_wayland_dnd_selection(Efl_Core_Wayland_Input *input,
+                                struct wl_data_offer   *offer)
 {
     Efl_Core_Wayland_Event_Seat_Selection *ev;
 
-    if (input->selection.offer) _efl_core_wayland_offer_unref(input->selection.offer);
+    if (input->selection.offer)
+        _efl_core_wayland_offer_unref(input->selection.offer);
     input->selection.offer = NULL;
 
     if (offer) input->selection.offer = wl_data_offer_get_user_data(offer);
@@ -434,7 +447,8 @@ _efl_core_wayland_dnd_del(Efl_Core_Wayland_Dnd_Source *source)
 }
 
 EAPI void
-efl_core_wayland_dnd_drag_types_set(Efl_Core_Wayland_Input *input, const char **types)
+efl_core_wayland_dnd_drag_types_set(Efl_Core_Wayland_Input *input,
+                                    const char            **types)
 {
     struct wl_data_device_manager *manager;
     const char                   **type;
@@ -478,15 +492,16 @@ efl_core_wayland_dnd_drag_types_set(Efl_Core_Wayland_Input *input, const char **
 
 EAPI uint32_t
 efl_core_wayland_dnd_drag_start(Efl_Core_Wayland_Input  *input,
-                        Efl_Core_Wayland_Window *window,
-                        Efl_Core_Wayland_Window *drag_window)
+                                Efl_Core_Wayland_Window *window,
+                                Efl_Core_Wayland_Window *drag_window)
 {
     struct wl_surface *dsurface = NULL, *osurface;
 
     EINA_SAFETY_ON_NULL_RETURN_VAL(input, 0);
     EINA_SAFETY_ON_NULL_RETURN_VAL(input->data.drag.source, 0);
 
-    if (drag_window) dsurface = efl_core_wayland_window_surface_get(drag_window);
+    if (drag_window)
+        dsurface = efl_core_wayland_window_surface_get(drag_window);
 
     _efl_core_wayland_input_ungrab(input);
 
@@ -570,7 +585,8 @@ efl_core_wayland_dnd_selection_get(Efl_Core_Wayland_Input *input)
 }
 
 EAPI uint32_t
-efl_core_wayland_dnd_selection_set(Efl_Core_Wayland_Input *input, const char **types)
+efl_core_wayland_dnd_selection_set(Efl_Core_Wayland_Input *input,
+                                   const char            **types)
 {
     struct wl_data_device_manager *manager;
     const char                   **type;
@@ -640,10 +656,14 @@ _wl_to_action_convert(uint32_t action)
 {
 #define PAIR(wl, ac) \
     if (action == wl) return ac;
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY, EFL_CORE_WAYLAND_DRAG_ACTION_COPY)
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK, EFL_CORE_WAYLAND_DRAG_ACTION_ASK)
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE, EFL_CORE_WAYLAND_DRAG_ACTION_MOVE)
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE, EFL_CORE_WAYLAND_DRAG_ACTION_NONE)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY,
+         EFL_CORE_WAYLAND_DRAG_ACTION_COPY)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK,
+         EFL_CORE_WAYLAND_DRAG_ACTION_ASK)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
+         EFL_CORE_WAYLAND_DRAG_ACTION_MOVE)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE,
+         EFL_CORE_WAYLAND_DRAG_ACTION_NONE)
 #undef PAIR
     return EFL_CORE_WAYLAND_DRAG_ACTION_NONE;
 }
@@ -653,10 +673,14 @@ _action_to_wl_convert(Efl_Core_Wayland_Drag_Action action)
 {
 #define PAIR(wl, ac) \
     if (action == ac) return wl;
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY, EFL_CORE_WAYLAND_DRAG_ACTION_COPY)
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK, EFL_CORE_WAYLAND_DRAG_ACTION_ASK)
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE, EFL_CORE_WAYLAND_DRAG_ACTION_MOVE)
-    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE, EFL_CORE_WAYLAND_DRAG_ACTION_NONE)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY,
+         EFL_CORE_WAYLAND_DRAG_ACTION_COPY)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK,
+         EFL_CORE_WAYLAND_DRAG_ACTION_ASK)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
+         EFL_CORE_WAYLAND_DRAG_ACTION_MOVE)
+    PAIR(WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE,
+         EFL_CORE_WAYLAND_DRAG_ACTION_NONE)
 #undef PAIR
     return WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE;
 }
@@ -667,7 +691,7 @@ data_offer_offer(void                               *data,
                  const char                         *type)
 {
     Efl_Core_Wayland_Offer *offer = data;
-    char           *str;
+    char                   *str;
 
     if (type) eina_array_push(offer->mimetypes, strdup(type)); /*LEEEAK */
     else
@@ -685,11 +709,11 @@ data_offer_source_actions(void                               *data,
                           uint32_t                            source_actions)
 {
     Efl_Core_Wayland_Offer *offer;
-    unsigned int    i;
-    uint32_t        types[] = { WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
-                                WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY,
-                                WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK,
-                                WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE };
+    unsigned int            i;
+    uint32_t                types[] = { WL_DATA_DEVICE_MANAGER_DND_ACTION_MOVE,
+                                        WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY,
+                                        WL_DATA_DEVICE_MANAGER_DND_ACTION_ASK,
+                                        WL_DATA_DEVICE_MANAGER_DND_ACTION_NONE };
 
     offer = data;
 
@@ -720,7 +744,8 @@ static const struct wl_data_offer_listener _offer_listener = {
 };
 
 void
-_efl_core_wayland_dnd_add(Efl_Core_Wayland_Input *input, struct wl_data_offer *offer)
+_efl_core_wayland_dnd_add(Efl_Core_Wayland_Input *input,
+                          struct wl_data_offer   *offer)
 {
     Efl_Core_Wayland_Offer *result;
 
@@ -741,8 +766,8 @@ efl_core_wayland_offer_actions_get(Efl_Core_Wayland_Offer *offer)
 
 EAPI void
 efl_core_wayland_offer_actions_set(Efl_Core_Wayland_Offer      *offer,
-                           Efl_Core_Wayland_Drag_Action actions,
-                           Efl_Core_Wayland_Drag_Action action)
+                                   Efl_Core_Wayland_Drag_Action actions,
+                                   Efl_Core_Wayland_Drag_Action action)
 {
     uint32_t val = 0;
     int      i   = 0;
@@ -784,7 +809,8 @@ _emit_mime(const void *container EFL_UNUSED, void *elem, void *data)
 }
 
 EAPI void
-efl_core_wayland_offer_mimes_set(Efl_Core_Wayland_Offer *offer, Eina_Array *mimes)
+efl_core_wayland_offer_mimes_set(Efl_Core_Wayland_Offer *offer,
+                                 Eina_Array             *mimes)
 {
     EINA_SAFETY_ON_NULL_RETURN(offer);
 
@@ -793,7 +819,8 @@ efl_core_wayland_offer_mimes_set(Efl_Core_Wayland_Offer *offer, Eina_Array *mime
 }
 
 EAPI void
-efl_core_wayland_offer_accept(Efl_Core_Wayland_Offer *offer, const char *mime_type)
+efl_core_wayland_offer_accept(Efl_Core_Wayland_Offer *offer,
+                              const char             *mime_type)
 {
     EINA_SAFETY_ON_NULL_RETURN(offer);
 
@@ -802,16 +829,16 @@ efl_core_wayland_offer_accept(Efl_Core_Wayland_Offer *offer, const char *mime_ty
 
 typedef struct
 {
-    int             len;
-    void           *data;
-    char           *mimetype;
+    int                     len;
+    void                   *data;
+    char                   *mimetype;
     Efl_Core_Wayland_Offer *offer;
 } Read_Buffer;
 
 static void
 _free_buf(void *user_data, void *event)
 {
-    Read_Buffer                     *buf = user_data;
+    Read_Buffer                             *buf = user_data;
     Efl_Core_Wayland_Event_Offer_Data_Ready *ev  = event;
 
     _efl_core_wayland_offer_unref(buf->offer);
@@ -858,7 +885,10 @@ _offer_receive_fd_cb(void *data, Core_Fd_Handler *fdh)
         ev->seat     = buf->offer->input->id;
         ev->display  = buf->offer->input->display;
         ev->display->refs++;
-        core_event_add(EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY, ev, _free_buf, buf);
+        core_event_add(EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY,
+                       ev,
+                       _free_buf,
+                       buf);
 
         buf->offer->reads = eina_list_remove(buf->offer->reads, fdh);
         return CORE_CALLBACK_CANCEL;
@@ -901,7 +931,9 @@ efl_core_wayland_offer_receive(Efl_Core_Wayland_Offer *offer, char *mime)
 }
 
 EAPI void
-efl_core_wayland_offer_proxy_receive(Efl_Core_Wayland_Offer *offer, const char *mime, int fd)
+efl_core_wayland_offer_proxy_receive(Efl_Core_Wayland_Offer *offer,
+                                     const char             *mime,
+                                     int                     fd)
 {
     EINA_SAFETY_ON_NULL_RETURN(offer);
 
@@ -964,7 +996,8 @@ _compare(const void *container EFL_UNUSED, void *elem, void *data)
 }
 
 EAPI Efl_Bool
-efl_core_wayland_offer_supports_mime(Efl_Core_Wayland_Offer *offer, const char *mime)
+efl_core_wayland_offer_supports_mime(Efl_Core_Wayland_Offer *offer,
+                                     const char             *mime)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(offer, EFL_FALSE);
     EINA_SAFETY_ON_NULL_RETURN_VAL(mime, EFL_FALSE);

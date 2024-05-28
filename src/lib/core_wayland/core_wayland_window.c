@@ -115,7 +115,10 @@ _configure_complete(Efl_Core_Wayland_Window *window)
     if (!ev) return;
 
     ev->win = window;
-    core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE, ev, NULL, NULL);
+    core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE,
+                   ev,
+                   NULL,
+                   NULL);
 }
 
 #include "window_v6.x"
@@ -155,7 +158,7 @@ _xdg_toplevel_cb_configure(void                             *data,
                            struct wl_array                  *states)
 {
     Efl_Core_Wayland_Window *win = data;
-    uint32_t        *s;
+    uint32_t                *s;
 
     win->def_config.maximized  = EFL_FALSE;
     win->def_config.fullscreen = EFL_FALSE;
@@ -215,9 +218,9 @@ _xdg_popup_cb_configure(void                       *data,
                         int32_t                     width,
                         int32_t                     height)
 {
-    Efl_Core_Wayland_Window *win       = data;
-    win->def_config.geometry.w = width;
-    win->def_config.geometry.h = height;
+    Efl_Core_Wayland_Window *win = data;
+    win->def_config.geometry.w   = width;
+    win->def_config.geometry.h   = height;
 }
 
 static void
@@ -373,10 +376,10 @@ _efl_core_wayland_window_shell_surface_init(Efl_Core_Wayland_Window *window)
                                                     gh);
 
             efl_core_wayland_window_opaque_region_set(window,
-                                              window->opaque.x,
-                                              window->opaque.y,
-                                              window->opaque.w,
-                                              window->opaque.h);
+                                                      window->opaque.x,
+                                                      window->opaque.y,
+                                                      window->opaque.w,
+                                                      window->opaque.h);
         }
         else
             zwp_e_session_recovery_get_uuid(
@@ -421,7 +424,10 @@ _surface_leave(void                   *data,
         if (ev)
         {
             ev->win = win;
-            core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN, ev, NULL, NULL);
+            core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN,
+                           ev,
+                           NULL,
+                           NULL);
         }
     }
 }
@@ -495,7 +501,8 @@ _efl_core_wayland_window_hide_send(Efl_Core_Wayland_Window *window)
 }
 
 static void
-_efl_core_wayland_window_create_destroy_send(Efl_Core_Wayland_Window *window, Efl_Bool create)
+_efl_core_wayland_window_create_destroy_send(Efl_Core_Wayland_Window *window,
+                                             Efl_Bool                 create)
 {
     Efl_Core_Wayland_Event_Window_Common *ev;
 
@@ -506,17 +513,18 @@ _efl_core_wayland_window_create_destroy_send(Efl_Core_Wayland_Window *window, Ef
     if (window->parent) ev->parent_win = window->parent;
     ev->event_win = window;
 
-    if (create) core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE, ev, NULL, NULL);
+    if (create)
+        core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE, ev, NULL, NULL);
     else core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY, ev, NULL, NULL);
 }
 
 EAPI Efl_Core_Wayland_Window *
 efl_core_wayland_window_new(Efl_Core_Wayland_Display *display,
-                    Efl_Core_Wayland_Window  *parent,
-                    int               x,
-                    int               y,
-                    int               w,
-                    int               h)
+                            Efl_Core_Wayland_Window  *parent,
+                            int                       x,
+                            int                       y,
+                            int                       w,
+                            int                       h)
 {
     Efl_Core_Wayland_Window *win;
 
@@ -553,9 +561,10 @@ efl_core_wayland_window_new(Efl_Core_Wayland_Display *display,
 }
 
 EAPI void
-efl_core_wayland_window_close_callback_set(Efl_Core_Wayland_Window *window,
-                                   void (*cb)(void *data, Efl_Core_Wayland_Window *win),
-                                   void *data)
+efl_core_wayland_window_close_callback_set(
+    Efl_Core_Wayland_Window *window,
+    void (*cb)(void *data, Efl_Core_Wayland_Window *win),
+    void *data)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->cb_close      = cb;
@@ -588,16 +597,16 @@ efl_core_wayland_window_show(Efl_Core_Wayland_Window *window)
 
     if (window->input_set)
         efl_core_wayland_window_input_region_set(window,
-                                         window->input_rect.x,
-                                         window->input_rect.y,
-                                         window->input_rect.w,
-                                         window->input_rect.h);
+                                                 window->input_rect.x,
+                                                 window->input_rect.y,
+                                                 window->input_rect.w,
+                                                 window->input_rect.h);
     if (window->opaque_set)
         efl_core_wayland_window_opaque_region_set(window,
-                                          window->opaque.x,
-                                          window->opaque.y,
-                                          window->opaque.w,
-                                          window->opaque.h);
+                                                  window->opaque.x,
+                                                  window->opaque.y,
+                                                  window->opaque.w,
+                                                  window->opaque.h);
 
     if ((window->type != EFL_CORE_WAYLAND_WINDOW_TYPE_DND) &&
         (window->type != EFL_CORE_WAYLAND_WINDOW_TYPE_NONE))
@@ -668,7 +677,7 @@ efl_core_wayland_window_free(Efl_Core_Wayland_Window *window)
     Efl_Core_Wayland_Display    *display;
     Efl_Core_Wayland_Input      *input;
     Efl_Core_Wayland_Subsurface *subsurf;
-    Eina_Inlist         *tmp;
+    Eina_Inlist                 *tmp;
 
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -714,7 +723,8 @@ efl_core_wayland_window_free(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_move(Efl_Core_Wayland_Window *window, Efl_Core_Wayland_Input *input)
+efl_core_wayland_window_move(Efl_Core_Wayland_Window *window,
+                             Efl_Core_Wayland_Input  *input)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     EINA_SAFETY_ON_NULL_RETURN(window->display->inputs);
@@ -722,8 +732,8 @@ efl_core_wayland_window_move(Efl_Core_Wayland_Window *window, Efl_Core_Wayland_I
     if (!input)
     {
         ERR("NULL input parameter is deprecated");
-        input =
-            EINA_INLIST_CONTAINER_GET(window->display->inputs, Efl_Core_Wayland_Input);
+        input = EINA_INLIST_CONTAINER_GET(window->display->inputs,
+                                          Efl_Core_Wayland_Input);
     }
     if (window->xdg_toplevel)
         xdg_toplevel_move(window->xdg_toplevel,
@@ -740,8 +750,8 @@ efl_core_wayland_window_move(Efl_Core_Wayland_Window *window, Efl_Core_Wayland_I
 
 EAPI void
 efl_core_wayland_window_resize(Efl_Core_Wayland_Window *window,
-                       Efl_Core_Wayland_Input  *input,
-                       int              location)
+                               Efl_Core_Wayland_Input  *input,
+                               int                      location)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     EINA_SAFETY_ON_NULL_RETURN(window->display->inputs);
@@ -749,8 +759,8 @@ efl_core_wayland_window_resize(Efl_Core_Wayland_Window *window,
     if (!input)
     {
         ERR("NULL input parameter is deprecated");
-        input =
-            EINA_INLIST_CONTAINER_GET(window->display->inputs, Efl_Core_Wayland_Input);
+        input = EINA_INLIST_CONTAINER_GET(window->display->inputs,
+                                          Efl_Core_Wayland_Input);
     }
 
     if (window->xdg_toplevel)
@@ -777,7 +787,8 @@ efl_core_wayland_window_alpha_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_alpha_set(Efl_Core_Wayland_Window *window, Efl_Bool alpha)
+efl_core_wayland_window_alpha_set(Efl_Core_Wayland_Window *window,
+                                  Efl_Bool                 alpha)
 {
     Efl_Core_Wayland_Surface *surf;
 
@@ -787,15 +798,16 @@ efl_core_wayland_window_alpha_set(Efl_Core_Wayland_Window *window, Efl_Bool alph
 
     window->alpha = alpha;
     surf          = window->wl_surface;
-    if (surf) efl_core_wayland_surface_reconfigure(surf, surf->w, surf->h, 0, alpha);
+    if (surf)
+        efl_core_wayland_surface_reconfigure(surf, surf->w, surf->h, 0, alpha);
 }
 
 EAPI void
 efl_core_wayland_window_opaque_region_set(Efl_Core_Wayland_Window *window,
-                                  int              x,
-                                  int              y,
-                                  int              w,
-                                  int              h)
+                                          int                      x,
+                                          int                      y,
+                                          int                      w,
+                                          int                      h)
 {
     int nx = 0, ny = 0, nw = 0, nh = 0;
 
@@ -845,10 +857,10 @@ efl_core_wayland_window_opaque_region_set(Efl_Core_Wayland_Window *window,
 
 EAPI void
 efl_core_wayland_window_opaque_region_get(Efl_Core_Wayland_Window *window,
-                                  int             *x,
-                                  int             *y,
-                                  int             *w,
-                                  int             *h)
+                                          int                     *x,
+                                          int                     *y,
+                                          int                     *w,
+                                          int                     *h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -860,10 +872,10 @@ efl_core_wayland_window_opaque_region_get(Efl_Core_Wayland_Window *window,
 
 EAPI void
 efl_core_wayland_window_input_region_set(Efl_Core_Wayland_Window *window,
-                                 int              x,
-                                 int              y,
-                                 int              w,
-                                 int              h)
+                                         int                      x,
+                                         int                      y,
+                                         int                      w,
+                                         int                      h)
 {
     int nx = 0, ny = 0, nw = 0, nh = 0;
 
@@ -913,10 +925,10 @@ efl_core_wayland_window_input_region_set(Efl_Core_Wayland_Window *window,
 
 EAPI void
 efl_core_wayland_window_input_region_get(Efl_Core_Wayland_Window *window,
-                                 int             *x,
-                                 int             *y,
-                                 int             *w,
-                                 int             *h)
+                                         int                     *x,
+                                         int                     *y,
+                                         int                     *w,
+                                         int                     *h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -935,7 +947,8 @@ efl_core_wayland_window_maximized_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_maximized_set(Efl_Core_Wayland_Window *window, Efl_Bool maximized)
+efl_core_wayland_window_maximized_set(Efl_Core_Wayland_Window *window,
+                                      Efl_Bool                 maximized)
 {
     Efl_Bool prev;
 
@@ -981,7 +994,8 @@ efl_core_wayland_window_fullscreen_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_fullscreen_set(Efl_Core_Wayland_Window *window, Efl_Bool fullscreen)
+efl_core_wayland_window_fullscreen_set(Efl_Core_Wayland_Window *window,
+                                       Efl_Bool                 fullscreen)
 {
     Efl_Bool prev;
 
@@ -1027,7 +1041,8 @@ efl_core_wayland_window_rotation_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_rotation_set(Efl_Core_Wayland_Window *window, int rotation)
+efl_core_wayland_window_rotation_set(Efl_Core_Wayland_Window *window,
+                                     int                      rotation)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1035,7 +1050,8 @@ efl_core_wayland_window_rotation_set(Efl_Core_Wayland_Window *window, int rotati
 }
 
 EAPI void
-efl_core_wayland_window_title_set(Efl_Core_Wayland_Window *window, const char *title)
+efl_core_wayland_window_title_set(Efl_Core_Wayland_Window *window,
+                                  const char              *title)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1059,7 +1075,8 @@ efl_core_wayland_window_title_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_class_set(Efl_Core_Wayland_Window *window, const char *clas)
+efl_core_wayland_window_class_set(Efl_Core_Wayland_Window *window,
+                                  const char              *clas)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1084,10 +1101,10 @@ efl_core_wayland_window_class_get(Efl_Core_Wayland_Window *window)
 
 EAPI void
 efl_core_wayland_window_geometry_get(Efl_Core_Wayland_Window *window,
-                             int             *x,
-                             int             *y,
-                             int             *w,
-                             int             *h)
+                                     int                     *x,
+                                     int                     *y,
+                                     int                     *w,
+                                     int                     *h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1099,10 +1116,10 @@ efl_core_wayland_window_geometry_get(Efl_Core_Wayland_Window *window,
 
 EAPI void
 efl_core_wayland_window_geometry_set(Efl_Core_Wayland_Window *window,
-                             int              x,
-                             int              y,
-                             int              w,
-                             int              h)
+                                     int                      x,
+                                     int                      y,
+                                     int                      w,
+                                     int                      h)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1120,7 +1137,8 @@ efl_core_wayland_window_geometry_set(Efl_Core_Wayland_Window *window,
 }
 
 EAPI void
-efl_core_wayland_window_iconified_set(Efl_Core_Wayland_Window *window, Efl_Bool iconified)
+efl_core_wayland_window_iconified_set(Efl_Core_Wayland_Window *window,
+                                      Efl_Bool                 iconified)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1143,18 +1161,21 @@ efl_core_wayland_window_iconified_set(Efl_Core_Wayland_Window *window, Efl_Bool 
 }
 
 EAPI void
-efl_core_wayland_window_type_set(Efl_Core_Wayland_Window *window, Efl_Core_Wayland_Window_Type type)
+efl_core_wayland_window_type_set(Efl_Core_Wayland_Window     *window,
+                                 Efl_Core_Wayland_Window_Type type)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->type = type;
 }
 
 EAPI void
-efl_core_wayland_window_popup_input_set(Efl_Core_Wayland_Window *window, Efl_Core_Wayland_Input *input)
+efl_core_wayland_window_popup_input_set(Efl_Core_Wayland_Window *window,
+                                        Efl_Core_Wayland_Input  *input)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     EINA_SAFETY_ON_NULL_RETURN(input);
-    EINA_SAFETY_ON_TRUE_RETURN(window->type != EFL_CORE_WAYLAND_WINDOW_TYPE_MENU);
+    EINA_SAFETY_ON_TRUE_RETURN(window->type !=
+                               EFL_CORE_WAYLAND_WINDOW_TYPE_MENU);
     window->grab = input;
 }
 
@@ -1200,7 +1221,8 @@ efl_core_wayland_window_output_find(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_buffer_transform_set(Efl_Core_Wayland_Window *window, int transform)
+efl_core_wayland_window_buffer_transform_set(Efl_Core_Wayland_Window *window,
+                                             int                      transform)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1208,22 +1230,25 @@ efl_core_wayland_window_buffer_transform_set(Efl_Core_Wayland_Window *window, in
 }
 
 EAPI void
-efl_core_wayland_window_wm_rotation_supported_set(Efl_Core_Wayland_Window *window,
-                                          Efl_Bool         enabled)
+efl_core_wayland_window_wm_rotation_supported_set(
+    Efl_Core_Wayland_Window *window,
+    Efl_Bool                 enabled)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->wm_rot.supported = enabled;
 }
 
 EAPI Efl_Bool
-efl_core_wayland_window_wm_rotation_supported_get(Efl_Core_Wayland_Window *window)
+efl_core_wayland_window_wm_rotation_supported_get(
+    Efl_Core_Wayland_Window *window)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(window, EFL_FALSE);
     return window->wm_rot.supported;
 }
 
 EAPI void
-efl_core_wayland_window_rotation_app_set(Efl_Core_Wayland_Window *window, Efl_Bool set)
+efl_core_wayland_window_rotation_app_set(Efl_Core_Wayland_Window *window,
+                                         Efl_Bool                 set)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->wm_rot.app_set = set;
@@ -1237,7 +1262,8 @@ efl_core_wayland_window_rotation_app_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_preferred_rotation_set(Efl_Core_Wayland_Window *window, int rot)
+efl_core_wayland_window_preferred_rotation_set(Efl_Core_Wayland_Window *window,
+                                               int                      rot)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->wm_rot.preferred_rot = rot;
@@ -1252,8 +1278,8 @@ efl_core_wayland_window_preferred_rotation_get(Efl_Core_Wayland_Window *window)
 
 EAPI void
 efl_core_wayland_window_available_rotations_set(Efl_Core_Wayland_Window *window,
-                                        const int       *rots,
-                                        unsigned int     count)
+                                                const int               *rots,
+                                                unsigned int             count)
 {
     unsigned int i = 0;
     EINA_SAFETY_ON_NULL_RETURN(window);
@@ -1277,8 +1303,8 @@ efl_core_wayland_window_available_rotations_set(Efl_Core_Wayland_Window *window,
 
 EAPI Efl_Bool
 efl_core_wayland_window_available_rotations_get(Efl_Core_Wayland_Window *window,
-                                        int            **rots,
-                                        unsigned int    *count)
+                                                int                    **rots,
+                                                unsigned int            *count)
 {
     unsigned int i   = 0;
     int         *val = NULL;
@@ -1304,17 +1330,19 @@ efl_core_wayland_window_available_rotations_get(Efl_Core_Wayland_Window *window,
 }
 
 EAPI void
-efl_core_wayland_window_rotation_change_prepare_send(Efl_Core_Wayland_Window *window,
-                                             int              rot,
-                                             int              w,
-                                             int              h,
-                                             Efl_Bool         resize)
+efl_core_wayland_window_rotation_change_prepare_send(
+    Efl_Core_Wayland_Window *window,
+    int                      rot,
+    int                      w,
+    int                      h,
+    Efl_Bool                 resize)
 {
     Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare *ev;
 
     EINA_SAFETY_ON_NULL_RETURN(window);
 
-    ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare));
+    ev = calloc(1,
+                sizeof(Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare));
     if (!ev) return;
 
     ev->win      = window;
@@ -1330,14 +1358,17 @@ efl_core_wayland_window_rotation_change_prepare_send(Efl_Core_Wayland_Window *wi
 }
 
 EAPI void
-efl_core_wayland_window_rotation_change_prepare_done_send(Efl_Core_Wayland_Window *window,
-                                                  int              rot)
+efl_core_wayland_window_rotation_change_prepare_done_send(
+    Efl_Core_Wayland_Window *window,
+    int                      rot)
 {
     Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare_Done *ev;
 
     EINA_SAFETY_ON_NULL_RETURN(window);
 
-    ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare_Done));
+    ev = calloc(
+        1,
+        sizeof(Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare_Done));
     if (!ev) return;
 
     ev->win      = window;
@@ -1353,13 +1384,16 @@ efl_core_wayland_window_rotation_change_prepare_done_send(Efl_Core_Wayland_Windo
 }
 
 EAPI void
-efl_core_wayland_window_rotation_change_request_send(Efl_Core_Wayland_Window *window, int rot)
+efl_core_wayland_window_rotation_change_request_send(
+    Efl_Core_Wayland_Window *window,
+    int                      rot)
 {
     Efl_Core_Wayland_Event_Window_Rotation_Change_Request *ev;
 
     EINA_SAFETY_ON_NULL_RETURN(window);
 
-    ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Window_Rotation_Change_Request));
+    ev = calloc(1,
+                sizeof(Efl_Core_Wayland_Event_Window_Rotation_Change_Request));
     if (!ev) return;
 
     ev->win      = window;
@@ -1375,10 +1409,11 @@ efl_core_wayland_window_rotation_change_request_send(Efl_Core_Wayland_Window *wi
 }
 
 EAPI void
-efl_core_wayland_window_rotation_change_done_send(Efl_Core_Wayland_Window *window,
-                                          int              rot,
-                                          int              w,
-                                          int              h)
+efl_core_wayland_window_rotation_change_done_send(
+    Efl_Core_Wayland_Window *window,
+    int                      rot,
+    int                      w,
+    int                      h)
 {
     Efl_Core_Wayland_Event_Window_Rotation_Change_Done *ev;
 
@@ -1393,7 +1428,10 @@ efl_core_wayland_window_rotation_change_done_send(Efl_Core_Wayland_Window *windo
     ev->h        = h;
     ev->resize   = 0;
 
-    core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE, ev, NULL, NULL);
+    core_event_add(EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE,
+                   ev,
+                   NULL,
+                   NULL);
 }
 
 EAPI Eina_List *
@@ -1417,9 +1455,9 @@ efl_core_wayland_window_aux_hints_supported_get(Efl_Core_Wayland_Window *win)
 
 EAPI void
 efl_core_wayland_window_aux_hint_add(Efl_Core_Wayland_Window *win,
-                             int              id,
-                             const char      *hint,
-                             const char      *val)
+                                     int                      id,
+                                     const char              *hint,
+                                     const char              *val)
 {
     if (!win) return;
     if ((!win->surface) || (!win->display->wl.efl_aux_hints)) return;
@@ -1433,7 +1471,9 @@ efl_core_wayland_window_aux_hint_add(Efl_Core_Wayland_Window *win,
 }
 
 EAPI void
-efl_core_wayland_window_aux_hint_change(Efl_Core_Wayland_Window *win, int id, const char *val)
+efl_core_wayland_window_aux_hint_change(Efl_Core_Wayland_Window *win,
+                                        int                      id,
+                                        const char              *val)
 {
     if (!win) return;
     if ((!win->surface) && (!win->display->wl.efl_aux_hints)) return;
@@ -1458,7 +1498,8 @@ efl_core_wayland_window_aux_hint_del(Efl_Core_Wayland_Window *win, int id)
 }
 
 EAPI void
-efl_core_wayland_window_focus_skip_set(Efl_Core_Wayland_Window *window, Efl_Bool focus_skip)
+efl_core_wayland_window_focus_skip_set(Efl_Core_Wayland_Window *window,
+                                       Efl_Bool                 focus_skip)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->focus_skip = focus_skip;
@@ -1472,7 +1513,8 @@ efl_core_wayland_window_focus_skip_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_role_set(Efl_Core_Wayland_Window *window, const char *role)
+efl_core_wayland_window_role_set(Efl_Core_Wayland_Window *window,
+                                 const char              *role)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     eina_stringshare_replace(&window->role, role);
@@ -1487,7 +1529,8 @@ efl_core_wayland_window_role_get(Efl_Core_Wayland_Window *window)
 }
 
 EAPI void
-efl_core_wayland_window_floating_mode_set(Efl_Core_Wayland_Window *window, Efl_Bool floating)
+efl_core_wayland_window_floating_mode_set(Efl_Core_Wayland_Window *window,
+                                          Efl_Bool                 floating)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     window->floating = floating;
@@ -1502,9 +1545,9 @@ efl_core_wayland_window_floating_mode_get(Efl_Core_Wayland_Window *window)
 
 EAPI void
 efl_core_wayland_window_aspect_set(Efl_Core_Wayland_Window *window,
-                           int              w,
-                           int              h,
-                           unsigned int     aspect)
+                                   int                      w,
+                                   int                      h,
+                                   unsigned int             aspect)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
     EINA_SAFETY_ON_TRUE_RETURN(w < 1);
@@ -1530,9 +1573,9 @@ efl_core_wayland_window_aspect_set(Efl_Core_Wayland_Window *window,
 
 EAPI void
 efl_core_wayland_window_aspect_get(Efl_Core_Wayland_Window *window,
-                           int             *w,
-                           int             *h,
-                           unsigned int    *aspect)
+                                   int                     *w,
+                                   int                     *h,
+                                   unsigned int            *aspect)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 
@@ -1542,7 +1585,9 @@ efl_core_wayland_window_aspect_get(Efl_Core_Wayland_Window *window,
 }
 
 EAPI void
-efl_core_wayland_window_weight_set(Efl_Core_Wayland_Window *window, double w, double h)
+efl_core_wayland_window_weight_set(Efl_Core_Wayland_Window *window,
+                                   double                   w,
+                                   double                   h)
 {
     int ww, hh;
     EINA_SAFETY_ON_NULL_RETURN(window);
@@ -1569,7 +1614,7 @@ _frame_cb(void *data, struct wl_callback *callback, uint32_t timestamp)
 {
     Efl_Core_Wayland_Frame_Cb_Handle *cb;
     Efl_Core_Wayland_Window          *window;
-    Eina_Inlist              *l;
+    Eina_Inlist                      *l;
 
     window                 = data;
     window->commit_pending = EFL_FALSE;
@@ -1793,8 +1838,8 @@ efl_core_wayland_window_pending_get(Efl_Core_Wayland_Window *window)
 
 EAPI Efl_Core_Wayland_Frame_Cb_Handle *
 efl_core_wayland_window_frame_callback_add(Efl_Core_Wayland_Window  *window,
-                                   Efl_Core_Wayland_Frame_Cb cb,
-                                   void             *data)
+                                           Efl_Core_Wayland_Frame_Cb cb,
+                                           void                     *data)
 {
     Efl_Core_Wayland_Frame_Cb_Handle *callback;
 
@@ -1812,7 +1857,8 @@ efl_core_wayland_window_frame_callback_add(Efl_Core_Wayland_Window  *window,
 }
 
 EAPI void
-efl_core_wayland_window_frame_callback_del(Efl_Core_Wayland_Frame_Cb_Handle *handle)
+efl_core_wayland_window_frame_callback_del(
+    Efl_Core_Wayland_Frame_Cb_Handle *handle)
 {
     EINA_SAFETY_ON_NULL_RETURN(handle);
 
@@ -1824,10 +1870,10 @@ efl_core_wayland_window_frame_callback_del(Efl_Core_Wayland_Frame_Cb_Handle *han
 
 EAPI void
 efl_core_wayland_window_buffer_attach(Efl_Core_Wayland_Window *win,
-                              void            *buffer,
-                              int              x,
-                              int              y,
-                              Efl_Bool         implicit)
+                                      void                    *buffer,
+                                      int                      x,
+                                      int                      y,
+                                      Efl_Bool                 implicit)
 {
     EINA_SAFETY_ON_NULL_RETURN(win);
     EINA_SAFETY_ON_NULL_RETURN(win->surface);
@@ -1858,8 +1904,8 @@ efl_core_wayland_window_update_begin(Efl_Core_Wayland_Window *window)
 
 EAPI void
 efl_core_wayland_window_damage(Efl_Core_Wayland_Window *window,
-                       Eina_Rectangle  *rects,
-                       unsigned int     count)
+                               Eina_Rectangle          *rects,
+                               unsigned int             count)
 {
     void (*damage)(struct wl_surface *, int32_t, int32_t, int32_t, int32_t);
     unsigned int k;
@@ -1884,7 +1930,8 @@ efl_core_wayland_window_damage(Efl_Core_Wayland_Window *window,
 }
 
 EAPI void
-efl_core_wayland_window_surface_flush(Efl_Core_Wayland_Window *window, Efl_Bool purge)
+efl_core_wayland_window_surface_flush(Efl_Core_Wayland_Window *window,
+                                      Efl_Bool                 purge)
 {
     EINA_SAFETY_ON_NULL_RETURN(window);
 

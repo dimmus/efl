@@ -130,14 +130,16 @@ _efl_core_wayland_surface_modules_unload(void)
 EAPI int
 efl_core_wayland_init(void)
 {
-    if (++_efl_core_wayland_init_count != 1) return _efl_core_wayland_init_count;
+    if (++_efl_core_wayland_init_count != 1)
+        return _efl_core_wayland_init_count;
 
    /* try to initialize Eina */
     if (!eina_init()) return --_efl_core_wayland_init_count;
 
    /* try to create Eina logging domain */
     _efl_core_wayland_log_dom =
-        eina_log_domain_register("efl_core_wl", EFL_CORE_WAYLAND_DEFAULT_LOG_COLOR);
+        eina_log_domain_register("efl_core_wl",
+                                 EFL_CORE_WAYLAND_DEFAULT_LOG_COLOR);
     if (_efl_core_wayland_log_dom < 0)
     {
         EINA_LOG_ERR("Cannot create a log domain for EFl_Core_Wl");
@@ -165,52 +167,55 @@ efl_core_wayland_init(void)
     }
 
     /* handle creating new Efl_Core_Wayland event types */
-    EFL_CORE_WAYLAND_EVENT_CONNECT                             = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DISCONNECT                          = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_GLOBAL_ADDED                        = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_GLOBAL_REMOVED                      = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_FOCUS_IN                            = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_FOCUS_OUT                           = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DND_ENTER                           = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DND_LEAVE                           = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DND_MOTION                          = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DND_DROP                            = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DND_END                             = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END                     = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_DROP                    = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_ACTION                  = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_TARGET                  = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_SEND                    = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE                    = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_SYNC_DONE                           = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY                    = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED                   = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED           = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED                        = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED                      = core_event_type_new();
-    _efl_core_wayland_event_window_www                          = core_event_type_new();
-    _efl_core_wayland_event_window_www_drag                     = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE           = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED                 = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED        = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION                      = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM                    = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE                       = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE      = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST      = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE         = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED                    = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED                  = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE                         = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW                         = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE                         = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE                     = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE                   = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE         = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN                    = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE                       = core_event_type_new();
-    EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY                      = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_CONNECT                      = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DISCONNECT                   = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_GLOBAL_ADDED                 = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_GLOBAL_REMOVED               = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_FOCUS_IN                     = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_FOCUS_OUT                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_ENTER                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_LEAVE                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_MOTION                   = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_DROP                     = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DND_END                      = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END              = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_DROP             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_ACTION           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_TARGET           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_SEND             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SYNC_DONE                    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED            = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED                 = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED               = core_event_type_new();
+    _efl_core_wayland_event_window_www                  = core_event_type_new();
+    _efl_core_wayland_event_window_www_drag             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE    = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED          = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION               = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE                = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE =
+        core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE =
+        core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST =
+        core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED            = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED          = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE                 = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW                 = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE                 = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE             = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE           = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN            = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE               = core_event_type_new();
+    EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY              = core_event_type_new();
 
     if (!no_session_recovery)
         no_session_recovery = !!getenv("EFL_NO_WAYLAND_SESSION_RECOVERY");
@@ -238,57 +243,60 @@ efl_core_wayland_shutdown(void)
 {
     if (_efl_core_wayland_init_count < 1)
     {
-        EINA_LOG_ERR("Efl_Core_Wayland shutdown called without Efl_Core_Wayland Init");
+        EINA_LOG_ERR(
+            "Efl_Core_Wayland shutdown called without Efl_Core_Wayland Init");
         return 0;
     }
 
-    if (--_efl_core_wayland_init_count != 0) return _efl_core_wayland_init_count;
+    if (--_efl_core_wayland_init_count != 0)
+        return _efl_core_wayland_init_count;
 
    /* reset events */
-    core_event_type_flush(EFL_CORE_WAYLAND_EVENT_CONNECT,
-                          EFL_CORE_WAYLAND_EVENT_DISCONNECT,
-                          EFL_CORE_WAYLAND_EVENT_GLOBAL_ADDED,
-                          EFL_CORE_WAYLAND_EVENT_GLOBAL_REMOVED,
-                          EFL_CORE_WAYLAND_EVENT_FOCUS_IN,
-                          EFL_CORE_WAYLAND_EVENT_FOCUS_OUT,
-                          EFL_CORE_WAYLAND_EVENT_DND_ENTER,
-                          EFL_CORE_WAYLAND_EVENT_DND_LEAVE,
-                          EFL_CORE_WAYLAND_EVENT_DND_MOTION,
-                          EFL_CORE_WAYLAND_EVENT_DND_DROP,
-                          EFL_CORE_WAYLAND_EVENT_DND_END,
-                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END,
-                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_DROP,
-                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_ACTION,
-                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_TARGET,
-                          EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_SEND,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE,
-                          EFL_CORE_WAYLAND_EVENT_SYNC_DONE,
-                          EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY,
-                          EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED,
-                          EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED,
-                          EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED,
-                          EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE,
-                          EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED,
-                          EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED,
-                          EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION,
-                          EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE,
-                          EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED,
-                          EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED,
-                          EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE,
-                          EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY);
+    core_event_type_flush(
+        EFL_CORE_WAYLAND_EVENT_CONNECT,
+        EFL_CORE_WAYLAND_EVENT_DISCONNECT,
+        EFL_CORE_WAYLAND_EVENT_GLOBAL_ADDED,
+        EFL_CORE_WAYLAND_EVENT_GLOBAL_REMOVED,
+        EFL_CORE_WAYLAND_EVENT_FOCUS_IN,
+        EFL_CORE_WAYLAND_EVENT_FOCUS_OUT,
+        EFL_CORE_WAYLAND_EVENT_DND_ENTER,
+        EFL_CORE_WAYLAND_EVENT_DND_LEAVE,
+        EFL_CORE_WAYLAND_EVENT_DND_MOTION,
+        EFL_CORE_WAYLAND_EVENT_DND_DROP,
+        EFL_CORE_WAYLAND_EVENT_DND_END,
+        EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_END,
+        EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_DROP,
+        EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_ACTION,
+        EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_TARGET,
+        EFL_CORE_WAYLAND_EVENT_DATA_SOURCE_SEND,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE,
+        EFL_CORE_WAYLAND_EVENT_SYNC_DONE,
+        EFL_CORE_WAYLAND_EVENT_OFFER_DATA_READY,
+        EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED,
+        EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED,
+        EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED,
+        EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE,
+        EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED,
+        EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED,
+        EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION,
+        EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE,
+        EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED,
+        EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED,
+        EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE,
+        EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY);
 
    /* shutdown Ecore_Event */
     core_event_shutdown();

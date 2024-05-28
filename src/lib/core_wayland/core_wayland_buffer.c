@@ -53,8 +53,8 @@ struct dma_buf_sync
 static int drm_fd = -1;
 
 typedef struct _Efl_Core_Wayland_Buffer Efl_Core_Wayland_Buffer;
-typedef struct _Buffer_Handle   Buffer_Handle;
-typedef struct _Buffer_Manager  Buffer_Manager;
+typedef struct _Buffer_Handle           Buffer_Handle;
+typedef struct _Buffer_Manager          Buffer_Manager;
 
 struct _Buffer_Manager
 {
@@ -64,7 +64,8 @@ struct _Buffer_Manager
                             int             h,
                             unsigned long  *stride,
                             int32_t        *fd);
-    struct wl_buffer *(*to_buffer)(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer *db);
+    struct wl_buffer *(*to_buffer)(Efl_Core_Wayland_Display *ewd,
+                                   Efl_Core_Wayland_Buffer  *db);
     void *(*map)(Efl_Core_Wayland_Buffer *buf);
     void (*unmap)(Efl_Core_Wayland_Buffer *buf);
     void (*discard)(Efl_Core_Wayland_Buffer *buf);
@@ -119,7 +120,8 @@ buffer_release(void *data, struct wl_buffer *buffer EFL_UNUSED)
 static const struct wl_buffer_listener buffer_listener = { buffer_release };
 
 static struct wl_buffer *
-_evas_dmabuf_wl_buffer_from_dmabuf(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer *db)
+_evas_dmabuf_wl_buffer_from_dmabuf(Efl_Core_Wayland_Display *ewd,
+                                   Efl_Core_Wayland_Buffer  *db)
 {
     struct wl_buffer                  *buf;
     struct zwp_linux_dmabuf_v1        *dmabuf;
@@ -648,10 +650,12 @@ err:
 }
 
 EAPI Efl_Bool
-efl_core_wayland_buffer_init(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer_Type types)
+efl_core_wayland_buffer_init(Efl_Core_Wayland_Display    *ewd,
+                             Efl_Core_Wayland_Buffer_Type types)
 {
-    int      fd      = -1;
-    Efl_Bool dmabuf  = ewd->wl.dmabuf && (types & EFL_CORE_WAYLAND_BUFFER_DMABUF);
+    int      fd = -1;
+    Efl_Bool dmabuf =
+        ewd->wl.dmabuf && (types & EFL_CORE_WAYLAND_BUFFER_DMABUF);
     Efl_Bool shm     = ewd->wl.shm && (types & EFL_CORE_WAYLAND_BUFFER_SHM);
     Efl_Bool success = EFL_FALSE;
 
@@ -742,7 +746,10 @@ efl_core_wayland_buffer_wl_buffer_get(Efl_Core_Wayland_Buffer *buf)
 }
 
 EAPI void *
-efl_core_wayland_buffer_map(Efl_Core_Wayland_Buffer *buf, int *w, int *h, int *stride)
+efl_core_wayland_buffer_map(Efl_Core_Wayland_Buffer *buf,
+                            int                     *w,
+                            int                     *h,
+                            int                     *stride)
 {
     void *out;
 
@@ -913,7 +920,10 @@ _efl_core_wayland_buffer_partial_create(int w, int h, Efl_Bool alpha)
 }
 
 EAPI Efl_Core_Wayland_Buffer *
-efl_core_wayland_buffer_create(Efl_Core_Wayland_Display *ewd, int w, int h, Efl_Bool alpha)
+efl_core_wayland_buffer_create(Efl_Core_Wayland_Display *ewd,
+                               int                       w,
+                               int                       h,
+                               Efl_Bool                  alpha)
 {
     Efl_Core_Wayland_Buffer *out;
 
@@ -953,9 +963,10 @@ void
 _efl_core_wayland_buffer_test(Efl_Core_Wayland_Display *ewd)
 {
     struct zwp_linux_buffer_params_v1 *dp;
-    Efl_Core_Wayland_Buffer                   *buf;
+    Efl_Core_Wayland_Buffer           *buf;
 
-    if (!efl_core_wayland_buffer_init(ewd, EFL_CORE_WAYLAND_BUFFER_DMABUF)) return;
+    if (!efl_core_wayland_buffer_init(ewd, EFL_CORE_WAYLAND_BUFFER_DMABUF))
+        return;
 
     buf = _efl_core_wayland_buffer_partial_create(1, 1, EFL_TRUE);
     if (!buf) goto fail;

@@ -5,7 +5,7 @@ EFL_START_TEST(core_wayland_input_seat_get)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -30,7 +30,7 @@ EFL_START_TEST(core_wayland_input_seat_id_get)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -55,7 +55,7 @@ EFL_START_TEST(core_wayland_input_display_get)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -77,7 +77,7 @@ EFL_START_TEST(core_wayland_input_keymap_get)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -101,7 +101,7 @@ EFL_START_TEST(core_wayland_input_name_get)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -124,16 +124,17 @@ _test_input_seat_capa_configure_complete(void       *data,
                                          int type    EFL_UNUSED,
                                          void *event EFL_UNUSED)
 {
-    Test_Data      *td = data;
+    Test_Data              *td = data;
     Efl_Core_Wayland_Input *input;
-    Eina_Iterator  *itr;
+    Eina_Iterator          *itr;
 
     itr = efl_core_wayland_display_inputs_get(td->display);
     ck_assert(itr != NULL);
 
     EINA_ITERATOR_FOREACH(itr, input)
     {
-        Efl_Core_Wayland_Seat_Capabilities cap = EFL_CORE_WAYLAND_SEAT_CAPABILITIES_NONE;
+        Efl_Core_Wayland_Seat_Capabilities cap =
+            EFL_CORE_WAYLAND_SEAT_CAPABILITIES_NONE;
 
         cap = efl_core_wayland_input_seat_capabilities_get(input);
         ck_assert(cap != EFL_CORE_WAYLAND_SEAT_CAPABILITIES_NONE);
@@ -181,7 +182,7 @@ EFL_START_TEST(core_wayland_input_pointer_xy)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -211,7 +212,7 @@ EFL_START_TEST(core_wayland_input_keyboard_repeat)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -242,7 +243,7 @@ EFL_START_TEST(core_wayland_input_cursor_from_name_set)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -270,7 +271,7 @@ EFL_START_TEST(core_wayland_input_pointer_set)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);

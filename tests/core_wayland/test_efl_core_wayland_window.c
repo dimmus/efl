@@ -27,10 +27,10 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_window_surface_test)
 {
-    Efl_Core_Wayland_Display  *disp;
-    Efl_Core_Wayland_Window   *win;
-    struct wl_surface *surf;
-    int                id = -1;
+    Efl_Core_Wayland_Display *disp;
+    Efl_Core_Wayland_Window  *win;
+    struct wl_surface        *surf;
+    int                       id = -1;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -53,7 +53,7 @@ EFL_START_TEST(core_wayland_window_rotation)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    int               rot = -1;
+    int                       rot = -1;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -92,7 +92,7 @@ EFL_START_TEST(core_wayland_window_alpha)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          alpha = EFL_FALSE;
+    Efl_Bool                  alpha = EFL_FALSE;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -112,7 +112,7 @@ EFL_START_TEST(core_wayland_window_floating_mode)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          f = EFL_FALSE;
+    Efl_Bool                  f = EFL_FALSE;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -132,7 +132,7 @@ EFL_START_TEST(core_wayland_window_focus_skip)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          skip = EFL_FALSE;
+    Efl_Bool                  skip = EFL_FALSE;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -152,7 +152,7 @@ EFL_START_TEST(core_wayland_window_fullscreen)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          full = EFL_FALSE;
+    Efl_Bool                  full = EFL_FALSE;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -172,7 +172,7 @@ EFL_START_TEST(core_wayland_window_maximize)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          m = EFL_FALSE;
+    Efl_Bool                  m = EFL_FALSE;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -192,7 +192,7 @@ EFL_START_TEST(core_wayland_window_preferred_rot)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    int               rot = 0;
+    int                       rot = 0;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -212,7 +212,7 @@ EFL_START_TEST(core_wayland_window_rotation_app)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          r = EFL_FALSE;
+    Efl_Bool                  r = EFL_FALSE;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -232,7 +232,7 @@ EFL_START_TEST(core_wayland_wm_window_rotation_app)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          r = EFL_FALSE;
+    Efl_Bool                  r = EFL_FALSE;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -252,7 +252,7 @@ EFL_START_TEST(core_wayland_window_geometry)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    int               x, y, w, h;
+    int                       x, y, w, h;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -284,7 +284,8 @@ EFL_START_TEST(core_wayland_window_type)
     win = _window_create(disp);
     ck_assert(win != NULL);
 
-    efl_core_wayland_window_type_set(win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     type = efl_core_wayland_window_type_get(win);
     fail_if(type != EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
@@ -295,8 +296,8 @@ EFL_END_TEST
 #ifdef GL_GLES
 static void
 _test_activated_frame_cb(Efl_Core_Wayland_Window *win EFL_UNUSED,
-                         uint32_t timestamp   EFL_UNUSED,
-                         void                *data)
+                         uint32_t timestamp           EFL_UNUSED,
+                         void                        *data)
 {
     Test_Data *td = data;
 
@@ -324,8 +325,8 @@ _test_activated_configure_complete(void       *data,
 
     td->frame_callback_handler =
         efl_core_wayland_window_frame_callback_add(td->win,
-                                           _test_activated_frame_cb,
-                                           td);
+                                                   _test_activated_frame_cb,
+                                                   td);
     efl_core_wayland_window_commit(td->win, EFL_TRUE);
 
     return CORE_CALLBACK_PASS_ON;
@@ -360,7 +361,8 @@ EFL_START_TEST(core_wayland_window_activated)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
@@ -399,8 +401,8 @@ EFL_START_TEST(core_wayland_window_aspect)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    int               w, h;
-    unsigned int      aspect;
+    int                       w, h;
+    unsigned int              aspect;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -422,7 +424,7 @@ EFL_START_TEST(core_wayland_window_title)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    const char       *title;
+    const char               *title;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -462,10 +464,10 @@ EFL_START_TEST(core_wayland_window_available_rotation)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          ret;
-    int               rots[2] = { 90, 180 };
-    int              *ret_rots;
-    unsigned int      ret_count;
+    Efl_Bool                  ret;
+    int                       rots[2] = { 90, 180 };
+    int                      *ret_rots;
+    unsigned int              ret_count;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -475,7 +477,9 @@ EFL_START_TEST(core_wayland_window_available_rotation)
 
     efl_core_wayland_window_available_rotations_set(win, rots, 2);
 
-    ret = efl_core_wayland_window_available_rotations_get(win, &ret_rots, &ret_count);
+    ret = efl_core_wayland_window_available_rotations_get(win,
+                                                          &ret_rots,
+                                                          &ret_count);
 
     fail_if(ret != EFL_TRUE);
     fail_if(ret_rots[0] != 90);
@@ -491,7 +495,7 @@ EFL_START_TEST(core_wayland_window_role)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    const char       *role;
+    const char               *role;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -511,7 +515,7 @@ EFL_START_TEST(core_wayland_window_input_region)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    int               x, y, w, h;
+    int                       x, y, w, h;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -534,7 +538,7 @@ EFL_START_TEST(core_wayland_window_opaque_region)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    int               x, y, w, h;
+    int                       x, y, w, h;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -558,7 +562,7 @@ EFL_START_TEST(core_wayland_window_popup_input)
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
     Efl_Core_Wayland_Input   *input;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -589,8 +593,8 @@ EFL_END_TEST
 
 static void
 _test_commit_frame_cb(Efl_Core_Wayland_Window *win EFL_UNUSED,
-                      uint32_t timestamp   EFL_UNUSED,
-                      void                *data)
+                      uint32_t timestamp           EFL_UNUSED,
+                      void                        *data)
 {
     Test_Data *td = data;
     td->frame_callback_count++;
@@ -605,7 +609,9 @@ _test_commit_configure_complete(void       *data,
     Test_Data *td = data;
 
     td->frame_callback_handler =
-        efl_core_wayland_window_frame_callback_add(td->win, _test_commit_frame_cb, td);
+        efl_core_wayland_window_frame_callback_add(td->win,
+                                                   _test_commit_frame_cb,
+                                                   td);
     efl_core_wayland_window_commit(td->win, EFL_TRUE);
 
     return CORE_CALLBACK_PASS_ON;
@@ -628,7 +634,8 @@ EFL_START_TEST(core_wayland_window_commit)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
@@ -653,8 +660,8 @@ EFL_END_TEST
 
 static void
 _test_frame_callback_frame_cb(Efl_Core_Wayland_Window *win EFL_UNUSED,
-                              uint32_t timestamp   EFL_UNUSED,
-                              void                *data)
+                              uint32_t timestamp           EFL_UNUSED,
+                              void                        *data)
 {
     Test_Data *td = data;
     td->frame_callback_count++;
@@ -673,10 +680,10 @@ _test_frame_callback_configure_complete(void       *data,
 {
     Test_Data *td = data;
 
-    td->frame_callback_handler =
-        efl_core_wayland_window_frame_callback_add(td->win,
-                                           _test_frame_callback_frame_cb,
-                                           td);
+    td->frame_callback_handler = efl_core_wayland_window_frame_callback_add(
+        td->win,
+        _test_frame_callback_frame_cb,
+        td);
     efl_core_wayland_window_commit(td->win, EFL_TRUE);
 
     return CORE_CALLBACK_PASS_ON;
@@ -699,7 +706,8 @@ EFL_START_TEST(core_wayland_window_frame_callback)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
@@ -726,7 +734,7 @@ EFL_END_TEST
 EFL_START_TEST(core_wayland_window_free)
 {
     Efl_Core_Wayland_Window *t_win;
-    Test_Data       *td;
+    Test_Data               *td;
 
     efl_core_wayland_init();
 
@@ -738,19 +746,22 @@ EFL_START_TEST(core_wayland_window_free)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
 
     efl_core_wayland_window_show(td->win);
 
-    t_win = efl_core_wayland_display_window_find_by_surface(td->display, td->surface);
+    t_win = efl_core_wayland_display_window_find_by_surface(td->display,
+                                                            td->surface);
 
     fail_if(td->win != t_win);
 
     efl_core_wayland_window_free(td->win);
-    t_win = efl_core_wayland_display_window_find_by_surface(td->display, td->surface);
+    t_win = efl_core_wayland_display_window_find_by_surface(td->display,
+                                                            td->surface);
 
     //Check the returned window with freed window.
     fail_if(td->win == t_win);
@@ -789,7 +800,8 @@ EFL_START_TEST(core_wayland_window_hide)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
@@ -826,7 +838,8 @@ EFL_START_TEST(core_wayland_window_shell_surface_exists)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
@@ -870,7 +883,8 @@ EFL_START_TEST(core_wayland_window_show)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
@@ -932,7 +946,8 @@ EFL_START_TEST(core_wayland_window_update_begin)
     td->win = _window_create(td->display);
     ck_assert(td->win != NULL);
 
-    efl_core_wayland_window_type_set(td->win, EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
+    efl_core_wayland_window_type_set(td->win,
+                                     EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL);
 
     td->surface = _surface_get(td->win);
     ck_assert(td->surface != NULL);
@@ -995,7 +1010,7 @@ EFL_START_TEST(core_wayland_window_resizing_get)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Window  *win;
-    Efl_Bool          ret;
+    Efl_Bool                  ret;
 
     disp = _display_connect();
     ck_assert(disp != NULL);

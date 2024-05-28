@@ -46,15 +46,15 @@
 typedef struct _Efl_Core_Wayland_Mouse_Down_Info
 {
     EINA_INLIST;
-    int              device, sx, sy;
+    int                      device, sx, sy;
     Efl_Core_Wayland_Window *last_win;
     Efl_Core_Wayland_Window *last_last_win;
     Efl_Core_Wayland_Window *last_event_win;
     Efl_Core_Wayland_Window *last_last_event_win;
-    unsigned int     last_time;
-    unsigned int     last_last_time;
-    Efl_Bool         double_click : 1;
-    Efl_Bool         triple_click : 1;
+    unsigned int             last_time;
+    unsigned int             last_last_time;
+    Efl_Bool                 double_click : 1;
+    Efl_Bool                 triple_click : 1;
 } Efl_Core_Wayland_Mouse_Down_Info;
 
 static Eina_Inlist *_efl_core_wayland_mouse_down_info_list = NULL;
@@ -69,7 +69,7 @@ static void _keyboard_cb_key(void                        *data,
 static Efl_Core_Wayland_Mouse_Down_Info *
 _efl_core_wayland_input_mouse_down_info_get(int device)
 {
-    Eina_Inlist              *l    = NULL;
+    Eina_Inlist                      *l    = NULL;
     Efl_Core_Wayland_Mouse_Down_Info *info = NULL;
 
     l = _efl_core_wayland_mouse_down_info_list;
@@ -79,8 +79,8 @@ _efl_core_wayland_input_mouse_down_info_get(int device)
     info = calloc(1, sizeof(Efl_Core_Wayland_Mouse_Down_Info));
     if (!info) return NULL;
 
-    info->device                   = device;
-    l                              = eina_inlist_append(l, (Eina_Inlist *)info);
+    info->device = device;
+    l            = eina_inlist_append(l, (Eina_Inlist *)info);
     _efl_core_wayland_mouse_down_info_list = l;
 
     return info;
@@ -88,10 +88,10 @@ _efl_core_wayland_input_mouse_down_info_get(int device)
 
 static Efl_Core_Wayland_Input_Devices *
 _efl_core_wayland_devices_get(const Efl_Core_Wayland_Input  *input,
-                      const Efl_Core_Wayland_Window *window)
+                              const Efl_Core_Wayland_Window *window)
 {
     Efl_Core_Wayland_Input_Devices *devices;
-    Eina_List              *l;
+    Eina_List                      *l;
 
     EINA_LIST_FOREACH(input->devices_list, l, devices)
     {
@@ -102,7 +102,8 @@ _efl_core_wayland_devices_get(const Efl_Core_Wayland_Input  *input,
 }
 
 static Eo *
-_efl_core_wayland_mouse_dev_get(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window)
+_efl_core_wayland_mouse_dev_get(Efl_Core_Wayland_Input  *input,
+                                Efl_Core_Wayland_Window *window)
 {
     Efl_Core_Wayland_Input_Devices *devices;
 
@@ -113,7 +114,8 @@ _efl_core_wayland_mouse_dev_get(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_
 }
 
 static Eo *
-_efl_core_wayland_touch_dev_get(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window)
+_efl_core_wayland_touch_dev_get(Efl_Core_Wayland_Input  *input,
+                                Efl_Core_Wayland_Window *window)
 {
     Efl_Core_Wayland_Input_Devices *devices;
 
@@ -124,7 +126,8 @@ _efl_core_wayland_touch_dev_get(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_
 }
 
 static Eo *
-_efl_core_wayland_seat_dev_get(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window)
+_efl_core_wayland_seat_dev_get(Efl_Core_Wayland_Input  *input,
+                               Efl_Core_Wayland_Window *window)
 {
     Efl_Core_Wayland_Input_Devices *devices;
 
@@ -142,7 +145,8 @@ _input_event_cb_free(void *data, void *event)
 }
 
 static void
-_efl_core_wayland_input_mouse_in_send(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window)
+_efl_core_wayland_input_mouse_in_send(Efl_Core_Wayland_Input  *input,
+                                      Efl_Core_Wayland_Window *window)
 {
     Ecore_Event_Mouse_IO *ev;
 
@@ -161,7 +165,8 @@ _efl_core_wayland_input_mouse_in_send(Efl_Core_Wayland_Input *input, Efl_Core_Wa
 }
 
 static void
-_efl_core_wayland_input_mouse_out_send(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window)
+_efl_core_wayland_input_mouse_out_send(Efl_Core_Wayland_Input  *input,
+                                       Efl_Core_Wayland_Window *window)
 {
     Ecore_Event_Mouse_IO *ev;
 
@@ -181,10 +186,10 @@ _efl_core_wayland_input_mouse_out_send(Efl_Core_Wayland_Input *input, Efl_Core_W
 
 static void
 _efl_core_wayland_input_mouse_move_send(Efl_Core_Wayland_Input  *input,
-                                Efl_Core_Wayland_Window *window,
-                                int              device)
+                                        Efl_Core_Wayland_Window *window,
+                                        int                      device)
 {
-    Ecore_Event_Mouse_Move   *ev;
+    Ecore_Event_Mouse_Move           *ev;
     Efl_Core_Wayland_Mouse_Down_Info *info;
 
     ev = calloc(1, sizeof(Ecore_Event_Mouse_Move));
@@ -226,9 +231,9 @@ _efl_core_wayland_input_mouse_move_send(Efl_Core_Wayland_Input  *input,
 
 static void
 _efl_core_wayland_input_mouse_wheel_send(Efl_Core_Wayland_Input *input,
-                                 unsigned int    axis,
-                                 int             value,
-                                 unsigned int    timestamp)
+                                         unsigned int            axis,
+                                         int                     value,
+                                         unsigned int            timestamp)
 {
     Ecore_Event_Mouse_Wheel *ev;
 
@@ -261,21 +266,24 @@ _efl_core_wayland_input_mouse_wheel_send(Efl_Core_Wayland_Input *input,
     {
         ev->window       = (Ecore_Window)input->focus.pointer;
         ev->event_window = (Ecore_Window)input->focus.pointer;
-        ev->dev          = _efl_core_wayland_mouse_dev_get(input, input->focus.pointer);
+        ev->dev = _efl_core_wayland_mouse_dev_get(input, input->focus.pointer);
     }
     else if (input->focus.touch)
     {
         ev->window       = (Ecore_Window)input->focus.touch;
         ev->event_window = (Ecore_Window)input->focus.touch;
-        ev->dev          = _efl_core_wayland_touch_dev_get(input, input->focus.touch);
+        ev->dev = _efl_core_wayland_touch_dev_get(input, input->focus.touch);
     }
 
     if (!ev->dev)
     {
-        ev->dev = _efl_core_wayland_mouse_dev_get(input, (Efl_Core_Wayland_Window *)ev->window);
+        ev->dev = _efl_core_wayland_mouse_dev_get(
+            input,
+            (Efl_Core_Wayland_Window *)ev->window);
         if (!ev->dev)
-            ev->dev =
-                _efl_core_wayland_touch_dev_get(input, (Efl_Core_Wayland_Window *)ev->window);
+            ev->dev = _efl_core_wayland_touch_dev_get(
+                input,
+                (Efl_Core_Wayland_Window *)ev->window);
     }
 
     core_event_add(CORE_EVENT_MOUSE_WHEEL, ev, _input_event_cb_free, ev->dev);
@@ -283,12 +291,12 @@ _efl_core_wayland_input_mouse_wheel_send(Efl_Core_Wayland_Input *input,
 
 static void
 _efl_core_wayland_input_mouse_down_send(Efl_Core_Wayland_Input  *input,
-                                Efl_Core_Wayland_Window *window,
-                                int              device,
-                                unsigned int     button,
-                                unsigned int     timestamp)
+                                        Efl_Core_Wayland_Window *window,
+                                        int                      device,
+                                        unsigned int             button,
+                                        unsigned int             timestamp)
 {
-    Ecore_Event_Mouse_Button *ev;
+    Ecore_Event_Mouse_Button         *ev;
     Efl_Core_Wayland_Mouse_Down_Info *info;
 
     ev = calloc(1, sizeof(Ecore_Event_Mouse_Button));
@@ -390,12 +398,12 @@ _efl_core_wayland_input_mouse_down_send(Efl_Core_Wayland_Input  *input,
 
 static void
 _efl_core_wayland_input_mouse_up_send(Efl_Core_Wayland_Input  *input,
-                              Efl_Core_Wayland_Window *window,
-                              int              device,
-                              unsigned int     button,
-                              unsigned int     timestamp)
+                                      Efl_Core_Wayland_Window *window,
+                                      int                      device,
+                                      unsigned int             button,
+                                      unsigned int             timestamp)
 {
-    Ecore_Event_Mouse_Button *ev;
+    Ecore_Event_Mouse_Button         *ev;
     Efl_Core_Wayland_Mouse_Down_Info *info;
 
     ev = calloc(1, sizeof(Ecore_Event_Mouse_Button));
@@ -465,7 +473,8 @@ _input_event_focus_cb_free(void *data, void *event)
 }
 
 static void
-_efl_core_wayland_input_focus_in_send(Efl_Core_Wayland_Window *window, Efl_Core_Wayland_Input *input)
+_efl_core_wayland_input_focus_in_send(Efl_Core_Wayland_Window *window,
+                                      Efl_Core_Wayland_Input  *input)
 {
     Efl_Core_Wayland_Event_Focus_In *ev;
 
@@ -484,7 +493,8 @@ _efl_core_wayland_input_focus_in_send(Efl_Core_Wayland_Window *window, Efl_Core_
 }
 
 static void
-_efl_core_wayland_input_focus_out_send(Efl_Core_Wayland_Window *window, Efl_Core_Wayland_Input *input)
+_efl_core_wayland_input_focus_out_send(Efl_Core_Wayland_Window *window,
+                                       Efl_Core_Wayland_Input  *input)
 {
     Efl_Core_Wayland_Event_Focus_Out *ev;
 
@@ -504,9 +514,9 @@ _efl_core_wayland_input_focus_out_send(Efl_Core_Wayland_Window *window, Efl_Core
 
 static int
 _efl_core_wayland_input_key_translate(xkb_keysym_t keysym,
-                              unsigned int modifiers,
-                              char        *buffer,
-                              int          bytes)
+                                      unsigned int modifiers,
+                                      char        *buffer,
+                                      int          bytes)
 {
     /* this function is copied, with slight changes in variable names, from KeyBind.c in libX11
  * the license from that file can be found below:
@@ -598,9 +608,9 @@ in this Software without prior written authorization from The Open Group.
 
 static void
 _efl_core_wayland_input_symbol_rep_find(xkb_keysym_t keysym,
-                                char        *buffer,
-                                int          size,
-                                unsigned int code)
+                                        char        *buffer,
+                                        int          size,
+                                        unsigned int code)
 {
     if (xkb_keysym_get_name(keysym, buffer, size) != 0) return;
 
@@ -608,7 +618,8 @@ _efl_core_wayland_input_symbol_rep_find(xkb_keysym_t keysym,
 }
 
 static Eo *
-_efl_core_wayland_keyboard_dev_get(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window)
+_efl_core_wayland_keyboard_dev_get(Efl_Core_Wayland_Input  *input,
+                                   Efl_Core_Wayland_Window *window)
 {
     Efl_Core_Wayland_Input_Devices *devices;
 
@@ -620,12 +631,12 @@ _efl_core_wayland_keyboard_dev_get(Efl_Core_Wayland_Input *input, Efl_Core_Wayla
 
 static void
 _efl_core_wayland_input_key_send(Efl_Core_Wayland_Input  *input,
-                         Efl_Core_Wayland_Window *window,
-                         xkb_keysym_t     sym,
-                         xkb_keysym_t     sym_name,
-                         unsigned int     code,
-                         unsigned int     state,
-                         unsigned int     timestamp)
+                                 Efl_Core_Wayland_Window *window,
+                                 xkb_keysym_t             sym,
+                                 xkb_keysym_t             sym_name,
+                                 unsigned int             code,
+                                 unsigned int             state,
+                                 unsigned int             timestamp)
 {
     Ecore_Event_Key *ev;
     char             key[256] = "", keyname[256] = "", compose[256] = "";
@@ -633,11 +644,14 @@ _efl_core_wayland_input_key_send(Efl_Core_Wayland_Input  *input,
 
     /*try to get a name or utf char of the given symbol */
     _efl_core_wayland_input_symbol_rep_find(sym, key, sizeof(key), code);
-    _efl_core_wayland_input_symbol_rep_find(sym_name, keyname, sizeof(keyname), code);
+    _efl_core_wayland_input_symbol_rep_find(sym_name,
+                                            keyname,
+                                            sizeof(keyname),
+                                            code);
     _efl_core_wayland_input_key_translate(sym,
-                                  input->keyboard.modifiers,
-                                  compose,
-                                  sizeof(compose));
+                                          input->keyboard.modifiers,
+                                          compose,
+                                          sizeof(compose));
 
     name_len = strlen(keyname);
     key_len  = strlen(key);
@@ -671,8 +685,8 @@ _efl_core_wayland_input_key_send(Efl_Core_Wayland_Input  *input,
 
 void
 _efl_core_wayland_input_grab(Efl_Core_Wayland_Input  *input,
-                     Efl_Core_Wayland_Window *window,
-                     unsigned int     button)
+                             Efl_Core_Wayland_Window *window,
+                             unsigned int             button)
 {
     input->grab.window = window;
     input->grab.button = button;
@@ -683,10 +697,10 @@ _efl_core_wayland_input_ungrab(Efl_Core_Wayland_Input *input)
 {
     if ((input->grab.window) && (input->grab.button) && (input->grab.count))
         _efl_core_wayland_input_mouse_up_send(input,
-                                      input->grab.window,
-                                      0,
-                                      input->grab.button,
-                                      input->grab.timestamp);
+                                              input->grab.window,
+                                              0,
+                                              input->grab.button,
+                                              input->grab.timestamp);
 
     input->grab.window      = NULL;
     input->grab.button      = 0;
@@ -725,7 +739,8 @@ _pointer_cb_enter(void                      *data,
     input->pointer.sy           = wl_fixed_to_double(sy);
 
     /* find the window which this surface belongs to */
-    window = _efl_core_wayland_display_window_surface_find(input->display, surface);
+    window =
+        _efl_core_wayland_display_window_surface_find(input->display, surface);
     if (!window) return;
 
     input->focus.prev_pointer = NULL;
@@ -754,7 +769,8 @@ _pointer_cb_leave(void                      *data,
     if (!surface) return;
 
     /* find the window which this surface belongs to */
-    window = _efl_core_wayland_display_window_surface_find(input->display, surface);
+    window =
+        _efl_core_wayland_display_window_surface_find(input->display, surface);
     if (!window) return;
 
     _efl_core_wayland_input_mouse_out_send(input, window);
@@ -816,10 +832,10 @@ _pointer_cb_button(void                      *data,
 
         if (input->focus.pointer)
             _efl_core_wayland_input_mouse_down_send(input,
-                                            input->focus.pointer,
-                                            0,
-                                            button,
-                                            timestamp);
+                                                    input->focus.pointer,
+                                                    0,
+                                                    button,
+                                                    timestamp);
 
         input->grab.count++;
     }
@@ -827,10 +843,10 @@ _pointer_cb_button(void                      *data,
     {
         if (input->focus.pointer)
             _efl_core_wayland_input_mouse_up_send(input,
-                                          input->focus.pointer,
-                                          0,
-                                          button,
-                                          timestamp);
+                                                  input->focus.pointer,
+                                                  0,
+                                                  button,
+                                                  timestamp);
 
         if (input->grab.count) input->grab.count--;
         if ((input->grab.window) && (input->grab.button == button) &&
@@ -854,9 +870,9 @@ _pointer_cb_axis(void                      *data,
     input->timestamp = timestamp;
 
     _efl_core_wayland_input_mouse_wheel_send(input,
-                                     axis,
-                                     wl_fixed_to_int(value),
-                                     timestamp);
+                                             axis,
+                                             wl_fixed_to_int(value),
+                                             timestamp);
 }
 
 static const struct wl_pointer_listener _pointer_listener = {
@@ -882,8 +898,8 @@ _keyboard_cb_keymap(void                        *data,
 {
     Efl_Core_Wayland_Input                     *input;
     Efl_Core_Wayland_Event_Seat_Keymap_Changed *ev;
-    char                               *map = NULL;
-    const char                         *locale;
+    char                                       *map = NULL;
+    const char                                 *locale;
 
     input = data;
     if (!input)
@@ -1011,7 +1027,8 @@ _keyboard_cb_enter(void                        *data,
     }
 
     /* find the window which this surface belongs to */
-    window = _efl_core_wayland_display_window_surface_find(input->display, surface);
+    window =
+        _efl_core_wayland_display_window_surface_find(input->display, surface);
     if (!window) return;
 
     input->focus.keyboard = window;
@@ -1037,7 +1054,8 @@ _keyboard_cb_leave(void                        *data,
     input->repeat.time = 0;
     if (input->repeat.timer) core_timer_del(input->repeat.timer);
     input->repeat.timer = NULL;
-    window = _efl_core_wayland_display_window_surface_find(input->display, surface);
+    window =
+        _efl_core_wayland_display_window_surface_find(input->display, surface);
     if (window)
     {
         if (input->focus.keyboard != window)
@@ -1060,12 +1078,12 @@ _keyboard_cb_repeat(void *data)
     if (!window) goto out;
 
     _efl_core_wayland_input_key_send(input,
-                             input->focus.keyboard,
-                             input->repeat.sym,
-                             input->repeat.sym_name,
-                             input->repeat.key + 8,
-                             WL_KEYBOARD_KEY_STATE_PRESSED,
-                             input->repeat.time);
+                                     input->focus.keyboard,
+                                     input->repeat.sym,
+                                     input->repeat.sym_name,
+                                     input->repeat.key + 8,
+                                     WL_KEYBOARD_KEY_STATE_PRESSED,
+                                     input->repeat.time);
 
     if (!input->repeat.repeating)
     {
@@ -1115,9 +1133,9 @@ _keyboard_cb_key(void                        *data,
                  unsigned int                 keycode,
                  unsigned int                 state)
 {
-    Efl_Core_Wayland_Input     *input;
-    Efl_Core_Wayland_Window    *window;
-    unsigned int        code;
+    Efl_Core_Wayland_Input  *input;
+    Efl_Core_Wayland_Window *window;
+    unsigned int             code;
     xkb_keysym_t        sym = XKB_KEY_NoSymbol, sym_name = XKB_KEY_NoSymbol;
     const xkb_keysym_t *syms;
 
@@ -1141,12 +1159,12 @@ _keyboard_cb_key(void                        *data,
     sym_name = xkb_state_key_get_one_sym(input->xkb.maskless_state, code);
 
     _efl_core_wayland_input_key_send(input,
-                             window,
-                             sym,
-                             sym_name,
-                             code,
-                             state,
-                             timestamp);
+                                     window,
+                                     sym,
+                                     sym_name,
+                                     code,
+                                     state,
+                                     timestamp);
 
     if (!xkb_keymap_key_repeats(input->xkb.keymap, code)) return;
 
@@ -1192,7 +1210,7 @@ _keyboard_cb_modifiers(void                        *data,
                        unsigned int                 group)
 {
     Efl_Core_Wayland_Input *input;
-    xkb_mod_mask_t  mask;
+    xkb_mod_mask_t          mask;
 
     input = data;
     if (!input) return;
@@ -1300,7 +1318,8 @@ _touch_cb_down(void                  *data,
     if (!input) return;
 
     /* find the window which this surface belongs to */
-    window = _efl_core_wayland_display_window_surface_find(input->display, surface);
+    window =
+        _efl_core_wayland_display_window_surface_find(input->display, surface);
     if (!window) return;
 
     input->focus.touch = window;
@@ -1317,10 +1336,10 @@ _touch_cb_down(void                  *data,
     }
 
     _efl_core_wayland_input_mouse_down_send(input,
-                                    input->focus.touch,
-                                    id,
-                                    BTN_LEFT,
-                                    timestamp);
+                                            input->focus.touch,
+                                            id,
+                                            BTN_LEFT,
+                                            timestamp);
 }
 
 static void
@@ -1342,10 +1361,10 @@ _touch_cb_up(void                  *data,
     input->display->serial = serial;
 
     _efl_core_wayland_input_mouse_up_send(input,
-                                  input->focus.touch,
-                                  id,
-                                  BTN_LEFT,
-                                  timestamp);
+                                          input->focus.touch,
+                                          id,
+                                          BTN_LEFT,
+                                          timestamp);
 
     if (input->grab.count) input->grab.count--;
     if (input->grab.touch_count) input->grab.touch_count--;
@@ -1423,11 +1442,11 @@ _data_cb_enter(void                              *data,
     if (!input) return;
 
     _efl_core_wayland_dnd_enter(input,
-                        offer,
-                        surface,
-                        wl_fixed_to_int(x),
-                        wl_fixed_to_int(y),
-                        serial);
+                                offer,
+                                surface,
+                                wl_fixed_to_int(x),
+                                wl_fixed_to_int(y),
+                                serial);
 }
 
 static void
@@ -1453,7 +1472,10 @@ _data_cb_motion(void                              *data,
     input = data;
     if (!input) return;
 
-    _efl_core_wayland_dnd_motion(input, wl_fixed_to_int(x), wl_fixed_to_int(y), serial);
+    _efl_core_wayland_dnd_motion(input,
+                                 wl_fixed_to_int(x),
+                                 wl_fixed_to_int(y),
+                                 serial);
 }
 
 static void
@@ -1655,7 +1677,7 @@ _efl_core_wayland_cb_device_event(void *data, int type, void *event)
     ;
     Efl_Core_Wayland_Event_Device *ev    = event;
     Efl_Core_Wayland_Input        *input = data;
-    Eina_List             *l;
+    Eina_List                     *l;
 
     if (input->id != ev->seat_id) return CORE_CALLBACK_PASS_ON;
 
@@ -1724,8 +1746,8 @@ _efl_core_wayland_cb_device_event(void *data, int type, void *event)
 
 void
 _efl_core_wayland_input_add(Efl_Core_Wayland_Display *display,
-                    unsigned int      id,
-                    unsigned int      version)
+                            unsigned int              id,
+                            unsigned int              version)
 {
     Efl_Core_Wayland_Input *input;
 
@@ -1778,7 +1800,7 @@ _efl_core_wayland_input_del(Efl_Core_Wayland_Input *input)
 {
     Efl_Core_Wayland_Input_Devices   *devices;
     Efl_Core_Wayland_Display         *display;
-    Eina_Inlist              *l    = NULL;
+    Eina_Inlist                      *l    = NULL;
     Efl_Core_Wayland_Mouse_Down_Info *info = NULL;
     Efl_Core_Wayland_Window          *window;
 
@@ -1821,7 +1843,8 @@ _efl_core_wayland_input_del(Efl_Core_Wayland_Input *input)
     if (input->data.drag.source)
         wl_data_source_destroy(input->data.drag.source);
     if (input->drag.offer) _efl_core_wayland_offer_unref(input->drag.offer);
-    if (input->selection.offer) _efl_core_wayland_offer_unref(input->selection.offer);
+    if (input->selection.offer)
+        _efl_core_wayland_offer_unref(input->selection.offer);
     if (input->data.device) wl_data_device_destroy(input->data.device);
 
     if (input->xkb.state) xkb_state_unref(input->xkb.state);
@@ -1850,17 +1873,19 @@ _efl_core_wayland_input_del(Efl_Core_Wayland_Input *input)
 }
 
 void
-_efl_core_wayland_input_cursor_set(Efl_Core_Wayland_Input *input, const char *cursor)
+_efl_core_wayland_input_cursor_set(Efl_Core_Wayland_Input *input,
+                                   const char             *cursor)
 {
     eina_stringshare_replace(&input->cursor.name, cursor);
     if (!cursor) eina_stringshare_replace(&input->cursor.name, "left_ptr");
 }
 
 void
-_efl_core_wayland_input_window_remove(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window)
+_efl_core_wayland_input_window_remove(Efl_Core_Wayland_Input  *input,
+                                      Efl_Core_Wayland_Window *window)
 {
     Efl_Core_Wayland_Input_Devices *devices;
-    Eina_List              *l, *l_next;
+    Eina_List                      *l, *l_next;
 
     if ((input->focus.pointer) && (input->focus.pointer == window))
         input->focus.pointer = NULL;
@@ -1890,7 +1915,8 @@ efl_core_wayland_input_seat_get(Efl_Core_Wayland_Input *input)
 EAPI Efl_Core_Wayland_Seat_Capabilities
 efl_core_wayland_input_seat_capabilities_get(Efl_Core_Wayland_Input *input)
 {
-    Efl_Core_Wayland_Seat_Capabilities cap = EFL_CORE_WAYLAND_SEAT_CAPABILITIES_NONE;
+    Efl_Core_Wayland_Seat_Capabilities cap =
+        EFL_CORE_WAYLAND_SEAT_CAPABILITIES_NONE;
 
     EINA_SAFETY_ON_NULL_RETURN_VAL(input, cap);
     EINA_SAFETY_ON_NULL_RETURN_VAL(input->display, 0);
@@ -1934,8 +1960,8 @@ efl_core_wayland_input_keymap_get(const Efl_Core_Wayland_Input *input)
 
 EAPI Efl_Bool
 efl_core_wayland_input_keyboard_repeat_set(Efl_Core_Wayland_Input *input,
-                                   double          rate,
-                                   double          delay)
+                                           double                  rate,
+                                           double                  delay)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(input, EFL_FALSE);
     EINA_SAFETY_ON_NULL_RETURN_VAL(input->display, EFL_FALSE);
@@ -1948,8 +1974,8 @@ efl_core_wayland_input_keyboard_repeat_set(Efl_Core_Wayland_Input *input,
 
 EAPI Efl_Bool
 efl_core_wayland_input_keyboard_repeat_get(const Efl_Core_Wayland_Input *input,
-                                   double               *rate,
-                                   double               *delay)
+                                           double                       *rate,
+                                           double                       *delay)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(input, EFL_FALSE);
     EINA_SAFETY_ON_NULL_RETURN_VAL(input->display, EFL_FALSE);
@@ -1960,10 +1986,10 @@ efl_core_wayland_input_keyboard_repeat_get(const Efl_Core_Wayland_Input *input,
 }
 
 EAPI void
-efl_core_wayland_input_pointer_set(Efl_Core_Wayland_Input    *input,
-                           struct wl_surface *surface,
-                           int                hot_x,
-                           int                hot_y)
+efl_core_wayland_input_pointer_set(Efl_Core_Wayland_Input *input,
+                                   struct wl_surface      *surface,
+                                   int                     hot_x,
+                                   int                     hot_y)
 {
     EINA_SAFETY_ON_NULL_RETURN(input);
 
@@ -1975,14 +2001,17 @@ efl_core_wayland_input_pointer_set(Efl_Core_Wayland_Input    *input,
 }
 
 EAPI void
-efl_core_wayland_input_cursor_from_name_set(Efl_Core_Wayland_Input *input, const char *cursor)
+efl_core_wayland_input_cursor_from_name_set(Efl_Core_Wayland_Input *input,
+                                            const char             *cursor)
 {
     EINA_SAFETY_ON_NULL_RETURN(input);
     _efl_core_wayland_input_cursor_set(input, cursor);
 }
 
 EAPI Efl_Bool
-efl_core_wayland_input_pointer_xy_get(const Efl_Core_Wayland_Input *input, int *x, int *y)
+efl_core_wayland_input_pointer_xy_get(const Efl_Core_Wayland_Input *input,
+                                      int                          *x,
+                                      int                          *y)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(input, EFL_FALSE);
 
@@ -2003,7 +2032,8 @@ efl_core_wayland_input_default_input_get(const Efl_Core_Wayland_Display *ewd)
     EINA_SAFETY_ON_NULL_RETURN_VAL(ewd->inputs, NULL);
 
     input = efl_core_wayland_display_input_find_by_name(ewd, "seat0");
-    if (!input) input = efl_core_wayland_display_input_find_by_name(ewd, "default");
+    if (!input)
+        input = efl_core_wayland_display_input_find_by_name(ewd, "default");
 
     return input;
 }

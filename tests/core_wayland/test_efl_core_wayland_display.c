@@ -31,8 +31,8 @@ EFL_END_TEST
 
 EFL_START_TEST(core_wayland_display_get)
 {
-    Efl_Core_Wayland_Display  *disp;
-    struct wl_display *wdisp;
+    Efl_Core_Wayland_Display *disp;
+    struct wl_display        *wdisp;
 
     disp = _display_setup();
     ck_assert(disp != NULL);
@@ -92,7 +92,7 @@ EFL_END_TEST
 EFL_START_TEST(core_wayland_display_shm_get)
 {
     Efl_Core_Wayland_Display *disp;
-    struct wl_shm    *shm;
+    struct wl_shm            *shm;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -106,7 +106,7 @@ EFL_END_TEST
 EFL_START_TEST(core_wayland_display_dmabuf_get)
 {
     Efl_Core_Wayland_Display *disp;
-    void             *dma;
+    void                     *dma;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -121,8 +121,8 @@ EFL_START_TEST(core_wayland_display_globals_get)
 {
     Efl_Core_Wayland_Display *disp;
     Efl_Core_Wayland_Global  *global;
-    Eina_Iterator    *itr;
-    void             *data;
+    Eina_Iterator            *itr;
+    void                     *data;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -144,7 +144,7 @@ EFL_END_TEST
 EFL_START_TEST(core_wayland_display_screen_size_get)
 {
     Efl_Core_Wayland_Display *disp;
-    int               w, h;
+    int                       w, h;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -159,7 +159,7 @@ EFL_END_TEST
 EFL_START_TEST(core_wayland_display_inputs_get)
 {
     Efl_Core_Wayland_Display *disp;
-    Eina_Iterator    *itr;
+    Eina_Iterator            *itr;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -175,7 +175,7 @@ EFL_END_TEST
 EFL_START_TEST(core_wayland_display_compositor_version_get)
 {
     Efl_Core_Wayland_Display *disp;
-    int               ver;
+    int                       ver;
 
     disp = _display_connect();
     ck_assert(disp != NULL);
@@ -295,7 +295,9 @@ EFL_START_TEST(core_wayland_display_sync_is_done)
 
     efl_core_wayland_window_show(td->win);
 
-    core_event_handler_add(EFL_CORE_WAYLAND_EVENT_SYNC_DONE, _test_sync_done, td);
+    core_event_handler_add(EFL_CORE_WAYLAND_EVENT_SYNC_DONE,
+                           _test_sync_done,
+                           td);
 
     core_main_loop_begin();
 

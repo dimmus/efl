@@ -11,7 +11,8 @@ static Eina_Hash *_server_displays = NULL;
 static Eina_Hash *_client_displays = NULL;
 
 static Efl_Bool _cb_connect_data(void *data, Core_Fd_Handler *hdl);
-static Efl_Bool _efl_core_wayland_display_connect(Efl_Core_Wayland_Display *ewd, Efl_Bool sync);
+static Efl_Bool _efl_core_wayland_display_connect(Efl_Core_Wayland_Display *ewd,
+                                                  Efl_Bool sync);
 
 static void _efl_core_wayland_display_sync_add(Efl_Core_Wayland_Display *ewd);
 
@@ -107,12 +108,12 @@ _aux_hints_supported_aux_hints(void                           *data,
                                uint32_t                        num_hints)
 {
     Efl_Core_Wayland_Display                  *ewd     = data;
-    struct wl_surface                 *surface = surface_resource;
+    struct wl_surface                         *surface = surface_resource;
     Efl_Core_Wayland_Window                   *win     = NULL;
-    char                              *p       = NULL;
-    char                             **str     = NULL;
-    const char                        *hint    = NULL;
-    unsigned int                       i       = 0;
+    char                                      *p       = NULL;
+    char                                     **str     = NULL;
+    const char                                *hint    = NULL;
+    unsigned int                               i       = 0;
     Efl_Core_Wayland_Event_Aux_Hint_Supported *ev;
 
     if (!surface) return;
@@ -148,7 +149,8 @@ _aux_hints_supported_aux_hints(void                           *data,
         free(str);
     }
 
-    if (!(ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Aux_Hint_Supported)))) return;
+    if (!(ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Aux_Hint_Supported))))
+        return;
     ev->win     = win;
     ev->display = ewd;
     ewd->refs++;
@@ -164,7 +166,7 @@ _aux_hints_allowed_aux_hint(void                           *data,
                             struct wl_surface              *surface_resource,
                             int                             id)
 {
-    struct wl_surface               *surface = surface_resource;
+    struct wl_surface                       *surface = surface_resource;
     Efl_Core_Wayland_Window                 *win     = NULL;
     Efl_Core_Wayland_Display                *ewd     = data;
     Efl_Core_Wayland_Event_Aux_Hint_Allowed *ev;
@@ -173,7 +175,8 @@ _aux_hints_allowed_aux_hint(void                           *data,
     win = _efl_core_wayland_display_window_surface_find(ewd, surface_resource);
     if (!win) return;
 
-    if (!(ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Aux_Hint_Allowed)))) return;
+    if (!(ev = calloc(1, sizeof(Efl_Core_Wayland_Event_Aux_Hint_Allowed))))
+        return;
     ev->win     = win;
     ev->id      = id;
     ev->display = ewd;
@@ -188,7 +191,7 @@ static void
 _cb_aux_message_free(void *data EFL_UNUSED, void *event)
 {
     Efl_Core_Wayland_Event_Aux_Message *ev;
-    char                       *str;
+    char                               *str;
 
     ev = event;
     efl_core_wayland_display_disconnect(ev->display);
@@ -209,8 +212,8 @@ _aux_hints_aux_message(void                           *data,
 {
     Efl_Core_Wayland_Window            *win = NULL;
     Efl_Core_Wayland_Event_Aux_Message *ev;
-    char                       *p = NULL, *str = NULL;
-    Eina_List                  *opt_list = NULL;
+    char                               *p = NULL, *str = NULL;
+    Eina_List                          *opt_list = NULL;
     Efl_Core_Wayland_Display           *ewd      = data;
 
     if (!surface_resource) return;
@@ -237,7 +240,10 @@ _aux_hints_aux_message(void                           *data,
     ev->display = ewd;
     ewd->refs++;
 
-    core_event_add(EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE, ev, _cb_aux_message_free, NULL);
+    core_event_add(EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE,
+                   ev,
+                   _cb_aux_message_free,
+                   NULL);
 }
 
 static const struct efl_aux_hints_listener _aux_hints_listener = {
@@ -355,7 +361,8 @@ _cb_global_add(void               *data,
                 efl_aux_hints_get_supported_aux_hints(ewd->wl.efl_aux_hints,
                                                       window->surface);
     }
-    else if (!strcmp(interface, "wl_output")) _efl_core_wayland_output_add(ewd, id);
+    else if (!strcmp(interface, "wl_output"))
+        _efl_core_wayland_output_add(ewd, id);
     else if (!strcmp(interface, "wl_seat"))
         _efl_core_wayland_input_add(ewd, id, version);
     else if (!strcmp(interface, "efl_hints"))
@@ -444,8 +451,8 @@ static const struct wl_registry_listener _registry_listener = {
 static Efl_Bool
 _cb_create_data(void *data, Core_Fd_Handler *hdl EFL_UNUSED)
 {
-    Efl_Core_Wayland_Display     *ewd = data;
-    struct wl_event_loop *loop;
+    Efl_Core_Wayland_Display *ewd = data;
+    struct wl_event_loop     *loop;
 
     loop = wl_display_get_event_loop(ewd->wl.display);
     wl_event_loop_dispatch(loop, 0);
@@ -494,7 +501,7 @@ _efl_core_wayland_display_globals_cleanup(Efl_Core_Wayland_Display *ewd)
 static void
 _recovery_timer_add(Efl_Core_Wayland_Display *ewd)
 {
-    Eina_Inlist     *tmp, *tmp2;
+    Eina_Inlist             *tmp, *tmp2;
     Efl_Core_Wayland_Output *output;
     Efl_Core_Wayland_Input  *input;
     Efl_Core_Wayland_Window *window;
@@ -556,7 +563,7 @@ static void
 _cb_connect_pre(void *data, Core_Fd_Handler *hdl EFL_UNUSED)
 {
     Efl_Core_Wayland_Display *ewd = data;
-    int               ret = 0, code;
+    int                       ret = 0, code;
 
     while ((wl_display_prepare_read(ewd->wl.display) != 0) && (ret >= 0))
         ret = wl_display_dispatch_pending(ewd->wl.display);
@@ -580,7 +587,7 @@ static Efl_Bool
 _cb_connect_data(void *data, Core_Fd_Handler *hdl)
 {
     Efl_Core_Wayland_Display *ewd = data;
-    int               ret = 0, code;
+    int                       ret = 0, code;
 
     if (core_main_fd_handler_active_get(hdl, CORE_FD_READ))
     {
@@ -623,9 +630,10 @@ _cb_globals_hash_del(void *data)
 }
 
 static Efl_Core_Wayland_Global *
-_efl_core_wayland_global_find(Efl_Core_Wayland_Display *ewd, const char *interface)
+_efl_core_wayland_global_find(Efl_Core_Wayland_Display *ewd,
+                              const char               *interface)
 {
-    Eina_Iterator   *itr;
+    Eina_Iterator           *itr;
     Efl_Core_Wayland_Global *global = NULL, *g = NULL;
 
     itr = eina_hash_iterator_data_new(ewd->globals);
@@ -648,8 +656,8 @@ static void
 _efl_core_wayland_shell_bind(Efl_Core_Wayland_Display *ewd)
 {
     Efl_Core_Wayland_Global *global = NULL;
-    const char     **itr;
-    const char      *shells[] = { "xdg_wm_base", "zxdg_shell_v6", NULL };
+    const char             **itr;
+    const char *shells[] = { "xdg_wm_base", "zxdg_shell_v6", NULL };
 
     if (ewd->shell_done) return;
 
@@ -708,7 +716,10 @@ _cb_sync_done(void *data, struct wl_callback *cb, uint32_t serial EFL_UNUSED)
 
     ev->display = ewd;
     ewd->refs++;
-    core_event_add(EFL_CORE_WAYLAND_EVENT_SYNC_DONE, ev, _display_event_free, ewd);
+    core_event_add(EFL_CORE_WAYLAND_EVENT_SYNC_DONE,
+                   ev,
+                   _display_event_free,
+                   ewd);
 }
 
 static const struct wl_callback_listener _sync_listener = { _cb_sync_done };
@@ -779,7 +790,7 @@ _efl_core_wayland_display_cleanup(Efl_Core_Wayland_Display *ewd)
 {
     Efl_Core_Wayland_Output *output;
     Efl_Core_Wayland_Input  *input;
-    Eina_Inlist     *tmp;
+    Eina_Inlist             *tmp;
 
     if (ewd->xkb_context) xkb_context_unref(ewd->xkb_context);
 
@@ -799,8 +810,8 @@ _efl_core_wayland_display_cleanup(Efl_Core_Wayland_Display *ewd)
 }
 
 Efl_Core_Wayland_Window *
-_efl_core_wayland_display_window_surface_find(Efl_Core_Wayland_Display  *display,
-                                      struct wl_surface *wl_surface)
+_efl_core_wayland_display_window_surface_find(Efl_Core_Wayland_Display *display,
+                                              struct wl_surface *wl_surface)
 {
     Efl_Core_Wayland_Window *window;
 
@@ -817,8 +828,8 @@ _efl_core_wayland_display_window_surface_find(Efl_Core_Wayland_Display  *display
 EAPI Efl_Core_Wayland_Display *
 efl_core_wayland_display_create(const char *name)
 {
-    Efl_Core_Wayland_Display     *ewd;
-    struct wl_event_loop *loop;
+    Efl_Core_Wayland_Display *ewd;
+    struct wl_event_loop     *loop;
 
     if (!_server_displays)
         _server_displays = eina_hash_string_superfast_new(NULL);
@@ -914,8 +925,8 @@ EAPI Efl_Core_Wayland_Display *
 efl_core_wayland_display_connect(const char *name)
 {
     Efl_Core_Wayland_Display *ewd;
-    const char       *n;
-    Efl_Bool          hash_create = !_client_displays;
+    const char               *n;
+    Efl_Bool                  hash_create = !_client_displays;
 
     if (!_client_displays)
         _client_displays = eina_hash_string_superfast_new(NULL);
@@ -956,7 +967,9 @@ efl_core_wayland_display_connect(const char *name)
     if (!ewd->xkb_context) goto context_err;
 
     /* check server display hash and match on pid. If match, skip sync */
-    if (!_efl_core_wayland_display_connect(ewd, _efl_core_wayland_display_sync_get()))
+    if (!_efl_core_wayland_display_connect(
+            ewd,
+            _efl_core_wayland_display_sync_get()))
         goto connect_err;
 
     /* add this new client display to hash */
@@ -1073,10 +1086,12 @@ efl_core_wayland_display_globals_get(Efl_Core_Wayland_Display *display)
 }
 
 EAPI void
-efl_core_wayland_display_screen_size_get(Efl_Core_Wayland_Display *display, int *w, int *h)
+efl_core_wayland_display_screen_size_get(Efl_Core_Wayland_Display *display,
+                                         int                      *w,
+                                         int                      *h)
 {
     Efl_Core_Wayland_Output *output;
-    int              ow = 0, oh = 0;
+    int                      ow = 0, oh = 0;
 
     EINA_SAFETY_ON_NULL_RETURN(display);
 
@@ -1114,7 +1129,8 @@ efl_core_wayland_display_registry_get(Efl_Core_Wayland_Display *display)
 }
 
 EAPI int
-efl_core_wayland_display_compositor_version_get(Efl_Core_Wayland_Display *display)
+efl_core_wayland_display_compositor_version_get(
+    Efl_Core_Wayland_Display *display)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(display, 0);
 
@@ -1130,7 +1146,8 @@ efl_core_wayland_display_inputs_get(Efl_Core_Wayland_Display *display)
 }
 
 EAPI Efl_Core_Wayland_Input *
-efl_core_wayland_display_input_find(const Efl_Core_Wayland_Display *display, unsigned int id)
+efl_core_wayland_display_input_find(const Efl_Core_Wayland_Display *display,
+                                    unsigned int                    id)
 {
     Efl_Core_Wayland_Input *input;
 
@@ -1142,8 +1159,9 @@ efl_core_wayland_display_input_find(const Efl_Core_Wayland_Display *display, uns
 }
 
 EAPI Efl_Core_Wayland_Input *
-efl_core_wayland_display_input_find_by_name(const Efl_Core_Wayland_Display *display,
-                                    const char             *name)
+efl_core_wayland_display_input_find_by_name(
+    const Efl_Core_Wayland_Display *display,
+    const char                     *name)
 {
     Efl_Core_Wayland_Input *input;
 
@@ -1191,8 +1209,9 @@ efl_core_wayland_display_flush(Efl_Core_Wayland_Display *display)
 }
 
 EAPI Efl_Core_Wayland_Window *
-efl_core_wayland_display_window_find_by_surface(Efl_Core_Wayland_Display  *display,
-                                        struct wl_surface *surface)
+efl_core_wayland_display_window_find_by_surface(
+    Efl_Core_Wayland_Display *display,
+    struct wl_surface        *surface)
 {
     return _efl_core_wayland_display_window_surface_find(display, surface);
 }

@@ -17,7 +17,7 @@ _cb_geometry(void                       *data,
              int                         transform)
 {
     Efl_Core_Wayland_Output *output;
-    int              ot;
+    int                      ot;
 
     output = data;
     if (!output) return;
@@ -47,7 +47,10 @@ _cb_geometry(void                       *data,
             ev->output        = output;
             ev->old_transform = ot;
             ev->transform     = transform;
-            core_event_add(EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM, ev, NULL, NULL);
+            core_event_add(EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM,
+                           ev,
+                           NULL,
+                           NULL);
         }
     }
 }
@@ -128,7 +131,8 @@ _efl_core_wayland_output_del(Efl_Core_Wayland_Output *output)
 }
 
 Efl_Core_Wayland_Output *
-_efl_core_wayland_output_find(Efl_Core_Wayland_Display *display, struct wl_output *op)
+_efl_core_wayland_output_find(Efl_Core_Wayland_Display *display,
+                              struct wl_output         *op)
 {
     Efl_Core_Wayland_Output *wlop;
 
