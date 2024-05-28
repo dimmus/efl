@@ -105,12 +105,8 @@ remove_build_dir()
 
 meson_setup_default()
 {
-    time -p -f "Execution time: %e sec" meson setup . $BD
-
-    # default [3032]: 43-44 sec
-    # add -Dembedded-lz4=false [3029]: 27-31 sec
-    # add -Dbuild-tests=false [2424]: 26-27 sec
-    # add -Dbindings='' [2043]: 22-23 sec
+    time -p -f "Execution time: %e sec" \
+    meson setup . $BD
 }
 
 meson_setup_dev_all()
@@ -173,7 +169,7 @@ meson_setup_dev_all()
         # -Decore-imf-loaders-disabler=ibus,scim,xim \
 }
 
-meson_setup_dev()
+meson_setup_dev_tmp()
 {
     time -p -f "Execution time: %e sec" \
     meson setup . $BD \
@@ -191,6 +187,14 @@ meson_setup_dev()
         -Ddebug_graph_lock=false \
         -Ddebug_mutex=false \
         -Ddebug_stack_usage=false
+}
+
+meson_setup_dev()
+{
+    time -p -f "Execution time: %e sec" \
+    meson setup . $BD \
+        -Dbuildtype=debug \
+        -Dbuild-examples=true
 }
 
 meson_compile()
