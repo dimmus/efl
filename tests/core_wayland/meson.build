@@ -18,7 +18,7 @@ endif
 efl_core_wayland_suite = executable('efl_core_wayland_suite',
   src_efl_core_wayland_suite,
   dependencies: [ core_wayland, core, core_input, 
-                  dep_check, dep_libwayland, dependency('wayland-egl'), 
+                  dep_check, dep_wayland, dependency('wayland-egl'), 
                   dep_efl_core_wayland_suite ],
   c_args : [ '-DTESTS_BUILD_DIR="'+meson.current_build_dir()+'"',
              '-DTESTS_SRC_DIR="'+meson.current_source_dir()+'"']
