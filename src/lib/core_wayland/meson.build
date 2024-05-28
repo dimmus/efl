@@ -1,13 +1,18 @@
-dep_libdrm     = dependency('libdrm', required: true)
-dep_libwayland = [ dependency('wayland-client'), dependency('wayland-server') ]
-dep_libxkb     = dependency('xkbcommon')
+dep_libdrm         = dependency('libdrm', required: true)
+dep_libxkb         = dependency('xkbcommon')
+dep_wayland_server = dependency('wayland-server', version: '>= 1.20.0')
+dep_wayland_client = dependency('wayland-client', version: '>= 1.20.0')
+
+efl_config.set('EFL_WAYLAND_VERSION', dep_wayland_server.version().split('.')[1])
+
+dep_wayland = [ dep_wayland_client, dep_wayland_server ]
 
 subdir('protocols')
-dep_libwayland += wayland_protocol
+dep_wayland += wayland_protocol
 
 dep_core_wayland     = [ core, core_input ]
 dep_core_wayland_pub = [ core, shared ]
-dep_core_wayland_ext = [ dep_libwayland, dep_libxkb, dep_libdrm, dep_libdl, dep_libm]
+dep_core_wayland_ext = [ dep_wayland, dep_libxkb, dep_libdrm, dep_libdl, dep_libm]
 
 inc_core_wayland = include_directories('.')
 
