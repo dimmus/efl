@@ -72,3 +72,7 @@ Basic usage:
 `./run t`     — run tests
 
 `./run f`     — apply formatting
+
+## GitHub Stats
+
+![Alt](https://repobeats.axiom.co/api/embed/51a92f91a34df2e929bb45d75b54e1bb8b09aa11.svg "Repobeats analytics image")
