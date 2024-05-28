@@ -33,23 +33,23 @@ src_core_wayland = files(
 )
 
 lib_core_wayland = library('efl_core_wayland',
-    src_core_wayland, pub_eo_file_target,
-    dependencies:         [ dep_core_wayland, dep_core_wayland_pub, dep_core_wayland_ext ],
-    include_directories : inc_config,
-    c_args :              package_c_args,
-    install:              true,
-    version :             version
+  src_core_wayland, pub_eo_file_target,
+  dependencies:         [ dep_core_wayland, dep_core_wayland_pub, dep_core_wayland_ext ],
+  include_directories : inc_config,
+  c_args :              package_c_args,
+  install:              true,
+  version :             version
 )
 
 core_wayland = declare_dependency(
-  include_directories:    inc_core_wayland,
-  link_with:              lib_core_wayland,
-  sources :               pub_eo_file_target + priv_eo_file_target,
-  dependencies:           dep_core_wayland_pub,
+  include_directories:  inc_core_wayland,
+  link_with:            lib_core_wayland,
+  sources :             pub_eo_file_target + priv_eo_file_target,
+  dependencies:         dep_core_wayland_pub,
 )
 
 install_headers(src_core_wayland_header,
-  install_dir :           dir_package_include,
+  install_dir :         dir_package_include,
 )
 
 dep_core_wayland_one = dep_core_wayland + dep_core_wayland_pub + dep_core_wayland_ext
