@@ -206,8 +206,10 @@ _xdg_toplevel_cb_close(void *data, struct xdg_toplevel *xdg_toplevel EFL_UNUSED)
 static const struct xdg_toplevel_listener _xdg_toplevel_listener = {
     _xdg_toplevel_cb_configure,
     _xdg_toplevel_cb_close,
+#if EFL_WAYLAND_VERSION >= 22
     NULL, /* configure_bounds */
     NULL  /* wm_capabilities */
+#endif
 };
 
 static void
@@ -435,8 +437,10 @@ _surface_leave(void                   *data,
 static const struct wl_surface_listener _surface_listener = {
     _surface_enter,
     _surface_leave,
+#if EFL_WAYLAND_VERSION >= 22
     NULL, /* preferred_buffer_scale */
     NULL  /* preferred_buffer_transform */
+#endif
 };
 
 void

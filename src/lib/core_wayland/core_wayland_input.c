@@ -881,12 +881,14 @@ static const struct wl_pointer_listener _pointer_listener = {
     _pointer_cb_motion,
     _pointer_cb_button,
     _pointer_cb_axis,
+#if EFL_WAYLAND_VERSION >= 22
     NULL, /* frame */
     NULL, /* axis_source */
     NULL, /* axis_stop */
     NULL, /* axis_discrete */
     NULL, /* axis_value120 */
     NULL /* axis_relative_direction */
+#endif
 };
 
 static void
