@@ -47,6 +47,20 @@ subdir('po')
 
 inc_config = include_directories('.')
 
+backend_default = get_option('backend-default')
+if backend_default == 'auto'
+	foreach b : [ 'headless', 'x11', 'wayland', 'drm' ]
+		if get_option('backend-' + b)
+			backend_default = b
+		endif
+	endforeach
+endif
+efl_config.set_quoted('EFL_DEFAULT_BACKEND', backend_default)
+summary_env += {'Default backend': backend_default}
+if not get_option('backend-' + backend_default)
+	error('Backend @0@ was chosen as native but is not being built.'.format(backend_default))
+endif
+
 # we have to do that first, shared modules are required by shared
 # the other modules require theire package
 subdir(join_paths(local_module,'shared'))
