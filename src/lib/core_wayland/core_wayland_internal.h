@@ -27,49 +27,48 @@
 #  endif
 # endif
 
-EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE; /** @since 1.20 */
+EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE;      /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE; /** @since 1.20 */
-EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST; /** @since 1.20 */
-EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE; /** @since 1.20 */
+EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST;      /** @since 1.20 */
+EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE;         /** @since 1.20 */
 
-EAPI void efl_core_wayland_window_rotation_change_prepare_send(Efl_Core_Wayland_Window *window, int rot, int w, int h, Efl_Bool resize);
-EAPI void efl_core_wayland_window_rotation_change_prepare_done_send(Efl_Core_Wayland_Window *window, int rot);
-EAPI void efl_core_wayland_window_rotation_change_request_send(Efl_Core_Wayland_Window *window, int rot);
-EAPI void efl_core_wayland_window_rotation_change_done_send(Efl_Core_Wayland_Window *window, int rot, int w, int h);
+EAPI void efl_core_wayland_window_rotation_change_prepare_send       (Efl_Core_Wayland_Window *window, int rot, int w, int h, Efl_Bool resize);
+EAPI void efl_core_wayland_window_rotation_change_prepare_done_send  (Efl_Core_Wayland_Window *window, int rot);
+EAPI void efl_core_wayland_window_rotation_change_request_send       (Efl_Core_Wayland_Window *window, int rot);
+EAPI void efl_core_wayland_window_rotation_change_done_send          (Efl_Core_Wayland_Window *window, int rot, int w, int h);
+EAPI void efl_core_wayland_window_false_commit                       (Efl_Core_Wayland_Window *window);
+EAPI void efl_core_wayland_window_damage                             (Efl_Core_Wayland_Window *window, Eina_Rectangle *rects, unsigned int count);
 
-EAPI void efl_core_wayland_window_false_commit(Efl_Core_Wayland_Window *window);
-EAPI Efl_Bool efl_core_wayland_buffer_fit(Efl_Core_Wayland_Buffer *b, int w, int h);
+EAPI Efl_Bool                  efl_core_wayland_buffer_fit           (Efl_Core_Wayland_Buffer *b, int w, int h);
+EAPI Efl_Bool                  efl_core_wayland_buffer_init          (Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer_Type types);
+EAPI Efl_Core_Wayland_Buffer  *efl_core_wayland_buffer_create        (Efl_Core_Wayland_Display *ewd, int w, int h, Efl_Bool alpha);
+EAPI void                      efl_core_wayland_buffer_destroy       (Efl_Core_Wayland_Buffer *b);
+EAPI struct wl_buffer         *efl_core_wayland_buffer_wl_buffer_get (Efl_Core_Wayland_Buffer *buf);
+EAPI void                     *efl_core_wayland_buffer_map           (Efl_Core_Wayland_Buffer *buf, int *w, int *h, int *stride);
+EAPI void                      efl_core_wayland_buffer_unmap         (Efl_Core_Wayland_Buffer *buf);
+EAPI void                      efl_core_wayland_buffer_discard       (Efl_Core_Wayland_Buffer *buf);
+EAPI void                      efl_core_wayland_buffer_lock          (Efl_Core_Wayland_Buffer *b);
+EAPI void                      efl_core_wayland_buffer_unlock        (Efl_Core_Wayland_Buffer *b);
+EAPI void                      efl_core_wayland_buffer_destroy       (Efl_Core_Wayland_Buffer *b);
+EAPI Efl_Bool                  efl_core_wayland_buffer_busy_get      (Efl_Core_Wayland_Buffer *buffer);
+EAPI void                      efl_core_wayland_buffer_busy_set      (Efl_Core_Wayland_Buffer *buffer);
+EAPI int                       efl_core_wayland_buffer_age_get       (Efl_Core_Wayland_Buffer *buffer);
+EAPI void                      efl_core_wayland_buffer_age_set       (Efl_Core_Wayland_Buffer *buffer, int age);
+EAPI void                      efl_core_wayland_buffer_age_inc       (Efl_Core_Wayland_Buffer *buffer);
 
-EAPI void efl_core_wayland_window_damage(Efl_Core_Wayland_Window *window, Eina_Rectangle *rects, unsigned int count);
-EAPI Efl_Bool efl_core_wayland_buffer_init(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer_Type types);
-EAPI Efl_Core_Wayland_Buffer *efl_core_wayland_buffer_create(Efl_Core_Wayland_Display *ewd, int w, int h, Efl_Bool alpha);
-EAPI void efl_core_wayland_buffer_destroy(Efl_Core_Wayland_Buffer *b);
-EAPI struct wl_buffer *efl_core_wayland_buffer_wl_buffer_get(Efl_Core_Wayland_Buffer *buf);
-EAPI void *efl_core_wayland_buffer_map(Efl_Core_Wayland_Buffer *buf, int *w, int *h, int *stride);
-EAPI void efl_core_wayland_buffer_unmap(Efl_Core_Wayland_Buffer *buf);
-EAPI void efl_core_wayland_buffer_discard(Efl_Core_Wayland_Buffer *buf);
-EAPI void efl_core_wayland_buffer_lock(Efl_Core_Wayland_Buffer *b);
-EAPI void efl_core_wayland_buffer_unlock(Efl_Core_Wayland_Buffer *b);
-EAPI void efl_core_wayland_buffer_destroy(Efl_Core_Wayland_Buffer *b);
-EAPI Efl_Bool efl_core_wayland_buffer_busy_get(Efl_Core_Wayland_Buffer *buffer);
-EAPI void efl_core_wayland_buffer_busy_set(Efl_Core_Wayland_Buffer *buffer);
-EAPI int efl_core_wayland_buffer_age_get(Efl_Core_Wayland_Buffer *buffer);
-EAPI void efl_core_wayland_buffer_age_set(Efl_Core_Wayland_Buffer *buffer, int age);
-EAPI void efl_core_wayland_buffer_age_inc(Efl_Core_Wayland_Buffer *buffer);
-
-EAPI Efl_Core_Wayland_Surface *efl_core_wayland_surface_create(Efl_Core_Wayland_Window *win, Efl_Bool alpha);
-EAPI void efl_core_wayland_surface_destroy(Efl_Core_Wayland_Surface *surface);
-EAPI void efl_core_wayland_surface_reconfigure(Efl_Core_Wayland_Surface *surface, int w, int h, uint32_t flags, Efl_Bool alpha);
-EAPI void *efl_core_wayland_surface_data_get(Efl_Core_Wayland_Surface *surface, int *w, int *h);
-EAPI int  efl_core_wayland_surface_assign(Efl_Core_Wayland_Surface *surface);
-EAPI void efl_core_wayland_surface_post(Efl_Core_Wayland_Surface *surface, Eina_Rectangle *rects, unsigned int count);
-EAPI void efl_core_wayland_surface_flush(Efl_Core_Wayland_Surface *surface, Efl_Bool purge);
-EAPI void efl_core_wayland_window_surface_flush(Efl_Core_Wayland_Window *window, Efl_Bool purge);
-EAPI Efl_Core_Wayland_Buffer *efl_core_wayland_surface_buffer_create(Efl_Core_Wayland_Surface *surface);
-EAPI int efl_core_wayland_surface_manager_add(Efl_Core_Wayland_Surface_Interface *intf);
-EAPI void efl_core_wayland_surface_manager_del(Efl_Core_Wayland_Surface_Interface *intf);
-EAPI Efl_Core_Wayland_Window *efl_core_wayland_surface_window_get(Efl_Core_Wayland_Surface *surface);
-EAPI Efl_Bool efl_core_wayland_surface_alpha_get(Efl_Core_Wayland_Surface *surface);
+EAPI Efl_Core_Wayland_Surface *efl_core_wayland_surface_create       (Efl_Core_Wayland_Window *win, Efl_Bool alpha);
+EAPI void                      efl_core_wayland_surface_destroy      (Efl_Core_Wayland_Surface *surface);
+EAPI void                      efl_core_wayland_surface_reconfigure  (Efl_Core_Wayland_Surface *surface, int w, int h, uint32_t flags, Efl_Bool alpha);
+EAPI void                     *efl_core_wayland_surface_data_get     (Efl_Core_Wayland_Surface *surface, int *w, int *h);
+EAPI int                       efl_core_wayland_surface_assign       (Efl_Core_Wayland_Surface *surface);
+EAPI void                      efl_core_wayland_surface_post         (Efl_Core_Wayland_Surface *surface, Eina_Rectangle *rects, unsigned int count);
+EAPI void                      efl_core_wayland_surface_flush        (Efl_Core_Wayland_Surface *surface, Efl_Bool purge);
+EAPI Efl_Core_Wayland_Buffer  *efl_core_wayland_surface_buffer_create(Efl_Core_Wayland_Surface *surface);
+EAPI int                       efl_core_wayland_surface_manager_add  (Efl_Core_Wayland_Surface_Interface *intf);
+EAPI void                      efl_core_wayland_surface_manager_del  (Efl_Core_Wayland_Surface_Interface *intf);
+EAPI Efl_Core_Wayland_Window  *efl_core_wayland_surface_window_get   (Efl_Core_Wayland_Surface *surface);
+EAPI Efl_Bool                  efl_core_wayland_surface_alpha_get    (Efl_Core_Wayland_Surface *surface);
+EAPI void                      efl_core_wayland_window_surface_flush (Efl_Core_Wayland_Window *window, Efl_Bool purge);
 
 /**
  * Attach a buffer to a window
