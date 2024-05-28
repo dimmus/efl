@@ -1,5 +1,5 @@
 dep_eo_pub = [ shared ]
-dep_eo_ext = [ valgrind, dep_libdl, execinfo ]
+dep_eo_ext = [ dep_valgrind, dep_libdl, execinfo ]
 
 inc_eo = include_directories('.')
 
@@ -15,13 +15,9 @@ pub_eo_files = [
 src_eo = files(
   'eo.c',
   'eo_ptr_indirection.c',
-  'eo_ptr_indirection.h',
   'eo_base_class.c',
   'eo_class_class.c',
   'eo_add_fallback.c',
-  'eo_add_fallback.h',
-  'eo_private.h',
-  'eo_internal.h'
 )
 
 pub_eo_types_files = [
@@ -32,7 +28,7 @@ pub_eo_file_target = []
 foreach eo_file : pub_eo_types_files
   pub_eo_file_target += custom_target(eo_file,
     input :       eo_file,
-    output :      [eo_file + '.h'],
+    output :      eo_file + '.h',
     depfile :     eo_file + '.d',
     install :     true,
     install_dir : dir_package_include,
