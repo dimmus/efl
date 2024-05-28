@@ -332,16 +332,16 @@ if stringshare_usage
 endif
 
 if use_valgrind
-   valgrind = dependency('valgrind', required: false)
-   if not valgrind.found()
+   dep_valgrind = dependency('valgrind', required: false)
+   if not dep_valgrind.found()
      efl_config.set('NVALGRIND', 1)
    else
      efl_config.set('HAVE_VALGRIND', 1)
    endif
-   dep_shared += valgrind
+   dep_shared += dep_valgrind
 else
    efl_config.set('NVALGRIND', 1)
-   valgrind = []
+   dep_valgrind = []
 endif
 
 if debug_malloc
