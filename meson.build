@@ -1,7 +1,7 @@
 project('efl', ['c','cpp'],
   version: '2.0.99',
   default_options : [
-    'buildtype=release', # plain,debug,debugoptimized,release,minsize,custom
+    'buildtype=plain', # plain,debug,debugoptimized,release,minsize,custom
     'warning_level=2',   # 0,1,2,3
     # 'optimization=g',  # 0,g,1,2,3,s
     # 'b_sanitize=none   # none,address,thread,undefined,memory,leak,address,undefined',
