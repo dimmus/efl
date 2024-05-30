@@ -1,9 +1,8 @@
 inc_wayland_protocol  = include_directories('.')
 bin_wayland_scanner   = find_program('wayland-scanner', native: true)
-dep_wayland_protocols = dependency('wayland-protocols',
+dep_wayland_protocols = dependency('wayland-protocols', version: '>= 1.32',
                                     fallback: 'wayland-protocols',
 	                                  default_options: ['tests=false'])
-dep_wayland_client    = dependency('wayland-client', native: true)
 
 dir_protocols = dep_wayland_protocols.get_variable('pkgdatadir')
 assert(dir_protocols != '', 'Could not get pkgdatadir from wayland-protocols.pc')

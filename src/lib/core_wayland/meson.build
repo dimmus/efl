@@ -1,7 +1,7 @@
 dep_libdrm         = dependency('libdrm', required: true)
 dep_libxkb         = dependency('xkbcommon')
-dep_wayland_server = dependency('wayland-server', version: '>= 1.20.0')
-dep_wayland_client = dependency('wayland-client', version: '>= 1.20.0')
+dep_wayland_server = dependency('wayland-server', native: true, version: '>= 1.20.0')
+dep_wayland_client = dependency('wayland-client', native: true, version: '>= 1.20.0')
 
 efl_config.set('EFL_WAYLAND_VERSION', dep_wayland_server.version().split('.')[1])
 
