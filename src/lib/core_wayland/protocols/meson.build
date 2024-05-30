@@ -1,14 +1,16 @@
 inc_wayland_protocol  = include_directories('.')
-bin_wayland_scanner   = find_program('wayland-scanner')
-dep_wayland_protocols = dependency('wayland-protocols')
-dep_wayland_client    = dependency('wayland-client')
+bin_wayland_scanner   = find_program('wayland-scanner', native: true)
+dep_wayland_protocols = dependency('wayland-protocols',
+                                    fallback: 'wayland-protocols',
+	                                  default_options: ['tests=false'])
+dep_wayland_client    = dependency('wayland-client', native: true)
 
 dir_protocols = dep_wayland_protocols.get_variable('pkgdatadir')
 assert(dir_protocols != '', 'Could not get pkgdatadir from wayland-protocols.pc')
 
-headers_server_wayland_protocol = []
-headers_client_wayland_protocol = []
-sources_wayland_protocol        = []
+hdr_wayland_protocol_server = []
+hdr_wayland_protocol_client = []
+src_wayland_protocol        = []
 
 wayland_protocols = [
   
@@ -131,21 +133,21 @@ foreach p: wayland_protocols
     command: [ bin_wayland_scanner, 'private-code', '@INPUT@', '@OUTPUT@' ]
   )
 
-  headers_server_wayland_protocol += header_server
-  headers_client_wayland_protocol += header_client
-  sources_wayland_protocol += source_protocol
+  hdr_wayland_protocol_server += header_server
+  hdr_wayland_protocol_client += header_client
+  src_wayland_protocol += source_protocol
 endforeach
 
-headers_wayland_protocol = headers_server_wayland_protocol \
-                         + headers_client_wayland_protocol
+hdr_wayland_protocol = hdr_wayland_protocol_server \
+                     + hdr_wayland_protocol_client
 
 lib_wayland_protocol = static_library('wayland_protocol',
-    headers_wayland_protocol + sources_wayland_protocol,
+    hdr_wayland_protocol + src_wayland_protocol,
 )
 
 wayland_protocol = declare_dependency(
 	include_directories:  inc_wayland_protocol,
 	link_with:            lib_wayland_protocol,
-  sources:              headers_wayland_protocol,
+  sources:              hdr_wayland_protocol,
   dependencies :        dep_wayland_client
 )
