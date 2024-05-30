@@ -68,7 +68,7 @@ typedef struct _Efl_Dbus_Timeout_Data
     int                  interval;
 } Efl_Dbus_Timeout_Data;
 
-static const Efl_Dbus_Version _version         = { VMAJ, VMIN, VMIC, VREV };
+static const Efl_Dbus_Version _version         = { EFL_VERSION_MAJOR, EFL_VERSION_MINOR, EFL_VERSION_MICRO, 0 };
 EAPI const Efl_Dbus_Version  *efl_dbus_version = &_version;
 
 static int _efl_dbus_init_count   = 0;

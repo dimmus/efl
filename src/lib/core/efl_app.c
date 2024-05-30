@@ -37,10 +37,10 @@ EOLIAN static const Efl_Version *
 _efl_app_efl_version_get(const Eo *obj EFL_UNUSED, void *pd EFL_UNUSED)
 {
    /* vanilla EFL: flavor = NULL */
-    static const Efl_Version version = { .major    = VMAJ,
-                                         .minor    = VMIN,
-                                         .micro    = VMIC,
-                                         .revision = VREV,
+    static const Efl_Version version = { .major    = EFL_VERSION_MAJOR,
+                                         .minor    = EFL_VERSION_MINOR,
+                                         .micro    = EFL_VERSION_MICRO,
+                                         .revision = 0,
                                          .build_id = EFL_BUILD_ID,
                                          .flavor   = NULL };
     return &version;

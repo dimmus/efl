@@ -36,8 +36,7 @@
  */
 
 static const int _eina_hamster =
-    (VMAJ * 100 * 100 * 100) + (VMIN * 100 * 100) + (VMIC * 100) + (VREV);
-
+    (EFL_VERSION_MAJOR * 100 * 100 * 100) + (EFL_VERSION_MINOR * 100 * 100) + (EFL_VERSION_MICRO * 100);
 /**
  * @endcond
  */

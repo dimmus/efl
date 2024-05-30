@@ -112,7 +112,7 @@ function_checks = [
   { 'name' : 'sched_getcpu',          'head' : ['sched.h'      ],   'deps' : [],          'args' : ['-D_GNU_SOURCE=1']},
   { 'name' : 'dladdr',                'head' : ['dlfcn.h'      ],   'deps' : ['dl'],      'args' : ['-D_GNU_SOURCE=1']},
   { 'name' : 'pthread_getcpuclockid', 'head' : ['pthread.h'     ,
-                                                'time.h'        ],  'deps' : [],          'args' : [] },
+                                                'time.h'       ],  'deps' : [],          'args' : [] },
 ]
 
 open_cloexec = cc.compiles('''#include <sys/types.h>
@@ -190,17 +190,9 @@ if cc.has_header_symbol('sys/stat.h', 'fstatat')
   efl_config.set10('HAVE_ATFILE_SOURCE', true)
 endif
 
-# regexp = []
 if not cc.has_header_symbol('regex.h', 'regcomp')
   error('regcomp can not be found')
 endif
-
-efl_config.set('VMAJ', version_major)
-efl_config.set('VMIN', version_minor)
-efl_config.set('VMIC', version_micro)
-efl_config.set('VREV', '0')
-
-#jpeg detection ... life is a bit more complex there
 
 # jpeg = dependency('libjpeg', required: false)
 # if jpeg.found()
@@ -213,7 +205,7 @@ efl_config.set('SIZEOF_LONG', cc.sizeof('long'))
 # Memory configuration
 have_aligned_malloc = cc.has_function('_aligned_malloc', prefix: '#include <malloc.h>')
 if have_aligned_malloc
-  efl_config.set('HAVE__ALIGNED_MALLOC', 1)
+  efl_config.set('HAVE_ALIGNED_MALLOC', 1)
 endif
 
 have_aligned_calloc = host_os != 'windows' and cc.has_function('aligned_alloc', prefix: '#include <stdlib.h>')
