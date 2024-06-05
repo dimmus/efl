@@ -39,7 +39,7 @@
           # Checkout the code base #
           ##########################
           - name: Checkout Code
-            uses: actions/checkout@v4.1.3
+            uses: actions/checkout@v4
             with:
               # Full git history is needed to get a proper list of changed files within `super-linter`
               fetch-depth: 0
@@ -48,7 +48,7 @@
           # Run Linter against code base #
           ################################
           - name: Lint Code Base
-            uses: github/super-linter@v5
+            uses: github/super-linter@v6
             env:
               VALIDATE_ALL_CODEBASE: false
               DEFAULT_BRANCH: main
