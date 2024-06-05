@@ -30,7 +30,7 @@ jobs:
 
     steps:
     - name: Repository checkout
-      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633
+      uses: actions/checkout@b80ff79f1755d06ba70441c368a6fe801f5f3a62
       if: github.event_name == 'pull_request'
 
     - name: Label PR based on policy in labeler.yml
