@@ -1854,8 +1854,8 @@ _core_main_select(Eo *obj, Efl_Loop_Data *pd, double timeout)
         sec  = (int)timeout;
         usec = (int)((timeout - (double)sec) * 1000000);
 #  else
-        sec       = (int)timeout;
-        usec      = (int)((timeout - (double)sec) * 1000000);
+        sec  = (int)timeout;
+        usec = (int)((timeout - (double)sec) * 1000000);
 #  endif
         tv.tv_sec  = sec;
         tv.tv_usec = usec;

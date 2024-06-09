@@ -59,7 +59,7 @@ eina_sha1(const unsigned char *data, int size, unsigned char dst[20])
             buf[60] = (size >> 24) & 0xff;
             buf[61] = (size >> 16) & 0xff;
             buf[62] = (size >> 8) & 0xff;
-            buf[63] = (size)&0xff;
+            buf[63] = (size) & 0xff;
         }
         buf[idx] = *d;
         idx++;

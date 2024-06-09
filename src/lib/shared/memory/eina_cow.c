@@ -308,7 +308,7 @@ eina_cow_init(void)
 #ifdef EINA_DEFAULT_MEMPOOL
     choice = "pass_through";
 #else
-    choice     = "chained_mempool";
+    choice = "chained_mempool";
 #endif
     tmp = getenv("EINA_MEMPOOL");
     if (tmp && tmp[0]) choice = tmp;
@@ -351,7 +351,7 @@ eina_cow_add(const char  *name,
 #ifdef EINA_DEFAULT_MEMPOOL
     choice = "pass_through";
 #else
-    choice     = "chained_mempool";
+    choice = "chained_mempool";
 #endif
     tmp = getenv("EINA_MEMPOOL");
     if (tmp && tmp[0]) choice = tmp;

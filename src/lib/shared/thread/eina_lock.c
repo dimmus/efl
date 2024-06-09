@@ -236,7 +236,7 @@ _eina_spinlock_new(Eina_Spinlock *spinlock)
     else EINA_LOCK_ABORT_DEBUG(ok, spin_init, spinlock);
     return EFL_FALSE;
 #elif defined(EINA_HAVE_OSX_SPINLOCK)
-    *spinlock       = 0;
+    *spinlock = 0;
     return EFL_TRUE;
 #else
     return eina_lock_new(spinlock);

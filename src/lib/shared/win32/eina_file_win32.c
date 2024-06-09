@@ -139,7 +139,7 @@ _eina_file_win32_first_file(const char *dir, WIN32_FIND_DATA *fd)
                         0);
     free(wdir);
 #else
-    h    = FindFirstFileEx(buf,
+    h = FindFirstFileEx(buf,
                         FindExInfoBasic,
                         fd,
                         FindExSearchNameMatch,
@@ -209,7 +209,7 @@ _eina_file_win32_ls_iterator_next(Eina_File_Iterator *it, void **data)
     cname = evil_wchar_to_char(old_name);
     if (!cname) return EFL_FALSE;
 #else
-    cname    = old_name;
+    cname = old_name;
 #endif
 
     length = strlen(cname);

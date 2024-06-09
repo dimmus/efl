@@ -155,7 +155,7 @@ _eina_file_ls_iterator_next(Eina_File_Iterator *it, void **data)
 #  ifdef _DIRENT_HAVE_D_NAMLEN
     length = dp->d_namlen;
 #  else
-    length   = strlen(dp->d_name);
+    length = strlen(dp->d_name);
 #  endif
     name = alloca(length + 2 + it->length);
 
@@ -1262,9 +1262,9 @@ eina_file_statat(void *container, Eina_File_Direct_Info *info, Eina_Stat *st)
     st->mtimensec = buf.st_mtim.tv_nsec;
     st->ctimensec = buf.st_ctim.tv_nsec;
 #  else
-    st->atimensec    = buf.st_atimensec;
-    st->mtimensec    = buf.st_mtimensec;
-    st->ctimensec    = buf.st_ctimensec;
+    st->atimensec = buf.st_atimensec;
+    st->mtimensec = buf.st_mtimensec;
+    st->ctimensec = buf.st_ctimensec;
 #  endif
 #else
     st->atimensec = 0;

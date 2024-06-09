@@ -40,7 +40,10 @@
 #  define O_BINARY 0
 #endif
 
-static Core_Version _version     = { EFL_VERSION_MAJOR, EFL_VERSION_MINOR, EFL_VERSION_MICRO, 0 };
+static Core_Version _version     = { EFL_VERSION_MAJOR,
+                                     EFL_VERSION_MINOR,
+                                     EFL_VERSION_MICRO,
+                                     0 };
 EAPI Core_Version  *core_version = &_version;
 
 EAPI double _efl_startup_time = 0;

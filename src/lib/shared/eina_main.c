@@ -82,7 +82,10 @@
  * @cond LOCAL
  */
 
-static Eina_Version _version = { EFL_VERSION_MAJOR, EFL_VERSION_MINOR, EFL_VERSION_MICRO, 0 };
+static Eina_Version _version = { EFL_VERSION_MAJOR,
+                                 EFL_VERSION_MINOR,
+                                 EFL_VERSION_MICRO,
+                                 0 };
 
 static int _eina_main_count = 0;
 #ifdef EFL_HAVE_THREADS

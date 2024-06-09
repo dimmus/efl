@@ -71,7 +71,7 @@ static size_t              _eina_errors_allocated = 0;
 
 /* used to differentiate registered errors from errno.h */
 #define EINA_ERROR_REGISTERED_BIT        (1 << 30)
-#define EINA_ERROR_REGISTERED_CHECK(err) ((err)&EINA_ERROR_REGISTERED_BIT)
+#define EINA_ERROR_REGISTERED_CHECK(err) ((err) & EINA_ERROR_REGISTERED_BIT)
 
 #define EINA_ERROR_FROM_INDEX(idx) ((idx) | EINA_ERROR_REGISTERED_BIT)
 #define EINA_ERROR_TO_INDEX(err)   ((err) & (~EINA_ERROR_REGISTERED_BIT))
@@ -323,7 +323,7 @@ eina_error_msg_get(Eina_Error error)
 
 #  ifdef HAVE_STRERROR_R
 #    ifndef STRERROR_R_CHAR_P
-            int         ret;
+            int ret;
 
             ret = strerror_r(error, buf, sizeof(buf)); /* XSI */
             if (ret == 0) str = buf;

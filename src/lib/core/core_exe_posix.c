@@ -537,7 +537,8 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
                     E_IF_NO_ERRNO(result,
                                   eina_file_close_on_exec(exe->child_fd_error_x,
                                                           EFL_TRUE),
-                                  ok){}
+                                  ok)
+                    {}
                     {
                         // XXX: eoify ecore fd handlers
                         exe->error_fd_handler = core_main_fd_handler_add(
@@ -566,7 +567,8 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
                     E_IF_NO_ERRNO(
                         result,
                         eina_file_close_on_exec(exe->child_fd_read_x, EFL_TRUE),
-                        ok){}
+                        ok)
+                    {}
                     {
                         // XXX: eoify ecore fd handlers
                         exe->read_fd_handler = core_main_fd_handler_add(
@@ -595,7 +597,8 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
                     E_IF_NO_ERRNO(result,
                                   eina_file_close_on_exec(exe->child_fd_write_x,
                                                           EFL_TRUE),
-                                  ok){}
+                                  ok)
+                    {}
                     {
                         // XXX: eoify ecore fd handlers
                         exe->write_fd_handler = core_main_fd_handler_add(

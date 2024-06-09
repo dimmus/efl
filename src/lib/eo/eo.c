@@ -876,7 +876,7 @@ _eo_class_funcs_set(Eo_Vtable            *vtable,
 #ifdef EO_DEBUG
     check_equal = EFL_TRUE;
 #else
-    check_equal      = !override_only;
+    check_equal = !override_only;
 #endif
     api_funcs = alloca(ops->count * sizeof(api_funcs[0]));
 

@@ -127,7 +127,7 @@ _core_time_init(void)
     }
     else
         CRI("Cannot get a valid clock_gettime() clock id! Fallback to unix "
-             "time");
+            "time");
 #else
 #  if defined(__APPLE__) && defined(__MACH__)
     mach_timebase_info_data_t info;

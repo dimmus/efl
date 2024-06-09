@@ -182,7 +182,7 @@ eina_unicode_escape(const Eina_Unicode *str)
 
 #define EINA_UNICODE_UTF8_BYTES_PER_CHAR 6
 /* The replacement range that will be used for bad utf8 chars. */
-#define ERROR_REPLACEMENT_END 0xDCFF
+#define ERROR_REPLACEMENT_END            0xDCFF
 
 EINA_API Eina_Unicode
 _eina_unicode_utf8_next_get(int           ind,

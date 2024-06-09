@@ -35,8 +35,10 @@
  * @cond LOCAL
  */
 
-static const int _eina_hamster =
-    (EFL_VERSION_MAJOR * 100 * 100 * 100) + (EFL_VERSION_MINOR * 100 * 100) + (EFL_VERSION_MICRO * 100);
+static const int _eina_hamster = (EFL_VERSION_MAJOR * 100 * 100 * 100) +
+                                 (EFL_VERSION_MINOR * 100 * 100) +
+                                 (EFL_VERSION_MICRO * 100);
+
 /**
  * @endcond
  */
