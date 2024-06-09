@@ -726,8 +726,8 @@ _efl_gfx_path_append_arc_to(Eo                *obj,
         // scale uniformly until we have a single solution
         // (see F6.2) i.e. when c == 0.0
         double scale = sqrt(1.0 - c / (rx2 * ry2));
-        rx *= scale;
-        ry *= scale;
+        rx          *= scale;
+        ry          *= scale;
         // update rx2 and ry2
         rx2 = rx * rx;
         ry2 = ry * ry;
@@ -843,12 +843,12 @@ _bezier_coefficients(double t, double *ap, double *bp, double *cp, double *dp)
     double a, b, c, d;
     double m_t = 1.0 - t;
 
-    b = m_t * m_t;
-    c = t * t;
-    d = c * t;
-    a = b * m_t;
-    b *= 3.0 * t;
-    c *= 3.0 * m_t;
+    b   = m_t * m_t;
+    c   = t * t;
+    d   = c * t;
+    a   = b * m_t;
+    b  *= 3.0 * t;
+    c  *= 3.0 * m_t;
     *ap = a;
     *bp = b;
     *cp = c;
@@ -950,7 +950,7 @@ _find_ellipse_coords(double x,
         t     = theta / 90;
         // truncate
         quadrant = (int)t;
-        t -= quadrant;
+        t       -= quadrant;
 
         t = _efl_gfx_t_for_arc_angle(90 * t);
 
@@ -1057,14 +1057,14 @@ _curves_for_arc(double x,
     // avoid empty start segment
     if (EINA_FLT_EQ(start_t, 1.0))
     {
-        start_t = 0;
+        start_t        = 0;
         start_segment += delta;
     }
 
     // avoid empty end segment
     if (EINA_FLT_EQ(end_t, 0.0))
     {
-        end_t = 1;
+        end_t        = 1;
         end_segment -= delta;
     }
 

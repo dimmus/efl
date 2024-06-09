@@ -274,7 +274,7 @@ eina_bezier_t_at(const Eina_Bezier *b, double l)
         else
         {
             biggest = t;
-            t -= t * 0.5;
+            t      -= t * 0.5;
         }
     }
 

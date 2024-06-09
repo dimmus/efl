@@ -681,7 +681,7 @@ eo_gen_docs_func_gen(const Eolian_State    *state,
         if (adoc)
         {
             eina_strbuf_append_char(buf, ' ');
-            curl += 1;
+            curl            += 1;
             const char *asum = eolian_documentation_summary_get(adoc);
             _append_section(state,
                             SUMMARY_OR_DEFAULT(asum),
@@ -718,7 +718,7 @@ eo_gen_docs_func_gen(const Eolian_State    *state,
     {
         curl = _indent_line(buf, indent);
         eina_strbuf_append(buf, " * @return ");
-        curl += sizeof(" * @return ") - 1;
+        curl            += sizeof(" * @return ") - 1;
         const char *rsum = eolian_documentation_summary_get(rdoc);
         _append_section(state,
                         SUMMARY_OR_DEFAULT(rsum),

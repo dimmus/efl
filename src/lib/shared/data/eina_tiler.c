@@ -271,7 +271,7 @@ _split_strict(list_t *dirty, const rect_t current, rect_t r)
          */
         rect_list_append_xywh(dirty, r.left, r.top, r.width, h_1);
         r.height -= h_1;
-        r.top = current.top;
+        r.top     = current.top;
     }
 
     if (h_2 > 0)
@@ -426,8 +426,8 @@ _split_fuzzy(list_t *dirty, const rect_t a, rect_t *b)
          */
         rect_list_append_xywh(dirty, b->left, b->top, b->width, h_1);
         b->height -= h_1;
-        b->top = a.top;
-        action = SPLIT_FUZZY_ACTION_SPLIT;
+        b->top     = a.top;
+        action     = SPLIT_FUZZY_ACTION_SPLIT;
     }
 
     if (h_2 > 0)
@@ -441,7 +441,7 @@ _split_fuzzy(list_t *dirty, const rect_t a, rect_t *b)
          */
         rect_list_append_xywh(dirty, b->left, a.bottom, b->width, h_2);
         b->height -= h_2;
-        action = SPLIT_FUZZY_ACTION_SPLIT;
+        action     = SPLIT_FUZZY_ACTION_SPLIT;
     }
 
     if (((w_1 > 0) || (w_2 > 0)) && (a.height == b->height))
@@ -1009,9 +1009,9 @@ _splitter_rect_add(Eina_Tiler *t, Eina_Rectangle *rect)
         // was disable. Need to investigate.
         rect->x >>= 1;
         rect->y >>= 1;
-        rect->w += 2;
+        rect->w  += 2;
         rect->w >>= 1;
-        rect->h += 2;
+        rect->h  += 2;
         rect->h >>= 1;
     }
 
@@ -1036,13 +1036,13 @@ _splitter_rect_del(Eina_Tiler *t, Eina_Rectangle *rect)
 
     if (t->rounding)
     {
-        rect->x += 1;
-        rect->y += 1;
+        rect->x  += 1;
+        rect->y  += 1;
         rect->x >>= 1;
         rect->y >>= 1;
-        rect->w -= 1;
+        rect->w  -= 1;
         rect->w >>= 1;
-        rect->h -= 1;
+        rect->h  -= 1;
         rect->h >>= 1;
     }
 

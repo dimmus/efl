@@ -133,7 +133,7 @@ _eina_debug_chunk_push(int size)
         chunk1_size = chunk1_size * 2;
     }
    // get the mem at the top of this stack and return it, then move along
-    ptr = chunk1 + chunk1_num;
+    ptr         = chunk1 + chunk1_num;
     chunk1_num += size;
     return ptr;
 }
@@ -198,7 +198,7 @@ _eina_debug_chunk_tmp_push(int size)
         chunk3_size = chunk3_size * 2;
     }
    // get the mem at the top of this stack and return it, then move along
-    ptr = chunk3 + chunk3_num;
+    ptr         = chunk3 + chunk3_num;
     chunk3_num += size;
     return ptr;
 }
@@ -235,7 +235,7 @@ _eina_debug_chunk_push(int size)
    // if we ran out of space - fail
     if ((chunk1_num + size) > chunk1_size) return NULL;
    // get the mem at the top of this stack and return it, then move along
-    ptr = chunk1 + chunk1_num;
+    ptr         = chunk1 + chunk1_num;
     chunk1_num += size;
     return ptr;
 }
@@ -262,7 +262,7 @@ _eina_debug_chunk_tmp_push(int size)
    // if we ran out of space - fail
     if ((chunk3_num + size) > chunk3_size) return NULL;
    // get the mem at the top of this stack and return it, then move along
-    ptr = chunk3 + chunk1_num;
+    ptr         = chunk3 + chunk1_num;
     chunk3_num += size;
     return ptr;
 }

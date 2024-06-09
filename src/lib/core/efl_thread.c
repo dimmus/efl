@@ -263,7 +263,7 @@ _efl_thread_pipe_write(int fd, const void *buf, size_t count)
         else if (ret >= 0)
         {
             my_buf += ret;
-            count -= ret;
+            count  -= ret;
             if (count == 0) return;
         }
     }

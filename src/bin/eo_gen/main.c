@@ -82,27 +82,27 @@ _try_set_out(char t, char **outs, const char *val, int *what)
     switch (t)
     {
         case 'h':
-            pos = _get_bit_pos(GEN_H);
+            pos    = _get_bit_pos(GEN_H);
             *what |= GEN_H;
             break;
         case 's':
-            pos = _get_bit_pos(GEN_H_STUB);
+            pos    = _get_bit_pos(GEN_H_STUB);
             *what |= GEN_H_STUB;
             break;
         case 'c':
-            pos = _get_bit_pos(GEN_C);
+            pos    = _get_bit_pos(GEN_C);
             *what |= GEN_C;
             break;
         case 'i':
-            pos = _get_bit_pos(GEN_C_IMPL);
+            pos    = _get_bit_pos(GEN_C_IMPL);
             *what |= GEN_C_IMPL;
             break;
         case 'd':
-            pos = _get_bit_pos(GEN_D);
+            pos    = _get_bit_pos(GEN_D);
             *what |= GEN_D;
             break;
         case 'D':
-            pos = _get_bit_pos(GEN_D_FULL);
+            pos    = _get_bit_pos(GEN_D_FULL);
             *what |= GEN_D_FULL;
             break;
     }

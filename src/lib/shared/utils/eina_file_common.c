@@ -166,7 +166,7 @@ _eina_file_escape(char *path, size_t len)
    // remove '/..$'
                 if (p[3] == '\0')
                 {
-                    len -= p + 2 - q;
+                    len        -= p + 2 - q;
                     result[len] = '\0';
                     break;
                 }
@@ -641,7 +641,7 @@ _eina_find_eol(const char *start, int boundary, const char *end)
         }
         else if (lf) return lf;
 
-        start += chunk;
+        start   += chunk;
         boundary = 4096;
     }
 
@@ -884,7 +884,7 @@ _eina_file_copy_splice_internal(int                     s,
         if (!ret) break;
 
         *splice_unsupported = EFL_FALSE;
-        done += r;
+        done               += r;
 
         if (cb)
         {

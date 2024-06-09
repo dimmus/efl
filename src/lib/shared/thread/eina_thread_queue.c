@@ -261,8 +261,8 @@ _eina_thread_queue_msg_alloc(Eina_Thread_Queue            *thq,
         if (size < MIN_SIZE)
             blk->next = _eina_thread_queue_msg_block_new(MIN_SIZE);
         else blk->next = _eina_thread_queue_msg_block_new(size);
-        blk       = blk->next;
-        thq->last = blk;
+        blk        = blk->next;
+        thq->last  = blk;
         blk->last += size;
         if (blk->last == blk->size) blk->full = 1;
         msg = (Eina_Thread_Queue_Msg *)(&(blk->data[0]));

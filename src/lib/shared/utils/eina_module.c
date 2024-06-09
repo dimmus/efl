@@ -542,7 +542,7 @@ eina_module_find(const Eina_Array *array, const char *module)
         memcpy(tmp, eina_module_file_get(m), len + 1);
         file_m = basename(tmp);
         len    = strlen(file_m);
-        len -= sizeof(SHARED_LIB_SUFFIX) - 1;
+        len   -= sizeof(SHARED_LIB_SUFFIX) - 1;
         if (len <= 0) continue;
 
         if (!strncmp(module, file_m, len)) return m;

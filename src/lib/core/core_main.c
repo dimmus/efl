@@ -1809,11 +1809,11 @@ _core_main_select_fd_too_big_check(int fd)
 {
     if (fd < FD_SETSIZE) return;
     int newsize = fd + 1 - 1;
-    newsize |= newsize >> 1;
-    newsize |= newsize >> 2;
-    newsize |= newsize >> 4;
-    newsize |= newsize >> 8;
-    newsize |= newsize >> 16;
+    newsize    |= newsize >> 1;
+    newsize    |= newsize >> 2;
+    newsize    |= newsize >> 4;
+    newsize    |= newsize >> 8;
+    newsize    |= newsize >> 16;
     newsize++;
     fprintf(stderr,
             "ERROR: ecore main loop, fd %i >= max possible fd %i.   "
@@ -1851,8 +1851,8 @@ _core_main_select(Eo *obj, Efl_Loop_Data *pd, double timeout)
 
 #  ifdef FIX_HZ
         timeout += (0.5 / HZ);
-        sec  = (int)timeout;
-        usec = (int)((timeout - (double)sec) * 1000000);
+        sec      = (int)timeout;
+        usec     = (int)((timeout - (double)sec) * 1000000);
 #  else
         sec  = (int)timeout;
         usec = (int)((timeout - (double)sec) * 1000000);
@@ -2238,7 +2238,7 @@ _core_main_fd_handlers_buf_call(Eo *obj, Efl_Loop_Data *pd)
             fdh->references++;
             if (_core_call_fd_cb(fdh->buf_func, fdh->buf_data, fdh))
             {
-                ret |= _core_call_fd_cb(fdh->func, fdh->data, fdh);
+                ret             |= _core_call_fd_cb(fdh->func, fdh->data, fdh);
                 fdh->read_active = EFL_TRUE;
                 _Core_try_add_to_call_list(obj, pd, fdh);
             }
@@ -2661,12 +2661,12 @@ _core_main_win32_objects_wait(DWORD         objects_nbr,
         if ((i == (threads_nbr - 1)) && (threads_remain != 0))
         {
             threads_data[i].objects_nbr = threads_remain;
-            objects_idx += threads_remain;
+            objects_idx                += threads_remain;
         }
         else
         {
             threads_data[i].objects_nbr = (MAXIMUM_WAIT_OBJECTS - 1);
-            objects_idx += (MAXIMUM_WAIT_OBJECTS - 1);
+            objects_idx                += (MAXIMUM_WAIT_OBJECTS - 1);
         }
 
         threads_handles[i] =

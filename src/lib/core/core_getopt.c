@@ -168,7 +168,7 @@ _core_getopt_help_line(FILE       *fp,
                 i = fwrite(text, 1, i, fp);
                 i++;
                 text += i;
-                len -= i;
+                len  -= i;
                 used += i;
 
                 /* if we start the line (linebreak is true) with a space
@@ -212,9 +212,9 @@ _core_getopt_help_line(FILE       *fp,
             }
             else
             {
-                i = fwrite(text, 1, i, fp);
+                i     = fwrite(text, 1, i, fp);
                 text += i;
-                len -= i;
+                len  -= i;
                 used += i;
             }
             linebreak = 0;
@@ -264,12 +264,12 @@ _core_getopt_help_description(FILE *fp, const Core_Getopt *parser)
         if (strncmp(d, "prog", sizeof("prog") - 1) == 0)
         {
             used = _core_getopt_help_line(fp, 0, cols, used, prg, prglen);
-            d += sizeof("prog") - 1;
+            d   += sizeof("prog") - 1;
         }
         else if (strncmp(d, "version", sizeof("version") - 1) == 0)
         {
             used = _core_getopt_help_line(fp, 0, cols, used, ver, verlen);
-            d += sizeof("version") - 1;
+            d   += sizeof("version") - 1;
         }
         else
         {

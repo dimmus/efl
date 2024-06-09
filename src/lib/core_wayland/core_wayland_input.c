@@ -244,7 +244,7 @@ _efl_core_wayland_input_mouse_wheel_send(Efl_Core_Wayland_Input *input,
     ev->modifiers = input->keyboard.modifiers;
     ev->x         = input->pointer.sx;
     ev->y         = input->pointer.sy;
-    value /= 10;
+    value        /= 10;
 
     if (axis == WL_POINTER_AXIS_VERTICAL_SCROLL)
     {

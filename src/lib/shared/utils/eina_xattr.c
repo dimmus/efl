@@ -75,7 +75,7 @@ _eina_xattr_value_ls_fd_iterator_next(Eina_Xattr_Iterator *it, void **data)
 
     *data          = it->attr;
     it->attr->name = it->xattr + it->offset;
-    it->offset += strlen(it->attr->name) + 1;
+    it->offset    += strlen(it->attr->name) + 1;
 
     it->attr->length = fgetxattr(it->fd, it->attr->name, NULL, 0);
     if (it->attr->length > 0)
@@ -110,7 +110,7 @@ _eina_xattr_value_ls_iterator_next(Eina_Xattr_Iterator *it, void **data)
 
     *data          = it->attr;
     it->attr->name = it->xattr + it->offset;
-    it->offset += strlen(it->attr->name) + 1;
+    it->offset    += strlen(it->attr->name) + 1;
 
     it->attr->length = getxattr(it->file, it->attr->name, NULL, 0);
     if (it->attr->length > 0)
@@ -141,7 +141,7 @@ _eina_xattr_ls_iterator_next(Eina_Xattr_Iterator *it, void **data)
 {
     if (it->offset >= it->length) return EFL_FALSE;
 
-    *data = it->xattr + it->offset;
+    *data       = it->xattr + it->offset;
     it->offset += strlen(it->xattr + it->offset) + 1;
 
     return EFL_TRUE;

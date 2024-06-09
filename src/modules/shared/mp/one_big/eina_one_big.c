@@ -292,7 +292,7 @@ retry:
     {
         unsigned char *ptr = (unsigned char *)(it->pool->base);
 
-        ptr += it->offset;
+        ptr        += it->offset;
         it->offset += it->pool->item_size;
 
         if (!eina_one_big_from(it->pool, ptr)) goto retry;

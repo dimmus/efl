@@ -225,9 +225,9 @@ eina_hash_add_alloc_by_hash(Eina_Hash  *hash,
     EINA_MAGIC_CHECK_HASH(hash);
 
    /* Apply eina mask to hash. */
-    hash_num = key_hash & hash->mask;
+    hash_num   = key_hash & hash->mask;
     key_hash >>= hash->buckets_power_size;
-    key_hash &= EINA_HASH_RBTREE_MASK;
+    key_hash  &= EINA_HASH_RBTREE_MASK;
 
     if (!hash->buckets)
     {
@@ -1339,16 +1339,16 @@ eina_hash_superfast(const char *key, int len)
     size_t hash = len, tmp;
     size_t rem;
 
-    rem = len & 3;
+    rem   = len & 3;
     len >>= 2;
 
     /* Main loop */
     for (; len > 0; len--)
     {
         hash += get16bits(key);
-        tmp  = (get16bits(key + 2) << 11) ^ hash;
-        hash = (hash << 16) ^ tmp;
-        key += 2 * sizeof(uint16_t);
+        tmp   = (get16bits(key + 2) << 11) ^ hash;
+        hash  = (hash << 16) ^ tmp;
+        key  += 2 * sizeof(uint16_t);
         hash += hash >> 11;
     }
 

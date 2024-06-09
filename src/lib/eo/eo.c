@@ -1717,8 +1717,8 @@ _eo_classes_expand(void)
     if (RUNNING_ON_VALGRIND)
     {
         _eo_classes_alloc += 128;
-        newsize = _eo_classes_alloc * sizeof(_Efl_Class *);
-        ptr     = realloc(_eo_classes, newsize);
+        newsize            = _eo_classes_alloc * sizeof(_Efl_Class *);
+        ptr                = realloc(_eo_classes, newsize);
         if (!ptr)
         {
             ERR("realloc of eo class table region faile!!");
@@ -1736,8 +1736,8 @@ _eo_classes_expand(void)
         if (_eo_no_anon == 1)
         {
             _eo_classes_alloc += 128;
-            newsize = _eo_classes_alloc * sizeof(_Efl_Class *);
-            ptr     = realloc(_eo_classes, newsize);
+            newsize            = _eo_classes_alloc * sizeof(_Efl_Class *);
+            ptr                = realloc(_eo_classes, newsize);
             if (!ptr)
             {
                 ERR("realloc of eo class table region faile!!");
@@ -1747,8 +1747,8 @@ _eo_classes_expand(void)
         else
         {
             _eo_classes_alloc += (MEM_PAGE_SIZE / sizeof(_Efl_Class *));
-            newsize = _eo_classes_alloc * sizeof(_Efl_Class *);
-            ptr     = mmap(NULL,
+            newsize            = _eo_classes_alloc * sizeof(_Efl_Class *);
+            ptr                = mmap(NULL,
                        newsize,
                        PROT_READ | PROT_WRITE,
                        MAP_PRIVATE | MAP_ANON,
@@ -1765,8 +1765,8 @@ _eo_classes_expand(void)
     }
 #else
     _eo_classes_alloc += 128;
-    newsize = _eo_classes_alloc * sizeof(_Efl_Class *);
-    ptr     = realloc(_eo_classes, newsize);
+    newsize            = _eo_classes_alloc * sizeof(_Efl_Class *);
+    ptr                = realloc(_eo_classes, newsize);
     if (!ptr)
     {
         ERR("realloc of eo class table region faile!!");

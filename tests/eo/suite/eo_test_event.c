@@ -233,7 +233,7 @@ static void
 _inc_when_called(void *data, const Efl_Event *ev EFL_UNUSED)
 {
     int *called = (int *)data;
-    *called += 1;
+    *called    += 1;
 }
 
 EFL_START_TEST(eo_event_fowarder_test)

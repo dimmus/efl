@@ -193,7 +193,7 @@ _eina_internal_call(void *context)
         int                max, pol;
 
         pthread_getschedparam(self, &pol, &params);
-        max = sched_get_priority_max(pol);
+        max                    = sched_get_priority_max(pol);
         params.sched_priority += 5;
         if (params.sched_priority > max) params.sched_priority = max;
         pthread_setschedparam(self, pol, &params);

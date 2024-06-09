@@ -431,7 +431,7 @@ eina_inarray_grow(Eina_Inarray *array, unsigned int size)
 
     if (!_eina_inarray_resize(array, array->len + size)) return NULL;
 
-    p = _eina_inarray_get(array, array->len);
+    p           = _eina_inarray_get(array, array->len);
     array->len += size;
 
     return p;

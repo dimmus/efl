@@ -436,7 +436,7 @@ _escaped_char_get(const char *s, const char *s_end)
         char        *utf8_char;
         size_t       len  = 0;
         int          base = 10;
-        s += 2; /* Skip "&#" */
+        s                += 2; /* Skip "&#" */
 
         if ((*s == 'x') || (*s == 'X'))
         {

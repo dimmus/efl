@@ -403,10 +403,10 @@ _eina_stringshare_small_bucket_dump(Eina_Stringshare_Small_Bucket *bucket,
     unsigned int  *r = bucket->references;
     int            i;
 
-    di->used += sizeof(*bucket);
-    di->used += bucket->count * sizeof(*s);
-    di->used += bucket->count * sizeof(*l);
-    di->used += bucket->count * sizeof(*r);
+    di->used   += sizeof(*bucket);
+    di->used   += bucket->count * sizeof(*s);
+    di->used   += bucket->count * sizeof(*l);
+    di->used   += bucket->count * sizeof(*r);
     di->unique += bucket->count;
 
     for (i = 0; i < bucket->count; i++, s++, l++, r++)
@@ -417,9 +417,9 @@ _eina_stringshare_small_bucket_dump(Eina_Stringshare_Small_Bucket *bucket,
 
         dups = (*r - 1);
 
-        di->used += *l;
+        di->used  += *l;
         di->saved += *l * dups;
-        di->dups += dups;
+        di->dups  += dups;
     }
 }
 

@@ -2764,7 +2764,7 @@ _eina_value_type_list_flush_elements(Eina_Value_List *tmem)
     while (tmem->list)
     {
         void *mem = eina_value_list_node_memory_get(tmem->subtype, tmem->list);
-        ret &= eina_value_type_flush(subtype, mem);
+        ret      &= eina_value_type_flush(subtype, mem);
         eina_value_list_node_memory_flush(tmem->subtype, tmem->list);
         tmem->list = eina_list_remove_list(tmem->list, tmem->list);
     }
@@ -3486,7 +3486,7 @@ _eina_value_type_timeval_fix(const struct timeval *input)
     struct timeval ret = *input;
     if (EINA_UNLIKELY(ret.tv_usec < 0))
     {
-        ret.tv_sec -= 1;
+        ret.tv_sec  -= 1;
         ret.tv_usec += 1e6;
     }
     return ret;

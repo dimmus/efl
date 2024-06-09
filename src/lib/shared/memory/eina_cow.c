@@ -159,7 +159,7 @@ _eina_cow_hash_gen(const void   *key,
     {
         r ^= hash(walk, size);
 
-        walk += size;
+        walk       += size;
         key_length -= size;
     }
 

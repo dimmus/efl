@@ -105,7 +105,7 @@ pat_next(const char *pat, size_t m, size_t *step, int flags)
                 (pat[k + 1] == ':' || pat[k + 1] == '.' || pat[k + 1] == '='))
             {
                 int z = pat[k + 1];
-                k += 2;
+                k    += 2;
                 if (k < m && pat[k]) k++;
                 while (k < m && pat[k] && (pat[k - 1] != z || pat[k] != ']'))
                     k++;
@@ -185,7 +185,7 @@ match_bracket(const char *p, int k, int kfold)
         {
             const char *p0 = p + 2;
             int         z  = p[1];
-            p += 3;
+            p             += 3;
             while (p[-1] != z || p[0] != ']')
                 p++;
             if (z == ':' && p - 1 - p0 < 16)
@@ -242,8 +242,8 @@ fnmatch_internal(const char *pat,
             default:
                 k = str_next(str, n, &sinc);
                 if (k <= 0) return (c == END) ? 0 : EINA_FNMATCH_NOMATCH;
-                str += sinc;
-                n -= sinc;
+                str  += sinc;
+                n    -= sinc;
                 kfold = flags & EINA_FNMATCH_CASEFOLD ? casefold(k) : k;
                 if (c == BRACKET)
                 {
@@ -255,7 +255,7 @@ fnmatch_internal(const char *pat,
                     return EINA_FNMATCH_NOMATCH;
                 }
                 pat += pinc;
-                m -= pinc;
+                m   -= pinc;
                 continue;
         }
         break;
@@ -307,14 +307,14 @@ fnmatch_internal(const char *pat,
     p = ptail;
     for (;;)
     {
-        c = pat_next(p, endpat - p, &pinc, flags);
+        c  = pat_next(p, endpat - p, &pinc, flags);
         p += pinc;
         if ((k = str_next(s, endstr - s, &sinc)) <= 0)
         {
             if (c != END) return EINA_FNMATCH_NOMATCH;
             break;
         }
-        s += sinc;
+        s    += sinc;
         kfold = flags & EINA_FNMATCH_CASEFOLD ? casefold(k) : k;
         if (c == BRACKET)
         {
@@ -337,7 +337,7 @@ fnmatch_internal(const char *pat,
         s = str;
         for (;;)
         {
-            c = pat_next(p, endpat - p, &pinc, flags);
+            c  = pat_next(p, endpat - p, &pinc, flags);
             p += pinc;
    /* Encountering * completes/commits a component */
             if (c == STAR)

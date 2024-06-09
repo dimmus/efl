@@ -405,7 +405,7 @@ _eina_file_map_rule_apply(Eina_File_Populate rule,
     addr = _page_aligned_address(map, offset, hugetlb);
     if (size > 0)
     {
-        size += ((char *)map + offset) - addr;
+        size   += ((char *)map + offset) - addr;
         offset -= ((char *)map + offset) - addr;
         if ((offset + size) > maplen)
         {
@@ -557,7 +557,7 @@ eina_file_current_directory_get(const char *path, size_t len)
     if (!tmp) return NULL;
 
     len += strlen(cwd) + 2;
-    tmp = alloca(sizeof(char) * len);
+    tmp  = alloca(sizeof(char) * len);
 
     slprintf(tmp, len, "%s/%s", cwd, path);
 
@@ -1049,7 +1049,7 @@ eina_file_map_new(Eina_File         *file,
 #ifdef MAP_HUGETLB
         if (map->map == MAP_FAILED && (flags & MAP_HUGETLB))
         {
-            flags &= ~MAP_HUGETLB;
+            flags   &= ~MAP_HUGETLB;
             map->map = mmap(NULL, length, PROT_READ, flags, file->fd, offset);
         }
 
@@ -1370,7 +1370,7 @@ skip:
             }
             d     = (Dirent *)(buf + pos);
             fname = d->d_name;
-            pos += d->d_reclen;
+            pos  += d->d_reclen;
             if (pos >= ret) do_read = EFL_TRUE;
             if (!((fname[0] >= '0') && (fname[0] <= '9'))) continue;
             num = atoi(fname);
@@ -1404,7 +1404,7 @@ skip2:
                 }
                 d     = (Dirent *)(buf + pos);
                 fname = d->d_name;
-                pos += d->d_reclen;
+                pos  += d->d_reclen;
                 if (pos >= ret) do_read = EFL_TRUE;
                 if (!((fname[0] >= '0') && (fname[0] <= '9'))) continue;
                 num = atoi(fname);

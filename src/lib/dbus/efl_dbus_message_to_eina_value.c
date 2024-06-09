@@ -300,8 +300,8 @@ _message_iter_struct_to_eina_value(Efl_Dbus_Message_Iter *iter)
         m->name   = strdup(name);
         offset    = _type_offset(type, offset);
         m->offset = offset;
-        offset += _type_size(type);
-        m->type = _dbus_type_to_eina_value_type(type);
+        offset   += _type_size(type);
+        m->type   = _dbus_type_to_eina_value_type(type);
         eina_array_push(st_members, m);
 
         DBG("type = %c", type);

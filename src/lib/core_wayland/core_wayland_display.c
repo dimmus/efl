@@ -127,7 +127,7 @@ _aux_hints_supported_aux_hints(void                           *data,
     while ((const char *)p < ((const char *)hints->data + hints->size))
     {
         str[i] = (char *)eina_stringshare_add(p);
-        p += strlen(p) + 1;
+        p     += strlen(p) + 1;
         i++;
     }
     for (i = 0; i < num_hints; i++)
@@ -229,7 +229,7 @@ _aux_hints_aux_message(void                           *data,
         {
             str      = (char *)eina_stringshare_add(p);
             opt_list = eina_list_append(opt_list, str);
-            p += strlen(p) + 1;
+            p       += strlen(p) + 1;
         }
     }
 

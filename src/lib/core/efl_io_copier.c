@@ -192,7 +192,7 @@ _efl_io_copier_dispatch_data_events(Eo                 *o,
     tmp = eina_binbuf_slice_get(pd->buf);
     if (offset <= tmp.len)
     {
-        tmp.len -= offset;
+        tmp.len   -= offset;
         tmp.bytes += offset;
     }
     if (tmp.len > slice_of_binbuf.len) tmp.len = slice_of_binbuf.len;
@@ -211,7 +211,7 @@ _efl_io_copier_dispatch_data_events(Eo                 *o,
         tmp = eina_binbuf_slice_get(pd->buf);
         if (offset <= tmp.len)
         {
-            tmp.len -= offset;
+            tmp.len   -= offset;
             tmp.bytes += offset;
         }
         if (tmp.len > slice_of_binbuf.len) tmp.len = slice_of_binbuf.len;

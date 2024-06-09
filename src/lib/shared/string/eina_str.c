@@ -250,7 +250,7 @@ eina_str_split_full_helper(const char   *str,
             str_array[x] = pos;
             //printf("str_array[%d] = '%s'\n", x, str_array[x]);
             pos += idx[x] - idx[x - 1] - dlen + 1;
-            src = idx[x];
+            src  = idx[x];
             x++, tokens++;
             str_array[x] = s = pos;
             break;
@@ -518,17 +518,17 @@ eina_str_convert(const char *enc_from, const char *enc_to, const char *text)
     {
         size_t count;
 
-        tob   = outb;
-        count = iconv(ic, (char **)&inp, &inb, &outp, &outb);
+        tob     = outb;
+        count   = iconv(ic, (char **)&inp, &inb, &outp, &outb);
         outlen += tob - outb;
         if (count == (size_t)(-1))
         {
             if (errno == E2BIG)
             {
-                new_txt = realloc(new_txt, outalloc + 64);
-                outp    = new_txt + outlen;
+                new_txt   = realloc(new_txt, outalloc + 64);
+                outp      = new_txt + outlen;
                 outalloc += 64;
-                outb += 64;
+                outb     += 64;
             }
             else
             {
@@ -591,17 +591,17 @@ eina_str_convert_len(const char *enc_from,
     {
         size_t count;
 
-        tob   = outb;
-        count = iconv(ic, (char **)&inp, &inb, &outp, &outb);
+        tob     = outb;
+        count   = iconv(ic, (char **)&inp, &inb, &outp, &outb);
         outlen += tob - outb;
         if (count == (size_t)(-1))
         {
             if (errno == E2BIG)
             {
-                new_txt = realloc(new_txt, outalloc + 64);
-                outp    = new_txt + outlen;
+                new_txt   = realloc(new_txt, outalloc + 64);
+                outp      = new_txt + outlen;
                 outalloc += 64;
-                outb += 64;
+                outb     += 64;
             }
             else
             {

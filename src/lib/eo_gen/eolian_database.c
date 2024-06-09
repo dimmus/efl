@@ -320,7 +320,7 @@ mloop:
    /* complex monospace markup ($[...]) */
     if ((doc[0] == '$') && (doc[1] == '['))
     {
-        doc += 2;
+        doc          += 2;
         ret->text     = doc;
         ret->text_end = ret->text;
         while ((ret->text_end[0] != '\0') && (ret->text_end[0] != ']') &&

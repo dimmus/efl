@@ -23,7 +23,7 @@ mask_to_str(int mask, char *buf)
     {                                      \
         if (append_sep) *(buf++) = '|';    \
         memcpy(buf, str, sizeof(str) - 1); \
-        buf += sizeof(str) - 1;            \
+        buf       += sizeof(str) - 1;      \
         append_sep = EFL_TRUE;             \
     }
 

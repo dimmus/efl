@@ -65,7 +65,7 @@ _get_abbreviated_name(const char *prefix, const char *fname)
         ((*(tmp + len) == '\0') || (*(tmp + len) == '_')))
     {
         int plen = strlen(prefix);
-        len += (tmp - fname);
+        len     += (tmp - fname);
 
         if ((plen >= len) && !strncmp(prefix + plen - len, fname, len))
         {

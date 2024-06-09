@@ -1156,7 +1156,7 @@ _efl_object_wref_add(Eo *obj, Efl_Object_Data *pd, Eo **wref)
     Eo                 ***tmp;
     Efl_Object_Extension *ext;
 
-    count = _wref_count(pd);
+    count  = _wref_count(pd);
     count += 1; /* New wref. */
 
     ext = _efl_object_extension_need(pd);

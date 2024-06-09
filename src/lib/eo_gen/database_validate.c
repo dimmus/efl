@@ -118,7 +118,7 @@ _validate_doc_since(Validate_State *vals, Eolian_Documentation *doc)
                 _eo_parser_log(&doc->base, "invalid EFL version in @since");
                 return EFL_FALSE;
             }
-            snum += 2;
+            snum             += 2;
             unsigned long min = strtoul(snum, NULL, 10);
             if (min < 22)
             {

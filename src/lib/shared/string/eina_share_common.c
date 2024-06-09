@@ -593,10 +593,10 @@ eina_iterator_array_check(const Eina_Rbtree *rbtree EFL_UNUSED,
         EINA_LOG_DBG("'%.*s'",
                      node->length,
                      ((char *)node) + sizeof(Eina_Share_Common_Node));
-        fdata->used += sizeof(Eina_Share_Common_Node);
-        fdata->used += node->length;
+        fdata->used  += sizeof(Eina_Share_Common_Node);
+        fdata->used  += node->length;
         fdata->saved += (node->references - 1) * node->length;
-        fdata->dups += node->references - 1;
+        fdata->dups  += node->references - 1;
         fdata->unique++;
     }
 

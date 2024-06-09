@@ -456,8 +456,8 @@ _core_pipe_wait(Core_Pipe *p, int message_count, double wait)
             p->handling++;
             _core_pipe_read(p, NULL);
             message_count -= p->message;
-            total += p->message;
-            p->message = 0;
+            total         += p->message;
+            p->message     = 0;
             _core_pipe_unhandle(p);
         }
         else if (ret == 0) break;
@@ -540,8 +540,8 @@ _core_pipe_wait(Core_Pipe *p, int message_count, double wait)
         {
             _core_pipe_read(p, NULL);
             message_count -= p->message;
-            total += p->message;
-            p->message = 0;
+            total         += p->message;
+            p->message     = 0;
             if (message_count <= 0)
             {
                 _core_pipe_unhandle(p);

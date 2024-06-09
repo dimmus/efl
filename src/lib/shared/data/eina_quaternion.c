@@ -805,7 +805,7 @@ eina_matrix4_quaternion_to(Eina_Quaternion    *rotation,
         scale->z = eina_point_3d_norm(&row2);
         eina_point_3d_normalize(&row2, scale->z);
 
-        tmp = 1 / scale->z;
+        tmp      = 1 / scale->z;
         skew->y *= tmp;
         skew->z *= tmp;
 

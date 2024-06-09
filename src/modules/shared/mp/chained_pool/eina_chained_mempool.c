@@ -203,7 +203,7 @@ _eina_chained_mempool_alloc_in(Chained_Mempool *pool, Chained_Pool *p)
     }
     else if (p->last)
     {
-        mem = p->last;
+        mem      = p->last;
         p->last += pool->item_alloc;
         if (p->last >= p->limit) p->last = NULL;
     }
@@ -587,7 +587,7 @@ retry:
     {
         unsigned char *ptr = (unsigned char *)(it->current + 1);
 
-        ptr += it->offset;
+        ptr        += it->offset;
         it->offset += it->pool->item_alloc;
 
         if (!eina_chained_mempool_from(it->pool, ptr)) goto retry;
@@ -678,7 +678,7 @@ eina_chained_mempool_repack(void                  *data,
 
         if (start == tail || start->usage == pool->pool_size) break;
 
-        for (src = start->limit - pool->group_size; src != start->limit;
+        for (src  = start->limit - pool->group_size; src != start->limit;
              src += pool->item_alloc)
         {
             Efl_Bool is_free = EFL_FALSE;

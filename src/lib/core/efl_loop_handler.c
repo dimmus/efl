@@ -161,7 +161,7 @@ _event_references_update(Efl_Loop_Handler_Data *pd,
     if (array[i].desc == _desc)            \
     {                                      \
         pd->references._refs += increment; \
-        need_reset = EFL_TRUE;             \
+        need_reset            = EFL_TRUE;  \
         continue;                          \
     }
         REFERENCES_MAP(EFL_LOOP_HANDLER_EVENT_READ, read);

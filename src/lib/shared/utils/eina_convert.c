@@ -229,7 +229,7 @@ eina_convert_atod(const char *src, int length, long long *m, long *e)
         return EFL_FALSE;
     }
 
-    str += 2;
+    str    += 2;
     length -= 2;
 
     mantisse = HEXA_TO_INT(*str);
@@ -243,7 +243,7 @@ eina_convert_atod(const char *src, int length, long long *m, long *e)
              ++str, --length, ++nbr_decimals)
         {
             mantisse <<= 4;
-            mantisse += HEXA_TO_INT(*str);
+            mantisse  += HEXA_TO_INT(*str);
         }
 
     if (sign < 0) mantisse = -mantisse;
@@ -315,12 +315,12 @@ eina_convert_dtoa(double d, char *des)
     *(des++) = 'x';
     *(des++) = look_up_table[(size_t)d];
     *(des++) = '.';
-    length += 4;
+    length  += 4;
 
     for (i = 0; i < 16; i++, length++)
     {
-        d -= floor(d);
-        d *= 16;
+        d       -= floor(d);
+        d       *= 16;
         *(des++) = look_up_table[(size_t)d];
     }
 
@@ -398,12 +398,12 @@ eina_convert_fptoa(Eina_F32p32 fp, char *des)
     *(des++) = 'x';
     *(des++) = look_up_table[fp >> 32];
     *(des++) = '.';
-    length += 4;
+    length  += 4;
 
     for (i = 0; i < 16; i++, length++)
     {
-        fp &= 0x00000000ffffffffLL;
-        fp <<= 4; /* fp *= 16 */
+        fp      &= 0x00000000ffffffffLL;
+        fp     <<= 4; /* fp *= 16 */
         *(des++) = look_up_table[fp >> 32];
     }
 
@@ -559,7 +559,7 @@ eina_convert_strtod_c(const char *nptr, char **endptr)
             }
         }
         val += (double)decimal_part / (double)pow10;
-        a = iter;
+        a    = iter;
     }
 
    /* (optional) exponent */
@@ -602,7 +602,7 @@ eina_convert_strtod_c(const char *nptr, char **endptr)
         if ((eina_dbl_exact(val, 2.2250738585072011)) &&
             ((minus_e * (int)expo_part) == -308))
         {
-            val *= 1.0e-308;
+            val  *= 1.0e-308;
             a     = iter;
             errno = ERANGE;
             goto on_success;
@@ -612,7 +612,7 @@ eina_convert_strtod_c(const char *nptr, char **endptr)
             ((minus_e * (int)expo_part) <= -308))
         {
             val *= 1.0e-308;
-            a = iter;
+            a    = iter;
             goto on_success;
         }
 
@@ -620,7 +620,7 @@ eina_convert_strtod_c(const char *nptr, char **endptr)
 
         while (expo_part >= 8U)
         {
-            scale *= 1E8;
+            scale     *= 1E8;
             expo_part -= 8U;
         }
         while (expo_part > 0U)

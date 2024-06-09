@@ -276,7 +276,7 @@ _efl_io_queue_efl_io_reader_read(Eo                *o,
     ro_slice.len = rw_slice->len;
     ro_slice.mem = pd->bytes + pd->position_read;
 
-    *rw_slice = eina_rw_slice_copy(*rw_slice, ro_slice);
+    *rw_slice          = eina_rw_slice_copy(*rw_slice, ro_slice);
     pd->position_read += ro_slice.len;
 
     efl_io_reader_can_read_set(o, pd->position_read < pd->position_write);

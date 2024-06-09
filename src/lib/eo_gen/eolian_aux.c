@@ -147,7 +147,7 @@ eolian_aux_class_callables_get(const Eolian_Class *klass,
     }
     if (ownfuncs) *ownfuncs = of;
     if (ownevs) *ownevs = oe;
-    total = of + oe;
+    total  = of + oe;
     total += _callables_find(klass, funcs, events, written);
     eina_hash_free(written);
     return total;

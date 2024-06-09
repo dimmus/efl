@@ -68,7 +68,7 @@ eina_sha1(const unsigned char *data, int size, unsigned char dst[20])
             if ((left == 1) && (idx < 64)) buf[idx] = 0x80;
             for (i = 0; i < 16; i++)
             {
-                word[i] = (unsigned int)buf[(i * 4)] << 24;
+                word[i]  = (unsigned int)buf[(i * 4)] << 24;
                 word[i] |= (unsigned int)buf[(i * 4) + 1] << 16;
                 word[i] |= (unsigned int)buf[(i * 4) + 2] << 8;
                 word[i] |= (unsigned int)buf[(i * 4) + 3];
@@ -105,7 +105,7 @@ eina_sha1(const unsigned char *data, int size, unsigned char dst[20])
             digest[2] += wc;
             digest[3] += wd;
             digest[4] += we;
-            idx = 0;
+            idx        = 0;
         }
     }
 

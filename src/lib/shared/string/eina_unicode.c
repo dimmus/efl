@@ -369,13 +369,13 @@ eina_unicode_unicode_to_utf8_range(const Eina_Unicode *uni, int ulen, int *_len)
         if (*uind <= 0x7F) /* 1 byte char */
         {
             *ind++ = *uind;
-            len += 1;
+            len   += 1;
         }
         else if (*uind <= 0x7FF) /* 2 byte char */
         {
             *ind++ = 0xC0 | (unsigned char)(*uind >> 6);
             *ind++ = 0x80 | (unsigned char)(*uind & 0x3F);
-            len += 2;
+            len   += 2;
         }
         else if (*uind <= 0xFFFF) /* 3 byte char */
         {
@@ -384,14 +384,14 @@ eina_unicode_unicode_to_utf8_range(const Eina_Unicode *uni, int ulen, int *_len)
                 *uind <= ERROR_REPLACEMENT_END)
             {
                 *ind++ = *uind & 0xFF;
-                len += 1;
+                len   += 1;
             }
             else
             {
                 *ind++ = 0xE0 | (unsigned char)(*uind >> 12);
                 *ind++ = 0x80 | (unsigned char)((*uind >> 6) & 0x3F);
                 *ind++ = 0x80 | (unsigned char)(*uind & 0x3F);
-                len += 3;
+                len   += 3;
             }
         }
         else if (*uind <= 0x1FFFFF) /* 4 byte char */
@@ -400,7 +400,7 @@ eina_unicode_unicode_to_utf8_range(const Eina_Unicode *uni, int ulen, int *_len)
             *ind++ = 0x80 | (unsigned char)((*uind >> 12) & 0x3F);
             *ind++ = 0x80 | (unsigned char)((*uind >> 6) & 0x3F);
             *ind++ = 0x80 | (unsigned char)(*uind & 0x3F);
-            len += 4;
+            len   += 4;
         }
         else if (*uind <= 0x3FFFFFF) /* 5 byte char */
         {
@@ -409,7 +409,7 @@ eina_unicode_unicode_to_utf8_range(const Eina_Unicode *uni, int ulen, int *_len)
             *ind++ = 0x80 | (unsigned char)((*uind >> 12) & 0x3F);
             *ind++ = 0x80 | (unsigned char)((*uind >> 6) & 0x3F);
             *ind++ = 0x80 | (unsigned char)(*uind & 0x3F);
-            len += 5;
+            len   += 5;
         }
         else /* 6 byte char */
         {
@@ -419,7 +419,7 @@ eina_unicode_unicode_to_utf8_range(const Eina_Unicode *uni, int ulen, int *_len)
             *ind++ = 0x80 | (unsigned char)((*uind >> 12) & 0x3F);
             *ind++ = 0x80 | (unsigned char)((*uind >> 6) & 0x3F);
             *ind++ = 0x80 | (unsigned char)(*uind & 0x3F);
-            len += 6;
+            len   += 6;
         }
     }
     buf2 = realloc(buf, len + 1);

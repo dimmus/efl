@@ -165,7 +165,7 @@ push_buf(Eina_Evlog_Buf *b, unsigned int size)
         b->overflow++;
         b->top = 0;
     }
-    ptr = (b->buf + b->top);
+    ptr     = (b->buf + b->top);
     b->top += size;
     return ptr;
 }
@@ -187,7 +187,7 @@ eina_evlog(const char *event, void *obj, double srctime, const char *detail)
     if (detail)
     {
         detail_offset = size;
-        size += strlen(detail) + 1;
+        size         += strlen(detail) + 1;
     }
     size = sizeof(double) * ((size + sizeof(double) - 1) / sizeof(double));
     eina_spinlock_take(&_evlog_lock);

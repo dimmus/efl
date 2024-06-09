@@ -186,7 +186,7 @@ _eina_inlist_sorted_state_compact(Eina_Inlist_Sorted_State *state)
     unsigned short i, j;
 
    /* compress the jump table */
-    state->jump_div *= 2;
+    state->jump_div   *= 2;
     state->jump_limit /= 2;
 
     for (i = 2, j = 1; i < EINA_INLIST_JUMP_SIZE; i += 2, j++)
@@ -591,8 +591,8 @@ eina_inlist_sorted_insert(Eina_Inlist    *list,
     * Now do a dychotomic search between two entries inside the jump_table
     */
     cur *= state.jump_div;
-    inf = cur - state.jump_div - 1;
-    sup = cur + state.jump_div + 1;
+    inf  = cur - state.jump_div - 1;
+    sup  = cur + state.jump_div + 1;
 
     if (sup > count - 1) sup = count - 1;
     if (inf < 0) inf = 0;
@@ -710,8 +710,8 @@ eina_inlist_sorted_state_insert(Eina_Inlist              *list,
     * Now do a dychotomic search between two entries inside the jump_table
     */
     cur *= state->jump_div;
-    inf = cur - state->jump_div - 1;
-    sup = cur + state->jump_div + 1;
+    inf  = cur - state->jump_div - 1;
+    sup  = cur + state->jump_div + 1;
 
     if (sup > count - 1) sup = count - 1;
     if (inf < 0) inf = 0;

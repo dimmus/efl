@@ -713,18 +713,18 @@ _gen_func(const Eolian_Class     *cl,
 
         if (is_prop)
         {
-            itr = eolian_property_values_get(fid, ftype);
+            itr     = eolian_property_values_get(fid, ftype);
             owners += _gen_function_param_fallback(itr,
                                                    fallback_free_ownership,
                                                    param_call);
-            itr = eolian_property_keys_get(fid, ftype);
+            itr     = eolian_property_keys_get(fid, ftype);
             owners += _gen_function_param_fallback(itr,
                                                    fallback_free_ownership,
                                                    param_call);
         }
         else
         {
-            itr = eolian_function_parameters_get(fid);
+            itr     = eolian_function_parameters_get(fid);
             owners += _gen_function_param_fallback(itr,
                                                    fallback_free_ownership,
                                                    param_call);

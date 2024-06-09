@@ -463,12 +463,12 @@ _efl_io_buffer_efl_io_positioner_seek(Eo                      *o,
 
     if (whence == EFL_IO_POSITIONER_WHENCE_CURRENT)
     {
-        whence = EFL_IO_POSITIONER_WHENCE_START;
+        whence  = EFL_IO_POSITIONER_WHENCE_START;
         offset += efl_io_positioner_position_get(o);
     }
     else if (whence == EFL_IO_POSITIONER_WHENCE_END)
     {
-        whence = EFL_IO_POSITIONER_WHENCE_START;
+        whence  = EFL_IO_POSITIONER_WHENCE_START;
         offset += size;
     }
 

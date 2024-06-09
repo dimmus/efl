@@ -220,7 +220,7 @@ _core_exe_win32_io_poll_notify(void *data      EFL_UNUSED,
                     memcpy(b + exe->pipe_read.data_size,
                            trep->buf,
                            trep->buf_size);
-                    exe->pipe_read.data_buf = b;
+                    exe->pipe_read.data_buf   = b;
                     exe->pipe_read.data_size += trep->buf_size;
                 }
                 else ERR("Out of memory in reading exe pipe data");
@@ -254,7 +254,7 @@ _core_exe_win32_io_poll_notify(void *data      EFL_UNUSED,
                     memcpy(b + exe->pipe_error.data_size,
                            trep->buf,
                            trep->buf_size);
-                    exe->pipe_error.data_buf = b;
+                    exe->pipe_error.data_buf   = b;
                     exe->pipe_error.data_size += trep->buf_size;
                 }
                 else ERR("Out of memory in reading exe pipe data");
@@ -540,7 +540,7 @@ _impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe)
     si.hStdOutput = child_pipe_read;
     si.hStdInput  = exe->pipe_write.child_pipe;
     si.hStdError  = child_pipe_error;
-    si.dwFlags |= STARTF_USESTDHANDLES;
+    si.dwFlags   |= STARTF_USESTDHANDLES;
 
     DBG("CreateProcess: shell:%s child:%s", use_sh ? "yes" : "no", exe_cmd_buf);
     if (!CreateProcess(shell,
@@ -699,7 +699,7 @@ _impl_core_exe_event_data_get(Core_Exe      *obj,
                     {
                         Core_Exe_Event_Data_Line *lines;
 
-                        max += 10;
+                        max  += 10;
                         lines = realloc(e->lines,
                                         sizeof(Core_Exe_Event_Data_Line) *
                                             (max + 1));

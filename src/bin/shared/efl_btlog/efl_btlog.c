@@ -278,13 +278,13 @@ bt_input_translate(const char *line, char **comment)
     if (!filestart) return NULL;
 
     filestart += strlen("(in ");
-    basestart = strstr(filestart, " 0x");
+    basestart  = strstr(filestart, " 0x");
     if (!basestart) return NULL;
 
     fileend = basestart;
 
     basestart += strlen(" ");
-    baseend = strchr(basestart, ')');
+    baseend    = strchr(basestart, ')');
     if (!baseend) return NULL;
 
     snprintf(local,

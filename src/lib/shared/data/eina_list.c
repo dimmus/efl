@@ -1215,8 +1215,8 @@ eina_list_merge(Eina_List *left, Eina_List *right)
 
     if (n_left >= n_right)
     {
-        Eina_List *itr         = right;
-        left->accounting->last = right->accounting->last;
+        Eina_List *itr           = right;
+        left->accounting->last   = right->accounting->last;
         left->accounting->count += n_right;
 
         _eina_list_mempool_accounting_free(right->accounting);
@@ -1230,7 +1230,7 @@ eina_list_merge(Eina_List *left, Eina_List *right)
     }
     else
     {
-        Eina_List *itr = left->accounting->last;
+        Eina_List *itr            = left->accounting->last;
         right->accounting->count += n_left;
 
         _eina_list_mempool_accounting_free(left->accounting);
@@ -1303,18 +1303,18 @@ eina_list_sorted_merge(Eina_List *left, Eina_List *right, Eina_Compare_Cb func)
 
     if (func(left->data, right->data) < 0)
     {
-        ret     = left;
-        current = left;
-        left    = left->next;
+        ret                     = left;
+        current                 = left;
+        left                    = left->next;
         ret->accounting->count += right->accounting->count;
 
         _eina_list_mempool_accounting_free(right->accounting);
     }
     else
     {
-        ret     = right;
-        current = right;
-        right   = right->next;
+        ret                     = right;
+        current                 = right;
+        right                   = right->next;
         ret->accounting->count += left->accounting->count;
 
         _eina_list_mempool_accounting_free(left->accounting);

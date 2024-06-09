@@ -1690,7 +1690,7 @@ static void
 _destruct_test_destruct_cb(void *data, const Efl_Event *ev)
 {
     int *var = data;
-    *var *= 2;
+    *var    *= 2;
 
     ck_assert_int_eq(efl_ref_count(ev->object), 0);
 
