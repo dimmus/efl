@@ -81,7 +81,7 @@ AlignConsecutiveDeclarations:
 AlignConsecutiveMacros:
     Enabled:          true
     AcrossEmptyLines: false
-    AcrossComments:   false
+    AcrossComments:   true
 AlignTrailingComments:
     Kind:           Leave
     OverEmptyLines: 0
@@ -128,7 +128,7 @@ AllowShortLoopsOnASingleLine: false
 #       "multi"
 #       "line";
 #
-AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterReturnType: AllDefinitions
 AlwaysBreakBeforeMultilineStrings: false
 
 # This tries to match EFL's style as much as possible.
