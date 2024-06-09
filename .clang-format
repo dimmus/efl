@@ -68,7 +68,11 @@ AlignConsecutiveAssignments:
     Enabled:          true
     AcrossEmptyLines: false
     AcrossComments:   false
-    AlignCompound:    false
+# false: mem = p->last;
+#        p->last += pool->item_alloc;
+# true:  mem      = p->last;
+#        p->last += pool->item_alloc;
+    AlignCompound:    true
     PadOperators:     false
 AlignConsecutiveBitFields:
     Enabled:          true
