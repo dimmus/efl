@@ -28,7 +28,7 @@ To understand something, i should break it! So, to begin with ..
 - create **transparent** lib names. Systematic renaming. See [changelog_api](./changelog_api.md)
 - general and consistent EFL_* (re)naming (like EFL_UNUSED, 
   Efl_Bool, libefl_core_*, libefl_shared, etc).
-- create test system **without** `check` usage
+- ~~create test system **without** `check` usage~~ (it was a bad idea, we need infastructure to init some stuff before test itself)
 - create diverse documentation: man files, manuals, wiki, coockbooks, api, etc.
   Some templates from different projects are provided.
 - make thorough **code analysis** system. Some templates from different 
