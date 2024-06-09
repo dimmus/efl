@@ -150,7 +150,8 @@ typedef unsigned int Eina_Magic;
  *
  * @warning The returned value must not be freed.
  */
-EINA_API const char *eina_magic_string_get(Eina_Magic magic) EFL_WARN_UNUSED_RESULT;
+EINA_API const char *
+eina_magic_string_get(Eina_Magic magic) EFL_WARN_UNUSED_RESULT;
 /**
  * @brief Sets the string associated with the given magic identifier.
  * @details This function sets the string @p magic_name to @p magic. It is not
@@ -165,8 +166,9 @@ EINA_API const char *eina_magic_string_get(Eina_Magic magic) EFL_WARN_UNUSED_RES
  *
  * @see eina_magic_string_static_set()
  */
-EINA_API Efl_Bool   eina_magic_string_set(Eina_Magic  magic,
-                                       const char *magic_name) EINA_ARG_NONNULL(2);
+EINA_API Efl_Bool eina_magic_string_set(Eina_Magic  magic,
+                                        const char *magic_name)
+  EINA_ARG_NONNULL(2);
 
 /**
  * @brief Sets the string associated with the given magic identifier.
@@ -183,8 +185,9 @@ EINA_API Efl_Bool   eina_magic_string_set(Eina_Magic  magic,
  *
  * @see eina_magic_string_set()
  */
-EINA_API Efl_Bool   eina_magic_string_static_set(Eina_Magic  magic,
-                                              const char *magic_name) EINA_ARG_NONNULL(2);
+EINA_API Efl_Bool eina_magic_string_static_set(Eina_Magic  magic,
+                                               const char *magic_name)
+  EINA_ARG_NONNULL(2);
 
 /**
  * @def EINA_MAGIC_NONE
@@ -221,7 +224,7 @@ EINA_API extern Eina_Error EINA_ERROR_MAGIC_FAILED;
  *
  * @note If the magic feature of Eina is disabled, #EINA_MAGIC does nothing.
  */
-#define EINA_MAGIC Eina_Magic __magic
+#  define EINA_MAGIC Eina_Magic __magic
 
 /**
  * @def EINA_MAGIC_SET(d, m)
@@ -232,7 +235,7 @@ EINA_API extern Eina_Error EINA_ERROR_MAGIC_FAILED;
  * @note If the magic feature of Eina is disabled, #EINA_MAGIC_CHECK is just
  *       the value @c 0.
  */
-#define EINA_MAGIC_SET(d, m)   (d)->__magic = (m)
+#  define EINA_MAGIC_SET(d, m)   (d)->__magic = (m)
 
 /**
  * @def EINA_MAGIC_CHECK(d, m)
@@ -244,7 +247,7 @@ EINA_API extern Eina_Error EINA_ERROR_MAGIC_FAILED;
  * @note If the magic feature of Eina is disabled, #EINA_MAGIC_CHECK is just
  *       the value @c 1.
  */
-#define EINA_MAGIC_CHECK(d, m) (EINA_LIKELY((d) && ((d)->__magic == (m))))
+#  define EINA_MAGIC_CHECK(d, m) (EINA_LIKELY((d) && ((d)->__magic == (m))))
 
 /**
  * @def EINA_MAGIC_FAIL(d, m)
@@ -256,7 +259,7 @@ EINA_API extern Eina_Error EINA_ERROR_MAGIC_FAILED;
  * @note If the magic feature of Eina is disabled, #EINA_MAGIC_FAIL does
  *       nothing.
  */
-#define EINA_MAGIC_FAIL(d, m)             \
+#  define EINA_MAGIC_FAIL(d, m)             \
   eina_magic_fail((void *)(d),            \
                   (d) ? (d)->__magic : 0, \
                   (m),                    \
@@ -289,9 +292,12 @@ EINA_API extern Eina_Error EINA_ERROR_MAGIC_FAILED;
  *       called and the program stops. It is useful for debugging programs
  *       with gdb.
  */
-EINA_API void eina_magic_fail(void *d, Eina_Magic m, Eina_Magic req_m,
-                          const char *file, const char *fnc,
-                          int line) EINA_ARG_NONNULL(4, 5);
+EINA_API void eina_magic_fail(void       *d,
+                              Eina_Magic  m,
+                              Eina_Magic  req_m,
+                              const char *file,
+                              const char *fnc,
+                              int         line) EINA_ARG_NONNULL(4, 5);
 
 #else
 
@@ -299,12 +305,12 @@ EINA_API void eina_magic_fail(void *d, Eina_Magic m, Eina_Magic req_m,
  * @cond LOCAL
  */
 
-#define EINA_MAGIC
-#define EINA_MAGIC_SET(d, m)                          ((void)0)
-#define EINA_MAGIC_CHECK(d, m)                        (1)
-#define EINA_MAGIC_FAIL(d, m)                         ((void)0)
+#  define EINA_MAGIC
+#  define EINA_MAGIC_SET(d, m)                          ((void)0)
+#  define EINA_MAGIC_CHECK(d, m)                        (1)
+#  define EINA_MAGIC_FAIL(d, m)                         ((void)0)
 
-#define eina_magic_fail(d, m, req_m, file, fnx, line) ((void)0)
+#  define eina_magic_fail(d, m, req_m, file, fnx, line) ((void)0)
 
 /**
  * @endcond

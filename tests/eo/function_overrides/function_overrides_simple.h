@@ -3,10 +3,10 @@
 
 typedef struct
 {
-   int a;
+  int a;
 } Simple_Public_Data;
 
-void simple_a_set(Eo *obj, int a);
+void     simple_a_set(Eo *obj, int a);
 Efl_Bool simple_a_print(Eo *obj);
 Efl_Bool simple_class_print(const Eo *obj);
 Efl_Bool simple_class_print2(const Eo *obj);

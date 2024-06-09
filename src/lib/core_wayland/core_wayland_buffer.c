@@ -23,7 +23,7 @@
 /* begin/end dma-buf functions used for userspace mmap. */
 struct dma_buf_sync
 {
-    __u64 flags;
+  __u64 flags;
 };
 
 #  define DMA_BUF_SYNC_READ             (1 << 0)
@@ -58,32 +58,32 @@ typedef struct _Buffer_Manager          Buffer_Manager;
 
 struct _Buffer_Manager
 {
-    Buffer_Handle *(*alloc)(Buffer_Manager *self,
-                            const char     *name,
-                            int             w,
-                            int             h,
-                            unsigned long  *stride,
-                            int32_t        *fd);
-    struct wl_buffer *(*to_buffer)(Efl_Core_Wayland_Display *ewd,
-                                   Efl_Core_Wayland_Buffer  *db);
-    void *(*map)(Efl_Core_Wayland_Buffer *buf);
-    void (*unmap)(Efl_Core_Wayland_Buffer *buf);
-    void (*discard)(Efl_Core_Wayland_Buffer *buf);
-    void (*lock)(Efl_Core_Wayland_Buffer *buf);
-    void (*unlock)(Efl_Core_Wayland_Buffer *buf);
-    void (*manager_destroy)(void);
-    void    *priv;
-    void    *dl_handle;
-    int      refcount;
-    Efl_Bool destroyed;
+  Buffer_Handle *(*alloc)(Buffer_Manager *self,
+                          const char     *name,
+                          int             w,
+                          int             h,
+                          unsigned long  *stride,
+                          int32_t        *fd);
+  struct wl_buffer *(*to_buffer)(Efl_Core_Wayland_Display *ewd,
+                                 Efl_Core_Wayland_Buffer  *db);
+  void *(*map)(Efl_Core_Wayland_Buffer *buf);
+  void (*unmap)(Efl_Core_Wayland_Buffer *buf);
+  void (*discard)(Efl_Core_Wayland_Buffer *buf);
+  void (*lock)(Efl_Core_Wayland_Buffer *buf);
+  void (*unlock)(Efl_Core_Wayland_Buffer *buf);
+  void (*manager_destroy)(void);
+  void    *priv;
+  void    *dl_handle;
+  int      refcount;
+  Efl_Bool destroyed;
 };
 
 static Buffer_Manager *buffer_manager = NULL;
 
 static drm_intel_bufmgr *(
-    *sym_drm_intel_bufmgr_gem_init)(int fd, int batch_size) = NULL;
-static int (*sym_drm_intel_bo_unmap)(drm_intel_bo *bo)      = NULL;
-static int (*sym_drm_intel_bo_map)(drm_intel_bo *bo)        = NULL;
+  *sym_drm_intel_bufmgr_gem_init)(int fd, int batch_size) = NULL;
+static int (*sym_drm_intel_bo_unmap)(drm_intel_bo *bo)    = NULL;
+static int (*sym_drm_intel_bo_map)(drm_intel_bo *bo)      = NULL;
 static drm_intel_bo *(*sym_drm_intel_bo_alloc_tiled)(drm_intel_bufmgr *mgr,
                                                      const char       *name,
                                                      int               x,
@@ -92,7 +92,7 @@ static drm_intel_bo *(*sym_drm_intel_bo_alloc_tiled)(drm_intel_bufmgr *mgr,
                                                      uint32_t         *tile,
                                                      unsigned long    *pitch,
                                                      unsigned long     flags) =
-    NULL;
+  NULL;
 static void (*sym_drm_intel_bo_unreference)(drm_intel_bo *bo)   = NULL;
 static int (*sym_drmPrimeHandleToFD)(int      fd,
                                      uint32_t handle,
@@ -111,10 +111,10 @@ static void (*sym_drm_intel_bufmgr_destroy)(drm_intel_bufmgr *) = NULL;
 static void
 buffer_release(void *data, struct wl_buffer *buffer EFL_UNUSED)
 {
-    Efl_Core_Wayland_Buffer *b = data;
+  Efl_Core_Wayland_Buffer *b = data;
 
-    b->busy = EFL_FALSE;
-    if (b->orphaned) efl_core_wayland_buffer_destroy(b);
+  b->busy = EFL_FALSE;
+  if (b->orphaned) efl_core_wayland_buffer_destroy(b);
 }
 
 static const struct wl_buffer_listener buffer_listener = { buffer_release };
@@ -123,59 +123,56 @@ static struct wl_buffer *
 _evas_dmabuf_wl_buffer_from_dmabuf(Efl_Core_Wayland_Display *ewd,
                                    Efl_Core_Wayland_Buffer  *db)
 {
-    struct wl_buffer                  *buf;
-    struct zwp_linux_dmabuf_v1        *dmabuf;
-    struct zwp_linux_buffer_params_v1 *dp;
-    uint32_t                           flags = 0;
-    uint32_t                           format;
+  struct wl_buffer                  *buf;
+  struct zwp_linux_dmabuf_v1        *dmabuf;
+  struct zwp_linux_buffer_params_v1 *dp;
+  uint32_t                           flags = 0;
+  uint32_t                           format;
 
-    if (db->alpha) format = DRM_FORMAT_ARGB8888;
-    else format = DRM_FORMAT_XRGB8888;
+  if (db->alpha) format = DRM_FORMAT_ARGB8888;
+  else format = DRM_FORMAT_XRGB8888;
 
-    dmabuf = efl_core_wayland_display_dmabuf_get(ewd);
-    dp     = zwp_linux_dmabuf_v1_create_params(dmabuf);
-    zwp_linux_buffer_params_v1_add(dp, db->fd, 0, 0, db->stride, 0, 0);
-    buf = zwp_linux_buffer_params_v1_create_immed(dp,
-                                                  db->w,
-                                                  db->h,
-                                                  format,
-                                                  flags);
-    wl_buffer_add_listener(buf, &buffer_listener, db);
-    zwp_linux_buffer_params_v1_destroy(dp);
+  dmabuf = efl_core_wayland_display_dmabuf_get(ewd);
+  dp     = zwp_linux_dmabuf_v1_create_params(dmabuf);
+  zwp_linux_buffer_params_v1_add(dp, db->fd, 0, 0, db->stride, 0, 0);
+  buf =
+    zwp_linux_buffer_params_v1_create_immed(dp, db->w, db->h, format, flags);
+  wl_buffer_add_listener(buf, &buffer_listener, db);
+  zwp_linux_buffer_params_v1_destroy(dp);
 
-    return buf;
+  return buf;
 }
 
 static void
 _dmabuf_lock(Efl_Core_Wayland_Buffer *b)
 {
-    int                 ret;
-    struct dma_buf_sync s;
+  int                 ret;
+  struct dma_buf_sync s;
 
-    s.flags = DMA_BUF_SYNC_START | DMA_BUF_SYNC_RW;
-    do
-    {
-        ret = ioctl(b->fd, DMA_BUF_IOCTL_SYNC, &s);
-    }
-    while (ret && ((errno == EAGAIN) || (errno == EINTR)));
+  s.flags = DMA_BUF_SYNC_START | DMA_BUF_SYNC_RW;
+  do
+  {
+    ret = ioctl(b->fd, DMA_BUF_IOCTL_SYNC, &s);
+  }
+  while (ret && ((errno == EAGAIN) || (errno == EINTR)));
 
-    if (ret) WRN("Failed to lock dmabuf");
+  if (ret) WRN("Failed to lock dmabuf");
 }
 
 static void
 _dmabuf_unlock(Efl_Core_Wayland_Buffer *b)
 {
-    int                 ret;
-    struct dma_buf_sync s;
+  int                 ret;
+  struct dma_buf_sync s;
 
-    s.flags = DMA_BUF_SYNC_END | DMA_BUF_SYNC_RW;
-    do
-    {
-        ret = ioctl(b->fd, DMA_BUF_IOCTL_SYNC, &s);
-    }
-    while (ret && ((errno == EAGAIN) || (errno == EINTR)));
+  s.flags = DMA_BUF_SYNC_END | DMA_BUF_SYNC_RW;
+  do
+  {
+    ret = ioctl(b->fd, DMA_BUF_IOCTL_SYNC, &s);
+  }
+  while (ret && ((errno == EAGAIN) || (errno == EINTR)));
 
-    if (ret) WRN("Failed to unlock dmabuf");
+  if (ret) WRN("Failed to unlock dmabuf");
 }
 
 static Buffer_Handle *
@@ -186,110 +183,104 @@ _intel_alloc(Buffer_Manager *self,
              unsigned long  *stride,
              int32_t        *fd)
 {
-    uint32_t      tile = I915_TILING_NONE;
-    drm_intel_bo *out;
+  uint32_t      tile = I915_TILING_NONE;
+  drm_intel_bo *out;
 
-    out = sym_drm_intel_bo_alloc_tiled(self->priv,
-                                       name,
-                                       w,
-                                       h,
-                                       4,
-                                       &tile,
-                                       stride,
-                                       0);
+  out =
+    sym_drm_intel_bo_alloc_tiled(self->priv, name, w, h, 4, &tile, stride, 0);
 
-    if (!out) return NULL;
+  if (!out) return NULL;
 
-    if (tile != I915_TILING_NONE) goto err;
+  if (tile != I915_TILING_NONE) goto err;
    /* First try to allocate an mmapable buffer with O_RDWR,
     * if that fails retry unmappable - if the compositor is
     * using GL it won't need to mmap the buffer and this can
     * work - otherwise it'll reject this buffer and we'll
     * have to fall back to shm rendering.
     */
-    if (sym_drmPrimeHandleToFD(drm_fd, out->handle, DRM_CLOEXEC | O_RDWR, fd) !=
-        0)
-        if (sym_drmPrimeHandleToFD(drm_fd, out->handle, DRM_CLOEXEC, fd) != 0)
-            goto err;
+  if (sym_drmPrimeHandleToFD(drm_fd, out->handle, DRM_CLOEXEC | O_RDWR, fd) !=
+      0)
+    if (sym_drmPrimeHandleToFD(drm_fd, out->handle, DRM_CLOEXEC, fd) != 0)
+      goto err;
 
-    return (Buffer_Handle *)out;
+  return (Buffer_Handle *)out;
 
 err:
-    sym_drm_intel_bo_unreference(out);
-    return NULL;
+  sym_drm_intel_bo_unreference(out);
+  return NULL;
 }
 
 static void *
 _intel_map(Efl_Core_Wayland_Buffer *buf)
 {
-    drm_intel_bo *bo;
+  drm_intel_bo *bo;
 
-    bo = (drm_intel_bo *)buf->bh;
-    if (sym_drm_intel_bo_map(bo) != 0) return NULL;
-    return bo->virtual;
+  bo = (drm_intel_bo *)buf->bh;
+  if (sym_drm_intel_bo_map(bo) != 0) return NULL;
+  return bo->virtual;
 }
 
 static void
 _intel_unmap(Efl_Core_Wayland_Buffer *buf)
 {
-    drm_intel_bo *bo;
+  drm_intel_bo *bo;
 
-    bo = (drm_intel_bo *)buf->bh;
-    sym_drm_intel_bo_unmap(bo);
+  bo = (drm_intel_bo *)buf->bh;
+  sym_drm_intel_bo_unmap(bo);
 }
 
 static void
 _intel_discard(Efl_Core_Wayland_Buffer *buf)
 {
-    drm_intel_bo *bo;
+  drm_intel_bo *bo;
 
-    bo = (drm_intel_bo *)buf->bh;
-    sym_drm_intel_bo_unreference(bo);
+  bo = (drm_intel_bo *)buf->bh;
+  sym_drm_intel_bo_unreference(bo);
 }
 
 static void
 _intel_manager_destroy(void)
 {
-    sym_drm_intel_bufmgr_destroy(buffer_manager->priv);
+  sym_drm_intel_bufmgr_destroy(buffer_manager->priv);
 }
 
 static Efl_Bool
 _intel_buffer_manager_setup(int fd)
 {
-    Efl_Bool fail = EFL_FALSE;
-    void    *drm_intel_lib;
+  Efl_Bool fail = EFL_FALSE;
+  void    *drm_intel_lib;
 
-    drm_intel_lib = dlopen("libdrm_intel.so", RTLD_LAZY | RTLD_GLOBAL);
-    if (!drm_intel_lib) return EFL_FALSE;
+  drm_intel_lib = dlopen("libdrm_intel.so", RTLD_LAZY | RTLD_GLOBAL);
+  if (!drm_intel_lib) return EFL_FALSE;
 
-    SYM(drm_intel_lib, drm_intel_bufmgr_gem_init);
-    SYM(drm_intel_lib, drm_intel_bo_unmap);
-    SYM(drm_intel_lib, drm_intel_bo_map);
-    SYM(drm_intel_lib, drm_intel_bo_alloc_tiled);
-    SYM(drm_intel_lib, drm_intel_bo_unreference);
-    SYM(drm_intel_lib, drm_intel_bufmgr_destroy);
-    SYM(drm_intel_lib, drmPrimeHandleToFD);
+  SYM(drm_intel_lib, drm_intel_bufmgr_gem_init);
+  SYM(drm_intel_lib, drm_intel_bo_unmap);
+  SYM(drm_intel_lib, drm_intel_bo_map);
+  SYM(drm_intel_lib, drm_intel_bo_alloc_tiled);
+  SYM(drm_intel_lib, drm_intel_bo_unreference);
+  SYM(drm_intel_lib, drm_intel_bufmgr_destroy);
+  SYM(drm_intel_lib, drmPrimeHandleToFD);
 
-    if (fail) goto err;
+  if (fail) goto err;
 
-    buffer_manager->priv = sym_drm_intel_bufmgr_gem_init(fd, 32);
-    if (!buffer_manager->priv) goto err;
+  buffer_manager->priv = sym_drm_intel_bufmgr_gem_init(fd, 32);
+  if (!buffer_manager->priv) goto err;
 
-    buffer_manager->alloc           = _intel_alloc;
-    buffer_manager->to_buffer       = _evas_dmabuf_wl_buffer_from_dmabuf;
-    buffer_manager->map             = _intel_map;
-    buffer_manager->unmap           = _intel_unmap;
-    buffer_manager->discard         = _intel_discard;
-    buffer_manager->lock            = _dmabuf_lock;
-    buffer_manager->unlock          = _dmabuf_unlock;
-    buffer_manager->manager_destroy = _intel_manager_destroy;
-    buffer_manager->dl_handle       = drm_intel_lib;
+  buffer_manager->alloc           = _intel_alloc;
+  buffer_manager->to_buffer       = _evas_dmabuf_wl_buffer_from_dmabuf;
+  buffer_manager->map             = _intel_map;
+  buffer_manager->unmap           = _intel_unmap;
+  buffer_manager->discard         = _intel_discard;
+  buffer_manager->lock            = _dmabuf_lock;
+  buffer_manager->unlock          = _dmabuf_unlock;
+  buffer_manager->manager_destroy = _intel_manager_destroy;
+  buffer_manager->dl_handle       = drm_intel_lib;
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 
 err:
-    dlclose(drm_intel_lib);
-    return EFL_FALSE;
+  dlclose(drm_intel_lib);
+  return EFL_FALSE;
 }
 
 #if 0
@@ -413,38 +404,38 @@ _wl_shm_alloc(Buffer_Manager *self EFL_UNUSED,
               unsigned long       *stride,
               int32_t             *fd)
 {
-    Eina_Tmpstr *fullname;
-    size_t       size = w * h * 4;
-    void        *out  = NULL;
-    char        *tmp;
+  Eina_Tmpstr *fullname;
+  size_t       size = w * h * 4;
+  void        *out  = NULL;
+  char        *tmp;
 
    // XXX try memfd, then shm open then the below...
-    tmp = eina_vpath_resolve("(:usr.run:)/evas-wayland_shm-XXXXXX");
-    *fd = eina_file_mkstemp(tmp, &fullname);
-    free(tmp);
+  tmp = eina_vpath_resolve("(:usr.run:)/evas-wayland_shm-XXXXXX");
+  *fd = eina_file_mkstemp(tmp, &fullname);
+  free(tmp);
 
-    if (*fd < 0) return NULL;
+  if (*fd < 0) return NULL;
 
-    unlink(fullname);
-    eina_tmpstr_del(fullname);
+  unlink(fullname);
+  eina_tmpstr_del(fullname);
 
-    *stride = w * 4;
-    if (ftruncate(*fd, size) < 0) goto err;
+  *stride = w * 4;
+  if (ftruncate(*fd, size) < 0) goto err;
 
-    out = mmap(NULL, size, (PROT_READ | PROT_WRITE), MAP_SHARED, *fd, 0);
-    if (out == MAP_FAILED) goto err;
+  out = mmap(NULL, size, (PROT_READ | PROT_WRITE), MAP_SHARED, *fd, 0);
+  if (out == MAP_FAILED) goto err;
 
-    return out;
+  return out;
 
 err:
-    close(*fd);
-    return NULL;
+  close(*fd);
+  return NULL;
 }
 
 static void *
 _wl_shm_map(Efl_Core_Wayland_Buffer *buf)
 {
-    return buf->bh;
+  return buf->bh;
 }
 
 static void
@@ -456,7 +447,7 @@ _wl_shm_unmap(Efl_Core_Wayland_Buffer *buf EFL_UNUSED)
 static void
 _wl_shm_discard(Efl_Core_Wayland_Buffer *buf)
 {
-    munmap(buf->bh, buf->size);
+  munmap(buf->bh, buf->size);
 }
 
 static void
@@ -468,47 +459,47 @@ _wl_shm_manager_destroy(void)
 static struct wl_buffer *
 _wl_shm_to_buffer(Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer *db)
 {
-    struct wl_buffer   *buf;
-    struct wl_shm_pool *pool;
-    struct wl_shm      *shm;
-    uint32_t            format;
+  struct wl_buffer   *buf;
+  struct wl_shm_pool *pool;
+  struct wl_shm      *shm;
+  uint32_t            format;
 
-    if (db->alpha) format = WL_SHM_FORMAT_ARGB8888;
-    else format = WL_SHM_FORMAT_XRGB8888;
+  if (db->alpha) format = WL_SHM_FORMAT_ARGB8888;
+  else format = WL_SHM_FORMAT_XRGB8888;
 
-    shm  = efl_core_wayland_display_shm_get(ewd);
-    pool = wl_shm_create_pool(shm, db->fd, db->size);
-    buf  = wl_shm_pool_create_buffer(pool, 0, db->w, db->h, db->stride, format);
-    wl_shm_pool_destroy(pool);
-    close(db->fd);
-    db->fd = -1;
-    wl_buffer_add_listener(buf, &buffer_listener, db);
-    return buf;
+  shm  = efl_core_wayland_display_shm_get(ewd);
+  pool = wl_shm_create_pool(shm, db->fd, db->size);
+  buf  = wl_shm_pool_create_buffer(pool, 0, db->w, db->h, db->stride, format);
+  wl_shm_pool_destroy(pool);
+  close(db->fd);
+  db->fd = -1;
+  wl_buffer_add_listener(buf, &buffer_listener, db);
+  return buf;
 }
 
 static Efl_Bool
 _wl_shm_buffer_manager_setup(int fd EFL_UNUSED)
 {
-    buffer_manager->alloc           = _wl_shm_alloc;
-    buffer_manager->to_buffer       = _wl_shm_to_buffer;
-    buffer_manager->map             = _wl_shm_map;
-    buffer_manager->unmap           = _wl_shm_unmap;
-    buffer_manager->discard         = _wl_shm_discard;
-    buffer_manager->manager_destroy = _wl_shm_manager_destroy;
-    return EFL_TRUE;
+  buffer_manager->alloc           = _wl_shm_alloc;
+  buffer_manager->to_buffer       = _wl_shm_to_buffer;
+  buffer_manager->map             = _wl_shm_map;
+  buffer_manager->unmap           = _wl_shm_unmap;
+  buffer_manager->discard         = _wl_shm_discard;
+  buffer_manager->manager_destroy = _wl_shm_manager_destroy;
+  return EFL_TRUE;
 }
 
 struct internal_vc4_bo
 {
-    __u32 handle;
-    int   size;
-    int   fd;
+  __u32 handle;
+  int   size;
+  int   fd;
 };
 
 static int
 align(int v, int a)
 {
-    return (v + a - 1) & ~((uint64_t)a - 1);
+  return (v + a - 1) & ~((uint64_t)a - 1);
 }
 
 static Buffer_Handle *
@@ -519,209 +510,207 @@ _vc4_alloc(Buffer_Manager *self EFL_UNUSED,
            unsigned long       *stride,
            int32_t             *fd)
 {
-    struct drm_vc4_create_bo bo;
-    struct internal_vc4_bo  *obo;
-    struct drm_gem_close     cl;
-    size_t                   size;
-    int                      ret;
+  struct drm_vc4_create_bo bo;
+  struct internal_vc4_bo  *obo;
+  struct drm_gem_close     cl;
+  size_t                   size;
+  int                      ret;
 
-    obo = malloc(sizeof(struct internal_vc4_bo));
-    if (!obo) return NULL;
+  obo = malloc(sizeof(struct internal_vc4_bo));
+  if (!obo) return NULL;
 
-    *stride = align(w * 4, 16);
-    size    = *stride * h;
-    memset(&bo, 0, sizeof(bo));
-    bo.size = size;
-    ret     = ioctl(drm_fd, DRM_IOCTL_VC4_CREATE_BO, &bo);
-    if (ret)
-    {
-        free(obo);
-        return NULL;
-    }
+  *stride = align(w * 4, 16);
+  size    = *stride * h;
+  memset(&bo, 0, sizeof(bo));
+  bo.size = size;
+  ret     = ioctl(drm_fd, DRM_IOCTL_VC4_CREATE_BO, &bo);
+  if (ret)
+  {
+    free(obo);
+    return NULL;
+  }
 
-    obo->handle = bo.handle;
-    obo->size   = size;
+  obo->handle = bo.handle;
+  obo->size   = size;
    /* First try to allocate an mmapable buffer with O_RDWR,
     * if that fails retry unmappable - if the compositor is
     * using GL it won't need to mmap the buffer and this can
     * work - otherwise it'll reject this buffer and we'll
     * have to fall back to shm rendering.
     */
-    if (sym_drmPrimeHandleToFD(drm_fd, bo.handle, DRM_CLOEXEC | O_RDWR, fd) !=
-        0)
-        if (sym_drmPrimeHandleToFD(drm_fd, bo.handle, DRM_CLOEXEC, fd) != 0)
-            goto err;
+  if (sym_drmPrimeHandleToFD(drm_fd, bo.handle, DRM_CLOEXEC | O_RDWR, fd) != 0)
+    if (sym_drmPrimeHandleToFD(drm_fd, bo.handle, DRM_CLOEXEC, fd) != 0)
+      goto err;
 
-    obo->fd = *fd;
-    return (Buffer_Handle *)obo;
+  obo->fd = *fd;
+  return (Buffer_Handle *)obo;
 
 err:
-    memset(&cl, 0, sizeof(cl));
-    cl.handle = bo.handle;
-    ioctl(drm_fd, DRM_IOCTL_GEM_CLOSE, &cl);
-    free(obo);
-    return NULL;
+  memset(&cl, 0, sizeof(cl));
+  cl.handle = bo.handle;
+  ioctl(drm_fd, DRM_IOCTL_GEM_CLOSE, &cl);
+  free(obo);
+  return NULL;
 }
 
 static void *
 _vc4_map(Efl_Core_Wayland_Buffer *buf)
 {
-    struct drm_vc4_mmap_bo  map;
-    struct internal_vc4_bo *bo;
-    void                   *ptr;
-    int                     ret;
+  struct drm_vc4_mmap_bo  map;
+  struct internal_vc4_bo *bo;
+  void                   *ptr;
+  int                     ret;
 
-    bo = (struct internal_vc4_bo *)buf->bh;
+  bo = (struct internal_vc4_bo *)buf->bh;
 
-    memset(&map, 0, sizeof(map));
-    map.handle = bo->handle;
-    ret        = ioctl(drm_fd, DRM_IOCTL_VC4_MMAP_BO, &map);
-    if (ret) return NULL;
+  memset(&map, 0, sizeof(map));
+  map.handle = bo->handle;
+  ret        = ioctl(drm_fd, DRM_IOCTL_VC4_MMAP_BO, &map);
+  if (ret) return NULL;
 
-    ptr = mmap(NULL,
-               bo->size,
-               PROT_READ | PROT_WRITE,
-               MAP_SHARED,
-               drm_fd,
-               map.offset);
-    if (ptr == MAP_FAILED) return NULL;
+  ptr = mmap(NULL,
+             bo->size,
+             PROT_READ | PROT_WRITE,
+             MAP_SHARED,
+             drm_fd,
+             map.offset);
+  if (ptr == MAP_FAILED) return NULL;
 
-    return ptr;
+  return ptr;
 }
 
 static void
 _vc4_unmap(Efl_Core_Wayland_Buffer *buf)
 {
-    struct internal_vc4_bo *bo;
+  struct internal_vc4_bo *bo;
 
-    bo = (struct internal_vc4_bo *)buf->bh;
-    munmap(buf->mapping, bo->size);
+  bo = (struct internal_vc4_bo *)buf->bh;
+  munmap(buf->mapping, bo->size);
 }
 
 static void
 _vc4_discard(Efl_Core_Wayland_Buffer *buf)
 {
-    struct drm_gem_close    cl;
-    struct internal_vc4_bo *bo;
+  struct drm_gem_close    cl;
+  struct internal_vc4_bo *bo;
 
-    bo = (struct internal_vc4_bo *)buf->bh;
+  bo = (struct internal_vc4_bo *)buf->bh;
 
-    memset(&cl, 0, sizeof(cl));
-    cl.handle = bo->handle;
-    ioctl(drm_fd, DRM_IOCTL_GEM_CLOSE, &cl);
+  memset(&cl, 0, sizeof(cl));
+  cl.handle = bo->handle;
+  ioctl(drm_fd, DRM_IOCTL_GEM_CLOSE, &cl);
 }
 
 static Efl_Bool
 _vc4_buffer_manager_setup(int fd)
 {
-    struct drm_gem_close     cl;
-    struct drm_vc4_create_bo bo;
-    Efl_Bool                 fail = EFL_FALSE;
-    void                    *drm_lib;
+  struct drm_gem_close     cl;
+  struct drm_vc4_create_bo bo;
+  Efl_Bool                 fail = EFL_FALSE;
+  void                    *drm_lib;
 
-    memset(&bo, 0, sizeof(bo));
-    bo.size = 32;
-    if (ioctl(fd, DRM_IOCTL_VC4_CREATE_BO, &bo)) return EFL_FALSE;
+  memset(&bo, 0, sizeof(bo));
+  bo.size = 32;
+  if (ioctl(fd, DRM_IOCTL_VC4_CREATE_BO, &bo)) return EFL_FALSE;
 
-    memset(&cl, 0, sizeof(cl));
-    cl.handle = bo.handle;
-    ioctl(fd, DRM_IOCTL_GEM_CLOSE, &cl);
+  memset(&cl, 0, sizeof(cl));
+  cl.handle = bo.handle;
+  ioctl(fd, DRM_IOCTL_GEM_CLOSE, &cl);
 
-    drm_lib = dlopen("libdrm.so", RTLD_LAZY | RTLD_GLOBAL);
-    if (!drm_lib) return EFL_FALSE;
+  drm_lib = dlopen("libdrm.so", RTLD_LAZY | RTLD_GLOBAL);
+  if (!drm_lib) return EFL_FALSE;
 
-    SYM(drm_lib, drmPrimeHandleToFD);
+  SYM(drm_lib, drmPrimeHandleToFD);
 
-    if (fail) goto err;
+  if (fail) goto err;
 
-    buffer_manager->alloc           = _vc4_alloc;
-    buffer_manager->to_buffer       = _evas_dmabuf_wl_buffer_from_dmabuf;
-    buffer_manager->map             = _vc4_map;
-    buffer_manager->unmap           = _vc4_unmap;
-    buffer_manager->discard         = _vc4_discard;
-    buffer_manager->lock            = _dmabuf_lock;
-    buffer_manager->unlock          = _dmabuf_unlock;
-    buffer_manager->manager_destroy = NULL;
-    buffer_manager->dl_handle       = drm_lib;
-    return EFL_TRUE;
+  buffer_manager->alloc           = _vc4_alloc;
+  buffer_manager->to_buffer       = _evas_dmabuf_wl_buffer_from_dmabuf;
+  buffer_manager->map             = _vc4_map;
+  buffer_manager->unmap           = _vc4_unmap;
+  buffer_manager->discard         = _vc4_discard;
+  buffer_manager->lock            = _dmabuf_lock;
+  buffer_manager->unlock          = _dmabuf_unlock;
+  buffer_manager->manager_destroy = NULL;
+  buffer_manager->dl_handle       = drm_lib;
+  return EFL_TRUE;
 err:
-    dlclose(drm_lib);
-    return EFL_FALSE;
+  dlclose(drm_lib);
+  return EFL_FALSE;
 }
 
 EAPI Efl_Bool
 efl_core_wayland_buffer_init(Efl_Core_Wayland_Display    *ewd,
                              Efl_Core_Wayland_Buffer_Type types)
 {
-    int      fd = -1;
-    Efl_Bool dmabuf =
-        ewd->wl.dmabuf && (types & EFL_CORE_WAYLAND_BUFFER_DMABUF);
-    Efl_Bool shm     = ewd->wl.shm && (types & EFL_CORE_WAYLAND_BUFFER_SHM);
-    Efl_Bool success = EFL_FALSE;
+  int      fd      = -1;
+  Efl_Bool dmabuf  = ewd->wl.dmabuf && (types & EFL_CORE_WAYLAND_BUFFER_DMABUF);
+  Efl_Bool shm     = ewd->wl.shm && (types & EFL_CORE_WAYLAND_BUFFER_SHM);
+  Efl_Bool success = EFL_FALSE;
 
-    if (buffer_manager)
-    {
-        buffer_manager->refcount++;
-        return EFL_TRUE;
-    }
-
-    buffer_manager = calloc(1, sizeof(Buffer_Manager));
-    if (!buffer_manager) goto err_alloc;
-
-    if (!getenv("EVAS_WAYLAND_SHM_DISABLE_DMABUF") && dmabuf)
-    {
-        fd = open("/dev/dri/renderD128", O_RDWR | O_CLOEXEC);
-        if (fd < 0)
-        {
-            ERR("Tried to use dmabufs, but can't find /dev/dri/renderD128 . "
-                "Falling back to regular SHM");
-            goto fallback_shm;
-        }
-
-        success = _intel_buffer_manager_setup(fd);
-        // if (!success) success = _exynos_buffer_manager_setup(fd);
-        if (!success) success = _vc4_buffer_manager_setup(fd);
-    }
-fallback_shm:
-    if (!success) success = shm && _wl_shm_buffer_manager_setup(0);
-    if (!success) goto err_bm;
-
-    drm_fd                   = fd;
-    buffer_manager->refcount = 1;
+  if (buffer_manager)
+  {
+    buffer_manager->refcount++;
     return EFL_TRUE;
+  }
+
+  buffer_manager = calloc(1, sizeof(Buffer_Manager));
+  if (!buffer_manager) goto err_alloc;
+
+  if (!getenv("EVAS_WAYLAND_SHM_DISABLE_DMABUF") && dmabuf)
+  {
+    fd = open("/dev/dri/renderD128", O_RDWR | O_CLOEXEC);
+    if (fd < 0)
+    {
+      ERR("Tried to use dmabufs, but can't find /dev/dri/renderD128 . "
+          "Falling back to regular SHM");
+      goto fallback_shm;
+    }
+
+    success = _intel_buffer_manager_setup(fd);
+        // if (!success) success = _exynos_buffer_manager_setup(fd);
+    if (!success) success = _vc4_buffer_manager_setup(fd);
+  }
+fallback_shm:
+  if (!success) success = shm && _wl_shm_buffer_manager_setup(0);
+  if (!success) goto err_bm;
+
+  drm_fd                   = fd;
+  buffer_manager->refcount = 1;
+  return EFL_TRUE;
 
 err_bm:
-    if (fd >= 0) close(fd);
-    free(buffer_manager);
-    buffer_manager = NULL;
+  if (fd >= 0) close(fd);
+  free(buffer_manager);
+  buffer_manager = NULL;
 err_alloc:
-    return EFL_FALSE;
+  return EFL_FALSE;
 }
 
 static void
 _buffer_manager_ref(void)
 {
-    buffer_manager->refcount++;
+  buffer_manager->refcount++;
 }
 
 static void
 _buffer_manager_deref(void)
 {
-    buffer_manager->refcount--;
-    if (buffer_manager->refcount || !buffer_manager->destroyed) return;
+  buffer_manager->refcount--;
+  if (buffer_manager->refcount || !buffer_manager->destroyed) return;
 
-    if (buffer_manager->manager_destroy) buffer_manager->manager_destroy();
-    free(buffer_manager);
-    buffer_manager = NULL;
-    if (drm_fd >= 0) close(drm_fd);
+  if (buffer_manager->manager_destroy) buffer_manager->manager_destroy();
+  free(buffer_manager);
+  buffer_manager = NULL;
+  if (drm_fd >= 0) close(drm_fd);
 }
 
 static void
 _buffer_manager_destroy(void)
 {
-    if (buffer_manager->destroyed) return;
-    buffer_manager->destroyed = EFL_TRUE;
-    _buffer_manager_deref();
+  if (buffer_manager->destroyed) return;
+  buffer_manager->destroyed = EFL_TRUE;
+  _buffer_manager_deref();
 }
 
 static Buffer_Handle *
@@ -731,18 +720,18 @@ _buffer_manager_alloc(const char    *name,
                       unsigned long *stride,
                       int32_t       *fd)
 {
-    Buffer_Handle *out;
+  Buffer_Handle *out;
 
-    _buffer_manager_ref();
-    out = buffer_manager->alloc(buffer_manager, name, w, h, stride, fd);
-    if (!out) _buffer_manager_deref();
-    return out;
+  _buffer_manager_ref();
+  out = buffer_manager->alloc(buffer_manager, name, w, h, stride, fd);
+  if (!out) _buffer_manager_deref();
+  return out;
 }
 
 EAPI struct wl_buffer *
 efl_core_wayland_buffer_wl_buffer_get(Efl_Core_Wayland_Buffer *buf)
 {
-    return buf->wl_buffer;
+  return buf->wl_buffer;
 }
 
 EAPI void *
@@ -751,121 +740,121 @@ efl_core_wayland_buffer_map(Efl_Core_Wayland_Buffer *buf,
                             int                     *h,
                             int                     *stride)
 {
-    void *out;
+  void *out;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(buf, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(buf, NULL);
 
-    if (buf->mapping)
+  if (buf->mapping)
+  {
+    out = buf->mapping;
+  }
+  else
+  {
+    _buffer_manager_ref();
+    out = buffer_manager->map(buf);
+    if (!out)
     {
-        out = buf->mapping;
+      _buffer_manager_deref();
+      return NULL;
     }
-    else
-    {
-        _buffer_manager_ref();
-        out = buffer_manager->map(buf);
-        if (!out)
-        {
-            _buffer_manager_deref();
-            return NULL;
-        }
-        buf->locked  = EFL_TRUE;
-        buf->mapping = out;
-    }
-    if (w) *w = buf->w;
-    if (h) *h = buf->h;
-    if (stride) *stride = (int)buf->stride;
+    buf->locked  = EFL_TRUE;
+    buf->mapping = out;
+  }
+  if (w) *w = buf->w;
+  if (h) *h = buf->h;
+  if (stride) *stride = (int)buf->stride;
 
-    if (!buf->locked) efl_core_wayland_buffer_lock(buf);
+  if (!buf->locked) efl_core_wayland_buffer_lock(buf);
 
-    return out;
+  return out;
 }
 
 EAPI void
 efl_core_wayland_buffer_unmap(Efl_Core_Wayland_Buffer *buf)
 {
-    buffer_manager->unmap(buf);
-    _buffer_manager_deref();
+  buffer_manager->unmap(buf);
+  _buffer_manager_deref();
 }
 
 EAPI void
 efl_core_wayland_buffer_discard(Efl_Core_Wayland_Buffer *buf)
 {
-    buffer_manager->discard(buf);
-    _buffer_manager_deref();
+  buffer_manager->discard(buf);
+  _buffer_manager_deref();
 }
 
 EAPI void
 efl_core_wayland_buffer_lock(Efl_Core_Wayland_Buffer *b)
 {
-    if (b->locked) ERR("Buffer already locked\n");
-    if (buffer_manager->lock) buffer_manager->lock(b);
-    b->locked = EFL_TRUE;
+  if (b->locked) ERR("Buffer already locked\n");
+  if (buffer_manager->lock) buffer_manager->lock(b);
+  b->locked = EFL_TRUE;
 }
 
 EAPI void
 efl_core_wayland_buffer_unlock(Efl_Core_Wayland_Buffer *b)
 {
-    if (!b->locked) ERR("Buffer already unlocked\n");
-    if (buffer_manager->unlock) buffer_manager->unlock(b);
-    b->locked = EFL_FALSE;
+  if (!b->locked) ERR("Buffer already unlocked\n");
+  if (buffer_manager->unlock) buffer_manager->unlock(b);
+  b->locked = EFL_FALSE;
 }
 
 EAPI void
 efl_core_wayland_buffer_destroy(Efl_Core_Wayland_Buffer *b)
 {
-    if (!b) return;
+  if (!b) return;
 
-    if (b->locked || b->busy)
-    {
-        b->orphaned = EFL_TRUE;
-        return;
-    }
-    if (b->fd != -1) close(b->fd);
-    if (b->mapping) efl_core_wayland_buffer_unmap(b);
-    efl_core_wayland_buffer_discard(b);
-    if (b->wl_buffer) wl_buffer_destroy(b->wl_buffer);
-    b->wl_buffer = NULL;
-    free(b);
+  if (b->locked || b->busy)
+  {
+    b->orphaned = EFL_TRUE;
+    return;
+  }
+  if (b->fd != -1) close(b->fd);
+  if (b->mapping) efl_core_wayland_buffer_unmap(b);
+  efl_core_wayland_buffer_discard(b);
+  if (b->wl_buffer) wl_buffer_destroy(b->wl_buffer);
+  b->wl_buffer = NULL;
+  free(b);
 }
 
 EAPI Efl_Bool
 efl_core_wayland_buffer_busy_get(Efl_Core_Wayland_Buffer *buffer)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(buffer, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(buffer, EFL_FALSE);
 
-    return (buffer->locked) || (buffer->busy);
+  return (buffer->locked) || (buffer->busy);
 }
 
 EAPI void
 efl_core_wayland_buffer_busy_set(Efl_Core_Wayland_Buffer *buffer)
 {
-    EINA_SAFETY_ON_NULL_RETURN(buffer);
+  EINA_SAFETY_ON_NULL_RETURN(buffer);
 
-    buffer->busy = EFL_TRUE;
+  buffer->busy = EFL_TRUE;
 }
 
 EAPI int
 efl_core_wayland_buffer_age_get(Efl_Core_Wayland_Buffer *buffer)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(buffer, 0);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(buffer, 0);
 
-    return buffer->age;
+  return buffer->age;
 }
 
 EAPI void
 efl_core_wayland_buffer_age_set(Efl_Core_Wayland_Buffer *buffer, int age)
 {
-    EINA_SAFETY_ON_NULL_RETURN(buffer);
+  EINA_SAFETY_ON_NULL_RETURN(buffer);
 
-    buffer->age = age;
+  buffer->age = age;
 }
 
 EAPI void
 efl_core_wayland_buffer_age_inc(Efl_Core_Wayland_Buffer *buffer)
 {
-    EINA_SAFETY_ON_NULL_RETURN(buffer);
+  EINA_SAFETY_ON_NULL_RETURN(buffer);
 
-    buffer->age++;
+  buffer->age++;
 }
 
 /* The only user of this function has been removed, but it
@@ -882,41 +871,41 @@ efl_core_wayland_buffer_age_inc(Efl_Core_Wayland_Buffer *buffer)
 EAPI Efl_Bool
 efl_core_wayland_buffer_fit(Efl_Core_Wayland_Buffer *b, int w, int h)
 {
-    int stride;
+  int stride;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(b, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(b, EFL_FALSE);
 
-    stride = b->stride;
-    if ((w >= b->w) && (w <= stride / 4) && (h == b->h))
-    {
-        b->w = w;
-        return EFL_TRUE;
-    }
+  stride = b->stride;
+  if ((w >= b->w) && (w <= stride / 4) && (h == b->h))
+  {
+    b->w = w;
+    return EFL_TRUE;
+  }
 
-    return EFL_FALSE;
+  return EFL_FALSE;
 }
 
 static Efl_Core_Wayland_Buffer *
 _efl_core_wayland_buffer_partial_create(int w, int h, Efl_Bool alpha)
 {
-    Efl_Core_Wayland_Buffer *out;
+  Efl_Core_Wayland_Buffer *out;
 
-    out = calloc(1, sizeof(Efl_Core_Wayland_Buffer));
-    if (!out) return NULL;
+  out = calloc(1, sizeof(Efl_Core_Wayland_Buffer));
+  if (!out) return NULL;
 
-    out->fd    = -1;
-    out->alpha = alpha;
-    out->bh    = _buffer_manager_alloc("name", w, h, &out->stride, &out->fd);
-    if (!out->bh)
-    {
-        free(out);
-        return NULL;
-    }
-    out->w    = w;
-    out->h    = h;
-    out->size = out->stride * h;
+  out->fd    = -1;
+  out->alpha = alpha;
+  out->bh    = _buffer_manager_alloc("name", w, h, &out->stride, &out->fd);
+  if (!out->bh)
+  {
+    free(out);
+    return NULL;
+  }
+  out->w    = w;
+  out->h    = h;
+  out->size = out->stride * h;
 
-    return out;
+  return out;
 }
 
 EAPI Efl_Core_Wayland_Buffer *
@@ -925,14 +914,14 @@ efl_core_wayland_buffer_create(Efl_Core_Wayland_Display *ewd,
                                int                       h,
                                Efl_Bool                  alpha)
 {
-    Efl_Core_Wayland_Buffer *out;
+  Efl_Core_Wayland_Buffer *out;
 
-    out = _efl_core_wayland_buffer_partial_create(w, h, alpha);
-    if (!out) return NULL;
+  out = _efl_core_wayland_buffer_partial_create(w, h, alpha);
+  if (!out) return NULL;
 
-    out->wl_buffer = buffer_manager->to_buffer(ewd, out);
+  out->wl_buffer = buffer_manager->to_buffer(ewd, out);
 
-    return out;
+  return out;
 }
 
 static void
@@ -940,51 +929,47 @@ _create_succeeded(void *data                         EFL_UNUSED,
                   struct zwp_linux_buffer_params_v1 *params,
                   struct wl_buffer                  *new_buffer)
 {
-    wl_buffer_destroy(new_buffer);
-    zwp_linux_buffer_params_v1_destroy(params);
+  wl_buffer_destroy(new_buffer);
+  zwp_linux_buffer_params_v1_destroy(params);
 }
 
 static void
 _create_failed(void *data, struct zwp_linux_buffer_params_v1 *params)
 {
-    Efl_Core_Wayland_Display *ewd = data;
+  Efl_Core_Wayland_Display *ewd = data;
 
-    zwp_linux_buffer_params_v1_destroy(params);
-    _buffer_manager_destroy();
-    ewd->wl.dmabuf = NULL;
+  zwp_linux_buffer_params_v1_destroy(params);
+  _buffer_manager_destroy();
+  ewd->wl.dmabuf = NULL;
 }
 
 static const struct zwp_linux_buffer_params_v1_listener params_listener = {
-    _create_succeeded,
-    _create_failed
+  _create_succeeded,
+  _create_failed
 };
 
 void
 _efl_core_wayland_buffer_test(Efl_Core_Wayland_Display *ewd)
 {
-    struct zwp_linux_buffer_params_v1 *dp;
-    Efl_Core_Wayland_Buffer           *buf;
+  struct zwp_linux_buffer_params_v1 *dp;
+  Efl_Core_Wayland_Buffer           *buf;
 
-    if (!efl_core_wayland_buffer_init(ewd, EFL_CORE_WAYLAND_BUFFER_DMABUF))
-        return;
-
-    buf = _efl_core_wayland_buffer_partial_create(1, 1, EFL_TRUE);
-    if (!buf) goto fail;
-
-    dp = zwp_linux_dmabuf_v1_create_params(ewd->wl.dmabuf);
-    zwp_linux_buffer_params_v1_add(dp, buf->fd, 0, 0, buf->stride, 0, 0);
-    zwp_linux_buffer_params_v1_add_listener(dp, &params_listener, ewd);
-    zwp_linux_buffer_params_v1_create(dp,
-                                      buf->w,
-                                      buf->h,
-                                      DRM_FORMAT_ARGB8888,
-                                      0);
-
-    efl_core_wayland_buffer_destroy(buf);
-
+  if (!efl_core_wayland_buffer_init(ewd, EFL_CORE_WAYLAND_BUFFER_DMABUF))
     return;
 
+  buf = _efl_core_wayland_buffer_partial_create(1, 1, EFL_TRUE);
+  if (!buf) goto fail;
+
+  dp = zwp_linux_dmabuf_v1_create_params(ewd->wl.dmabuf);
+  zwp_linux_buffer_params_v1_add(dp, buf->fd, 0, 0, buf->stride, 0, 0);
+  zwp_linux_buffer_params_v1_add_listener(dp, &params_listener, ewd);
+  zwp_linux_buffer_params_v1_create(dp, buf->w, buf->h, DRM_FORMAT_ARGB8888, 0);
+
+  efl_core_wayland_buffer_destroy(buf);
+
+  return;
+
 fail:
-    _buffer_manager_destroy();
-    ewd->wl.dmabuf = NULL;
+  _buffer_manager_destroy();
+  ewd->wl.dmabuf = NULL;
 }

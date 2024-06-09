@@ -39,34 +39,33 @@ static int _thread_id_counter  = 1;
 void
 _eina_debug_thread_add(void *th)
 {
-    Eina_Thread *pth = th;
+  Eina_Thread *pth = th;
    // take thread tracking lock
-    eina_spinlock_take(&_eina_debug_thread_lock);
+  eina_spinlock_take(&_eina_debug_thread_lock);
    // if we don't have enough space to store thread id's - make some more
-    if (_thread_active_size < (_eina_debug_thread_active_num + 1))
+  if (_thread_active_size < (_eina_debug_thread_active_num + 1))
+  {
+    Eina_Debug_Thread *threads = realloc(
+      _eina_debug_thread_active,
+      ((_eina_debug_thread_active_num + 16) * 2) * sizeof(Eina_Debug_Thread));
+    if (threads)
     {
-        Eina_Debug_Thread *threads =
-            realloc(_eina_debug_thread_active,
-                    ((_eina_debug_thread_active_num + 16) * 2) *
-                        sizeof(Eina_Debug_Thread));
-        if (threads)
-        {
-            _eina_debug_thread_active = threads;
-            _thread_active_size = (_eina_debug_thread_active_num + 16) * 2;
-        }
+      _eina_debug_thread_active = threads;
+      _thread_active_size       = (_eina_debug_thread_active_num + 16) * 2;
     }
+  }
    // add new thread id to the end
-    _eina_debug_thread_active[_eina_debug_thread_active_num].thread = *pth;
+  _eina_debug_thread_active[_eina_debug_thread_active_num].thread = *pth;
 #if defined(__clockid_t_defined)
-    _eina_debug_thread_active[_eina_debug_thread_active_num].clok.tv_sec  = 0;
-    _eina_debug_thread_active[_eina_debug_thread_active_num].clok.tv_nsec = 0;
-    _eina_debug_thread_active[_eina_debug_thread_active_num].val          = -1;
+  _eina_debug_thread_active[_eina_debug_thread_active_num].clok.tv_sec  = 0;
+  _eina_debug_thread_active[_eina_debug_thread_active_num].clok.tv_nsec = 0;
+  _eina_debug_thread_active[_eina_debug_thread_active_num].val          = -1;
 #endif
-    _eina_debug_thread_active[_eina_debug_thread_active_num].thread_id =
-        _thread_id_counter++;
-    _eina_debug_thread_active_num++;
+  _eina_debug_thread_active[_eina_debug_thread_active_num].thread_id =
+    _thread_id_counter++;
+  _eina_debug_thread_active_num++;
    // release our lock cleanly
-    eina_spinlock_release(&_eina_debug_thread_lock);
+  eina_spinlock_release(&_eina_debug_thread_lock);
 }
 
 // remove a thread id from our tracking array - simply find and shuffle all
@@ -75,31 +74,31 @@ _eina_debug_thread_add(void *th)
 void
 _eina_debug_thread_del(void *th)
 {
-    Eina_Thread *pth = th;
-    int          i;
+  Eina_Thread *pth = th;
+  int          i;
    // take a thread tracking lock
-    eina_spinlock_take(&_eina_debug_thread_lock);
+  eina_spinlock_take(&_eina_debug_thread_lock);
    // find the thread id to remove
-    for (i = 0; i < _eina_debug_thread_active_num; i++)
+  for (i = 0; i < _eina_debug_thread_active_num; i++)
+  {
+    if (_eina_debug_thread_active[i].thread == *pth)
     {
-        if (_eina_debug_thread_active[i].thread == *pth)
-        {
-            // found it - now shuffle down all further thread id's in array
-            for (; i < (_eina_debug_thread_active_num - 1); i++)
-                _eina_debug_thread_active[i] = _eina_debug_thread_active[i + 1];
-            // reduce our counter and get out of loop
-            _eina_debug_thread_active_num--;
-            break;
-        }
+      // found it - now shuffle down all further thread id's in array
+      for (; i < (_eina_debug_thread_active_num - 1); i++)
+        _eina_debug_thread_active[i] = _eina_debug_thread_active[i + 1];
+      // reduce our counter and get out of loop
+      _eina_debug_thread_active_num--;
+      break;
     }
-    // release lock cleanly
-    eina_spinlock_release(&_eina_debug_thread_lock);
+  }
+  // release lock cleanly
+  eina_spinlock_release(&_eina_debug_thread_lock);
 }
 
 // register the thread that is the mainloop - always there
 void
 _eina_debug_thread_mainloop_set(void *th)
 {
-    Eina_Thread *pth            = th;
-    _eina_debug_thread_mainloop = *pth;
+  Eina_Thread *pth            = th;
+  _eina_debug_thread_mainloop = *pth;
 }

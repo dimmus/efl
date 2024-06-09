@@ -14,55 +14,55 @@ const Efl_Event_Description _EV_A_CHANGED2 = EFL_EVENT_DESCRIPTION("a,changed");
 static void
 _a_set(Eo *obj EFL_UNUSED, void *class_data, int a)
 {
-    Simple_Public_Data *pd = class_data;
-    printf("%s %d\n", efl_class_name_get(MY_CLASS), a);
-    pd->a = a;
+  Simple_Public_Data *pd = class_data;
+  printf("%s %d\n", efl_class_name_get(MY_CLASS), a);
+  pd->a = a;
 
-    efl_event_callback_legacy_call(obj, EV_A_CHANGED, &pd->a);
+  efl_event_callback_legacy_call(obj, EV_A_CHANGED, &pd->a);
 }
 
 static Eina_Error
 _a_set_reflect(Eo *obj, Eina_Value value)
 {
-    int        a;
-    Eina_Error r = 0;
+  int        a;
+  Eina_Error r = 0;
 
-    if (!eina_value_int_convert(&value, &a))
-    {
-        r = EINA_ERROR_VALUE_FAILED;
-        goto end;
-    }
-    simple_a_set(obj, a);
+  if (!eina_value_int_convert(&value, &a))
+  {
+    r = EINA_ERROR_VALUE_FAILED;
+    goto end;
+  }
+  simple_a_set(obj, a);
 
 end:
-    eina_value_flush(&value);
+  eina_value_flush(&value);
 
-    return r;
+  return r;
 }
 
 static int
 _a_get(const Eo *obj EFL_UNUSED, void *class_data)
 {
-    Simple_Public_Data *pd = class_data;
+  Simple_Public_Data *pd = class_data;
 
-    return pd->a;
+  return pd->a;
 }
 
 static Eina_Value
 _a_get_reflect(const Eo *obj)
 {
-    int a = simple_a_get(obj);
+  int a = simple_a_get(obj);
 
-    return eina_value_int_init(a);
+  return eina_value_int_init(a);
 }
 
 static Efl_Bool
 _a_print(Eo *obj EFL_UNUSED, void *class_data)
 {
-    const Simple_Public_Data *pd = class_data;
-    printf("Print %s %d\n", efl_class_name_get(MY_CLASS), pd->a);
+  const Simple_Public_Data *pd = class_data;
+  printf("Print %s %d\n", efl_class_name_get(MY_CLASS), pd->a);
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 EFL_FUNC_BODYV(simple_part_get,
@@ -75,7 +75,7 @@ static Eo *
 _part_get(Eo *obj, void *class_data EFL_UNUSED, const char *name EFL_UNUSED)
 {
    /* A normal part get will do something saner, we just create objects. */
-    return efl_add(SIMPLE_CLASS, obj);
+  return efl_add(SIMPLE_CLASS, obj);
 }
 
 EFL_VOID_FUNC_BODYV(simple_recursive, EFL_FUNC_CALL(n), int n);
@@ -83,22 +83,22 @@ EFL_VOID_FUNC_BODYV(simple_recursive, EFL_FUNC_CALL(n), int n);
 static void
 _recursive(Eo *obj, void *class_data EFL_UNUSED, int n)
 {
-    static int count = 0;
+  static int count = 0;
 
-    if (count < n)
-    {
-        count++;
-        simple_recursive(obj, n);
-    }
-    else count = 0;
+  if (count < n)
+  {
+    count++;
+    simple_recursive(obj, n);
+  }
+  else count = 0;
 }
 
 static void
 _dbg_info_get(Eo *eo_obj, void *_pd EFL_UNUSED, Efl_Dbg_Info *root)
 {
-    efl_dbg_info_get(efl_super(eo_obj, MY_CLASS), root);
-    Efl_Dbg_Info *group = EFL_DBG_INFO_LIST_APPEND(root, "Test list");
-    EFL_DBG_INFO_APPEND(group, "Test", EINA_VALUE_TYPE_INT, 8);
+  efl_dbg_info_get(efl_super(eo_obj, MY_CLASS), root);
+  Efl_Dbg_Info *group = EFL_DBG_INFO_LIST_APPEND(root, "Test list");
+  EFL_DBG_INFO_APPEND(group, "Test", EINA_VALUE_TYPE_INT, 8);
 }
 
 EFL_VOID_FUNC_BODYV(simple_a_set, EFL_FUNC_CALL(a), int a);
@@ -110,23 +110,23 @@ EFL_VOID_FUNC_BODY(simple_no_implementation);
 static Efl_Bool
 _class_initializer(Efl_Class *klass)
 {
-    EFL_OPS_DEFINE(ops,
-                   EFL_OBJECT_OP_FUNC(simple_a_set, _a_set),
-                   EFL_OBJECT_OP_FUNC(simple_a_get, _a_get),
-                   EFL_OBJECT_OP_FUNC(simple_a_print, _a_print),
-                   EFL_OBJECT_OP_FUNC(simple_recursive, _recursive),
-                   EFL_OBJECT_OP_FUNC(simple_part_get, _part_get),
-                   EFL_OBJECT_OP_FUNC(simple_pure_virtual, NULL),
-                   EFL_OBJECT_OP_FUNC(efl_dbg_info_get, _dbg_info_get), );
-    static const Efl_Object_Property_Reflection reflection_table[] = {
-        {"simple_a", _a_set_reflect, _a_get_reflect},
-    };
-    static const Efl_Object_Property_Reflection_Ops ref_ops = {
-        reflection_table,
-        EINA_C_ARRAY_LENGTH(reflection_table)
-    };
+  EFL_OPS_DEFINE(ops,
+                 EFL_OBJECT_OP_FUNC(simple_a_set, _a_set),
+                 EFL_OBJECT_OP_FUNC(simple_a_get, _a_get),
+                 EFL_OBJECT_OP_FUNC(simple_a_print, _a_print),
+                 EFL_OBJECT_OP_FUNC(simple_recursive, _recursive),
+                 EFL_OBJECT_OP_FUNC(simple_part_get, _part_get),
+                 EFL_OBJECT_OP_FUNC(simple_pure_virtual, NULL),
+                 EFL_OBJECT_OP_FUNC(efl_dbg_info_get, _dbg_info_get), );
+  static const Efl_Object_Property_Reflection reflection_table[] = {
+    { "simple_a", _a_set_reflect, _a_get_reflect },
+  };
+  static const Efl_Object_Property_Reflection_Ops ref_ops = {
+    reflection_table,
+    EINA_C_ARRAY_LENGTH(reflection_table)
+  };
 
-    return efl_class_functions_set(klass, &ops, &ref_ops);
+  return efl_class_functions_set(klass, &ops, &ref_ops);
 }
 
 static const Efl_Class_Description class_desc = { EO_VERSION,
@@ -143,7 +143,7 @@ EFL_FUNC_BODY_CONST(simple2_class_beef_get, int, 0);
 static Efl_Bool
 _class_initializer2(Efl_Class *klass)
 {
-    return efl_class_functions_set(klass, NULL, NULL);
+  return efl_class_functions_set(klass, NULL, NULL);
 }
 
 static const Efl_Class_Description class_desc2 = { EO_VERSION,
@@ -159,7 +159,7 @@ EFL_DEFINE_CLASS(simple2_class_get, &class_desc2, EO_CLASS, NULL)
 static Efl_Bool
 _class_initializer3(Efl_Class *klass)
 {
-    return efl_class_functions_set(klass, NULL, NULL);
+  return efl_class_functions_set(klass, NULL, NULL);
 }
 
 static const Efl_Class_Description class_desc3 = { EO_VERSION,
@@ -179,27 +179,27 @@ EFL_DEFINE_CLASS(simple3_class_get,
 static Efl_Object *
 _interface_get(Eo *obj EFL_UNUSED, void *pd EFL_UNUSED, const Efl_Object *klass)
 {
-    if (klass == SEARCHABLE_CLASS) return obj;
+  if (klass == SEARCHABLE_CLASS) return obj;
 
-    return efl_provider_find(efl_super(obj, SEARCHABLE_CLASS), klass);
+  return efl_provider_find(efl_super(obj, SEARCHABLE_CLASS), klass);
 }
 
 static Efl_Bool
 _searchable_class_initializer(Efl_Class *klass)
 {
-    EFL_OPS_DEFINE(ops, EFL_OBJECT_OP_FUNC(efl_provider_find, _interface_get));
+  EFL_OPS_DEFINE(ops, EFL_OBJECT_OP_FUNC(efl_provider_find, _interface_get));
 
-    return efl_class_functions_set(klass, &ops, NULL);
+  return efl_class_functions_set(klass, &ops, NULL);
 }
 
 static const Efl_Class_Description class_desc_searchable = {
-    EO_VERSION,
-    "Searchable",
-    EFL_CLASS_TYPE_REGULAR,
-    0,
-    _searchable_class_initializer,
-    NULL,
-    NULL
+  EO_VERSION,
+  "Searchable",
+  EFL_CLASS_TYPE_REGULAR,
+  0,
+  _searchable_class_initializer,
+  NULL,
+  NULL
 };
 
 EFL_DEFINE_CLASS(searchable_class_get, &class_desc_searchable, EO_CLASS, NULL)

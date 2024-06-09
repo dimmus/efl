@@ -5,29 +5,29 @@
 #include <Efl_Shared.h>
 
 #ifdef EAPI
-# undef EAPI
+#  undef EAPI
 #endif
 
 #ifdef _WIN32
-# ifdef EFL_BUILD
-#  ifdef DLL_EXPORT
-#   define EAPI __declspec(dllexport)
+#  ifdef EFL_BUILD
+#    ifdef DLL_EXPORT
+#      define EAPI __declspec(dllexport)
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI __declspec(dllimport)
 #  endif
-# else
-#  define EAPI __declspec(dllimport)
-# endif
 #else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EAPI __attribute__ ((visibility("default")))
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EAPI __attribute__ ((visibility("default")))
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI
 #  endif
-# else
-#  define EAPI
-# endif
 #endif
 
 /**
@@ -61,21 +61,22 @@ extern "C" {
  * @brief Enumeration for defining the actions to do when parsing command line
  * parameters.
  */
-typedef enum {
-   CORE_GETOPT_ACTION_STORE, /**< Store a value */
-   CORE_GETOPT_ACTION_STORE_CONST, /**< Store a const */
-   CORE_GETOPT_ACTION_STORE_TRUE, /**< Store TRUE */
-   CORE_GETOPT_ACTION_STORE_FALSE, /**< Store FALSE */
-   CORE_GETOPT_ACTION_CHOICE, /**< Store a choice between several values */
-   CORE_GETOPT_ACTION_APPEND, /**< Allocate and store a new value of type Core_Getopt_Type */
-   CORE_GETOPT_ACTION_COUNT, /**< Store a count number */
-   CORE_GETOPT_ACTION_CALLBACK, /**< Call a callback */
-   CORE_GETOPT_ACTION_HELP, /**< Show help text */
-   CORE_GETOPT_ACTION_VERSION, /**< Show version */
-   CORE_GETOPT_ACTION_COPYRIGHT, /**< Show copyright */
-   CORE_GETOPT_ACTION_LICENSE, /**< Show license */
-   CORE_GETOPT_ACTION_BREAK, /**< Stop parsing options */
-   CORE_GETOPT_ACTION_CATEGORY
+typedef enum
+{
+  CORE_GETOPT_ACTION_STORE, /**< Store a value */
+  CORE_GETOPT_ACTION_STORE_CONST, /**< Store a const */
+  CORE_GETOPT_ACTION_STORE_TRUE, /**< Store TRUE */
+  CORE_GETOPT_ACTION_STORE_FALSE, /**< Store FALSE */
+  CORE_GETOPT_ACTION_CHOICE, /**< Store a choice between several values */
+  CORE_GETOPT_ACTION_APPEND, /**< Allocate and store a new value of type Core_Getopt_Type */
+  CORE_GETOPT_ACTION_COUNT, /**< Store a count number */
+  CORE_GETOPT_ACTION_CALLBACK, /**< Call a callback */
+  CORE_GETOPT_ACTION_HELP, /**< Show help text */
+  CORE_GETOPT_ACTION_VERSION, /**< Show version */
+  CORE_GETOPT_ACTION_COPYRIGHT, /**< Show copyright */
+  CORE_GETOPT_ACTION_LICENSE, /**< Show license */
+  CORE_GETOPT_ACTION_BREAK, /**< Stop parsing options */
+  CORE_GETOPT_ACTION_CATEGORY
 } Core_Getopt_Action;
 
 /**
@@ -83,16 +84,17 @@ typedef enum {
  * @brief Enumeration for defining the type of the values to store when using
  * append action.
  */
-typedef enum {
-   CORE_GETOPT_TYPE_STR, /**< Value of type string */
-   CORE_GETOPT_TYPE_BOOL, /**< Value of type boolean */
-   CORE_GETOPT_TYPE_SHORT, /**< Value of type short */
-   CORE_GETOPT_TYPE_INT, /**< Value of type int */
-   CORE_GETOPT_TYPE_LONG, /**< Value of type long */
-   CORE_GETOPT_TYPE_USHORT, /**< Value of type unsigned short */
-   CORE_GETOPT_TYPE_UINT, /**< Value of type unsigned int */
-   CORE_GETOPT_TYPE_ULONG, /**< Value of type unsigned long */
-   CORE_GETOPT_TYPE_DOUBLE /**< Value of type double */
+typedef enum
+{
+  CORE_GETOPT_TYPE_STR, /**< Value of type string */
+  CORE_GETOPT_TYPE_BOOL, /**< Value of type boolean */
+  CORE_GETOPT_TYPE_SHORT, /**< Value of type short */
+  CORE_GETOPT_TYPE_INT, /**< Value of type int */
+  CORE_GETOPT_TYPE_LONG, /**< Value of type long */
+  CORE_GETOPT_TYPE_USHORT, /**< Value of type unsigned short */
+  CORE_GETOPT_TYPE_UINT, /**< Value of type unsigned int */
+  CORE_GETOPT_TYPE_ULONG, /**< Value of type unsigned long */
+  CORE_GETOPT_TYPE_DOUBLE /**< Value of type double */
 } Core_Getopt_Type;
 
 /**
@@ -100,10 +102,11 @@ typedef enum {
  * @brief Enumeration for defining if the command line options require an
  * argument.
  */
-typedef enum {
-   CORE_GETOPT_DESC_ARG_REQUIREMENT_NO = 0, /**< Argument is not required */
-   CORE_GETOPT_DESC_ARG_REQUIREMENT_YES = 1, /**< Argument is required */
-   CORE_GETOPT_DESC_ARG_REQUIREMENT_OPTIONAL = 3 /**< Argument is optional */
+typedef enum
+{
+  CORE_GETOPT_DESC_ARG_REQUIREMENT_NO  = 0, /**< Argument is not required */
+  CORE_GETOPT_DESC_ARG_REQUIREMENT_YES = 1, /**< Argument is required */
+  CORE_GETOPT_DESC_ARG_REQUIREMENT_OPTIONAL = 3 /**< Argument is optional */
 } Core_Getopt_Desc_Arg_Requirement;
 
 typedef struct _Core_Getopt_Desc_Store    Core_Getopt_Desc_Store;
@@ -111,34 +114,33 @@ typedef struct _Core_Getopt_Desc_Callback Core_Getopt_Desc_Callback;
 
 #ifndef _CORE_GETOPT_PREDEF
 typedef struct _Core_Getopt Core_Getopt;
-#define _CORE_GETOPT_PREDEF 1
+#  define _CORE_GETOPT_PREDEF 1
 #endif
 #ifndef _CORE_GETOPT_DESC_PREDEF
 typedef struct _Core_Getopt_Desc Core_Getopt_Desc;
-#define _CORE_GETOPT_DESC_PREDEF 1
+#  define _CORE_GETOPT_DESC_PREDEF 1
 #endif
 #ifndef _CORE_GETOPT_VALUE_PREDEF
 typedef union _Core_Getopt_Value Core_Getopt_Value;
-#define _CORE_GETOPT_VALUE_PREDEF 1
+#  define _CORE_GETOPT_VALUE_PREDEF 1
 #endif
 
 /**
  * @union _Core_Getopt_Value
  * @brief Union listing the types of parameters that can take Getopt values.
  */
-union _Core_Getopt_Value
-{
-   char          **strp; /**< String pointer */
-   unsigned char  *boolp; /**< Boolean pointer */
-   short          *shortp; /**< Short pointer */
-   int            *intp; /**< Int pointer */
-   long           *longp; /**< Long pointer */
-   unsigned short *ushortp; /**< Unsigned short pointer */
-   unsigned int   *uintp; /**< Unsigned int pointer */
-   unsigned long  *ulongp; /**< Unsigned long pointer */
-   double         *doublep; /**< Double pointer */
-   Eina_List     **listp; /**< List pointer */
-   void          **ptrp; /**< Void pointer */
+union _Core_Getopt_Value {
+  char          **strp; /**< String pointer */
+  unsigned char  *boolp; /**< Boolean pointer */
+  short          *shortp; /**< Short pointer */
+  int            *intp; /**< Int pointer */
+  long           *longp; /**< Long pointer */
+  unsigned short *ushortp; /**< Unsigned short pointer */
+  unsigned int   *uintp; /**< Unsigned int pointer */
+  unsigned long  *ulongp; /**< Unsigned long pointer */
+  double         *doublep; /**< Double pointer */
+  Eina_List     **listp; /**< List pointer */
+  void          **ptrp; /**< Void pointer */
 };
 
 /**
@@ -148,20 +150,20 @@ union _Core_Getopt_Value
  */
 struct _Core_Getopt_Desc_Store
 {
-   Core_Getopt_Type                 type; /**< type of data being handled */
-   Core_Getopt_Desc_Arg_Requirement arg_req; /**< option argument requirement */
-   union
-   {
-      const char    *strv; /**< String value */
-      Efl_Bool      boolv; /**< Boolean value */
-      short          shortv; /**< Short value */
-      int            intv; /**< Int value */
-      long           longv; /**< Long value */
-      unsigned short ushortv; /**< Unsigned short value */
-      unsigned int   uintv; /**< Unsigned int value */
-      unsigned long  ulongv; /**< Unsigned long value */
-      double         doublev; /**< Double value */
-   } def; /**< value of data being handled */
+  Core_Getopt_Type                 type; /**< type of data being handled */
+  Core_Getopt_Desc_Arg_Requirement arg_req; /**< option argument requirement */
+
+  union {
+    const char    *strv; /**< String value */
+    Efl_Bool       boolv; /**< Boolean value */
+    short          shortv; /**< Short value */
+    int            intv; /**< Int value */
+    long           longv; /**< Long value */
+    unsigned short ushortv; /**< Unsigned short value */
+    unsigned int   uintv; /**< Unsigned int value */
+    unsigned long  ulongv; /**< Unsigned long value */
+    double         doublev; /**< Double value */
+  } def; /**< value of data being handled */
 };
 
 /**
@@ -171,14 +173,15 @@ struct _Core_Getopt_Desc_Store
  */
 struct _Core_Getopt_Desc_Callback
 {
-   Efl_Bool                         (*func)(const Core_Getopt *parser,
-                                             const Core_Getopt_Desc *desc,
-                                             const char *str,
-                                             void *data,
-                                             Core_Getopt_Value *storage); /**< function to call as a callback */
-   const void                       *data; /**< data to pass to the callback */
-   Core_Getopt_Desc_Arg_Requirement arg_req; /**< option argument requirement */
-   const char                       *def;
+  Efl_Bool (*func)(
+    const Core_Getopt      *parser,
+    const Core_Getopt_Desc *desc,
+    const char             *str,
+    void                   *data,
+    Core_Getopt_Value      *storage); /**< function to call as a callback */
+  const void                      *data; /**< data to pass to the callback */
+  Core_Getopt_Desc_Arg_Requirement arg_req; /**< option argument requirement */
+  const char                      *def;
 };
 
 /**
@@ -187,21 +190,21 @@ struct _Core_Getopt_Desc_Callback
  */
 struct _Core_Getopt_Desc
 {
-   char                shortname; /**< used with a single dash */
-   const char         *longname; /**< used with double dashes */
-   const char         *help; /**< used by --help/Core_getopt_help() */
-   const char         *metavar; /**< used by Core_getopt_help() with nargs > 0 */
+  char        shortname; /**< used with a single dash */
+  const char *longname; /**< used with double dashes */
+  const char *help; /**< used by --help/Core_getopt_help() */
+  const char *metavar; /**< used by Core_getopt_help() with nargs > 0 */
 
-   Core_Getopt_Action action;   /**< define how to handle it */
-   union
-   {
-      const Core_Getopt_Desc_Store    store;
-      const void                      *store_const;
-      const char *const               *choices; /* NULL terminated. */
-      const Core_Getopt_Type          append_type;
-      const Core_Getopt_Desc_Callback callback;
-      const void                      *dummy;
-   } action_param; /**< Action parameter */
+  Core_Getopt_Action action; /**< define how to handle it */
+
+  union {
+    const Core_Getopt_Desc_Store    store;
+    const void                     *store_const;
+    const char *const              *choices; /* NULL terminated. */
+    const Core_Getopt_Type          append_type;
+    const Core_Getopt_Desc_Callback callback;
+    const void                     *dummy;
+  } action_param; /**< Action parameter */
 };
 
 /**
@@ -210,21 +213,27 @@ struct _Core_Getopt_Desc
  */
 struct _Core_Getopt
 {
-   const char             *prog; /**< to be used when core_app_args_get() fails */
-   const char             *usage; /**< usage example, %%prog is replaced by @ref prog */
-   const char             *version; /**< if exists, --version will work */
-   const char             *copyright; /**< if exists, --copyright will work */
-   const char             *license; /**< if exists, --license will work */
-   const char             *description; /**< long description, possible multiline */
-   Efl_Bool               strict : 1; /**< fail on errors */
-   const Core_Getopt_Desc descs[];   /**< A table that contains the description of all the other options (NULL terminated).*/
-
+  const char *prog; /**< to be used when core_app_args_get() fails */
+  const char *usage; /**< usage example, %%prog is replaced by @ref prog */
+  const char *version; /**< if exists, --version will work */
+  const char *copyright; /**< if exists, --copyright will work */
+  const char *license; /**< if exists, --license will work */
+  const char *description; /**< long description, possible multiline */
+  Efl_Bool    strict : 1; /**< fail on errors */
+  const Core_Getopt_Desc descs
+    []; /**< A table that contains the description of all the other options (NULL terminated).*/
 };
 
 /**
  * @brief Definition for macro that helps to fill the Core_Getopt_Desc table.
  */
-#define CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar, type, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL(shortname,       \
+                               longname,        \
+                               help,            \
+                               metavar,         \
+                               type,            \
+                               arg_requirement, \
+                               default_value) \
   {shortname, longname, help, metavar, CORE_GETOPT_ACTION_STORE,                                         \
    {.store = {type, arg_requirement, default_value}}}
 
@@ -571,7 +580,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_STR(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_STR(shortname,       \
+                                   longname,        \
+                                   help,            \
+                                   metavar,         \
+                                   arg_requirement, \
+                                   default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                           \
                           CORE_GETOPT_TYPE_STR,                                                        \
                           arg_requirement,                                                              \
@@ -587,7 +601,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_BOOL(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_BOOL(shortname,       \
+                                    longname,        \
+                                    help,            \
+                                    metavar,         \
+                                    arg_requirement, \
+                                    default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                            \
                           CORE_GETOPT_TYPE_BOOL,                                                        \
                           arg_requirement,                                                               \
@@ -603,7 +622,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_SHORT(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_SHORT(shortname,       \
+                                     longname,        \
+                                     help,            \
+                                     metavar,         \
+                                     arg_requirement, \
+                                     default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                             \
                           CORE_GETOPT_TYPE_SHORT,                                                        \
                           arg_requirement,                                                                \
@@ -619,7 +643,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_INT(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_INT(shortname,       \
+                                   longname,        \
+                                   help,            \
+                                   metavar,         \
+                                   arg_requirement, \
+                                   default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                           \
                           CORE_GETOPT_TYPE_INT,                                                        \
                           arg_requirement,                                                              \
@@ -635,7 +664,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_LONG(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_LONG(shortname,       \
+                                    longname,        \
+                                    help,            \
+                                    metavar,         \
+                                    arg_requirement, \
+                                    default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                            \
                           CORE_GETOPT_TYPE_LONG,                                                        \
                           arg_requirement,                                                               \
@@ -651,7 +685,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_USHORT(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_USHORT(shortname,       \
+                                      longname,        \
+                                      help,            \
+                                      metavar,         \
+                                      arg_requirement, \
+                                      default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                              \
                           CORE_GETOPT_TYPE_USHORT,                                                        \
                           arg_requirement,                                                                 \
@@ -667,7 +706,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_UINT(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_UINT(shortname,       \
+                                    longname,        \
+                                    help,            \
+                                    metavar,         \
+                                    arg_requirement, \
+                                    default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                            \
                           CORE_GETOPT_TYPE_UINT,                                                        \
                           arg_requirement,                                                               \
@@ -683,7 +727,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_ULONG(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_ULONG(shortname,       \
+                                     longname,        \
+                                     help,            \
+                                     metavar,         \
+                                     arg_requirement, \
+                                     default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                             \
                           CORE_GETOPT_TYPE_ULONG,                                                        \
                           arg_requirement,                                                                \
@@ -699,7 +748,12 @@ struct _Core_Getopt
  * @param arg_requirement The option argument requirements.
  * @param default_value The default value for the parameter of the option.
  */
-#define CORE_GETOPT_STORE_FULL_DOUBLE(shortname, longname, help, metavar, arg_requirement, default_value) \
+#define CORE_GETOPT_STORE_FULL_DOUBLE(shortname,       \
+                                      longname,        \
+                                      help,            \
+                                      metavar,         \
+                                      arg_requirement, \
+                                      default_value) \
   CORE_GETOPT_STORE_FULL(shortname, longname, help, metavar,                                              \
                           CORE_GETOPT_TYPE_DOUBLE,                                                        \
                           arg_requirement,                                                                 \
@@ -760,7 +814,11 @@ struct _Core_Getopt
  * @param metavar The metavar message concerning the parameter of the option.
  * @param choices_array An string array of different choices.
  */
-#define CORE_GETOPT_CHOICE_METAVAR(shortname, longname, help, metavar, choices_array) \
+#define CORE_GETOPT_CHOICE_METAVAR(shortname, \
+                                   longname,  \
+                                   help,      \
+                                   metavar,   \
+                                   choices_array) \
   {shortname, longname, help, metavar, CORE_GETOPT_ACTION_CHOICE,                     \
    {.choices = choices_array}}
 
@@ -814,7 +872,14 @@ struct _Core_Getopt
  * @param argument_requirement The required arguments to this option.
  * @param default_value The default values for these arguments.
  */
-#define CORE_GETOPT_CALLBACK_FULL(shortname, longname, help, metavar, callback_func, callback_data, argument_requirement, default_value) \
+#define CORE_GETOPT_CALLBACK_FULL(shortname,            \
+                                  longname,             \
+                                  help,                 \
+                                  metavar,              \
+                                  callback_func,        \
+                                  callback_data,        \
+                                  argument_requirement, \
+                                  default_value) \
   {shortname, longname, help, metavar, CORE_GETOPT_ACTION_CALLBACK,                                                                      \
    {.callback = {callback_func, callback_data,                                                                                            \
                  argument_requirement, default_value}}}
@@ -828,7 +893,11 @@ struct _Core_Getopt
  * @param callback_func The callback function to call.
  * @param callback_data The data to pass to the callback.
  */
-#define CORE_GETOPT_CALLBACK_NOARGS(shortname, longname, help, callback_func, callback_data) \
+#define CORE_GETOPT_CALLBACK_NOARGS(shortname,     \
+                                    longname,      \
+                                    help,          \
+                                    callback_func, \
+                                    callback_data) \
   CORE_GETOPT_CALLBACK_FULL(shortname, longname, help, NULL,                                 \
                              callback_func, callback_data,                                    \
                              CORE_GETOPT_DESC_ARG_REQUIREMENT_NO,                            \
@@ -844,7 +913,12 @@ struct _Core_Getopt
  * @param callback_func The callback function to call.
  * @param callback_data The data to pass to the callback.
  */
-#define CORE_GETOPT_CALLBACK_ARGS(shortname, longname, help, metavar, callback_func, callback_data) \
+#define CORE_GETOPT_CALLBACK_ARGS(shortname,     \
+                                  longname,      \
+                                  help,          \
+                                  metavar,       \
+                                  callback_func, \
+                                  callback_data) \
   CORE_GETOPT_CALLBACK_FULL(shortname, longname, help, metavar,                                     \
                              callback_func, callback_data,                                           \
                              CORE_GETOPT_DESC_ARG_REQUIREMENT_YES,                                  \
@@ -1025,7 +1099,7 @@ struct _Core_Getopt
  *
  * @see Core_getopt_help_category()
  */
-EAPI void       Core_getopt_help(FILE *fp, const Core_Getopt *info);
+EAPI void Core_getopt_help(FILE *fp, const Core_Getopt *info);
 
 /**
  * Shows help for a single category (along with program usage and description).
@@ -1038,7 +1112,9 @@ EAPI void       Core_getopt_help(FILE *fp, const Core_Getopt *info);
  *
  * @see Core_getopt_help()
  */
-EAPI Efl_Bool  Core_getopt_help_category(FILE *fp, const Core_Getopt *info, const char *category);
+EAPI Efl_Bool Core_getopt_help_category(FILE              *fp,
+                                        const Core_Getopt *info,
+                                        const char        *category);
 
 /**
  * Checks parser for duplicate entries, print them out.
@@ -1046,7 +1122,7 @@ EAPI Efl_Bool  Core_getopt_help_category(FILE *fp, const Core_Getopt *info, cons
  * @return @c EFL_TRUEif there are duplicates, @c EFL_FALSE otherwise.
  * @param parser The parser to be checked.
  */
-EAPI Efl_Bool  core_getopt_parser_has_duplicates(const Core_Getopt *parser);
+EAPI Efl_Bool core_getopt_parser_has_duplicates(const Core_Getopt *parser);
 
 /**
  * Parses command line parameters.
@@ -1110,7 +1186,10 @@ EAPI Efl_Bool  core_getopt_parser_has_duplicates(const Core_Getopt *parser);
  *
  * @see core_getopt_parse_positional()
  */
-EAPI int        core_getopt_parse(const Core_Getopt *parser, Core_Getopt_Value *values, int argc, char **argv);
+EAPI int core_getopt_parse(const Core_Getopt *parser,
+                           Core_Getopt_Value *values,
+                           int                argc,
+                           char             **argv);
 
 /**
  * Parses command line positional parameters.
@@ -1163,8 +1242,11 @@ EAPI int        core_getopt_parse(const Core_Getopt *parser, Core_Getopt_Value *
  *         last positional argument is of action @c
  *         CORE_GETOPT_ACTION_APPEND then it will be the same as @a argc.
  */
-EAPI int        core_getopt_parse_positional(const Core_Getopt *parser, Core_Getopt_Value *values, int argc, char **argv, int start);
-
+EAPI int core_getopt_parse_positional(const Core_Getopt *parser,
+                                      Core_Getopt_Value *values,
+                                      int                argc,
+                                      char             **argv,
+                                      int                start);
 
 /**
  * Utilities to free list and nodes allocated by @a CORE_GETOPT_ACTION_APPEND.
@@ -1189,7 +1271,11 @@ EAPI Eina_List *Core_getopt_list_free(Eina_List *list);
  *
  * @c callback_data value is ignored, you can safely use @c NULL.
  */
-EAPI Efl_Bool  Core_getopt_callback_geometry_parse(const Core_Getopt *parser, const Core_Getopt_Desc *desc, const char *str, void *data, Core_Getopt_Value *storage);
+EAPI Efl_Bool Core_getopt_callback_geometry_parse(const Core_Getopt *parser,
+                                                  const Core_Getopt_Desc *desc,
+                                                  const char             *str,
+                                                  void                   *data,
+                                                  Core_Getopt_Value *storage);
 
 /**
  * Helper Core_getopt callback to parse geometry size (WxH).
@@ -1205,7 +1291,11 @@ EAPI Efl_Bool  Core_getopt_callback_geometry_parse(const Core_Getopt *parser, co
  *
  * @c callback_data value is ignored, you can safely use @c NULL.
  */
-EAPI Efl_Bool  Core_getopt_callback_size_parse(const Core_Getopt *parser, const Core_Getopt_Desc *desc, const char *str, void *data, Core_Getopt_Value *storage);
+EAPI Efl_Bool Core_getopt_callback_size_parse(const Core_Getopt      *parser,
+                                              const Core_Getopt_Desc *desc,
+                                              const char             *str,
+                                              void                   *data,
+                                              Core_Getopt_Value      *storage);
 
 #ifdef __cplusplus
 }

@@ -93,8 +93,9 @@
  *
  * @see eina_binshare_add()
  */
-EINA_API const void *eina_binshare_add_length(const void  *obj,
-                                          unsigned int olen) EFL_WARN_UNUSED_RESULT;
+EINA_API const void *
+eina_binshare_add_length(const void  *obj,
+                         unsigned int olen) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Increments references of the given shared object.
@@ -125,7 +126,7 @@ EINA_API const void *eina_binshare_ref(const void *obj);
  * @warning If the given pointer is not shared, bad things happen, mostly a
  *          segmentation fault.
  */
-EINA_API void        eina_binshare_del(const void *obj);
+EINA_API void eina_binshare_del(const void *obj);
 
 /**
  * @brief Notes that the given object @b must be shared.
@@ -138,7 +139,8 @@ EINA_API void        eina_binshare_del(const void *obj);
  * @warning If the given pointer is not shared, bad things happen, mostly a
  *          segmentation fault. If in doubt, try strlen().
  */
-EINA_API int         eina_binshare_length(const void *obj) EFL_WARN_UNUSED_RESULT EINA_PURE;
+EINA_API int
+eina_binshare_length(const void *obj) EFL_WARN_UNUSED_RESULT EINA_PURE;
 
 /**
  * @brief Dumps the contents of share_common.
@@ -146,7 +148,7 @@ EINA_API int         eina_binshare_length(const void *obj) EFL_WARN_UNUSED_RESUL
  * @details This function dumps all the objects from share_common to stdout with a
  *          DDD: prefix per line and a memory usage summary.
  */
-EINA_API void        eina_binshare_dump(void);
+EINA_API void eina_binshare_dump(void);
 
 /**
  * @brief Retrieves an instance of a blob for use in a program.

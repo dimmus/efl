@@ -58,10 +58,11 @@ typedef struct _Eina_QuadTree_Item Eina_QuadTree_Item;
 /**
  * @typedef Eina_Quad_Direction
  */
-typedef enum {
-   EINA_QUAD_LEFT,
-   EINA_QUAD_RIGHT,
-   EINA_QUAD_BOTH
+typedef enum
+{
+  EINA_QUAD_LEFT,
+  EINA_QUAD_RIGHT,
+  EINA_QUAD_BOTH
 } Eina_Quad_Direction;
 
 /**
@@ -72,7 +73,8 @@ typedef enum {
  * where in the tree the given data @p object belongs, using @p middle
  * as the division line for the two halves of the space.
  */
-typedef Eina_Quad_Direction (*Eina_Quad_Callback)(const void *object, size_t middle);
+typedef Eina_Quad_Direction (*Eina_Quad_Callback)(const void *object,
+                                                  size_t      middle);
 
 /**
  * @brief Constructs a quadtree object.
@@ -86,7 +88,10 @@ typedef Eina_Quad_Direction (*Eina_Quad_Callback)(const void *object, size_t mid
  * The vertical and horizontal callbacks are used to assist in
  * determining which quadrant a given data item belongs to.
  */
-EINA_API Eina_QuadTree *eina_quadtree_new(size_t w, size_t h, Eina_Quad_Callback vertical, Eina_Quad_Callback horizontal);
+EINA_API Eina_QuadTree *eina_quadtree_new(size_t             w,
+                                          size_t             h,
+                                          Eina_Quad_Callback vertical,
+                                          Eina_Quad_Callback horizontal);
 
 /**
  * @brief Destructs quadtree and its data.
@@ -138,7 +143,8 @@ EINA_API void eina_quadtree_increase(Eina_QuadTree_Item *object);
  * insert the item into the quadtree (i.e. insertion is delayed until
  * it needs to be used.)
  */
-EINA_API Eina_QuadTree_Item *eina_quadtree_add(Eina_QuadTree *q, const void *object);
+EINA_API Eina_QuadTree_Item *eina_quadtree_add(Eina_QuadTree *q,
+                                               const void    *object);
 
 /**
  * @brief Deletes a given quadtree item from the quadtree.
@@ -191,7 +197,8 @@ EINA_API Efl_Bool eina_quadtree_show(Eina_QuadTree_Item *object);
  * changes, then performs a collision detection to find items whose
  * geometry is contained within or intersects the given target geometry.
  */
-EINA_API Eina_Inlist *eina_quadtree_collide(Eina_QuadTree *q, int x, int y, int w, int h);
+EINA_API Eina_Inlist *
+eina_quadtree_collide(Eina_QuadTree *q, int x, int y, int w, int h);
 
 /**
  * @brief Retrieves the quadtree item's data for the given inline list.

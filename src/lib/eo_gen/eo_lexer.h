@@ -14,10 +14,20 @@
 
 enum Tokens
 {
-   TOK_EQ = START_CUSTOM, TOK_NQ, TOK_GE, TOK_LE,
-   TOK_AND, TOK_OR, TOK_LSH, TOK_RSH,
+  TOK_EQ = START_CUSTOM,
+  TOK_NQ,
+  TOK_GE,
+  TOK_LE,
+  TOK_AND,
+  TOK_OR,
+  TOK_LSH,
+  TOK_RSH,
 
-   TOK_DOC, TOK_STRING, TOK_CHAR, TOK_NUMBER, TOK_VALUE
+  TOK_DOC,
+  TOK_STRING,
+  TOK_CHAR,
+  TOK_NUMBER,
+  TOK_VALUE
 };
 
 /* all keywords in eolian, they can still be used as names (they're TOK_VALUE)
@@ -77,8 +87,8 @@ enum Tokens
 
 enum Keywords
 {
-   KW_UNKNOWN = 0,
-   KEYWORDS
+  KW_UNKNOWN = 0,
+  KEYWORDS
 };
 
 #undef KW
@@ -87,29 +97,28 @@ enum Keywords
 
 enum Numbers
 {
-   NUM_INT,
-   NUM_UINT,
-   NUM_LONG,
-   NUM_ULONG,
-   NUM_LLONG,
-   NUM_ULLONG,
-   NUM_FLOAT,
-   NUM_DOUBLE
+  NUM_INT,
+  NUM_UINT,
+  NUM_LONG,
+  NUM_ULONG,
+  NUM_LLONG,
+  NUM_ULLONG,
+  NUM_FLOAT,
+  NUM_DOUBLE
 };
 
-typedef union
-{
-   char               c;
-   const    char     *s;
-   signed   int       i;
-   unsigned int       u;
-   signed   long      l;
-   unsigned long      ul;
-   signed   long long ll;
-   unsigned long long ull;
-   float              f;
-   double             d;
-   Eolian_Documentation *doc;
+typedef union {
+  char                  c;
+  const char           *s;
+  signed int            i;
+  unsigned int          u;
+  signed long           l;
+  unsigned long         ul;
+  signed long long      ll;
+  unsigned long long    ull;
+  float                 f;
+  double                d;
+  Eolian_Documentation *doc;
 } Eo_Token_Union;
 
 /* a token - "token" is the actual token id, "value" is the value of a token
@@ -117,125 +126,125 @@ typedef union
  * is the keyword id if this is a keyword, it's 0 when not a keyword */
 typedef struct _Eo_Token
 {
-   int token, kw;
-   Eo_Token_Union value;
+  int            token, kw;
+  Eo_Token_Union value;
 } Eo_Token;
 
 typedef struct _Lexer_Ctx
 {
-   int line, column;
-   const char *linestr;
-   Eo_Token token;
+  int         line, column;
+  const char *linestr;
+  Eo_Token    token;
 } Lexer_Ctx;
 
 typedef struct _Eo_Lexer_Dtor
 {
-   Eina_Free_Cb free_cb;
-   void *data;
+  Eina_Free_Cb free_cb;
+  void        *data;
 } Eo_Lexer_Dtor;
 
 /* keeps all lexer state */
 typedef struct _Eo_Lexer
 {
    /* current character being tested */
-   int          current;
-   /* column is token aware column number, for example when lexing a keyword
+  int current;
+    /* column is token aware column number, for example when lexing a keyword
     * it points to the beginning of it after the lexing is done, icolumn is
     * token unaware, always pointing to current column */
-   int          column, icolumn;
-   /* the current line number, token aware and unaware */
-   int          line_number, iline_number;
-   /* t: "normal" - token to lex into, "lookahead" - a lookahead token, used
+  int column, icolumn;
+    /* the current line number, token aware and unaware */
+  int line_number, iline_number;
+    /* t: "normal" - token to lex into, "lookahead" - a lookahead token, used
     * to look one token past "t", when we need to check for a token after the
     * current one and use it in a conditional without consuming the current
     * token - used in pretty few cases - because we have one extra lookahead
     * token, that makes our grammar LL(2) - two tokens in total */
-   Eo_Token     t, lookahead;
-   /* a string buffer used to keep contents of token currently being read,
+  Eo_Token t, lookahead;
+    /* a string buffer used to keep contents of token currently being read,
     * if needed at all */
-   Efl_Strbuf *buff;
-   /* a handle pointing to a memory mapped file representing the file we're
+  Efl_Strbuf *buff;
+    /* a handle pointing to a memory mapped file representing the file we're
     * currently lexing */
-   Eina_File   *handle;
-   /* the source file name */
-   const char  *source;
-   /* only basename */
-   const char  *filename;
-   /* points to the current character in our mmapped file being lexed, just
+  Eina_File *handle;
+    /* the source file name */
+  const char *source;
+    /* only basename */
+  const char *filename;
+    /* points to the current character in our mmapped file being lexed, just
     * incremented until the end */
-   const char  *stream;
-   /* end pointer - required to check if we've reached past the file, as
+  const char *stream;
+    /* end pointer - required to check if we've reached past the file, as
     * mmapped data will give us no EOF */
-   const char  *stream_end;
-   /* points to the current line being lexed, used by error messages to
+  const char *stream_end;
+    /* points to the current line being lexed, used by error messages to
     * display the current line with a caret at the respective column */
-   const char  *stream_line;
-   /* a pointer to the state this lexer belongs to */
-   Eolian_State *state;
-   /* the unit being filled during current parsing */
-   Eolian_Unit *unit;
-   /* this is jumped to when an error happens */
-   jmp_buf      err_jmp;
+  const char *stream_line;
+    /* a pointer to the state this lexer belongs to */
+  Eolian_State *state;
+    /* the unit being filled during current parsing */
+  Eolian_Unit *unit;
+    /* this is jumped to when an error happens */
+  jmp_buf err_jmp;
 
-   /* saved context info */
-   Eina_List *saved_ctxs;
+    /* saved context info */
+  Eina_List *saved_ctxs;
 
-   Eolian_Class *klass;
-   /* a dtor list; dtors can be pushed and popped during
+  Eolian_Class *klass;
+    /* a dtor list; dtors can be pushed and popped during
     * parser execution to simulate scoped resource management
     *
     * unpopped dtors (e.g. on error) are run when the state is freed
     */
-   Eina_List *dtors;
-   /* a node hash; eolian objects can be allocated through this and
+  Eina_List *dtors;
+    /* a node hash; eolian objects can be allocated through this and
     * they are stored here (with 1 reference) until they're released
     * into the environment (they also get deref'd)
     *
     * if the release never happens, everything is just freed when the state is
     */
-   Eina_Hash *nodes;
+  Eina_Hash *nodes;
 
-   /* whether we allow lexing expression related tokens */
-   Efl_Bool expr_mode;
+    /* whether we allow lexing expression related tokens */
+  Efl_Bool expr_mode;
 
-   /* decimal point, by default '.' */
-   char decpoint;
+    /* decimal point, by default '.' */
+  char decpoint;
 } Eo_Lexer;
 
 typedef enum _Eo_Lexer_Error
 {
-   EO_LEXER_ERROR_UNKNOWN = 0,
-   EO_LEXER_ERROR_NORMAL,
-   EO_LEXER_ERROR_OOM
+  EO_LEXER_ERROR_UNKNOWN = 0,
+  EO_LEXER_ERROR_NORMAL,
+  EO_LEXER_ERROR_OOM
 } Eo_Lexer_Error;
 
-void        eo_lexer_init           (void);
-void        eo_lexer_shutdown       (void);
-Eo_Lexer   *eo_lexer_new            (Eolian_State *state, const char *source);
-void        eo_lexer_free           (Eo_Lexer *ls);
+void      eo_lexer_init(void);
+void      eo_lexer_shutdown(void);
+Eo_Lexer *eo_lexer_new(Eolian_State *state, const char *source);
+void      eo_lexer_free(Eo_Lexer *ls);
 /* gets a regular token, singlechar or one of TOK_something */
-int         eo_lexer_get            (Eo_Lexer *ls);
+int eo_lexer_get(Eo_Lexer *ls);
 /* lookahead token - see Eo_Lexer */
-int         eo_lexer_lookahead      (Eo_Lexer *ls);
+int eo_lexer_lookahead(Eo_Lexer *ls);
 /* "throws" an error, with a custom message and custom token */
-void        eo_lexer_lex_error      (Eo_Lexer *ls, const char *msg, int token);
+void eo_lexer_lex_error(Eo_Lexer *ls, const char *msg, int token);
 /* like above, but uses the lexstate->t.token, a.k.a. current token */
-void        eo_lexer_syntax_error   (Eo_Lexer *ls, const char *msg);
+void eo_lexer_syntax_error(Eo_Lexer *ls, const char *msg);
 /* turns the token into a string, writes into the given buffer */
-void        eo_lexer_token_to_str   (int token, char *buf);
+void eo_lexer_token_to_str(int token, char *buf);
 /* returns the string representation of a keyword */
 const char *eo_lexer_keyword_str_get(int kw);
 /* checks if the given keyword is a builtin type */
-Efl_Bool   eo_lexer_is_type_keyword(int kw);
+Efl_Bool eo_lexer_is_type_keyword(int kw);
 /* gets a keyword id from the keyword string */
-int         eo_lexer_keyword_str_to_id(const char *kw);
+int eo_lexer_keyword_str_to_id(const char *kw);
 /* gets the C type name for a builtin type name - e.g. uchar -> unsigned char */
-const char *eo_lexer_get_c_type     (int kw);
+const char *eo_lexer_get_c_type(int kw);
 /* save, restore and clear context (line, column, line string) */
-void eo_lexer_context_push   (Eo_Lexer *ls);
-void eo_lexer_context_pop    (Eo_Lexer *ls);
+void eo_lexer_context_push(Eo_Lexer *ls);
+void eo_lexer_context_pop(Eo_Lexer *ls);
 void eo_lexer_context_restore(Eo_Lexer *ls);
-void eo_lexer_context_clear  (Eo_Lexer *ls);
+void eo_lexer_context_clear(Eo_Lexer *ls);
 
 /* node ("heap") management */
 Eolian_Object *eo_lexer_node_new(Eo_Lexer *ls, size_t objsize);
@@ -244,73 +253,72 @@ Eolian_Object *eo_lexer_node_release(Eo_Lexer *ls, Eolian_Object *obj);
 static inline Eolian_Type *
 eo_lexer_type_new(Eo_Lexer *ls)
 {
-   return (Eolian_Type *)eo_lexer_node_new(ls, sizeof(Eolian_Type));
+  return (Eolian_Type *)eo_lexer_node_new(ls, sizeof(Eolian_Type));
 }
 
 static inline Eolian_Type *
 eo_lexer_type_release(Eo_Lexer *ls, Eolian_Type *tp)
 {
-   return (Eolian_Type *)eo_lexer_node_release(ls, (Eolian_Object *)tp);
+  return (Eolian_Type *)eo_lexer_node_release(ls, (Eolian_Object *)tp);
 }
 
 static inline Eolian_Typedecl *
 eo_lexer_typedecl_new(Eo_Lexer *ls)
 {
-   return (Eolian_Typedecl *)eo_lexer_node_new(ls, sizeof(Eolian_Typedecl));
+  return (Eolian_Typedecl *)eo_lexer_node_new(ls, sizeof(Eolian_Typedecl));
 }
 
 static inline Eolian_Typedecl *
 eo_lexer_typedecl_release(Eo_Lexer *ls, Eolian_Typedecl *tp)
 {
-   return (Eolian_Typedecl *)eo_lexer_node_release(ls, (Eolian_Object *)tp);
+  return (Eolian_Typedecl *)eo_lexer_node_release(ls, (Eolian_Object *)tp);
 }
 
 static inline Eolian_Constant *
 eo_lexer_constant_new(Eo_Lexer *ls)
 {
-   return (Eolian_Constant *)eo_lexer_node_new(ls, sizeof(Eolian_Constant));
+  return (Eolian_Constant *)eo_lexer_node_new(ls, sizeof(Eolian_Constant));
 }
 
 static inline Eolian_Constant *
 eo_lexer_constant_release(Eo_Lexer *ls, Eolian_Constant *var)
 {
-   return (Eolian_Constant *)eo_lexer_node_release(ls, (Eolian_Object *)var);
+  return (Eolian_Constant *)eo_lexer_node_release(ls, (Eolian_Object *)var);
 }
 
 static inline Eolian_Expression *
 eo_lexer_expr_new(Eo_Lexer *ls)
 {
-   return (Eolian_Expression *)eo_lexer_node_new(ls, sizeof(Eolian_Expression));
+  return (Eolian_Expression *)eo_lexer_node_new(ls, sizeof(Eolian_Expression));
 }
 
 static inline Eolian_Expression *
 eo_lexer_expr_release(Eo_Lexer *ls, Eolian_Expression *expr)
 {
-   return (Eolian_Expression *)eo_lexer_node_release(ls, (Eolian_Object *)expr);
+  return (Eolian_Expression *)eo_lexer_node_release(ls, (Eolian_Object *)expr);
 }
 
 static inline Eolian_Expression *
 eo_lexer_expr_release_ref(Eo_Lexer *ls, Eolian_Expression *expr)
 {
-   eolian_object_ref(&expr->base);
-   return eo_lexer_expr_release(ls, expr);
+  eolian_object_ref(&expr->base);
+  return eo_lexer_expr_release(ls, expr);
 }
 
 static inline Eolian_Error *
 eo_lexer_error_new(Eo_Lexer *ls)
 {
-   return (Eolian_Error *)eo_lexer_node_new(ls, sizeof(Eolian_Error));
+  return (Eolian_Error *)eo_lexer_node_new(ls, sizeof(Eolian_Error));
 }
 
 static inline Eolian_Error *
 eo_lexer_error_release(Eo_Lexer *ls, Eolian_Error *err)
 {
-   return (Eolian_Error *)eo_lexer_node_release(ls, (Eolian_Object *)err);
+  return (Eolian_Error *)eo_lexer_node_release(ls, (Eolian_Object *)err);
 }
 
 /* "stack" management, only to protect against errors (jumps) in parsing */
 void eo_lexer_dtor_push(Eo_Lexer *ls, Eina_Free_Cb free_cb, void *data);
 void eo_lexer_dtor_pop(Eo_Lexer *ls);
-
 
 #endif /* __EO_LEXER_H__ */

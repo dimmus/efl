@@ -16,7 +16,6 @@
  * @}
  */
 
-
 #include "efl_loop_message_future.eo.h"
 #include "efl_loop_message_future_handler.eo.h"
 
@@ -45,9 +44,13 @@
 /* To be deprecated at some point */
 
 /** Please use efl_provider_register instead. */
-EAPI Efl_Bool efl_loop_register(Efl_Loop *obj, const Efl_Class *klass, const Efl_Object *provider);
+EAPI Efl_Bool efl_loop_register(Efl_Loop         *obj,
+                                const Efl_Class  *klass,
+                                const Efl_Object *provider);
 /** Please use efl_provider_unregister instead. */
-EAPI Efl_Bool efl_loop_unregister(Efl_Loop *obj, const Efl_Class *klass, const Efl_Object *provider);
+EAPI Efl_Bool efl_loop_unregister(Efl_Loop         *obj,
+                                  const Efl_Class  *klass,
+                                  const Efl_Object *provider);
 
 /**
  * @brief Quits the main loop once all the events currently on the queue have

@@ -24,7 +24,6 @@
 #include "eina_types.h"
 #include "eina_error.h"
 
-
 /**
  * @addtogroup Eina_Core_Group Core
  *
@@ -60,10 +59,10 @@
  */
 typedef struct _Eina_Version
 {
-   int major;    /**< Major component of the version */
-   int minor;    /**< Minor component of the version */
-   int micro;    /**< Micro component of the version */
-   int revision; /**< Revision component of the version */
+  int major;    /**< Major component of the version */
+  int minor;    /**< Minor component of the version */
+  int micro;    /**< Micro component of the version */
+  int revision; /**< Revision component of the version */
 } Eina_Version;
 
 EINA_API extern Eina_Version *eina_version;

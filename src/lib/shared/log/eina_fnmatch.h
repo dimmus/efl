@@ -35,21 +35,23 @@
  * - Rich Felker, April 2012
  */
 
-#ifndef	EINA_FNMATCH_H
-#define	EINA_FNMATCH_H
+#ifndef EINA_FNMATCH_H
+#define EINA_FNMATCH_H
 
 typedef enum
 {
-   EINA_FNMATCH_PATHNAME    = (1 << 0),
-   EINA_FNMATCH_NOESCAPE    = (1 << 1),
-   EINA_FNMATCH_PERIOD      = (1 << 2),
-   EINA_FNMATCH_LEADING_DIR = (1 << 3),
-   EINA_FNMATCH_CASEFOLD    = (1 << 4),
-   EINA_FNMATCH_FILE_NAME   = EINA_FNMATCH_PATHNAME,
-   EINA_FNMATCH_NOMATCH = 1,
-   EINA_FNMATCH_NOSYS   = -1,
+  EINA_FNMATCH_PATHNAME    = (1 << 0),
+  EINA_FNMATCH_NOESCAPE    = (1 << 1),
+  EINA_FNMATCH_PERIOD      = (1 << 2),
+  EINA_FNMATCH_LEADING_DIR = (1 << 3),
+  EINA_FNMATCH_CASEFOLD    = (1 << 4),
+  EINA_FNMATCH_FILE_NAME   = EINA_FNMATCH_PATHNAME,
+  EINA_FNMATCH_NOMATCH     = 1,
+  EINA_FNMATCH_NOSYS       = -1,
 } Eina_Fnmatch_Flags;
 
-EINA_API Efl_Bool eina_fnmatch(const char *glob, const char *string, Eina_Fnmatch_Flags flags);
+EINA_API Efl_Bool eina_fnmatch(const char        *glob,
+                               const char        *string,
+                               Eina_Fnmatch_Flags flags);
 
 #endif

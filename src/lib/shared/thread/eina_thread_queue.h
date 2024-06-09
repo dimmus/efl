@@ -57,13 +57,14 @@ typedef struct _Eina_Thread_Queue_Msg_Sub Eina_Thread_Queue_Msg_Sub;
 
 struct _Eina_Thread_Queue_Msg
 {
-   int size; /*< The size of the message in bytes, including this header */
+  int size; /*< The size of the message in bytes, including this header */
 };
 
 struct _Eina_Thread_Queue_Msg_Sub
 {
-   Eina_Thread_Queue_Msg  head; /*< Standard header on all messages */
-   Eina_Thread_Queue     *queue; /*< The child queue that woke up and needs a message fetched from it */
+  Eina_Thread_Queue_Msg head; /*< Standard header on all messages */
+  Eina_Thread_Queue *
+    queue; /*< The child queue that woke up and needs a message fetched from it */
 };
 
 /**
@@ -73,8 +74,7 @@ struct _Eina_Thread_Queue_Msg_Sub
  *
  * @since 1.11
  */
-EINA_API Eina_Thread_Queue *
-eina_thread_queue_new(void);
+EINA_API Eina_Thread_Queue *eina_thread_queue_new(void);
 
 /**
  * @brief Frees a thread queue.
@@ -87,8 +87,8 @@ eina_thread_queue_new(void);
  *
  * @since 1.11
  */
-EINA_API void
-eina_thread_queue_free(Eina_Thread_Queue *thq) EINA_ARG_NONNULL(1);
+EINA_API void eina_thread_queue_free(Eina_Thread_Queue *thq)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Allocates a message to send down a thread queue.
@@ -106,8 +106,9 @@ eina_thread_queue_free(Eina_Thread_Queue *thq) EINA_ARG_NONNULL(1);
  *
  * @since 1.11
  */
-EINA_API void *
-eina_thread_queue_send(Eina_Thread_Queue *thq, int size, void **allocref) EINA_ARG_NONNULL(1, 3);
+EINA_API void *eina_thread_queue_send(Eina_Thread_Queue *thq,
+                                      int                size,
+                                      void **allocref) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Finishes sending the allocated message.
@@ -120,8 +121,9 @@ eina_thread_queue_send(Eina_Thread_Queue *thq, int size, void **allocref) EINA_A
  *
  * @since 1.11
  */
-EINA_API void
-eina_thread_queue_send_done(Eina_Thread_Queue *thq, void *allocref) EINA_ARG_NONNULL(1, 2);
+EINA_API void eina_thread_queue_send_done(Eina_Thread_Queue *thq,
+                                          void              *allocref)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Fetches a message from a thread queue.
@@ -140,8 +142,8 @@ eina_thread_queue_send_done(Eina_Thread_Queue *thq, void *allocref) EINA_ARG_NON
  *
  * @since 1.11
  */
-EINA_API void *
-eina_thread_queue_wait(Eina_Thread_Queue *thq, void **allocref) EINA_ARG_NONNULL(1, 2);
+EINA_API void *eina_thread_queue_wait(Eina_Thread_Queue *thq, void **allocref)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Finishes fetching a message from a thread queue.
@@ -154,8 +156,9 @@ eina_thread_queue_wait(Eina_Thread_Queue *thq, void **allocref) EINA_ARG_NONNULL
  *
  * @since 1.11
  */
-EINA_API void
-eina_thread_queue_wait_done(Eina_Thread_Queue *thq, void *allocref) EINA_ARG_NONNULL(1, 2);
+EINA_API void eina_thread_queue_wait_done(Eina_Thread_Queue *thq,
+                                          void              *allocref)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Fetches a message from a thread queue, but return immediately if there is none with NULL.
@@ -172,8 +175,8 @@ eina_thread_queue_wait_done(Eina_Thread_Queue *thq, void *allocref) EINA_ARG_NON
  *
  * @since 1.11
  */
-EINA_API void *
-eina_thread_queue_poll(Eina_Thread_Queue *thq, void **allocref) EINA_ARG_NONNULL(1, 2);
+EINA_API void *eina_thread_queue_poll(Eina_Thread_Queue *thq, void **allocref)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Gets the number of messages on a queue as yet unfetched.
@@ -186,8 +189,8 @@ eina_thread_queue_poll(Eina_Thread_Queue *thq, void **allocref) EINA_ARG_NONNULL
  *
  * @since 1.11
  */
-EINA_API int
-eina_thread_queue_pending_get(const Eina_Thread_Queue *thq) EINA_ARG_NONNULL(1);
+EINA_API int eina_thread_queue_pending_get(const Eina_Thread_Queue *thq)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the parent of a thread queue (make this one a child).
@@ -203,8 +206,9 @@ eina_thread_queue_pending_get(const Eina_Thread_Queue *thq) EINA_ARG_NONNULL(1);
  *
  * @since 1.11
  */
-EINA_API void
-eina_thread_queue_parent_set(Eina_Thread_Queue *thq, Eina_Thread_Queue *thq_parent) EINA_ARG_NONNULL(1);
+EINA_API void eina_thread_queue_parent_set(Eina_Thread_Queue *thq,
+                                           Eina_Thread_Queue *thq_parent)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the parent of a thread queue.
@@ -239,8 +243,8 @@ eina_thread_queue_parent_get(const Eina_Thread_Queue *thq) EINA_ARG_NONNULL(1);
  *
  * @since 1.11
  */
-EINA_API void
-eina_thread_queue_fd_set(Eina_Thread_Queue *thq, int fd) EINA_ARG_NONNULL(1);
+EINA_API void eina_thread_queue_fd_set(Eina_Thread_Queue *thq, int fd)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the file descriptor written to on message sends.
@@ -255,8 +259,8 @@ eina_thread_queue_fd_set(Eina_Thread_Queue *thq, int fd) EINA_ARG_NONNULL(1);
  *
  * @since 1.11
  */
-EINA_API int
-eina_thread_queue_fd_get(const Eina_Thread_Queue *thq) EINA_ARG_NONNULL(1);
+EINA_API int eina_thread_queue_fd_get(const Eina_Thread_Queue *thq)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @}

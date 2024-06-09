@@ -21,8 +21,6 @@
 
 #include "eina_array.h"
 
-
-
 /**
  * @page tutorial_benchmark_page Benchmark Tutorial
  *
@@ -284,7 +282,6 @@
  * for more information.
  */
 
-
 /**
  * @addtogroup Eina_Benchmark_Group Benchmark
  *
@@ -344,7 +341,6 @@ typedef void (*Eina_Benchmark_Specimens)(int request);
  */
 #define EINA_BENCHMARK(function) ((Eina_Benchmark_Specimens)function)
 
-
 /**
  * @brief Creates a new array.
  *
@@ -359,8 +355,7 @@ typedef void (*Eina_Benchmark_Specimens)(int request);
  * When the new module is not needed anymore, use
  * eina_benchmark_free() to free the allocated memory.
  */
-EINA_API Eina_Benchmark *eina_benchmark_new(const char *name,
-                                        const char *run);
+EINA_API Eina_Benchmark *eina_benchmark_new(const char *name, const char *run);
 
 /**
  * @brief Frees a benchmark object.
@@ -371,7 +366,7 @@ EINA_API Eina_Benchmark *eina_benchmark_new(const char *name,
  * registered and frees @p bench. If @p bench is @c NULL, this
  * function returns immediately.
  */
-EINA_API void            eina_benchmark_free(Eina_Benchmark *bench);
+EINA_API void eina_benchmark_free(Eina_Benchmark *bench);
 
 /**
  * @brief Adds a test to a benchmark.
@@ -393,12 +388,12 @@ EINA_API void            eina_benchmark_free(Eina_Benchmark *bench);
  * If @p bench is @c NULL or @p count_step is 0, this function returns
  * immediately and does not add any tests to the benchmark.
  */
-EINA_API Efl_Bool       eina_benchmark_register(Eina_Benchmark          *bench,
-                                             const char              *name,
-                                             Eina_Benchmark_Specimens bench_cb,
-                                             int                      count_start,
-                                             int                      count_end,
-                                             int                      count_step);
+EINA_API Efl_Bool eina_benchmark_register(Eina_Benchmark          *bench,
+                                          const char              *name,
+                                          Eina_Benchmark_Specimens bench_cb,
+                                          int                      count_start,
+                                          int                      count_end,
+                                          int                      count_step);
 
 /**
  * @brief Runs the benchmark's registered tests.

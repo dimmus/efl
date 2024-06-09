@@ -1,9 +1,9 @@
 typedef enum
 {
-   CORE_EXE_WIN32_SIGINT,
-   CORE_EXE_WIN32_SIGQUIT,
-   CORE_EXE_WIN32_SIGTERM,
-   CORE_EXE_WIN32_SIGKILL
+  CORE_EXE_WIN32_SIGINT,
+  CORE_EXE_WIN32_SIGQUIT,
+  CORE_EXE_WIN32_SIGTERM,
+  CORE_EXE_WIN32_SIGKILL
 } Core_Exe_Win32_Signal;
 
 /* FIXME: Getting respawn to work
@@ -68,67 +68,80 @@ typedef enum
 
 struct _Core_Exe_Data
 {
-   void             *data;
-   char             *tag, *cmd;
-   Eo               *loop;
+  void *data;
+  char *tag, *cmd;
+  Eo   *loop;
 
 #ifdef _WIN32
-   HANDLE process;
-   HANDLE process_thread;
-   DWORD thread_id;
-   Core_Win32_Handler *h_close;
-   Core_Exe_Win32_Signal sig;
+  HANDLE                process;
+  HANDLE                process_thread;
+  DWORD                 thread_id;
+  Core_Win32_Handler   *h_close;
+  Core_Exe_Win32_Signal sig;
 
-   Core_Thread *th;
+  Core_Thread *th;
 
-   struct {
-      HANDLE child_pipe;
-      void *data_buf;
-      int data_size;
-   } pipe_read;
+  struct
+  {
+    HANDLE child_pipe;
+    void  *data_buf;
+    int    data_size;
+  } pipe_read;
 
-   struct {
-      HANDLE child_pipe;
-      void *data_buf;
-      int data_size;
-   } pipe_error;
+  struct
+  {
+    HANDLE child_pipe;
+    void  *data_buf;
+    int    data_size;
+  } pipe_error;
 
-   struct {
-      HANDLE child_pipe;
-      HANDLE child_pipe_x;
-   } pipe_write;
+  struct
+  {
+    HANDLE child_pipe;
+    HANDLE child_pipe_x;
+  } pipe_write;
 
-   Efl_Bool close_threads : 1;
-   Efl_Bool is_suspended : 1;
+  Efl_Bool close_threads : 1;
+  Efl_Bool is_suspended  : 1;
 #else
-   Core_Fd_Handler *write_fd_handler; /* the fd_handler to handle write to child - if this was used, or NULL if not */
-   Core_Fd_Handler *read_fd_handler; /* the fd_handler to handle read from child - if this was used, or NULL if not */
-   Core_Fd_Handler *error_fd_handler; /* the fd_handler to handle errors from child - if this was used, or NULL if not */
-   void             *write_data_buf; /* a data buffer for data to write to the child -
+  Core_Fd_Handler *
+    write_fd_handler; /* the fd_handler to handle write to child - if this was used, or NULL if not */
+  Core_Fd_Handler *
+    read_fd_handler; /* the fd_handler to handle read from child - if this was used, or NULL if not */
+  Core_Fd_Handler *
+    error_fd_handler; /* the fd_handler to handle errors from child - if this was used, or NULL if not */
+  void *write_data_buf; /* a data buffer for data to write to the child -
                                       * realloced as needed for more data and flushed when the fd handler says writes are possible
                                       */
-   int               write_data_size; /* the size in bytes of the data buffer */
-   int               write_data_offset; /* the offset in bytes in the data buffer */
-   void             *read_data_buf; /* data read from the child awating delivery to an event */
-   int               read_data_size; /* data read from child in bytes */
-   void             *error_data_buf; /* errors read from the child awating delivery to an event */
-   int               error_data_size; /* errors read from child in bytes */
-   int               child_fd_write; /* fd to write TO to send data to the child */
-   int               child_fd_read; /* fd to read FROM when child has sent us (the parent) data */
-   int               child_fd_error; /* fd to read FROM when child has sent us (the parent) errors */
-   int               child_fd_write_x; /* fd to write TO to send data to the child */
-   int               child_fd_read_x; /* fd to read FROM when child has sent us (the parent) data */
-   int               child_fd_error_x; /* fd to read FROM when child has sent us (the parent) errors */
+  int   write_data_size; /* the size in bytes of the data buffer */
+  int   write_data_offset; /* the offset in bytes in the data buffer */
+  void
+     *read_data_buf; /* data read from the child awating delivery to an event */
+  int read_data_size; /* data read from child in bytes */
+  void *
+    error_data_buf; /* errors read from the child awating delivery to an event */
+  int error_data_size; /* errors read from child in bytes */
+  int child_fd_write; /* fd to write TO to send data to the child */
+  int
+    child_fd_read; /* fd to read FROM when child has sent us (the parent) data */
+  int
+    child_fd_error; /* fd to read FROM when child has sent us (the parent) errors */
+  int child_fd_write_x; /* fd to write TO to send data to the child */
+  int
+    child_fd_read_x; /* fd to read FROM when child has sent us (the parent) data */
+  int
+    child_fd_error_x; /* fd to read FROM when child has sent us (the parent) errors */
 
-   int               start_bytes, end_bytes, start_lines, end_lines; /* Number of bytes/lines to auto pipe at start/end of stdout/stderr. */
+  int start_bytes, end_bytes, start_lines,
+    end_lines; /* Number of bytes/lines to auto pipe at start/end of stdout/stderr. */
 
-   Core_Timer      *doomsday_clock; /* The Timer of Death.  Muahahahaha. */
+  Core_Timer *doomsday_clock; /* The Timer of Death.  Muahahahaha. */
 #endif
 
-   Core_Exe_Cb      pre_free_cb;
-   pid_t             pid;
-   Core_Exe_Flags   flags;
-   Efl_Bool         close_stdin : 1;
+  Core_Exe_Cb    pre_free_cb;
+  pid_t          pid;
+  Core_Exe_Flags flags;
+  Efl_Bool       close_stdin : 1;
 };
 
 typedef struct _Core_Exe_Data Core_Exe_Data;
@@ -143,19 +156,31 @@ EAPI extern int CORE_EXE_EVENT_DATA;
 EAPI extern int CORE_EXE_EVENT_ERROR;
 
 Core_Exe *_core_exe_find(pid_t pid);
-void *_core_exe_event_del_new(void);
-void _core_exe_event_del_free(void *data EFL_UNUSED, void *ev);
-void _core_exe_event_exe_data_free(void *data EFL_UNUSED, void *ev);
-Core_Exe_Event_Add * _core_exe_event_add_new(void);
-void _core_exe_event_add_free(void *data EFL_UNUSED, void *ev);
+void     *_core_exe_event_del_new(void);
+void      _core_exe_event_del_free(void *data EFL_UNUSED, void *ev);
+void      _core_exe_event_exe_data_free(void *data EFL_UNUSED, void *ev);
+Core_Exe_Event_Add *_core_exe_event_add_new(void);
+void                _core_exe_event_add_free(void *data EFL_UNUSED, void *ev);
 
-void _impl_core_exe_run_priority_set(int pri);
-int _impl_core_exe_run_priority_get(void);
-void _impl_core_exe_auto_limits_set(Core_Exe *obj, Core_Exe_Data *exe, int start_bytes, int end_bytes, int start_lines, int end_lines);
-Eo *_impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe);
-void _impl_core_exe_efl_control_suspend_set(Eo *obj EFL_UNUSED, Core_Exe_Data *exe, Efl_Bool suspend);
-Efl_Bool _impl_core_exe_send(Core_Exe *obj, Core_Exe_Data *exe, const void *data, int size);
-Core_Exe_Event_Data *_impl_core_exe_event_data_get(Core_Exe *obj, Core_Exe_Data *exe, Core_Exe_Flags flags);
+void     _impl_core_exe_run_priority_set(int pri);
+int      _impl_core_exe_run_priority_get(void);
+void     _impl_core_exe_auto_limits_set(Core_Exe      *obj,
+                                        Core_Exe_Data *exe,
+                                        int            start_bytes,
+                                        int            end_bytes,
+                                        int            start_lines,
+                                        int            end_lines);
+Eo      *_impl_core_exe_efl_object_finalize(Eo *obj, Core_Exe_Data *exe);
+void     _impl_core_exe_efl_control_suspend_set(Eo *obj        EFL_UNUSED,
+                                                Core_Exe_Data *exe,
+                                                Efl_Bool       suspend);
+Efl_Bool _impl_core_exe_send(Core_Exe      *obj,
+                             Core_Exe_Data *exe,
+                             const void    *data,
+                             int            size);
+Core_Exe_Event_Data *_impl_core_exe_event_data_get(Core_Exe      *obj,
+                                                   Core_Exe_Data *exe,
+                                                   Core_Exe_Flags flags);
 void _impl_core_exe_efl_object_destructor(Eo *obj, Core_Exe_Data *exe);
 void _impl_core_exe_pause(Core_Exe *obj, Core_Exe_Data *exe);
 void _impl_core_exe_continue(Core_Exe *obj, Core_Exe_Data *exe);

@@ -282,7 +282,7 @@
  * @typedef Eina_Hash
  * Type for a generic hash table.
  */
-typedef struct _Eina_Hash       Eina_Hash;
+typedef struct _Eina_Hash Eina_Hash;
 
 /**
  * @typedef Eina_Hash_Tuple
@@ -296,9 +296,9 @@ typedef struct _Eina_Hash_Tuple Eina_Hash_Tuple;
  */
 struct _Eina_Hash_Tuple
 {
-   const void  *key; /**< The key */
-   void        *data; /**< The data associated to the key */
-   unsigned int key_length; /**< The length of the key */
+  const void  *key; /**< The key */
+  void        *data; /**< The data associated to the key */
+  unsigned int key_length; /**< The length of the key */
 };
 
 /**
@@ -317,7 +317,10 @@ typedef unsigned int (*Eina_Key_Length)(const void *key);
  * @typedef Eina_Key_Cmp
  * Type for a function to compare two hash keys.
  */
-typedef int          (*Eina_Key_Cmp)(const void *key1, int key1_length, const void *key2, int key2_length);
+typedef int (*Eina_Key_Cmp)(const void *key1,
+                            int         key1_length,
+                            const void *key2,
+                            int         key2_length);
 /**
  * @def EINA_KEY_CMP
  * @param[in] Function The function used to compare hash key.
@@ -328,7 +331,7 @@ typedef int          (*Eina_Key_Cmp)(const void *key1, int key1_length, const vo
  * @typedef Eina_Key_Hash
  * Type for a function to create a hash key.
  */
-typedef int          (*Eina_Key_Hash)(const void *key, int key_length);
+typedef int (*Eina_Key_Hash)(const void *key, int key_length);
 /**
  * @def EINA_KEY_HASH
  * @param[in] Function The function used to hash key.
@@ -339,8 +342,10 @@ typedef int          (*Eina_Key_Hash)(const void *key, int key_length);
  * @typedef Eina_Hash_Foreach
  * Type for a function to iterate over a hash table.
  */
-typedef Efl_Bool    (*Eina_Hash_Foreach)(const Eina_Hash *hash, const void *key, void *data, void *fdata);
-
+typedef Efl_Bool (*Eina_Hash_Foreach)(const Eina_Hash *hash,
+                                      const void      *key,
+                                      void            *data,
+                                      void            *fdata);
 
 /**
  * @brief Creates a new hash table.
@@ -371,11 +376,13 @@ typedef Efl_Bool    (*Eina_Hash_Foreach)(const Eina_Hash *hash, const void *key,
  * eina_hash_int64_new(), eina_hash_pointer_new() and
  * eina_hash_stringshared_new().
  */
-EINA_API Eina_Hash *eina_hash_new(Eina_Key_Length key_length_cb,
-                              Eina_Key_Cmp    key_cmp_cb,
-                              Eina_Key_Hash   key_hash_cb,
-                              Eina_Free_Cb    data_free_cb,
-                              int             buckets_power_size) EINA_MALLOC EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(2, 3);
+EINA_API Eina_Hash *
+eina_hash_new(Eina_Key_Length key_length_cb,
+              Eina_Key_Cmp    key_cmp_cb,
+              Eina_Key_Hash   key_hash_cb,
+              Eina_Free_Cb    data_free_cb,
+              int buckets_power_size) EINA_MALLOC EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(2, 3);
 
 /**
  * @brief Sets the data cleanup callback for a hash.
@@ -391,7 +398,8 @@ EINA_API Eina_Hash *eina_hash_new(Eina_Key_Length key_length_cb,
  * @since 1.1
  * @see eina_hash_new.
  */
-EINA_API void eina_hash_free_cb_set(Eina_Hash *hash, Eina_Free_Cb data_free_cb) EINA_ARG_NONNULL(1);
+EINA_API void eina_hash_free_cb_set(Eina_Hash *hash, Eina_Free_Cb data_free_cb)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Creates a new hash table using the djb2 algorithm.
@@ -553,9 +561,9 @@ EINA_API Eina_Hash *eina_hash_stringshared_new(Eina_Free_Cb data_free_cb);
  *
  * Key strings are case sensitive.
  */
-EINA_API Efl_Bool  eina_hash_add(Eina_Hash  *hash,
-                              const void *key,
-                              const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API Efl_Bool eina_hash_add(Eina_Hash  *hash,
+                                const void *key,
+                                const void *data) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Adds an entry to the given hash table without duplicating the string.
@@ -583,8 +591,9 @@ EINA_API Efl_Bool  eina_hash_add(Eina_Hash  *hash,
  * in the object being added). Key strings are case sensitive.
  */
 EINA_API Efl_Bool eina_hash_direct_add(Eina_Hash  *hash,
-                                    const void *key,
-                                    const void *data) EINA_ARG_NONNULL(1, 2, 3);
+                                       const void *key,
+                                       const void *data)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Removes the entry identified by a key or a data from the given
@@ -608,8 +617,8 @@ EINA_API Efl_Bool eina_hash_direct_add(Eina_Hash  *hash,
  * eina_hash_del_by_data() directly.
  */
 EINA_API Efl_Bool eina_hash_del(Eina_Hash  *hash,
-                             const void *key,
-                             const void *data) EINA_ARG_NONNULL(1);
+                                const void *key,
+                                const void *data) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Retrieves a specific entry in the given hash table.
@@ -622,8 +631,8 @@ EINA_API Efl_Bool eina_hash_del(Eina_Hash  *hash,
  * This function retrieves the entry associated with @p key in
  * @p hash. If @p hash is @c NULL, this function returns @c NULL.
  */
-EINA_API void *eina_hash_find(const Eina_Hash *hash,
-                          const void      *key) EINA_ARG_NONNULL(2);
+EINA_API void *eina_hash_find(const Eina_Hash *hash, const void *key)
+  EINA_ARG_NONNULL(2);
 
 /**
  * @brief Modifies the entry pointer at the specified key and returns
@@ -638,8 +647,8 @@ EINA_API void *eina_hash_find(const Eina_Hash *hash,
  * hash. If no entry is found, nothing is added to @p hash.
  */
 EINA_API void *eina_hash_modify(Eina_Hash  *hash,
-                            const void *key,
-                            const void *data) EINA_ARG_NONNULL(1, 2, 3);
+                                const void *key,
+                                const void *data) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Modifies the entry pointer at the specified key and returns the
@@ -655,9 +664,8 @@ EINA_API void *eina_hash_modify(Eina_Hash  *hash,
  * hash. If no entry is found, @p data is added to @p hash with the
  * key @p key.
  */
-EINA_API void *eina_hash_set(Eina_Hash  *hash,
-                         const void *key,
-                         const void *data) EINA_ARG_NONNULL(1, 2);
+EINA_API void *eina_hash_set(Eina_Hash *hash, const void *key, const void *data)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Changes the key of an entry in a hash without triggering the
@@ -673,8 +681,8 @@ EINA_API void *eina_hash_set(Eina_Hash  *hash,
  * when destroying the old key.
  */
 EINA_API Efl_Bool eina_hash_move(Eina_Hash  *hash,
-                              const void *old_key,
-                              const void *new_key) EINA_ARG_NONNULL(1, 2, 3);
+                                 const void *old_key,
+                                 const void *new_key) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Frees the given hash table's resources.
@@ -699,7 +707,7 @@ EINA_API Efl_Bool eina_hash_move(Eina_Hash  *hash,
  * hash = NULL;
  * @endcode
  */
-EINA_API void      eina_hash_free(Eina_Hash *hash) EINA_ARG_NONNULL(1);
+EINA_API void eina_hash_free(Eina_Hash *hash) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Frees the given hash table buckets resources.
@@ -715,7 +723,7 @@ EINA_API void      eina_hash_free(Eina_Hash *hash) EINA_ARG_NONNULL(1);
  *
  * If @p hash is @c NULL, the function returns immediately.
  */
-EINA_API void      eina_hash_free_buckets(Eina_Hash *hash) EINA_ARG_NONNULL(1);
+EINA_API void eina_hash_free_buckets(Eina_Hash *hash) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Returns the number of entries in the given hash table.
@@ -724,7 +732,7 @@ EINA_API void      eina_hash_free_buckets(Eina_Hash *hash) EINA_ARG_NONNULL(1);
  * @return The number of entries in the hash table, or @c 0 on error or
  * if @p hash is @c NULL.
  */
-EINA_API int       eina_hash_population(const Eina_Hash *hash) EINA_ARG_NONNULL(1);
+EINA_API int eina_hash_population(const Eina_Hash *hash) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Adds an entry to the given hash table by its key hash.
@@ -748,10 +756,11 @@ EINA_API int       eina_hash_population(const Eina_Hash *hash) EINA_ARG_NONNULL(
  * @see eina_hash_add()
  */
 EINA_API Efl_Bool eina_hash_add_by_hash(Eina_Hash  *hash,
-                                     const void *key,
-                                     int         key_length,
-                                     int         key_hash,
-                                     const void *data) EINA_ARG_NONNULL(1, 2, 5);
+                                        const void *key,
+                                        int         key_length,
+                                        int         key_hash,
+                                        const void *data)
+  EINA_ARG_NONNULL(1, 2, 5);
 
 /**
  * @brief Adds an entry to a hash table by its key hash without duplicating the string key.
@@ -779,10 +788,11 @@ EINA_API Efl_Bool eina_hash_add_by_hash(Eina_Hash  *hash,
  * @see eina_hash_direct_add()
  */
 EINA_API Efl_Bool eina_hash_direct_add_by_hash(Eina_Hash  *hash,
-                                            const void *key,
-                                            int         key_length,
-                                            int         key_hash,
-                                            const void *data) EINA_ARG_NONNULL(1, 2, 5);
+                                               const void *key,
+                                               int         key_length,
+                                               int         key_hash,
+                                               const void *data)
+  EINA_ARG_NONNULL(1, 2, 5);
 
 /**
  * @brief Removes the entry identified by a key and a key hash from the given
@@ -804,9 +814,10 @@ EINA_API Efl_Bool eina_hash_direct_add_by_hash(Eina_Hash  *hash,
  * instead.  If you don't have the key, use eina_hash_del_by_data().
  */
 EINA_API Efl_Bool eina_hash_del_by_key_hash(Eina_Hash  *hash,
-                                         const void *key,
-                                         int         key_length,
-                                         int         key_hash) EINA_ARG_NONNULL(1, 2);
+                                            const void *key,
+                                            int         key_length,
+                                            int         key_hash)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Removes the entry identified by a key from the given hash table.
@@ -828,8 +839,8 @@ EINA_API Efl_Bool eina_hash_del_by_key_hash(Eina_Hash  *hash,
  * @note If you already have the key_hash, use eina_hash_del_by_key_hash().
  * If you don't have the key, use eina_hash_del_by_data() instead.
  */
-EINA_API Efl_Bool eina_hash_del_by_key(Eina_Hash  *hash,
-                                    const void *key) EINA_ARG_NONNULL(1, 2);
+EINA_API Efl_Bool eina_hash_del_by_key(Eina_Hash *hash, const void *key)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Removes an entry from a hash table identified by its data value.
@@ -850,8 +861,8 @@ EINA_API Efl_Bool eina_hash_del_by_key(Eina_Hash  *hash,
  * @note If you already have the key, use eina_hash_del_by_key()
  * or eina_hash_del_by_key_hash() instead.
  */
-EINA_API Efl_Bool eina_hash_del_by_data(Eina_Hash  *hash,
-                                     const void *data) EINA_ARG_NONNULL(1, 2);
+EINA_API Efl_Bool eina_hash_del_by_data(Eina_Hash *hash, const void *data)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Removes the entry identified by a key and a key hash, or a
@@ -881,10 +892,10 @@ EINA_API Efl_Bool eina_hash_del_by_data(Eina_Hash  *hash,
  * If you don't have the key, use eina_hash_del_by_data() directly.
  */
 EINA_API Efl_Bool eina_hash_del_by_hash(Eina_Hash  *hash,
-                                     const void *key,
-                                     int         key_length,
-                                     int         key_hash,
-                                     const void *data) EINA_ARG_NONNULL(1);
+                                        const void *key,
+                                        int         key_length,
+                                        int         key_hash,
+                                        const void *data) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Retrieves a specific entry from the given hash table.
@@ -902,9 +913,9 @@ EINA_API Efl_Bool eina_hash_del_by_hash(Eina_Hash  *hash,
  * '\\0' for string when setting the value of @p key_length.
  */
 EINA_API void *eina_hash_find_by_hash(const Eina_Hash *hash,
-                                  const void      *key,
-                                  int              key_length,
-                                  int              key_hash) EINA_ARG_NONNULL(1, 2);
+                                      const void      *key,
+                                      int              key_length,
+                                      int key_hash) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Modifies the entry pointer at the specified key and returns
@@ -922,10 +933,11 @@ EINA_API void *eina_hash_find_by_hash(const Eina_Hash *hash,
  * the hash.
  */
 EINA_API void *eina_hash_modify_by_hash(Eina_Hash  *hash,
-                                    const void *key,
-                                    int         key_length,
-                                    int         key_hash,
-                                    const void *data) EINA_ARG_NONNULL(1, 2, 5);
+                                        const void *key,
+                                        int         key_length,
+                                        int         key_hash,
+                                        const void *data)
+  EINA_ARG_NONNULL(1, 2, 5);
 
 /**
  * @brief Returns a new iterator associated with hash keys.
@@ -941,7 +953,9 @@ EINA_API void *eina_hash_modify_by_hash(Eina_Hash  *hash,
  * @warning If the hash structure changes then the iterator becomes
  * invalid; adding or removing items may lead to program crash.
  */
-EINA_API Eina_Iterator *eina_hash_iterator_key_new(const Eina_Hash *hash) EINA_MALLOC EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *
+eina_hash_iterator_key_new(const Eina_Hash *hash) EINA_MALLOC
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new iterator associated with a hash.
@@ -957,7 +971,9 @@ EINA_API Eina_Iterator *eina_hash_iterator_key_new(const Eina_Hash *hash) EINA_M
  * @warning If the hash structure changes then the iterator becomes
  * invalid; adding or removing items may lead to program crash.
  */
-EINA_API Eina_Iterator *eina_hash_iterator_data_new(const Eina_Hash *hash) EINA_MALLOC EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *
+eina_hash_iterator_data_new(const Eina_Hash *hash) EINA_MALLOC
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returned a new iterator associated with hash keys and data.
@@ -976,7 +992,9 @@ EINA_API Eina_Iterator *eina_hash_iterator_data_new(const Eina_Hash *hash) EINA_
  * @warning If the hash structure changes then the iterator becomes
  * invalid; adding or removing items may lead to program crash.
  */
-EINA_API Eina_Iterator *eina_hash_iterator_tuple_new(const Eina_Hash *hash) EINA_MALLOC EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *
+eina_hash_iterator_tuple_new(const Eina_Hash *hash) EINA_MALLOC
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Calls a function on every member stored in the hash table.
@@ -1013,10 +1031,9 @@ EINA_API Eina_Iterator *eina_hash_iterator_tuple_new(const Eina_Hash *hash) EINA
  * }
  * @endcode
  */
-EINA_API void           eina_hash_foreach(const Eina_Hash  *hash,
-                                      Eina_Hash_Foreach func,
-                                      const void       *fdata) EINA_ARG_NONNULL(1, 2);
-
+EINA_API void eina_hash_foreach(const Eina_Hash  *hash,
+                                Eina_Hash_Foreach func,
+                                const void       *fdata) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Appends data to an #Eina_List inside a hash.
@@ -1031,7 +1048,9 @@ EINA_API void           eina_hash_foreach(const Eina_Hash  *hash,
  *
  * @since 1.10
  */
-EINA_API void eina_hash_list_append(Eina_Hash *hash, const void *key, const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API void eina_hash_list_append(Eina_Hash  *hash,
+                                    const void *key,
+                                    const void *data) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Appends data to an #Eina_List inside a hash using eina_hash_direct_add().
@@ -1046,7 +1065,9 @@ EINA_API void eina_hash_list_append(Eina_Hash *hash, const void *key, const void
  *
  * @since 1.23
  */
-EINA_API void eina_hash_list_direct_append(Eina_Hash *hash, const void *key, const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API void
+eina_hash_list_direct_append(Eina_Hash *hash, const void *key, const void *data)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Prepends data to an #Eina_List inside a hash.
@@ -1061,7 +1082,9 @@ EINA_API void eina_hash_list_direct_append(Eina_Hash *hash, const void *key, con
  *
  * @since 1.10
  */
-EINA_API void eina_hash_list_prepend(Eina_Hash *hash, const void *key, const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API void
+eina_hash_list_prepend(Eina_Hash *hash, const void *key, const void *data)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Prepends data to an #Eina_List inside a hash using eina_hash_direct_add().
@@ -1076,7 +1099,10 @@ EINA_API void eina_hash_list_prepend(Eina_Hash *hash, const void *key, const voi
  *
  * @since 1.23
  */
-EINA_API void eina_hash_list_direct_prepend(Eina_Hash *hash, const void *key, const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API void eina_hash_list_direct_prepend(Eina_Hash  *hash,
+                                            const void *key,
+                                            const void *data)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Removes data from an #Eina_List inside a hash.
@@ -1091,7 +1117,9 @@ EINA_API void eina_hash_list_direct_prepend(Eina_Hash *hash, const void *key, co
  *
  * @since 1.10
  */
-EINA_API void eina_hash_list_remove(Eina_Hash *hash, const void *key, const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API void eina_hash_list_remove(Eina_Hash  *hash,
+                                    const void *key,
+                                    const void *data) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief
@@ -1101,8 +1129,7 @@ EINA_API void eina_hash_list_remove(Eina_Hash *hash, const void *key, const void
  * @param[in] len The length of the key.
  * @return The hash value.
  */
-EINA_API int eina_hash_superfast(const char *key,
-                             int         len) EINA_ARG_NONNULL(1);
+EINA_API int eina_hash_superfast(const char *key, int len) EINA_ARG_NONNULL(1);
 
 /**
  * @brief
@@ -1112,8 +1139,7 @@ EINA_API int eina_hash_superfast(const char *key,
  * @param[in] len The length of the key.
  * @return The hash value.
  */
-static inline int eina_hash_djb2(const char *key,
-                                 int         len) EINA_ARG_NONNULL(1);
+static inline int eina_hash_djb2(const char *key, int len) EINA_ARG_NONNULL(1);
 
 /**
  * @brief
@@ -1123,8 +1149,8 @@ static inline int eina_hash_djb2(const char *key,
  * @param[in] plen The length of the key.
  * @return The hash value.
  */
-static inline int eina_hash_djb2_len(const char *key,
-                                     int        *plen) EINA_ARG_NONNULL(1, 2);
+static inline int eina_hash_djb2_len(const char *key, int *plen)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief
@@ -1134,8 +1160,8 @@ static inline int eina_hash_djb2_len(const char *key,
  * @param[in] len The length of the key.
  * @return The hash value.
  */
-static inline int eina_hash_int32(const unsigned int *pkey,
-                                  int                 len) EINA_ARG_NONNULL(1);
+static inline int eina_hash_int32(const unsigned int *pkey, int len)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief
@@ -1145,8 +1171,8 @@ static inline int eina_hash_int32(const unsigned int *pkey,
  * @param[in] len The length of the key.
  * @return The hash value.
  */
-static inline int eina_hash_int64(const unsigned long long int *pkey,
-                                  int                      len) EINA_ARG_NONNULL(1);
+static inline int eina_hash_int64(const unsigned long long int *pkey, int len)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief
@@ -1156,8 +1182,8 @@ static inline int eina_hash_int64(const unsigned long long int *pkey,
  * @param[in] len The length of the key.
  * @return The hash value.
  */
-static inline int eina_hash_murmur3(const char *key,
-                           int         len) EINA_ARG_NONNULL(1);
+static inline int eina_hash_murmur3(const char *key, int len)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief
@@ -1167,8 +1193,7 @@ static inline int eina_hash_murmur3(const char *key,
  * @param[in] len The length of the key.
  * @return The hash value.
  */
-static inline int eina_hash_crc(const char *key,
-                           int         len) EINA_ARG_NONNULL(1);
+static inline int eina_hash_crc(const char *key, int len) EINA_ARG_NONNULL(1);
 
 #include "eina_inline_hash.x"
 

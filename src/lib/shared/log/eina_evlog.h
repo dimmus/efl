@@ -34,25 +34,25 @@
  */
 
 typedef struct _Eina_Evlog_Item Eina_Evlog_Item;
-typedef struct _Eina_Evlog_Buf Eina_Evlog_Buf;
+typedef struct _Eina_Evlog_Buf  Eina_Evlog_Buf;
 
 struct _Eina_Evlog_Item
 {
-   double tim; // the time when this event happened
-   double srctim; // if > 0.0, then this is the src event time causing this
-   unsigned long long thread; // a thread handle/id where this log happened
-   unsigned long long obj; // an object associated with this event (anything)
-   unsigned short event_offset; // must be provided - mem pos after item
-   unsigned short detail_offset; // if not provided, 0, otherwise mem pos
-   unsigned short event_next; // mem offset in bytes for next event;
+  double tim; // the time when this event happened
+  double srctim; // if > 0.0, then this is the src event time causing this
+  unsigned long long thread; // a thread handle/id where this log happened
+  unsigned long long obj;  // an object associated with this event (anything)
+  unsigned short     event_offset;  // must be provided - mem pos after item
+  unsigned short     detail_offset;  // if not provided, 0, otherwise mem pos
+  unsigned short     event_next;  // mem offset in bytes for next event;
 };
 
 struct _Eina_Evlog_Buf
 {
-   unsigned char *buf; // current buffer we fill with event logs
-   unsigned int size; // the max size of the evlog buffer
-   unsigned int top; // the current top byte for a new evlog item
-   unsigned int overflow; // how many times this buffer has overflowed
+  unsigned char *buf;  // current buffer we fill with event logs
+  unsigned int   size;  // the max size of the evlog buffer
+  unsigned int   top;  // the current top byte for a new evlog item
+  unsigned int   overflow;  // how many times this buffer has overflowed
 };
 
 /**
@@ -126,16 +126,14 @@ eina_evlog(const char *event, void *obj, double srctime, const char *detail);
  *
  * @since 1.15
  */
-EINA_API Eina_Evlog_Buf *
-eina_evlog_steal(void);
+EINA_API Eina_Evlog_Buf *eina_evlog_steal(void);
 
 /**
  * @brief Begins logging - until now eina_evlog is a NOOP.
  *
  * @since 1.15
  */
-EINA_API void
-eina_evlog_start(void);
+EINA_API void eina_evlog_start(void);
 
 /**
  * @brief Stops logging.
@@ -145,8 +143,7 @@ eina_evlog_start(void);
  *
  * @since 1.15
  */
-EINA_API void
-eina_evlog_stop(void);
+EINA_API void eina_evlog_stop(void);
 
 /**
  * @}

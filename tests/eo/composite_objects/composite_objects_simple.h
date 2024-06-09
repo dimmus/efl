@@ -3,11 +3,11 @@
 
 typedef struct
 {
-   int a;
+  int a;
 } Simple_Public_Data;
 
 void simple_a_set(Eo *obj, int a);
-int simple_a_get(Eo *obj);
+int  simple_a_get(Eo *obj);
 
 void simple_a_set1(Eo *obj, int a);
 void simple_a_set2(Eo *obj, int a);

@@ -13,7 +13,10 @@
  * @return A documentation comment
  *
  */
-Efl_Strbuf *eo_gen_docs_full_gen(const Eolian_State *state, const Eolian_Documentation *doc, const char *group, int indent);
+Efl_Strbuf *eo_gen_docs_full_gen(const Eolian_State         *state,
+                                 const Eolian_Documentation *doc,
+                                 const char                 *group,
+                                 int                         indent);
 
 /*
  * @brief Generate function documentation
@@ -25,7 +28,10 @@ Efl_Strbuf *eo_gen_docs_full_gen(const Eolian_State *state, const Eolian_Documen
  * @return A documentation comment
  *
  */
-Efl_Strbuf *eo_gen_docs_func_gen(const Eolian_State *state, const Eolian_Function *fid, Eolian_Function_Type ftype, int indent);
+Efl_Strbuf *eo_gen_docs_func_gen(const Eolian_State    *state,
+                                 const Eolian_Function *fid,
+                                 Eolian_Function_Type   ftype,
+                                 int                    indent);
 
 /*
  * @brief Generate event documentation
@@ -36,7 +42,8 @@ Efl_Strbuf *eo_gen_docs_func_gen(const Eolian_State *state, const Eolian_Functio
  * @return A documentation comment
  *
  */
-Efl_Strbuf *eo_gen_docs_event_gen(const Eolian_State *state, const Eolian_Event *ev, const char *group);
+Efl_Strbuf *eo_gen_docs_event_gen(const Eolian_State *state,
+                                  const Eolian_Event *ev,
+                                  const char         *group);
 
 #endif
-

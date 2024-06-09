@@ -55,16 +55,13 @@ static const char __BINBUF_MAGIC_STR[] = "Eina Binbuf";
 EINA_API Eina_Binbuf *
 eina_binbuf_manage_new(const unsigned char *str, size_t length, Efl_Bool ro)
 {
-    Eina_Binbuf *buf;
+  Eina_Binbuf *buf;
 
-    if (ro)
-        buf = eina_strbuf_common_manage_ro_new(_STRBUF_CSIZE,
-                                               (void *)str,
-                                               length);
-    else
-        buf = eina_strbuf_common_manage_new(_STRBUF_CSIZE, (void *)str, length);
-    EINA_MAGIC_SET(buf, _STRBUF_MAGIC);
-    return buf;
+  if (ro)
+    buf = eina_strbuf_common_manage_ro_new(_STRBUF_CSIZE, (void *)str, length);
+  else buf = eina_strbuf_common_manage_new(_STRBUF_CSIZE, (void *)str, length);
+  EINA_MAGIC_SET(buf, _STRBUF_MAGIC);
+  return buf;
 }
 
 /**

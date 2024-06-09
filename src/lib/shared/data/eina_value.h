@@ -297,7 +297,6 @@
  * @{
  */
 
-
 /**
  * @typedef Eina_Value
  * Store generic values.
@@ -344,13 +343,11 @@ typedef union _Eina_Value_Union Eina_Value_Union;
  * @internal
  * @since 1.2
  */
-union _Eina_Value_Union
-{
-   unsigned char  buf[8];    /**< just hold 8-bytes, more goes into ptr */
-   void          *ptr;       /**< used as generic pointer */
-   uint64_t      _guarantee; /**< guarantees 8-byte alignment */
+union _Eina_Value_Union {
+  unsigned char buf[8];    /**< just hold 8-bytes, more goes into ptr */
+  void         *ptr;       /**< used as generic pointer */
+  uint64_t      _guarantee; /**< guarantees 8-byte alignment */
 };
-
 
 /**
  * @var EINA_VALUE_TYPE_ERROR
@@ -502,7 +499,6 @@ EINA_API extern const Eina_Value_Type *EINA_VALUE_TYPE_STRINGSHARE;
  * @since 1.2
  */
 EINA_API extern const Eina_Value_Type *EINA_VALUE_TYPE_STRING;
-
 
 /**
  * @var EINA_VALUE_TYPE_ARRAY
@@ -660,8 +656,8 @@ EINA_API extern Eina_Error EINA_ERROR_VALUE_FAILED;
  */
 struct _Eina_Value
 {
-   const Eina_Value_Type *type; /**< how to access values */
-   Eina_Value_Union value; /**< to be accessed with type descriptor */
+  const Eina_Value_Type *type; /**< how to access values */
+  Eina_Value_Union       value; /**< to be accessed with type descriptor */
 };
 
 /**
@@ -686,7 +682,8 @@ struct _Eina_Value
  *
  * @since 1.2
  */
-EINA_API Eina_Value *eina_value_new(const Eina_Value_Type *type) EINA_ARG_NONNULL(1) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Value *eina_value_new(const Eina_Value_Type *type)
+  EINA_ARG_NONNULL(1) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Frees value and its data.
@@ -720,8 +717,9 @@ EINA_API void eina_value_free(Eina_Value *value);
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_setup(Eina_Value *value,
-                                         const Eina_Value_Type *type) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool eina_value_setup(Eina_Value            *value,
+                                        const Eina_Value_Type *type)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Empties a generic value storage.
@@ -758,8 +756,8 @@ static inline void eina_value_flush(Eina_Value *value) EINA_ARG_NONNULL(1);
  *
  * @since 1.2
  */
-EINA_API Efl_Bool eina_value_copy(const Eina_Value *value,
-                               Eina_Value *copy) EINA_ARG_NONNULL(1, 2);
+EINA_API Efl_Bool eina_value_copy(const Eina_Value *value, Eina_Value *copy)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Compares generic value storage.
@@ -770,8 +768,8 @@ EINA_API Efl_Bool eina_value_copy(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline int eina_value_compare(const Eina_Value *a,
-                                     const Eina_Value *b) EINA_ARG_NONNULL(1, 2);
+static inline int eina_value_compare(const Eina_Value *a, const Eina_Value *b)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Sets the generic value.
@@ -831,8 +829,8 @@ static inline int eina_value_compare(const Eina_Value *a,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_set(Eina_Value *value,
-                                       ...) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_set(Eina_Value *value, ...)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value.
@@ -900,8 +898,8 @@ static inline Efl_Bool eina_value_set(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_get(const Eina_Value *value,
-                                       ...) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_get(const Eina_Value *value, ...)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value.
@@ -920,8 +918,8 @@ static inline Efl_Bool eina_value_get(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_vset(Eina_Value *value,
-                                        va_list args) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_vset(Eina_Value *value, va_list args)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value.
@@ -945,8 +943,8 @@ static inline Efl_Bool eina_value_vset(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_vget(const Eina_Value *value,
-                                        va_list args) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_vget(const Eina_Value *value, va_list args)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value from pointer.
@@ -1010,8 +1008,8 @@ static inline Efl_Bool eina_value_vget(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_pset(Eina_Value *value,
-                                        const void *ptr) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool eina_value_pset(Eina_Value *value, const void *ptr)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Gets the generic value to pointer.
@@ -1079,8 +1077,8 @@ static inline Efl_Bool eina_value_pset(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_pget(const Eina_Value *value,
-                                        void *ptr) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool eina_value_pget(const Eina_Value *value, void *ptr)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Converts one value to another type.
@@ -1106,7 +1104,8 @@ static inline Efl_Bool eina_value_pget(const Eina_Value *value,
  * @since 1.2
  */
 EINA_API Efl_Bool eina_value_convert(const Eina_Value *value,
-                                  Eina_Value *convert) EINA_ARG_NONNULL(1, 2);
+                                     Eina_Value       *convert)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Converts one value to Eina_Binbuf.
@@ -1136,7 +1135,8 @@ EINA_API Eina_Binbuf *eina_value_to_binbuf(Eina_Value *value);
  * @see eina_value_to_binbuf()
  * @since 1.2
  */
-EINA_API char *eina_value_to_string(const Eina_Value *value) EINA_ARG_NONNULL(1);
+EINA_API char *eina_value_to_string(const Eina_Value *value)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Queries value type.
@@ -1151,19 +1151,19 @@ EINA_API char *eina_value_to_string(const Eina_Value *value) EINA_ARG_NONNULL(1)
  *
  * @since 1.2
  */
-static inline const Eina_Value_Type *eina_value_type_get(const Eina_Value *value) EINA_PURE EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+static inline const Eina_Value_Type *
+eina_value_type_get(const Eina_Value *value) EINA_PURE
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @}
  */
-
 
 /**
  * @defgroup Eina_Value_Array_Group Generic Value Array management
  *
  * @{
  */
-
 
 /**
  * @typedef Eina_Value_Array
@@ -1181,9 +1181,10 @@ typedef struct _Eina_Value_Array Eina_Value_Array;
  */
 struct _Eina_Value_Array
 {
-   const Eina_Value_Type *subtype; /**< how to allocate and access items */
-   unsigned int step; /**< how to grow the members array */
-   Eina_Inarray *array; /**< the array that holds data, members are of subtype->value_size bytes. */
+  const Eina_Value_Type *subtype; /**< how to allocate and access items */
+  unsigned int           step; /**< how to grow the members array */
+  Eina_Inarray *
+    array; /**< the array that holds data, members are of subtype->value_size bytes. */
 };
 
 /**
@@ -1204,7 +1205,8 @@ struct _Eina_Value_Array
  * @since 1.2
  */
 EINA_API Eina_Value *eina_value_array_new(const Eina_Value_Type *subtype,
-                                      unsigned int step) EINA_ARG_NONNULL(1);
+                                          unsigned int           step)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Initializes generic value storage of type array.
@@ -1229,9 +1231,10 @@ EINA_API Eina_Value *eina_value_array_new(const Eina_Value_Type *subtype,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_setup(Eina_Value *value,
-                                               const Eina_Value_Type *subtype,
-                                               unsigned int step) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool eina_value_array_setup(Eina_Value            *value,
+                                              const Eina_Value_Type *subtype,
+                                              unsigned int           step)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Queries number of elements in value of array type.
@@ -1248,8 +1251,9 @@ static inline unsigned int eina_value_array_count(const Eina_Value *value);
  * @return #EFL_TRUE on success, #EFL_FALSE otherwise.
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_remove(Eina_Value *value,
-                                                unsigned int position) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_array_remove(Eina_Value  *value,
+                                               unsigned int position)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value in an array member.
@@ -1306,9 +1310,9 @@ static inline Efl_Bool eina_value_array_remove(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_set(Eina_Value *value,
-                                             unsigned int position,
-                                             ...) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_array_set(Eina_Value  *value,
+                                            unsigned int position,
+                                            ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value from an array member.
@@ -1364,8 +1368,8 @@ static inline Efl_Bool eina_value_array_set(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_array_get(const Eina_Value *value,
-                                             unsigned int position,
-                                             ...) EINA_ARG_NONNULL(1);
+                                            unsigned int      position,
+                                            ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Inserts a generic value in an array member position.
@@ -1422,10 +1426,9 @@ static inline Efl_Bool eina_value_array_get(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_insert(Eina_Value *value,
-                                                unsigned int position,
-                                                ...) EINA_ARG_NONNULL(1);
-
+static inline Efl_Bool eina_value_array_insert(Eina_Value  *value,
+                                               unsigned int position,
+                                               ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Appends a generic value in an array.
@@ -1482,8 +1485,8 @@ static inline Efl_Bool eina_value_array_insert(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_append(Eina_Value *value,
-                                                ...) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_array_append(Eina_Value *value, ...)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets a generic value to an array member.
@@ -1505,9 +1508,9 @@ static inline Efl_Bool eina_value_array_append(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_vset(Eina_Value *value,
-                                              unsigned int position,
-                                              va_list args) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_array_vset(Eina_Value  *value,
+                                             unsigned int position,
+                                             va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value from an array member.
@@ -1529,8 +1532,8 @@ static inline Efl_Bool eina_value_array_vset(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_array_vget(const Eina_Value *value,
-                                              unsigned int position,
-                                              va_list args) EINA_ARG_NONNULL(1);
+                                             unsigned int      position,
+                                             va_list args) EINA_ARG_NONNULL(1);
 /**
  * @brief Inserts a generic value to an array member position.
  *
@@ -1551,9 +1554,9 @@ static inline Efl_Bool eina_value_array_vget(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_vinsert(Eina_Value *value,
-                                                unsigned int position,
-                                                va_list args) EINA_ARG_NONNULL(1);
+static inline Efl_Bool
+eina_value_array_vinsert(Eina_Value *value, unsigned int position, va_list args)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Appends a generic value to an array.
@@ -1574,9 +1577,8 @@ static inline Efl_Bool eina_value_array_vinsert(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_vappend(Eina_Value *value,
-                                                 va_list args) EINA_ARG_NONNULL(1);
-
+static inline Efl_Bool eina_value_array_vappend(Eina_Value *value, va_list args)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets a generic value to an array member from a pointer.
@@ -1638,9 +1640,9 @@ static inline Efl_Bool eina_value_array_vappend(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_pset(Eina_Value *value,
-                                              unsigned int position,
-                                              const void *ptr) EINA_ARG_NONNULL(1, 3);
+static inline Efl_Bool
+eina_value_array_pset(Eina_Value *value, unsigned int position, const void *ptr)
+  EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Retrieves a generic value into a pointer from an array member.
@@ -1698,8 +1700,8 @@ static inline Efl_Bool eina_value_array_pset(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_array_pget(const Eina_Value *value,
-                                              unsigned int position,
-                                              void *ptr) EINA_ARG_NONNULL(1, 3);
+                                             unsigned int      position,
+                                             void *ptr) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Inserts a generic value to an array member position from a pointer.
@@ -1760,9 +1762,10 @@ static inline Efl_Bool eina_value_array_pget(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_array_pinsert(Eina_Value *value,
-                                                 unsigned int position,
-                                                 const void *ptr) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_array_pinsert(Eina_Value  *value,
+                                                unsigned int position,
+                                                const void  *ptr)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Appends a generic value to an array from a pointer.
@@ -1823,7 +1826,8 @@ static inline Efl_Bool eina_value_array_pinsert(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_array_pappend(Eina_Value *value,
-                                                 const void *ptr) EINA_ARG_NONNULL(1);
+                                                const void *ptr)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Retrieves a value from the array as an Eina_Value copy.
@@ -1839,8 +1843,9 @@ static inline Efl_Bool eina_value_array_pappend(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_array_value_get(const Eina_Value *src,
-                                                   unsigned int position,
-                                                   Eina_Value *dst) EINA_ARG_NONNULL(1, 3);
+                                                  unsigned int      position,
+                                                  Eina_Value       *dst)
+  EINA_ARG_NONNULL(1, 3);
 
 /**
  * @def EINA_VALUE_ARRAY_FOREACH
@@ -1888,13 +1893,11 @@ static inline Efl_Bool eina_value_array_value_get(const Eina_Value *src,
  * @}
  */
 
-
 /**
  * @defgroup Eina_Value_List_Group Generic Value List management
  *
  * @{
  */
-
 
 /**
  * @typedef Eina_Value_List
@@ -1912,8 +1915,9 @@ typedef struct _Eina_Value_List Eina_Value_List;
  */
 struct _Eina_Value_List
 {
-   const Eina_Value_Type *subtype; /**< how to allocate and access items */
-   Eina_List *list; /**< the list that holds data, members are of subtype->value_size bytes. */
+  const Eina_Value_Type *subtype; /**< how to allocate and access items */
+  Eina_List *
+    list; /**< the list that holds data, members are of subtype->value_size bytes. */
 };
 
 /**
@@ -1935,7 +1939,8 @@ struct _Eina_Value_List
  *
  * @since 1.2
  */
-EINA_API Eina_Value *eina_value_list_new(const Eina_Value_Type *subtype) EINA_ARG_NONNULL(1);
+EINA_API Eina_Value *eina_value_list_new(const Eina_Value_Type *subtype)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Initializes generic value storage of type list.
@@ -1960,8 +1965,9 @@ EINA_API Eina_Value *eina_value_list_new(const Eina_Value_Type *subtype) EINA_AR
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_setup(Eina_Value *value,
-                                               const Eina_Value_Type *subtype) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool eina_value_list_setup(Eina_Value            *value,
+                                             const Eina_Value_Type *subtype)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Queries number of elements in value of list type.
@@ -1982,8 +1988,9 @@ static inline unsigned int eina_value_list_count(const Eina_Value *value);
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_remove(Eina_Value *value,
-                                                unsigned int position) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_list_remove(Eina_Value  *value,
+                                              unsigned int position)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value in a list member.
@@ -2040,9 +2047,9 @@ static inline Efl_Bool eina_value_list_remove(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_set(Eina_Value *value,
-                                             unsigned int position,
-                                             ...) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_list_set(Eina_Value  *value,
+                                           unsigned int position,
+                                           ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value from a list member.
@@ -2098,8 +2105,8 @@ static inline Efl_Bool eina_value_list_set(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_list_get(const Eina_Value *value,
-                                             unsigned int position,
-                                             ...) EINA_ARG_NONNULL(1);
+                                           unsigned int      position,
+                                           ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Inserts the generic value in a list member position.
@@ -2155,10 +2162,9 @@ static inline Efl_Bool eina_value_list_get(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_insert(Eina_Value *value,
-                                                unsigned int position,
-                                                ...) EINA_ARG_NONNULL(1);
-
+static inline Efl_Bool eina_value_list_insert(Eina_Value  *value,
+                                              unsigned int position,
+                                              ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Appends the generic value in a list.
@@ -2214,8 +2220,8 @@ static inline Efl_Bool eina_value_list_insert(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_append(Eina_Value *value,
-                                                ...) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_list_append(Eina_Value *value, ...)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value in a list member.
@@ -2237,9 +2243,9 @@ static inline Efl_Bool eina_value_list_append(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_vset(Eina_Value *value,
-                                              unsigned int position,
-                                              va_list args) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_list_vset(Eina_Value  *value,
+                                            unsigned int position,
+                                            va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value from a list member.
@@ -2261,8 +2267,8 @@ static inline Efl_Bool eina_value_list_vset(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_list_vget(const Eina_Value *value,
-                                              unsigned int position,
-                                              va_list args) EINA_ARG_NONNULL(1);
+                                            unsigned int      position,
+                                            va_list args) EINA_ARG_NONNULL(1);
 /**
  * @brief Inserts the generic value in a list member position.
  *
@@ -2283,9 +2289,9 @@ static inline Efl_Bool eina_value_list_vget(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_vinsert(Eina_Value *value,
-                                                unsigned int position,
-                                                va_list args) EINA_ARG_NONNULL(1);
+static inline Efl_Bool
+eina_value_list_vinsert(Eina_Value *value, unsigned int position, va_list args)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Appends the generic value in a list.
@@ -2306,9 +2312,8 @@ static inline Efl_Bool eina_value_list_vinsert(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_vappend(Eina_Value *value,
-                                                 va_list args) EINA_ARG_NONNULL(1);
-
+static inline Efl_Bool eina_value_list_vappend(Eina_Value *value, va_list args)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value in a list member from pointer.
@@ -2369,9 +2374,9 @@ static inline Efl_Bool eina_value_list_vappend(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_pset(Eina_Value *value,
-                                              unsigned int position,
-                                              const void *ptr) EINA_ARG_NONNULL(1, 3);
+static inline Efl_Bool
+eina_value_list_pset(Eina_Value *value, unsigned int position, const void *ptr)
+  EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Gets the generic value to pointer from a list member.
@@ -2428,8 +2433,8 @@ static inline Efl_Bool eina_value_list_pset(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_list_pget(const Eina_Value *value,
-                                              unsigned int position,
-                                              void *ptr) EINA_ARG_NONNULL(1, 3);
+                                            unsigned int      position,
+                                            void *ptr) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Inserts the generic value in a list member position from pointer.
@@ -2489,9 +2494,10 @@ static inline Efl_Bool eina_value_list_pget(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_list_pinsert(Eina_Value *value,
-                                                 unsigned int position,
-                                                 const void *ptr) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_list_pinsert(Eina_Value  *value,
+                                               unsigned int position,
+                                               const void  *ptr)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Appends the generic value in a list from pointer.
@@ -2551,7 +2557,8 @@ static inline Efl_Bool eina_value_list_pinsert(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_list_pappend(Eina_Value *value,
-                                                 const void *ptr) EINA_ARG_NONNULL(1);
+                                               const void *ptr)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @}
@@ -2579,9 +2586,11 @@ typedef struct _Eina_Value_Hash Eina_Value_Hash;
  */
 struct _Eina_Value_Hash
 {
-   const Eina_Value_Type *subtype; /**< how to allocate and access items */
-   unsigned int buckets_power_size; /**< how to allocate hash buckets, if zero a sane default is chosen. */
-   Eina_Hash *hash; /**< the hash that holds data, members are of subtype->value_size bytes. */
+  const Eina_Value_Type *subtype; /**< how to allocate and access items */
+  unsigned int
+    buckets_power_size; /**< how to allocate hash buckets, if zero a sane default is chosen. */
+  Eina_Hash *
+    hash; /**< the hash that holds data, members are of subtype->value_size bytes. */
 };
 
 /**
@@ -2605,7 +2614,9 @@ struct _Eina_Value_Hash
  *
  * @since 1.2
  */
-EINA_API Eina_Value *eina_value_hash_new(const Eina_Value_Type *subtype, unsigned int buckets_power_size) EINA_ARG_NONNULL(1);
+EINA_API Eina_Value *eina_value_hash_new(const Eina_Value_Type *subtype,
+                                         unsigned int buckets_power_size)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Initializes generic value storage of type hash.
@@ -2632,9 +2643,10 @@ EINA_API Eina_Value *eina_value_hash_new(const Eina_Value_Type *subtype, unsigne
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_hash_setup(Eina_Value *value,
-                                              const Eina_Value_Type *subtype,
-                                              unsigned int buckets_power_size) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool eina_value_hash_setup(Eina_Value            *value,
+                                             const Eina_Value_Type *subtype,
+                                             unsigned int buckets_power_size)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Queries number of elements in value of hash type.
@@ -2655,8 +2667,8 @@ static inline unsigned int eina_value_hash_population(const Eina_Value *value);
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_hash_del(Eina_Value *value,
-                                            const char *key) EINA_ARG_NONNULL(1);
+static inline Efl_Bool eina_value_hash_del(Eina_Value *value, const char *key)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value in an hash member.
@@ -2708,8 +2720,8 @@ static inline Efl_Bool eina_value_hash_del(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_hash_set(Eina_Value *value,
-                                            const char *key,
-                                            ...) EINA_ARG_NONNULL(1);
+                                           const char *key,
+                                           ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value from an hash member.
@@ -2765,8 +2777,8 @@ static inline Efl_Bool eina_value_hash_set(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_hash_get(const Eina_Value *value,
-                                            const char *key,
-                                            ...) EINA_ARG_NONNULL(1);
+                                           const char       *key,
+                                           ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value in an hash member.
@@ -2783,8 +2795,8 @@ static inline Efl_Bool eina_value_hash_get(const Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_hash_vset(Eina_Value *value,
-                                             const char *key,
-                                             va_list args) EINA_ARG_NONNULL(1);
+                                            const char *key,
+                                            va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the generic value from an hash member.
@@ -2806,8 +2818,8 @@ static inline Efl_Bool eina_value_hash_vset(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_hash_vget(const Eina_Value *value,
-                                             const char *key,
-                                             va_list args) EINA_ARG_NONNULL(1);
+                                            const char       *key,
+                                            va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the generic value in an hash member from pointer.
@@ -2860,9 +2872,9 @@ static inline Efl_Bool eina_value_hash_vget(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_hash_pset(Eina_Value *value,
-                                             const char *key,
-                                             const void *ptr) EINA_ARG_NONNULL(1, 3);
+static inline Efl_Bool
+eina_value_hash_pset(Eina_Value *value, const char *key, const void *ptr)
+  EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Gets the generic value to pointer from an hash member.
@@ -2918,8 +2930,8 @@ static inline Efl_Bool eina_value_hash_pset(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_hash_pget(const Eina_Value *value,
-                                             const char *key,
-                                             void *ptr) EINA_ARG_NONNULL(1, 3);
+                                            const char       *key,
+                                            void *ptr) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @}
@@ -2954,11 +2966,21 @@ typedef struct _Eina_Value_Blob_Operations Eina_Value_Blob_Operations;
  */
 struct _Eina_Value_Blob_Operations
 {
-   unsigned int version; /**< must be #EINA_VALUE_BLOB_OPERATIONS_VERSION */
-   void (*free)(const Eina_Value_Blob_Operations *ops, void *memory, size_t size);
-   void *(*copy)(const Eina_Value_Blob_Operations *ops, const void *memory, size_t size);
-   int (*compare)(const Eina_Value_Blob_Operations *ops, const void *data1, size_t size_data1, const void *data2, size_t size_data2);
-   char *(*to_string)(const Eina_Value_Blob_Operations *ops, const void *memory, size_t size);
+  unsigned int version; /**< must be #EINA_VALUE_BLOB_OPERATIONS_VERSION */
+  void (*free)(const Eina_Value_Blob_Operations *ops,
+               void                             *memory,
+               size_t                            size);
+  void *(*copy)(const Eina_Value_Blob_Operations *ops,
+                const void                       *memory,
+                size_t                            size);
+  int (*compare)(const Eina_Value_Blob_Operations *ops,
+                 const void                       *data1,
+                 size_t                            size_data1,
+                 const void                       *data2,
+                 size_t                            size_data2);
+  char *(*to_string)(const Eina_Value_Blob_Operations *ops,
+                     const void                       *memory,
+                     size_t                            size);
 };
 
 /**
@@ -2970,7 +2992,8 @@ struct _Eina_Value_Blob_Operations
  *
  * No compare or to_string are provided, defaults will be used.
  */
-EINA_API extern const Eina_Value_Blob_Operations *EINA_VALUE_BLOB_OPERATIONS_MALLOC;
+EINA_API extern const Eina_Value_Blob_Operations
+  *EINA_VALUE_BLOB_OPERATIONS_MALLOC;
 
 /**
  * @typedef Eina_Value_Blob
@@ -2990,9 +3013,10 @@ typedef struct _Eina_Value_Blob Eina_Value_Blob;
  */
 struct _Eina_Value_Blob
 {
-   const Eina_Value_Blob_Operations *ops; /**< if @c NULL, nothing is freed, copy will just copy the memory pointer, not its value. */
-   const void *memory;
-   unsigned int size;
+  const Eina_Value_Blob_Operations *
+    ops; /**< if @c NULL, nothing is freed, copy will just copy the memory pointer, not its value. */
+  const void  *memory;
+  unsigned int size;
 };
 
 /**
@@ -3064,12 +3088,29 @@ typedef struct _Eina_Value_Struct Eina_Value_Struct;
  */
 struct _Eina_Value_Struct_Operations
 {
-   unsigned int version; /**< must be #EINA_VALUE_STRUCT_OPERATIONS_VERSION */
-   void *(*alloc)(const Eina_Value_Struct_Operations *ops, const Eina_Value_Struct_Desc *desc); /**< How to allocate struct memory to be managed by the Eina_Value */
-   void (*free)(const Eina_Value_Struct_Operations *ops, const Eina_Value_Struct_Desc *desc, void *memory); /**< How to release memory managed by the Eina_Value */
-   void *(*copy)(const Eina_Value_Struct_Operations *ops, const Eina_Value_Struct_Desc *desc, const void *memory); /**< How to copy struct memory from an existing Eina_Value, if not provided alloc() will be used, then every member is copied using eina_value_type_copy() with member's type. */
-   int (*compare)(const Eina_Value_Struct_Operations *ops, const Eina_Value_Struct_Desc *desc, const void *data1, const void *data2); /**< How to compare two struct memories */
-   const Eina_Value_Struct_Member *(*find_member)(const Eina_Value_Struct_Operations *ops, const Eina_Value_Struct_Desc *desc, const char *name); /**< How to find description for member. For huge structures consider using binary search, stringshared, hash or gperf. The default function does linear search using strcmp(). */
+  unsigned int version; /**< must be #EINA_VALUE_STRUCT_OPERATIONS_VERSION */
+  void *(*alloc)(
+    const Eina_Value_Struct_Operations *ops,
+    const Eina_Value_Struct_Desc *
+      desc); /**< How to allocate struct memory to be managed by the Eina_Value */
+  void (*free)(
+    const Eina_Value_Struct_Operations *ops,
+    const Eina_Value_Struct_Desc       *desc,
+    void *memory); /**< How to release memory managed by the Eina_Value */
+  void *(*copy)(
+    const Eina_Value_Struct_Operations *ops,
+    const Eina_Value_Struct_Desc       *desc,
+    const void *
+      memory); /**< How to copy struct memory from an existing Eina_Value, if not provided alloc() will be used, then every member is copied using eina_value_type_copy() with member's type. */
+  int (*compare)(const Eina_Value_Struct_Operations *ops,
+                 const Eina_Value_Struct_Desc       *desc,
+                 const void                         *data1,
+                 const void *data2); /**< How to compare two struct memories */
+  const Eina_Value_Struct_Member *(*find_member)(
+    const Eina_Value_Struct_Operations *ops,
+    const Eina_Value_Struct_Desc       *desc,
+    const char *
+      name); /**< How to find description for member. For huge structures consider using binary search, stringshared, hash or gperf. The default function does linear search using strcmp(). */
 };
 
 /**
@@ -3083,7 +3124,8 @@ struct _Eina_Value_Struct_Operations
  * No other methods are set (alloc, free, copy, compare), then it uses
  * the default operations.
  */
-EINA_API extern const Eina_Value_Struct_Operations *EINA_VALUE_STRUCT_OPERATIONS_BINSEARCH;
+EINA_API extern const Eina_Value_Struct_Operations
+  *EINA_VALUE_STRUCT_OPERATIONS_BINSEARCH;
 
 /**
  * @var EINA_VALUE_STRUCT_OPERATIONS_STRINGSHARE
@@ -3098,7 +3140,8 @@ EINA_API extern const Eina_Value_Struct_Operations *EINA_VALUE_STRUCT_OPERATIONS
  * No other methods are set (alloc, free, copy, compare), then it uses
  * the default operations.
  */
-EINA_API extern const Eina_Value_Struct_Operations *EINA_VALUE_STRUCT_OPERATIONS_STRINGSHARE;
+EINA_API extern const Eina_Value_Struct_Operations
+  *EINA_VALUE_STRUCT_OPERATIONS_STRINGSHARE;
 
 /**
  * @struct _Eina_Value_Struct_Member
@@ -3119,9 +3162,11 @@ EINA_API extern const Eina_Value_Struct_Operations *EINA_VALUE_STRUCT_OPERATIONS
  */
 struct _Eina_Value_Struct_Member
 {
-   const char *name; /**< member name, used in lookups such as eina_value_struct_get() */
-   const Eina_Value_Type *type; /**< how to use this member */
-   unsigned int offset; /**< where this member is located within the structure memory */
+  const char
+    *name; /**< member name, used in lookups such as eina_value_struct_get() */
+  const Eina_Value_Type *type; /**< how to use this member */
+  unsigned int
+    offset; /**< where this member is located within the structure memory */
 };
 
 /**
@@ -3142,11 +3187,15 @@ struct _Eina_Value_Struct_Member
  */
 struct _Eina_Value_Struct_Desc
 {
-   unsigned int version; /**< must be #EINA_VALUE_STRUCT_DESC_VERSION */
-   const Eina_Value_Struct_Operations *ops; /**< operations, if @c NULL defaults will be used. You may use operations to optimize member lookup using binary search or gperf hash. */
-   const Eina_Value_Struct_Member *members; /**< array of member descriptions, if @c member_count is zero, then it must be @c NULL terminated. */
-   unsigned int member_count; /**< if > 0, specifies number of members. If zero then @c members must be NULL terminated. */
-   unsigned int size; /**< byte size to allocate, may be bigger than sum of members */
+  unsigned int version; /**< must be #EINA_VALUE_STRUCT_DESC_VERSION */
+  const Eina_Value_Struct_Operations *
+    ops; /**< operations, if @c NULL defaults will be used. You may use operations to optimize member lookup using binary search or gperf hash. */
+  const Eina_Value_Struct_Member *
+    members; /**< array of member descriptions, if @c member_count is zero, then it must be @c NULL terminated. */
+  unsigned int
+    member_count; /**< if > 0, specifies number of members. If zero then @c members must be NULL terminated. */
+  unsigned int
+    size; /**< byte size to allocate, may be bigger than sum of members */
 };
 
 /**
@@ -3170,7 +3219,6 @@ struct _Eina_Value_Struct_Desc
  */
 #define EINA_VALUE_STRUCT_MEMBER_SENTINEL {NULL, NULL, 0}
 
-
 /**
  * @struct _Eina_Value_Struct
  * Used to store the memory and its description.
@@ -3178,8 +3226,8 @@ struct _Eina_Value_Struct_Desc
  */
 struct _Eina_Value_Struct
 {
-   const Eina_Value_Struct_Desc *desc; /**< How to manage the structure */
-   void *memory; /**< The managed structure memory */
+  const Eina_Value_Struct_Desc *desc; /**< How to manage the structure */
+  void                         *memory; /**< The managed structure memory */
 };
 
 #define EINA_VALUE_STRUCT_DESC_DEFINE(Name, Ops, Size, ...)             \
@@ -3223,7 +3271,8 @@ struct _Eina_Value_Struct
  *
  * @since 1.2
  */
-EINA_API Eina_Value *eina_value_struct_new(const Eina_Value_Struct_Desc *desc) EINA_ARG_NONNULL(1);
+EINA_API Eina_Value *eina_value_struct_new(const Eina_Value_Struct_Desc *desc)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Initializes generic value storage of type struct.
@@ -3248,8 +3297,9 @@ EINA_API Eina_Value *eina_value_struct_new(const Eina_Value_Struct_Desc *desc) E
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_setup(Eina_Value *value,
-                                                const Eina_Value_Struct_Desc *desc) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool
+eina_value_struct_setup(Eina_Value *value, const Eina_Value_Struct_Desc *desc)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Checks for a struct and get its description.
@@ -3260,7 +3310,9 @@ static inline Efl_Bool eina_value_struct_setup(Eina_Value *value,
  *
  * @since 1.21
  */
-static inline const Eina_Value_Struct_Desc *eina_value_struct_desc_get(const Eina_Value *value) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+static inline const Eina_Value_Struct_Desc *
+eina_value_struct_desc_get(const Eina_Value *value)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets the generic value in a struct member.
@@ -3327,8 +3379,8 @@ static inline const Eina_Value_Struct_Desc *eina_value_struct_desc_get(const Ein
  * @since 1.2
  */
 static inline Efl_Bool eina_value_struct_set(Eina_Value *value,
-                                              const char *name,
-                                              ...) EINA_ARG_NONNULL(1, 2);
+                                             const char *name,
+                                             ...) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Gets the generic value from a struct member.
@@ -3400,8 +3452,8 @@ static inline Efl_Bool eina_value_struct_set(Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_struct_get(const Eina_Value *value,
-                                              const char *name,
-                                              ...) EINA_ARG_NONNULL(1, 2);
+                                             const char       *name,
+                                             ...) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Sets the generic value in a struct member.
@@ -3417,9 +3469,9 @@ static inline Efl_Bool eina_value_struct_get(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_vset(Eina_Value *value,
-                                               const char *name,
-                                               va_list args) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool
+eina_value_struct_vset(Eina_Value *value, const char *name, va_list args)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Gets the generic value from a struct member.
@@ -3440,9 +3492,9 @@ static inline Efl_Bool eina_value_struct_vset(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_vget(const Eina_Value *value,
-                                               const char *name,
-                                               va_list args) EINA_ARG_NONNULL(1, 2);
+static inline Efl_Bool
+eina_value_struct_vget(const Eina_Value *value, const char *name, va_list args)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Sets the generic value in a struct member from pointer.
@@ -3511,9 +3563,9 @@ static inline Efl_Bool eina_value_struct_vget(const Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_pset(Eina_Value *value,
-                                               const char *name,
-                                               const void *ptr) EINA_ARG_NONNULL(1, 2, 3);
+static inline Efl_Bool
+eina_value_struct_pset(Eina_Value *value, const char *name, const void *ptr)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Gets the generic value to pointer from a struct member.
@@ -3584,9 +3636,9 @@ static inline Efl_Bool eina_value_struct_pset(Eina_Value *value,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_pget(const Eina_Value *value,
-                                               const char *name,
-                                               void *ptr) EINA_ARG_NONNULL(1, 2, 3);
+static inline Efl_Bool
+eina_value_struct_pget(const Eina_Value *value, const char *name, void *ptr)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Gets the member as Eina_Value copy
@@ -3602,8 +3654,9 @@ static inline Efl_Bool eina_value_struct_pget(const Eina_Value *value,
  * @since 1.2
  */
 static inline Efl_Bool eina_value_struct_value_get(const Eina_Value *src,
-                                                    const char *name,
-                                                    Eina_Value *dst) EINA_ARG_NONNULL(1, 2, 3);
+                                                   const char       *name,
+                                                   Eina_Value       *dst)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Sets the member from Eina_Value source.
@@ -3615,9 +3668,10 @@ static inline Efl_Bool eina_value_struct_value_get(const Eina_Value *src,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_value_set(Eina_Value *dst,
-                                                    const char *name,
-                                                    const Eina_Value *src) EINA_ARG_NONNULL(1, 2, 3);
+static inline Efl_Bool eina_value_struct_value_set(Eina_Value       *dst,
+                                                   const char       *name,
+                                                   const Eina_Value *src)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Gets the member as Eina_Value copy given its member description.
@@ -3632,9 +3686,10 @@ static inline Efl_Bool eina_value_struct_value_set(Eina_Value *dst,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_member_value_get(const Eina_Value *src,
-                                                           const Eina_Value_Struct_Member *member,
-                                                           Eina_Value *dst) EINA_ARG_NONNULL(1, 2, 3);
+static inline Efl_Bool
+eina_value_struct_member_value_get(const Eina_Value               *src,
+                                   const Eina_Value_Struct_Member *member,
+                                   Eina_Value *dst) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Sets the member from Eina_Value source.
@@ -3646,15 +3701,15 @@ static inline Efl_Bool eina_value_struct_member_value_get(const Eina_Value *src,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_struct_member_value_set(Eina_Value *dst,
-                                                           const Eina_Value_Struct_Member *member,
-                                                           const Eina_Value *src) EINA_ARG_NONNULL(1, 2, 3);
-
+static inline Efl_Bool
+eina_value_struct_member_value_set(Eina_Value                     *dst,
+                                   const Eina_Value_Struct_Member *member,
+                                   const Eina_Value               *src)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @}
  */
-
 
 /**
  * @defgroup Eina_Value_Type_Group Generic Value Type management
@@ -3676,18 +3731,44 @@ static inline Efl_Bool eina_value_struct_member_value_set(Eina_Value *dst,
  */
 struct _Eina_Value_Type
 {
-   unsigned int version; /**< must be #EINA_VALUE_TYPE_VERSION */
-   unsigned int value_size; /**< byte size of value */
-   const char *name; /**< name for debug and introspection */
-   Efl_Bool (*setup)(const Eina_Value_Type *type, void *mem); /**< mem will be malloc(value_size) and should be configured */
-   Efl_Bool (*flush)(const Eina_Value_Type *type, void *mem); /**< clear any values from mem */
-   Efl_Bool (*copy)(const Eina_Value_Type *type, const void *src, void *dst); /**< how to copy values, both memory are @c value_size */
-   int (*compare)(const Eina_Value_Type *type, const void *a, const void *b); /**< how to compare values, both memory are @c value_size */
-   Efl_Bool (*convert_to)(const Eina_Value_Type *type, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem); /**< how to convert values, both memory are @c value_size */
-   Efl_Bool (*convert_from)(const Eina_Value_Type *type, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem); /**< how to convert values, both memory are @c value_size */
-   Efl_Bool (*vset)(const Eina_Value_Type *type, void *mem, va_list args); /**< how to set memory from variable argument */
-   Efl_Bool (*pset)(const Eina_Value_Type *type, void *mem, const void *ptr); /**< how to set memory from pointer */
-   Efl_Bool (*pget)(const Eina_Value_Type *type, const void *mem, void *ptr); /**< how to read memory */
+  unsigned int version; /**< must be #EINA_VALUE_TYPE_VERSION */
+  unsigned int value_size; /**< byte size of value */
+  const char  *name; /**< name for debug and introspection */
+  Efl_Bool (*setup)(
+    const Eina_Value_Type *type,
+    void *mem); /**< mem will be malloc(value_size) and should be configured */
+  Efl_Bool (*flush)(const Eina_Value_Type *type,
+                    void *mem); /**< clear any values from mem */
+  Efl_Bool (*copy)(
+    const Eina_Value_Type *type,
+    const void            *src,
+    void *dst); /**< how to copy values, both memory are @c value_size */
+  int (*compare)(
+    const Eina_Value_Type *type,
+    const void            *a,
+    const void *b); /**< how to compare values, both memory are @c value_size */
+  Efl_Bool (*convert_to)(
+    const Eina_Value_Type *type,
+    const Eina_Value_Type *convert,
+    const void            *type_mem,
+    void *
+      convert_mem); /**< how to convert values, both memory are @c value_size */
+  Efl_Bool (*convert_from)(
+    const Eina_Value_Type *type,
+    const Eina_Value_Type *convert,
+    void                  *type_mem,
+    const void *
+      convert_mem); /**< how to convert values, both memory are @c value_size */
+  Efl_Bool (*vset)(
+    const Eina_Value_Type *type,
+    void                  *mem,
+    va_list args); /**< how to set memory from variable argument */
+  Efl_Bool (*pset)(const Eina_Value_Type *type,
+                   void                  *mem,
+                   const void *ptr); /**< how to set memory from pointer */
+  Efl_Bool (*pget)(const Eina_Value_Type *type,
+                   const void            *mem,
+                   void                  *ptr); /**< how to read memory */
 };
 
 /**
@@ -3698,7 +3779,9 @@ struct _Eina_Value_Type
  *
  * @since 1.2
  */
-EINA_API const char *eina_value_type_name_get(const Eina_Value_Type *type) EINA_PURE EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EINA_API const char *
+eina_value_type_name_get(const Eina_Value_Type *type) EINA_PURE
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Checks if type is valid.
@@ -3711,7 +3794,8 @@ EINA_API const char *eina_value_type_name_get(const Eina_Value_Type *type) EINA_
  *
  * @since 1.2
  */
-EINA_API Efl_Bool eina_value_type_check(const Eina_Value_Type *type) EINA_PURE EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_value_type_check(const Eina_Value_Type *type) EINA_PURE
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Initializes memory using type descriptor.
@@ -3722,7 +3806,8 @@ EINA_API Efl_Bool eina_value_type_check(const Eina_Value_Type *type) EINA_PURE E
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_setup(const Eina_Value_Type *type, void *mem);
+static inline Efl_Bool eina_value_type_setup(const Eina_Value_Type *type,
+                                             void                  *mem);
 
 /**
  * @brief Flushes (clears) memory using type descriptor.
@@ -3733,7 +3818,8 @@ static inline Efl_Bool eina_value_type_setup(const Eina_Value_Type *type, void *
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_flush(const Eina_Value_Type *type, void *mem);
+static inline Efl_Bool eina_value_type_flush(const Eina_Value_Type *type,
+                                             void                  *mem);
 
 /**
  * @brief Copies memory using type descriptor.
@@ -3745,7 +3831,8 @@ static inline Efl_Bool eina_value_type_flush(const Eina_Value_Type *type, void *
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_copy(const Eina_Value_Type *type, const void *src, void *dst);
+static inline Efl_Bool
+eina_value_type_copy(const Eina_Value_Type *type, const void *src, void *dst);
 
 /**
  * @brief Compares memory using type descriptor.
@@ -3757,7 +3844,9 @@ static inline Efl_Bool eina_value_type_copy(const Eina_Value_Type *type, const v
  *
  * @since 1.2
  */
-static inline int eina_value_type_compare(const Eina_Value_Type *type, const void *a, const void *b);
+static inline int eina_value_type_compare(const Eina_Value_Type *type,
+                                          const void            *a,
+                                          const void            *b);
 
 /**
  * @brief Converts memory using type descriptor.
@@ -3770,7 +3859,11 @@ static inline int eina_value_type_compare(const Eina_Value_Type *type, const voi
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_convert_to(const Eina_Value_Type *type, const Eina_Value_Type *convert, const void *type_mem, void *convert_mem);
+static inline Efl_Bool
+eina_value_type_convert_to(const Eina_Value_Type *type,
+                           const Eina_Value_Type *convert,
+                           const void            *type_mem,
+                           void                  *convert_mem);
 
 /**
  * @brief Converts memory using type descriptor.
@@ -3783,7 +3876,11 @@ static inline Efl_Bool eina_value_type_convert_to(const Eina_Value_Type *type, c
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_convert_from(const Eina_Value_Type *type, const Eina_Value_Type *convert, void *type_mem, const void *convert_mem);
+static inline Efl_Bool
+eina_value_type_convert_from(const Eina_Value_Type *type,
+                             const Eina_Value_Type *convert,
+                             void                  *type_mem,
+                             const void            *convert_mem);
 
 /**
  * @brief Sets memory using type descriptor and variable argument.
@@ -3795,7 +3892,8 @@ static inline Efl_Bool eina_value_type_convert_from(const Eina_Value_Type *type,
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_vset(const Eina_Value_Type *type, void *mem, va_list args);
+static inline Efl_Bool
+eina_value_type_vset(const Eina_Value_Type *type, void *mem, va_list args);
 
 /**
  * @brief Sets memory using type descriptor and pointer.
@@ -3807,7 +3905,8 @@ static inline Efl_Bool eina_value_type_vset(const Eina_Value_Type *type, void *m
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_pset(const Eina_Value_Type *type, void *mem, const void *ptr);
+static inline Efl_Bool
+eina_value_type_pset(const Eina_Value_Type *type, void *mem, const void *ptr);
 
 /**
  * @brief Gets memory using type descriptor.
@@ -3819,7 +3918,8 @@ static inline Efl_Bool eina_value_type_pset(const Eina_Value_Type *type, void *m
  *
  * @since 1.2
  */
-static inline Efl_Bool eina_value_type_pget(const Eina_Value_Type *type, const void *mem, void *ptr);
+static inline Efl_Bool
+eina_value_type_pget(const Eina_Value_Type *type, const void *mem, void *ptr);
 
 /**
  * @}
@@ -3865,7 +3965,8 @@ static inline Eina_Value *eina_value_optional_empty_new(void);
  * @since 1.17
  */
 EINA_API Eina_Value *eina_value_optional_new(const Eina_Value_Type *subtype,
-                                         const void* value) EINA_ARG_NONNULL(1, 2);
+                                             const void            *value)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Function to know if an eina optional is empty or not
@@ -3877,7 +3978,8 @@ EINA_API Eina_Value *eina_value_optional_new(const Eina_Value_Type *subtype,
  * @since 1.17
  */
 static inline Efl_Bool eina_value_optional_empty_is(const Eina_Value *value,
-                                                     Efl_Bool *is_empty) EINA_ARG_NONNULL(1, 2);
+                                                    Efl_Bool         *is_empty)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Sets the optional with a value
@@ -3889,9 +3991,10 @@ static inline Efl_Bool eina_value_optional_empty_is(const Eina_Value *value,
  *
  * @since 1.17
  */
-EINA_API Efl_Bool eina_value_optional_pset(Eina_Value *value,
-                                        Eina_Value_Type const* subtype,
-                                        const void *subvalue) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API Efl_Bool eina_value_optional_pset(Eina_Value            *value,
+                                           const Eina_Value_Type *subtype,
+                                           const void            *subvalue)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Gets the value from an optional
@@ -3903,8 +4006,8 @@ EINA_API Efl_Bool eina_value_optional_pset(Eina_Value *value,
  *
  * @since 1.17
  */
-EINA_API Efl_Bool eina_value_optional_pget(Eina_Value *value,
-                                        void *subvalue) EINA_ARG_NONNULL(1, 2);
+EINA_API Efl_Bool eina_value_optional_pget(Eina_Value *value, void *subvalue)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Resets eina optional to empty
@@ -3914,7 +4017,8 @@ EINA_API Efl_Bool eina_value_optional_pget(Eina_Value *value,
  *
  * @since 1.17
  */
-EINA_API Efl_Bool eina_value_optional_reset(Eina_Value *value) EINA_ARG_NONNULL(1);
+EINA_API Efl_Bool eina_value_optional_reset(Eina_Value *value)
+  EINA_ARG_NONNULL(1);
 
 /**
  *
@@ -3925,7 +4029,8 @@ EINA_API Efl_Bool eina_value_optional_reset(Eina_Value *value) EINA_ARG_NONNULL(
  *
  * @since 1.17
  */
-static inline const Eina_Value_Type *eina_value_optional_type_get(Eina_Value *value) EINA_ARG_NONNULL(1);
+static inline const Eina_Value_Type *
+eina_value_optional_type_get(Eina_Value *value) EINA_ARG_NONNULL(1);
 
 /**
  * @var EINA_VALUE_TYPE_FILE

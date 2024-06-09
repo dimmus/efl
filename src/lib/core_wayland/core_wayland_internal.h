@@ -1,74 +1,122 @@
 #ifndef _EFL_CORE_WAYLAND_INTERNAL_H
-# define _EFL_CORE_WAYLAND_INTERNAL_H
+#define _EFL_CORE_WAYLAND_INTERNAL_H
 
-# ifdef EAPI
+#ifdef EAPI
 #  undef EAPI
-# endif
+#endif
 
-# ifdef _WIN32
+#ifdef _WIN32
 #  ifdef EFL_BUILD
-#   ifdef DLL_EXPORT
-#    define EAPI __declspec(dllexport)
-#   else
-#    define EAPI
-#   endif
+#    ifdef DLL_EXPORT
+#      define EAPI __declspec(dllexport)
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI __declspec(dllimport)
+#    define EAPI __declspec(dllimport)
 #  endif
-# else
+#else
 #  ifdef __GNUC__
-#   if __GNUC__ >= 4
-#    define EAPI __attribute__ ((visibility("default")))
-#   else
-#    define EAPI
-#   endif
+#    if __GNUC__ >= 4
+#      define EAPI __attribute__ ((visibility("default")))
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI
 #  endif
-# endif
+#endif
 
-EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE;      /** @since 1.20 */
-EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE; /** @since 1.20 */
-EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST;      /** @since 1.20 */
-EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE;         /** @since 1.20 */
+EAPI extern int
+  EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE; /** @since 1.20 */
+EAPI extern int
+  EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_PREPARE_DONE; /** @since 1.20 */
+EAPI extern int
+  EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_REQUEST; /** @since 1.20 */
+EAPI extern int
+  EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATION_CHANGE_DONE; /** @since 1.20 */
 
-EAPI void efl_core_wayland_window_rotation_change_prepare_send       (Efl_Core_Wayland_Window *window, int rot, int w, int h, Efl_Bool resize);
-EAPI void efl_core_wayland_window_rotation_change_prepare_done_send  (Efl_Core_Wayland_Window *window, int rot);
-EAPI void efl_core_wayland_window_rotation_change_request_send       (Efl_Core_Wayland_Window *window, int rot);
-EAPI void efl_core_wayland_window_rotation_change_done_send          (Efl_Core_Wayland_Window *window, int rot, int w, int h);
-EAPI void efl_core_wayland_window_false_commit                       (Efl_Core_Wayland_Window *window);
-EAPI void efl_core_wayland_window_damage                             (Efl_Core_Wayland_Window *window, Eina_Rectangle *rects, unsigned int count);
+EAPI void efl_core_wayland_window_rotation_change_prepare_send(
+  Efl_Core_Wayland_Window *window,
+  int                      rot,
+  int                      w,
+  int                      h,
+  Efl_Bool                 resize);
+EAPI void efl_core_wayland_window_rotation_change_prepare_done_send(
+  Efl_Core_Wayland_Window *window,
+  int                      rot);
+EAPI void efl_core_wayland_window_rotation_change_request_send(
+  Efl_Core_Wayland_Window *window,
+  int                      rot);
+EAPI void efl_core_wayland_window_rotation_change_done_send(
+  Efl_Core_Wayland_Window *window,
+  int                      rot,
+  int                      w,
+  int                      h);
+EAPI void efl_core_wayland_window_false_commit(Efl_Core_Wayland_Window *window);
+EAPI void efl_core_wayland_window_damage(Efl_Core_Wayland_Window *window,
+                                         Eina_Rectangle          *rects,
+                                         unsigned int             count);
 
-EAPI Efl_Bool                  efl_core_wayland_buffer_fit           (Efl_Core_Wayland_Buffer *b, int w, int h);
-EAPI Efl_Bool                  efl_core_wayland_buffer_init          (Efl_Core_Wayland_Display *ewd, Efl_Core_Wayland_Buffer_Type types);
-EAPI Efl_Core_Wayland_Buffer  *efl_core_wayland_buffer_create        (Efl_Core_Wayland_Display *ewd, int w, int h, Efl_Bool alpha);
-EAPI void                      efl_core_wayland_buffer_destroy       (Efl_Core_Wayland_Buffer *b);
-EAPI struct wl_buffer         *efl_core_wayland_buffer_wl_buffer_get (Efl_Core_Wayland_Buffer *buf);
-EAPI void                     *efl_core_wayland_buffer_map           (Efl_Core_Wayland_Buffer *buf, int *w, int *h, int *stride);
-EAPI void                      efl_core_wayland_buffer_unmap         (Efl_Core_Wayland_Buffer *buf);
-EAPI void                      efl_core_wayland_buffer_discard       (Efl_Core_Wayland_Buffer *buf);
-EAPI void                      efl_core_wayland_buffer_lock          (Efl_Core_Wayland_Buffer *b);
-EAPI void                      efl_core_wayland_buffer_unlock        (Efl_Core_Wayland_Buffer *b);
-EAPI void                      efl_core_wayland_buffer_destroy       (Efl_Core_Wayland_Buffer *b);
-EAPI Efl_Bool                  efl_core_wayland_buffer_busy_get      (Efl_Core_Wayland_Buffer *buffer);
-EAPI void                      efl_core_wayland_buffer_busy_set      (Efl_Core_Wayland_Buffer *buffer);
-EAPI int                       efl_core_wayland_buffer_age_get       (Efl_Core_Wayland_Buffer *buffer);
-EAPI void                      efl_core_wayland_buffer_age_set       (Efl_Core_Wayland_Buffer *buffer, int age);
-EAPI void                      efl_core_wayland_buffer_age_inc       (Efl_Core_Wayland_Buffer *buffer);
+EAPI Efl_Bool efl_core_wayland_buffer_fit(Efl_Core_Wayland_Buffer *b,
+                                          int                      w,
+                                          int                      h);
+EAPI Efl_Bool efl_core_wayland_buffer_init(Efl_Core_Wayland_Display    *ewd,
+                                           Efl_Core_Wayland_Buffer_Type types);
+EAPI Efl_Core_Wayland_Buffer           *
+efl_core_wayland_buffer_create(Efl_Core_Wayland_Display *ewd,
+                                         int                       w,
+                                         int                       h,
+                                         Efl_Bool                  alpha);
+EAPI void efl_core_wayland_buffer_destroy(Efl_Core_Wayland_Buffer *b);
+EAPI struct wl_buffer            *
+efl_core_wayland_buffer_wl_buffer_get(Efl_Core_Wayland_Buffer *buf);
+EAPI void *efl_core_wayland_buffer_map(Efl_Core_Wayland_Buffer *buf,
+                                       int                     *w,
+                                       int                     *h,
+                                       int                     *stride);
+EAPI void  efl_core_wayland_buffer_unmap(Efl_Core_Wayland_Buffer *buf);
+EAPI void  efl_core_wayland_buffer_discard(Efl_Core_Wayland_Buffer *buf);
+EAPI void  efl_core_wayland_buffer_lock(Efl_Core_Wayland_Buffer *b);
+EAPI void  efl_core_wayland_buffer_unlock(Efl_Core_Wayland_Buffer *b);
+EAPI void  efl_core_wayland_buffer_destroy(Efl_Core_Wayland_Buffer *b);
+EAPI Efl_Bool efl_core_wayland_buffer_busy_get(Efl_Core_Wayland_Buffer *buffer);
+EAPI void     efl_core_wayland_buffer_busy_set(Efl_Core_Wayland_Buffer *buffer);
+EAPI int      efl_core_wayland_buffer_age_get(Efl_Core_Wayland_Buffer *buffer);
+EAPI void     efl_core_wayland_buffer_age_set(Efl_Core_Wayland_Buffer *buffer,
+                                              int                      age);
+EAPI void     efl_core_wayland_buffer_age_inc(Efl_Core_Wayland_Buffer *buffer);
 
-EAPI Efl_Core_Wayland_Surface *efl_core_wayland_surface_create       (Efl_Core_Wayland_Window *win, Efl_Bool alpha);
-EAPI void                      efl_core_wayland_surface_destroy      (Efl_Core_Wayland_Surface *surface);
-EAPI void                      efl_core_wayland_surface_reconfigure  (Efl_Core_Wayland_Surface *surface, int w, int h, uint32_t flags, Efl_Bool alpha);
-EAPI void                     *efl_core_wayland_surface_data_get     (Efl_Core_Wayland_Surface *surface, int *w, int *h);
-EAPI int                       efl_core_wayland_surface_assign       (Efl_Core_Wayland_Surface *surface);
-EAPI void                      efl_core_wayland_surface_post         (Efl_Core_Wayland_Surface *surface, Eina_Rectangle *rects, unsigned int count);
-EAPI void                      efl_core_wayland_surface_flush        (Efl_Core_Wayland_Surface *surface, Efl_Bool purge);
-EAPI Efl_Core_Wayland_Buffer  *efl_core_wayland_surface_buffer_create(Efl_Core_Wayland_Surface *surface);
-EAPI int                       efl_core_wayland_surface_manager_add  (Efl_Core_Wayland_Surface_Interface *intf);
-EAPI void                      efl_core_wayland_surface_manager_del  (Efl_Core_Wayland_Surface_Interface *intf);
-EAPI Efl_Core_Wayland_Window  *efl_core_wayland_surface_window_get   (Efl_Core_Wayland_Surface *surface);
-EAPI Efl_Bool                  efl_core_wayland_surface_alpha_get    (Efl_Core_Wayland_Surface *surface);
-EAPI void                      efl_core_wayland_window_surface_flush (Efl_Core_Wayland_Window *window, Efl_Bool purge);
+EAPI Efl_Core_Wayland_Surface *
+efl_core_wayland_surface_create(Efl_Core_Wayland_Window *win, Efl_Bool alpha);
+EAPI void efl_core_wayland_surface_destroy(Efl_Core_Wayland_Surface *surface);
+EAPI void
+efl_core_wayland_surface_reconfigure(Efl_Core_Wayland_Surface *surface,
+                                     int                       w,
+                                     int                       h,
+                                     uint32_t                  flags,
+                                     Efl_Bool                  alpha);
+EAPI void *efl_core_wayland_surface_data_get(Efl_Core_Wayland_Surface *surface,
+                                             int                      *w,
+                                             int                      *h);
+EAPI int   efl_core_wayland_surface_assign(Efl_Core_Wayland_Surface *surface);
+EAPI void  efl_core_wayland_surface_post(Efl_Core_Wayland_Surface *surface,
+                                         Eina_Rectangle           *rects,
+                                         unsigned int              count);
+EAPI void  efl_core_wayland_surface_flush(Efl_Core_Wayland_Surface *surface,
+                                          Efl_Bool                  purge);
+EAPI Efl_Core_Wayland_Buffer *
+efl_core_wayland_surface_buffer_create(Efl_Core_Wayland_Surface *surface);
+EAPI int
+efl_core_wayland_surface_manager_add(Efl_Core_Wayland_Surface_Interface *intf);
+EAPI void
+efl_core_wayland_surface_manager_del(Efl_Core_Wayland_Surface_Interface *intf);
+EAPI Efl_Core_Wayland_Window *
+efl_core_wayland_surface_window_get(Efl_Core_Wayland_Surface *surface);
+EAPI Efl_Bool
+          efl_core_wayland_surface_alpha_get(Efl_Core_Wayland_Surface *surface);
+EAPI void efl_core_wayland_window_surface_flush(Efl_Core_Wayland_Window *window,
+                                                Efl_Bool                 purge);
 
 /**
  * Attach a buffer to a window
@@ -86,7 +134,11 @@ EAPI void                      efl_core_wayland_window_surface_flush (Efl_Core_W
  *
  * @since 1.21
  */
-EAPI void efl_core_wayland_window_buffer_attach(Efl_Core_Wayland_Window *win, void *buffer, int x, int y, Efl_Bool implicit);
+EAPI void efl_core_wayland_window_buffer_attach(Efl_Core_Wayland_Window *win,
+                                                void                    *buffer,
+                                                int                      x,
+                                                int                      y,
+                                                Efl_Bool implicit);
 
 /**
  * Set a buffer transform on a given window
@@ -97,7 +149,9 @@ EAPI void efl_core_wayland_window_buffer_attach(Efl_Core_Wayland_Window *win, vo
  * @ingroup Efl_Core_Wayland_Window_Group
  * @since 1.20
  */
-EAPI void efl_core_wayland_window_buffer_transform_set(Efl_Core_Wayland_Window *window, int transform);
+EAPI void
+efl_core_wayland_window_buffer_transform_set(Efl_Core_Wayland_Window *window,
+                                             int transform);
 
 /**
  * Iconify a window
@@ -108,7 +162,8 @@ EAPI void efl_core_wayland_window_buffer_transform_set(Efl_Core_Wayland_Window *
  * @ingroup Efl_Core_Wayland_Window_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_window_iconified_set(Efl_Core_Wayland_Window *window, Efl_Bool iconified);
+EAPI void efl_core_wayland_window_iconified_set(Efl_Core_Wayland_Window *window,
+                                                Efl_Bool iconified);
 
 /**
  * Check if a wayland window's surface is in the pending state.
@@ -122,7 +177,8 @@ EAPI void efl_core_wayland_window_iconified_set(Efl_Core_Wayland_Window *window,
  *
  * @since 1.21
  */
-EAPI Efl_Bool efl_core_wayland_window_pending_get(Efl_Core_Wayland_Window *window);
+EAPI Efl_Bool
+efl_core_wayland_window_pending_get(Efl_Core_Wayland_Window *window);
 
 /**
  * @defgroup Efl_Core_Wayland_Dnd_Group Wayland Library Drag-n-Drop Functions
@@ -142,7 +198,8 @@ EAPI Efl_Bool efl_core_wayland_window_pending_get(Efl_Core_Wayland_Window *windo
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_dnd_drag_types_set(Efl_Core_Wayland_Input *input, const char **types);
+EAPI void efl_core_wayland_dnd_drag_types_set(Efl_Core_Wayland_Input *input,
+                                              const char            **types);
 
 /**
  * Start a drag on the given input
@@ -156,7 +213,10 @@ EAPI void efl_core_wayland_dnd_drag_types_set(Efl_Core_Wayland_Input *input, con
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.17
  */
-EAPI uint32_t efl_core_wayland_dnd_drag_start(Efl_Core_Wayland_Input *input, Efl_Core_Wayland_Window *window, Efl_Core_Wayland_Window *drag_window);
+EAPI uint32_t
+efl_core_wayland_dnd_drag_start(Efl_Core_Wayland_Input  *input,
+                                Efl_Core_Wayland_Window *window,
+                                Efl_Core_Wayland_Window *drag_window);
 
 /**
  * Call wl_data_source.set_actions on an existing source
@@ -188,7 +248,8 @@ EAPI void efl_core_wayland_dnd_drag_end(Efl_Core_Wayland_Input *input);
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI Efl_Core_Wayland_Offer* efl_core_wayland_dnd_selection_get(Efl_Core_Wayland_Input *input);
+EAPI Efl_Core_Wayland_Offer *
+efl_core_wayland_dnd_selection_get(Efl_Core_Wayland_Input *input);
 
 /**
  * Set the types which are available from this client
@@ -203,7 +264,8 @@ EAPI Efl_Core_Wayland_Offer* efl_core_wayland_dnd_selection_get(Efl_Core_Wayland
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.17
  */
-EAPI uint32_t efl_core_wayland_dnd_selection_set(Efl_Core_Wayland_Input *input, const char **types);
+EAPI uint32_t efl_core_wayland_dnd_selection_set(Efl_Core_Wayland_Input *input,
+                                                 const char            **types);
 
 /**
  * Clear the selection currently setted on this input.
@@ -215,7 +277,8 @@ EAPI uint32_t efl_core_wayland_dnd_selection_set(Efl_Core_Wayland_Input *input, 
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.17
  */
-EAPI uint32_t efl_core_wayland_dnd_selection_clear(Efl_Core_Wayland_Input *input);
+EAPI uint32_t
+efl_core_wayland_dnd_selection_clear(Efl_Core_Wayland_Input *input);
 
 /**
  * Get the actions available from the data source
@@ -227,7 +290,8 @@ EAPI uint32_t efl_core_wayland_dnd_selection_clear(Efl_Core_Wayland_Input *input
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI Efl_Core_Wayland_Drag_Action efl_core_wayland_offer_actions_get(Efl_Core_Wayland_Offer *offer);
+EAPI Efl_Core_Wayland_Drag_Action
+efl_core_wayland_offer_actions_get(Efl_Core_Wayland_Offer *offer);
 
 /**
  * Set the actions which are supported by you
@@ -239,7 +303,10 @@ EAPI Efl_Core_Wayland_Drag_Action efl_core_wayland_offer_actions_get(Efl_Core_Wa
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI void efl_core_wayland_offer_actions_set(Efl_Core_Wayland_Offer *offer, Efl_Core_Wayland_Drag_Action actions, Efl_Core_Wayland_Drag_Action action);
+EAPI void
+efl_core_wayland_offer_actions_set(Efl_Core_Wayland_Offer      *offer,
+                                   Efl_Core_Wayland_Drag_Action actions,
+                                   Efl_Core_Wayland_Drag_Action action);
 
 /**
  * Get action which is set by either the data source or in the last call of actions_set
@@ -251,7 +318,8 @@ EAPI void efl_core_wayland_offer_actions_set(Efl_Core_Wayland_Offer *offer, Efl_
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI Efl_Core_Wayland_Drag_Action efl_core_wayland_offer_action_get(Efl_Core_Wayland_Offer *offer);
+EAPI Efl_Core_Wayland_Drag_Action
+efl_core_wayland_offer_action_get(Efl_Core_Wayland_Offer *offer);
 
 /**
  * Get the mime types which are given by the source
@@ -263,7 +331,8 @@ EAPI Efl_Core_Wayland_Drag_Action efl_core_wayland_offer_action_get(Efl_Core_Way
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI Eina_Array* efl_core_wayland_offer_mimes_get(Efl_Core_Wayland_Offer *offer);
+EAPI Eina_Array *
+efl_core_wayland_offer_mimes_get(Efl_Core_Wayland_Offer *offer);
 
 /**
  * Set mimetypes you are accepting under this offer
@@ -273,7 +342,8 @@ EAPI Eina_Array* efl_core_wayland_offer_mimes_get(Efl_Core_Wayland_Offer *offer)
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI void efl_core_wayland_offer_mimes_set(Efl_Core_Wayland_Offer *offer, Eina_Array *mimes);
+EAPI void efl_core_wayland_offer_mimes_set(Efl_Core_Wayland_Offer *offer,
+                                           Eina_Array             *mimes);
 
 /**
  * Accept a single mime type for an offer
@@ -284,7 +354,8 @@ EAPI void efl_core_wayland_offer_mimes_set(Efl_Core_Wayland_Offer *offer, Eina_A
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.20
  */
-EAPI void efl_core_wayland_offer_accept(Efl_Core_Wayland_Offer *offer, const char *mime_type);
+EAPI void efl_core_wayland_offer_accept(Efl_Core_Wayland_Offer *offer,
+                                        const char             *mime_type);
 
 /**
  * Request the data from this offer.
@@ -297,7 +368,8 @@ EAPI void efl_core_wayland_offer_accept(Efl_Core_Wayland_Offer *offer, const cha
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI void efl_core_wayland_offer_receive(Efl_Core_Wayland_Offer *offer, char *mime);
+EAPI void efl_core_wayland_offer_receive(Efl_Core_Wayland_Offer *offer,
+                                         char                   *mime);
 
 /**
  * Request the data from this offer on an externally managed fd.
@@ -311,7 +383,9 @@ EAPI void efl_core_wayland_offer_receive(Efl_Core_Wayland_Offer *offer, char *mi
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.20
  */
-EAPI void efl_core_wayland_offer_proxy_receive(Efl_Core_Wayland_Offer *offer, const char *mime, int fd);
+EAPI void efl_core_wayland_offer_proxy_receive(Efl_Core_Wayland_Offer *offer,
+                                               const char             *mime,
+                                               int                     fd);
 
 /**
  * End the use of a proxy received offer. This may invalidate the offer object
@@ -321,7 +395,8 @@ EAPI void efl_core_wayland_offer_proxy_receive(Efl_Core_Wayland_Offer *offer, co
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.20
  */
-EAPI void efl_core_wayland_offer_proxy_receive_end(Efl_Core_Wayland_Offer *offer);
+EAPI void
+efl_core_wayland_offer_proxy_receive_end(Efl_Core_Wayland_Offer *offer);
 
 /**
  * Check if the given offer supports the given mimetype
@@ -334,7 +409,9 @@ EAPI void efl_core_wayland_offer_proxy_receive_end(Efl_Core_Wayland_Offer *offer
  * @ingroup Efl_Core_Wayland_Dnd_Group
  * @since 1.19
  */
-EAPI Efl_Bool efl_core_wayland_offer_supports_mime(Efl_Core_Wayland_Offer *offer, const char *mime);
+EAPI Efl_Bool
+efl_core_wayland_offer_supports_mime(Efl_Core_Wayland_Offer *offer,
+                                     const char             *mime);
 
 /**
  * Mark this offer as finished
@@ -376,7 +453,8 @@ EAPI void efl_core_wayland_offer_finish(Efl_Core_Wayland_Offer *offer);
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI Efl_Core_Wayland_Subsurface *efl_core_wayland_subsurface_new(Efl_Core_Wayland_Window *window);
+EAPI Efl_Core_Wayland_Subsurface *
+efl_core_wayland_subsurface_new(Efl_Core_Wayland_Window *window);
 
 /**
  * Destroy the given subsurface, as well as the surface associated with it.
@@ -386,7 +464,8 @@ EAPI Efl_Core_Wayland_Subsurface *efl_core_wayland_subsurface_new(Efl_Core_Wayla
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_subsurface_del(Efl_Core_Wayland_Subsurface *subsurface);
+EAPI void
+efl_core_wayland_subsurface_del(Efl_Core_Wayland_Subsurface *subsurface);
 
 /**
  * Get the wl_surface for this subsurface
@@ -398,7 +477,8 @@ EAPI void efl_core_wayland_subsurface_del(Efl_Core_Wayland_Subsurface *subsurfac
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI struct wl_surface *efl_core_wayland_subsurface_surface_get(Efl_Core_Wayland_Subsurface *subsurface);
+EAPI struct wl_surface *efl_core_wayland_subsurface_surface_get(
+  Efl_Core_Wayland_Subsurface *subsurface);
 
 /**
  * Set the position of this subsurface, relative to its parent surface.
@@ -412,7 +492,10 @@ EAPI struct wl_surface *efl_core_wayland_subsurface_surface_get(Efl_Core_Wayland
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_subsurface_position_set(Efl_Core_Wayland_Subsurface *subsurface, int x, int y);
+EAPI void efl_core_wayland_subsurface_position_set(
+  Efl_Core_Wayland_Subsurface *subsurface,
+  int                          x,
+  int                          y);
 
 /**
  * Get the position of this subsurface, relative to its parent surface.
@@ -425,7 +508,10 @@ EAPI void efl_core_wayland_subsurface_position_set(Efl_Core_Wayland_Subsurface *
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_subsurface_position_get(Efl_Core_Wayland_Subsurface *subsurface, int *x, int *y);
+EAPI void efl_core_wayland_subsurface_position_get(
+  Efl_Core_Wayland_Subsurface *subsurface,
+  int                         *x,
+  int                         *y);
 
 /**
  * Place subsurface on layer above a reference surface
@@ -441,7 +527,9 @@ EAPI void efl_core_wayland_subsurface_position_get(Efl_Core_Wayland_Subsurface *
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_subsurface_place_above(Efl_Core_Wayland_Subsurface *subsurface, struct wl_surface *surface);
+EAPI void
+efl_core_wayland_subsurface_place_above(Efl_Core_Wayland_Subsurface *subsurface,
+                                        struct wl_surface           *surface);
 
 /**
  * Place subsurface on layer below a reference surface
@@ -454,7 +542,9 @@ EAPI void efl_core_wayland_subsurface_place_above(Efl_Core_Wayland_Subsurface *s
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_subsurface_place_below(Efl_Core_Wayland_Subsurface *subsurface, struct wl_surface *surface);
+EAPI void
+efl_core_wayland_subsurface_place_below(Efl_Core_Wayland_Subsurface *subsurface,
+                                        struct wl_surface           *surface);
 
 /**
  * Enables or disables sub-surface synchronization
@@ -482,7 +572,9 @@ EAPI void efl_core_wayland_subsurface_place_below(Efl_Core_Wayland_Subsurface *s
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_subsurface_sync_set(Efl_Core_Wayland_Subsurface *subsurface, Efl_Bool sync);
+EAPI void
+efl_core_wayland_subsurface_sync_set(Efl_Core_Wayland_Subsurface *subsurface,
+                                     Efl_Bool                     sync);
 
 /**
  * Set an opaque region for the given subsurface.
@@ -502,7 +594,12 @@ EAPI void efl_core_wayland_subsurface_sync_set(Efl_Core_Wayland_Subsurface *subs
  * @ingroup Efl_Core_Wayland_Subsurface_Group
  * @since 1.17
  */
-EAPI void efl_core_wayland_subsurface_opaque_region_set(Efl_Core_Wayland_Subsurface *subsurface, int x, int y, int w, int h);
+EAPI void efl_core_wayland_subsurface_opaque_region_set(
+  Efl_Core_Wayland_Subsurface *subsurface,
+  int                          x,
+  int                          y,
+  int                          w,
+  int                          h);
 
 /**
  * Get list of supported auxiliary window hints
@@ -514,7 +611,8 @@ EAPI void efl_core_wayland_subsurface_opaque_region_set(Efl_Core_Wayland_Subsurf
  * @ingroup Efl_Core_Wayland_Window_Group
  * @since 1.20
  */
-EAPI Eina_List *efl_core_wayland_window_aux_hints_supported_get(Efl_Core_Wayland_Window *window);
+EAPI Eina_List *efl_core_wayland_window_aux_hints_supported_get(
+  Efl_Core_Wayland_Window *window);
 
 /**
  * Add a supported auxiliary hint to a given window
@@ -527,7 +625,10 @@ EAPI Eina_List *efl_core_wayland_window_aux_hints_supported_get(Efl_Core_Wayland
  * @ingroup Efl_Core_Wayland_Window_Group
  * @since 1.20
  */
-EAPI void efl_core_wayland_window_aux_hint_add(Efl_Core_Wayland_Window *window, int id, const char *hint, const char *val);
+EAPI void efl_core_wayland_window_aux_hint_add(Efl_Core_Wayland_Window *window,
+                                               int                      id,
+                                               const char              *hint,
+                                               const char              *val);
 
 /**
  * Change an auxiliary hint on a given window
@@ -539,7 +640,10 @@ EAPI void efl_core_wayland_window_aux_hint_add(Efl_Core_Wayland_Window *window, 
  * @ingroup Efl_Core_Wayland_Window_Group
  * @since 1.20
  */
-EAPI void efl_core_wayland_window_aux_hint_change(Efl_Core_Wayland_Window *window, int id, const char *val);
+EAPI void
+efl_core_wayland_window_aux_hint_change(Efl_Core_Wayland_Window *window,
+                                        int                      id,
+                                        const char              *val);
 
 /**
  * Delete an auxiliary hint on a given window
@@ -550,7 +654,8 @@ EAPI void efl_core_wayland_window_aux_hint_change(Efl_Core_Wayland_Window *windo
  * @ingroup Efl_Core_Wayland_Window_Group
  * @since 1.20
  */
-EAPI void efl_core_wayland_window_aux_hint_del(Efl_Core_Wayland_Window *window, int id);
+EAPI void efl_core_wayland_window_aux_hint_del(Efl_Core_Wayland_Window *window,
+                                               int                      id);
 
 /**
  * Terminate a Wayland display's main loop
@@ -566,7 +671,7 @@ EAPI void efl_core_wayland_window_aux_hint_del(Efl_Core_Wayland_Window *window, 
  */
 EAPI void efl_core_wayland_display_terminate(Efl_Core_Wayland_Display *display);
 
-# undef EAPI
-# define EAPI
+#undef EAPI
+#define EAPI
 
 #endif

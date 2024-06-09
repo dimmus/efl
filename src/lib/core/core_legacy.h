@@ -38,7 +38,10 @@ typedef struct _Core_Poller Core_Poller;
  * @c 0 it will be deleted automatically making any references/handles for it
  * invalid.
  */
-EAPI Core_Poller *core_poller_add(Core_Poller_Type type, int interval, Core_Task_Cb func, const void *data);
+EAPI Core_Poller *core_poller_add(Core_Poller_Type type,
+                                  int              interval,
+                                  Core_Task_Cb     func,
+                                  const void      *data);
 
 /**
  * @brief Deletes the specified poller from the timer list.
@@ -59,7 +62,8 @@ EAPI void *core_poller_del(Core_Poller *poller);
  * This will adjust the time between ticks of the given timer type defined by
  * @p type to the time period defined by @p poll_time.
  */
-EAPI void core_poller_poll_interval_set(Core_Poller_Type type, double poll_time);
+EAPI void core_poller_poll_interval_set(Core_Poller_Type type,
+                                        double           poll_time);
 
 /**
  * @brief Gets the time(in seconds) between ticks for the given poller type.
@@ -157,7 +161,9 @@ EAPI Core_Animator *core_animator_add(Core_Task_Cb func, const void *data);
  *
  * @since 1.1.0
  */
-EAPI Core_Animator *core_animator_timeline_add(double runtime, Core_Timeline_Cb func, const void *data);
+EAPI Core_Animator *core_animator_timeline_add(double           runtime,
+                                               Core_Timeline_Cb func,
+                                               const void      *data);
 
 /**
  * @brief Deletes the specified animator from the animator list.
@@ -242,7 +248,8 @@ EAPI Core_Timer *core_timer_add(double in, Core_Task_Cb func, const void *data);
  * core_loop_time_get() not core_time_get() as core_timer_add() uses. See
  * core_timer_add() for more details.
  */
-EAPI Core_Timer *core_timer_loop_add(double in, Core_Task_Cb func, const void *data);
+EAPI Core_Timer *
+core_timer_loop_add(double in, Core_Task_Cb func, const void *data);
 
 /**
  * Deletes the specified timer from the timer list.
@@ -341,7 +348,8 @@ EAPI void *core_idler_del(Core_Idler *idler);
  * idle state, as long as it returns @c 1 (or @c CORE_CALLBACK_RENEW). A return of @c 0
  * (or @c CORE_CALLBACK_CANCEL) deletes the idle enterer.
  */
-EAPI Core_Idle_Enterer *core_idle_enterer_add(Core_Task_Cb func, const void *data);
+EAPI Core_Idle_Enterer *core_idle_enterer_add(Core_Task_Cb func,
+                                              const void  *data);
 
 /**
  * Adds an idle enterer handler at the start of the list so it gets called earlier than others.
@@ -353,7 +361,8 @@ EAPI Core_Idle_Enterer *core_idle_enterer_add(Core_Task_Cb func, const void *dat
  * idle state, as long as it returns @c 1 (or @c CORE_CALLBACK_RENEW). A return of @c 0
  * (or @c CORE_CALLBACK_CANCEL) deletes the idle enterer.
  */
-EAPI Core_Idle_Enterer *core_idle_enterer_before_add(Core_Task_Cb func, const void *data);
+EAPI Core_Idle_Enterer *core_idle_enterer_before_add(Core_Task_Cb func,
+                                                     const void  *data);
 
 /**
  * Deletes an idle enterer callback.
@@ -372,7 +381,8 @@ EAPI void *core_idle_enterer_del(Core_Idle_Enterer *idle_enterer);
  * idle state, as long as it returns @c 1 (or @c CORE_CALLBACK_RENEW). A return of @c 0
  * (or @c CORE_CALLBACK_CANCEL) deletes the idle exiter.
  */
-EAPI Core_Idle_Exiter *core_idle_exiter_add(Core_Task_Cb func, const void *data);
+EAPI Core_Idle_Exiter *core_idle_exiter_add(Core_Task_Cb func,
+                                            const void  *data);
 
 /**
  * Deletes an idle exiter handler from the list to be run on exiting idle state.
@@ -426,8 +436,12 @@ EAPI void *core_job_del(Core_Job *obj);
  */
 
 #ifdef EFL_BETA_API_SUPPORT
-EAPI Core_Animator *core_evas_animator_timeline_add(void *evo, double runtime, Core_Timeline_Cb func, const void *data);
-EAPI Core_Animator *core_evas_animator_add(void *evo, Core_Task_Cb func, const void *data);
+EAPI Core_Animator *core_evas_animator_timeline_add(void            *evo,
+                                                    double           runtime,
+                                                    Core_Timeline_Cb func,
+                                                    const void      *data);
+EAPI Core_Animator *
+core_evas_animator_add(void *evo, Core_Task_Cb func, const void *data);
 #endif /* EFL_BETA_API_SUPPORT */
 
 #endif

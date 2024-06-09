@@ -3,7 +3,7 @@
 
 typedef struct
 {
-   int count;
+  int count;
 } Mixin2_Public_Data;
 
 #define MIXIN2_CLASS mixin2_class_get()

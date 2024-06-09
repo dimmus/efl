@@ -94,7 +94,7 @@ typedef enum _Eina_FreeQ_Type
     *
     * @since 1.19
     */
-   EINA_FREEQ_DEFAULT,
+  EINA_FREEQ_DEFAULT,
 
    /** @brief Postponed type of free queue.
     *
@@ -117,7 +117,7 @@ typedef enum _Eina_FreeQ_Type
     *
     * @since 1.19
     */
-   EINA_FREEQ_POSTPONED,
+  EINA_FREEQ_POSTPONED,
 } Eina_FreeQ_Type;
 
 /**
@@ -126,8 +126,7 @@ typedef enum _Eina_FreeQ_Type
  * @return A new free queue
  * @since 1.19
  */
-EINA_API Eina_FreeQ *
-eina_freeq_new(Eina_FreeQ_Type type);
+EINA_API Eina_FreeQ *eina_freeq_new(Eina_FreeQ_Type type);
 
 /**
  * @brief Free a free queue and anything that is queued in it.
@@ -136,8 +135,7 @@ eina_freeq_new(Eina_FreeQ_Type type);
  *
  * @since 1.19
  */
-EINA_API void
-eina_freeq_free(Eina_FreeQ *fq);
+EINA_API void eina_freeq_free(Eina_FreeQ *fq);
 
 /**
  * @brief Query the type of a free queue.
@@ -146,8 +144,7 @@ eina_freeq_free(Eina_FreeQ *fq);
  *
  * @since 1.19
  */
-EINA_API Eina_FreeQ_Type
-eina_freeq_type_get(Eina_FreeQ *fq);
+EINA_API Eina_FreeQ_Type eina_freeq_type_get(Eina_FreeQ *fq);
 
 /**
  * @brief Get the main loop free queue.
@@ -156,8 +153,7 @@ eina_freeq_type_get(Eina_FreeQ *fq);
  *
  * @since 1.19
  */
-EINA_API Eina_FreeQ *
-eina_freeq_main_get(void);
+EINA_API Eina_FreeQ *eina_freeq_main_get(void);
 
 /**
  * @brief Set the maximum number of free pointers this queue is allowed
@@ -177,8 +173,7 @@ eina_freeq_main_get(void);
  *
  * @since 1.19
  */
-EINA_API void
-eina_freeq_count_max_set(Eina_FreeQ *fq, int count);
+EINA_API void eina_freeq_count_max_set(Eina_FreeQ *fq, int count);
 
 /**
  * @brief Get the maximum number of free pointers this queue is allowed
@@ -188,8 +183,7 @@ eina_freeq_count_max_set(Eina_FreeQ *fq, int count);
  *
  * @since 1.19
  */
-EINA_API int
-eina_freeq_count_max_get(Eina_FreeQ *fq);
+EINA_API int eina_freeq_count_max_get(Eina_FreeQ *fq);
 
 /**
  * @brief Set the maximum amount of memory allowed
@@ -210,8 +204,7 @@ eina_freeq_count_max_get(Eina_FreeQ *fq);
  *
  * @since 1.19
  */
-EINA_API void
-eina_freeq_mem_max_set(Eina_FreeQ *fq, size_t mem);
+EINA_API void eina_freeq_mem_max_set(Eina_FreeQ *fq, size_t mem);
 
 /**
  * @brief Get the maximum amount of memory allowed
@@ -221,8 +214,7 @@ eina_freeq_mem_max_set(Eina_FreeQ *fq, size_t mem);
  *
  * @since 1.19
  */
-EINA_API size_t
-eina_freeq_mem_max_get(Eina_FreeQ *fq);
+EINA_API size_t eina_freeq_mem_max_get(Eina_FreeQ *fq);
 
 /**
  * @brief Clear out all queued items to be freed by freeing them
@@ -235,8 +227,7 @@ eina_freeq_mem_max_get(Eina_FreeQ *fq);
  *
  * @since 1.19
  */
-EINA_API void
-eina_freeq_clear(Eina_FreeQ *fq);
+EINA_API void eina_freeq_clear(Eina_FreeQ *fq);
 
 /**
  * @brief Reduce the number of items in the free queue by up to @p count
@@ -251,8 +242,7 @@ eina_freeq_clear(Eina_FreeQ *fq);
  *
  * @since 1.19
  */
-EINA_API void
-eina_freeq_reduce(Eina_FreeQ *fq, int count);
+EINA_API void eina_freeq_reduce(Eina_FreeQ *fq, int count);
 
 /**
  * @brief Return if there are any items pending a free in the free queue
@@ -262,8 +252,7 @@ eina_freeq_reduce(Eina_FreeQ *fq, int count);
  *
  * @since 1.19
  */
-EINA_API Efl_Bool
-eina_freeq_ptr_pending(Eina_FreeQ *fq);
+EINA_API Efl_Bool eina_freeq_ptr_pending(Eina_FreeQ *fq);
 
 /**
  * @brief Add a pointer with free function and size to the free queue
@@ -306,8 +295,10 @@ eina_freeq_ptr_pending(Eina_FreeQ *fq);
  *
  * @since 1.19
  */
-EINA_API void
-eina_freeq_ptr_add(Eina_FreeQ *fq, void *ptr, void (*free_func) (void *ptr), size_t size);
+EINA_API void eina_freeq_ptr_add(Eina_FreeQ *fq,
+                                 void       *ptr,
+                                 void (*free_func)(void *ptr),
+                                 size_t size);
 
 /**
  * @brief Add a pointer to the main free queue
@@ -322,9 +313,9 @@ eina_freeq_ptr_add(Eina_FreeQ *fq, void *ptr, void (*free_func) (void *ptr), siz
  * @since 1.19
  */
 static inline void
-eina_freeq_ptr_main_add(void *ptr, void (*free_func) (void *ptr), size_t size)
+eina_freeq_ptr_main_add(void *ptr, void (*free_func)(void *ptr), size_t size)
 {
-   eina_freeq_ptr_add(eina_freeq_main_get(), ptr, free_func, size);
+  eina_freeq_ptr_add(eina_freeq_main_get(), ptr, free_func, size);
 }
 
 /**

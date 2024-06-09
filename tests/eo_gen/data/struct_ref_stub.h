@@ -27,5 +27,4 @@ typedef struct _Another Another;
  */
 typedef struct _Opaque Opaque;
 
-
 #endif

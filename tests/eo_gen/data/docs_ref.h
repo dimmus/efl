@@ -2,14 +2,14 @@
 #define _EOLIAN_DOCS_EO_H_
 
 #ifndef _EO_DOCS_EO_CLASS_TYPE
-#define _EO_DOCS_EO_CLASS_TYPE
+#  define _EO_DOCS_EO_CLASS_TYPE
 
 typedef Eo Eo_Docs;
 
 #endif
 
 #ifndef _EO_DOCS_EO_TYPES
-#define _EO_DOCS_EO_TYPES
+#  define _EO_DOCS_EO_TYPES
 
 /**
  * @brief This is struct Foo. It does stuff.
@@ -29,7 +29,7 @@ typedef Eo Eo_Docs;
  */
 typedef struct _Foo
 {
-  int field1; /**< Field documentation.
+  int   field1; /**< Field documentation.
                *
                * @since 1.66 */
   float field2;
@@ -47,10 +47,10 @@ typedef struct _Foo
 typedef enum
 {
   BAR_BLAH = 0,
-  BAR_FOO = 1, /**< Docs for foo.
+  BAR_FOO  = 1, /**< Docs for foo.
                 *
                 * @since 1.55 */
-  BAR_BAR = 2 /**< Docs for bar.
+  BAR_BAR  = 2 /**< Docs for bar.
                *
                * @since 1.55 */
 } Bar;
@@ -66,15 +66,15 @@ typedef enum
  */
 typedef Bar Alias;
 
-#ifndef PANTS
+#  ifndef PANTS
 /** Docs for var.
  *
  * @since 1.66
  *
  * @ingroup pants
  */
-#define PANTS 150
-#endif
+#    define PANTS 150
+#  endif
 
 /** Opaque struct docs. See @ref Foo for another struct.
  *
@@ -83,7 +83,6 @@ typedef Bar Alias;
  * @ingroup Opaque
  */
 typedef struct _Opaque Opaque;
-
 
 #endif
 /**

@@ -11,22 +11,22 @@ typedef struct _Efl_Bounce_Interpolator_Data Efl_Bounce_Interpolator_Data;
 
 struct _Efl_Bounce_Interpolator_Data
 {
-    double rigidness;
-    int    bounces;
+  double rigidness;
+  int    bounces;
 };
 
 EOLIAN static double
 _efl_bounce_interpolator_efl_interpolator_interpolate(
-    Eo *eo_obj                       EFL_UNUSED,
-    Efl_Bounce_Interpolator_Data *pd EFL_UNUSED,
-    double                           progress)
+  Eo *eo_obj                       EFL_UNUSED,
+  Efl_Bounce_Interpolator_Data *pd EFL_UNUSED,
+  double                           progress)
 {
-    if ((progress < 0.0) || (progress > 1.0)) return progress;
+  if ((progress < 0.0) || (progress > 1.0)) return progress;
 
-    return core_animator_pos_map(progress,
-                                 CORE_POS_MAP_BOUNCE,
-                                 pd->rigidness,
-                                 (double)pd->bounces);
+  return core_animator_pos_map(progress,
+                               CORE_POS_MAP_BOUNCE,
+                               pd->rigidness,
+                               (double)pd->bounces);
 }
 
 EOLIAN static void
@@ -34,14 +34,14 @@ _efl_bounce_interpolator_rigidness_set(Eo *eo_obj                    EFL_UNUSED,
                                        Efl_Bounce_Interpolator_Data *pd,
                                        double                        rigidness)
 {
-    pd->rigidness = rigidness;
+  pd->rigidness = rigidness;
 }
 
 EOLIAN static double
 _efl_bounce_interpolator_rigidness_get(const Eo *eo_obj              EFL_UNUSED,
                                        Efl_Bounce_Interpolator_Data *pd)
 {
-    return pd->rigidness;
+  return pd->rigidness;
 }
 
 EOLIAN static void
@@ -49,27 +49,27 @@ _efl_bounce_interpolator_bounces_set(Eo *eo_obj                    EFL_UNUSED,
                                      Efl_Bounce_Interpolator_Data *pd,
                                      int                           bounces)
 {
-    pd->bounces = bounces;
+  pd->bounces = bounces;
 }
 
 EOLIAN static int
 _efl_bounce_interpolator_bounces_get(const Eo *eo_obj              EFL_UNUSED,
                                      Efl_Bounce_Interpolator_Data *pd)
 {
-    return pd->bounces;
+  return pd->bounces;
 }
 
 EOLIAN static Efl_Object *
 _efl_bounce_interpolator_efl_object_constructor(
-    Eo                           *eo_obj,
-    Efl_Bounce_Interpolator_Data *pd)
+  Eo                           *eo_obj,
+  Efl_Bounce_Interpolator_Data *pd)
 {
-    eo_obj = efl_constructor(efl_super(eo_obj, MY_CLASS));
+  eo_obj = efl_constructor(efl_super(eo_obj, MY_CLASS));
 
-    pd->rigidness = 1.0;
-    pd->bounces   = 1;
+  pd->rigidness = 1.0;
+  pd->bounces   = 1;
 
-    return eo_obj;
+  return eo_obj;
 }
 
 #include "efl_bounce_interpolator.eo.c"

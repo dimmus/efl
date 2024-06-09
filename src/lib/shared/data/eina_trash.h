@@ -39,7 +39,7 @@ typedef struct _Eina_Trash Eina_Trash;
  */
 struct _Eina_Trash
 {
-   Eina_Trash *next; /**< Next item in the trash */
+  Eina_Trash *next; /**< Next item in the trash */
 };
 
 /**
@@ -52,7 +52,7 @@ struct _Eina_Trash
  * @note You can just set *trash to @c NULL and you will have
  *       the same result.
  */
-static inline void  eina_trash_init(Eina_Trash **trash) EINA_ARG_NONNULL(1);
+static inline void eina_trash_init(Eina_Trash **trash) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Pushes an unused pointer in the trash instead of freeing it.
@@ -69,7 +69,8 @@ static inline void  eina_trash_init(Eina_Trash **trash) EINA_ARG_NONNULL(1);
  * @note This trash will not resize, nor do anything with the size of
  *       the region pointed by @p data, so it's your duty to manage the size.
  */
-static inline void  eina_trash_push(Eina_Trash **trash, void *data) EINA_ARG_NONNULL(1);
+static inline void eina_trash_push(Eina_Trash **trash, void *data)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Pops an available pointer from the trash if possible.
@@ -82,7 +83,8 @@ static inline void  eina_trash_push(Eina_Trash **trash, void *data) EINA_ARG_NON
  *       the region pointed by pointer inside the trash, so it's your duty
  *       to manage the size of the returned pointer.
  */
-static inline void *eina_trash_pop(Eina_Trash **trash) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+static inline void *eina_trash_pop(Eina_Trash **trash)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @def EINA_TRASH_CLEAN

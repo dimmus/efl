@@ -280,7 +280,6 @@ extern "C" {
 #include <eina_abstract_content.h>
 #include <eina_sha.h>
 
-
 #ifdef __cplusplus
 }
 #endif

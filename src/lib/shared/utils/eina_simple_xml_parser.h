@@ -137,18 +137,19 @@ typedef struct _Eina_Simple_XML_Node_Data Eina_Simple_XML_Node_Data;
 typedef struct _Eina_Simple_XML_Node_Data Eina_Simple_XML_Node_CData;
 typedef struct _Eina_Simple_XML_Node_Data Eina_Simple_XML_Node_Processing;
 typedef struct _Eina_Simple_XML_Node_Data Eina_Simple_XML_Node_Doctype;
-typedef struct _Eina_Simple_XML_Node_Data Eina_Simple_XML_Node_Doctype_Child; /**< @since 1.8 */
+typedef struct _Eina_Simple_XML_Node_Data
+  Eina_Simple_XML_Node_Doctype_Child; /**< @since 1.8 */
 typedef struct _Eina_Simple_XML_Node_Data Eina_Simple_XML_Node_Comment;
 typedef struct _Eina_Simple_XML_Attribute Eina_Simple_XML_Attribute;
 
 struct _Eina_Simple_XML_Attribute
 {
-   EINA_INLIST;
-   EINA_MAGIC;
+  EINA_INLIST;
+  EINA_MAGIC;
 
-   Eina_Simple_XML_Node_Tag *parent;
-   const char *key;
-   const char *value;
+  Eina_Simple_XML_Node_Tag *parent;
+  const char               *key;
+  const char               *value;
 };
 
 typedef enum _Eina_Simple_XML_Node_Type
@@ -165,27 +166,28 @@ typedef enum _Eina_Simple_XML_Node_Type
 
 struct _Eina_Simple_XML_Node
 {
-   EINA_INLIST;
-   EINA_MAGIC;
+  EINA_INLIST;
+  EINA_MAGIC;
 
-   Eina_Simple_XML_Node_Tag *parent;
-   Eina_Simple_XML_Node_Type type;
+  Eina_Simple_XML_Node_Tag *parent;
+  Eina_Simple_XML_Node_Type type;
 };
 
 struct _Eina_Simple_XML_Node_Tag
 {
-   Eina_Simple_XML_Node base;
-   Eina_Inlist *children;
-   Eina_Inlist *attributes;
-   const char *name;
+  Eina_Simple_XML_Node base;
+  Eina_Inlist         *children;
+  Eina_Inlist         *attributes;
+  const char          *name;
 };
 
 struct _Eina_Simple_XML_Node_Data
 {
-   Eina_Simple_XML_Node base;
-   size_t length;
-   char data[];
+  Eina_Simple_XML_Node base;
+  size_t               length;
+  char                 data[];
 };
+
 /**
  * @typedef _Eina_Simple_XML_Type
  * a simple XML type.
@@ -205,9 +207,14 @@ typedef enum _Eina_Simple_XML_Type
   EINA_SIMPLE_XML_DOCTYPE_CHILD /*!< \<!DOCTYPE_CHILD @since 1.8 */
 } Eina_Simple_XML_Type;
 
-typedef Efl_Bool (*Eina_Simple_XML_Cb)(void *data, Eina_Simple_XML_Type type, const char *content, unsigned offset, unsigned length);
-typedef Efl_Bool (*Eina_Simple_XML_Attribute_Cb)(void *data, const char *key, const char *value);
-
+typedef Efl_Bool (*Eina_Simple_XML_Cb)(void                *data,
+                                       Eina_Simple_XML_Type type,
+                                       const char          *content,
+                                       unsigned             offset,
+                                       unsigned             length);
+typedef Efl_Bool (*Eina_Simple_XML_Attribute_Cb)(void       *data,
+                                                 const char *key,
+                                                 const char *value);
 
 /**
  * @brief Parses a section of XML string text
@@ -229,10 +236,11 @@ typedef Efl_Bool (*Eina_Simple_XML_Attribute_Cb)(void *data, const char *key, co
  * @return #EFL_TRUE on success, or #EFL_FALSE if it was aborted by user or
  * parsing error.
  */
-EINA_API Efl_Bool eina_simple_xml_parse(const char *buf, unsigned buflen,
-                                     Efl_Bool strip,
-                                     Eina_Simple_XML_Cb func, const void *data);
-
+EINA_API Efl_Bool eina_simple_xml_parse(const char        *buf,
+                                        unsigned           buflen,
+                                        Efl_Bool           strip,
+                                        Eina_Simple_XML_Cb func,
+                                        const void        *data);
 
 /**
  * @brief Given the contents of a tag, find where the attributes start.
@@ -247,7 +255,8 @@ EINA_API Efl_Bool eina_simple_xml_parse(const char *buf, unsigned buflen,
  * type is #EINA_SIMPLE_XML_OPEN or #EINA_SIMPLE_XML_OPEN_EMPTY.
  *
  */
-EINA_API const char * eina_simple_xml_tag_attributes_find(const char *buf, unsigned buflen);
+EINA_API const char *eina_simple_xml_tag_attributes_find(const char *buf,
+                                                         unsigned    buflen);
 
 /**
  * @brief Given a buffer with xml attributes, parse them to key=value pairs.
@@ -264,8 +273,11 @@ EINA_API const char * eina_simple_xml_tag_attributes_find(const char *buf, unsig
  * @return #EFL_TRUE on success, or #EFL_FALSE if it was aborted by user or
  *         parsing error.
  */
-EINA_API Efl_Bool eina_simple_xml_attributes_parse(const char *buf, unsigned buflen,
-						Eina_Simple_XML_Attribute_Cb func, const void *data);
+EINA_API Efl_Bool
+eina_simple_xml_attributes_parse(const char                  *buf,
+                                 unsigned                     buflen,
+                                 Eina_Simple_XML_Attribute_Cb func,
+                                 const void                  *data);
 
 /**
  * @brief Given a buffer with the xml value of an attributes, parse them to key:value pairs.
@@ -284,7 +296,9 @@ EINA_API Efl_Bool eina_simple_xml_attributes_parse(const char *buf, unsigned buf
  * @since 1.14
  */
 EINA_API Efl_Bool
-eina_simple_xml_attribute_w3c_parse(const char *buf, Eina_Simple_XML_Attribute_Cb func, const void *data);
+eina_simple_xml_attribute_w3c_parse(const char                  *buf,
+                                    Eina_Simple_XML_Attribute_Cb func,
+                                    const void                  *data);
 
 /**
  * @brief Creates (and appends) new attribute to tag.
@@ -299,7 +313,10 @@ eina_simple_xml_attribute_w3c_parse(const char *buf, Eina_Simple_XML_Attribute_C
  *         released with eina_simple_xml_attribute_free() or indirectly
  *         with eina_simple_xml_node_tag_free().
  */
-EINA_API Eina_Simple_XML_Attribute * eina_simple_xml_attribute_new(Eina_Simple_XML_Node_Tag *parent, const char *key, const char *value);
+EINA_API Eina_Simple_XML_Attribute *
+eina_simple_xml_attribute_new(Eina_Simple_XML_Node_Tag *parent,
+                              const char               *key,
+                              const char               *value);
 
 /**
  * @brief Removes attribute from parent and deletes it.
@@ -319,7 +336,9 @@ EINA_API void eina_simple_xml_attribute_free(Eina_Simple_XML_Attribute *attr);
  *         released with eina_simple_xml_node_tag_free() or indirectly
  *         with eina_simple_xml_node_tag_free() of the parent.
  */
-EINA_API Eina_Simple_XML_Node_Tag * eina_simple_xml_node_tag_new(Eina_Simple_XML_Node_Tag *parent, const char *name);
+EINA_API Eina_Simple_XML_Node_Tag *
+eina_simple_xml_node_tag_new(Eina_Simple_XML_Node_Tag *parent,
+                             const char               *name);
 
 /**
  * @brief Removes tag from parent and deletes it.
@@ -327,7 +346,6 @@ EINA_API Eina_Simple_XML_Node_Tag * eina_simple_xml_node_tag_new(Eina_Simple_XML
  * @param[in] tag to release memory.
  */
 EINA_API void eina_simple_xml_node_tag_free(Eina_Simple_XML_Node_Tag *tag);
-
 
 /**
  * @brief Creates new data. If parent is provided, it is automatically appended.
@@ -341,7 +359,10 @@ EINA_API void eina_simple_xml_node_tag_free(Eina_Simple_XML_Node_Tag *tag);
  *         released with eina_simple_xml_node_data_free() or indirectly
  *         with eina_simple_xml_node_tag_free() of the parent.
  */
-EINA_API Eina_Simple_XML_Node_Data * eina_simple_xml_node_data_new(Eina_Simple_XML_Node_Tag *parent, const char *contents, size_t length);
+EINA_API Eina_Simple_XML_Node_Data *
+eina_simple_xml_node_data_new(Eina_Simple_XML_Node_Tag *parent,
+                              const char               *contents,
+                              size_t                    length);
 
 /**
  * @brief Removes data from parent and deletes it.
@@ -349,7 +370,6 @@ EINA_API Eina_Simple_XML_Node_Data * eina_simple_xml_node_data_new(Eina_Simple_X
  * @param[in] node to release memory.
  */
 EINA_API void eina_simple_xml_node_data_free(Eina_Simple_XML_Node_Data *node);
-
 
 /**
  * @brief Creates new cdata. If parent is provided, it is automatically appended.
@@ -363,7 +383,10 @@ EINA_API void eina_simple_xml_node_data_free(Eina_Simple_XML_Node_Data *node);
  *         released with eina_simple_xml_node_cdata_free() or indirectly
  *         with eina_simple_xml_node_tag_free() of the parent.
  */
-EINA_API Eina_Simple_XML_Node_CData * eina_simple_xml_node_cdata_new(Eina_Simple_XML_Node_Tag *parent, const char *contents, size_t length);
+EINA_API Eina_Simple_XML_Node_CData *
+eina_simple_xml_node_cdata_new(Eina_Simple_XML_Node_Tag *parent,
+                               const char               *contents,
+                               size_t                    length);
 
 /**
  * @brief Removes cdata from parent and deletes it.
@@ -371,7 +394,6 @@ EINA_API Eina_Simple_XML_Node_CData * eina_simple_xml_node_cdata_new(Eina_Simple
  * @param[in] node to release memory.
  */
 EINA_API void eina_simple_xml_node_cdata_free(Eina_Simple_XML_Node_Data *node);
-
 
 /**
  * @brief Creates new doctype child. If parent is provided, it is automatically appended.
@@ -387,7 +409,10 @@ EINA_API void eina_simple_xml_node_cdata_free(Eina_Simple_XML_Node_Data *node);
  *
  * @since 1.8
  */
-EINA_API Eina_Simple_XML_Node_Doctype_Child * eina_simple_xml_node_doctype_child_new(Eina_Simple_XML_Node_Tag *parent, const char *contents, size_t length);
+EINA_API Eina_Simple_XML_Node_Doctype_Child *
+eina_simple_xml_node_doctype_child_new(Eina_Simple_XML_Node_Tag *parent,
+                                       const char               *contents,
+                                       size_t                    length);
 
 /**
  * @brief Removes doctype child from parent and deletes it.
@@ -396,8 +421,8 @@ EINA_API Eina_Simple_XML_Node_Doctype_Child * eina_simple_xml_node_doctype_child
  *
  * @since 1.8
  */
-EINA_API void eina_simple_xml_node_doctype_child_free(Eina_Simple_XML_Node_Data *node);
-
+EINA_API void
+eina_simple_xml_node_doctype_child_free(Eina_Simple_XML_Node_Data *node);
 
 /**
  * @brief Creates new processing. If parent is provided, it is automatically appended.
@@ -411,15 +436,18 @@ EINA_API void eina_simple_xml_node_doctype_child_free(Eina_Simple_XML_Node_Data 
  *         released with eina_simple_xml_node_processing_free() or indirectly
  *         with eina_simple_xml_node_tag_free() of the parent.
  */
-EINA_API Eina_Simple_XML_Node_Processing * eina_simple_xml_node_processing_new(Eina_Simple_XML_Node_Tag *parent, const char *contents, size_t length);
+EINA_API Eina_Simple_XML_Node_Processing *
+eina_simple_xml_node_processing_new(Eina_Simple_XML_Node_Tag *parent,
+                                    const char               *contents,
+                                    size_t                    length);
 
 /**
  * @brief Removes processing from parent and deletes it.
  *
  * @param[in] node processing to release memory.
  */
-EINA_API void eina_simple_xml_node_processing_free(Eina_Simple_XML_Node_Data *node);
-
+EINA_API void
+eina_simple_xml_node_processing_free(Eina_Simple_XML_Node_Data *node);
 
 /**
  * @brief Creates new doctype. If parent is provided, it is automatically appended.
@@ -433,15 +461,18 @@ EINA_API void eina_simple_xml_node_processing_free(Eina_Simple_XML_Node_Data *no
  *         released with eina_simple_xml_node_doctype_free() or indirectly
  *         with eina_simple_xml_node_tag_free() of the parent.
  */
-EINA_API Eina_Simple_XML_Node_Doctype * eina_simple_xml_node_doctype_new(Eina_Simple_XML_Node_Tag *parent, const char *contents, size_t length);
+EINA_API Eina_Simple_XML_Node_Doctype *
+eina_simple_xml_node_doctype_new(Eina_Simple_XML_Node_Tag *parent,
+                                 const char               *contents,
+                                 size_t                    length);
 
 /**
  * @brief Removes doctype from parent and deletes it.
  *
  * @param[in] node doctype to release memory.
  */
-EINA_API void eina_simple_xml_node_doctype_free(Eina_Simple_XML_Node_Data *node);
-
+EINA_API void
+eina_simple_xml_node_doctype_free(Eina_Simple_XML_Node_Data *node);
 
 /**
  * @brief Creates new comment. If parent is provided, it is automatically appended.
@@ -455,15 +486,18 @@ EINA_API void eina_simple_xml_node_doctype_free(Eina_Simple_XML_Node_Data *node)
  *         released with eina_simple_xml_node_comment_free() or indirectly
  *         with eina_simple_xml_node_tag_free() of the parent.
  */
-EINA_API Eina_Simple_XML_Node_Comment * eina_simple_xml_node_comment_new(Eina_Simple_XML_Node_Tag *parent, const char *contents, size_t length);
+EINA_API Eina_Simple_XML_Node_Comment *
+eina_simple_xml_node_comment_new(Eina_Simple_XML_Node_Tag *parent,
+                                 const char               *contents,
+                                 size_t                    length);
 
 /**
  * @brief Removes comment from parent and deletes it.
  *
  * @param[in] node comment to release memory.
  */
-EINA_API void eina_simple_xml_node_comment_free(Eina_Simple_XML_Node_Data *node);
-
+EINA_API void
+eina_simple_xml_node_comment_free(Eina_Simple_XML_Node_Data *node);
 
 /**
  * @brief Loads a XML node tree based on the given string.
@@ -477,7 +511,8 @@ EINA_API void eina_simple_xml_node_comment_free(Eina_Simple_XML_Node_Data *node)
  *         Document with errors may return partial tree instead of @c NULL,
  *         we'll do our best to avoid returning nothing.
  */
-EINA_API Eina_Simple_XML_Node_Root * eina_simple_xml_node_load(const char *buf, unsigned buflen, Efl_Bool strip);
+EINA_API Eina_Simple_XML_Node_Root *
+eina_simple_xml_node_load(const char *buf, unsigned buflen, Efl_Bool strip);
 
 /**
  * @brief Frees node tree build with eina_simple_xml_node_load()
@@ -494,8 +529,8 @@ EINA_API void eina_simple_xml_node_root_free(Eina_Simple_XML_Node_Root *root);
  *
  * @return @c NULL on errors, or a newly allocated string on success.
  */
-EINA_API char * eina_simple_xml_node_dump(Eina_Simple_XML_Node *node, const char *indent);
-
+EINA_API char *eina_simple_xml_node_dump(Eina_Simple_XML_Node *node,
+                                         const char           *indent);
 
 /**
  * @}

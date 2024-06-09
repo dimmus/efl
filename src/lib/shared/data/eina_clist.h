@@ -107,8 +107,8 @@ typedef struct _Eina_Clist Eina_Clist;
  */
 struct _Eina_Clist
 {
-   Eina_Clist *next; /**< The next entry in the list */
-   Eina_Clist *prev; /**< The previous entry in the list */
+  Eina_Clist *next; /**< The next entry in the list */
+  Eina_Clist *prev; /**< The previous entry in the list */
 };
 
 /**
@@ -215,7 +215,8 @@ static inline void eina_clist_remove(Eina_Clist *elem);
  *
  * @since 1.1.0
  */
-static inline Eina_Clist *eina_clist_next(const Eina_Clist *list, const Eina_Clist *elem);
+static inline Eina_Clist *eina_clist_next(const Eina_Clist *list,
+                                          const Eina_Clist *elem);
 
 /**
  * @brief Gets the previous element.
@@ -227,7 +228,8 @@ static inline Eina_Clist *eina_clist_next(const Eina_Clist *list, const Eina_Cli
  *
  * @since 1.1.0
  */
-static inline Eina_Clist *eina_clist_prev(const Eina_Clist *list, const Eina_Clist *elem);
+static inline Eina_Clist *eina_clist_prev(const Eina_Clist *list,
+                                          const Eina_Clist *elem);
 
 /**
  * @brief Gets the first element.
@@ -315,7 +317,7 @@ static inline void eina_clist_move_head(Eina_Clist *dst, Eina_Clist *src);
  * @param[out] cursor The pointer to be used during the interaction
  * @param[in] list The list to be interacted with
  */
-#define EINA_CLIST_FOR_EACH(cursor,list) \
+#define EINA_CLIST_FOR_EACH(cursor, list) \
     for ((cursor) = (list)->next; (cursor) != (list); (cursor) = (cursor)->next)
 
 /**
@@ -369,7 +371,7 @@ static inline void eina_clist_move_head(Eina_Clist *dst, Eina_Clist *src);
  * @param[out] cursor The pointer to be used during the interaction
  * @param[in] list The list to be interacted with
  */
-#define EINA_CLIST_FOR_EACH_REV(cursor,list) \
+#define EINA_CLIST_FOR_EACH_REV(cursor, list) \
     for ((cursor) = (list)->prev; (cursor) != (list); (cursor) = (cursor)->prev)
 
 /**

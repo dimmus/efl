@@ -3,8 +3,8 @@
 
 #include <Efl_Eo.h>
 
-typedef unsigned char Efl_Bool;
-typedef struct _Eo_Opaque Eo;
+typedef unsigned char                 Efl_Bool;
+typedef struct _Eo_Opaque             Eo;
 typedef struct _Efl_Event_Description Efl_Event_Description;
 
 /**
@@ -13,11 +13,12 @@ typedef struct _Efl_Event_Description Efl_Event_Description;
  * anything about them.
  * @internal
  */
-EO_API const Efl_Event_Description *efl_object_legacy_only_event_description_get(const char *_event_name);
+EO_API const Efl_Event_Description *
+efl_object_legacy_only_event_description_get(const char *_event_name);
 
 EO_API void ___efl_auto_unref_set(Eo *obj_id, Efl_Bool enable);
 
-EO_API int ___efl_ref2_count(const Eo *obj_id);
+EO_API int  ___efl_ref2_count(const Eo *obj_id);
 EO_API void ___efl_ref2_reset(const Eo *obj_id);
 
 #define EFL_CLASS_SIMPLE_CLASS(FUNC, NAME, ABSTRACT_CLASS) \

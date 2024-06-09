@@ -13,9 +13,9 @@ typedef struct _Core_Mempool Core_Mempool;
 
 struct _Core_Mempool
 {
-    const char   *name;
-    Eina_Mempool *mp;
-    size_t        size;
+  const char   *name;
+  Eina_Mempool *mp;
+  size_t        size;
 };
 
 #define GENERIC_ALLOC_FREE(TYPE, Type)                                       \
@@ -58,19 +58,19 @@ static Core_Mempool *mempool_array[] = {
 //  &core_job_mp,
 //  &core_timer_mp,
 //  &core_poller_mp,
-    &core_pipe_mp,
-    &core_fd_handler_mp,
-    &efl_loop_promise_simple_data_mp,
+  &core_pipe_mp,
+  &core_fd_handler_mp,
+  &efl_loop_promise_simple_data_mp,
 #ifdef _WIN32
-    &core_win32_handler_mp
+  &core_win32_handler_mp
 #endif
 };
 
 Efl_Bool
 core_mempool_init(void)
 {
-    const char  *choice;
-    unsigned int i;
+  const char  *choice;
+  unsigned int i;
 
 #define MP_SIZE_INIT(TYPE, Type) Type##_mp.size = _core_sizeof_##TYPE
 
@@ -84,53 +84,53 @@ core_mempool_init(void)
 //   MP_SIZE_INIT(Core_Job, core_job);
 //   MP_SIZE_INIT(Core_Timer, core_timer);
 //   MP_SIZE_INIT(Core_Poller, core_poller);
-    MP_SIZE_INIT(Core_Pipe, core_pipe);
-    MP_SIZE_INIT(Core_Fd_Handler, core_fd_handler);
-    MP_SIZE_INIT(Efl_Loop_Promise_Simple_Data, efl_loop_promise_simple_data);
+  MP_SIZE_INIT(Core_Pipe, core_pipe);
+  MP_SIZE_INIT(Core_Fd_Handler, core_fd_handler);
+  MP_SIZE_INIT(Efl_Loop_Promise_Simple_Data, efl_loop_promise_simple_data);
 #ifdef _WIN32
-    MP_SIZE_INIT(Core_Win32_Handler, core_win32_handler);
+  MP_SIZE_INIT(Core_Win32_Handler, core_win32_handler);
 #endif
 #undef MP_SIZE_INIT
 
-    choice = getenv("EINA_MEMPOOL");
-    if ((!choice) || (!choice[0])) choice = "chained_mempool";
+  choice = getenv("EINA_MEMPOOL");
+  if ((!choice) || (!choice[0])) choice = "chained_mempool";
 
-    for (i = 0; i < sizeof(mempool_array) / sizeof(mempool_array[0]); ++i)
-    {
+  for (i = 0; i < sizeof(mempool_array) / sizeof(mempool_array[0]); ++i)
+  {
 retry:
-        mempool_array[i]->mp = eina_mempool_add(choice,
-                                                mempool_array[i]->name,
-                                                NULL,
-                                                mempool_array[i]->size,
-                                                16);
-        if (!mempool_array[i]->mp)
-        {
-            if (!(!strcmp(choice, "pass_through")))
-            {
-                ERR("Falling back to pass through ! Previously tried '%s' "
-                    "mempool.",
-                    choice);
-                choice = "pass_through";
-                goto retry;
-            }
-            else
-            {
-                ERR("Impossible to allocate mempool '%s' !", choice);
-                return EFL_FALSE;
-            }
-        }
+    mempool_array[i]->mp = eina_mempool_add(choice,
+                                            mempool_array[i]->name,
+                                            NULL,
+                                            mempool_array[i]->size,
+                                            16);
+    if (!mempool_array[i]->mp)
+    {
+      if (!(!strcmp(choice, "pass_through")))
+      {
+        ERR("Falling back to pass through ! Previously tried '%s' "
+            "mempool.",
+            choice);
+        choice = "pass_through";
+        goto retry;
+      }
+      else
+      {
+        ERR("Impossible to allocate mempool '%s' !", choice);
+        return EFL_FALSE;
+      }
     }
-    return EFL_TRUE;
+  }
+  return EFL_TRUE;
 }
 
 void
 core_mempool_shutdown(void)
 {
-    unsigned int i;
+  unsigned int i;
 
-    for (i = 0; i < sizeof(mempool_array) / sizeof(mempool_array[0]); ++i)
-    {
-        eina_mempool_del(mempool_array[i]->mp);
-        mempool_array[i]->mp = NULL;
-    }
+  for (i = 0; i < sizeof(mempool_array) / sizeof(mempool_array[0]); ++i)
+  {
+    eina_mempool_del(mempool_array[i]->mp);
+    mempool_array[i]->mp = NULL;
+  }
 }

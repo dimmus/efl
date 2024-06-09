@@ -19,8 +19,8 @@
 
 typedef struct _Efl_Dbus_Arg_Info
 {
-   const char *signature;
-   const char *name;
+  const char *signature;
+  const char *name;
 } Efl_Dbus_Arg_Info;
 
 /**
@@ -33,9 +33,14 @@ typedef struct _Efl_Dbus_Arg_Info
 #define EFL_DBUS_ARGS(args...) (const Efl_Dbus_Arg_Info[]){ args, { NULL, NULL } }
 
 typedef struct _Efl_Dbus_Service_Interface Efl_Dbus_Service_Interface;
-typedef Efl_Dbus_Message * (*Efl_Dbus_Method_Cb)(const Efl_Dbus_Service_Interface *iface, const Efl_Dbus_Message *message);
+typedef Efl_Dbus_Message *(*Efl_Dbus_Method_Cb)(
+  const Efl_Dbus_Service_Interface *iface,
+  const Efl_Dbus_Message           *message);
 
-typedef Efl_Dbus_Message * (*Efl_Dbus_Method_Data_Cb)(void* data, const Efl_Dbus_Service_Interface *iface, const Efl_Dbus_Message *message); // @since 1.11
+typedef Efl_Dbus_Message *(*Efl_Dbus_Method_Data_Cb)(
+  void                             *data,
+  const Efl_Dbus_Service_Interface *iface,
+  const Efl_Dbus_Message           *message); // @since 1.11
 
 /**
  * Callback function to append property value to message.
@@ -54,7 +59,12 @@ typedef Efl_Dbus_Message * (*Efl_Dbus_Method_Data_Cb)(void* data, const Efl_Dbus
  * It's a mistake to return an error in this case because if a property changed,
  * it must have a new value set and it should be able to be read.
  */
-typedef Efl_Bool (*Efl_Dbus_Property_Get_Cb)(const Efl_Dbus_Service_Interface *iface, const char *propname, Efl_Dbus_Message_Iter *iter, const Efl_Dbus_Message *request_msg, Efl_Dbus_Message **error);
+typedef Efl_Bool (*Efl_Dbus_Property_Get_Cb)(
+  const Efl_Dbus_Service_Interface *iface,
+  const char                       *propname,
+  Efl_Dbus_Message_Iter            *iter,
+  const Efl_Dbus_Message           *request_msg,
+  Efl_Dbus_Message                **error);
 
 /**
  * Callback function to set property value from message.
@@ -65,55 +75,66 @@ typedef Efl_Bool (*Efl_Dbus_Property_Get_Cb)(const Efl_Dbus_Service_Interface *i
  *
  * @return Message of response, could be a simple method_return, error or NULL to send response later.
  */
-typedef Efl_Dbus_Message *(*Efl_Dbus_Property_Set_Cb)(const Efl_Dbus_Service_Interface *iface, const char *propname, Efl_Dbus_Message_Iter *iter, const Efl_Dbus_Message *input_msg);
+typedef Efl_Dbus_Message *(*Efl_Dbus_Property_Set_Cb)(
+  const Efl_Dbus_Service_Interface *iface,
+  const char                       *propname,
+  Efl_Dbus_Message_Iter            *iter,
+  const Efl_Dbus_Message           *input_msg);
 
 typedef struct _Efl_Dbus_Method
 {
-   const char *member;
-   const Efl_Dbus_Arg_Info *in;
-   const Efl_Dbus_Arg_Info *out;
-   Efl_Dbus_Method_Cb cb;
-   unsigned int flags;
+  const char              *member;
+  const Efl_Dbus_Arg_Info *in;
+  const Efl_Dbus_Arg_Info *out;
+  Efl_Dbus_Method_Cb       cb;
+  unsigned int             flags;
 } Efl_Dbus_Method;
 
 // @since 1.11
 typedef struct _Efl_Dbus_Method2
 {
-   Efl_Dbus_Method method;
-   void* data;
+  Efl_Dbus_Method method;
+  void           *data;
 } Efl_Dbus_Method2;
 
 typedef struct _Efl_Dbus_Signal
 {
-   const char *name;
-   const Efl_Dbus_Arg_Info *args;
-   unsigned int flags;
+  const char              *name;
+  const Efl_Dbus_Arg_Info *args;
+  unsigned int             flags;
 } Efl_Dbus_Signal;
 
 typedef struct _Efl_Dbus_Property
 {
-   const char *name;
-   const char *type;
-   Efl_Dbus_Property_Get_Cb get_func;
-   Efl_Dbus_Property_Set_Cb set_func;
-   unsigned int flags;
+  const char              *name;
+  const char              *type;
+  Efl_Dbus_Property_Get_Cb get_func;
+  Efl_Dbus_Property_Set_Cb set_func;
+  unsigned int             flags;
 } Efl_Dbus_Property;
 
 typedef struct _Efl_Dbus_Service_Interface_Desc
 {
-   const char *interface; /**< interface name */
-   const Efl_Dbus_Method *methods; /**< array of the methods that should be registered in this interface, the last item of array should be filled with NULL */
-   const Efl_Dbus_Signal *signals; /**< array of signal that this interface send, the last item of array should be filled with NULL */
-   const Efl_Dbus_Property *properties; /**< array of property that this interface have, the last item of array should be filled with NULL  */
-   const Efl_Dbus_Property_Get_Cb default_get; /**< default get function, if a property don't have a get function this will be used */
-   const Efl_Dbus_Property_Set_Cb default_set; /**< default set function, if a property don't have a set function this will be used */
+  const char *interface; /**< interface name */
+  const Efl_Dbus_Method *
+    methods; /**< array of the methods that should be registered in this interface, the last item of array should be filled with NULL */
+  const Efl_Dbus_Signal *
+    signals; /**< array of signal that this interface send, the last item of array should be filled with NULL */
+  const Efl_Dbus_Property *
+    properties; /**< array of property that this interface have, the last item of array should be filled with NULL  */
+  const Efl_Dbus_Property_Get_Cb
+    default_get; /**< default get function, if a property don't have a get function this will be used */
+  const Efl_Dbus_Property_Set_Cb
+    default_set; /**< default set function, if a property don't have a set function this will be used */
 } Efl_Dbus_Service_Interface_Desc;
 
 typedef struct _Efl_Dbus_Service_Interface_Desc2
 {
   Efl_Dbus_Service_Interface_Desc description;
-  int version; /**< version of the interface descriptor. Must be initialized with EFL_DBUS_INTERFACE_DESCRIPTOR_VERSION @since 1.11 >*/
-  const Efl_Dbus_Method2 *methods2; /**< array of the methods that should be registered in this interface, the last item of array should be filled with NULL @since 1.11 */
+  int
+    version; /**< version of the interface descriptor. Must be initialized with EFL_DBUS_INTERFACE_DESCRIPTOR_VERSION @since 1.11 >*/
+  const Efl_Dbus_Method2 *
+    methods2; /**< array of the methods that should be registered in this interface, the last item of array should be filled with NULL @since 1.11 */
 } Efl_Dbus_Service_Interface_Desc2;
 
 /**
@@ -125,7 +146,11 @@ typedef struct _Efl_Dbus_Service_Interface_Desc2
  *
  * @return Interface
  */
-EAPI Efl_Dbus_Service_Interface *efl_dbus_service_interface_register(Efl_Dbus_Connection *conn, const char *path, const Efl_Dbus_Service_Interface_Desc *desc) EINA_ARG_NONNULL(1, 2, 3);
+EAPI Efl_Dbus_Service_Interface *
+efl_dbus_service_interface_register(Efl_Dbus_Connection                   *conn,
+                                    const char                            *path,
+                                    const Efl_Dbus_Service_Interface_Desc *desc)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Register a fallback interface handler for a given subsection of the object hierarchy.
@@ -139,8 +164,10 @@ EAPI Efl_Dbus_Service_Interface *efl_dbus_service_interface_register(Efl_Dbus_Co
  *
  * @return Interface
  */
-EAPI Efl_Dbus_Service_Interface *
-efl_dbus_service_interface_fallback_register(Efl_Dbus_Connection *conn, const char *path, const Efl_Dbus_Service_Interface_Desc *desc) EINA_ARG_NONNULL(1, 2, 3);
+EAPI Efl_Dbus_Service_Interface *efl_dbus_service_interface_fallback_register(
+  Efl_Dbus_Connection                   *conn,
+  const char                            *path,
+  const Efl_Dbus_Service_Interface_Desc *desc) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Register an interface in the given path and connection. This
@@ -156,7 +183,10 @@ efl_dbus_service_interface_fallback_register(Efl_Dbus_Connection *conn, const ch
  *
  * @return Interface
  */
-EAPI Efl_Dbus_Service_Interface *efl_dbus_service_interface_register2(Efl_Dbus_Connection *conn, const char *path, const Efl_Dbus_Service_Interface_Desc2 *desc) EINA_ARG_NONNULL(1, 2, 3);
+EAPI Efl_Dbus_Service_Interface *efl_dbus_service_interface_register2(
+  Efl_Dbus_Connection                    *conn,
+  const char                             *path,
+  const Efl_Dbus_Service_Interface_Desc2 *desc) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Register a fallback interface handler for a given subsection
@@ -174,9 +204,10 @@ EAPI Efl_Dbus_Service_Interface *efl_dbus_service_interface_register2(Efl_Dbus_C
  *
  * @return Interface
  */
-EAPI Efl_Dbus_Service_Interface *
-efl_dbus_service_interface_fallback_register2(Efl_Dbus_Connection *conn, const char *path, const Efl_Dbus_Service_Interface_Desc2 *desc) EINA_ARG_NONNULL(1, 2, 3);
-
+EAPI Efl_Dbus_Service_Interface *efl_dbus_service_interface_fallback_register2(
+  Efl_Dbus_Connection                    *conn,
+  const char                             *path,
+  const Efl_Dbus_Service_Interface_Desc2 *desc) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Unregister a interface.
@@ -185,7 +216,9 @@ efl_dbus_service_interface_fallback_register2(Efl_Dbus_Connection *conn, const c
  *
  * @param iface interface to unregister
  */
-EAPI void efl_dbus_service_interface_unregister(Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1);
+EAPI void
+efl_dbus_service_interface_unregister(Efl_Dbus_Service_Interface *iface)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Unregister all interfaces of the object path that this interface belongs
@@ -193,9 +226,14 @@ EAPI void efl_dbus_service_interface_unregister(Efl_Dbus_Service_Interface *ifac
  *
  * @param iface interface to unregister
  */
-EAPI void efl_dbus_service_object_unregister(Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1);
-EAPI Efl_Dbus_Connection *efl_dbus_service_connection_get(const Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
-EAPI const char *efl_dbus_service_object_path_get(const Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI void efl_dbus_service_object_unregister(Efl_Dbus_Service_Interface *iface)
+  EINA_ARG_NONNULL(1);
+EAPI Efl_Dbus_Connection *
+efl_dbus_service_connection_get(const Efl_Dbus_Service_Interface *iface)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *
+efl_dbus_service_object_path_get(const Efl_Dbus_Service_Interface *iface)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Emit a signal handler of the interface with non-complex types.
@@ -208,7 +246,10 @@ EAPI const char *efl_dbus_service_object_path_get(const Efl_Dbus_Service_Interfa
  *
  * @return EFL_TRUE if success
  */
-EAPI Efl_Bool efl_dbus_service_signal_emit(const Efl_Dbus_Service_Interface *iface, unsigned int signal_id, ...) EINA_ARG_NONNULL(1);
+EAPI Efl_Bool
+efl_dbus_service_signal_emit(const Efl_Dbus_Service_Interface *iface,
+                             unsigned int                      signal_id,
+                             ...) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Create signal message.
@@ -221,7 +262,10 @@ EAPI Efl_Bool efl_dbus_service_signal_emit(const Efl_Dbus_Service_Interface *ifa
  *
  * @return EFL_TRUE if success
  */
-EAPI Efl_Dbus_Message *efl_dbus_service_signal_new(const Efl_Dbus_Service_Interface *iface, unsigned int signal_id) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Message *
+efl_dbus_service_signal_new(const Efl_Dbus_Service_Interface *iface,
+                            unsigned int                      signal_id)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Send a signal message.
@@ -235,7 +279,9 @@ EAPI Efl_Dbus_Message *efl_dbus_service_signal_new(const Efl_Dbus_Service_Interf
  *
  * @return EFL_TRUE if success
  */
-EAPI Efl_Bool efl_dbus_service_signal_send(const Efl_Dbus_Service_Interface *iface, Efl_Dbus_Message *signal_msg) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool efl_dbus_service_signal_send(
+  const Efl_Dbus_Service_Interface *iface,
+  Efl_Dbus_Message                 *signal_msg) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Store data at object path, this data can be obtained from all interfaces
@@ -246,7 +292,10 @@ EAPI Efl_Bool efl_dbus_service_signal_send(const Efl_Dbus_Service_Interface *ifa
  * @param key to identify data
  * @param data
  */
-EAPI void efl_dbus_service_object_data_set(Efl_Dbus_Service_Interface *iface, const char *key, const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EAPI void efl_dbus_service_object_data_set(Efl_Dbus_Service_Interface *iface,
+                                           const char                 *key,
+                                           const void                 *data)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Get data stored in object path.
@@ -256,7 +305,10 @@ EAPI void efl_dbus_service_object_data_set(Efl_Dbus_Service_Interface *iface, co
  *
  * @return pointer to data if found otherwise NULL
  */
-EAPI void *efl_dbus_service_object_data_get(const Efl_Dbus_Service_Interface *iface, const char *key) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EAPI void *
+efl_dbus_service_object_data_get(const Efl_Dbus_Service_Interface *iface,
+                                 const char                       *key)
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Del data stored in object path.
@@ -266,7 +318,9 @@ EAPI void *efl_dbus_service_object_data_get(const Efl_Dbus_Service_Interface *if
  *
  * @return pointer to data if found otherwise NULL
  */
-EAPI void *efl_dbus_service_object_data_del(Efl_Dbus_Service_Interface *iface, const char *key) EINA_ARG_NONNULL(1, 2);
+EAPI void *efl_dbus_service_object_data_del(Efl_Dbus_Service_Interface *iface,
+                                            const char                 *key)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Add property to list of changed properties
@@ -278,9 +332,14 @@ EAPI void *efl_dbus_service_object_data_del(Efl_Dbus_Service_Interface *iface, c
  *
  * @return EFL_TRUE if success
  */
-EAPI Efl_Bool efl_dbus_service_property_changed(const Efl_Dbus_Service_Interface *iface, const char *name) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool
+efl_dbus_service_property_changed(const Efl_Dbus_Service_Interface *iface,
+                                  const char *name) EINA_ARG_NONNULL(1, 2);
 
-EAPI Efl_Bool efl_dbus_service_property_invalidate_set(const Efl_Dbus_Service_Interface *iface, const char *name, Efl_Bool is_invalidate) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool efl_dbus_service_property_invalidate_set(
+  const Efl_Dbus_Service_Interface *iface,
+  const char                       *name,
+  Efl_Bool                          is_invalidate) EINA_ARG_NONNULL(1, 2);
 
 /**
  * Attach ObjectManager interface.
@@ -288,7 +347,8 @@ EAPI Efl_Bool efl_dbus_service_property_invalidate_set(const Efl_Dbus_Service_In
  * @param iface ObjectManager will be attach in object path of this interface.
  * @return EFL_TRUE if success
  */
-EAPI Efl_Bool efl_dbus_service_object_manager_attach(Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1);
+EAPI Efl_Bool efl_dbus_service_object_manager_attach(
+  Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1);
 
 /**
  * Detach ObjectManager interface.
@@ -296,7 +356,8 @@ EAPI Efl_Bool efl_dbus_service_object_manager_attach(Efl_Dbus_Service_Interface 
  * @param iface ObjectManager of object path of this interface will be detach.
  * @return EFL_TRUE if success
  */
-EAPI Efl_Bool efl_dbus_service_object_manager_detach(Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1);
+EAPI Efl_Bool efl_dbus_service_object_manager_detach(
+  Efl_Dbus_Service_Interface *iface) EINA_ARG_NONNULL(1);
 
 /**
  * @}

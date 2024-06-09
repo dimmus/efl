@@ -82,32 +82,32 @@
 // #include <Efl_Config.h>
 #include <Efl_Eo.h>
 #ifdef EFL_BETA_API_SUPPORT
-#include <Efl_Core.h>
+#  include <Efl_Core.h>
 #endif
 #ifdef EAPI
-# undef EAPI
+#  undef EAPI
 #endif
 
 #ifdef _WIN32
-# ifdef EFL_BUILD
-#  ifdef DLL_EXPORT
-#   define EAPI __declspec(dllexport)
+#  ifdef EFL_BUILD
+#    ifdef DLL_EXPORT
+#      define EAPI __declspec(dllexport)
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI __declspec(dllimport)
 #  endif
-# else
-#  define EAPI __declspec(dllimport)
-# endif
 #else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EAPI __attribute__ ((visibility("default")))
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EAPI __attribute__ ((visibility("default")))
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI
 #  endif
-# else
-#  define EAPI
-# endif
 #endif
 
 #ifdef __cplusplus
@@ -139,13 +139,16 @@ extern "C" {
  */
 typedef struct _Efl_Dbus_Version
 {
-   int major; /**< major (binary or source incompatible changes) */
-   int minor; /**< minor (new features, bugfixes, major improvements version) */
-   int micro; /**< micro (bugfix, internal improvements, no new features version) */
-   int revision; /**< git revision (0 if a proper release or the git revision number Eldbus is built from) */
+  int major; /**< major (binary or source incompatible changes) */
+  int minor; /**< minor (new features, bugfixes, major improvements version) */
+  int
+    micro; /**< micro (bugfix, internal improvements, no new features version) */
+  int
+    revision; /**< git revision (0 if a proper release or the git revision number Eldbus is built from) */
 } Efl_Dbus_Version;
 
-EAPI extern const Efl_Dbus_Version * dbusversion; /**< Global Efl_Dbus_Version object */
+EAPI extern const Efl_Dbus_Version
+  *dbusversion; /**< Global Efl_Dbus_Version object */
 
 /**
  * @brief Initialize eldbus.
@@ -165,13 +168,13 @@ EAPI int efl_dbus_shutdown(void);
  *
  * Callback that is called when the connection is freed.
  */
-typedef void                       (*Efl_Dbus_Free_Cb)(void *data, const void *deadptr);
+typedef void (*Efl_Dbus_Free_Cb)(void *data, const void *deadptr);
 /**
  * @typedef Efl_Dbus_Message
  *
  * Represents the way data is sent and received in DBus.
  */
-typedef struct _Efl_Dbus_Message        Efl_Dbus_Message;
+typedef struct _Efl_Dbus_Message Efl_Dbus_Message;
 /**
  * @typedef Efl_Dbus_Message_Iter
  *
@@ -186,7 +189,7 @@ typedef struct _Efl_Dbus_Message_Iter Efl_Dbus_Message_Iter;
  * Represents a message that has been sent but has not yet reached its
  * destination.
  */
-typedef struct _Efl_Dbus_Pending        Efl_Dbus_Pending;
+typedef struct _Efl_Dbus_Pending Efl_Dbus_Pending;
 
 /**
  * @typedef Efl_Dbus_Signal_Handler
@@ -201,7 +204,9 @@ typedef struct _Efl_Dbus_Signal_Handler Efl_Dbus_Signal_Handler;
  *
  * Callback that is called when answer of a method call message comes.
  */
-typedef void (*Efl_Dbus_Message_Cb)(void *data, const Efl_Dbus_Message *msg, Efl_Dbus_Pending *pending);
+typedef void (*Efl_Dbus_Message_Cb)(void                   *data,
+                                    const Efl_Dbus_Message *msg,
+                                    Efl_Dbus_Pending       *pending);
 
 /**
  * @typedef Efl_Dbus_Signal_Cb
@@ -245,13 +250,13 @@ typedef struct _Efl_Dbus_Object Efl_Dbus_Object;
 
 #ifdef EFL_BETA_API_SUPPORT
 
-#include "efl_dbus_model.eo.h"
-#include "efl_dbus_model_arguments.eo.h"
-#include "efl_dbus_model_connection.eo.h"
-#include "efl_dbus_model_method.eo.h"
-#include "efl_dbus_model_object.eo.h"
-#include "efl_dbus_model_proxy.eo.h"
-#include "efl_dbus_model_signal.eo.h"
+#  include "efl_dbus_model.eo.h"
+#  include "efl_dbus_model_arguments.eo.h"
+#  include "efl_dbus_model_connection.eo.h"
+#  include "efl_dbus_model_method.eo.h"
+#  include "efl_dbus_model_object.eo.h"
+#  include "efl_dbus_model_proxy.eo.h"
+#  include "efl_dbus_model_signal.eo.h"
 
 #endif
 

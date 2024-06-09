@@ -37,21 +37,21 @@
 int
 clock_gettime(int mode, struct timespec *ts)
 {
-    clock_serv_t    cclock;
-    mach_timespec_t mts;
-    kern_return_t   err;
+  clock_serv_t    cclock;
+  mach_timespec_t mts;
+  kern_return_t   err;
 
-    err = host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-    if (EINA_UNLIKELY(err != KERN_SUCCESS)) return err;
+  err = host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
+  if (EINA_UNLIKELY(err != KERN_SUCCESS)) return err;
 
-    err = clock_get_time(cclock, &mts);
-    mach_port_deallocate(mach_task_self(), cclock);
-    if (EINA_UNLIKELY(err != KERN_SUCCESS)) return err;
+  err = clock_get_time(cclock, &mts);
+  mach_port_deallocate(mach_task_self(), cclock);
+  if (EINA_UNLIKELY(err != KERN_SUCCESS)) return err;
 
-    ts->tv_sec  = mts.tv_sec;
-    ts->tv_nsec = mts.tv_nsec;
+  ts->tv_sec  = mts.tv_sec;
+  ts->tv_nsec = mts.tv_nsec;
 
-    return 0;
+  return 0;
 }
 
 #  elif defined(_WIN32)
@@ -61,15 +61,15 @@ clock_gettime(int mode, struct timespec *ts)
 int
 clock_gettime(int mode, struct timespec *ts)
 {
-    FILETIME       sys_time;
-    ULARGE_INTEGER li_sys_time;
+  FILETIME       sys_time;
+  ULARGE_INTEGER li_sys_time;
 
-    GetSystemTimeAsFileTime(&sys_time);
-    li_sys_time.u.LowPart  = sys_time.dwLowDateTime;
-    li_sys_time.u.HighPart = sys_time.dwHighDateTime;
-    ts->tv_sec             = li_sys_time.QuadPart / 10000000UL;
-    ts->tv_nsec            = (li_sys_time.QuadPart % 10000000UL) * 100UL;
-    return 0;
+  GetSystemTimeAsFileTime(&sys_time);
+  li_sys_time.u.LowPart  = sys_time.dwLowDateTime;
+  li_sys_time.u.HighPart = sys_time.dwHighDateTime;
+  ts->tv_sec             = li_sys_time.QuadPart / 10000000UL;
+  ts->tv_nsec            = (li_sys_time.QuadPart % 10000000UL) * 100UL;
+  return 0;
 }
 
 #  else /* ! __MACH__ */
@@ -85,49 +85,49 @@ static unsigned int  counter;
 static void *
 _eina_test_lock_thread(void *data, Eina_Thread t)
 {
-    unsigned int i;
+  unsigned int i;
 
-    fail_if(!eina_thread_equal(t, thread));
-    fail_if(strcmp("test", data));
+  fail_if(!eina_thread_equal(t, thread));
+  fail_if(strcmp("test", data));
 
-    for (i = 0; i < 150; i++)
-    {
-        fail_if(eina_spinlock_take(&spin) != EINA_LOCK_SUCCEED);
-        counter++;
-        fail_if(eina_spinlock_release(&spin) != EINA_LOCK_SUCCEED);
-    }
+  for (i = 0; i < 150; i++)
+  {
+    fail_if(eina_spinlock_take(&spin) != EINA_LOCK_SUCCEED);
+    counter++;
+    fail_if(eina_spinlock_release(&spin) != EINA_LOCK_SUCCEED);
+  }
 
-    return data;
+  return data;
 }
 
 EFL_START_TEST(efl_shared_test_spinlock)
 {
-    unsigned int i;
+  unsigned int i;
 
-    counter = 0;
-    fail_if(!eina_spinlock_new(&spin));
+  counter = 0;
+  fail_if(!eina_spinlock_new(&spin));
 
-    fail_if(!eina_thread_create(&thread,
-                                EINA_THREAD_NORMAL,
-                                -1,
-                                _eina_test_lock_thread,
-                                "test"));
+  fail_if(!eina_thread_create(&thread,
+                              EINA_THREAD_NORMAL,
+                              -1,
+                              _eina_test_lock_thread,
+                              "test"));
 
-    for (i = 0; i < 150; i++)
-    {
-        fail_if(eina_spinlock_take(&spin) != EINA_LOCK_SUCCEED);
-        counter++;
-        fail_if(eina_spinlock_release(&spin) != EINA_LOCK_SUCCEED);
-    }
-
-    fail_if(strcmp("test", eina_thread_join(thread)));
-
-    fail_if(counter != 300);
-
-    fail_if(eina_spinlock_take_try(&spin) != EINA_LOCK_SUCCEED);
+  for (i = 0; i < 150; i++)
+  {
+    fail_if(eina_spinlock_take(&spin) != EINA_LOCK_SUCCEED);
+    counter++;
     fail_if(eina_spinlock_release(&spin) != EINA_LOCK_SUCCEED);
+  }
 
-    eina_spinlock_free(&spin);
+  fail_if(strcmp("test", eina_thread_join(thread)));
+
+  fail_if(counter != 300);
+
+  fail_if(eina_spinlock_take_try(&spin) != EINA_LOCK_SUCCEED);
+  fail_if(eina_spinlock_release(&spin) != EINA_LOCK_SUCCEED);
+
+  eina_spinlock_free(&spin);
 }
 
 EFL_END_TEST
@@ -138,56 +138,56 @@ static int      _eina_tls_free_count = 0;
 static void *
 _eina_test_tls_alloc(int v)
 {
-    int *ptr = malloc(sizeof(int));
-    *ptr     = v;
+  int *ptr = malloc(sizeof(int));
+  *ptr     = v;
 
-    return ptr;
+  return ptr;
 }
 
 static void
 _eina_test_tls_free(void *ptr)
 {
-    _eina_tls_free_count++;
-    free(ptr);
+  _eina_tls_free_count++;
+  free(ptr);
 }
 
 static void *
 _eina_test_tls_thread(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
-    int *ptr;
+  int *ptr;
 
-    ptr = eina_tls_get(key);
-    fail_if(ptr != NULL);
+  ptr = eina_tls_get(key);
+  fail_if(ptr != NULL);
 
-    fail_if(!eina_tls_set(key, _eina_test_tls_alloc(24)));
+  fail_if(!eina_tls_set(key, _eina_test_tls_alloc(24)));
 
-    ptr = eina_tls_get(key);
-    fail_if(ptr == NULL);
-    fail_if(*ptr != 24);
+  ptr = eina_tls_get(key);
+  fail_if(ptr == NULL);
+  fail_if(*ptr != 24);
 
-    return NULL;
+  return NULL;
 }
 
 EFL_START_TEST(efl_shared_test_tls)
 {
-    fail_if(!eina_tls_cb_new(&key, _eina_test_tls_free));
+  fail_if(!eina_tls_cb_new(&key, _eina_test_tls_free));
 
-    fail_if(!eina_tls_set(key, _eina_test_tls_alloc(42)));
+  fail_if(!eina_tls_set(key, _eina_test_tls_alloc(42)));
 
-    fail_if(!eina_thread_create(&thread,
-                                EINA_THREAD_NORMAL,
-                                -1,
-                                _eina_test_tls_thread,
-                                NULL));
+  fail_if(!eina_thread_create(&thread,
+                              EINA_THREAD_NORMAL,
+                              -1,
+                              _eina_test_tls_thread,
+                              NULL));
 
-    eina_thread_join(thread);
-    fail_if(_eina_tls_free_count != 1);
+  eina_thread_join(thread);
+  fail_if(_eina_tls_free_count != 1);
 
-    int *ptr = eina_tls_get(key);
-    fail_if(eina_tls_get(key) == NULL);
-    fail_if(*ptr != 42);
+  int *ptr = eina_tls_get(key);
+  fail_if(eina_tls_get(key) == NULL);
+  fail_if(*ptr != 42);
 
-    eina_tls_free(key);
+  eina_tls_free(key);
 }
 
 EFL_END_TEST
@@ -200,80 +200,80 @@ static Eina_RWLock    mutex;
 static void *
 _eina_test_rwlock_thread(void *data EFL_UNUSED, Eina_Thread t EFL_UNUSED)
 {
-    fail_if(!eina_barrier_wait(&barrier));
-    fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
-    fail_if(!eina_condition_broadcast(&cond));
-    fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(!eina_barrier_wait(&barrier));
+  fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(!eina_condition_broadcast(&cond));
+  fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
 
-    fail_if(eina_rwlock_take_write(&mutex) != EINA_LOCK_SUCCEED);
-    counter = 7200;
-    fail_if(eina_rwlock_release(&mutex) != EINA_LOCK_SUCCEED);
+  fail_if(eina_rwlock_take_write(&mutex) != EINA_LOCK_SUCCEED);
+  counter = 7200;
+  fail_if(eina_rwlock_release(&mutex) != EINA_LOCK_SUCCEED);
 
-    fail_if(!eina_barrier_wait(&barrier));
+  fail_if(!eina_barrier_wait(&barrier));
 
-    fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
-    fail_if(!eina_condition_broadcast(&cond));
-    fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(!eina_condition_broadcast(&cond));
+  fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
 
-    return NULL;
+  return NULL;
 }
 
 EFL_START_TEST(efl_shared_test_rwlock)
 {
-    struct timespec ts, ts2;
-    long            delay;
+  struct timespec ts, ts2;
+  long            delay;
 
-    fail_if(!eina_rwlock_new(&mutex));
-    fail_if(!eina_lock_new(&mtcond));
-    fail_if(!eina_condition_new(&cond, &mtcond));
-    fail_if(!eina_barrier_new(&barrier, 2));
+  fail_if(!eina_rwlock_new(&mutex));
+  fail_if(!eina_lock_new(&mtcond));
+  fail_if(!eina_condition_new(&cond, &mtcond));
+  fail_if(!eina_barrier_new(&barrier, 2));
 
-    counter = 42;
+  counter = 42;
 
-    eina_lock_debug(&mtcond);
+  eina_lock_debug(&mtcond);
 
-    fail_if(eina_rwlock_take_read(&mutex) != EINA_LOCK_SUCCEED);
-    fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(eina_rwlock_take_read(&mutex) != EINA_LOCK_SUCCEED);
+  fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
 
-    fail_if(!eina_thread_create(&thread,
-                                EINA_THREAD_NORMAL,
-                                -1,
-                                _eina_test_rwlock_thread,
-                                NULL));
+  fail_if(!eina_thread_create(&thread,
+                              EINA_THREAD_NORMAL,
+                              -1,
+                              _eina_test_rwlock_thread,
+                              NULL));
 
-    fail_if(!eina_barrier_wait(&barrier));
-    fail_if(!eina_condition_wait(&cond));
-    fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(!eina_barrier_wait(&barrier));
+  fail_if(!eina_condition_wait(&cond));
+  fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
 
-    fail_if(counter != 42);
-    fail_if(eina_rwlock_release(&mutex) != EINA_LOCK_SUCCEED);
+  fail_if(counter != 42);
+  fail_if(eina_rwlock_release(&mutex) != EINA_LOCK_SUCCEED);
 
-    fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
-    fail_if(!eina_barrier_wait(&barrier));
+  fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(!eina_barrier_wait(&barrier));
 
-    fail_if(!eina_condition_wait(&cond));
-    fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(!eina_condition_wait(&cond));
+  fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
 
-    fail_if(eina_rwlock_take_read(&mutex) != EINA_LOCK_SUCCEED);
-    fail_if(counter != 7200);
-    fail_if(eina_rwlock_release(&mutex) != EINA_LOCK_SUCCEED);
+  fail_if(eina_rwlock_take_read(&mutex) != EINA_LOCK_SUCCEED);
+  fail_if(counter != 7200);
+  fail_if(eina_rwlock_release(&mutex) != EINA_LOCK_SUCCEED);
 
-    fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
-    clock_gettime(CLOCK_REALTIME, &ts);
-    eina_condition_timedwait(&cond, 0.050);
-    clock_gettime(CLOCK_REALTIME, &ts2);
-    delay = (ts2.tv_sec - ts.tv_sec) * 1000L +
-            (ts2.tv_nsec - ts.tv_nsec) / 1000000L;
-    fail_if(delay < 50);
-    fail_if(delay > 200);
-    fail_if(eina_error_get() != ETIMEDOUT);
-    fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
+  fail_if(eina_lock_take(&mtcond) != EINA_LOCK_SUCCEED);
+  clock_gettime(CLOCK_REALTIME, &ts);
+  eina_condition_timedwait(&cond, 0.050);
+  clock_gettime(CLOCK_REALTIME, &ts2);
+  delay =
+    (ts2.tv_sec - ts.tv_sec) * 1000L + (ts2.tv_nsec - ts.tv_nsec) / 1000000L;
+  fail_if(delay < 50);
+  fail_if(delay > 200);
+  fail_if(eina_error_get() != ETIMEDOUT);
+  fail_if(eina_lock_release(&mtcond) != EINA_LOCK_SUCCEED);
 
-    eina_thread_join(thread);
+  eina_thread_join(thread);
 
-    eina_condition_free(&cond);
-    eina_lock_free(&mtcond);
-    eina_rwlock_free(&mutex);
+  eina_condition_free(&cond);
+  eina_lock_free(&mtcond);
+  eina_rwlock_free(&mutex);
 }
 
 EFL_END_TEST
@@ -281,7 +281,7 @@ EFL_END_TEST
 void
 eina_test_locking(TCase *tc)
 {
-    tcase_add_test(tc, efl_shared_test_spinlock);
-    tcase_add_test(tc, efl_shared_test_tls);
-    tcase_add_test(tc, efl_shared_test_rwlock);
+  tcase_add_test(tc, efl_shared_test_spinlock);
+  tcase_add_test(tc, efl_shared_test_tls);
+  tcase_add_test(tc, efl_shared_test_rwlock);
 }

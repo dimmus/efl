@@ -54,7 +54,7 @@ static const int _eina_hamster = (EFL_VERSION_MAJOR * 100 * 100 * 100) +
 EINA_API int
 eina_hamster_count(void)
 {
-    return _eina_hamster;
+  return _eina_hamster;
 }
 
 /**

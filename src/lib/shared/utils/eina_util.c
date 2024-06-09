@@ -38,92 +38,88 @@
 EINA_API char *
 eina_environment_home_get(void)
 {
-    char *home = NULL;
+  char *home = NULL;
 
     // if (home) return home; /* it's NULL */
 #ifdef _WIN32
-    home = getenv("USERPROFILE");
-    if (!home) home = getenv("WINDIR");
-    if (!home && (getenv("HOMEDRIVE") && getenv("HOMEPATH")))
-    {
-        char buf[PATH_MAX];
+  home = getenv("USERPROFILE");
+  if (!home) home = getenv("WINDIR");
+  if (!home && (getenv("HOMEDRIVE") && getenv("HOMEPATH")))
+  {
+    char buf[PATH_MAX];
 
-        snprintf(buf,
-                 sizeof(buf),
-                 "%s%s",
-                 getenv("HOMEDRIVE"),
-                 getenv("HOMEPATH"));
-        home = strdup(buf);
-        return home;
-    }
-    if (!home) home = "C:\\";
+    snprintf(buf, sizeof(buf), "%s%s", getenv("HOMEDRIVE"), getenv("HOMEPATH"));
+    home = strdup(buf);
+    return home;
+  }
+  if (!home) home = "C:\\";
 #else
 #  if defined(HAVE_GETUID) && defined(HAVE_GETEUID)
-    if (getuid() == geteuid()) home = getenv("HOME");
+  if (getuid() == geteuid()) home = getenv("HOME");
 #  endif
-    if (!home)
-    {
+  if (!home)
+  {
 #  ifdef HAVE_GETPWENT
-        struct passwd pwent, *pwent2 = NULL;
-        char          pwbuf[8129];
+    struct passwd pwent, *pwent2 = NULL;
+    char          pwbuf[8129];
 
-        if (!getpwuid_r(geteuid(), &pwent, pwbuf, sizeof(pwbuf), &pwent2))
-        {
-            if ((pwent2) && (pwent.pw_dir))
-            {
-                home = strdup(pwent.pw_dir);
-                return home;
-            }
-        }
-#  endif
-        home = "/tmp";
+    if (!getpwuid_r(geteuid(), &pwent, pwbuf, sizeof(pwbuf), &pwent2))
+    {
+      if ((pwent2) && (pwent.pw_dir))
+      {
+        home = strdup(pwent.pw_dir);
+        return home;
+      }
     }
+#  endif
+    home = "/tmp";
+  }
 #endif
     // home = strdup(home); /* what for !!! leak here */
 #ifdef _WIN32
-    EINA_PATH_TO_UNIX(home);
+  EINA_PATH_TO_UNIX(home);
 #endif
-    return home;
+  return home;
 }
 
 EINA_API char *
 eina_environment_tmp_get(void)
 {
-    char *tmp = NULL;
+  char *tmp = NULL;
 
     // if (tmp) return tmp;
 #ifdef _WIN32
-    tmp = getenv("TMP");
-    if (!tmp) tmp = getenv("TEMP");
-    if (!tmp) tmp = getenv("USERPROFILE");
-    if (!tmp) tmp = getenv("WINDIR");
-    if (!tmp) tmp = "C:\\";
+  tmp = getenv("TMP");
+  if (!tmp) tmp = getenv("TEMP");
+  if (!tmp) tmp = getenv("USERPROFILE");
+  if (!tmp) tmp = getenv("WINDIR");
+  if (!tmp) tmp = "C:\\";
 #else
 #  if defined(HAVE_GETUID) && defined(HAVE_GETEUID)
-    if (getuid() == geteuid())
+  if (getuid() == geteuid())
 #  endif
-    {
-        tmp = getenv("TMPDIR");
-        if (!tmp) tmp = getenv("TMP");
-        if (!tmp) tmp = getenv("TEMPDIR");
-        if (!tmp) tmp = getenv("TEMP");
-    }
-    if (!tmp) tmp = "/tmp";
+  {
+    tmp = getenv("TMPDIR");
+    if (!tmp) tmp = getenv("TMP");
+    if (!tmp) tmp = getenv("TEMPDIR");
+    if (!tmp) tmp = getenv("TEMP");
+  }
+  if (!tmp) tmp = "/tmp";
 #endif
 
 #if defined(__MACH__) && defined(__APPLE__)
-    if (tmp && tmp[strlen(tmp) - 1] == '/')
-    {
-        char *tmp2             = strdup(tmp);
-        tmp2[strlen(tmp2) - 1] = 0x0;
-        tmp                    = tmp2;
-        return tmp;
-    }
+  if (tmp && tmp[strlen(tmp) - 1] == '/')
+  {
+    char *tmp2             = strdup(tmp);
+    tmp2[strlen(tmp2) - 1] = 0x0;
+    tmp                    = tmp2;
+    return tmp;
+  }
 #endif
 
     // tmp = strdup(tmp);
 #ifdef _WIN32
-    EINA_PATH_TO_UNIX(tmp);
+  EINA_PATH_TO_UNIX(tmp);
 #endif
-    return tmp;
+  return tmp;
 }

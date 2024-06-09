@@ -14,7 +14,9 @@
  * @param key Key parameter.
  * @param var A message iterator on the current entry.
  */
-typedef void (*Efl_Dbus_Dict_Cb_Get)(void *data, const void *key, Efl_Dbus_Message_Iter *var);
+typedef void (*Efl_Dbus_Dict_Cb_Get)(void                  *data,
+                                     const void            *key,
+                                     Efl_Dbus_Message_Iter *var);
 
 /**
  * Iterate over a dictionary.
@@ -24,7 +26,11 @@ typedef void (*Efl_Dbus_Dict_Cb_Get)(void *data, const void *key, Efl_Dbus_Messa
  * @param cb callback that will be called in each entry
  * @param data context data
  */
-EAPI void efl_dbus_message_iter_dict_iterate(Efl_Dbus_Message_Iter *dict, const char *signature, Efl_Dbus_Dict_Cb_Get cb, const void *data) EINA_ARG_NONNULL(1, 2, 3);
+EAPI void efl_dbus_message_iter_dict_iterate(Efl_Dbus_Message_Iter *dict,
+                                             const char            *signature,
+                                             Efl_Dbus_Dict_Cb_Get   cb,
+                                             const void            *data)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @}

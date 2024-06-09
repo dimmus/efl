@@ -31,7 +31,7 @@
 #include "eina_iterator.h"
 #include "eina_accessor.h"
 #ifdef EINA_LIST_MAGIC
-# include "eina_magic.h"
+#  include "eina_magic.h"
 #endif
 
 /**
@@ -301,7 +301,7 @@
  * @typedef Eina_List
  * Type for a generic double linked list.
  */
-typedef struct _Eina_List            Eina_List;
+typedef struct _Eina_List Eina_List;
 
 /**
  * @typedef Eina_List_Accounting
@@ -316,12 +316,13 @@ typedef struct _Eina_List_Accounting Eina_List_Accounting;
  */
 struct _Eina_List
 {
-   void                 *data; /**< Pointer to list element payload */
-   Eina_List            *next; /**< Next member in the list */
-   Eina_List            *prev; /**< Previous member in the list */
-   Eina_List_Accounting *accounting; /**< Private list accounting info - don't touch */
+  void      *data; /**< Pointer to list element payload */
+  Eina_List *next; /**< Next member in the list */
+  Eina_List *prev; /**< Previous member in the list */
+  Eina_List_Accounting
+    *accounting; /**< Private list accounting info - don't touch */
 #ifdef EINA_LIST_MAGIC
-   EINA_MAGIC;
+  EINA_MAGIC;
 #endif
 };
 
@@ -333,11 +334,10 @@ struct _Eina_List
  */
 struct _Eina_List_Accounting
 {
-   Eina_List   *last; /**< Pointer to the last element of the list - don't touch */
-   unsigned int count; /**< Number of elements of the list - don't touch */
-   EINA_MAGIC;
+  Eina_List *last; /**< Pointer to the last element of the list - don't touch */
+  unsigned int count; /**< Number of elements of the list - don't touch */
+  EINA_MAGIC;
 };
-
 
 /**
  * @brief Appends the given data to the given linked list.
@@ -363,8 +363,8 @@ struct _Eina_List_Accounting
  *
  * @warning @p list must be a pointer to the first element of the list(or NULL).
  */
-EINA_API Eina_List            *eina_list_append(Eina_List *list, const void *data) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_append(Eina_List *list, const void *data)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Prepends the given data to the given linked list.
@@ -391,8 +391,8 @@ EINA_API Eina_List            *eina_list_append(Eina_List *list, const void *dat
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_prepend(Eina_List *list, const void *data) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_prepend(Eina_List *list, const void *data)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Inserts the given data into the given linked list after the specified data.
@@ -424,8 +424,10 @@ EINA_API Eina_List            *eina_list_prepend(Eina_List *list, const void *da
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_append_relative(Eina_List *list, const void *data, const void *relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_append_relative(Eina_List  *list,
+                                              const void *data,
+                                              const void *relative)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Appends a list node to a linked list after the specified member.
@@ -446,8 +448,10 @@ EINA_API Eina_List            *eina_list_append_relative(Eina_List *list, const 
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_append_relative_list(Eina_List *list, const void *data, Eina_List *relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_append_relative_list(Eina_List  *list,
+                                                   const void *data,
+                                                   Eina_List  *relative)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Prepends a data pointer to a linked list before the specified member.
@@ -479,8 +483,10 @@ EINA_API Eina_List            *eina_list_append_relative_list(Eina_List *list, c
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_prepend_relative(Eina_List *list, const void *data, const void *relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_prepend_relative(Eina_List  *list,
+                                               const void *data,
+                                               const void *relative)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Prepends a list node to a linked list before the specified member.
@@ -501,8 +507,10 @@ EINA_API Eina_List            *eina_list_prepend_relative(Eina_List *list, const
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_prepend_relative_list(Eina_List *list, const void *data, Eina_List *relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_prepend_relative_list(Eina_List  *list,
+                                                    const void *data,
+                                                    Eina_List  *relative)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Inserts a new node into a sorted list.
@@ -527,8 +535,9 @@ EINA_API Eina_List            *eina_list_prepend_relative_list(Eina_List *list, 
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_sorted_insert(Eina_List *list, Eina_Compare_Cb func, const void *data) EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_sorted_insert(Eina_List *list, Eina_Compare_Cb func, const void *data)
+  EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Removes the first instance of the specified data from the given list.
@@ -545,8 +554,8 @@ EINA_API Eina_List            *eina_list_sorted_insert(Eina_List *list, Eina_Com
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_remove(Eina_List *list, const void *data) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_remove(Eina_List *list, const void *data)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Removes the specified list node.
@@ -583,8 +592,9 @@ EINA_API Eina_List            *eina_list_remove(Eina_List *list, const void *dat
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_remove_list(Eina_List *list, Eina_List *remove_list) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_remove_list(Eina_List *list,
+                                          Eina_List *remove_list)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves the specified data to the head of the list.
@@ -617,8 +627,9 @@ EINA_API Eina_List            *eina_list_remove_list(Eina_List *list, Eina_List 
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_promote_list(Eina_List *list, Eina_List *move_list) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_promote_list(Eina_List *list,
+                                           Eina_List *move_list)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves the specified data to the tail of the list.
@@ -651,8 +662,8 @@ EINA_API Eina_List            *eina_list_promote_list(Eina_List *list, Eina_List
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_demote_list(Eina_List *list, Eina_List *move_list);
-
+EINA_API Eina_List *eina_list_demote_list(Eina_List *list,
+                                          Eina_List *move_list);
 
 /**
  * @brief Finds a member of a list and returns it.
@@ -678,8 +689,9 @@ EINA_API Eina_List            *eina_list_demote_list(Eina_List *list, Eina_List 
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API void                 *eina_list_data_find(const Eina_List *list, const void *data) EINA_PURE EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API void *eina_list_data_find(const Eina_List *list,
+                                   const void      *data) EINA_PURE
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Finds a member of a list and returns it as a list node.
@@ -696,8 +708,9 @@ EINA_API void                 *eina_list_data_find(const Eina_List *list, const 
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_data_find_list(const Eina_List *list, const void *data) EINA_PURE EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_data_find_list(const Eina_List *list,
+                                             const void      *data) EINA_PURE
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves a data pointer from one list to another.
@@ -713,8 +726,7 @@ EINA_API Eina_List            *eina_list_data_find_list(const Eina_List *list, c
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Efl_Bool             eina_list_move(Eina_List **to, Eina_List **from, void *data);
-
+EINA_API Efl_Bool eina_list_move(Eina_List **to, Eina_List **from, void *data);
 
 /**
  * @brief Moves a list node from one list to another.
@@ -730,8 +742,9 @@ EINA_API Efl_Bool             eina_list_move(Eina_List **to, Eina_List **from, v
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Efl_Bool             eina_list_move_list(Eina_List **to, Eina_List **from, Eina_List *data);
-
+EINA_API Efl_Bool eina_list_move_list(Eina_List **to,
+                                      Eina_List **from,
+                                      Eina_List  *data);
 
 /**
  * @brief Frees an entire list and all the nodes, ignoring the data contained.
@@ -742,7 +755,7 @@ EINA_API Efl_Bool             eina_list_move_list(Eina_List **to, Eina_List **fr
  * This function frees all the nodes of @p list. It does not free the
  * data of the nodes. To free them, use #EINA_LIST_FREE.
  */
-EINA_API Eina_List            *eina_list_free(Eina_List *list);
+EINA_API Eina_List *eina_list_free(Eina_List *list);
 
 /**
  * @brief Gets the nth member's data pointer in a list, or @c NULL on
@@ -761,7 +774,8 @@ EINA_API Eina_List            *eina_list_free(Eina_List *list);
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API void                 *eina_list_nth(const Eina_List *list, unsigned int n) EINA_PURE EFL_WARN_UNUSED_RESULT;
+EINA_API void *eina_list_nth(const Eina_List *list,
+                             unsigned int n) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the nth member's list node in a list.
@@ -782,8 +796,9 @@ EINA_API void                 *eina_list_nth(const Eina_List *list, unsigned int
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_nth_list(const Eina_List *list, unsigned int n) EINA_PURE EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_nth_list(const Eina_List *list,
+                   unsigned int     n) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Reverses all the elements in the list.
@@ -804,8 +819,7 @@ EINA_API Eina_List            *eina_list_nth_list(const Eina_List *list, unsigne
  * @see eina_list_reverse_clone()
  * @see eina_list_iterator_reversed_new()
  */
-EINA_API Eina_List            *eina_list_reverse(Eina_List *list) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_reverse(Eina_List *list) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Clones (copies) all the elements in the list in reverse order.
@@ -825,8 +839,8 @@ EINA_API Eina_List            *eina_list_reverse(Eina_List *list) EFL_WARN_UNUSE
  * @see eina_list_reverse()
  * @see eina_list_clone()
  */
-EINA_API Eina_List            *eina_list_reverse_clone(const Eina_List *list) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_reverse_clone(const Eina_List *list) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Clones (copies) all the elements in the list in exactly same order.
@@ -845,8 +859,8 @@ EINA_API Eina_List            *eina_list_reverse_clone(const Eina_List *list) EF
  *
  * @see eina_list_reverse_clone()
  */
-EINA_API Eina_List            *eina_list_clone(const Eina_List *list) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_clone(const Eina_List *list) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sorts a list according to the ordering func will return.
@@ -888,8 +902,9 @@ EINA_API Eina_List            *eina_list_clone(const Eina_List *list) EFL_WARN_U
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_sort(Eina_List *list, unsigned int limit, Eina_Compare_Cb func) EINA_ARG_NONNULL(3) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_sort(Eina_List *list, unsigned int limit, Eina_Compare_Cb func)
+  EINA_ARG_NONNULL(3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Shuffles list.
@@ -909,8 +924,8 @@ EINA_API Eina_List            *eina_list_sort(Eina_List *list, unsigned int limi
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_shuffle(Eina_List *list, Eina_Random_Cb func) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_shuffle(Eina_List *list, Eina_Random_Cb func) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Merges two list.
@@ -929,8 +944,8 @@ EINA_API Eina_List            *eina_list_shuffle(Eina_List *list, Eina_Random_Cb
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_merge(Eina_List *left, Eina_List *right) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *eina_list_merge(Eina_List *left,
+                                    Eina_List *right) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Merges two sorted list according to the ordering func will return.
@@ -969,8 +984,9 @@ EINA_API Eina_List            *eina_list_merge(Eina_List *left, Eina_List *right
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_sorted_merge(Eina_List *left, Eina_List *right, Eina_Compare_Cb func) EINA_ARG_NONNULL(3) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_sorted_merge(Eina_List *left, Eina_List *right, Eina_Compare_Cb func)
+  EINA_ARG_NONNULL(3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Splits a list into 2 lists.
@@ -989,8 +1005,10 @@ EINA_API Eina_List            *eina_list_sorted_merge(Eina_List *left, Eina_List
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_List            *eina_list_split_list(Eina_List *list, Eina_List *relative, Eina_List **right) EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_List *
+eina_list_split_list(Eina_List  *list,
+                     Eina_List  *relative,
+                     Eina_List **right) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns node nearest to data from the sorted list.
@@ -1051,8 +1069,10 @@ EINA_API Eina_List            *eina_list_split_list(Eina_List *list, Eina_List *
  * @see eina_list_sort()
  * @see eina_list_sorted_merge()
  */
-EINA_API Eina_List            *eina_list_search_sorted_near_list(const Eina_List *list, Eina_Compare_Cb func, const void *data, int *result_cmp);
-
+EINA_API Eina_List *eina_list_search_sorted_near_list(const Eina_List *list,
+                                                      Eina_Compare_Cb  func,
+                                                      const void      *data,
+                                                      int *result_cmp);
 
 /**
  * @brief Returns node if data is in the sorted list.
@@ -1087,8 +1107,9 @@ EINA_API Eina_List            *eina_list_search_sorted_near_list(const Eina_List
  * @see eina_list_search_unsorted_list()
  * @see eina_list_search_sorted_near_list()
  */
-EINA_API Eina_List            *eina_list_search_sorted_list(const Eina_List *list, Eina_Compare_Cb func, const void *data);
-
+EINA_API Eina_List *eina_list_search_sorted_list(const Eina_List *list,
+                                                 Eina_Compare_Cb  func,
+                                                 const void      *data);
 
 /**
  * @brief Returns node data if it is in the sorted list.
@@ -1123,8 +1144,9 @@ EINA_API Eina_List            *eina_list_search_sorted_list(const Eina_List *lis
  * @see eina_list_sorted_merge()
  * @see eina_list_search_unsorted_list()
  */
-EINA_API void                 *eina_list_search_sorted(const Eina_List *list, Eina_Compare_Cb func, const void *data);
-
+EINA_API void *eina_list_search_sorted(const Eina_List *list,
+                                       Eina_Compare_Cb  func,
+                                       const void      *data);
 
 /**
  * @brief Returns node if data is in the unsorted list.
@@ -1149,8 +1171,9 @@ EINA_API void                 *eina_list_search_sorted(const Eina_List *list, Ei
  * @see eina_list_search_sorted_list()
  * @see eina_list_search_unsorted()
  */
-EINA_API Eina_List            *eina_list_search_unsorted_list(const Eina_List *list, Eina_Compare_Cb func, const void *data);
-
+EINA_API Eina_List *eina_list_search_unsorted_list(const Eina_List *list,
+                                                   Eina_Compare_Cb  func,
+                                                   const void      *data);
 
 /**
  * @brief Returns node data if it is in the unsorted list.
@@ -1176,8 +1199,9 @@ EINA_API Eina_List            *eina_list_search_unsorted_list(const Eina_List *l
  * @see eina_list_search_sorted()
  * @see eina_list_search_unsorted_list()
  */
-EINA_API void                 *eina_list_search_unsorted(const Eina_List *list, Eina_Compare_Cb func, const void *data);
-
+EINA_API void *eina_list_search_unsorted(const Eina_List *list,
+                                         Eina_Compare_Cb  func,
+                                         const void      *data);
 
 /**
  * @brief Gets the last list node in the list.
@@ -1193,8 +1217,8 @@ EINA_API void                 *eina_list_search_unsorted(const Eina_List *list, 
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-static inline Eina_List   *eina_list_last(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
-
+static inline Eina_List *
+eina_list_last(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the next list node after the specified list node.
@@ -1208,8 +1232,8 @@ static inline Eina_List   *eina_list_last(const Eina_List *list) EINA_PURE EFL_W
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-static inline Eina_List   *eina_list_next(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
-
+static inline Eina_List *
+eina_list_next(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the list node prior to the specified list node.
@@ -1223,8 +1247,8 @@ static inline Eina_List   *eina_list_next(const Eina_List *list) EINA_PURE EFL_W
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-static inline Eina_List   *eina_list_prev(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
-
+static inline Eina_List *
+eina_list_prev(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the list node data member.
@@ -1238,8 +1262,8 @@ static inline Eina_List   *eina_list_prev(const Eina_List *list) EINA_PURE EFL_W
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-static inline void        *eina_list_data_get(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
-
+static inline void *
+eina_list_data_get(const Eina_List *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets the list node data member.
@@ -1254,8 +1278,7 @@ static inline void        *eina_list_data_get(const Eina_List *list) EINA_PURE E
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-static inline void        *eina_list_data_set(Eina_List *list, const void *data);
-
+static inline void *eina_list_data_set(Eina_List *list, const void *data);
 
 /**
  * @brief Gets the count of the number of items in a list.
@@ -1273,7 +1296,6 @@ static inline void        *eina_list_data_set(Eina_List *list, const void *data)
  */
 static inline unsigned int eina_list_count(const Eina_List *list) EINA_PURE;
 
-
 /**
  * @brief Returns the last list node's data.
  *
@@ -1283,8 +1305,7 @@ static inline unsigned int eina_list_count(const Eina_List *list) EINA_PURE;
  * This function is a shortcut for typing eina_list_data_get(eina_list_last())
  * @since 1.8
  */
-static inline void        *eina_list_last_data_get(const Eina_List *list);
-
+static inline void *eina_list_last_data_get(const Eina_List *list);
 
 /**
  * @brief Returns a new iterator associated with a list.
@@ -1304,8 +1325,8 @@ static inline void        *eina_list_last_data_get(const Eina_List *list);
  *    invalid! That is, if you add or remove nodes this iterator
  *    behavior is undefined and your program may crash!
  */
-EINA_API Eina_Iterator        *eina_list_iterator_new(const Eina_List *list) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_Iterator *eina_list_iterator_new(const Eina_List *list)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new reversed iterator associated with a list.
@@ -1327,8 +1348,8 @@ EINA_API Eina_Iterator        *eina_list_iterator_new(const Eina_List *list) EIN
  *    invalid! That is, if you add or remove nodes this iterator
  *    behavior is undefined and your program may crash!
  */
-EINA_API Eina_Iterator        *eina_list_iterator_reversed_new(const Eina_List *list) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_Iterator *eina_list_iterator_reversed_new(const Eina_List *list)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new accessor associated with a list.
@@ -1344,8 +1365,8 @@ EINA_API Eina_Iterator        *eina_list_iterator_reversed_new(const Eina_List *
  *
  * @warning @p list must be a pointer to the first element of the list.
  */
-EINA_API Eina_Accessor        *eina_list_accessor_new(const Eina_List *list) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
-
+EINA_API Eina_Accessor *eina_list_accessor_new(const Eina_List *list)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Finds the member of the list and returns the index.
@@ -1362,8 +1383,7 @@ EINA_API Eina_Accessor        *eina_list_accessor_new(const Eina_List *list) EIN
  *
  * @since 1.14
  */
-EINA_API int                   eina_list_data_idx(const Eina_List *list, void *data);
-
+EINA_API int eina_list_data_idx(const Eina_List *list, void *data);
 
 /**
  * @def EINA_LIST_FOREACH

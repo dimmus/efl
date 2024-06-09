@@ -43,14 +43,14 @@
  */
 typedef struct _Eina_Quad
 {
-   double x0; /**< Top left x coordinate */
-   double y0; /**< Top left y coordinate */
-   double x1; /**< Top right x coordinate */
-   double y1; /**< Top right y coordinate */
-   double x2; /**< Bottom right x coordinate */
-   double y2; /**< Bottom right y coordinate */
-   double x3; /**< Bottom left x coordinate */
-   double y3; /**< Bottom left y coordinate */
+  double x0; /**< Top left x coordinate */
+  double y0; /**< Top left y coordinate */
+  double x1; /**< Top right x coordinate */
+  double y1; /**< Top right y coordinate */
+  double x2; /**< Bottom right x coordinate */
+  double y2; /**< Bottom right y coordinate */
+  double x3; /**< Bottom left x coordinate */
+  double y3; /**< Bottom left y coordinate */
 } Eina_Quad;
 
 /**
@@ -61,8 +61,7 @@ typedef struct _Eina_Quad
  *
  * @since 1.14
  * */
-EINA_API void eina_quad_rectangle_to(const Eina_Quad *q,
-                                 Eina_Rectangle *r);
+EINA_API void eina_quad_rectangle_to(const Eina_Quad *q, Eina_Rectangle *r);
 /**
  * @brief Transform the given rectangle to the given quadrangle.
  *
@@ -71,8 +70,7 @@ EINA_API void eina_quad_rectangle_to(const Eina_Quad *q,
  *
  * @since 1.14
  * */
-EINA_API void eina_quad_rectangle_from(Eina_Quad *q,
-                                   const Eina_Rectangle *r);
+EINA_API void eina_quad_rectangle_from(Eina_Quad *q, const Eina_Rectangle *r);
 /**
  * @brief Sets the values of the coordinates of the given quadrangle.
  *
@@ -89,10 +87,14 @@ EINA_API void eina_quad_rectangle_from(Eina_Quad *q,
  * @since 1.14
  * */
 EINA_API void eina_quad_coords_set(Eina_Quad *q,
-                               double x0, double y0,
-                               double x1, double y1,
-                               double x2, double y2,
-                               double x3, double y3);
+                                   double     x0,
+                                   double     y0,
+                                   double     x1,
+                                   double     y1,
+                                   double     x2,
+                                   double     y2,
+                                   double     x3,
+                                   double     y3);
 
 /**
  * @brief Gets the values of the coordinates of the given quadrangle.
@@ -110,10 +112,14 @@ EINA_API void eina_quad_coords_set(Eina_Quad *q,
  * @since 1.14
  * */
 EINA_API void eina_quad_coords_get(const Eina_Quad *q,
-                               double *x0, double *y0,
-                               double *x1, double *y1,
-                               double *x2, double *y2,
-                               double *x3, double *y3);
+                                   double          *x0,
+                                   double          *y0,
+                                   double          *x1,
+                                   double          *y1,
+                                   double          *x2,
+                                   double          *y2,
+                                   double          *x3,
+                                   double          *y3);
 
 /**
  * @}

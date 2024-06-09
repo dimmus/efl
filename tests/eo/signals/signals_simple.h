@@ -3,7 +3,7 @@
 
 typedef struct
 {
-   int cb_count;
+  int cb_count;
 } Simple_Public_Data;
 
 void simple_a_set(Eo *obj, int a);

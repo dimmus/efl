@@ -21,13 +21,13 @@
 
 #include <stdarg.h>
 #include <locale.h>
-#if defined (__MacOSX__) || (defined (__MACH__) && defined (__APPLE__))
-#include <xlocale.h>
+#if defined(__MacOSX__) || (defined(__MACH__) && defined(__APPLE__))
+#  include <xlocale.h>
 #endif
 
 #ifdef _WIN32
-# include <windows.h>
-# include <bcrypt.h>
+#  include <windows.h>
+#  include <bcrypt.h>
 #endif
 
 #include "eina_magic.h"
@@ -37,7 +37,7 @@
 
 #ifdef _WIN32
 
-# define EINA_PATH_SEP_SWAP(p, s1, s2) \
+#  define EINA_PATH_SEP_SWAP(p, s1, s2) \
    do { \
      char *iter = p; \
      while (*iter) \
@@ -48,17 +48,16 @@
        } \
    } while (0)
 
-# define EINA_PATH_TO_UNIX(p) EINA_PATH_SEP_SWAP(p, '\\', '/')
-# define EINA_PATH_TO_WIN32(p) EINA_PATH_SEP_SWAP(p, '/', '\\')
+#  define EINA_PATH_TO_UNIX(p) EINA_PATH_SEP_SWAP(p, '\\', '/')
+#  define EINA_PATH_TO_WIN32(p) EINA_PATH_SEP_SWAP(p, '/', '\\')
 #endif
 
 #ifndef ABS
-# define ABS(x) ((x) < 0 ? -(x) : (x))
+#  define ABS(x) ((x) < 0 ? -(x) : (x))
 #endif
 
 #ifndef CLAMP
-# define CLAMP(x, min, \
-               max) (((x) > (max)) ? (max) : (((x) < (min)) ? (min) : (x)))
+#  define CLAMP(x, min, max) (((x) > (max)) ? (max) : (((x) < (min)) ? (min) : (x)))
 #endif
 
 #define EINA_INLIST_JUMP_SIZE 256
@@ -168,7 +167,7 @@ Efl_Bool eina_magic_string_shutdown(void);
 Efl_Bool eina_simple_xml_init(void);
 Efl_Bool eina_simple_xml_shutdown(void);
 Efl_Bool pass_through_init(void);
-void pass_through_shutdown(void);
+void     pass_through_shutdown(void);
 Efl_Bool eina_vpath_init(void);
 Efl_Bool eina_vpath_shutdown(void);
 Efl_Bool eina_module_init(void);
@@ -244,31 +243,30 @@ Efl_Bool eina_accessor_shutdown(void);
 // Efl_Bool eina__init(void);
 // Efl_Bool eina__shutdown(void);
 
-
-char * _eina_debug_chunk_strdup(const char *str);
-void * _eina_debug_chunk_push(int size);
-void * _eina_debug_chunk_realloc(int size);
-void * _eina_debug_chunk_tmp_push(int size);
-void   _eina_debug_chunk_tmp_reset(void);
+char *_eina_debug_chunk_strdup(const char *str);
+void *_eina_debug_chunk_push(int size);
+void *_eina_debug_chunk_realloc(int size);
+void *_eina_debug_chunk_tmp_push(int size);
+void  _eina_debug_chunk_tmp_reset(void);
 
 #ifdef EINA_STATIC_BUILD_CHAINED_POOL
-  Efl_Bool chained_init(void);
-  void     chained_shutdown(void);
+Efl_Bool chained_init(void);
+void     chained_shutdown(void);
 #endif
 
 #ifdef EINA_STATIC_BUILD_ONE_BIG
-  Efl_Bool one_big_init(void);
-  void     one_big_shutdown(void);
+Efl_Bool one_big_init(void);
+void     one_big_shutdown(void);
 #endif
 
 #ifdef EINA_STATIC_BUILD_PASS_THROUGH
-  Efl_Bool pass_through_init(void);
-  void     pass_through_shutdown(void);
+Efl_Bool pass_through_init(void);
+void     pass_through_shutdown(void);
 #endif
 
 Efl_Bool eina_cpu_init(void);
 Efl_Bool eina_cpu_shutdown(void);
-void eina_cpu_count_internal(void);
+void     eina_cpu_count_internal(void);
 
 Efl_Bool eina_file_mmap_faulty(void *addr, long page_size);
 
@@ -282,7 +280,7 @@ void eina_freeq_main_set(Eina_FreeQ *fq);
 
 #ifdef _WIN32
 extern BCRYPT_ALG_HANDLE _eina_bcrypt_provider;
-typedef _locale_t locale_t;
+typedef _locale_t        locale_t;
 #endif
 locale_t _eina_c_locale_get(void);
 

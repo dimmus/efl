@@ -10,11 +10,11 @@ typedef struct _Efl_Dbus_Model_Method_Data Efl_Dbus_Model_Method_Data;
  */
 struct _Efl_Dbus_Model_Method_Data
 {
-   Eo *obj;
+  Eo *obj;
 
-   const Efl_Dbus_Introspection_Method *method;
+  const Efl_Dbus_Introspection_Method *method;
 
-   Efl_Dbus_Proxy *proxy;
+  Efl_Dbus_Proxy *proxy;
 };
 
 #endif

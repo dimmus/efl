@@ -17,13 +17,14 @@ typedef struct _Fake_Server_Data Fake_Server_Data;
 
 struct _Fake_Server_Data
 {
-   int readonly_property;
-   int writeonly_property;
-   int readwrite_property;
-   int pong_response;
+  int readonly_property;
+  int writeonly_property;
+  int readwrite_property;
+  int pong_response;
 };
 
-Efl_Dbus_Service_Interface *fake_server_start(Fake_Server_Data *data, const char *name);
+Efl_Dbus_Service_Interface *fake_server_start(Fake_Server_Data *data,
+                                              const char       *name);
 void fake_server_stop(Efl_Dbus_Service_Interface *interface);
 
 #endif

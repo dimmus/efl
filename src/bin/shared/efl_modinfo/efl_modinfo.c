@@ -24,41 +24,39 @@
 int
 main(int argc, char **argv)
 {
-    Eina_Module *em;
+  Eina_Module *em;
 
-    eina_init();
-    if (argc != 2)
-    {
-        fprintf(stderr, "Error: Missing module or filename\n");
-        return 1;
-    }
+  eina_init();
+  if (argc != 2)
+  {
+    fprintf(stderr, "Error: Missing module or filename\n");
+    return 1;
+  }
 
-    em = eina_module_new(argv[1]);
-    if (!em)
-    {
-        fprintf(stderr, "Error: Failed to open: %s\n", argv[1]);
-        return 2;
-    }
-    if (!eina_module_load(em))
-    {
-        fprintf(stderr, "Error: Failed to load module\n");
-        eina_module_free(em);
-        return 3;
-    }
-
-    printf("version:        %s\n",
-           (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_ver"));
-    printf("description:    %s\n",
-           (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_desc"));
-    printf(
-        "license:        %s\n",
-        (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_license"));
-    printf(
-        "author:         %s\n",
-        (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_author"));
-
+  em = eina_module_new(argv[1]);
+  if (!em)
+  {
+    fprintf(stderr, "Error: Failed to open: %s\n", argv[1]);
+    return 2;
+  }
+  if (!eina_module_load(em))
+  {
+    fprintf(stderr, "Error: Failed to load module\n");
     eina_module_free(em);
-    eina_shutdown();
+    return 3;
+  }
 
-    return 0;
+  printf("version:        %s\n",
+         (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_ver"));
+  printf("description:    %s\n",
+         (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_desc"));
+  printf("license:        %s\n",
+         (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_license"));
+  printf("author:         %s\n",
+         (char *)eina_module_symbol_get(em, "__EINA_MODULE_UNIQUE_ID_author"));
+
+  eina_module_free(em);
+  eina_shutdown();
+
+  return 0;
 }

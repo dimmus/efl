@@ -1,5 +1,5 @@
 #ifndef EINA_INTERNAL_H
-# define EINA_INTERNAL_H
+#define EINA_INTERNAL_H
 
 /*
  * eina_internal.h
@@ -16,19 +16,19 @@ typedef struct _Eina_Vpath_Interface_User Eina_Vpath_Interface_User;
 
 struct _Eina_Vpath_Interface_User
 {
-   const char *desktop;
-   const char *documents;
-   const char *downloads;
-   const char *music;
-   const char *pictures;
-   const char *pub;
-   const char *templates;
-   const char *videos;
-   const char *data;
-   const char *config;
-   const char *cache;
-   const char *run;
-   const char *tmp;
+  const char *desktop;
+  const char *documents;
+  const char *downloads;
+  const char *music;
+  const char *pictures;
+  const char *pub;
+  const char *templates;
+  const char *videos;
+  const char *data;
+  const char *config;
+  const char *cache;
+  const char *run;
+  const char *tmp;
 };
 
 /**
@@ -57,7 +57,8 @@ EINA_API void __eina_promise_cancel_data(void *data);
  *
  * If you do NOT call this api the virtual paths for app.* will be unset
  */
-EINA_API void eina_vpath_interface_app_set(const char *app_name, Eina_Prefix *p);
+EINA_API void eina_vpath_interface_app_set(const char  *app_name,
+                                           Eina_Prefix *p);
 
 /**
  * Create the desktop specific vpaths

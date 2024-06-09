@@ -9,8 +9,8 @@
 
 typedef struct
 {
-    int a;
-    int b;
+  int a;
+  int b;
 } Private_Data;
 
 #define MY_CLASS SIMPLE_CLASS
@@ -37,35 +37,35 @@ _GET_SET_FUNC(b)
 static int
 _ab_sum_get(Eo *obj, void *class_data EFL_UNUSED)
 {
-    int a = 0, b = 0;
-    a = simple_a_get(obj);
-    b = simple_b_get(obj);
-    printf("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
-    return a + b;
+  int a = 0, b = 0;
+  a = simple_a_get(obj);
+  b = simple_b_get(obj);
+  printf("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
+  return a + b;
 }
 
 static int
 _ab_sum_get2(Eo *obj, void *class_data EFL_UNUSED)
 {
-    int a = 0, b = 0;
-    a = simple_a_get(obj);
-    b = simple_b_get(obj);
-    printf("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
-    return a + b + 1;
+  int a = 0, b = 0;
+  a = simple_a_get(obj);
+  b = simple_b_get(obj);
+  printf("%s %s\n", efl_class_name_get(MY_CLASS), __func__);
+  return a + b + 1;
 }
 
 static Efl_Bool
 _class_initializer(Efl_Class *klass)
 {
-    EFL_OPS_DEFINE(ops,
-                   EFL_OBJECT_OP_FUNC(simple_a_set, _a_set),
-                   EFL_OBJECT_OP_FUNC(simple_a_get, _a_get),
-                   EFL_OBJECT_OP_FUNC(simple_b_set, _b_set),
-                   EFL_OBJECT_OP_FUNC(simple_b_get, _b_get),
-                   EFL_OBJECT_OP_FUNC(interface_ab_sum_get, _ab_sum_get),
-                   EFL_OBJECT_OP_FUNC(interface2_ab_sum_get2, _ab_sum_get2), );
+  EFL_OPS_DEFINE(ops,
+                 EFL_OBJECT_OP_FUNC(simple_a_set, _a_set),
+                 EFL_OBJECT_OP_FUNC(simple_a_get, _a_get),
+                 EFL_OBJECT_OP_FUNC(simple_b_set, _b_set),
+                 EFL_OBJECT_OP_FUNC(simple_b_get, _b_get),
+                 EFL_OBJECT_OP_FUNC(interface_ab_sum_get, _ab_sum_get),
+                 EFL_OBJECT_OP_FUNC(interface2_ab_sum_get2, _ab_sum_get2), );
 
-    return efl_class_functions_set(klass, &ops, NULL);
+  return efl_class_functions_set(klass, &ops, NULL);
 }
 
 static const Efl_Class_Description class_desc = { EO_VERSION,

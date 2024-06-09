@@ -47,7 +47,7 @@
 Efl_Bool
 eina_strbuf_common_init(void)
 {
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 /**
@@ -64,7 +64,7 @@ eina_strbuf_common_init(void)
 Efl_Bool
 eina_strbuf_common_shutdown(void)
 {
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 /**
@@ -79,14 +79,14 @@ eina_strbuf_common_shutdown(void)
 static Efl_Bool
 _eina_strbuf_common_init(size_t csize, Efl_Strbuf *buf)
 {
-    buf->ro   = EFL_FALSE;
-    buf->len  = 0;
-    buf->size = EINA_STRBUF_INIT_SIZE;
-    buf->step = EINA_STRBUF_INIT_STEP;
+  buf->ro   = EFL_FALSE;
+  buf->len  = 0;
+  buf->size = EINA_STRBUF_INIT_SIZE;
+  buf->step = EINA_STRBUF_INIT_STEP;
 
-    buf->buf = calloc(csize, buf->size);
-    if (EINA_UNLIKELY(!buf->buf)) return EFL_FALSE;
-    return EFL_TRUE;
+  buf->buf = calloc(csize, buf->size);
+  if (EINA_UNLIKELY(!buf->buf)) return EFL_FALSE;
+  return EFL_TRUE;
 }
 
 /**
@@ -104,12 +104,12 @@ _eina_strbuf_common_manage_init(size_t csize EFL_UNUSED,
                                 void        *str,
                                 size_t       len)
 {
-    buf->len  = len;
-    buf->size = len + 1;
-    buf->step = EINA_STRBUF_INIT_STEP;
-    buf->buf  = str;
+  buf->len  = len;
+  buf->size = len + 1;
+  buf->step = EINA_STRBUF_INIT_STEP;
+  buf->buf  = str;
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 /**
@@ -125,51 +125,50 @@ _eina_strbuf_common_manage_init(size_t csize EFL_UNUSED,
 static inline Efl_Bool
 _eina_strbuf_common_resize(size_t csize, Efl_Strbuf *buf, size_t size)
 {
-    size_t new_size, new_step, delta;
-    void  *buffer;
-    void  *copy;
+  size_t new_size, new_step, delta;
+  void  *buffer;
+  void  *copy;
 
-    size += 1; // Add extra space for '\0'
+  size += 1; // Add extra space for '\0'
 
    /* nothing to do */
-    if (size == buf->size) return EFL_TRUE;
-    else if (size > buf->size) delta = size - buf->size;
-    else delta = buf->size - size;
+  if (size == buf->size) return EFL_TRUE;
+  else if (size > buf->size) delta = size - buf->size;
+  else delta = buf->size - size;
 
    /* check if should keep the same step (just used while growing) */
-    if ((delta <= buf->step) && (size > buf->size)) new_step = buf->step;
-    else
-    {
-        new_step =
-            (((delta / EINA_STRBUF_INIT_STEP) + 1) * EINA_STRBUF_INIT_STEP);
-        if (new_step > EINA_STRBUF_MAX_STEP) new_step = EINA_STRBUF_MAX_STEP;
-    }
+  if ((delta <= buf->step) && (size > buf->size)) new_step = buf->step;
+  else
+  {
+    new_step = (((delta / EINA_STRBUF_INIT_STEP) + 1) * EINA_STRBUF_INIT_STEP);
+    if (new_step > EINA_STRBUF_MAX_STEP) new_step = EINA_STRBUF_MAX_STEP;
+  }
 
-    new_size = (((size / new_step) + 1) * new_step);
+  new_size = (((size / new_step) + 1) * new_step);
 
-    if (buf->size == new_size * csize) return EFL_TRUE;
+  if (buf->size == new_size * csize) return EFL_TRUE;
 
-    copy = buf->buf;
-    if (EINA_UNLIKELY(buf->ro)) buf->buf = NULL;
+  copy = buf->buf;
+  if (EINA_UNLIKELY(buf->ro)) buf->buf = NULL;
 
    /* reallocate the buffer to the new size */
-    buffer = realloc(buf->buf, new_size * csize);
-    if (EINA_UNLIKELY(!buffer)) goto on_error;
+  buffer = realloc(buf->buf, new_size * csize);
+  if (EINA_UNLIKELY(!buffer)) goto on_error;
 
-    if (EINA_UNLIKELY(buf->ro))
-    {
-        memcpy(buffer, copy, buf->len);
-        buf->ro = EFL_FALSE;
-    }
+  if (EINA_UNLIKELY(buf->ro))
+  {
+    memcpy(buffer, copy, buf->len);
+    buf->ro = EFL_FALSE;
+  }
 
-    buf->buf  = buffer;
-    buf->size = new_size;
-    buf->step = new_step;
-    return EFL_TRUE;
+  buf->buf  = buffer;
+  buf->size = new_size;
+  buf->step = new_step;
+  return EFL_TRUE;
 
 on_error:
-    if (buf->ro) buf->buf = copy;
-    return EFL_FALSE;
+  if (buf->ro) buf->buf = copy;
+  return EFL_FALSE;
 }
 
 /**
@@ -186,8 +185,8 @@ on_error:
 Efl_Bool
 _eina_strbuf_common_grow(size_t csize, Efl_Strbuf *buf, size_t size)
 {
-    if ((size + 1) < buf->size) return EFL_TRUE;
-    return _eina_strbuf_common_resize(csize, buf, size);
+  if ((size + 1) < buf->size) return EFL_TRUE;
+  return _eina_strbuf_common_resize(csize, buf, size);
 }
 
 /**
@@ -211,20 +210,20 @@ _eina_strbuf_common_insert_length(size_t      csize,
                                   size_t      len,
                                   size_t      pos)
 {
-    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + len)))
-        return EFL_FALSE;
+  if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + len)))
+    return EFL_FALSE;
 
    /* move the existing text */
-    memmove(((unsigned char *)(buf->buf)) + ((len + pos) * csize),
-            ((unsigned char *)(buf->buf)) + (pos * csize),
-            (buf->len - pos) * csize);
+  memmove(((unsigned char *)(buf->buf)) + ((len + pos) * csize),
+          ((unsigned char *)(buf->buf)) + (pos * csize),
+          (buf->len - pos) * csize);
 
    /* and now insert the given string */
-    memcpy((unsigned char *)buf->buf + (pos * csize), str, len * csize);
+  memcpy((unsigned char *)buf->buf + (pos * csize), str, len * csize);
 
-    buf->len += len;
-    memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
-    return EFL_TRUE;
+  buf->len += len;
+  memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
+  return EFL_TRUE;
 }
 
 /*============================================================================*
@@ -248,16 +247,16 @@ _eina_strbuf_common_insert_length(size_t      csize,
 Efl_Strbuf *
 eina_strbuf_common_new(size_t csize)
 {
-    Efl_Strbuf *buf;
+  Efl_Strbuf *buf;
 
-    buf = calloc(1, sizeof(Efl_Strbuf));
-    if (EINA_UNLIKELY(!buf)) return NULL;
-    if (EINA_UNLIKELY(!_eina_strbuf_common_init(csize, buf)))
-    {
-        eina_strbuf_common_free(buf);
-        return NULL;
-    }
-    return buf;
+  buf = calloc(1, sizeof(Efl_Strbuf));
+  if (EINA_UNLIKELY(!buf)) return NULL;
+  if (EINA_UNLIKELY(!_eina_strbuf_common_init(csize, buf)))
+  {
+    eina_strbuf_common_free(buf);
+    return NULL;
+  }
+  return buf;
 }
 
 /**
@@ -280,16 +279,16 @@ eina_strbuf_common_new(size_t csize)
 Efl_Strbuf *
 eina_strbuf_common_manage_new(size_t csize, void *str, size_t len)
 {
-    Efl_Strbuf *buf;
+  Efl_Strbuf *buf;
 
-    buf = calloc(1, sizeof(Efl_Strbuf));
-    if (EINA_UNLIKELY(!buf)) return NULL;
-    if (EINA_UNLIKELY(!_eina_strbuf_common_manage_init(csize, buf, str, len)))
-    {
-        eina_strbuf_common_free(buf);
-        return NULL;
-    }
-    return buf;
+  buf = calloc(1, sizeof(Efl_Strbuf));
+  if (EINA_UNLIKELY(!buf)) return NULL;
+  if (EINA_UNLIKELY(!_eina_strbuf_common_manage_init(csize, buf, str, len)))
+  {
+    eina_strbuf_common_free(buf);
+    return NULL;
+  }
+  return buf;
 }
 
 /**
@@ -312,18 +311,18 @@ eina_strbuf_common_manage_new(size_t csize, void *str, size_t len)
 Efl_Strbuf *
 eina_strbuf_common_manage_ro_new(size_t csize, const void *str, size_t len)
 {
-    Efl_Strbuf *buf;
+  Efl_Strbuf *buf;
 
-    buf = calloc(1, sizeof(Efl_Strbuf));
-    if (EINA_UNLIKELY(!buf)) return NULL;
-    if (EINA_UNLIKELY(
-            !_eina_strbuf_common_manage_init(csize, buf, (void *)str, len)))
-    {
-        eina_strbuf_common_free(buf);
-        return NULL;
-    }
-    buf->ro = EFL_TRUE;
-    return buf;
+  buf = calloc(1, sizeof(Efl_Strbuf));
+  if (EINA_UNLIKELY(!buf)) return NULL;
+  if (EINA_UNLIKELY(
+        !_eina_strbuf_common_manage_init(csize, buf, (void *)str, len)))
+  {
+    eina_strbuf_common_free(buf);
+    return NULL;
+  }
+  buf->ro = EFL_TRUE;
+  return buf;
 }
 
 /**
@@ -338,8 +337,8 @@ eina_strbuf_common_manage_ro_new(size_t csize, const void *str, size_t len)
 void
 eina_strbuf_common_free(Efl_Strbuf *buf)
 {
-    if (!buf->ro) free(buf->buf);
-    free(buf);
+  if (!buf->ro) free(buf->buf);
+  free(buf);
 }
 
 /**
@@ -356,16 +355,16 @@ void
 eina_strbuf_common_reset(size_t csize, Efl_Strbuf *buf)
 {
    /* This is a read only buffer which need change to be made */
-    if (buf->ro)
-    {
-        _eina_strbuf_common_init(csize, buf);
-        buf->ro = EFL_FALSE;
-        return;
-    }
+  if (buf->ro)
+  {
+    _eina_strbuf_common_init(csize, buf);
+    buf->ro = EFL_FALSE;
+    return;
+  }
 
-    buf->len  = 0;
-    buf->step = EINA_STRBUF_INIT_STEP;
-    memset(buf->buf, 0, csize);
+  buf->len  = 0;
+  buf->step = EINA_STRBUF_INIT_STEP;
+  memset(buf->buf, 0, csize);
 }
 
 /**
@@ -404,20 +403,18 @@ eina_strbuf_common_expand(size_t      csize,
                           Efl_Strbuf *buf,
                           size_t      minimum_unused_space)
 {
-    Eina_Rw_Slice ret = { .mem = NULL, .len = 0 };
+  Eina_Rw_Slice ret = { .mem = NULL, .len = 0 };
 
-    if (EINA_LIKELY(buf->len + minimum_unused_space < buf->size)) goto end;
+  if (EINA_LIKELY(buf->len + minimum_unused_space < buf->size)) goto end;
 
-    if (EINA_UNLIKELY(
-            !_eina_strbuf_common_grow(csize,
-                                      buf,
-                                      buf->len + minimum_unused_space)))
-        return ret;
+  if (EINA_UNLIKELY(
+        !_eina_strbuf_common_grow(csize, buf, buf->len + minimum_unused_space)))
+    return ret;
 
 end:
-    ret.mem = (unsigned char *)buf->buf + (buf->len * csize);
-    ret.len = buf->size - buf->len - 1;
-    return ret;
+  ret.mem = (unsigned char *)buf->buf + (buf->len * csize);
+  ret.len = buf->size - buf->len - 1;
+  return ret;
 }
 
 /**
@@ -445,10 +442,10 @@ end:
 Efl_Bool
 eina_strbuf_common_use(Efl_Strbuf *buf, size_t extra_bytes)
 {
-    if (EINA_UNLIKELY(buf->size < buf->len + extra_bytes + 1)) return EFL_FALSE;
+  if (EINA_UNLIKELY(buf->size < buf->len + extra_bytes + 1)) return EFL_FALSE;
 
-    buf->len += extra_bytes;
-    return EFL_TRUE;
+  buf->len += extra_bytes;
+  return EFL_TRUE;
 }
 
 /**
@@ -475,15 +472,15 @@ eina_strbuf_common_append(size_t      csize,
                           const void *str,
                           size_t      len)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
 
-    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + len)))
-        return EFL_FALSE;
-    memcpy(((unsigned char *)(buf->buf)) + (buf->len * csize),
-           str,
-           (len + 1) * csize);
-    buf->len += len;
-    return EFL_TRUE;
+  if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + len)))
+    return EFL_FALSE;
+  memcpy(((unsigned char *)(buf->buf)) + (buf->len * csize),
+         str,
+         (len + 1) * csize);
+  buf->len += len;
+  return EFL_TRUE;
 }
 
 /**
@@ -516,17 +513,15 @@ eina_strbuf_common_append_n(size_t      csize,
                             size_t      len,
                             size_t      maxlen)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
 
-    if (len > maxlen) len = maxlen;
-    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + len)))
-        return EFL_FALSE;
-    memcpy(((unsigned char *)(buf->buf)) + (buf->len * csize),
-           str,
-           len * csize);
-    buf->len += len;
-    memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
-    return EFL_TRUE;
+  if (len > maxlen) len = maxlen;
+  if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + len)))
+    return EFL_FALSE;
+  memcpy(((unsigned char *)(buf->buf)) + (buf->len * csize), str, len * csize);
+  buf->len += len;
+  memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
+  return EFL_TRUE;
 }
 
 /**
@@ -556,16 +551,16 @@ eina_strbuf_common_append_length(size_t      csize,
                                  const void *str,
                                  size_t      length)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
 
-    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + length)))
-        return EFL_FALSE;
-    memcpy(((unsigned char *)(buf->buf)) + (buf->len * csize),
-           str,
-           length * csize);
-    buf->len += length;
-    memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
-    return EFL_TRUE;
+  if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + length)))
+    return EFL_FALSE;
+  memcpy(((unsigned char *)(buf->buf)) + (buf->len * csize),
+         str,
+         length * csize);
+  buf->len += length;
+  memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
+  return EFL_TRUE;
 }
 
 /**
@@ -591,10 +586,10 @@ eina_strbuf_common_insert(size_t      csize,
                           size_t      len,
                           size_t      pos)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
 
-    if (pos >= buf->len) return eina_strbuf_common_append(csize, buf, str, len);
-    return _eina_strbuf_common_insert_length(csize, buf, str, len, pos);
+  if (pos >= buf->len) return eina_strbuf_common_append(csize, buf, str, len);
+  return _eina_strbuf_common_insert_length(csize, buf, str, len, pos);
 }
 
 /**
@@ -625,12 +620,12 @@ eina_strbuf_common_insert_n(size_t      csize,
                             size_t      maxlen,
                             size_t      pos)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
 
-    if (pos >= buf->len)
-        return eina_strbuf_common_append_n(csize, buf, str, len, maxlen);
-    if (len > maxlen) len = maxlen;
-    return _eina_strbuf_common_insert_length(csize, buf, str, len, pos);
+  if (pos >= buf->len)
+    return eina_strbuf_common_append_n(csize, buf, str, len, maxlen);
+  if (len > maxlen) len = maxlen;
+  return _eina_strbuf_common_insert_length(csize, buf, str, len, pos);
 }
 
 /**
@@ -662,11 +657,11 @@ eina_strbuf_common_insert_length(size_t      csize,
                                  size_t      length,
                                  size_t      pos)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
 
-    if (pos >= buf->len)
-        return eina_strbuf_common_append_length(csize, buf, str, length);
-    return _eina_strbuf_common_insert_length(csize, buf, str, length, pos);
+  if (pos >= buf->len)
+    return eina_strbuf_common_append_length(csize, buf, str, length);
+  return _eina_strbuf_common_insert_length(csize, buf, str, length, pos);
 }
 
 /**
@@ -685,12 +680,12 @@ eina_strbuf_common_insert_length(size_t      csize,
 Efl_Bool
 eina_strbuf_common_append_char(size_t csize, Efl_Strbuf *buf, const void *c)
 {
-    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + 1)))
-        return EFL_FALSE;
+  if (EINA_UNLIKELY(!_eina_strbuf_common_grow(csize, buf, buf->len + 1)))
+    return EFL_FALSE;
 
-    memcpy(((unsigned char *)(buf->buf)) + ((buf->len)++ * csize), c, csize);
-    memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
-    return EFL_TRUE;
+  memcpy(((unsigned char *)(buf->buf)) + ((buf->len)++ * csize), c, csize);
+  memset(((unsigned char *)(buf->buf)) + (buf->len * csize), 0, csize);
+  return EFL_TRUE;
 }
 
 /**
@@ -714,8 +709,8 @@ eina_strbuf_common_insert_char(size_t      csize,
                                const void *c,
                                size_t      pos)
 {
-    if (pos >= buf->len) return eina_strbuf_common_append_char(csize, buf, c);
-    return _eina_strbuf_common_insert_length(csize, buf, c, 1, pos);
+  if (pos >= buf->len) return eina_strbuf_common_append_char(csize, buf, c);
+  return _eina_strbuf_common_insert_length(csize, buf, c, 1, pos);
 }
 
 /**
@@ -740,36 +735,36 @@ eina_strbuf_common_remove(size_t      csize,
                           size_t      start,
                           size_t      end)
 {
-    size_t remove_len, tail_len;
+  size_t remove_len, tail_len;
 
-    if (end >= buf->len) end = buf->len;
-    if (end <= start) return EFL_TRUE;
+  if (end >= buf->len) end = buf->len;
+  if (end <= start) return EFL_TRUE;
 
    /* This is a read only buffer which need change to be made */
-    if (buf->ro)
-    {
-        char *dest;
+  if (buf->ro)
+  {
+    char *dest;
 
-        dest = malloc(buf->size);
-        if (!dest) return 0;
-        memcpy(dest, buf->buf, buf->len);
-        buf->buf = dest;
-        buf->ro  = EFL_FALSE;
-    }
+    dest = malloc(buf->size);
+    if (!dest) return 0;
+    memcpy(dest, buf->buf, buf->len);
+    buf->buf = dest;
+    buf->ro  = EFL_FALSE;
+  }
 
-    remove_len = end - start;
-    if (remove_len == buf->len)
-    {
-        free(buf->buf);
-        return _eina_strbuf_common_init(csize, buf);
-    }
+  remove_len = end - start;
+  if (remove_len == buf->len)
+  {
+    free(buf->buf);
+    return _eina_strbuf_common_init(csize, buf);
+  }
 
-    tail_len = buf->len - end + 1; /* includes '\0' */
-    memmove(((unsigned char *)(buf->buf)) + (start * csize),
-            ((unsigned char *)(buf->buf)) + (end * csize),
-            tail_len * csize);
-    buf->len -= remove_len;
-    return _eina_strbuf_common_resize(csize, buf, buf->len);
+  tail_len = buf->len - end + 1; /* includes '\0' */
+  memmove(((unsigned char *)(buf->buf)) + (start * csize),
+          ((unsigned char *)(buf->buf)) + (end * csize),
+          tail_len * csize);
+  buf->len -= remove_len;
+  return _eina_strbuf_common_resize(csize, buf, buf->len);
 }
 
 /**
@@ -789,7 +784,7 @@ eina_strbuf_common_remove(size_t      csize,
 const void *
 eina_strbuf_common_string_get(const Efl_Strbuf *buf)
 {
-    return buf->buf;
+  return buf->buf;
 }
 
 /**
@@ -810,26 +805,26 @@ eina_strbuf_common_string_get(const Efl_Strbuf *buf)
 void *
 eina_strbuf_common_string_steal(size_t csize, Efl_Strbuf *buf)
 {
-    void *ret;
+  void *ret;
 
    // If the buffer is ro, the caller would have to do additional
    // test to detect if it is the same string or not. Let's make
    // life for everyone easy.
-    if (buf->ro)
-    {
-        char *dest;
+  if (buf->ro)
+  {
+    char *dest;
 
-        dest = malloc(buf->size);
-        if (!dest) return 0;
-        memcpy(dest, buf->buf, buf->len);
-        buf->buf = dest;
-        buf->ro  = EFL_FALSE;
-    }
+    dest = malloc(buf->size);
+    if (!dest) return 0;
+    memcpy(dest, buf->buf, buf->len);
+    buf->buf = dest;
+    buf->ro  = EFL_FALSE;
+  }
 
-    ret = buf->buf;
+  ret = buf->buf;
    // TODO: Check return value and do something clever
-    _eina_strbuf_common_init(csize, buf);
-    return ret;
+  _eina_strbuf_common_init(csize, buf);
+  return ret;
 }
 
 /**
@@ -845,8 +840,8 @@ eina_strbuf_common_string_steal(size_t csize, Efl_Strbuf *buf)
 void
 eina_strbuf_common_string_free(size_t csize, Efl_Strbuf *buf)
 {
-    free(buf->buf);
-    _eina_strbuf_common_init(csize, buf);
+  free(buf->buf);
+  _eina_strbuf_common_init(csize, buf);
 }
 
 /**
@@ -861,7 +856,7 @@ eina_strbuf_common_string_free(size_t csize, Efl_Strbuf *buf)
 size_t
 eina_strbuf_common_length_get(const Efl_Strbuf *buf)
 {
-    return buf->len;
+  return buf->len;
 }
 
 /**
@@ -875,10 +870,10 @@ eina_strbuf_common_length_get(const Efl_Strbuf *buf)
 Eina_Slice
 eina_strbuf_common_slice_get(const Efl_Strbuf *buf)
 {
-    Eina_Slice ret;
-    ret.len = buf->len;
-    ret.mem = buf->buf;
-    return ret;
+  Eina_Slice ret;
+  ret.len = buf->len;
+  ret.mem = buf->buf;
+  return ret;
 }
 
 /**
@@ -892,10 +887,10 @@ eina_strbuf_common_slice_get(const Efl_Strbuf *buf)
 Eina_Rw_Slice
 eina_strbuf_common_rw_slice_get(const Efl_Strbuf *buf)
 {
-    Eina_Rw_Slice ret;
-    ret.len = buf->len;
-    ret.mem = buf->buf;
-    return ret;
+  Eina_Rw_Slice ret;
+  ret.len = buf->len;
+  ret.mem = buf->buf;
+  return ret;
 }
 
 /**
@@ -925,198 +920,198 @@ eina_strbuf_replace(Efl_Strbuf  *buf,
                     const char  *with,
                     unsigned int n)
 {
-    size_t len1, len2;
-    char  *spos;
-    size_t pos;
+  size_t len1, len2;
+  char  *spos;
+  size_t pos;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(with, EFL_FALSE);
-    EINA_MAGIC_CHECK_STRBUF(buf, 0);
-    if (n == 0) return EFL_FALSE;
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(with, EFL_FALSE);
+  EINA_MAGIC_CHECK_STRBUF(buf, 0);
+  if (n == 0) return EFL_FALSE;
 
-    spos = buf->buf;
-    while (n--)
-    {
-        spos = strstr(spos, str);
-        if (!spos || *spos == '\0') return EFL_FALSE;
-        if (n) spos++;
-    }
+  spos = buf->buf;
+  while (n--)
+  {
+    spos = strstr(spos, str);
+    if (!spos || *spos == '\0') return EFL_FALSE;
+    if (n) spos++;
+  }
 
-    pos  = spos - (const char *)buf->buf;
-    len1 = strlen(str);
-    len2 = strlen(with);
+  pos  = spos - (const char *)buf->buf;
+  len1 = strlen(str);
+  len2 = strlen(with);
 
    /* This is a read only buffer which need change to be made */
-    if (buf->ro)
-    {
-        char *dest;
+  if (buf->ro)
+  {
+    char *dest;
 
-        dest = malloc(buf->size);
-        if (!dest) return 0;
-        memcpy(dest, buf->buf, buf->len);
-        buf->buf = dest;
-        buf->ro  = EFL_FALSE;
-    }
+    dest = malloc(buf->size);
+    if (!dest) return 0;
+    memcpy(dest, buf->buf, buf->len);
+    buf->buf = dest;
+    buf->ro  = EFL_FALSE;
+  }
 
-    if (len1 != len2)
-    {
+  if (len1 != len2)
+  {
         /* resize the buffer if necessary */
-        if (EINA_UNLIKELY(!_eina_strbuf_common_grow(_STRBUF_CSIZE,
-                                                    buf,
-                                                    buf->len - len1 + len2)))
-            return EFL_FALSE; /* move the existing text */
-        memmove(((unsigned char *)(buf->buf)) + pos + len2,
-                ((unsigned char *)(buf->buf)) + pos + len1,
-                buf->len - pos - len1);
-    }
+    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(_STRBUF_CSIZE,
+                                                buf,
+                                                buf->len - len1 + len2)))
+      return EFL_FALSE; /* move the existing text */
+    memmove(((unsigned char *)(buf->buf)) + pos + len2,
+            ((unsigned char *)(buf->buf)) + pos + len1,
+            buf->len - pos - len1);
+  }
    /* and now insert the given string */
-    memcpy(((unsigned char *)(buf->buf)) + pos, with, len2);
-    buf->len += len2 - len1;
-    memset(((unsigned char *)(buf->buf)) + buf->len, 0, 1);
-    return EFL_TRUE;
+  memcpy(((unsigned char *)(buf->buf)) + pos, with, len2);
+  buf->len += len2 - len1;
+  memset(((unsigned char *)(buf->buf)) + buf->len, 0, 1);
+  return EFL_TRUE;
 }
 
 EINA_API Efl_Bool
 eina_strbuf_replace_last(Efl_Strbuf *buf, const char *str, const char *with)
 {
-    size_t len1, len2;
-    char  *spos, *spos_next;
-    size_t pos;
+  size_t len1, len2;
+  char  *spos, *spos_next;
+  size_t pos;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(with, EFL_FALSE);
-    EINA_MAGIC_CHECK_STRBUF(buf, 0);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(with, EFL_FALSE);
+  EINA_MAGIC_CHECK_STRBUF(buf, 0);
 
-    spos      = NULL;
-    spos_next = strstr(buf->buf, str);
-    while (spos_next && *spos_next)
-    {
-        spos      = spos_next;
-        spos_next = strstr(spos + 1, str);
-    }
+  spos      = NULL;
+  spos_next = strstr(buf->buf, str);
+  while (spos_next && *spos_next)
+  {
+    spos      = spos_next;
+    spos_next = strstr(spos + 1, str);
+  }
 
-    if (!spos) return EFL_FALSE;
+  if (!spos) return EFL_FALSE;
 
-    pos  = spos - (const char *)buf->buf;
-    len1 = strlen(str);
-    len2 = strlen(with);
+  pos  = spos - (const char *)buf->buf;
+  len1 = strlen(str);
+  len2 = strlen(with);
 
    /* This is a read only buffer which need change to be made */
-    if (buf->ro)
-    {
-        char *dest;
+  if (buf->ro)
+  {
+    char *dest;
 
-        dest = malloc(buf->size);
-        if (!dest) return 0;
-        memcpy(dest, buf->buf, buf->len);
-        buf->buf = dest;
-    }
+    dest = malloc(buf->size);
+    if (!dest) return 0;
+    memcpy(dest, buf->buf, buf->len);
+    buf->buf = dest;
+  }
 
-    if (len1 != len2)
-    {
+  if (len1 != len2)
+  {
         /* resize the buffer if necessary */
-        if (EINA_UNLIKELY(!_eina_strbuf_common_grow(_STRBUF_CSIZE,
-                                                    buf,
-                                                    buf->len - len1 + len2)))
-            return EFL_FALSE; /* move the existing text */
-        memmove(((unsigned char *)(buf->buf)) + pos + len2,
-                ((unsigned char *)(buf->buf)) + pos + len1,
-                buf->len - pos - len1);
-    }
+    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(_STRBUF_CSIZE,
+                                                buf,
+                                                buf->len - len1 + len2)))
+      return EFL_FALSE; /* move the existing text */
+    memmove(((unsigned char *)(buf->buf)) + pos + len2,
+            ((unsigned char *)(buf->buf)) + pos + len1,
+            buf->len - pos - len1);
+  }
    /* and now insert the given string */
-    memcpy(((unsigned char *)(buf->buf)) + pos, with, len2);
-    buf->len += len2 - len1;
-    memset(((unsigned char *)(buf->buf)) + buf->len, 0, 1);
-    return EFL_TRUE;
+  memcpy(((unsigned char *)(buf->buf)) + pos, with, len2);
+  buf->len += len2 - len1;
+  memset(((unsigned char *)(buf->buf)) + buf->len, 0, 1);
+  return EFL_TRUE;
 }
 
 EINA_API int
 eina_strbuf_replace_all(Efl_Strbuf *buf, const char *str, const char *with)
 {
-    size_t len1, len2, len;
-    char  *tmp_buf = NULL;
-    char  *spos;
-    size_t pos, start;
-    size_t pos_tmp, start_tmp;
-    int    n = 0;
+  size_t len1, len2, len;
+  char  *tmp_buf = NULL;
+  char  *spos;
+  size_t pos, start;
+  size_t pos_tmp, start_tmp;
+  int    n = 0;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(str, 0);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(with, 0);
-    EINA_MAGIC_CHECK_STRBUF(buf, 0);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, 0);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(with, 0);
+  EINA_MAGIC_CHECK_STRBUF(buf, 0);
 
-    spos = strstr(buf->buf, str);
-    if (!spos || *spos == '\0') return 0;
+  spos = strstr(buf->buf, str);
+  if (!spos || *spos == '\0') return 0;
 
    /* This is a read only buffer which need change to be made */
-    if (buf->ro)
-    {
-        char *dest;
+  if (buf->ro)
+  {
+    char *dest;
 
-        dest = malloc(buf->size);
-        if (!dest) return 0;
-        memcpy(dest, buf->buf, buf->len);
-        buf->buf = dest;
-        buf->ro  = EFL_FALSE;
-    }
+    dest = malloc(buf->size);
+    if (!dest) return 0;
+    memcpy(dest, buf->buf, buf->len);
+    buf->buf = dest;
+    buf->ro  = EFL_FALSE;
+  }
 
-    len1 = strlen(str);
-    len2 = strlen(with);
-    /* if the size of the two string is equal, it is fairly easy to replace them
+  len1 = strlen(str);
+  len2 = strlen(with);
+  /* if the size of the two string is equal, it is fairly easy to replace them
     * we don't need to resize the buffer or doing other calculations */
-    if (len1 == len2)
-    {
-        while (spos)
-        {
-            memcpy(spos, with, len2);
-            spos = strstr(spos + len2, str);
-            n++;
-        }
-        return n;
-    }
-    pos = pos_tmp = spos - (const char *)buf->buf;
-    tmp_buf       = buf->buf;
-    buf->buf      = malloc(buf->size);
-    if (EINA_UNLIKELY(!buf->buf))
-    {
-        buf->buf = tmp_buf;
-        return 0;
-    }
-    start = start_tmp = 0;
-    len               = buf->len;
+  if (len1 == len2)
+  {
     while (spos)
     {
-        n++;
-        len = (len + len2) - len1;
-        /* resize the buffer if necessary */
-        if (EINA_UNLIKELY(!_eina_strbuf_common_grow(_STRBUF_CSIZE, buf, len)))
-        {
-            /* we have to stop replacing here, because we haven't enough
-              * memory to go on */
-            len = (len + len1) - len2;
-            break;
-        }
-        /* copy the untouched text */
-        memcpy(((unsigned char *)(buf->buf)) + start,
-               tmp_buf + start_tmp,
-               pos - start);
-        /* copy the new string */
-        memcpy(((unsigned char *)(buf->buf)) + pos, with, len2);
-        /* calculate the next positions */
-        start_tmp = pos_tmp + len1;
-        start     = pos + len2;
-        spos      = strstr(tmp_buf + start_tmp, str);
-        /* this calculations don't make sense if spos == NULL, but the
-         * calculated values won't be used, because the loop will stop
-         * then */
-        pos_tmp = spos - tmp_buf;
-        pos     = start + pos_tmp - start_tmp;
+      memcpy(spos, with, len2);
+      spos = strstr(spos + len2, str);
+      n++;
     }
-    /* and now copy the rest of the text */
+    return n;
+  }
+  pos = pos_tmp = spos - (const char *)buf->buf;
+  tmp_buf       = buf->buf;
+  buf->buf      = malloc(buf->size);
+  if (EINA_UNLIKELY(!buf->buf))
+  {
+    buf->buf = tmp_buf;
+    return 0;
+  }
+  start = start_tmp = 0;
+  len               = buf->len;
+  while (spos)
+  {
+    n++;
+    len = (len + len2) - len1;
+    /* resize the buffer if necessary */
+    if (EINA_UNLIKELY(!_eina_strbuf_common_grow(_STRBUF_CSIZE, buf, len)))
+    {
+      /* we have to stop replacing here, because we haven't enough
+              * memory to go on */
+      len = (len + len1) - len2;
+      break;
+    }
+    /* copy the untouched text */
     memcpy(((unsigned char *)(buf->buf)) + start,
            tmp_buf + start_tmp,
-           len - start);
-    buf->len = len;
-    memset(((unsigned char *)(buf->buf)) + buf->len, 0, 1);
-    free(tmp_buf);
-    return n;
+           pos - start);
+    /* copy the new string */
+    memcpy(((unsigned char *)(buf->buf)) + pos, with, len2);
+    /* calculate the next positions */
+    start_tmp = pos_tmp + len1;
+    start     = pos + len2;
+    spos      = strstr(tmp_buf + start_tmp, str);
+    /* this calculations don't make sense if spos == NULL, but the
+         * calculated values won't be used, because the loop will stop
+         * then */
+    pos_tmp = spos - tmp_buf;
+    pos     = start + pos_tmp - start_tmp;
+  }
+  /* and now copy the rest of the text */
+  memcpy(((unsigned char *)(buf->buf)) + start,
+         tmp_buf + start_tmp,
+         len - start);
+  buf->len = len;
+  memset(((unsigned char *)(buf->buf)) + buf->len, 0, 1);
+  free(tmp_buf);
+  return n;
 }

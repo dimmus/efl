@@ -52,339 +52,339 @@ typedef struct _Efl_Core_Wayland_Surface  Efl_Core_Wayland_Surface;
 /* matches protocol values */
 typedef enum
 {
-    EFL_CORE_WAYLAND_DRAG_ACTION_NONE = 0,
-    EFL_CORE_WAYLAND_DRAG_ACTION_COPY = 1,
-    EFL_CORE_WAYLAND_DRAG_ACTION_MOVE = 2,
-    EFL_CORE_WAYLAND_DRAG_ACTION_ASK  = 4,
-    EFL_CORE_WAYLAND_DRAG_ACTION_LAST = 5,
+  EFL_CORE_WAYLAND_DRAG_ACTION_NONE = 0,
+  EFL_CORE_WAYLAND_DRAG_ACTION_COPY = 1,
+  EFL_CORE_WAYLAND_DRAG_ACTION_MOVE = 2,
+  EFL_CORE_WAYLAND_DRAG_ACTION_ASK  = 4,
+  EFL_CORE_WAYLAND_DRAG_ACTION_LAST = 5,
 } Efl_Core_Wayland_Drag_Action;
 
 typedef enum
 {
-    EFL_CORE_WAYLAND_SEAT_CAPABILITIES_NONE     = 0,
-    EFL_CORE_WAYLAND_SEAT_CAPABILITIES_POINTER  = 1,
-    EFL_CORE_WAYLAND_SEAT_CAPABILITIES_KEYBOARD = 2,
-    EFL_CORE_WAYLAND_SEAT_CAPABILITIES_TOUCH    = 4
+  EFL_CORE_WAYLAND_SEAT_CAPABILITIES_NONE     = 0,
+  EFL_CORE_WAYLAND_SEAT_CAPABILITIES_POINTER  = 1,
+  EFL_CORE_WAYLAND_SEAT_CAPABILITIES_KEYBOARD = 2,
+  EFL_CORE_WAYLAND_SEAT_CAPABILITIES_TOUCH    = 4
 } Efl_Core_Wayland_Seat_Capabilities;
 
 struct _Efl_Core_Wayland_Event_Connection
 {
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Display *display;
 };
 
 typedef struct _Efl_Core_Wayland_Event_Connection
-    Efl_Core_Wayland_Event_Connect;
+  Efl_Core_Wayland_Event_Connect;
 typedef struct _Efl_Core_Wayland_Event_Connection
-    Efl_Core_Wayland_Event_Disconnect;
+  Efl_Core_Wayland_Event_Disconnect;
 
 typedef struct _Efl_Core_Wayland_Global
 {
-    Eina_Stringshare         *interface;
-    unsigned int              id, version;
-    Efl_Core_Wayland_Display *display;
+  Eina_Stringshare         *interface;
+  unsigned int              id, version;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Global;
 
 typedef struct _Efl_Core_Wayland_Event_Global
 {
-    Efl_Core_Wayland_Display *display;
-    Eina_Stringshare         *interface;
-    unsigned int              id, version;
+  Efl_Core_Wayland_Display *display;
+  Eina_Stringshare         *interface;
+  unsigned int              id, version;
 } Efl_Core_Wayland_Event_Global;
 
 typedef struct _Efl_Core_Wayland_Event_Focus_In
 {
-    Efl_Core_Wayland_Window  *window;
-    unsigned int              timestamp;
-    Eo                       *dev; //The seat device
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *window;
+  unsigned int              timestamp;
+  Eo                       *dev; //The seat device
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Focus_In;
 
 typedef struct _Efl_Core_Wayland_Event_Focus_Out
 {
-    Efl_Core_Wayland_Window  *window;
-    unsigned int              timestamp;
-    Eo                       *dev; //The seat device
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *window;
+  unsigned int              timestamp;
+  Eo                       *dev; //The seat device
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Focus_Out;
 
 typedef struct _Efl_Core_Wayland_Event_Dnd_Enter
 {
-    Efl_Core_Wayland_Window  *win, *source;
-    Efl_Core_Wayland_Offer   *offer;
-    int                       x, y;
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win, *source;
+  Efl_Core_Wayland_Offer   *offer;
+  int                       x, y;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Dnd_Enter;
 
 typedef struct _Efl_Core_Wayland_Event_Dnd_Leave
 {
-    Efl_Core_Wayland_Window  *win, *source;
-    Efl_Core_Wayland_Offer   *offer;
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win, *source;
+  Efl_Core_Wayland_Offer   *offer;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Dnd_Leave;
 
 typedef struct _Efl_Core_Wayland_Event_Dnd_Motion
 {
-    Efl_Core_Wayland_Window  *win, *source;
-    Efl_Core_Wayland_Offer   *offer;
-    int                       x, y;
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win, *source;
+  Efl_Core_Wayland_Offer   *offer;
+  int                       x, y;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Dnd_Motion;
 
 typedef struct _Efl_Core_Wayland_Event_Dnd_Drop
 {
-    Efl_Core_Wayland_Window  *win, *source;
-    int                       x, y;
-    Efl_Core_Wayland_Offer   *offer;
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win, *source;
+  int                       x, y;
+  Efl_Core_Wayland_Offer   *offer;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Dnd_Drop;
 
 typedef struct _Efl_Core_Wayland_Event_Dnd_End
 {
-    Efl_Core_Wayland_Window  *win, *source;
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win, *source;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Dnd_End;
 
 struct _Efl_Core_Wayland_Event_Data_Source_Event
 {
-    Efl_Core_Wayland_Window     *win, *source;
-    Efl_Core_Wayland_Drag_Action action;
-    unsigned int                 seat;
-    uint32_t                     serial;
-    Efl_Core_Wayland_Display    *display;
+  Efl_Core_Wayland_Window     *win, *source;
+  Efl_Core_Wayland_Drag_Action action;
+  unsigned int                 seat;
+  uint32_t                     serial;
+  Efl_Core_Wayland_Display    *display;
 };
 
 typedef struct Efl_Core_Wayland_Event_Data_Source_End
 {
-    Efl_Core_Wayland_Window     *win, *source;
-    Efl_Core_Wayland_Drag_Action action;
-    unsigned int                 seat;
-    uint32_t                     serial;
-    Efl_Core_Wayland_Display    *display;
-    Efl_Bool                     cancelled;
+  Efl_Core_Wayland_Window     *win, *source;
+  Efl_Core_Wayland_Drag_Action action;
+  unsigned int                 seat;
+  uint32_t                     serial;
+  Efl_Core_Wayland_Display    *display;
+  Efl_Bool                     cancelled;
 } Efl_Core_Wayland_Event_Data_Source_End;
 
 typedef struct _Efl_Core_Wayland_Event_Data_Source_Event
-    Efl_Core_Wayland_Event_Data_Source_Drop;
+  Efl_Core_Wayland_Event_Data_Source_Drop;
 
 typedef struct _Efl_Core_Wayland_Event_Data_Source_Event
-    Efl_Core_Wayland_Event_Data_Source_Action;
+  Efl_Core_Wayland_Event_Data_Source_Action;
 
 typedef struct _Efl_Core_Wayland_Event_Data_Source_Target
 {
-    char                     *type;
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  char                     *type;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Data_Source_Target;
 
 typedef struct _Efl_Core_Wayland_Event_Data_Source_Send
 {
-    char                     *type;
-    int                       fd;
-    unsigned int              seat;
-    uint32_t                  serial;
-    Efl_Core_Wayland_Display *display;
+  char                     *type;
+  int                       fd;
+  unsigned int              seat;
+  uint32_t                  serial;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Data_Source_Send;
 
 typedef struct Efl_Core_Wayland_Event_Seat_Selection
 {
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Seat_Selection;
 
 typedef struct _Efl_Core_Wayland_Event_Seat_Name
 {
-    Eina_Stringshare         *name;
-    unsigned int              id;
-    Efl_Core_Wayland_Display *display;
+  Eina_Stringshare         *name;
+  unsigned int              id;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Seat_Name;
 
 typedef struct _Efl_Core_Wayland_Event_Seat_Capabilities
 {
-    unsigned int              id;
-    Efl_Bool                  pointer_enabled  : 1;
-    Efl_Bool                  keyboard_enabled : 1;
-    Efl_Bool                  touch_enabled    : 1;
-    Efl_Core_Wayland_Display *display;
+  unsigned int              id;
+  Efl_Bool                  pointer_enabled  : 1;
+  Efl_Bool                  keyboard_enabled : 1;
+  Efl_Bool                  touch_enabled    : 1;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Seat_Capabilities;
 
 typedef enum
 {
-    EFL_CORE_WAYLAND_DEVICE_TYPE_SEAT,
-    EFL_CORE_WAYLAND_DEVICE_TYPE_POINTER,
-    EFL_CORE_WAYLAND_DEVICE_TYPE_KEYBOARD,
-    EFL_CORE_WAYLAND_DEVICE_TYPE_TOUCH
+  EFL_CORE_WAYLAND_DEVICE_TYPE_SEAT,
+  EFL_CORE_WAYLAND_DEVICE_TYPE_POINTER,
+  EFL_CORE_WAYLAND_DEVICE_TYPE_KEYBOARD,
+  EFL_CORE_WAYLAND_DEVICE_TYPE_TOUCH
 } Efl_Core_Wayland_Device_Type;
 
 typedef struct _Efl_Core_Wayland_Event_Device
 {
-    Eo                          *dev;
-    Efl_Core_Wayland_Window     *window;
-    unsigned int                 seat_id;
-    Efl_Core_Wayland_Device_Type type;
+  Eo                          *dev;
+  Efl_Core_Wayland_Window     *window;
+  unsigned int                 seat_id;
+  Efl_Core_Wayland_Device_Type type;
 } Efl_Core_Wayland_Event_Device;
 
 typedef enum
 {
-    EFL_CORE_WAYLAND_SELECTION_CNP,
-    EFL_CORE_WAYLAND_SELECTION_DND
+  EFL_CORE_WAYLAND_SELECTION_CNP,
+  EFL_CORE_WAYLAND_SELECTION_DND
 } Efl_Core_Wayland_Selection_Type;
 
 typedef enum
 {
-    EFL_CORE_WAYLAND_WINDOW_STATE_NONE       = 0,
-    EFL_CORE_WAYLAND_WINDOW_STATE_FULLSCREEN = (1 << 0),
-    EFL_CORE_WAYLAND_WINDOW_STATE_MAXIMIZED  = (1 << 1),
+  EFL_CORE_WAYLAND_WINDOW_STATE_NONE       = 0,
+  EFL_CORE_WAYLAND_WINDOW_STATE_FULLSCREEN = (1 << 0),
+  EFL_CORE_WAYLAND_WINDOW_STATE_MAXIMIZED  = (1 << 1),
 } Efl_Core_Wayland_Window_States;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Configure
 {
-    Efl_Core_Wayland_Window *win, *event_win;
-    unsigned int             edges;
-    unsigned int             w, h;
-    unsigned int             states;
+  Efl_Core_Wayland_Window *win, *event_win;
+  unsigned int             edges;
+  unsigned int             w, h;
+  unsigned int             states;
 } Efl_Core_Wayland_Event_Window_Configure;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Configure_Complete
 {
-    Efl_Core_Wayland_Window *win;
+  Efl_Core_Wayland_Window *win;
 } Efl_Core_Wayland_Event_Window_Configure_Complete;
 
 typedef struct _Efl_Core_Wayland_Event_Input_Keymap_Changed
 {
-    unsigned int              id;
-    Efl_Core_Wayland_Display *display;
+  unsigned int              id;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Seat_Keymap_Changed;
 
 typedef struct Efl_Core_Wayland_Event_Seat_Keyboard_Repeat_Changed
 {
-    unsigned int              id;
-    Efl_Core_Wayland_Display *display;
+  unsigned int              id;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Seat_Keyboard_Repeat_Changed;
 
 typedef struct _Efl_Core_Wayland_Event_Sync_Done
 {
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Sync_Done;
 
 typedef struct _Efl_Core_Wayland_Event_Offer_Data_Ready
 {
-    Efl_Core_Wayland_Offer   *offer;
-    char                     *data;
-    int                       len;
-    const char               *mimetype;
-    unsigned int              seat;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Offer   *offer;
+  char                     *data;
+  int                       len;
+  const char               *mimetype;
+  unsigned int              seat;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Offer_Data_Ready;
 
 typedef struct _Efl_Core_Wayland_Event_Output_Transform
 {
-    Efl_Core_Wayland_Output *output;
-    int                      transform, old_transform;
+  Efl_Core_Wayland_Output *output;
+  int                      transform, old_transform;
 } Efl_Core_Wayland_Event_Output_Transform;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Rotation
 {
-    Efl_Core_Wayland_Window *win;
-    int                      rotation, w, h, angle;
-    Efl_Bool                 resize : 1;
+  Efl_Core_Wayland_Window *win;
+  int                      rotation, w, h, angle;
+  Efl_Bool                 resize : 1;
 } Efl_Core_Wayland_Event_Window_Rotation;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Rotation
-    Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare;
+  Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare;
 typedef struct _Efl_Core_Wayland_Event_Window_Rotation
-    Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare_Done;
+  Efl_Core_Wayland_Event_Window_Rotation_Change_Prepare_Done;
 typedef struct _Efl_Core_Wayland_Event_Window_Rotation
-    Efl_Core_Wayland_Event_Window_Rotation_Change_Request;
+  Efl_Core_Wayland_Event_Window_Rotation_Change_Request;
 typedef struct _Efl_Core_Wayland_Event_Window_Rotation
-    Efl_Core_Wayland_Event_Window_Rotation_Change_Done;
+  Efl_Core_Wayland_Event_Window_Rotation_Change_Done;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Show
 {
-    Efl_Core_Wayland_Window *win;
-    Efl_Core_Wayland_Window *parent_win;
-    Efl_Core_Wayland_Window *event_win;
+  Efl_Core_Wayland_Window *win;
+  Efl_Core_Wayland_Window *parent_win;
+  Efl_Core_Wayland_Window *event_win;
 } Efl_Core_Wayland_Event_Window_Show;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Hide
 {
-    Efl_Core_Wayland_Window *win;
-    Efl_Core_Wayland_Window *parent_win;
-    Efl_Core_Wayland_Window *event_win;
+  Efl_Core_Wayland_Window *win;
+  Efl_Core_Wayland_Window *parent_win;
+  Efl_Core_Wayland_Window *event_win;
 } Efl_Core_Wayland_Event_Window_Hide;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Activate
 {
-    Efl_Core_Wayland_Window *win;
-    Efl_Core_Wayland_Window *parent_win;
-    Efl_Core_Wayland_Window *event_win;
+  Efl_Core_Wayland_Window *win;
+  Efl_Core_Wayland_Window *parent_win;
+  Efl_Core_Wayland_Window *event_win;
 } Efl_Core_Wayland_Event_Window_Activate;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Deactivate
 {
-    Efl_Core_Wayland_Window *win;
-    Efl_Core_Wayland_Window *parent_win;
-    Efl_Core_Wayland_Window *event_win;
+  Efl_Core_Wayland_Window *win;
+  Efl_Core_Wayland_Window *parent_win;
+  Efl_Core_Wayland_Window *event_win;
 } Efl_Core_Wayland_Event_Window_Deactivate;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Common
 {
-    Efl_Core_Wayland_Window *win;
-    Efl_Core_Wayland_Window *parent_win;
-    Efl_Core_Wayland_Window *event_win;
+  Efl_Core_Wayland_Window *win;
+  Efl_Core_Wayland_Window *parent_win;
+  Efl_Core_Wayland_Window *event_win;
 } Efl_Core_Wayland_Event_Window_Common;
 
 typedef struct _Efl_Core_Wayland_Event_Window_Iconify_State_Change
 {
-    Efl_Core_Wayland_Window *win;
-    unsigned int             iconified;
-    unsigned int             force;
+  Efl_Core_Wayland_Window *win;
+  unsigned int             iconified;
+  unsigned int             force;
 } Efl_Core_Wayland_Event_Window_Iconify_State_Change;
 
 typedef enum _Efl_Core_Wayland_Window_Type
 {
-    EFL_CORE_WAYLAND_WINDOW_TYPE_NONE,
-    EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL,
-    EFL_CORE_WAYLAND_WINDOW_TYPE_MENU,
-    EFL_CORE_WAYLAND_WINDOW_TYPE_DND,
-    EFL_CORE_WAYLAND_WINDOW_TYPE_CUSTOM,
-    EFL_CORE_WAYLAND_WINDOW_TYPE_NOTIFICATION, /** @since 1.20 */
-    EFL_CORE_WAYLAND_WINDOW_TYPE_UTILITY,      /** @since 1.20 */
-    EFL_CORE_WAYLAND_WINDOW_TYPE_DIALOG,       /** @since 1.20 */
-    EFL_CORE_WAYLAND_WINDOW_TYPE_DOCK,         /** @since 1.20 */
-    EFL_CORE_WAYLAND_WINDOW_TYPE_SPLASH,       /** @since 1.20 */
-    EFL_CORE_WAYLAND_WINDOW_TYPE_LAST
+  EFL_CORE_WAYLAND_WINDOW_TYPE_NONE,
+  EFL_CORE_WAYLAND_WINDOW_TYPE_TOPLEVEL,
+  EFL_CORE_WAYLAND_WINDOW_TYPE_MENU,
+  EFL_CORE_WAYLAND_WINDOW_TYPE_DND,
+  EFL_CORE_WAYLAND_WINDOW_TYPE_CUSTOM,
+  EFL_CORE_WAYLAND_WINDOW_TYPE_NOTIFICATION, /** @since 1.20 */
+  EFL_CORE_WAYLAND_WINDOW_TYPE_UTILITY,      /** @since 1.20 */
+  EFL_CORE_WAYLAND_WINDOW_TYPE_DIALOG,       /** @since 1.20 */
+  EFL_CORE_WAYLAND_WINDOW_TYPE_DOCK,         /** @since 1.20 */
+  EFL_CORE_WAYLAND_WINDOW_TYPE_SPLASH,       /** @since 1.20 */
+  EFL_CORE_WAYLAND_WINDOW_TYPE_LAST
 } Efl_Core_Wayland_Window_Type;
 
 typedef struct _Efl_Core_Wayland_Event_Aux_Hint_Allowed
 {
-    Efl_Core_Wayland_Window  *win;
-    int                       id;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win;
+  int                       id;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Aux_Hint_Allowed;
 
 typedef struct _Efl_Core_Wayland_Event_Aux_Hint_Supported
 {
-    Efl_Core_Wayland_Window  *win;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Aux_Hint_Supported;
 
 typedef struct Efl_Core_Wayland_Event_Aux_Message
 {
-    Efl_Core_Wayland_Window  *win;
-    Eina_Stringshare         *key;
-    Eina_Stringshare         *val;
-    Eina_List                *options;
-    Efl_Core_Wayland_Display *display;
+  Efl_Core_Wayland_Window  *win;
+  Eina_Stringshare         *key;
+  Eina_Stringshare         *val;
+  Eina_List                *options;
+  Efl_Core_Wayland_Display *display;
 } Efl_Core_Wayland_Event_Aux_Message;
 
 typedef struct Efl_Core_Wayland_Event_Window_Offscreen
 {
-    Efl_Core_Wayland_Window *win;
+  Efl_Core_Wayland_Window *win;
 } Efl_Core_Wayland_Event_Window_Offscreen;
 
 typedef struct _Efl_Core_Wayland_Buffer Efl_Core_Wayland_Buffer;
@@ -393,9 +393,9 @@ typedef enum _Efl_Core_Wayland_Buffer_Type Efl_Core_Wayland_Buffer_Type;
 
 enum _Efl_Core_Wayland_Buffer_Type
 {
-    EFL_CORE_WAYLAND_BUFFER_NONE   = 0,
-    EFL_CORE_WAYLAND_BUFFER_SHM    = 1,
-    EFL_CORE_WAYLAND_BUFFER_DMABUF = 2
+  EFL_CORE_WAYLAND_BUFFER_NONE   = 0,
+  EFL_CORE_WAYLAND_BUFFER_SHM    = 1,
+  EFL_CORE_WAYLAND_BUFFER_DMABUF = 2
 };
 
 typedef void (*Efl_Core_Wayland_Bind_Cb)(struct wl_client *client,
@@ -407,7 +407,7 @@ typedef void (*Efl_Core_Wayland_Frame_Cb)(Efl_Core_Wayland_Window *win,
                                           uint32_t                 timestamp,
                                           void                    *data);
 typedef struct _Efl_Core_Wayland_Frame_Cb_Handle
-    Efl_Core_Wayland_Frame_Cb_Handle;
+  Efl_Core_Wayland_Frame_Cb_Handle;
 
 EAPI extern int EFL_CORE_WAYLAND_EVENT_DISCONNECT;          /** @since 1.18 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_CONNECT;             /** @since 1.18 */
@@ -431,11 +431,11 @@ EAPI extern int EFL_CORE_WAYLAND_EVENT_DEVICE_ADDED;        /** @since 1.19 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_DEVICE_REMOVED;      /** @since 1.19 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_SEAT_KEYMAP_CHANGED; /** @since 1.20 */
 EAPI extern int
-    EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED;    /** @since 1.20 */
+  EFL_CORE_WAYLAND_EVENT_SEAT_KEYBOARD_REPEAT_CHANGED;    /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_SEAT_SELECTION;      /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_SEAT_NAME_CHANGED;   /** @since 1.19 */
 EAPI extern int
-    EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED;       /** @since 1.19 */
+  EFL_CORE_WAYLAND_EVENT_SEAT_CAPABILITIES_CHANGED;       /** @since 1.19 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_OUTPUT_TRANSFORM;    /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_AUX_HINT_ALLOWED;    /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_AUX_HINT_SUPPORTED;  /** @since 1.20 */
@@ -443,42 +443,42 @@ EAPI extern int EFL_CORE_WAYLAND_EVENT_AUX_MESSAGE;         /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE;    /** @since 1.17 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ROTATE;       /** @since 1.20 */
 EAPI extern int
-    EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE;       /** @since 1.19 */
+  EFL_CORE_WAYLAND_EVENT_WINDOW_CONFIGURE_COMPLETE;       /** @since 1.19 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_SHOW;         /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_HIDE;         /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_ACTIVATE;     /** @since 1.20 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_DEACTIVATE;   /** @since 1.20 */
 EAPI extern int
-    EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE;     /** @since 1.21 */
+  EFL_CORE_WAYLAND_EVENT_WINDOW_ICONIFY_STATE_CHANGE;     /** @since 1.21 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_OFFSCREEN;    /** @since 1.21 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_CREATE;       /** @since 1.25 */
 EAPI extern int EFL_CORE_WAYLAND_EVENT_WINDOW_DESTROY;      /** @since 1.25 */
 
 typedef struct _Efl_Core_Wayland_Surface_Interface
 {
-    int id;
-    int version;
+  int id;
+  int version;
 
-    void *(*setup)(Efl_Core_Wayland_Window *win);
-    void (*destroy)(Efl_Core_Wayland_Surface *surface, void *priv_data);
-    void (*reconfigure)(Efl_Core_Wayland_Surface *surface,
-                        void                     *priv_data,
-                        int                       w,
-                        int                       h,
-                        uint32_t                  flags,
-                        Efl_Bool                  alpha);
-    void *(*data_get)(Efl_Core_Wayland_Surface *surface,
+  void *(*setup)(Efl_Core_Wayland_Window *win);
+  void (*destroy)(Efl_Core_Wayland_Surface *surface, void *priv_data);
+  void (*reconfigure)(Efl_Core_Wayland_Surface *surface,
                       void                     *priv_data,
-                      int                      *w,
-                      int                      *h);
-    int (*assign)(Efl_Core_Wayland_Surface *surface, void *priv_data);
-    void (*post)(Efl_Core_Wayland_Surface *surface,
-                 void                     *priv_data,
-                 Eina_Rectangle           *rects,
-                 unsigned int              count);
-    void (*flush)(Efl_Core_Wayland_Surface *surface,
-                  void                     *priv_data,
-                  Efl_Bool                  purge);
+                      int                       w,
+                      int                       h,
+                      uint32_t                  flags,
+                      Efl_Bool                  alpha);
+  void *(*data_get)(Efl_Core_Wayland_Surface *surface,
+                    void                     *priv_data,
+                    int                      *w,
+                    int                      *h);
+  int (*assign)(Efl_Core_Wayland_Surface *surface, void *priv_data);
+  void (*post)(Efl_Core_Wayland_Surface *surface,
+               void                     *priv_data,
+               Eina_Rectangle           *rects,
+               unsigned int              count);
+  void (*flush)(Efl_Core_Wayland_Surface *surface,
+                void                     *priv_data,
+                Efl_Bool                  purge);
 } Efl_Core_Wayland_Surface_Interface;
 
 /**
@@ -716,8 +716,8 @@ efl_core_wayland_display_input_find(const Efl_Core_Wayland_Display *display,
  * @since 1.20
  */
 EAPI Efl_Core_Wayland_Input *efl_core_wayland_display_input_find_by_name(
-    const Efl_Core_Wayland_Display *display,
-    const char                     *name);
+  const Efl_Core_Wayland_Display *display,
+  const char                     *name);
 
 /**
  * Retrieves the Wayland Registry used for the current Wayland display.
@@ -771,8 +771,8 @@ efl_core_wayland_display_name_get(const Efl_Core_Wayland_Display *display);
  * @since 1.24
  */
 EAPI Efl_Core_Wayland_Window *efl_core_wayland_display_window_find_by_surface(
-    Efl_Core_Wayland_Display *display,
-    struct wl_surface        *surface);
+  Efl_Core_Wayland_Display *display,
+  struct wl_surface        *surface);
 
 /**
  * Gets the connected display object
@@ -844,9 +844,9 @@ efl_core_wayland_window_new(Efl_Core_Wayland_Display *display,
  * @since 1.24
  */
 EAPI void efl_core_wayland_window_close_callback_set(
-    Efl_Core_Wayland_Window *window,
-    void (*cb)(void *data, Efl_Core_Wayland_Window *win),
-    void *data);
+  Efl_Core_Wayland_Window *window,
+  void (*cb)(void *data, Efl_Core_Wayland_Window *win),
+  void *data);
 
 /**
  * Get the wl_surface which belongs to this window
@@ -1270,8 +1270,8 @@ efl_core_wayland_window_output_find(Efl_Core_Wayland_Window *window);
  * @since 1.20
  */
 EAPI void efl_core_wayland_window_wm_rotation_supported_set(
-    Efl_Core_Wayland_Window *window,
-    Efl_Bool                 enabled);
+  Efl_Core_Wayland_Window *window,
+  Efl_Bool                 enabled);
 
 /**
  * Get if window rotation is supported by the window manager
@@ -1284,7 +1284,7 @@ EAPI void efl_core_wayland_window_wm_rotation_supported_set(
  * @since 1.20
  */
 EAPI Efl_Bool efl_core_wayland_window_wm_rotation_supported_get(
-    Efl_Core_Wayland_Window *window);
+  Efl_Core_Wayland_Window *window);
 
 /**
  * Set if an application has set window rotation
@@ -1569,7 +1569,7 @@ efl_core_wayland_input_seat_capabilities_get(Efl_Core_Wayland_Input *input);
  * @since 1.19
  */
 EAPI unsigned int efl_core_wayland_input_seat_id_get(
-    Efl_Core_Wayland_Input *input) EFL_WARN_UNUSED_RESULT;
+  Efl_Core_Wayland_Input *input) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the display object of an input
@@ -1799,7 +1799,7 @@ efl_core_wayland_window_frame_callback_add(Efl_Core_Wayland_Window  *window,
  * @since 1.21
  */
 EAPI void efl_core_wayland_window_frame_callback_del(
-    Efl_Core_Wayland_Frame_Cb_Handle *handle);
+  Efl_Core_Wayland_Frame_Cb_Handle *handle);
 
 /**
  * Push buffered wayland protocol to compositor

@@ -3,8 +3,8 @@
 
 typedef struct
 {
-   Simple_Public_Data public;
-   int protected_x1;
+  Simple_Public_Data public;
+  int protected_x1;
 } Simple_Protected_Data;
 
 #endif

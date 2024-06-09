@@ -6,20 +6,34 @@
 
 /* The Max level to consider when working with the print cb. */
 #define _EINA_LOG_MAX 2
+
 /* #define SHOW_LOG 1 */
 
-struct log_ctx {
-   const char *msg;
-   const char *fnc;
-   Efl_Bool did;
-   int expected_level;
+struct log_ctx
+{
+  const char *msg;
+  const char *fnc;
+  Efl_Bool    did;
+  int         expected_level;
 };
 
-void
-eo_test_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EFL_UNUSED);
+void eo_test_print_cb(const Eina_Log_Domain *d,
+                      Eina_Log_Level         level,
+                      const char            *file,
+                      const char            *fnc,
+                      int                    line,
+                      const char            *fmt,
+                      void                  *data,
+                      va_list args           EFL_UNUSED);
 
-void
-eo_test_safety_print_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args EFL_UNUSED);
+void eo_test_safety_print_cb(const Eina_Log_Domain *d,
+                             Eina_Log_Level         level,
+                             const char            *file,
+                             const char            *fnc,
+                             int                    line,
+                             const char            *fmt,
+                             void                  *data,
+                             va_list args           EFL_UNUSED);
 
 #define TEST_EO_ERROR(fn, _msg)                  \
   ctx.msg = _msg;                                \

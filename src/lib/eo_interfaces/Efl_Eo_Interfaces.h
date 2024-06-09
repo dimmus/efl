@@ -1,46 +1,46 @@
 #ifndef _EFL_EO_INTERFACES_H
 #define _EFL_EO_INTERFACES_H
 
-#if defined ( __cplusplus )
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
 #include <Efl_Eo.h>
 
 #ifdef EAPI
-# undef EAPI
+#  undef EAPI
 #endif
 #ifdef EWAPI
-# undef EWAPI
+#  undef EWAPI
 #endif
 #ifdef EOAPI
-# undef EOAPI
+#  undef EOAPI
 #endif
 
 #ifdef _WIN32
-# ifdef EFL_BUILD
-#  ifdef DLL_EXPORT
-#   define EAPI __declspec(dllexport)
+#  ifdef EFL_BUILD
+#    ifdef DLL_EXPORT
+#      define EAPI __declspec(dllexport)
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI __declspec(dllimport)
 #  endif
-# else
-#  define EAPI __declspec(dllimport)
-# endif
-# define EAPI_WEAK
-#else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EAPI __attribute__ ((visibility("default")))
-#   define EAPI_WEAK __attribute__ ((weak))
-#  else
-#   define EAPI
-#   define EAPI_WEAK
-#  endif
-# else
-#  define EAPI
 #  define EAPI_WEAK
-# endif
+#else
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EAPI __attribute__ ((visibility("default")))
+#      define EAPI_WEAK __attribute__ ((weak))
+#    else
+#      define EAPI
+#      define EAPI_WEAK
+#    endif
+#  else
+#    define EAPI
+#    define EAPI_WEAK
+#  endif
 #endif
 
 #define EWAPI EAPI EAPI_WEAK
@@ -59,8 +59,8 @@ extern "C" {
 
 /* Add here all the required ifdef for any @protected method */
 #ifdef EFL_BUILD
-# define EFL_PACK_LAYOUT_PROTECTED
-# define EFL_GFX_HINT_PROTECTED
+#  define EFL_PACK_LAYOUT_PROTECTED
+#  define EFL_GFX_HINT_PROTECTED
 #endif
 
 /**
@@ -72,8 +72,8 @@ extern "C" {
  */
 typedef struct tm Efl_Time;
 
-typedef struct _Efl_Text_Cursor_Handle Efl_Text_Cursor_Handle;
-typedef struct _Efl_Text_Cursor_Handle _Efl_Text_Cursor_Handle;
+typedef struct _Efl_Text_Cursor_Handle    Efl_Text_Cursor_Handle;
+typedef struct _Efl_Text_Cursor_Handle    _Efl_Text_Cursor_Handle;
 typedef struct _Efl_Text_Attribute_Handle Efl_Text_Attribute_Handle;
 
 #include "efl_types.eot.h"
@@ -154,7 +154,6 @@ typedef Efl_Gfx_Path_Command_Type Efl_Gfx_Path_Command;
 #include "efl_ui_zoom.eo.h"
 
 #include "efl_screen.eo.h"
-
 
 /* Core interface */
 #include "efl_interpolator.eo.h"
@@ -238,114 +237,111 @@ EAPI Efl_Object *efl_part(const Eo *obj, const char *name);
 
 EAPI void efl_observable_tuple_free(Efl_Observable_Tuple *tuple);
 
-
-
 static inline Efl_Bool
-efl_config_bool_set(Efl_Config *obj, const char * name, Efl_Bool val)
+efl_config_bool_set(Efl_Config *obj, const char *name, Efl_Bool val)
 {
-   Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_UCHAR);
-   Efl_Bool b;
-   eina_value_set(v, val);
-   b = efl_config_set(obj, name, v);
-   eina_value_free(v);
-   return b;
+  Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_UCHAR);
+  Efl_Bool    b;
+  eina_value_set(v, val);
+  b = efl_config_set(obj, name, v);
+  eina_value_free(v);
+  return b;
 }
 
 static inline Efl_Bool
-efl_config_bool_get(const Efl_Config *obj, const char * name)
+efl_config_bool_get(const Efl_Config *obj, const char *name)
 {
-   Eina_Value *v = efl_config_get(obj, name);
-   Efl_Bool b = 0;
-   if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_UCHAR)
-     eina_value_get(v, &b);
-   eina_value_free(v);
-   return b;
+  Eina_Value *v = efl_config_get(obj, name);
+  Efl_Bool    b = 0;
+  if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_UCHAR)
+    eina_value_get(v, &b);
+  eina_value_free(v);
+  return b;
 }
 
 static inline Efl_Bool
-efl_config_int_set(Efl_Config *obj, const char * name, int val)
+efl_config_int_set(Efl_Config *obj, const char *name, int val)
 {
-   Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_INT);
-   Efl_Bool b;
-   eina_value_set(v, val);
-   b = efl_config_set(obj, name, v);
-   eina_value_free(v);
-   return b;
+  Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_INT);
+  Efl_Bool    b;
+  eina_value_set(v, val);
+  b = efl_config_set(obj, name, v);
+  eina_value_free(v);
+  return b;
 }
 
 static inline int
-efl_config_int_get(const Efl_Config *obj, const char * name)
+efl_config_int_get(const Efl_Config *obj, const char *name)
 {
-   Eina_Value *v = efl_config_get(obj, name);
-   int b = 0;
-   if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_INT)
-     eina_value_get(v, &b);
-   eina_value_free(v);
-   return b;
+  Eina_Value *v = efl_config_get(obj, name);
+  int         b = 0;
+  if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_INT) eina_value_get(v, &b);
+  eina_value_free(v);
+  return b;
 }
 
 static inline Efl_Bool
-efl_config_double_set(Efl_Config *obj, const char * name, double val)
+efl_config_double_set(Efl_Config *obj, const char *name, double val)
 {
-   Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_DOUBLE);
-   Efl_Bool b;
-   eina_value_set(v, val);
-   b = efl_config_set(obj, name, v);
-   eina_value_free(v);
-   return b;
+  Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_DOUBLE);
+  Efl_Bool    b;
+  eina_value_set(v, val);
+  b = efl_config_set(obj, name, v);
+  eina_value_free(v);
+  return b;
 }
 
 static inline double
-efl_config_double_get(const Efl_Config *obj, const char * name)
+efl_config_double_get(const Efl_Config *obj, const char *name)
 {
-   Eina_Value *v = efl_config_get(obj, name);
-   double b = 0;
-   if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_DOUBLE)
-     eina_value_get(v, &b);
-   eina_value_free(v);
-   return b;
+  Eina_Value *v = efl_config_get(obj, name);
+  double      b = 0;
+  if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_DOUBLE)
+    eina_value_get(v, &b);
+  eina_value_free(v);
+  return b;
 }
 
 static inline Efl_Bool
 efl_config_string_set(Efl_Config *obj, const char *name, const char *val)
 {
-   Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_STRING);
-   Efl_Bool b;
-   eina_value_set(v, val);
-   b = efl_config_set(obj, name, v);
-   eina_value_free(v);
-   return b;
+  Eina_Value *v = eina_value_new(EINA_VALUE_TYPE_STRING);
+  Efl_Bool    b;
+  eina_value_set(v, val);
+  b = efl_config_set(obj, name, v);
+  eina_value_free(v);
+  return b;
 }
 
 static inline Eina_Stringshare *
 efl_config_string_get(const Efl_Config *obj, const char *name)
 {
-   Eina_Value *v = efl_config_get(obj, name);
-   Eina_Stringshare *s = 0;
-   if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_STRING)
-     {
-        const char *b = 0;
-        eina_value_get(v, &b);
-        s = eina_stringshare_add(b);
-     }
-   eina_value_free(v);
-   return s;
+  Eina_Value       *v = efl_config_get(obj, name);
+  Eina_Stringshare *s = 0;
+  if (v && eina_value_type_get(v) == EINA_VALUE_TYPE_STRING)
+  {
+    const char *b = 0;
+    eina_value_get(v, &b);
+    s = eina_stringshare_add(b);
+  }
+  eina_value_free(v);
+  return s;
 }
 
 #else
 
-#ifndef EFL_NOLEGACY_API_SUPPORT
-#include "efl_gfx_types.eot.h"
-#include "efl_ui_drag_types.eot.h"
-#include "efl_text_types.eot.h"
-#endif
+#  ifndef EFL_NOLEGACY_API_SUPPORT
+#    include "efl_gfx_types.eot.h"
+#    include "efl_ui_drag_types.eot.h"
+#    include "efl_text_types.eot.h"
+#  endif
 
 #endif
 
 /* work-around bug in gcc --as-needed link optimization */
 EAPI void __efl_internal_init(void);
 
-#if defined ( __cplusplus )
+#if defined(__cplusplus)
 }
 #endif
 

@@ -61,31 +61,27 @@ static int no_anon = -1;
 static void *
 _eina_debug_chunk_need(int size)
 {
-    void *ptr;
+  void *ptr;
 
 #  ifdef HAVE_VALGRIND
-    if (RUNNING_ON_VALGRIND) ptr = malloc(size);
-    else
+  if (RUNNING_ON_VALGRIND) ptr = malloc(size);
+  else
 #  endif
+  {
+    if (no_anon == -1)
     {
-        if (no_anon == -1)
-        {
-            if (getenv("EFL_NO_MMAP_ANON")) no_anon = 1;
-            else no_anon = 0;
-        }
-        if (no_anon == 1) ptr = malloc(size);
-        else
-        {
-            ptr = mmap(NULL,
-                       size,
-                       PROT_READ | PROT_WRITE,
-                       MAP_PRIVATE | MAP_ANON,
-                       -1,
-                       0);
-            if (ptr == MAP_FAILED) return NULL;
-        }
+      if (getenv("EFL_NO_MMAP_ANON")) no_anon = 1;
+      else no_anon = 0;
     }
-    return ptr;
+    if (no_anon == 1) ptr = malloc(size);
+    else
+    {
+      ptr =
+        mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+      if (ptr == MAP_FAILED) return NULL;
+    }
+  }
+  return ptr;
 }
 
 // release a chunk of this mmaped anon mem if we don't need it anymore
@@ -93,13 +89,13 @@ static void
 _eina_debug_chunk_noneed(void *ptr, int size)
 {
 #  ifdef HAVE_VALGRIND
-    if (RUNNING_ON_VALGRIND) free(ptr);
-    else
+  if (RUNNING_ON_VALGRIND) free(ptr);
+  else
 #  endif
-    {
-        if (no_anon == 1) free(ptr);
-        else munmap(ptr, size);
-    }
+  {
+    if (no_anon == 1) free(ptr);
+    else munmap(ptr, size);
+  }
 }
 
 // push a new bit of mem on our growing stack of mem - given our workload,
@@ -107,35 +103,35 @@ _eina_debug_chunk_noneed(void *ptr, int size)
 void *
 _eina_debug_chunk_push(int size)
 {
-    void *ptr;
+  void *ptr;
 
    // no initial chunk1 block - allocate it
-    if (!chunk1)
-    {
-        chunk1 = _eina_debug_chunk_need(8 * 1024);
-        if (!chunk1) return NULL;
-        chunk1_size = 8 * 1024;
-    }
+  if (!chunk1)
+  {
+    chunk1 = _eina_debug_chunk_need(8 * 1024);
+    if (!chunk1) return NULL;
+    chunk1_size = 8 * 1024;
+  }
    // round size up to the nearest pointer size for alignment
-    size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
+  size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
    // if our chunk is too small - grow it
-    if ((chunk1_num + size) > chunk1_size)
-    {
+  if ((chunk1_num + size) > chunk1_size)
+  {
         // get a new chunk twice as big
-        void *newchunk = _eina_debug_chunk_need(chunk1_size * 2);
-        if (!newchunk) return NULL;
+    void *newchunk = _eina_debug_chunk_need(chunk1_size * 2);
+    if (!newchunk) return NULL;
         // copy content over
-        memcpy(newchunk, chunk1, chunk1_num);
+    memcpy(newchunk, chunk1, chunk1_num);
         // release old chunk
-        _eina_debug_chunk_noneed(chunk1, chunk1_size);
+    _eina_debug_chunk_noneed(chunk1, chunk1_size);
         // switch to our new 2x as big chunk
-        chunk1      = newchunk;
-        chunk1_size = chunk1_size * 2;
-    }
+    chunk1      = newchunk;
+    chunk1_size = chunk1_size * 2;
+  }
    // get the mem at the top of this stack and return it, then move along
-    ptr         = chunk1 + chunk1_num;
-    chunk1_num += size;
-    return ptr;
+  ptr         = chunk1 + chunk1_num;
+  chunk1_num += size;
+  return ptr;
 }
 
 // grow a single existing chunk (we use this for the filename -> path lookup)
@@ -143,70 +139,70 @@ void *
 _eina_debug_chunk_realloc(int size)
 {
    // we have a null/empty second chunk - allocate one
-    if (!chunk2)
-    {
-        chunk2 = _eina_debug_chunk_need(4 * 1024);
-        if (!chunk2) return NULL;
-        chunk2_size = 4 * 1024;
-    }
+  if (!chunk2)
+  {
+    chunk2 = _eina_debug_chunk_need(4 * 1024);
+    if (!chunk2) return NULL;
+    chunk2_size = 4 * 1024;
+  }
    // if our chunk is too small - grow it
-    if (size > chunk2_size)
-    {
+  if (size > chunk2_size)
+  {
         // get a new chunk twice as big
-        void *newchunk = _eina_debug_chunk_need(chunk2_size * 2);
-        if (!newchunk) return NULL;
+    void *newchunk = _eina_debug_chunk_need(chunk2_size * 2);
+    if (!newchunk) return NULL;
         // copy content over
-        memcpy(newchunk, chunk2, chunk2_num);
+    memcpy(newchunk, chunk2, chunk2_num);
         // release old chunk
-        _eina_debug_chunk_noneed(chunk2, chunk2_size);
+    _eina_debug_chunk_noneed(chunk2, chunk2_size);
         // switch to our new 2x as big chunk
-        chunk2      = newchunk;
-        chunk2_size = chunk2_size * 2;
-    }
+    chunk2      = newchunk;
+    chunk2_size = chunk2_size * 2;
+  }
    // record new size and return chunk ptr as we just re-use it
-    chunk2_num = size;
-    return chunk2;
+  chunk2_num = size;
+  return chunk2;
 }
 
 // grow a single existing chunk (we use this for the filename -> path lookup)
 void *
 _eina_debug_chunk_tmp_push(int size)
 {
-    void *ptr;
+  void *ptr;
 
    // no initial chunk1 block - allocate it
-    if (!chunk3)
-    {
-        chunk3 = _eina_debug_chunk_need(32 * 1024);
-        if (!chunk3) return NULL;
-        chunk3_size = 32 * 1024;
-    }
+  if (!chunk3)
+  {
+    chunk3 = _eina_debug_chunk_need(32 * 1024);
+    if (!chunk3) return NULL;
+    chunk3_size = 32 * 1024;
+  }
    // round size up to the nearest pointer size for alignment
-    size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
+  size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
    // if our chunk is too small - grow it
-    if ((chunk3_num + size) > chunk3_size)
-    {
+  if ((chunk3_num + size) > chunk3_size)
+  {
         // get a new chunk twice as big
-        void *newchunk = _eina_debug_chunk_need(chunk3_size * 2);
-        if (!newchunk) return NULL;
+    void *newchunk = _eina_debug_chunk_need(chunk3_size * 2);
+    if (!newchunk) return NULL;
         // copy content over
-        memcpy(newchunk, chunk3, chunk3_num);
+    memcpy(newchunk, chunk3, chunk3_num);
         // release old chunk
-        _eina_debug_chunk_noneed(chunk3, chunk3_size);
+    _eina_debug_chunk_noneed(chunk3, chunk3_size);
         // switch to our new 2x as big chunk
-        chunk3      = newchunk;
-        chunk3_size = chunk3_size * 2;
-    }
+    chunk3      = newchunk;
+    chunk3_size = chunk3_size * 2;
+  }
    // get the mem at the top of this stack and return it, then move along
-    ptr         = chunk3 + chunk3_num;
-    chunk3_num += size;
-    return ptr;
+  ptr         = chunk3 + chunk3_num;
+  chunk3_num += size;
+  return ptr;
 }
 
 void
 _eina_debug_chunk_tmp_reset(void)
 {
-    chunk3_num = 0;
+  chunk3_num = 0;
 }
 #else
 // implement with static buffers - once we exceed these we will fail. sorry
@@ -228,16 +224,16 @@ static int           chunk3_num  = 0;
 void *
 _eina_debug_chunk_push(int size)
 {
-    void *ptr;
+  void *ptr;
 
    // round size up to the nearest pointer size for alignment
-    size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
+  size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
    // if we ran out of space - fail
-    if ((chunk1_num + size) > chunk1_size) return NULL;
+  if ((chunk1_num + size) > chunk1_size) return NULL;
    // get the mem at the top of this stack and return it, then move along
-    ptr         = chunk1 + chunk1_num;
-    chunk1_num += size;
-    return ptr;
+  ptr         = chunk1 + chunk1_num;
+  chunk1_num += size;
+  return ptr;
 }
 
 // grow a single existing chunk (we use this for the filename -> path lookup)
@@ -245,32 +241,32 @@ void *
 _eina_debug_chunk_realloc(int size)
 {
    // if we ran out of space - fail
-    if (size > chunk2_size) return NULL;
+  if (size > chunk2_size) return NULL;
    // record new size and return chunk ptr as we just re-use it
-    chunk2_num = size;
-    return chunk2;
+  chunk2_num = size;
+  return chunk2;
 }
 
 // grow a single existing chunk (we use this for the filename -> path lookup)
 void *
 _eina_debug_chunk_tmp_push(int size)
 {
-    void *ptr;
+  void *ptr;
 
    // round size up to the nearest pointer size for alignment
-    size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
+  size = sizeof(void *) * ((size + sizeof(void *) - 1) / sizeof(void *));
    // if we ran out of space - fail
-    if ((chunk3_num + size) > chunk3_size) return NULL;
+  if ((chunk3_num + size) > chunk3_size) return NULL;
    // get the mem at the top of this stack and return it, then move along
-    ptr         = chunk3 + chunk1_num;
-    chunk3_num += size;
-    return ptr;
+  ptr         = chunk3 + chunk1_num;
+  chunk3_num += size;
+  return ptr;
 }
 
 void
 _eina_debug_chunk_tmp_reset(void)
 {
-    chunk3_num = 0;
+  chunk3_num = 0;
 }
 #endif
 
@@ -278,9 +274,9 @@ _eina_debug_chunk_tmp_reset(void)
 char *
 _eina_debug_chunk_strdup(const char *str)
 {
-    int   len = strlen(str);
-    char *s   = _eina_debug_chunk_push(len + 1);
-    if (!s) return NULL;
-    strcpy(s, str);
-    return s;
+  int   len = strlen(str);
+  char *s   = _eina_debug_chunk_push(len + 1);
+  if (!s) return NULL;
+  strcpy(s, str);
+  return s;
 }

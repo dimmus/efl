@@ -5,35 +5,35 @@
 #include <Efl_Shared.h>
 
 #ifdef EO_API
-#error EO_API should not be already defined
+#  error EO_API should not be already defined
 #endif
 
 #define EOLIAN
 
 #ifdef _WIN32
-# ifndef EO_STATIC
-#  ifdef EO_BUILD
-#   define EO_API __declspec(dllexport)
+#  ifndef EO_STATIC
+#    ifdef EO_BUILD
+#      define EO_API __declspec(dllexport)
+#    else
+#      define EO_API __declspec(dllimport)
+#    endif
 #  else
-#   define EO_API __declspec(dllimport)
+#    define EO_API
 #  endif
-# else
-#  define EO_API
-# endif
-# define EO_API_WEAK
-#else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EO_API __attribute__ ((visibility("default")))
-#   define EO_API_WEAK __attribute__ ((weak))
-#  else
-#   define EO_API
-#   define EO_API_WEAK
-#  endif
-# else
-#  define EO_API
 #  define EO_API_WEAK
-# endif
+#else
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EO_API __attribute__ ((visibility("default")))
+#      define EO_API_WEAK __attribute__ ((weak))
+#    else
+#      define EO_API
+#      define EO_API_WEAK
+#    endif
+#  else
+#    define EO_API
+#    define EO_API_WEAK
+#  endif
 #endif
 
 #ifdef __cplusplus
@@ -207,7 +207,7 @@ EO_API extern unsigned int _efl_object_init_generation;
  *
  * @param obj_id The object needing to be destroyed.
  */
-typedef void (*Efl_Del_Intercept) (Eo *obj_id);
+typedef void (*Efl_Del_Intercept)(Eo *obj_id);
 
 /**
  * This is a no-operation. Its presence behind a function parameter indicates that
@@ -265,10 +265,9 @@ typedef void (*Efl_Event_Cb)(void *data, const Efl_Event *event);
  */
 typedef struct _Efl_Callback_Array_Item
 {
-   const Efl_Event_Description *desc; /**< The event description. */
-   Efl_Event_Cb func; /**< The callback function. */
+  const Efl_Event_Description *desc; /**< The event description. */
+  Efl_Event_Cb                 func; /**< The callback function. */
 } Efl_Callback_Array_Item;
-
 
 /**
  * @struct _Efl_Callback_Array_Item_Full
@@ -278,10 +277,10 @@ typedef struct _Efl_Callback_Array_Item
  */
 typedef struct _Efl_Callback_Array_Item_Full
 {
-   const Efl_Event_Description *desc; /**< The event description. */
-   Efl_Callback_Priority priority; /** < The priorit of the event */
-   Efl_Event_Cb func; /**< The callback function. */
-   void *user_data; /**< The user data pointer to be passed to the func */
+  const Efl_Event_Description *desc; /**< The event description. */
+  Efl_Callback_Priority        priority; /** < The priorit of the event */
+  Efl_Event_Cb                 func; /**< The callback function. */
+  void *user_data; /**< The user data pointer to be passed to the func */
 } Efl_Callback_Array_Item_Full;
 
 /**
@@ -298,7 +297,12 @@ typedef struct _Efl_Callback_Array_Item_Full
  *
  * @return Return @c true when the callback has been successfully added.
  */
-EO_API Efl_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Description *desc, Efl_Callback_Priority priority, Efl_Event_Cb cb, const void *data);
+EO_API Efl_Bool
+efl_event_callback_priority_add(Eo                          *obj,
+                                const Efl_Event_Description *desc,
+                                Efl_Callback_Priority        priority,
+                                Efl_Event_Cb                 cb,
+                                const void                  *data);
 
 /**
  * @brief Delete a callback with a specific data associated with it for an event.
@@ -312,7 +316,10 @@ EO_API Efl_Bool efl_event_callback_priority_add(Eo *obj, const Efl_Event_Descrip
  *
  * @return Return @c true when the callback has been successfully removed.
  */
-EO_API Efl_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *desc, Efl_Event_Cb func, const void *user_data);
+EO_API Efl_Bool efl_event_callback_del(Eo                          *obj,
+                                       const Efl_Event_Description *desc,
+                                       Efl_Event_Cb                 func,
+                                       const void                  *user_data);
 
 /**
  * @brief Get the Eina_Future scheduler that trigger them on a specific set of events on an object.
@@ -324,7 +331,8 @@ EO_API Efl_Bool efl_event_callback_del(Eo *obj, const Efl_Event_Description *des
  *
  * @note You must use EFL_SCHEDULER_ARRAY_DEFINE() to create the @p array.
  */
-EO_API Eina_Future_Scheduler *efl_event_future_scheduler_get(const Eo *obj, Efl_Callback_Array_Item *array);
+EO_API Eina_Future_Scheduler *
+efl_event_future_scheduler_get(const Eo *obj, Efl_Callback_Array_Item *array);
 
 /**
  * @brief Add an array of callbacks created by @ref EFL_CALLBACKS_ARRAY_DEFINE
@@ -343,7 +351,11 @@ EO_API Eina_Future_Scheduler *efl_event_future_scheduler_get(const Eo *obj, Efl_
  *
  * @return Return @c true when the callback has been successfully added.
  */
-EO_API Efl_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callback_Array_Item *array, Efl_Callback_Priority priority, const void *data);
+EO_API Efl_Bool
+efl_event_callback_array_priority_add(Eo                            *obj,
+                                      const Efl_Callback_Array_Item *array,
+                                      Efl_Callback_Priority          priority,
+                                      const void                    *data);
 
 /**
  * @brief Del a callback array with a specific data associated to it for an
@@ -355,7 +367,10 @@ EO_API Efl_Bool efl_event_callback_array_priority_add(Eo *obj, const Efl_Callbac
  *
  * @return Return @c true when the callback has been successfully removed.
  */
-EO_API Efl_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_Item *array, const void *user_data);
+EO_API Efl_Bool
+efl_event_callback_array_del(Eo                            *obj,
+                             const Efl_Callback_Array_Item *array,
+                             const void                    *user_data);
 
 /**
  * @brief Call the callbacks for an event of an object.
@@ -368,7 +383,9 @@ EO_API Efl_Bool efl_event_callback_array_del(Eo *obj, const Efl_Callback_Array_I
  *
  * @return @c false If one of the callbacks aborted the call, @c true otherwise
  */
-EO_API Efl_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
+EO_API Efl_Bool efl_event_callback_call(Eo                          *obj,
+                                        const Efl_Event_Description *desc,
+                                        void *event_info);
 
 /**
  * @brief Call the callbacks for an event of an object.
@@ -383,8 +400,10 @@ EO_API Efl_Bool efl_event_callback_call(Eo *obj, const Efl_Event_Description *de
  *
  * @since 1.19
  */
-EO_API Efl_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Description *desc, void *event_info);
-
+EO_API Efl_Bool
+efl_event_callback_legacy_call(Eo                          *obj,
+                               const Efl_Event_Description *desc,
+                               void                        *event_info);
 
 /**
  * @struct _Efl_Future_Cb_Desc
@@ -394,8 +413,9 @@ EO_API Efl_Bool efl_event_callback_legacy_call(Eo *obj, const Efl_Event_Descript
  * @see efl_future_cb_from_desc()
  * @see efl_future_chain_array()
  */
-typedef struct _Efl_Future_Cb_Desc {
-   /**
+typedef struct _Efl_Future_Cb_Desc
+{
+    /**
     * Called on success (value.type is not @c EINA_VALUE_TYPE_ERROR).
     *
     * If @c success_type is not NULL, then the value is guaranteed to be of that type.
@@ -420,8 +440,8 @@ typedef struct _Efl_Future_Cb_Desc {
     * using @c eina_value_flush() once they are unused (no more future or futures
     * returned a new value).
     */
-   Eina_Value (*success)(Eo *o, void *data, const Eina_Value value);
-   /**
+  Eina_Value (*success)(Eo *o, void *data, const Eina_Value value);
+    /**
     * Called on error (value.type is @c EINA_VALUE_TYPE_ERROR).
     *
     * This function can return another error then propagate or convert it. However it
@@ -458,8 +478,8 @@ typedef struct _Efl_Future_Cb_Desc {
     * using @c eina_value_flush() once they are unused (no more future or futures
     * returned a new value).
     */
-   Eina_Value (*error)(Eo *o, void *data, Eina_Error error);
-   /**
+  Eina_Value (*error)(Eo *o, void *data, Eina_Error error);
+    /**
     * Called on @b all situations to notify future destruction.
     *
     * This is called after @c success or @c error, as well as it's called if none of them are
@@ -472,26 +492,26 @@ typedef struct _Efl_Future_Cb_Desc {
     * @param o The object used to create the link in efl_future_cb_from_desc() or efl_future_chain_array().
     * @param dead_future The future that's been freed.
     */
-   void (*free)(Eo *o, void *data, const Eina_Future *dead_future);
-   /**
+  void (*free)(Eo *o, void *data, const Eina_Future *dead_future);
+    /**
     * If provided, then @c success will only be called if the value type matches the given pointer.
     *
     * If provided and no match is found, @c error will be called with @c EINVAL. If there's no @c error,
     * then it will be propagated to the next future in the chain.
     */
-   const Eina_Value_Type *success_type;
-   /**
+  const Eina_Value_Type *success_type;
+    /**
     * Context data given to every callback.
     *
     * This must be freed @b only by @c free callback as it's called from every case,
     * otherwise it may lead to memory leaks.
     */
-   const void *data;
-   /**
+  const void *data;
+    /**
     * This is used by Eo to cancel pending futures in case
     * an Eo object is deleted. It can be @c NULL.
     */
-   Eina_Future **storage;
+  Eina_Future **storage;
 } Efl_Future_Cb_Desc;
 
 /**
@@ -575,7 +595,9 @@ typedef struct _Efl_Future_Cb_Desc {
  * @see #Efl_Future_Cb_Desc
  * @see efl_key_data_set()
  */
-EO_API Eina_Future_Desc efl_future_cb_from_desc(const Eo *obj, const Efl_Future_Cb_Desc desc) EINA_ARG_NONNULL(1);
+EO_API Eina_Future_Desc efl_future_cb_from_desc(const Eo                *obj,
+                                                const Efl_Future_Cb_Desc desc)
+  EINA_ARG_NONNULL(1);
 
 /**
  * Syntax suger over efl_future_cb_from_desc()
@@ -622,7 +644,10 @@ EO_API Eina_Future_Desc efl_future_cb_from_desc(const Eo *obj, const Efl_Future_
  * @see eina_future_then_from_desc()
  * @see #Efl_Future_Cb_Desc
  */
-EO_API Eina_Future *efl_future_chain_array(Eo *obj, Eina_Future *prev, const Efl_Future_Cb_Desc descs[]) EINA_ARG_NONNULL(1, 2);
+EO_API Eina_Future *efl_future_chain_array(Eo                      *obj,
+                                           Eina_Future             *prev,
+                                           const Efl_Future_Cb_Desc descs[])
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * Syntax suger over efl_future_chain_array()
@@ -648,7 +673,7 @@ EO_API Eina_Future *efl_future_chain_array(Eo *obj, Eina_Future *prev, const Efl
 typedef struct _Efl_Dbg_Info
 {
   Eina_Stringshare *name; /**< The name of the part (stringshare). */
-  Eina_Value value; /**< The value. */
+  Eina_Value        value; /**< The value. */
 } Efl_Dbg_Info;
 
 /**
@@ -673,16 +698,16 @@ EO_API extern const Eina_Value_Type *EFL_DBG_INFO_TYPE;
 static inline Efl_Dbg_Info *
 EFL_DBG_INFO_LIST_APPEND(Efl_Dbg_Info *list, const char *name)
 {
-   Efl_Dbg_Info *tmp = (Efl_Dbg_Info *)calloc(1, sizeof(*tmp));
+  Efl_Dbg_Info *tmp = (Efl_Dbg_Info *)calloc(1, sizeof(*tmp));
 
-   if (!tmp) return NULL;
-   tmp->name = eina_stringshare_add(name);
-   eina_value_list_setup(&(tmp->value), EFL_DBG_INFO_TYPE);
-   if (list)
-     {
-        eina_value_list_pappend(&(list->value), tmp);
-     }
-   return tmp;
+  if (!tmp) return NULL;
+  tmp->name = eina_stringshare_add(name);
+  eina_value_list_setup(&(tmp->value), EFL_DBG_INFO_TYPE);
+  if (list)
+  {
+    eina_value_list_pappend(&(list->value), tmp);
+  }
+  return tmp;
 }
 
 /**
@@ -771,8 +796,6 @@ typedef unsigned int Efl_Object_Op;
  */
 #define EFL_EVENT_DESCRIPTION_HOT_RESTART(name) { name, EFL_TRUE, EFL_FALSE, EFL_TRUE }
 
-
-
 /**
  * @}
  */
@@ -820,17 +843,16 @@ class_get_func_name(void) \
    return _my_class; \
 }
 
-
 /**
  * An enum representing the possible types of an Eo class.
  */
 enum _Efl_Class_Type
 {
-   EFL_CLASS_TYPE_REGULAR = 0, /**< Regular class. */
-   EFL_CLASS_TYPE_REGULAR_NO_INSTANT, /**< Regular non instant-able class. */
-   EFL_CLASS_TYPE_INTERFACE, /**< Interface */
-   EFL_CLASS_TYPE_MIXIN, /**< Mixin */
-   EFL_CLASS_TYPE_INVALID
+  EFL_CLASS_TYPE_REGULAR = 0, /**< Regular class. */
+  EFL_CLASS_TYPE_REGULAR_NO_INSTANT, /**< Regular non instant-able class. */
+  EFL_CLASS_TYPE_INTERFACE, /**< Interface */
+  EFL_CLASS_TYPE_MIXIN, /**< Mixin */
+  EFL_CLASS_TYPE_INVALID
 };
 
 /**
@@ -847,8 +869,9 @@ typedef enum _Efl_Class_Type Efl_Class_Type;
 
 typedef struct _Efl_Op_Description
 {
-   void *api_func;         /**< The EO_API function offering this op. (The name of the func on windows) */
-   void *func;             /**< The static function to call for the op. */
+  void *
+    api_func; /**< The EO_API function offering this op. (The name of the func on windows) */
+  void *func; /**< The static function to call for the op. */
 } Efl_Op_Description;
 
 /**
@@ -858,8 +881,9 @@ typedef struct _Efl_Op_Description
  */
 typedef struct _Efl_Object_Ops
 {
-   const Efl_Op_Description *descs; /**< The op descriptions array of size count. */
-   size_t count; /**< Number of op descriptions. */
+  const Efl_Op_Description
+        *descs; /**< The op descriptions array of size count. */
+  size_t count; /**< Number of op descriptions. */
 } Efl_Object_Ops;
 
 /**
@@ -869,18 +893,24 @@ typedef struct _Efl_Object_Ops
  */
 struct _Efl_Class_Description
 {
-   unsigned int version; /**< The current version of eo, use #EO_VERSION */
-   const char *name; /**< The name of the class. */
-   Efl_Class_Type type; /**< The type of the class. */
-   size_t data_size; /**< The size of data (private + protected + public) this class needs per object. */
-   Efl_Bool (*class_initializer)(Efl_Class *klass); /**< The initializer for the class */
-   void (*class_constructor)(Efl_Class *klass); /**< The constructor of the class. */
-   void (*class_destructor)(Efl_Class *klass); /**< The destructor of the class. */
+  unsigned int   version; /**< The current version of eo, use #EO_VERSION */
+  const char    *name; /**< The name of the class. */
+  Efl_Class_Type type; /**< The type of the class. */
+  size_t
+    data_size; /**< The size of data (private + protected + public) this class needs per object. */
+  Efl_Bool (*class_initializer)(
+    Efl_Class *klass); /**< The initializer for the class */
+  void (*class_constructor)(
+    Efl_Class *klass); /**< The constructor of the class. */
+  void (*class_destructor)(
+    Efl_Class *klass); /**< The destructor of the class. */
 };
+
 /**
  * Setter type which is used to set an #Eina_Value, this function should access one particular property field
  */
-typedef Eina_Error (*Efl_Object_Property_Reflection_Setter)(Eo *obj, Eina_Value value);
+typedef Eina_Error (*Efl_Object_Property_Reflection_Setter)(Eo        *obj,
+                                                            Eina_Value value);
 
 /**
  * Getter type which is used to get an #Eina_Value, this function should access one particular property field
@@ -895,10 +925,13 @@ typedef Eina_Value (*Efl_Object_Property_Reflection_Getter)(const Eo *obj);
  * the property_name is a normal c string containing the name of the property
  * that the get and set function changes.
  */
-typedef struct _Efl_Object_Property_Reflection{
-   const char *property_name; /**< The name of the property */
-   Efl_Object_Property_Reflection_Setter set; /**< The function used to set a generic #Eina_Value on this property of the object. */
-   Efl_Object_Property_Reflection_Getter get; /**< The function used to retrieve a generic #Eina_Value from this property of the object. */
+typedef struct _Efl_Object_Property_Reflection
+{
+  const char *property_name; /**< The name of the property */
+  Efl_Object_Property_Reflection_Setter
+    set; /**< The function used to set a generic #Eina_Value on this property of the object. */
+  Efl_Object_Property_Reflection_Getter
+    get; /**< The function used to retrieve a generic #Eina_Value from this property of the object. */
 } Efl_Object_Property_Reflection;
 
 /**
@@ -908,8 +941,8 @@ typedef struct _Efl_Object_Property_Reflection{
  */
 typedef struct _Efl_Object_Property_Reflection_Ops
 {
-   const Efl_Object_Property_Reflection *table; /**< The reflection table. */
-   size_t count; /**< Number of table lines descriptions. */
+  const Efl_Object_Property_Reflection *table; /**< The reflection table. */
+  size_t count; /**< Number of table lines descriptions. */
 } Efl_Object_Property_Reflection_Ops;
 
 /**
@@ -934,7 +967,8 @@ typedef struct _Efl_Class_Description Efl_Class_Description;
  *
  * @see #EFL_DEFINE_CLASS
  */
-EO_API const Efl_Class *efl_class_new(const Efl_Class_Description *desc, const Efl_Class *parent, ...);
+EO_API const Efl_Class *
+efl_class_new(const Efl_Class_Description *desc, const Efl_Class *parent, ...);
 
 /**
  * @brief Set the functions of a class
@@ -949,7 +983,10 @@ EO_API const Efl_Class *efl_class_new(const Efl_Class_Description *desc, const E
  * efl_property_reflection_set() or efl_property_reflection_get() is called.
  * @see #EFL_DEFINE_CLASS
  */
-EO_API Efl_Bool efl_class_functions_set(const Efl_Class *klass_id, const Efl_Object_Ops *object_ops, const Efl_Object_Property_Reflection_Ops *reflection_table);
+EO_API Efl_Bool efl_class_functions_set(
+  const Efl_Class                          *klass_id,
+  const Efl_Object_Ops                     *object_ops,
+  const Efl_Object_Property_Reflection_Ops *reflection_table);
 
 /**
  * @brief Override Eo functions of this object.
@@ -1072,11 +1109,12 @@ EO_API Efl_Bool efl_object_shutdown(void);
  */
 typedef enum
 {
-   EFL_ID_DOMAIN_INVALID = -1, /**< Invalid */
-   EFL_ID_DOMAIN_MAIN    =  0, /**< The main loop domain where eo_init() is called */
-   EFL_ID_DOMAIN_SHARED  =  1, /**< A special shared domain visible to all threads but with extra locking and unlocking costs to access */
-   EFL_ID_DOMAIN_THREAD /**< The normal domain for threads so they can adopt the main loop domain at times */
-   /* One more slot for future expansion here - maybe fine-grain locked objs */
+  EFL_ID_DOMAIN_INVALID = -1, /**< Invalid */
+  EFL_ID_DOMAIN_MAIN = 0, /**< The main loop domain where eo_init() is called */
+  EFL_ID_DOMAIN_SHARED =
+    1, /**< A special shared domain visible to all threads but with extra locking and unlocking costs to access */
+  EFL_ID_DOMAIN_THREAD /**< The normal domain for threads so they can adopt the main loop domain at times */
+  /* One more slot for future expansion here - maybe fine-grain locked objs */
 } Efl_Id_Domain;
 
 /**
@@ -1107,7 +1145,7 @@ typedef struct _Efl_Domain_Data Efl_Domain_Data;
  * @see efl_domain_data_return()
  * @see efl_compatible()
  */
-EO_API Efl_Id_Domain    efl_domain_get(void);
+EO_API Efl_Id_Domain efl_domain_get(void);
 
 /**
  * @brief Switch the native domain for the current thread.
@@ -1122,7 +1160,7 @@ EO_API Efl_Id_Domain    efl_domain_get(void);
  *
  * @see efl_domain_get()
  */
-EO_API Efl_Bool        efl_domain_switch(Efl_Id_Domain domain);
+EO_API Efl_Bool efl_domain_switch(Efl_Id_Domain domain);
 
 /**
  * @brief Get the current domain used for allocating new objects
@@ -1135,7 +1173,7 @@ EO_API Efl_Bool        efl_domain_switch(Efl_Id_Domain domain);
  *
  * @see efl_domain_get()
  */
-EO_API Efl_Id_Domain    efl_domain_current_get(void);
+EO_API Efl_Id_Domain efl_domain_current_get(void);
 
 /**
  * @brief Set the current domain used for allocating new objects.
@@ -1149,7 +1187,7 @@ EO_API Efl_Id_Domain    efl_domain_current_get(void);
  *
  * @see efl_domain_get()
  */
-EO_API Efl_Bool        efl_domain_current_set(Efl_Id_Domain domain);
+EO_API Efl_Bool efl_domain_current_set(Efl_Id_Domain domain);
 
 /**
  * @brief Push a new domain onto the domain stack.
@@ -1162,7 +1200,7 @@ EO_API Efl_Bool        efl_domain_current_set(Efl_Id_Domain domain);
  *
  * @see efl_domain_get()
  */
-EO_API Efl_Bool        efl_domain_current_push(Efl_Id_Domain domain);
+EO_API Efl_Bool efl_domain_current_push(Efl_Id_Domain domain);
 
 /**
  * @brief Pop a previously pushed domain from the domain stack
@@ -1172,7 +1210,7 @@ EO_API Efl_Bool        efl_domain_current_push(Efl_Id_Domain domain);
  *
  * @see efl_domain_get()
  */
-EO_API void             efl_domain_current_pop(void);
+EO_API void efl_domain_current_pop(void);
 
 /**
  * @brief Get an opaque handle to the local native domain eoid data
@@ -1211,7 +1249,7 @@ EO_API Efl_Domain_Data *efl_domain_data_get(void);
  *
  * @see efl_domain_get()
  */
-EO_API Efl_Id_Domain    efl_domain_data_adopt(Efl_Domain_Data *data_in);
+EO_API Efl_Id_Domain efl_domain_data_adopt(Efl_Domain_Data *data_in);
 
 /**
  * @brief Return a domain to its original owning thread
@@ -1227,7 +1265,7 @@ EO_API Efl_Id_Domain    efl_domain_data_adopt(Efl_Domain_Data *data_in);
  *
  * @see efl_domain_get()
  */
-EO_API Efl_Bool        efl_domain_data_return(Efl_Id_Domain domain);
+EO_API Efl_Bool efl_domain_data_return(Efl_Id_Domain domain);
 
 /**
  * @brief Check if 2 objects are compatible
@@ -1243,38 +1281,37 @@ EO_API Efl_Bool        efl_domain_data_return(Efl_Id_Domain domain);
  *
  * @see efl_domain_get()
  */
-EO_API Efl_Bool        efl_compatible(const Eo *obj, const Eo *obj_target);
+EO_API Efl_Bool efl_compatible(const Eo *obj, const Eo *obj_target);
 
 #endif
 
 // to fetch internal function and object data at once
 typedef struct _Efl_Object_Op_Call_Data
 {
-   Eo           *eo_id;
-   _Eo_Object   *obj;
-   void         *func;
-   void         *data;
-   void         *extn1; // for future use to avoid ABI issues
-   void         *extn2; // for future use to avoid ABI issues
-   void         *extn3; // for future use to avoid ABI issues
-   void         *extn4; // for future use to avoid ABI issues
+  Eo         *eo_id;
+  _Eo_Object *obj;
+  void       *func;
+  void       *data;
+  void       *extn1;  // for future use to avoid ABI issues
+  void       *extn2;  // for future use to avoid ABI issues
+  void       *extn3;  // for future use to avoid ABI issues
+  void       *extn4;  // for future use to avoid ABI issues
 } Efl_Object_Op_Call_Data;
 
 // to pass the internal function call to EFL_FUNC_BODY (as Func parameter)
 #define EFL_FUNC_CALL(...) __VA_ARGS__
 
 #ifndef _WIN32
-# define EFL_FUNC_COMMON_OP_FUNC(Name) ((const void *) Name)
+#  define EFL_FUNC_COMMON_OP_FUNC(Name) ((const void *) Name)
 #else
-# define EFL_FUNC_COMMON_OP_FUNC(Name) ((const void *) #Name)
+#  define EFL_FUNC_COMMON_OP_FUNC(Name) ((const void *) #Name)
 #endif
 
 #ifdef _MSC_VER
-# define EFL_FUNC_TLS __declspec(thread)
+#  define EFL_FUNC_TLS __declspec(thread)
 #else
-# define EFL_FUNC_TLS __thread
+#  define EFL_FUNC_TLS __thread
 #endif
-
 
 // cache OP id, get real fct and object data then do the call
 #define EFL_FUNC_COMMON_OP(Obj, Name, DefRet) \
@@ -1342,7 +1379,13 @@ __##Name##_failed: EINA_COLD; \
      EFL_FUNC_COMMON_OP_END(obj, Name, , ErrorCase); \
   }
 
-#define _EFL_OBJECT_FUNC_BODYV(Name, ObjType, Ret, DefRet, ErrorCase, Arguments, ...) \
+#define _EFL_OBJECT_FUNC_BODYV(Name,      \
+                               ObjType,   \
+                               Ret,       \
+                               DefRet,    \
+                               ErrorCase, \
+                               Arguments, \
+                               ...) \
   Ret \
   Name(ObjType obj, __VA_ARGS__) \
   { \
@@ -1386,34 +1429,55 @@ __##Name##_failed: EINA_COLD; \
 
 #define EFL_FUNC_BODY_FALLBACK(Name, Ret, DefRet, FallbackCall) _EFL_OBJECT_FUNC_BODY(Name, Eo *, Ret, DefRet, FallbackCall)
 #define EFL_VOID_FUNC_BODY_FALLBACK(Name, FallbackCall) _EFL_OBJECT_VOID_FUNC_BODY(Name, Eo *, FallbackCall)
-#define EFL_FUNC_BODYV_FALLBACK(Name, Ret, DefRet, FallbackCall, Arguments, ...) _EFL_OBJECT_FUNC_BODYV(Name, Eo *, Ret, DefRet, FallbackCall, EFL_FUNC_CALL(Arguments), __VA_ARGS__)
+#define EFL_FUNC_BODYV_FALLBACK(Name,         \
+                                Ret,          \
+                                DefRet,       \
+                                FallbackCall, \
+                                Arguments,    \
+                                ...) _EFL_OBJECT_FUNC_BODYV(Name, Eo *, Ret, DefRet, FallbackCall, EFL_FUNC_CALL(Arguments), __VA_ARGS__)
 #define EFL_VOID_FUNC_BODYV_FALLBACK(Name, FallbackCall, Arguments, ...) _EFL_OBJECT_VOID_FUNC_BODYV(Name, Eo *, FallbackCall, EFL_FUNC_CALL(Arguments), __VA_ARGS__)
 
 #define EFL_FUNC_BODY_CONST_FALLBACK(Name, Ret, DefRet, FallbackCall) _EFL_OBJECT_FUNC_BODY(Name, const Eo *, Ret, DefRet, FallbackCall)
 #define EFL_VOID_FUNC_BODY_CONST_FALLBACK(Name, FallbackCall) _EFL_OBJECT_VOID_FUNC_BODY(Name, const Eo *, FallbackCall)
-#define EFL_FUNC_BODYV_CONST_FALLBACK(Name, Ret, DefRet, FallbackCall, Arguments, ...) _EFL_OBJECT_FUNC_BODYV(Name, const Eo *, Ret, DefRet, FallbackCall, EFL_FUNC_CALL(Arguments), __VA_ARGS__)
+#define EFL_FUNC_BODYV_CONST_FALLBACK(Name,         \
+                                      Ret,          \
+                                      DefRet,       \
+                                      FallbackCall, \
+                                      Arguments,    \
+                                      ...) _EFL_OBJECT_FUNC_BODYV(Name, const Eo *, Ret, DefRet, FallbackCall, EFL_FUNC_CALL(Arguments), __VA_ARGS__)
 #define EFL_VOID_FUNC_BODYV_CONST_FALLBACK(Name, FallbackCall, Arguments, ...) _EFL_OBJECT_VOID_FUNC_BODYV(Name, const Eo *, FallbackCall, EFL_FUNC_CALL(Arguments), __VA_ARGS__)
 
 #ifndef _WIN32
-# define _EFL_OBJECT_OP_API_ENTRY(a) (void*)a
+#  define _EFL_OBJECT_OP_API_ENTRY(a) (void*)a
 #else
-# define _EFL_OBJECT_OP_API_ENTRY(a) #a
+#  define _EFL_OBJECT_OP_API_ENTRY(a) #a
 #endif
 
 #define EFL_OBJECT_OP_FUNC(_api, _private) { _EFL_OBJECT_OP_API_ENTRY(_api), (void*)_private }
 
 // returns the OP id corresponding to the given api_func
-EO_API Efl_Object_Op _efl_object_api_op_id_get(const void *api_func) EINA_DEPRECATED;
-EO_API Efl_Object_Op _efl_object_op_api_id_get(const void *api_func, const Eo *obj, const char *api_func_name, const char *file, int line) EINA_ARG_NONNULL(1, 2, 3, 4) EFL_WARN_UNUSED_RESULT;
+EO_API Efl_Object_Op _efl_object_api_op_id_get(const void *api_func)
+  EINA_DEPRECATED;
+EO_API Efl_Object_Op _efl_object_op_api_id_get(const void *api_func,
+                                               const Eo   *obj,
+                                               const char *api_func_name,
+                                               const char *file,
+                                               int         line)
+  EINA_ARG_NONNULL(1, 2, 3, 4) EFL_WARN_UNUSED_RESULT;
 
 // gets the real function pointer and the object data
-EO_API Efl_Bool _efl_object_call_resolve(Eo *obj, const char *func_name, Efl_Object_Op_Call_Data *call, Efl_Object_Op op, const char *file, int line);
+EO_API Efl_Bool _efl_object_call_resolve(Eo                      *obj,
+                                         const char              *func_name,
+                                         Efl_Object_Op_Call_Data *call,
+                                         Efl_Object_Op            op,
+                                         const char              *file,
+                                         int                      line);
 
 // end of the eo call barrier, unref the obj
 EO_API void _efl_object_call_end(Efl_Object_Op_Call_Data *call);
 
 // end of the efl_add. Calls finalize among others
-EO_API Eo * _efl_add_end(Eo *obj, Efl_Bool is_ref, Efl_Bool is_fallback);
+EO_API Eo *_efl_add_end(Eo *obj, Efl_Bool is_ref, Efl_Bool is_fallback);
 
 /*****************************************************************************/
 
@@ -1504,9 +1568,9 @@ EO_API Eo *_efl_added_get(void);
 /* Check if GCC compatible (both GCC and clang define this) */
 #if defined(__GNUC__) && !defined(_EO_ADD_FALLBACK_FORCE)
 
-# define efl_added __efl_added
+#  define efl_added __efl_added
 
-# define _efl_add_common(klass, parent, is_ref, ...) \
+#  define _efl_add_common(klass, parent, is_ref, ...) \
    ({ \
      Eo * const __efl_added = _efl_add_internal_start(__FILE__, __LINE__, klass, parent, is_ref, EFL_FALSE); \
      (void) ((void)0, ##__VA_ARGS__);                                   \
@@ -1515,9 +1579,9 @@ EO_API Eo *_efl_added_get(void);
 
 #else
 
-# define efl_added _efl_added_get()
+#  define efl_added _efl_added_get()
 
-# define _efl_add_common(klass, parent, is_ref, ...) \
+#  define _efl_add_common(klass, parent, is_ref, ...) \
    ( \
      _efl_add_internal_start(__FILE__, __LINE__, klass, parent, is_ref, EFL_TRUE), \
      ##__VA_ARGS__, \
@@ -1587,7 +1651,12 @@ EO_API Eo *_efl_added_get(void);
  */
 #define efl_new(klass, ...) efl_add_ref(klass, NULL, ##__VA_ARGS__)
 
-EO_API Eo * _efl_add_internal_start(const char *file, int line, const Efl_Class *klass_id, Eo *parent, Efl_Bool ref, Efl_Bool is_fallback);
+EO_API Eo *_efl_add_internal_start(const char      *file,
+                                   int              line,
+                                   const Efl_Class *klass_id,
+                                   Eo              *parent,
+                                   Efl_Bool         ref,
+                                   Efl_Bool         is_fallback);
 
 /**
  * @typedef Efl_Substitute_Ctor_Cb
@@ -1616,7 +1685,15 @@ typedef Eo *(*Efl_Substitute_Ctor_Cb)(void *data, Eo *obj_id);
  * @param sub_ctor_data Additional data to be passed to the @p substitute_ctor callback.
  * @return An handle to the new object on success, NULL otherwise.
  */
-EO_API Eo * _efl_add_internal_start_bindings(const char *file, int line, const Efl_Class *klass_id, Eo *parent, Efl_Bool ref, Efl_Bool is_fallback, Efl_Substitute_Ctor_Cb substitute_ctor, void *sub_ctor_data);
+EO_API Eo *
+_efl_add_internal_start_bindings(const char            *file,
+                                 int                    line,
+                                 const Efl_Class       *klass_id,
+                                 Eo                    *parent,
+                                 Efl_Bool               ref,
+                                 Efl_Bool               is_fallback,
+                                 Efl_Substitute_Ctor_Cb substitute_ctor,
+                                 void                  *sub_ctor_data);
 
 /**
  * @brief Unrefs the object and reparents it to NULL.
@@ -1644,7 +1721,8 @@ EO_API void efl_del(const Eo *obj);
  *
  * @ingroup Efl_Object
  */
-EO_API Efl_Bool efl_class_override_register(const Efl_Class *klass, const Efl_Class *override);
+EO_API Efl_Bool efl_class_override_register(const Efl_Class *klass,
+                                            const Efl_Class *override);
 
 /**
  * @brief Unset an override for a class
@@ -1658,7 +1736,8 @@ EO_API Efl_Bool efl_class_override_register(const Efl_Class *klass, const Efl_Cl
  *
  * @ingroup Efl_Object
  */
-EO_API Efl_Bool efl_class_override_unregister(const Efl_Class *klass, const Efl_Class *override);
+EO_API Efl_Bool efl_class_override_unregister(const Efl_Class *klass,
+                                              const Efl_Class *override);
 /**
  * @brief Get a pointer to the data of an object for a specific class.
  *
@@ -1727,7 +1806,11 @@ EO_API void *efl_data_scope_safe_get(const Eo *obj, const Efl_Class *klass);
  *
  * @see efl_data_xunref_internal()
  */
-EO_API void *efl_data_xref_internal(const char *file, int line, const Eo *obj, const Efl_Class *klass, const Eo *ref_obj);
+EO_API void *efl_data_xref_internal(const char      *file,
+                                    int              line,
+                                    const Eo        *obj,
+                                    const Efl_Class *klass,
+                                    const Eo        *ref_obj);
 
 /**
  * @def efl_data_xunref(obj, data, ref_obj)
@@ -1754,7 +1837,8 @@ EO_API void *efl_data_xref_internal(const char *file, int line, const Eo *obj, c
  *
  * @see efl_data_xref_internal()
  */
-EO_API void efl_data_xunref_internal(const Eo *obj, void *data, const Eo *ref_obj);
+EO_API void
+efl_data_xunref_internal(const Eo *obj, void *data, const Eo *ref_obj);
 
 /**
  * @brief Increment the object's reference count by 1.
@@ -1821,7 +1905,8 @@ EO_API int efl_ref_count(const Eo *obj);
  * @see efl_unref()
  * @see efl_del()
  */
-EO_API void efl_del_intercept_set(Eo *obj, Efl_Del_Intercept del_intercept_func);
+EO_API void efl_del_intercept_set(Eo               *obj,
+                                  Efl_Del_Intercept del_intercept_func);
 
 /**
  * @brief Get the deletion interceptor function
@@ -1872,7 +1957,8 @@ EO_API void efl_reuse(const Eo *obj);
  *
  * @see efl_xunref()
  */
-EO_API Eo *efl_xref_internal(const char *file, int line, Eo *obj, const Eo *ref_obj);
+EO_API Eo *
+efl_xref_internal(const char *file, int line, Eo *obj, const Eo *ref_obj);
 
 /**
  * @brief Decrement the object's reference count by 1 and free it if needed. Will free the ref associated with ref_obj).
@@ -1916,7 +2002,7 @@ EO_API void efl_wref_del(Eo *obj, Efl_Object **wref);
  * @param[in] key The key associated with the data
  * @param[in] data The data to set
  */
-EO_API void efl_key_data_set(Eo *obj, const char * key, const void *data);
+EO_API void efl_key_data_set(Eo *obj, const char *key, const void *data);
 
 /**
  * @brief Generic data with string key on an object.
@@ -1927,7 +2013,7 @@ EO_API void efl_key_data_set(Eo *obj, const char * key, const void *data);
  *
  * @return The data to set
  */
-EO_API void *efl_key_data_get(const Eo *obj, const char * key);
+EO_API void *efl_key_data_get(const Eo *obj, const char *key);
 
 /**
  * @brief Generic object reference with string key to object.
@@ -1942,7 +2028,8 @@ EO_API void *efl_key_data_get(const Eo *obj, const char * key);
  * @param[in] key The key associated with the object ref
  * @param[in] objdata The object to set
  */
-EO_API void efl_key_ref_set(Eo *obj, const char * key, const Efl_Object *objdata);
+EO_API void
+efl_key_ref_set(Eo *obj, const char *key, const Efl_Object *objdata);
 
 /**
  * @brief Generic object reference with string key to object.
@@ -1958,7 +2045,7 @@ EO_API void efl_key_ref_set(Eo *obj, const char * key, const Efl_Object *objdata
  *
  * @return The object to set
  */
-EO_API Efl_Object *efl_key_ref_get(const Eo *obj, const char * key);
+EO_API Efl_Object *efl_key_ref_get(const Eo *obj, const char *key);
 
 /**
  * @brief Generic weak object reference with string key to object.
@@ -1972,7 +2059,8 @@ EO_API Efl_Object *efl_key_ref_get(const Eo *obj, const char * key);
  * @param[in] key The key associated with the object ref
  * @param[in] objdata The object to set
  */
-EO_API void efl_key_wref_set(Eo *obj, const char * key, const Efl_Object *objdata);
+EO_API void
+efl_key_wref_set(Eo *obj, const char *key, const Efl_Object *objdata);
 
 /**
  * @brief Generic weak object reference with string key to object.
@@ -1987,7 +2075,7 @@ EO_API void efl_key_wref_set(Eo *obj, const char * key, const Efl_Object *objdat
  *
  * @return The object to set
  */
-EO_API Efl_Object *efl_key_wref_get(const Eo *obj, const char * key);
+EO_API Efl_Object *efl_key_wref_get(const Eo *obj, const char *key);
 
 /**
  * @brief Value on with string key on the object.
@@ -2001,7 +2089,7 @@ EO_API Efl_Object *efl_key_wref_get(const Eo *obj, const char * key);
  * @param[in] key The key associated with the value
  * @param[in] value The value to set
  */
-EO_API void efl_key_value_set(Eo *obj, const char * key, Eina_Value *value);
+EO_API void efl_key_value_set(Eo *obj, const char *key, Eina_Value *value);
 
 /**
  * @brief Value on with string key on the object.
@@ -2016,7 +2104,7 @@ EO_API void efl_key_value_set(Eo *obj, const char * key, Eina_Value *value);
  *
  * @return The value to set
  */
-EO_API Eina_Value *efl_key_value_get(const Eo *obj, const char * key);
+EO_API Eina_Value *efl_key_value_get(const Eo *obj, const char *key);
 
 /**
  * @brief Enable or disable the manual free feature.
@@ -2067,7 +2155,9 @@ EO_API Efl_Bool efl_destructed_is(const Eo *obj);
  *
  * @see efl_property_reflection_get() and efl_property_reflection_exist()
  */
-EO_API Eina_Error efl_property_reflection_set(Eo *obj, const char *property_name, Eina_Value value);
+EO_API Eina_Error efl_property_reflection_set(Eo         *obj,
+                                              const char *property_name,
+                                              Eina_Value  value);
 
 /**
  * @brief Retrieve an #Eina_Value containing the current value of the property specified with \c property_name.
@@ -2078,7 +2168,8 @@ EO_API Eina_Error efl_property_reflection_set(Eo *obj, const char *property_name
  *
  * @see efl_property_reflection_set() and efl_property_reflection_exist()
  */
-EO_API Eina_Value efl_property_reflection_get(const Eo *obj, const char *property_name);
+EO_API Eina_Value efl_property_reflection_get(const Eo   *obj,
+                                              const char *property_name);
 
 /**
  * @brief Check if a property exist for reflection.
@@ -2089,7 +2180,8 @@ EO_API Eina_Value efl_property_reflection_get(const Eo *obj, const char *propert
  *
  * @see efl_property_reflection_set() and efl_property_reflection_get()
  */
-EO_API Efl_Bool efl_property_reflection_exist(Eo *obj, const char *property_name);
+EO_API Efl_Bool efl_property_reflection_exist(Eo         *obj,
+                                              const char *property_name);
 
 /**
  * @addtogroup Efl_Class_Class Eo's Class class.
@@ -2171,7 +2263,8 @@ typedef void (*efl_key_data_free_func)(void *);
  * Helper for sorting callbacks array. Automatically used by
  * @ref EFL_CALLBACKS_ARRAY_DEFINE
  */
-EO_API int efl_callbacks_cmp(const Efl_Callback_Array_Item *a, const Efl_Callback_Array_Item *b);
+EO_API int efl_callbacks_cmp(const Efl_Callback_Array_Item *a,
+                             const Efl_Callback_Array_Item *b);
 
 /**
  * Helper for creating global callback arrays.
@@ -2255,7 +2348,6 @@ EO_API int efl_callbacks_cmp(const Efl_Callback_Array_Item *a, const Efl_Callbac
    efl_event_callback_array_priority_add(obj, array, \
          EFL_CALLBACK_PRIORITY_DEFAULT, data)
 
-
 /**
  * @def efl_event_callback_forwarder_add(obj, desc, new_obj)
  * @brief Add an event callback forwarder for an event and an object.
@@ -2277,7 +2369,8 @@ EO_API int efl_callbacks_cmp(const Efl_Callback_Array_Item *a, const Efl_Callbac
  *
  * @ingroup Efl_Object
  */
-EO_API unsigned int efl_event_callback_count(const Eo *obj, const Efl_Event_Description *desc);
+EO_API unsigned int efl_event_callback_count(const Eo                    *obj,
+                                             const Efl_Event_Description *desc);
 
 /**
  * @brief Replace the previous Eo pointer with new content.
@@ -2301,14 +2394,14 @@ EO_API unsigned int efl_event_callback_count(const Eo *obj, const Efl_Event_Desc
 static inline Efl_Bool
 efl_replace(Eo **storage, const Eo *new_obj)
 {
-   Eo *tmp = NULL;
+  Eo *tmp = NULL;
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(storage, EFL_FALSE);
-   if (*storage == new_obj) return EFL_FALSE;
-   if (new_obj) tmp = efl_ref(new_obj);
-   if (*storage) efl_unref(*storage);
-   *storage = tmp;
-   return EFL_TRUE;
+  EINA_SAFETY_ON_NULL_RETURN_VAL(storage, EFL_FALSE);
+  if (*storage == new_obj) return EFL_FALSE;
+  if (new_obj) tmp = efl_ref(new_obj);
+  if (*storage) efl_unref(*storage);
+  *storage = tmp;
+  return EFL_TRUE;
 }
 
 EO_API extern const Eina_Value_Type *EINA_VALUE_TYPE_OBJECT;
@@ -2323,11 +2416,11 @@ EO_API extern const Eina_Value_Type *EINA_VALUE_TYPE_OBJECT;
 static inline Eina_Value *
 eina_value_object_new(Eo *obj)
 {
-   Eina_Value *v;
+  Eina_Value *v;
 
-   v = eina_value_new(EINA_VALUE_TYPE_OBJECT);
-   if (v) eina_value_set(v, obj);
-   return v;
+  v = eina_value_new(EINA_VALUE_TYPE_OBJECT);
+  if (v) eina_value_set(v, obj);
+  return v;
 }
 
 /**
@@ -2340,11 +2433,10 @@ eina_value_object_new(Eo *obj)
 static inline Eina_Value
 eina_value_object_init(Eo *obj)
 {
-   Eina_Value v = EINA_VALUE_EMPTY;
+  Eina_Value v = EINA_VALUE_EMPTY;
 
-   if (eina_value_setup(&v, EINA_VALUE_TYPE_OBJECT))
-     eina_value_set(&v, obj);
-   return v;
+  if (eina_value_setup(&v, EINA_VALUE_TYPE_OBJECT)) eina_value_set(&v, obj);
+  return v;
 }
 
 /**
@@ -2357,14 +2449,13 @@ eina_value_object_init(Eo *obj)
 static inline Eo *
 eina_value_object_get(const Eina_Value *v)
 {
-   Eo *r = NULL;
+  Eo *r = NULL;
 
-   if (!v) return NULL;
-   if (eina_value_type_get(v) != EINA_VALUE_TYPE_OBJECT)
-     return NULL;
+  if (!v) return NULL;
+  if (eina_value_type_get(v) != EINA_VALUE_TYPE_OBJECT) return NULL;
 
-   if (!eina_value_pget(v, &r)) return NULL;
-   return r;
+  if (!eina_value_pget(v, &r)) return NULL;
+  return r;
 }
 
 #ifdef EFL_BETA_API_SUPPORT
@@ -2378,7 +2469,8 @@ eina_value_object_get(const Eina_Value *v)
 static inline Efl_Bool
 efl_alive_get(const Eo *obj)
 {
-  return efl_finalized_get(obj) && !efl_invalidating_get(obj) && !efl_invalidated_get(obj);
+  return efl_finalized_get(obj) && !efl_invalidating_get(obj) &&
+         !efl_invalidated_get(obj);
 }
 
 #endif /* EFL_BETA_API_SUPPORT */
@@ -2439,7 +2531,6 @@ EO_API Efl_Bool efl_ownable_get(const Eo *obj);
 /**
  * @}
  */
-
 
 #ifdef __cplusplus
 }

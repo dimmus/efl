@@ -74,42 +74,42 @@
 void *
 g_aligned_alloc(size_t n_blocks, size_t n_block_bytes, size_t alignment)
 {
-    void  *res = NULL;
-    size_t real_size;
+  void  *res = NULL;
+  size_t real_size;
 
-    if (EINA_UNLIKELY((alignment == 0) || (alignment & (alignment - 1)) != 0))
-    {
-        eina_error("%s: alignment %" G_GSIZE_FORMAT
-                   " must be a positive power of two",
-                   G_STRLOC,
-                   alignment);
-    }
+  if (EINA_UNLIKELY((alignment == 0) || (alignment & (alignment - 1)) != 0))
+  {
+    eina_error("%s: alignment %" G_GSIZE_FORMAT
+               " must be a positive power of two",
+               G_STRLOC,
+               alignment);
+  }
 
-    if (EINA_UNLIKELY((alignment % sizeof(void *)) != 0))
-    {
-        g_error("%s: alignment %" G_GSIZE_FORMAT
-                " must be a multiple of %" G_GSIZE_FORMAT,
-                G_STRLOC,
-                alignment,
-                sizeof(void *));
-    }
+  if (EINA_UNLIKELY((alignment % sizeof(void *)) != 0))
+  {
+    g_error("%s: alignment %" G_GSIZE_FORMAT
+            " must be a multiple of %" G_GSIZE_FORMAT,
+            G_STRLOC,
+            alignment,
+            sizeof(void *));
+  }
 
-    if (SIZE_OVERFLOWS(n_blocks, n_block_bytes))
-    {
-        g_error("%s: overflow allocating %" G_GSIZE_FORMAT "*%" G_GSIZE_FORMAT
-                " bytes",
-                G_STRLOC,
-                n_blocks,
-                n_block_bytes);
-    }
+  if (SIZE_OVERFLOWS(n_blocks, n_block_bytes))
+  {
+    g_error("%s: overflow allocating %" G_GSIZE_FORMAT "*%" G_GSIZE_FORMAT
+            " bytes",
+            G_STRLOC,
+            n_blocks,
+            n_block_bytes);
+  }
 
-    real_size = n_blocks * n_block_bytes;
+  real_size = n_blocks * n_block_bytes;
 
-    if (EINA_UNLIKELY(real_size == 0))
-    {
-        TRACE(GLIB_MEM_ALLOC((void *)NULL, (int)real_size, 0, 0));
-        return NULL;
-    }
+  if (EINA_UNLIKELY(real_size == 0))
+  {
+    TRACE(GLIB_MEM_ALLOC((void *)NULL, (int)real_size, 0, 0));
+    return NULL;
+  }
 
   /* We need to clear errno because posix_memalign() will use its return
    * value in the same way memalign() and aligned_alloc() will set errno.
@@ -119,43 +119,43 @@ g_aligned_alloc(size_t n_blocks, size_t n_block_bytes, size_t alignment)
    * We handle all possible return values (ENOMEM and EINVAL) with either
    * precondition or postcondition checking.
    */
-    errno = 0;
+  errno = 0;
 
 #if defined(HAVE_POSIX_MEMALIGN)
-    errno = posix_memalign(&res, alignment, real_size);
+  errno = posix_memalign(&res, alignment, real_size);
 #elif defined(HAVE_ALIGNED_ALLOC) || defined(HAVE__ALIGNED_MALLOC)
   /* real_size must be a multiple of alignment */
-    if (real_size % alignment != 0)
+  if (real_size % alignment != 0)
+  {
+    size_t offset = real_size % alignment;
+
+    if (G_MAXSIZE - real_size < (alignment - offset))
     {
-        size_t offset = real_size % alignment;
-
-        if (G_MAXSIZE - real_size < (alignment - offset))
-        {
-            g_error("%s: overflow allocating %" G_GSIZE_FORMAT
-                    "+%" G_GSIZE_FORMAT " bytes",
-                    G_STRLOC,
-                    real_size,
-                    (alignment - offset));
-        }
-
-        real_size += (alignment - offset);
+      g_error("%s: overflow allocating %" G_GSIZE_FORMAT "+%" G_GSIZE_FORMAT
+              " bytes",
+              G_STRLOC,
+              real_size,
+              (alignment - offset));
     }
 
-    res = aligned_alloc(alignment, real_size);
+    real_size += (alignment - offset);
+  }
+
+  res = aligned_alloc(alignment, real_size);
 #elif defined(HAVE_MEMALIGN)
-    res = memalign(alignment, real_size);
+  res = memalign(alignment, real_size);
 #else
 #  error "This platform does not have an aligned memory allocator."
 #endif
 
-    TRACE(GLIB_MEM_ALLOC((void *)res, (unsigned int)real_size, 0, 0));
-    if (res) return res;
+  TRACE(GLIB_MEM_ALLOC((void *)res, (unsigned int)real_size, 0, 0));
+  if (res) return res;
 
-    g_error("%s: failed to allocate %" G_GSIZE_FORMAT " bytes",
-            G_STRLOC,
-            real_size);
+  g_error("%s: failed to allocate %" G_GSIZE_FORMAT " bytes",
+          G_STRLOC,
+          real_size);
 
-    return NULL;
+  return NULL;
 }
 
 /**
@@ -169,5 +169,5 @@ g_aligned_alloc(size_t n_blocks, size_t n_block_bytes, size_t alignment)
 void
 g_aligned_free(void *mem)
 {
-    aligned_free(mem);
+  aligned_free(mem);
 }

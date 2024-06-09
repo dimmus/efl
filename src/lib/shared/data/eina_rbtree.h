@@ -59,18 +59,20 @@
  * @typedef Eina_Rbtree_Color
  * node color.
  */
-typedef enum {
-   EINA_RBTREE_RED,
-   EINA_RBTREE_BLACK
+typedef enum
+{
+  EINA_RBTREE_RED,
+  EINA_RBTREE_BLACK
 } Eina_Rbtree_Color;
 
 /**
  * @typedef Eina_Rbtree_Direction
  * walk direction.
  */
-typedef enum {
-   EINA_RBTREE_LEFT = 0,
-   EINA_RBTREE_RIGHT = 1
+typedef enum
+{
+  EINA_RBTREE_LEFT  = 0,
+  EINA_RBTREE_RIGHT = 1
 } Eina_Rbtree_Direction;
 
 /**
@@ -78,11 +80,12 @@ typedef enum {
  * Type for a Red-Black tree node. It should be inlined into user's type.
  */
 typedef struct _Eina_Rbtree Eina_Rbtree;
+
 struct _Eina_Rbtree
 {
-   Eina_Rbtree      *son[2];
+  Eina_Rbtree *son[2];
 
-   unsigned int color : 1;
+  unsigned int color : 1;
 };
 
 /**
@@ -117,7 +120,10 @@ struct _Eina_Rbtree
  * @typedef Eina_Rbtree_Cmp_Node_Cb
  * Function used to compare two nodes and see which direction to navigate.
  */
-typedef Eina_Rbtree_Direction (*Eina_Rbtree_Cmp_Node_Cb)(const Eina_Rbtree *left, const Eina_Rbtree *right, void *data);
+typedef Eina_Rbtree_Direction (*Eina_Rbtree_Cmp_Node_Cb)(
+  const Eina_Rbtree *left,
+  const Eina_Rbtree *right,
+  void              *data);
 
 /**
  * @def EINA_RBTREE_CMP_NODE_CB
@@ -129,7 +135,10 @@ typedef Eina_Rbtree_Direction (*Eina_Rbtree_Cmp_Node_Cb)(const Eina_Rbtree *left
  * @typedef Eina_Rbtree_Cmp_Key_Cb
  * Function used compare node with a given key of specified length.
  */
-typedef int (*Eina_Rbtree_Cmp_Key_Cb)(const Eina_Rbtree *node, const void *key, int length, void *data);
+typedef int (*Eina_Rbtree_Cmp_Key_Cb)(const Eina_Rbtree *node,
+                                      const void        *key,
+                                      int                length,
+                                      void              *data);
 
 /**
  * @def EINA_RBTREE_CMP_KEY_CB
@@ -162,7 +171,11 @@ typedef void (*Eina_Rbtree_Free_Cb)(Eina_Rbtree *node, void *data);
  * an empty valid red black tree. The resulting new tree is a valid red
  * black tree. This function doesn't allocate any data.
  */
-EINA_API Eina_Rbtree          *eina_rbtree_inline_insert(Eina_Rbtree *root, Eina_Rbtree *node, Eina_Rbtree_Cmp_Node_Cb cmp, const void *data) EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Rbtree *eina_rbtree_inline_insert(Eina_Rbtree            *root,
+                                                Eina_Rbtree            *node,
+                                                Eina_Rbtree_Cmp_Node_Cb cmp,
+                                                const void             *data)
+  EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Removes a node from an existing red black tree.
@@ -177,7 +190,11 @@ EINA_API Eina_Rbtree          *eina_rbtree_inline_insert(Eina_Rbtree *root, Eina
  * contain the node that you are removing. This function will return @c NULL
  * when the red black tree got empty. This function doesn't free any data.
  */
-EINA_API Eina_Rbtree          *eina_rbtree_inline_remove(Eina_Rbtree *root, Eina_Rbtree *node, Eina_Rbtree_Cmp_Node_Cb cmp, const void *data) EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Rbtree *eina_rbtree_inline_remove(Eina_Rbtree            *root,
+                                                Eina_Rbtree            *node,
+                                                Eina_Rbtree_Cmp_Node_Cb cmp,
+                                                const void             *data)
+  EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Deletes all nodes from a valid red black tree.
@@ -186,7 +203,9 @@ EINA_API Eina_Rbtree          *eina_rbtree_inline_remove(Eina_Rbtree *root, Eina
  * @param[in] func The callback that will free each node.
  * @param[in] data Private data to help the compare function.
  */
-EINA_API void                  eina_rbtree_delete(Eina_Rbtree *root, Eina_Rbtree_Free_Cb func, void *data) EINA_ARG_NONNULL(2);
+EINA_API void eina_rbtree_delete(Eina_Rbtree        *root,
+                                 Eina_Rbtree_Free_Cb func,
+                                 void               *data) EINA_ARG_NONNULL(2);
 
 /**
  * @brief Searches tree for a key using a comparison function.
@@ -200,8 +219,12 @@ EINA_API void                  eina_rbtree_delete(Eina_Rbtree *root, Eina_Rbtree
  * @return The first matching node found in the red black tree, or
  * @p root if nothing was found.
  */
-static inline Eina_Rbtree *eina_rbtree_inline_lookup(const Eina_Rbtree *root, const void *key, int length, Eina_Rbtree_Cmp_Key_Cb cmp, const void *data) EINA_PURE EINA_ARG_NONNULL(2, 4) EFL_WARN_UNUSED_RESULT;
-
+static inline Eina_Rbtree *eina_rbtree_inline_lookup(const Eina_Rbtree *root,
+                                                     const void        *key,
+                                                     int                length,
+                                                     Eina_Rbtree_Cmp_Key_Cb cmp,
+                                                     const void *data) EINA_PURE
+  EINA_ARG_NONNULL(2, 4) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new prefix iterator associated with a rbtree.
@@ -221,7 +244,8 @@ static inline Eina_Rbtree *eina_rbtree_inline_lookup(const Eina_Rbtree *root, co
  *    invalid! That is, if you add or remove nodes this iterator
  *    behavior is undefined and your program may crash!
  */
-EINA_API Eina_Iterator        *eina_rbtree_iterator_prefix(const Eina_Rbtree *root) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_rbtree_iterator_prefix(const Eina_Rbtree *root)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new prefix iterator associated with a rbtree.
@@ -241,7 +265,8 @@ EINA_API Eina_Iterator        *eina_rbtree_iterator_prefix(const Eina_Rbtree *ro
  *    invalid! That is, if you add or remove nodes this iterator
  *    behavior is undefined and your program may crash!
  */
-EINA_API Eina_Iterator        *eina_rbtree_iterator_infix(const Eina_Rbtree *root) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_rbtree_iterator_infix(const Eina_Rbtree *root)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new prefix iterator associated with a rbtree.
@@ -261,7 +286,8 @@ EINA_API Eina_Iterator        *eina_rbtree_iterator_infix(const Eina_Rbtree *roo
  *    invalid! That is, if you add or remove nodes this iterator
  *    behavior is undefined and your program may crash!
  */
-EINA_API Eina_Iterator        *eina_rbtree_iterator_postfix(const Eina_Rbtree *root) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_rbtree_iterator_postfix(const Eina_Rbtree *root)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 #include "eina_inline_rbtree.x"
 

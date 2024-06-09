@@ -32,72 +32,72 @@ static Eina_Barrier barrier;
 static void *
 wk_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
-    eina_barrier_wait(&barrier);
-    return NULL;
+  eina_barrier_wait(&barrier);
+  return NULL;
 }
 
 static void *
 wk1_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
-    eina_barrier_wait(&barrier);
-    return NULL;
+  eina_barrier_wait(&barrier);
+  return NULL;
 }
 
 static void *
 wk2_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
-    eina_barrier_wait(&barrier);
-    return NULL;
+  eina_barrier_wait(&barrier);
+  return NULL;
 }
 
 static void *
 wk3_func(void *data EFL_UNUSED, Eina_Thread thread EFL_UNUSED)
 {
-    eina_barrier_wait(&barrier);
-    return NULL;
+  eina_barrier_wait(&barrier);
+  return NULL;
 }
 
 EFL_START_TEST(efl_shared_barrier_test_simple)
 {
-    Efl_Bool r;
-    int      i;
+  Efl_Bool r;
+  int      i;
 
-    i = eina_threads_init();
-    _ck_assert_int(i, >=, 1);
+  i = eina_threads_init();
+  _ck_assert_int(i, >=, 1);
 
-    r = eina_barrier_new(&barrier, 6);
-    fail_unless(r);
+  r = eina_barrier_new(&barrier, 6);
+  fail_unless(r);
 
-    r = eina_thread_create(&wk1, EINA_THREAD_NORMAL, -1, wk_func, NULL);
-    fail_unless(r);
+  r = eina_thread_create(&wk1, EINA_THREAD_NORMAL, -1, wk_func, NULL);
+  fail_unless(r);
 
-    r = eina_thread_create(&wk2, EINA_THREAD_NORMAL, -1, wk_func, NULL);
-    fail_unless(r);
+  r = eina_thread_create(&wk2, EINA_THREAD_NORMAL, -1, wk_func, NULL);
+  fail_unless(r);
 
-    r = eina_thread_create(&wk3, EINA_THREAD_NORMAL, -1, wk1_func, NULL);
-    fail_unless(r);
+  r = eina_thread_create(&wk3, EINA_THREAD_NORMAL, -1, wk1_func, NULL);
+  fail_unless(r);
 
-    r = eina_thread_create(&wk4, EINA_THREAD_NORMAL, -1, wk2_func, NULL);
-    fail_unless(r);
+  r = eina_thread_create(&wk4, EINA_THREAD_NORMAL, -1, wk2_func, NULL);
+  fail_unless(r);
 
-    r = eina_thread_create(&wk5, EINA_THREAD_NORMAL, -1, wk3_func, NULL);
-    fail_unless(r);
+  r = eina_thread_create(&wk5, EINA_THREAD_NORMAL, -1, wk3_func, NULL);
+  fail_unless(r);
 
-    eina_barrier_wait(&barrier);
+  eina_barrier_wait(&barrier);
 
-    eina_thread_join(wk1);
+  eina_thread_join(wk1);
 
-    eina_thread_join(wk2);
+  eina_thread_join(wk2);
 
-    eina_thread_join(wk3);
+  eina_thread_join(wk3);
 
-    eina_thread_join(wk4);
+  eina_thread_join(wk4);
 
-    eina_thread_join(wk5);
+  eina_thread_join(wk5);
 
-    eina_barrier_free(&barrier);
+  eina_barrier_free(&barrier);
 
-    eina_threads_shutdown();
+  eina_threads_shutdown();
 }
 
 EFL_END_TEST
@@ -106,7 +106,7 @@ void
 eina_test_barrier(TCase *tc)
 {
 #ifndef _WIN32
-    tcase_set_timeout(tc, 1);
+  tcase_set_timeout(tc, 1);
 #endif
-    tcase_add_test(tc, efl_shared_barrier_test_simple);
+  tcase_add_test(tc, efl_shared_barrier_test_simple);
 }

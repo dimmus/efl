@@ -47,7 +47,8 @@ extern "C" {
  *
  * @ingroup Eolian
  */
-EOLIAN_API Eina_Hash *eolian_aux_state_class_children_find(const Eolian_State *state);
+EOLIAN_API Eina_Hash *
+eolian_aux_state_class_children_find(const Eolian_State *state);
 
 /**
  * @brief Get all APIs that are usable on the class.
@@ -74,7 +75,11 @@ EOLIAN_API Eina_Hash *eolian_aux_state_class_children_find(const Eolian_State *s
  *
  * @ingroup Eolian
  */
-EOLIAN_API size_t eolian_aux_class_callables_get(const Eolian_Class *klass, Eina_List **funcs, Eina_List **events, size_t *ownfuncs, size_t *ownevs);
+EOLIAN_API size_t eolian_aux_class_callables_get(const Eolian_Class *klass,
+                                                 Eina_List         **funcs,
+                                                 Eina_List         **events,
+                                                 size_t             *ownfuncs,
+                                                 size_t             *ownevs);
 
 /**
  * @brief Get all implementations of a function in a state.
@@ -91,7 +96,9 @@ EOLIAN_API size_t eolian_aux_class_callables_get(const Eolian_Class *klass, Eina
  *
  * @ingroup Eolian
  */
-EOLIAN_API Eina_List *eolian_aux_function_all_implements_get(const Eolian_Function *func, Eina_Hash *class_children);
+EOLIAN_API Eina_List *
+eolian_aux_function_all_implements_get(const Eolian_Function *func,
+                                       Eina_Hash             *class_children);
 
 /**
  * @brief Get previous implementation in the inheritance hierarchy.
@@ -105,7 +112,8 @@ EOLIAN_API Eina_List *eolian_aux_function_all_implements_get(const Eolian_Functi
  *
  * @ingroup Eolian
  */
-EOLIAN_API const Eolian_Implement *eolian_aux_implement_parent_get(const Eolian_Implement *impl);
+EOLIAN_API const Eolian_Implement *
+eolian_aux_implement_parent_get(const Eolian_Implement *impl);
 
 /**
  * @brief Get documentation for an implementation.
@@ -121,7 +129,9 @@ EOLIAN_API const Eolian_Implement *eolian_aux_implement_parent_get(const Eolian_
  *
  * @ingroup Eolian
  */
-EOLIAN_API const Eolian_Documentation *eolian_aux_implement_documentation_get(const Eolian_Implement *impl, Eolian_Function_Type ftype);
+EOLIAN_API const Eolian_Documentation *
+eolian_aux_implement_documentation_get(const Eolian_Implement *impl,
+                                       Eolian_Function_Type    ftype);
 
 /**
  * @brief Get documentation fallback for an implementation.
@@ -136,7 +146,8 @@ EOLIAN_API const Eolian_Documentation *eolian_aux_implement_documentation_get(co
  *
  * @ingroup Eolian
  */
-EOLIAN_API const Eolian_Documentation *eolian_aux_implement_documentation_fallback_get(const Eolian_Implement *impl);
+EOLIAN_API const Eolian_Documentation *
+eolian_aux_implement_documentation_fallback_get(const Eolian_Implement *impl);
 
 #endif
 

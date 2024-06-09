@@ -45,18 +45,20 @@
  */
 typedef enum _Eina_Cpu_Features
 {
-   EINA_CPU_MMX     = 0x00000001, /**< Multimedia Extensions (Intel) */
-   EINA_CPU_SSE     = 0x00000002, /**< Streaming SIMD Extensions (Intel) */
-   EINA_CPU_SSE2    = 0x00000004, /**< Streaming SIMD Extensions 2 (Intel) */
-   EINA_CPU_SSE3    = 0x00000008, /**< Streaming SIMD Extensions 3 (Intel) */
+  EINA_CPU_MMX  = 0x00000001, /**< Multimedia Extensions (Intel) */
+  EINA_CPU_SSE  = 0x00000002, /**< Streaming SIMD Extensions (Intel) */
+  EINA_CPU_SSE2 = 0x00000004, /**< Streaming SIMD Extensions 2 (Intel) */
+  EINA_CPU_SSE3 = 0x00000008, /**< Streaming SIMD Extensions 3 (Intel) */
    /* TODO 3DNow! */
-   EINA_CPU_ALTIVEC = 0x00000010, /**< Single-precision floating point and integer SIMD (PowerPC) */
-   EINA_CPU_VIS     = 0x00000020, /**< Visual Instruction Set (Spark) */
-   EINA_CPU_NEON    = 0x00000040, /**< Advanced SIMD Extension (ARM) */
-   EINA_CPU_SSSE3   = 0x00000080, /**< Supplemental Streaming SIMD Extension 3 (Intel) */
-   EINA_CPU_SSE41   = 0x00000100, /**< Streaming SIMD Extension 4.1 (Intel) */
-   EINA_CPU_SSE42   = 0x00000200, /**< Streaming SIMD Extension 4.2 (Intel) */
-   EINA_CPU_SVE     = 0x00000400  /**< Scalable Vector Extension (ARM) */
+  EINA_CPU_ALTIVEC =
+    0x00000010, /**< Single-precision floating point and integer SIMD (PowerPC) */
+  EINA_CPU_VIS  = 0x00000020, /**< Visual Instruction Set (Spark) */
+  EINA_CPU_NEON = 0x00000040, /**< Advanced SIMD Extension (ARM) */
+  EINA_CPU_SSSE3 =
+    0x00000080, /**< Supplemental Streaming SIMD Extension 3 (Intel) */
+  EINA_CPU_SSE41 = 0x00000100, /**< Streaming SIMD Extension 4.1 (Intel) */
+  EINA_CPU_SSE42 = 0x00000200, /**< Streaming SIMD Extension 4.2 (Intel) */
+  EINA_CPU_SVE   = 0x00000400 /**< Scalable Vector Extension (ARM) */
 } Eina_Cpu_Features;
 
 /**
@@ -79,7 +81,7 @@ EINA_API Eina_Cpu_Features eina_cpu_features_get(void);
  * @return The number of processors that are online, that
  * is available when the function is called.
  */
-EINA_API int               eina_cpu_count(void);
+EINA_API int eina_cpu_count(void);
 
 /**
  * @brief Gets the current virtual page size.
@@ -88,7 +90,7 @@ EINA_API int               eina_cpu_count(void);
  * allocation performed by the operating system on behalf of the program, and
  * for transfers between the main memory and any other auxiliary store.
  */
-EINA_API int               eina_cpu_page_size(void);
+EINA_API int eina_cpu_page_size(void);
 
 /**
  * @brief Reverses the byte order of a 16-bit (destination) register.
@@ -140,7 +142,7 @@ static inline unsigned long long eina_ntohll(unsigned long long net);
  * @warning Beware of side effects, since the returned parameter is evaluated
  * twice.
  */
-# define MIN(x, y)          (((x) > (y)) ? (y) : (x))
+#  define MIN(x, y)          (((x) > (y)) ? (y) : (x))
 #endif
 
 #ifndef MAX
@@ -148,7 +150,7 @@ static inline unsigned long long eina_ntohll(unsigned long long net);
  * @warning Beware of side effects, since the returned parameter is evaluated
  * twice.
  */
-# define MAX(x, y)          (((x) > (y)) ? (x) : (y))
+#  define MAX(x, y)          (((x) > (y)) ? (x) : (y))
 #endif
 
 #include "eina_inline_cpu.x"

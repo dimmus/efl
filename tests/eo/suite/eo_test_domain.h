@@ -3,7 +3,7 @@
 
 typedef struct
 {
-   int a;
+  int a;
 } Domain_Public_Data;
 
 void domain_a_set(Eo *obj, int a);

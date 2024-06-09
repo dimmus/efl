@@ -42,5 +42,5 @@ EFL_END_TEST
 void
 core_test_core_fb(TCase *tc)
 {
-    tcase_add_test(tc, core_test_core_fb_init);
+  tcase_add_test(tc, core_test_core_fb_init);
 }

@@ -165,11 +165,11 @@ typedef struct Eina_Tile_Grid_Info Eina_Tile_Grid_Info;
  */
 struct Eina_Tile_Grid_Info
 {
-   unsigned long  col; /**< column of the tile grid */
-   unsigned long  row; /**< row of the tile grid*/
-   Eina_Rectangle rect; /**< rectangle of the tile grid, coordinates are
+  unsigned long  col; /**< column of the tile grid */
+  unsigned long  row; /**< row of the tile grid*/
+  Eina_Rectangle rect; /**< rectangle of the tile grid, coordinates are
                              relative to tile*/
-   Efl_Bool      full; /**< whether the grid is full or not */
+  Efl_Bool       full; /**< whether the grid is full or not */
 };
 
 typedef struct _Eina_Tile_Grid_Slicer Eina_Tile_Grid_Slicer;
@@ -183,7 +183,7 @@ typedef struct _Eina_Tile_Grid_Slicer Eina_Tile_Grid_Slicer;
  *
  * @see eina_tiler_free()
  */
-EINA_API Eina_Tiler        *eina_tiler_new(int w, int h);
+EINA_API Eina_Tiler *eina_tiler_new(int w, int h);
 
 /**
  * @brief Frees a tiler.
@@ -193,7 +193,7 @@ EINA_API Eina_Tiler        *eina_tiler_new(int w, int h);
  * This function frees @p t. It does not free the memory allocated for the
  * elements of @p t.
  */
-EINA_API void               eina_tiler_free(Eina_Tiler *t);
+EINA_API void eina_tiler_free(Eina_Tiler *t);
 
 /**
  * @brief Sets the size of tiles for a tiler.
@@ -206,7 +206,7 @@ EINA_API void               eina_tiler_free(Eina_Tiler *t);
  * won't be changed.
  * @warning Tile size is not used!
  */
-EINA_API void               eina_tiler_tile_size_set(Eina_Tiler *t, int w, int h);
+EINA_API void eina_tiler_tile_size_set(Eina_Tiler *t, int w, int h);
 
 /**
  * @brief Changes the size of the area covered by the tiler.
@@ -219,7 +219,7 @@ EINA_API void               eina_tiler_tile_size_set(Eina_Tiler *t, int w, int h
  *
  * @warning Must clear the tiler before changing its size.
  */
-EINA_API void               eina_tiler_area_size_set(Eina_Tiler *t, int w, int h);
+EINA_API void eina_tiler_area_size_set(Eina_Tiler *t, int w, int h);
 
 /**
  * @brief Gets the size of the area covered by the tiler.
@@ -230,7 +230,7 @@ EINA_API void               eina_tiler_area_size_set(Eina_Tiler *t, int w, int h
  *
  * @since 1.8
  */
-EINA_API void               eina_tiler_area_size_get(const Eina_Tiler *t, int *w, int *h);
+EINA_API void eina_tiler_area_size_get(const Eina_Tiler *t, int *w, int *h);
 
 /**
  * @brief Defines if we need to follow a strict grid of tile or a loose one.
@@ -242,7 +242,7 @@ EINA_API void               eina_tiler_area_size_get(const Eina_Tiler *t, int *w
  *
  * @since 1.8
  */
-EINA_API void               eina_tiler_strict_set(Eina_Tiler *t, Efl_Bool strict);
+EINA_API void eina_tiler_strict_set(Eina_Tiler *t, Efl_Bool strict);
 
 /**
  * @brief Tells if a tiler is empty or not.
@@ -252,7 +252,7 @@ EINA_API void               eina_tiler_strict_set(Eina_Tiler *t, Efl_Bool strict
  *
  * @since 1.8
  */
-EINA_API Efl_Bool          eina_tiler_empty(const Eina_Tiler *t);
+EINA_API Efl_Bool eina_tiler_empty(const Eina_Tiler *t);
 
 /**
  * @brief Adds a rectangle to a tiler.
@@ -263,7 +263,7 @@ EINA_API Efl_Bool          eina_tiler_empty(const Eina_Tiler *t);
  *
  * @see eina_tiler_rect_del()
  */
-EINA_API Efl_Bool          eina_tiler_rect_add(Eina_Tiler *t, const Eina_Rectangle *r);
+EINA_API Efl_Bool eina_tiler_rect_add(Eina_Tiler *t, const Eina_Rectangle *r);
 
 /**
  * @brief Removes a rectangle from a tiler.
@@ -274,7 +274,7 @@ EINA_API Efl_Bool          eina_tiler_rect_add(Eina_Tiler *t, const Eina_Rectang
  * @see eina_tiler_rect_add()
  * @see eina_tiler_clear()
  */
-EINA_API void               eina_tiler_rect_del(Eina_Tiler *t, const Eina_Rectangle *r);
+EINA_API void eina_tiler_rect_del(Eina_Tiler *t, const Eina_Rectangle *r);
 
 /**
  * @brief Removes all rectangles from tiles.
@@ -283,7 +283,7 @@ EINA_API void               eina_tiler_rect_del(Eina_Tiler *t, const Eina_Rectan
  *
  * @see eina_tiler_rect_del()
  */
-EINA_API void               eina_tiler_clear(Eina_Tiler *t);
+EINA_API void eina_tiler_clear(Eina_Tiler *t);
 
 /**
  * @brief Creates a iterator to access the tilers calculated rectangles.
@@ -291,7 +291,7 @@ EINA_API void               eina_tiler_clear(Eina_Tiler *t);
  * @param[in] t The tiler to iterate over.
  * @return A iterator containing Eina_Rectangle.
  */
-EINA_API Eina_Iterator     *eina_tiler_iterator_new(const Eina_Tiler *t);
+EINA_API Eina_Iterator *eina_tiler_iterator_new(const Eina_Tiler *t);
 
 /**
  * @brief Creates a new Eina_Iterator that iterates over a list of tiles.
@@ -312,7 +312,12 @@ EINA_API Eina_Iterator     *eina_tiler_iterator_new(const Eina_Tiler *t);
  * equivalent to calling eina_tile_grid_slicer_setup() and calling
  * eina_tile_grid_slicer_next() until it returns #EFL_FALSE.
  */
-EINA_API Eina_Iterator     *eina_tile_grid_slicer_iterator_new(int x, int y, int w, int h, int tile_w, int tile_h);
+EINA_API Eina_Iterator *eina_tile_grid_slicer_iterator_new(int x,
+                                                           int y,
+                                                           int w,
+                                                           int h,
+                                                           int tile_w,
+                                                           int tile_h);
 
 /**
  * @brief Gets the union of two tilers.
@@ -325,7 +330,7 @@ EINA_API Eina_Iterator     *eina_tile_grid_slicer_iterator_new(int x, int y, int
  * The result is stored in @p dst. It returns #EFL_TRUE if it succeeds.
  * @since 1.11
  */
-EINA_API Efl_Bool          eina_tiler_union(Eina_Tiler *dst, Eina_Tiler *src);
+EINA_API Efl_Bool eina_tiler_union(Eina_Tiler *dst, Eina_Tiler *src);
 
 /**
  * @brief Subtracts two tilers.
@@ -338,7 +343,7 @@ EINA_API Efl_Bool          eina_tiler_union(Eina_Tiler *dst, Eina_Tiler *src);
  * The result is stored in @p dst. It returns #EFL_TRUE if it succeeds.
  * @since 1.11
  */
-EINA_API Efl_Bool          eina_tiler_subtract(Eina_Tiler *dst, Eina_Tiler *src);
+EINA_API Efl_Bool eina_tiler_subtract(Eina_Tiler *dst, Eina_Tiler *src);
 
 /**
  * @brief Gets the intersection of two tilers.
@@ -351,7 +356,7 @@ EINA_API Efl_Bool          eina_tiler_subtract(Eina_Tiler *dst, Eina_Tiler *src)
  * It returns a pointer of result if intersection of two tilers exists., otherwise returns NULL.
  * @since 1.11
  */
-EINA_API Eina_Tiler        *eina_tiler_intersection(Eina_Tiler *t1, Eina_Tiler *t2);
+EINA_API Eina_Tiler *eina_tiler_intersection(Eina_Tiler *t1, Eina_Tiler *t2);
 
 /**
  * @brief Gets whether two tilers are equal in rects or not.
@@ -364,7 +369,7 @@ EINA_API Eina_Tiler        *eina_tiler_intersection(Eina_Tiler *t1, Eina_Tiler *
  * It returns #EFL_TRUE if tilers are equal.
  * @since 1.11
  */
-EINA_API Efl_Bool           eina_tiler_equal(const Eina_Tiler *t1, const Eina_Tiler *t2);
+EINA_API Efl_Bool eina_tiler_equal(const Eina_Tiler *t1, const Eina_Tiler *t2);
 
 /**
  * @brief Iterates over the tiles set by eina_tile_grid_slicer_setup().
@@ -380,7 +385,9 @@ EINA_API Efl_Bool           eina_tiler_equal(const Eina_Tiler *t1, const Eina_Ti
  *
  * @note Consider using eina_tile_grid_slicer_iterator_new() instead.
  */
-static inline Efl_Bool eina_tile_grid_slicer_next(Eina_Tile_Grid_Slicer *slc, const Eina_Tile_Grid_Info **rect);
+static inline Efl_Bool
+eina_tile_grid_slicer_next(Eina_Tile_Grid_Slicer      *slc,
+                           const Eina_Tile_Grid_Info **rect);
 
 /**
  * @brief Sets up an Eina_Tile_Grid_Slicer struct.
@@ -400,7 +407,13 @@ static inline Efl_Bool eina_tile_grid_slicer_next(Eina_Tile_Grid_Slicer *slc, co
  *
  * @note Consider using eina_tile_grid_slicer_iterator_new() instead.
  */
-static inline Efl_Bool eina_tile_grid_slicer_setup(Eina_Tile_Grid_Slicer *slc, int x, int y, int w, int h, int tile_w, int tile_h);
+static inline Efl_Bool eina_tile_grid_slicer_setup(Eina_Tile_Grid_Slicer *slc,
+                                                   int                    x,
+                                                   int                    y,
+                                                   int                    w,
+                                                   int                    h,
+                                                   int tile_w,
+                                                   int tile_h);
 
 #include "eina_inline_tiler.x"
 

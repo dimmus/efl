@@ -56,42 +56,42 @@ static inline void _quad_dump(Eina_Quad *q)
 EINA_API void
 eina_quad_rectangle_to(const Eina_Quad *q, Eina_Rectangle *r)
 {
-    double xmin, ymin, xmax, ymax;
+  double xmin, ymin, xmax, ymax;
    /* FIXME this code is very ugly, for sure there must be a better
     * implementation */
-    xmin = QUAD_X0(q) < QUAD_X1(q) ? QUAD_X0(q) : QUAD_X1(q);
-    xmin = xmin < QUAD_X2(q) ? xmin : QUAD_X2(q);
-    xmin = xmin < QUAD_X3(q) ? xmin : QUAD_X3(q);
+  xmin = QUAD_X0(q) < QUAD_X1(q) ? QUAD_X0(q) : QUAD_X1(q);
+  xmin = xmin < QUAD_X2(q) ? xmin : QUAD_X2(q);
+  xmin = xmin < QUAD_X3(q) ? xmin : QUAD_X3(q);
 
-    ymin = QUAD_Y0(q) < QUAD_Y1(q) ? QUAD_Y0(q) : QUAD_Y1(q);
-    ymin = ymin < QUAD_Y2(q) ? ymin : QUAD_Y2(q);
-    ymin = ymin < QUAD_Y3(q) ? ymin : QUAD_Y3(q);
+  ymin = QUAD_Y0(q) < QUAD_Y1(q) ? QUAD_Y0(q) : QUAD_Y1(q);
+  ymin = ymin < QUAD_Y2(q) ? ymin : QUAD_Y2(q);
+  ymin = ymin < QUAD_Y3(q) ? ymin : QUAD_Y3(q);
 
-    xmax = QUAD_X0(q) > QUAD_X1(q) ? QUAD_X0(q) : QUAD_X1(q);
-    xmax = xmax > QUAD_X2(q) ? xmax : QUAD_X2(q);
-    xmax = xmax > QUAD_X3(q) ? xmax : QUAD_X3(q);
+  xmax = QUAD_X0(q) > QUAD_X1(q) ? QUAD_X0(q) : QUAD_X1(q);
+  xmax = xmax > QUAD_X2(q) ? xmax : QUAD_X2(q);
+  xmax = xmax > QUAD_X3(q) ? xmax : QUAD_X3(q);
 
-    ymax = QUAD_Y0(q) > QUAD_Y1(q) ? QUAD_Y0(q) : QUAD_Y1(q);
-    ymax = ymax > QUAD_Y2(q) ? ymax : QUAD_Y2(q);
-    ymax = ymax > QUAD_Y3(q) ? ymax : QUAD_Y3(q);
+  ymax = QUAD_Y0(q) > QUAD_Y1(q) ? QUAD_Y0(q) : QUAD_Y1(q);
+  ymax = ymax > QUAD_Y2(q) ? ymax : QUAD_Y2(q);
+  ymax = ymax > QUAD_Y3(q) ? ymax : QUAD_Y3(q);
 
-    r->x = lround(xmin);
-    r->w = lround(xmax) - r->x;
-    r->y = lround(ymin);
-    r->h = lround(ymax) - r->y;
+  r->x = lround(xmin);
+  r->w = lround(xmax) - r->x;
+  r->y = lround(ymin);
+  r->h = lround(ymax) - r->y;
 }
 
 EINA_API void
 eina_quad_rectangle_from(Eina_Quad *q, const Eina_Rectangle *r)
 {
-    QUAD_X0(q) = r->x;
-    QUAD_Y0(q) = r->y;
-    QUAD_X1(q) = r->x + r->w;
-    QUAD_Y1(q) = r->y;
-    QUAD_X2(q) = r->x + r->w;
-    QUAD_Y2(q) = r->y + r->h;
-    QUAD_X3(q) = r->x;
-    QUAD_Y3(q) = r->y + r->h;
+  QUAD_X0(q) = r->x;
+  QUAD_Y0(q) = r->y;
+  QUAD_X1(q) = r->x + r->w;
+  QUAD_Y1(q) = r->y;
+  QUAD_X2(q) = r->x + r->w;
+  QUAD_Y2(q) = r->y + r->h;
+  QUAD_X3(q) = r->x;
+  QUAD_Y3(q) = r->y + r->h;
 }
 
 EINA_API void
@@ -105,14 +105,14 @@ eina_quad_coords_get(const Eina_Quad *q,
                      double          *qx3,
                      double          *qy3)
 {
-    if (qx0) *qx0 = q->x0;
-    if (qy0) *qy0 = q->y0;
-    if (qx1) *qx1 = q->x1;
-    if (qy1) *qy1 = q->y1;
-    if (qx2) *qx2 = q->x2;
-    if (qy2) *qy2 = q->y2;
-    if (qx3) *qx3 = q->x3;
-    if (qy3) *qy3 = q->y3;
+  if (qx0) *qx0 = q->x0;
+  if (qy0) *qy0 = q->y0;
+  if (qx1) *qx1 = q->x1;
+  if (qy1) *qy1 = q->y1;
+  if (qx2) *qx2 = q->x2;
+  if (qy2) *qy2 = q->y2;
+  if (qx3) *qx3 = q->x3;
+  if (qy3) *qy3 = q->y3;
 }
 
 EINA_API void
@@ -126,12 +126,12 @@ eina_quad_coords_set(Eina_Quad *q,
                      double     qx3,
                      double     qy3)
 {
-    QUAD_X0(q) = qx0;
-    QUAD_Y0(q) = qy0;
-    QUAD_X1(q) = qx1;
-    QUAD_Y1(q) = qy1;
-    QUAD_X2(q) = qx2;
-    QUAD_Y2(q) = qy2;
-    QUAD_X3(q) = qx3;
-    QUAD_Y3(q) = qy3;
+  QUAD_X0(q) = qx0;
+  QUAD_Y0(q) = qy0;
+  QUAD_X1(q) = qx1;
+  QUAD_Y1(q) = qy1;
+  QUAD_X2(q) = qx2;
+  QUAD_Y2(q) = qy2;
+  QUAD_X3(q) = qx3;
+  QUAD_Y3(q) = qy3;
 }

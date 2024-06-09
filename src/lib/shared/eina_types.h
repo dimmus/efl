@@ -34,42 +34,42 @@
  */
 
 #ifdef EINA_API
-#error EINA_API should not be already defined
+#  error EINA_API should not be already defined
 #endif
 
 #ifdef _WIN32
-# ifndef EINA_STATIC
-#  ifdef EINA_BUILD
-#   define EINA_API __declspec(dllexport)
+#  ifndef EINA_STATIC
+#    ifdef EINA_BUILD
+#      define EINA_API __declspec(dllexport)
+#    else
+#      define EINA_API __declspec(dllimport)
+#    endif
 #  else
-#   define EINA_API __declspec(dllimport)
+#    define EINA_API
 #  endif
-# else
-#  define EINA_API
-# endif
-# define EINA_API_WEAK
+#  define EINA_API_WEAK
 #else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EINA_API __attribute__ ((visibility("default")))
-#   define EINA_API_WEAK __attribute__ ((weak))
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EINA_API __attribute__ ((visibility("default")))
+#      define EINA_API_WEAK __attribute__ ((weak))
+#    else
+#      define EINA_API
+#      define EINA_API_WEAK
+#    endif
 #  else
-#   define EINA_API
-#   define EINA_API_WEAK
-#  endif
-# else
 /**
  * @def EINA_API
  * @brief Used to export functions (by changing visibility).
  */
-#  define EINA_API
+#    define EINA_API
 /**
  * @def EINA_API_WEAK
  * @brief Weak symbol, primarily useful in defining library functions which
  * can be overridden in user code.
  * Note: Not supported on all platforms.
  */
-#  define EINA_API_WEAK
+#    define EINA_API_WEAK
 #  endif
 #endif
 
@@ -81,40 +81,40 @@
 #define EWAPI EAPI EINA_API_WEAK
 
 #ifdef _WIN32
-# ifdef DLL_EXPORT
-#  define EXPORTAPI __declspec(dllexport)
-# else
-#  define EXPORTAPI
-# endif /* ! DLL_EXPORT */
-#else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EXPORTAPI __attribute__ ((visibility("default")))
+#  ifdef DLL_EXPORT
+#    define EXPORTAPI __declspec(dllexport)
 #  else
-#   define EXPORTAPI
-#  endif
-# else
+#    define EXPORTAPI
+#  endif /* ! DLL_EXPORT */
+#else
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EXPORTAPI __attribute__ ((visibility("default")))
+#    else
+#      define EXPORTAPI
+#    endif
+#  else
 /**
  * @def EXPORTAPI
  * @brief An alias for #EINA_API.
  */
-#  define EXPORTAPI
-# endif
+#    define EXPORTAPI
+#  endif
 #endif
 
 #include "shared_config.h"
 
 #ifndef __WORDSIZE
-# if defined(__OPENBSD__) && (INTPTR_MAX == INT32_MAX)
-#  define __WORDSIZE 32
-# else
+#  if defined(__OPENBSD__) && (INTPTR_MAX == INT32_MAX)
+#    define __WORDSIZE 32
+#  else
 /**
  * @def __WORDSIZE
  * @brief Architecture's word size (32 or 64 bits). Defined by Eina if
  * its definition cannot be found in the system's headers.
  */
-#  define __WORDSIZE 64
-# endif
+#    define __WORDSIZE 64
+#  endif
 #endif
 
 /* Do not turn the following #define as meaning EFL64. We are only
@@ -124,141 +124,168 @@
    defined(__x86_64__) || defined(__x86_64) || defined(__amd64__) || defined(__amd64)
  */
 #if defined(_WIN64) || defined(__LP64__) || defined(_LP64) || defined(__ppc64__)
-# define EFL64
+#  define EFL64
 #endif
 
 #ifdef EFL_UNUSED
-# undef EFL_UNUSED
+#  undef EFL_UNUSED
 #endif
 #ifdef EFL_WARN_UNUSED_RESULT
-# undef EFL_WARN_UNUSED_RESULT
+#  undef EFL_WARN_UNUSED_RESULT
 #endif
 #ifdef EINA_ARG_NONNULL
-# undef EINA_ARG_NONNULL
+#  undef EINA_ARG_NONNULL
 #endif
 #ifdef EINA_DEPRECATED
-# undef EINA_DEPRECATED
+#  undef EINA_DEPRECATED
 #endif
 #ifdef EINA_MALLOC
-# undef EINA_MALLOC
+#  undef EINA_MALLOC
 #endif
 #ifdef EINA_PURE
-# undef EINA_PURE
+#  undef EINA_PURE
 #endif
 #ifdef EINA_PRINTF
-# undef EINA_PRINTF
+#  undef EINA_PRINTF
 #endif
 #ifdef EINA_SCANF
-# undef EINA_SCANF
+#  undef EINA_SCANF
 #endif
 #ifdef EINA_FORMAT
-# undef EINA_FORMAT
+#  undef EINA_FORMAT
 #endif
 #ifdef EINA_CONST
-# undef EINA_CONST
+#  undef EINA_CONST
 #endif
 #ifdef EINA_NOINSTRUMENT
-# undef EINA_NOINSTRUMENT
+#  undef EINA_NOINSTRUMENT
 #endif
 #ifdef EINA_UNLIKELY
-# undef EINA_UNLIKELY
+#  undef EINA_UNLIKELY
 #endif
 #ifdef EINA_LIKELY
-# undef EINA_LIKELY
+#  undef EINA_LIKELY
 #endif
 #ifdef EINA_SENTINEL
-# undef EINA_SENTINEL
+#  undef EINA_SENTINEL
 #endif
 #ifdef EINA_FALLTHROUGH
-# undef EINA_FALLTHROUGH
+#  undef EINA_FALLTHROUGH
 #endif
 #ifdef EINA_PREFETCH
-# undef EINA_PREFETCH
+#  undef EINA_PREFETCH
 #endif
 #ifdef EINA_PREFETCH_WRITE
-# undef EINA_PREFETCH_WRITE
+#  undef EINA_PREFETCH_WRITE
 #endif
 #ifdef EINA_PREFETCH_NOCACHE
-# undef EINA_PREFETCH_NOCACHE
+#  undef EINA_PREFETCH_NOCACHE
 #endif
 #ifdef EINA_PREFETCH_NOCACHE_WRITE
-# undef EINA_PREFETCH_NOCACHE_WRITE
+#  undef EINA_PREFETCH_NOCACHE_WRITE
 #endif
 
 #ifdef __GNUC__
 
-# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-#  define EFL_UNUSED __attribute__ ((__unused__))
-# else
+#  if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
+#    define EFL_UNUSED __attribute__ ((__unused__))
+#  else
+#    define EFL_UNUSED
+#  endif
+
+#  if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#    define EFL_WARN_UNUSED_RESULT __attribute__ ((__warn_unused_result__))
+#  else
+#    define EFL_WARN_UNUSED_RESULT
+#  endif
+
+#  if (!defined(EINA_SAFETY_CHECKS)) && \
+    (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#    define EINA_ARG_NONNULL(...) __attribute__ ((__nonnull__(__VA_ARGS__)))
+#  else
+#    define EINA_ARG_NONNULL(...)
+#  endif
+
+#  if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
+#    define EINA_DEPRECATED __attribute__ ((__deprecated__))
+#  else
+#    define EINA_DEPRECATED
+#  endif
+
+#  if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+#    define EINA_MALLOC __attribute__ ((__malloc__))
+#    define EINA_PURE   __attribute__ ((__pure__))
+#  else
+#    define EINA_MALLOC
+#    define EINA_PURE
+#  endif
+
+#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+#    define EINA_HOT __attribute__ ((hot))
+#    define EINA_COLD __attribute__ ((cold))
+#  else
+#    define EINA_HOT
+#    define EINA_COLD
+#  endif
+
+#  if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
+#    if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 3)
+#      define EINA_PRINTF(fmt, arg) __attribute__((__format__ (__gnu_printf__, fmt, arg)))
+#    else
+#      define EINA_PRINTF(fmt, arg) __attribute__((__format__ (__printf__, fmt, arg)))
+#    endif
+#    define EINA_SCANF(fmt, arg)  __attribute__((__format__ (__scanf__, fmt, arg)))
+#    define EINA_FORMAT(fmt)      __attribute__((__format_arg__(fmt)))
+#    define EINA_CONST        __attribute__((__const__))
+#    define EINA_NOINSTRUMENT __attribute__((__no_instrument_function__))
+#    define EINA_UNLIKELY(exp)    __builtin_expect((exp), 0)
+#    define EINA_LIKELY(exp)      __builtin_expect((exp), 1)
+#    define EINA_SENTINEL __attribute__((__sentinel__))
+#    ifndef __clang__
+#      if __GNUC__ >= 7
+#        define EINA_FALLTHROUGH __attribute__ ((fallthrough));
+#      else
+#        define EINA_FALLTHROUGH
+#      endif
+#      define EINA_PREFETCH(arg) (arg ? __builtin_prefetch(arg) : (void) arg)
+#      define EINA_PREFETCH_WRITE(arg) (arg ? __builtin_prefetch(arg, 1) : (void) arg)
+#      define EINA_PREFETCH_NOCACHE(arg) (arg ? __builtin_prefetch(arg, 0, 0) : (void) arg)
+#      define EINA_PREFETCH_NOCACHE_WRITE(arg) (arg ? __builtin_prefetch(arg, 1, 0) : (void) arg)
+#    else
+/* LLVM Clang workaround (crash on compilation) */
+#      define EINA_FALLTHROUGH
+#      define EINA_PREFETCH(arg) ((void) (arg))
+#      define EINA_PREFETCH_WRITE(arg) ((void) (arg))
+#      define EINA_PREFETCH_NOCACHE(arg) ((void) (arg))
+#      define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
+#    endif
+#  else
+#    define EINA_PRINTF(fmt, arg)
+#    define EINA_SCANF(fmt, arg)
+#    define EINA_FORMAT(fmt)
+#    define EINA_CONST
+#    define EINA_NOINSTRUMENT
+#    define EINA_UNLIKELY(exp) (exp)
+#    define EINA_LIKELY(exp)   (exp)
+#    define EINA_SENTINEL
+#    define EINA_FALLTHROUGH
+#    define EINA_PREFETCH(arg) ((void) (arg))
+#    define EINA_PREFETCH_WRITE(arg) ((void) (arg))
+#    define EINA_PREFETCH_NOCACHE(arg) ((void) (arg))
+#    define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
+#  endif
+
+#elif defined(_MSC_VER)
 #  define EFL_UNUSED
-# endif
-
-# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-#  define EFL_WARN_UNUSED_RESULT __attribute__ ((__warn_unused_result__))
-# else
 #  define EFL_WARN_UNUSED_RESULT
-# endif
-
-# if (!defined(EINA_SAFETY_CHECKS)) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
-#  define EINA_ARG_NONNULL(...) __attribute__ ((__nonnull__(__VA_ARGS__)))
-# else
 #  define EINA_ARG_NONNULL(...)
-# endif
-
-# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-#  define EINA_DEPRECATED __attribute__ ((__deprecated__))
-# else
-#  define EINA_DEPRECATED
-# endif
-
-# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-#  define EINA_MALLOC __attribute__ ((__malloc__))
-#  define EINA_PURE   __attribute__ ((__pure__))
-# else
+#  if _MSC_VER >= 1300
+#    define EINA_DEPRECATED __declspec(deprecated)
+#  else
+#    define EINA_DEPRECATED
+#  endif
 #  define EINA_MALLOC
 #  define EINA_PURE
-# endif
-
-# if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
-#  define EINA_HOT __attribute__ ((hot))
-#  define EINA_COLD __attribute__ ((cold))
-# else
-#  define EINA_HOT
-#  define EINA_COLD
-# endif
-
-# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
-#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 3)
-#   define EINA_PRINTF(fmt, arg) __attribute__((__format__ (__gnu_printf__, fmt, arg)))
-#  else
-#   define EINA_PRINTF(fmt, arg) __attribute__((__format__ (__printf__, fmt, arg)))
-#  endif
-#  define EINA_SCANF(fmt, arg)  __attribute__((__format__ (__scanf__, fmt, arg)))
-#  define EINA_FORMAT(fmt)      __attribute__((__format_arg__(fmt)))
-#  define EINA_CONST        __attribute__((__const__))
-#  define EINA_NOINSTRUMENT __attribute__((__no_instrument_function__))
-#  define EINA_UNLIKELY(exp)    __builtin_expect((exp), 0)
-#  define EINA_LIKELY(exp)      __builtin_expect((exp), 1)
-#  define EINA_SENTINEL __attribute__((__sentinel__))
-#  ifndef __clang__
-#   if __GNUC__ >= 7
-#    define EINA_FALLTHROUGH __attribute__ ((fallthrough));
-#   else
-#    define EINA_FALLTHROUGH
-#   endif
-#   define EINA_PREFETCH(arg) (arg ? __builtin_prefetch(arg) : (void) arg)
-#   define EINA_PREFETCH_WRITE(arg) (arg ? __builtin_prefetch(arg, 1) : (void) arg)
-#   define EINA_PREFETCH_NOCACHE(arg) (arg ? __builtin_prefetch(arg, 0, 0) : (void) arg)
-#   define EINA_PREFETCH_NOCACHE_WRITE(arg) (arg ? __builtin_prefetch(arg, 1, 0) : (void) arg)
-#  else
-/* LLVM Clang workaround (crash on compilation) */
-#   define EINA_FALLTHROUGH
-#   define EINA_PREFETCH(arg) ((void) (arg))
-#   define EINA_PREFETCH_WRITE(arg) ((void) (arg))
-#   define EINA_PREFETCH_NOCACHE(arg) ((void) (arg))
-#   define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
-#  endif
-# else
 #  define EINA_PRINTF(fmt, arg)
 #  define EINA_SCANF(fmt, arg)
 #  define EINA_FORMAT(fmt)
@@ -272,62 +299,36 @@
 #  define EINA_PREFETCH_WRITE(arg) ((void) (arg))
 #  define EINA_PREFETCH_NOCACHE(arg) ((void) (arg))
 #  define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
-# endif
-
-#elif defined(_MSC_VER)
-# define EFL_UNUSED
-# define EFL_WARN_UNUSED_RESULT
-# define EINA_ARG_NONNULL(...)
-# if _MSC_VER >= 1300
-#  define EINA_DEPRECATED __declspec(deprecated)
-# else
-#  define EINA_DEPRECATED
-# endif
-# define EINA_MALLOC
-# define EINA_PURE
-# define EINA_PRINTF(fmt, arg)
-# define EINA_SCANF(fmt, arg)
-# define EINA_FORMAT(fmt)
-# define EINA_CONST
-# define EINA_NOINSTRUMENT
-# define EINA_UNLIKELY(exp) (exp)
-# define EINA_LIKELY(exp)   (exp)
-# define EINA_SENTINEL
-# define EINA_FALLTHROUGH
-# define EINA_PREFETCH(arg) ((void) (arg))
-# define EINA_PREFETCH_WRITE(arg) ((void) (arg))
-# define EINA_PREFETCH_NOCACHE(arg) ((void) (arg))
-# define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
 
 #elif defined(__SUNPRO_C)
-# define EFL_UNUSED
-# define EFL_WARN_UNUSED_RESULT
-# define EINA_ARG_NONNULL(...)
-# define EINA_DEPRECATED
-# if __SUNPRO_C >= 0x590
-#  define EINA_MALLOC __attribute__ ((malloc))
-#  define EINA_PURE   __attribute__ ((pure))
-# else
-#  define EINA_MALLOC
-#  define EINA_PURE
-# endif
-# define EINA_PRINTF(fmt, arg)
-# define EINA_SCANF(fmt, arg)
-# define EINA_FORMAT(fmt)
-# if __SUNPRO_C >= 0x590
-#  define EINA_CONST __attribute__ ((const))
-# else
-#  define EINA_CONST
-# endif
-# define EINA_NOINSTRUMENT
-# define EINA_UNLIKELY(exp) (exp)
-# define EINA_LIKELY(exp)   (exp)
-# define EINA_SENTINEL
-# define EINA_FALLTHROUGH
-# define EINA_PREFETCH(arg) ((void) (arg))
-# define EINA_PREFETCH_WRITE(arg) ((void) (arg))
-# define EINA_PREFETCH_NOCACHE(arg) ((void) (arg))
-# define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
+#  define EFL_UNUSED
+#  define EFL_WARN_UNUSED_RESULT
+#  define EINA_ARG_NONNULL(...)
+#  define EINA_DEPRECATED
+#  if __SUNPRO_C >= 0x590
+#    define EINA_MALLOC __attribute__ ((malloc))
+#    define EINA_PURE   __attribute__ ((pure))
+#  else
+#    define EINA_MALLOC
+#    define EINA_PURE
+#  endif
+#  define EINA_PRINTF(fmt, arg)
+#  define EINA_SCANF(fmt, arg)
+#  define EINA_FORMAT(fmt)
+#  if __SUNPRO_C >= 0x590
+#    define EINA_CONST __attribute__ ((const))
+#  else
+#    define EINA_CONST
+#  endif
+#  define EINA_NOINSTRUMENT
+#  define EINA_UNLIKELY(exp) (exp)
+#  define EINA_LIKELY(exp)   (exp)
+#  define EINA_SENTINEL
+#  define EINA_FALLTHROUGH
+#  define EINA_PREFETCH(arg) ((void) (arg))
+#  define EINA_PREFETCH_WRITE(arg) ((void) (arg))
+#  define EINA_PREFETCH_NOCACHE(arg) ((void) (arg))
+#  define EINA_PREFETCH_NOCACHE_WRITE(arg) ((void) (arg))
 
 #else /* ! __GNUC__ && ! _MSC_VER && ! __SUNPRO_C */
 
@@ -336,13 +337,13 @@
  * Used to indicate that a function parameter is purposely unused.
  * This silences some compiler's warning about unused parameters.
  */
-# define EFL_UNUSED
+#  define EFL_UNUSED
 
 /**
  * @def EFL_WARN_UNUSED_RESULT
  * Used to warn when the returned value of the function is not used.
  */
-# define EFL_WARN_UNUSED_RESULT
+#  define EFL_WARN_UNUSED_RESULT
 
 /**
  * @def EINA_ARG_NONNULL
@@ -353,13 +354,13 @@
  * @return Nothing, but Doxygen will complain if it's not documented :-P
  *
  */
-# define EINA_ARG_NONNULL(...)
+#  define EINA_ARG_NONNULL(...)
 
 /**
  * @def EINA_DEPRECATED
  * Used to warn when the function is considered as deprecated.
  */
-# define EINA_DEPRECATED
+#  define EINA_DEPRECATED
 
 /**
  * @def EINA_MALLOC
@@ -367,7 +368,7 @@
  * as if any non-NULL pointer it returns cannot alias any other pointer valid when
  * the function returns and that the memory has undefined content.
  */
-# define EINA_MALLOC
+#  define EINA_MALLOC
 
 /**
  * @def EINA_PURE
@@ -375,7 +376,7 @@
  * except the return value and its return value depends only on the parameters
  * and/or global variables.
  */
-# define EINA_PURE
+#  define EINA_PURE
 
 /**
  * @def EINA_PRINTF
@@ -385,7 +386,7 @@
  * @param[in] fmt The 1-based index of the parameter specifying the format string.
  * @param[in] arg The 1-based index of the first data parameter.
  */
-# define EINA_PRINTF(fmt, arg)
+#  define EINA_PRINTF(fmt, arg)
 
 /**
  * @def EINA_SCANF
@@ -395,7 +396,7 @@
  * @param[in] fmt The 1-based index of the parameter specifying the format string.
  * @param[in] arg The 1-based index of the first data parameter.
  */
-# define EINA_SCANF(fmt, arg)
+#  define EINA_SCANF(fmt, arg)
 
 /**
  * @def EINA_FORMAT
@@ -404,19 +405,19 @@
  * this function is consistent with the @p fmt parameter.
  * @param[in] fmt The 1-based index of the parameter specifying the format string.
  */
-# define EINA_FORMAT(fmt)
+#  define EINA_FORMAT(fmt)
 
 /**
  * @def EINA_CONST
  * @brief Attribute from gcc to prevent the function to read/modify any global memory.
  */
-# define EINA_CONST
+#  define EINA_CONST
 
 /**
  * @def EINA_NOINSTRUMENT
  * @brief Attribute from gcc to disable instrumentation for a specific function.
  */
-# define EINA_NOINSTRUMENT
+#  define EINA_NOINSTRUMENT
 
 /**
  * @def EINA_UNLIKELY
@@ -424,7 +425,7 @@
  * processor architectures can then optimize the more likely path.
  * @param[in] exp The expression to be used.
  */
-# define EINA_UNLIKELY(exp) (exp)
+#  define EINA_UNLIKELY(exp) (exp)
 
 /**
  * @def EINA_LIKELY
@@ -432,7 +433,7 @@
  * processor architectures can then optimize the more likely path.
  * @param[in] exp The expression to be used.
  */
-# define EINA_LIKELY(exp)   (exp)
+#  define EINA_LIKELY(exp)   (exp)
 
 /**
  * @def EINA_SENTINEL
@@ -441,7 +442,7 @@
  *
  * @since 1.7
  */
-# define EINA_SENTINEL
+#  define EINA_SENTINEL
 
 /**
  * @def EINA_FALLTHROUGH
@@ -450,7 +451,7 @@
  *
  * @since 1.20
  */
-# define EINA_FALLTHROUGH
+#  define EINA_FALLTHROUGH
 
 /**
  * @def EINA_PREFETCH
@@ -465,7 +466,7 @@
  *
  * @since 1.19
  */
-# define EINA_PREFETCH(arg)
+#  define EINA_PREFETCH(arg)
 
 /**
  * @def EINA_PREFETCH_WRITE
@@ -481,7 +482,7 @@
  *
  * @since 1.19
  */
-# define EINA_PREFETCH_WRITE(arg)
+#  define EINA_PREFETCH_WRITE(arg)
 
 /**
  * @def EINA_PREFETCH_NOCACHE
@@ -496,7 +497,7 @@
  *
  * @since 1.19
  */
-# define EINA_PREFETCH_NOCACHE(arg)
+#  define EINA_PREFETCH_NOCACHE(arg)
 
 /**
  * @def EINA_PREFETCH_NOCACHE_WRITE
@@ -512,7 +513,7 @@
  *
  * @since 1.19
  */
-# define EINA_PREFETCH_NOCACHE_WRITE(arg)
+#  define EINA_PREFETCH_NOCACHE_WRITE(arg)
 
 #endif /* ! __GNUC__ && ! _WIN32 && ! __SUNPRO_C */
 
@@ -577,7 +578,9 @@ typedef int (*Eina_Random_Cb)(const int min, const int max);
  * @param fdata Context data.
  * @return The processed data.
  */
-typedef void* (*Eina_Process_Cb)(const void *container, void *data, void *fdata);
+typedef void *(*Eina_Process_Cb)(const void *container,
+                                 void       *data,
+                                 void       *fdata);
 
 /**
  * @def EINA_PROCESS_CB
@@ -588,7 +591,9 @@ typedef void* (*Eina_Process_Cb)(const void *container, void *data, void *fdata)
  * @typedef Eina_Each_Cb
  * A callback type used when iterating over a container.
  */
-typedef Efl_Bool (*Eina_Each_Cb)(const void *container, void *data, void *fdata);
+typedef Efl_Bool (*Eina_Each_Cb)(const void *container,
+                                 void       *data,
+                                 void       *fdata);
 
 /**
  * @def EINA_EACH_CB

@@ -49,22 +49,22 @@ typedef struct _Eina_Run Eina_Run;
 
 struct _Eina_Run
 {
-    EINA_INLIST;
+  EINA_INLIST;
 
-    Eina_Benchmark_Specimens cb;
-    const char              *name;
-    int                      start;
-    int                      end;
-    int                      step;
+  Eina_Benchmark_Specimens cb;
+  const char              *name;
+  int                      start;
+  int                      end;
+  int                      step;
 };
 
 struct _Eina_Benchmark
 {
-    const char *name;
-    const char *run;
+  const char *name;
+  const char *run;
 
-    Eina_Inlist *runs;
-    Eina_List   *names;
+  Eina_Inlist *runs;
+  Eina_List   *names;
 };
 
 static int _eina_benchmark_log_dom = -1;
@@ -101,15 +101,15 @@ static int _eina_benchmark_log_dom = -1;
 Efl_Bool
 eina_benchmark_init(void)
 {
-    _eina_benchmark_log_dom =
-        eina_log_domain_register("eina_benchmark", EINA_LOG_COLOR_DEFAULT);
-    if (_eina_benchmark_log_dom < 0)
-    {
-        EINA_LOG_ERR("Could not register log domain: eina_benchmark");
-        return EFL_FALSE;
-    }
+  _eina_benchmark_log_dom =
+    eina_log_domain_register("eina_benchmark", EINA_LOG_COLOR_DEFAULT);
+  if (_eina_benchmark_log_dom < 0)
+  {
+    EINA_LOG_ERR("Could not register log domain: eina_benchmark");
+    return EFL_FALSE;
+  }
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 /**
@@ -126,9 +126,9 @@ eina_benchmark_init(void)
 Efl_Bool
 eina_benchmark_shutdown(void)
 {
-    eina_log_domain_unregister(_eina_benchmark_log_dom);
-    _eina_benchmark_log_dom = -1;
-    return EFL_TRUE;
+  eina_log_domain_unregister(_eina_benchmark_log_dom);
+  _eina_benchmark_log_dom = -1;
+  return EFL_TRUE;
 }
 
 /*============================================================================*
@@ -138,45 +138,45 @@ eina_benchmark_shutdown(void)
 EINA_API Eina_Benchmark *
 eina_benchmark_new(const char *name, const char *run)
 {
-    Eina_Benchmark *new;
+  Eina_Benchmark *new;
 
-    new = calloc(1, sizeof(Eina_Benchmark));
-    if (!new) return NULL;
+  new = calloc(1, sizeof(Eina_Benchmark));
+  if (!new) return NULL;
 
-    new->name = name;
-    new->run  = run;
+  new->name = name;
+  new->run  = run;
 
-    return new;
+  return new;
 }
 
 EINA_API void
 eina_benchmark_free(Eina_Benchmark *bench)
 {
-    Eina_Array *names;
+  Eina_Array *names;
 
-    if (!bench) return;
+  if (!bench) return;
 
-    while (bench->runs)
-    {
-        Eina_Run *run = (Eina_Run *)bench->runs;
+  while (bench->runs)
+  {
+    Eina_Run *run = (Eina_Run *)bench->runs;
 
-        bench->runs = eina_inlist_remove(bench->runs, bench->runs);
-        free(run);
-    }
+    bench->runs = eina_inlist_remove(bench->runs, bench->runs);
+    free(run);
+  }
 
-    EINA_LIST_FREE(bench->names, names)
-    {
-        Eina_Array_Iterator it;
-        char               *tmp;
-        unsigned int        i;
+  EINA_LIST_FREE(bench->names, names)
+  {
+    Eina_Array_Iterator it;
+    char               *tmp;
+    unsigned int        i;
 
-        EINA_ARRAY_ITER_NEXT(names, i, tmp, it)
-        free(tmp);
+    EINA_ARRAY_ITER_NEXT(names, i, tmp, it)
+    free(tmp);
 
-        eina_array_free(names);
-    }
+    eina_array_free(names);
+  }
 
-    free(bench);
+  free(bench);
 }
 
 EINA_API Efl_Bool
@@ -187,166 +187,166 @@ eina_benchmark_register(Eina_Benchmark          *bench,
                         int                      count_end,
                         int                      count_step)
 {
-    Eina_Run *run;
+  Eina_Run *run;
 
-    if (!bench) return EFL_FALSE;
+  if (!bench) return EFL_FALSE;
 
-    if (count_step == 0) return EFL_FALSE;
+  if (count_step == 0) return EFL_FALSE;
 
-    run = calloc(1, sizeof(Eina_Run));
-    if (!run) return EFL_FALSE;
+  run = calloc(1, sizeof(Eina_Run));
+  if (!run) return EFL_FALSE;
 
-    run->cb    = bench_cb;
-    run->name  = name;
-    run->start = count_start;
-    run->end   = count_end;
-    run->step  = count_step;
+  run->cb    = bench_cb;
+  run->name  = name;
+  run->start = count_start;
+  run->end   = count_end;
+  run->step  = count_step;
 
-    bench->runs = eina_inlist_append(bench->runs, EINA_INLIST_GET(run));
+  bench->runs = eina_inlist_append(bench->runs, EINA_INLIST_GET(run));
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 EINA_API Eina_Array *
 eina_benchmark_run(Eina_Benchmark *bench)
 {
-    FILE       *main_script;
-    FILE       *current_data;
-    Eina_Array *ea;
-    Eina_Run   *run;
-    char       *buffer;
-    Efl_Bool    first = EFL_FALSE;
-    size_t      length;
-    Efl_Strbuf *sbname, *sbrun;
+  FILE       *main_script;
+  FILE       *current_data;
+  Eina_Array *ea;
+  Eina_Run   *run;
+  char       *buffer;
+  Efl_Bool    first = EFL_FALSE;
+  size_t      length;
+  Efl_Strbuf *sbname, *sbrun;
 
-    if (!bench) return NULL;
+  if (!bench) return NULL;
 
-    length = strlen(EINA_BENCHMARK_FILENAME_MASK) + strlen(bench->name) +
-             strlen(bench->run);
+  length = strlen(EINA_BENCHMARK_FILENAME_MASK) + strlen(bench->name) +
+           strlen(bench->run);
 
-    buffer = alloca(sizeof(char) * length);
-    if (!buffer) return NULL;
+  buffer = alloca(sizeof(char) * length);
+  if (!buffer) return NULL;
+
+  snprintf(buffer,
+           length,
+           EINA_BENCHMARK_FILENAME_MASK,
+           bench->name,
+           bench->run);
+
+  main_script = fopen(buffer, "wb");
+  if (!main_script) return NULL;
+
+  ea = eina_array_new(16);
+  if (!ea)
+  {
+    fclose(main_script);
+    return NULL;
+  }
+
+  eina_array_push(ea, strdup(buffer));
+
+  sbname = eina_strbuf_new();
+  eina_strbuf_append(sbname, bench->name);
+  eina_strbuf_replace_all(sbname, "_", "\\_");
+
+  sbrun = eina_strbuf_new();
+  eina_strbuf_append(sbrun, bench->run);
+  eina_strbuf_replace_all(sbrun, "_", "\\_");
+
+  fprintf(
+    main_script,
+    "set   autoscale                        # scale axes automatically\n"
+    "unset log                              # remove any log-scaling\n"
+    "unset label                            # remove any previous labels\n"
+    "set xtic auto                          # set xtics automatically\n"
+    "set ytic auto                          # set ytics automatically\n"
+/*     "set logscale y\n" */
+    "set terminal png size 1024,768\n"
+    "set output \"output_%s_%s.png\"\n"
+    "set title '%s %s'\n"
+    "set xlabel \"tests\"\n"
+    "set ylabel \"time\"\n"
+    "plot ",
+    bench->name,
+    bench->run,
+    eina_strbuf_string_get(sbname),
+    eina_strbuf_string_get(sbrun));
+
+  eina_strbuf_free(sbname);
+  eina_strbuf_free(sbrun);
+
+  EINA_INLIST_FOREACH(bench->runs, run)
+  {
+    Eina_Counter *counter;
+    char         *result;
+    size_t        tmp;
+    int           i;
+
+    tmp = strlen(EINA_BENCHMARK_DATA_MASK) + strlen(bench->name) +
+          strlen(bench->run) + strlen(run->name);
+    if (tmp > length)
+    {
+      buffer = alloca(sizeof(char) * tmp);
+      length = tmp;
+    }
 
     snprintf(buffer,
              length,
-             EINA_BENCHMARK_FILENAME_MASK,
+             EINA_BENCHMARK_DATA_MASK,
              bench->name,
-             bench->run);
+             bench->run,
+             run->name);
 
-    main_script = fopen(buffer, "wb");
-    if (!main_script) return NULL;
-
-    ea = eina_array_new(16);
-    if (!ea)
-    {
-        fclose(main_script);
-        return NULL;
-    }
+    current_data = fopen(buffer, "wb");
+    if (!current_data) continue;
 
     eina_array_push(ea, strdup(buffer));
 
-    sbname = eina_strbuf_new();
-    eina_strbuf_append(sbname, bench->name);
-    eina_strbuf_replace_all(sbname, "_", "\\_");
+    counter = eina_counter_new(run->name);
 
-    sbrun = eina_strbuf_new();
-    eina_strbuf_append(sbrun, bench->run);
-    eina_strbuf_replace_all(sbrun, "_", "\\_");
-
-    fprintf(
-        main_script,
-        "set   autoscale                        # scale axes automatically\n"
-        "unset log                              # remove any log-scaling\n"
-        "unset label                            # remove any previous labels\n"
-        "set xtic auto                          # set xtics automatically\n"
-        "set ytic auto                          # set ytics automatically\n"
-/*     "set logscale y\n" */
-        "set terminal png size 1024,768\n"
-        "set output \"output_%s_%s.png\"\n"
-        "set title '%s %s'\n"
-        "set xlabel \"tests\"\n"
-        "set ylabel \"time\"\n"
-        "plot ",
-        bench->name,
-        bench->run,
-        eina_strbuf_string_get(sbname),
-        eina_strbuf_string_get(sbrun));
-
-    eina_strbuf_free(sbname);
-    eina_strbuf_free(sbrun);
-
-    EINA_INLIST_FOREACH(bench->runs, run)
+    for (i = run->start; i < run->end; i += run->step)
     {
-        Eina_Counter *counter;
-        char         *result;
-        size_t        tmp;
-        int           i;
+      fprintf(stderr, "Run %s: %i\n", run->name, i);
+      eina_counter_start(counter);
 
-        tmp = strlen(EINA_BENCHMARK_DATA_MASK) + strlen(bench->name) +
-              strlen(bench->run) + strlen(run->name);
-        if (tmp > length)
-        {
-            buffer = alloca(sizeof(char) * tmp);
-            length = tmp;
-        }
+      run->cb(i);
 
-        snprintf(buffer,
-                 length,
-                 EINA_BENCHMARK_DATA_MASK,
-                 bench->name,
-                 bench->run,
-                 run->name);
-
-        current_data = fopen(buffer, "wb");
-        if (!current_data) continue;
-
-        eina_array_push(ea, strdup(buffer));
-
-        counter = eina_counter_new(run->name);
-
-        for (i = run->start; i < run->end; i += run->step)
-        {
-            fprintf(stderr, "Run %s: %i\n", run->name, i);
-            eina_counter_start(counter);
-
-            run->cb(i);
-
-            eina_counter_stop(counter, i);
-        }
-
-        result = eina_counter_dump(counter);
-        if (result)
-        {
-            fprintf(current_data, "%s", result);
-            free(result);
-        }
-
-        eina_counter_free(counter);
-
-        fclose(current_data);
-
-        if (first == EFL_FALSE) first = EFL_TRUE;
-        else fprintf(main_script, ", \\\n");
-
-        sbname = eina_strbuf_new();
-        eina_strbuf_append(sbname, run->name);
-        eina_strbuf_replace_all(sbname, "_", "\\_");
-
-        fprintf(main_script,
-                "\"%s\" using 1:2 title \'%s\' with line",
-                buffer,
-                eina_strbuf_string_get(sbname));
-
-        eina_strbuf_free(sbname);
+      eina_counter_stop(counter, i);
     }
 
-    fprintf(main_script, "\n");
+    result = eina_counter_dump(counter);
+    if (result)
+    {
+      fprintf(current_data, "%s", result);
+      free(result);
+    }
 
-    fclose(main_script);
+    eina_counter_free(counter);
 
-    bench->names = eina_list_append(bench->names, ea);
+    fclose(current_data);
 
-    return ea;
+    if (first == EFL_FALSE) first = EFL_TRUE;
+    else fprintf(main_script, ", \\\n");
+
+    sbname = eina_strbuf_new();
+    eina_strbuf_append(sbname, run->name);
+    eina_strbuf_replace_all(sbname, "_", "\\_");
+
+    fprintf(main_script,
+            "\"%s\" using 1:2 title \'%s\' with line",
+            buffer,
+            eina_strbuf_string_get(sbname));
+
+    eina_strbuf_free(sbname);
+  }
+
+  fprintf(main_script, "\n");
+
+  fclose(main_script);
+
+  bench->names = eina_list_append(bench->names, ea);
+
+  return ea;
 }
 
 /**

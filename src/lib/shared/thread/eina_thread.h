@@ -55,7 +55,7 @@ typedef void *(*Eina_Thread_Cb)(void *data, Eina_Thread t);
  * @typedef Eina_Thread_Cleanup_Cb
  * Type for the definition of a thread cleanup function
  */
-typedef void (*Eina_Thread_Cleanup_Cb) (void *data);
+typedef void (*Eina_Thread_Cleanup_Cb)(void *data);
 
 /**
  * @typedef Eina_Thread_Priority
@@ -66,7 +66,7 @@ typedef enum _Eina_Thread_Priority
   EINA_THREAD_URGENT,     /**< Higher than average process priority */
   EINA_THREAD_NORMAL,     /**< Standard process priority */
   EINA_THREAD_BACKGROUND, /**< Lower than average process priority */
-  EINA_THREAD_IDLE        /**< Thread to be executed only when the processor is idle */
+  EINA_THREAD_IDLE /**< Thread to be executed only when the processor is idle */
 } Eina_Thread_Priority;
 
 /**
@@ -83,7 +83,8 @@ EINA_API Eina_Thread eina_thread_self(void) EFL_WARN_UNUSED_RESULT;
  * @return #EFL_TRUE if they are equal, #EFL_FALSE otherwise.
  * @since 1.8
  */
-EINA_API Efl_Bool eina_thread_equal(Eina_Thread t1, Eina_Thread t2) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_thread_equal(Eina_Thread t1,
+                                    Eina_Thread t2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates a new thread, setting its priority and affinity.
@@ -96,9 +97,12 @@ EINA_API Efl_Bool eina_thread_equal(Eina_Thread t1, Eina_Thread t2) EFL_WARN_UNU
  * @return #EFL_TRUE if thread was created, #EFL_FALSE on errors.
  * @since 1.8
  */
-EINA_API Efl_Bool eina_thread_create(Eina_Thread *t,
-                                  Eina_Thread_Priority prio, int affinity,
-                                  Eina_Thread_Cb func, const void *data) EINA_ARG_NONNULL(1, 4) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_thread_create(Eina_Thread         *t,
+                                     Eina_Thread_Priority prio,
+                                     int                  affinity,
+                                     Eina_Thread_Cb       func,
+                                     const void          *data)
+  EINA_ARG_NONNULL(1, 4) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief The return value of eina_thread_join() if it was canceled with
@@ -207,7 +211,8 @@ EINA_API Efl_Bool eina_thread_cancel(Eina_Thread t);
  *
  * @since 1.19
  */
-EINA_API Efl_Bool eina_thread_cancellable_set(Efl_Bool cancellable, Efl_Bool *was_cancellable);
+EINA_API Efl_Bool eina_thread_cancellable_set(Efl_Bool  cancellable,
+                                              Efl_Bool *was_cancellable);
 
 /**
  * If the current thread is cancellable, this introduces a
@@ -255,13 +260,13 @@ EINA_API void eina_thread_cancel_checkpoint(void);
  * @since 1.19
  */
 #ifdef _WIN32
-EINA_API Efl_Bool
-eina_thread_cleanup_push(Eina_Thread_Cleanup_Cb fn, void *data);
+EINA_API Efl_Bool eina_thread_cleanup_push(Eina_Thread_Cleanup_Cb fn,
+                                           void                  *data);
 
-#define EINA_THREAD_CLEANUP_PUSH(cleanup, data) \
+#  define EINA_THREAD_CLEANUP_PUSH(cleanup, data) \
   eina_thread_cleanup_push(cleanup, data)
 #else
-#define EINA_THREAD_CLEANUP_PUSH(cleanup, data) \
+#  define EINA_THREAD_CLEANUP_PUSH(cleanup, data) \
   pthread_cleanup_push(cleanup, data)
 #endif
 
@@ -293,13 +298,12 @@ eina_thread_cleanup_push(Eina_Thread_Cleanup_Cb fn, void *data);
  * @since 1.19
  */
 #ifdef _WIN32
-EINA_API void
-eina_thread_cleanup_pop(int execute);
+EINA_API void eina_thread_cleanup_pop(int execute);
 
-#define EINA_THREAD_CLEANUP_POP(exec_cleanup) \
+#  define EINA_THREAD_CLEANUP_POP(exec_cleanup) \
   eina_thread_cleanup_pop(exec_cleanup)
 #else
-#define EINA_THREAD_CLEANUP_POP(exec_cleanup) \
+#  define EINA_THREAD_CLEANUP_POP(exec_cleanup) \
   pthread_cleanup_pop(exec_cleanup)
 #endif
 
@@ -353,7 +357,9 @@ typedef void *(*Eina_Thread_Cancellable_Run_Cb)(void *data);
  *
  * @since 1.19
  */
-EINA_API void *eina_thread_cancellable_run(Eina_Thread_Cancellable_Run_Cb cb, Eina_Free_Cb cleanup_cb, void *data);
+EINA_API void *eina_thread_cancellable_run(Eina_Thread_Cancellable_Run_Cb cb,
+                                           Eina_Free_Cb cleanup_cb,
+                                           void        *data);
 
 /**
  * @brief Lowers the priority of the current thread.
@@ -368,7 +374,6 @@ EINA_API void *eina_thread_cancellable_run(Eina_Thread_Cancellable_Run_Cb cb, Ei
  *          incremented on this thread by @c NICENESS.
  */
 EINA_API void eina_sched_prio_drop(void);
-
 
 EINA_API Efl_Bool eina_thread_init(void);
 EINA_API Efl_Bool eina_thread_shutdown(void);

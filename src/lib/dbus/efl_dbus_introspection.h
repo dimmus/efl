@@ -36,8 +36,8 @@ typedef enum
 typedef struct _Efl_Dbus_Introspection_Node
 {
   Eina_Stringshare *name; /**< Node name (optional) */
-  Eina_List *nodes; /**< List with nodes */
-  Eina_List *interfaces; /**< List with interfaces */
+  Eina_List        *nodes; /**< List with nodes */
+  Eina_List        *interfaces; /**< List with interfaces */
 } Efl_Dbus_Introspection_Node;
 
 /** DBus Interface
@@ -47,10 +47,10 @@ typedef struct _Efl_Dbus_Introspection_Node
 typedef struct _Efl_Dbus_Introspection_Interface
 {
   Eina_Stringshare *name; /**< Interface name */
-  Eina_List *methods; /**< List with interface methods */
-  Eina_List *signals; /**< List with interface signals */
-  Eina_List *properties; /**< List with interface properties */
-  Eina_List *annotations; /**< List with interface annotations */
+  Eina_List        *methods; /**< List with interface methods */
+  Eina_List        *signals; /**< List with interface signals */
+  Eina_List        *properties; /**< List with interface properties */
+  Eina_List        *annotations; /**< List with interface annotations */
 } Efl_Dbus_Introspection_Interface;
 
 /** DBus Method
@@ -60,8 +60,8 @@ typedef struct _Efl_Dbus_Introspection_Interface
 typedef struct _Efl_Dbus_Introspection_Method
 {
   Eina_Stringshare *name; /**< Method name */
-  Eina_List *arguments; /**< List with method arguments */
-  Eina_List *annotations; /**< List with method annotations */
+  Eina_List        *arguments; /**< List with method arguments */
+  Eina_List        *annotations; /**< List with method annotations */
 } Efl_Dbus_Introspection_Method;
 
 /** DBus Property
@@ -70,8 +70,8 @@ typedef struct _Efl_Dbus_Introspection_Method
  */
 typedef struct _Efl_Dbus_Introspection_Property
 {
-  Eina_Stringshare *name; /**< Property name */
-  Eina_Stringshare *type; /**< Property type */
+  Eina_Stringshare                      *name; /**< Property name */
+  Eina_Stringshare                      *type; /**< Property type */
   Efl_Dbus_Introspection_Property_Access access; /**< Property access rights */
   Eina_List *annotations; /**< List with property annotations */
 } Efl_Dbus_Introspection_Property;
@@ -94,7 +94,8 @@ typedef struct _Efl_Dbus_Introspection_Argument
 {
   Eina_Stringshare *name; /**< Argument name (optional) */
   Eina_Stringshare *type; /**< Argument type */
-  Efl_Dbus_Introspection_Argument_Direction direction; /**< Argument direction */
+  Efl_Dbus_Introspection_Argument_Direction
+    direction; /**< Argument direction */
 } Efl_Dbus_Introspection_Argument;
 
 /** DBus Signal
@@ -104,8 +105,8 @@ typedef struct _Efl_Dbus_Introspection_Argument
 typedef struct _Efl_Dbus_Introspection_Signal
 {
   Eina_Stringshare *name; /**< Signal name */
-  Eina_List *arguments; /**< List with signal arguments */
-  Eina_List *annotations; /**< List with signal annotations */
+  Eina_List        *arguments; /**< List with signal arguments */
+  Eina_List        *annotations; /**< List with signal annotations */
 } Efl_Dbus_Introspection_Signal;
 
 /**
@@ -136,7 +137,8 @@ EAPI void efl_dbus_introspection_node_free(Efl_Dbus_Introspection_Node *node);
  *
  * @since 1.17
  */
-EAPI Efl_Dbus_Introspection_Interface *efl_dbus_introspection_interface_find(Eina_List *interfaces, const char *name);
+EAPI Efl_Dbus_Introspection_Interface *
+efl_dbus_introspection_interface_find(Eina_List *interfaces, const char *name);
 
 /**
  * @brief Finds a property by name
@@ -147,7 +149,8 @@ EAPI Efl_Dbus_Introspection_Interface *efl_dbus_introspection_interface_find(Ein
  *
  * @since 1.17
  */
-EAPI Efl_Dbus_Introspection_Property *efl_dbus_introspection_property_find(Eina_List *properties, const char *name);
+EAPI Efl_Dbus_Introspection_Property *
+efl_dbus_introspection_property_find(Eina_List *properties, const char *name);
 
 /**
  * @brief Finds an argument by name
@@ -158,6 +161,7 @@ EAPI Efl_Dbus_Introspection_Property *efl_dbus_introspection_property_find(Eina_
  *
  * @since 1.17
  */
-EAPI Efl_Dbus_Introspection_Argument *efl_dbus_introspection_argument_find(Eina_List *arguments, const char *name);
+EAPI Efl_Dbus_Introspection_Argument *
+efl_dbus_introspection_argument_find(Eina_List *arguments, const char *name);
 
 #endif

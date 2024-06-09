@@ -2,15 +2,14 @@
 #define _EFL_LOOP_TIMER_EO_LEGACY_H_
 
 #ifndef _EFL_LOOP_TIMER_EO_CLASS_TYPE
-#define _EFL_LOOP_TIMER_EO_CLASS_TYPE
+#  define _EFL_LOOP_TIMER_EO_CLASS_TYPE
 
 typedef Eo Efl_Loop_Timer;
 
 #endif
 
 #ifndef _EFL_LOOP_TIMER_EO_TYPES
-#define _EFL_LOOP_TIMER_EO_TYPES
-
+#  define _EFL_LOOP_TIMER_EO_TYPES
 
 #endif
 

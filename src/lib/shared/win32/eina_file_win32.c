@@ -59,28 +59,28 @@ typedef struct _Eina_File_Map             Eina_File_Map;
 
 struct _Eina_File_Iterator
 {
-    Eina_Iterator iterator;
+  Eina_Iterator iterator;
 
-    WIN32_FIND_DATA data;
-    HANDLE          handle;
-    size_t          length;
-    Efl_Bool        is_last : 1;
+  WIN32_FIND_DATA data;
+  HANDLE          handle;
+  size_t          length;
+  Efl_Bool        is_last : 1;
 
-    char dir[1];
+  char dir[1];
 };
 
 struct _Eina_File_Direct_Iterator
 {
-    Eina_Iterator iterator;
+  Eina_Iterator iterator;
 
-    WIN32_FIND_DATA data;
-    HANDLE          handle;
-    size_t          length;
-    Efl_Bool        is_last : 1;
+  WIN32_FIND_DATA data;
+  HANDLE          handle;
+  size_t          length;
+  Efl_Bool        is_last : 1;
 
-    Eina_File_Direct_Info info;
+  Eina_File_Direct_Info info;
 
-    char dir[1];
+  char dir[1];
 };
 
 int _eina_file_log_dom = -1;
@@ -89,161 +89,151 @@ static Efl_Bool
 _eina_file_win32_is_dir(const char *dir)
 {
 #ifdef UNICODE
-    wchar_t *wdir = NULL;
+  wchar_t *wdir = NULL;
 #endif
-    DWORD attr;
+  DWORD attr;
 
    /* check if it's a directory */
 #ifdef UNICODE
-    wdir = evil_char_to_wchar(dir);
-    if (!wdir) return EFL_FALSE;
+  wdir = evil_char_to_wchar(dir);
+  if (!wdir) return EFL_FALSE;
 
-    attr = GetFileAttributes(wdir);
-    free(wdir);
+  attr = GetFileAttributes(wdir);
+  free(wdir);
 #else
-    attr = GetFileAttributes(dir);
+  attr = GetFileAttributes(dir);
 #endif
 
-    if (attr == INVALID_FILE_ATTRIBUTES) return EFL_FALSE;
+  if (attr == INVALID_FILE_ATTRIBUTES) return EFL_FALSE;
 
-    if (!(attr & FILE_ATTRIBUTE_DIRECTORY)) return EFL_FALSE;
+  if (!(attr & FILE_ATTRIBUTE_DIRECTORY)) return EFL_FALSE;
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 static HANDLE
 _eina_file_win32_first_file(const char *dir, WIN32_FIND_DATA *fd)
 {
-    char   buf[4096];
-    HANDLE h;
-    size_t l = strlen(dir);
+  char   buf[4096];
+  HANDLE h;
+  size_t l = strlen(dir);
 #ifdef UNICODE
-    wchar_t *wdir = NULL;
+  wchar_t *wdir = NULL;
 #endif
 
-    l = strlen(dir);
-    if ((l + 5) > sizeof(buf)) return INVALID_HANDLE_VALUE;
+  l = strlen(dir);
+  if ((l + 5) > sizeof(buf)) return INVALID_HANDLE_VALUE;
 
-    memcpy(buf, dir, l);
-    memcpy(buf + l, "\\*.*", 5);
+  memcpy(buf, dir, l);
+  memcpy(buf + l, "\\*.*", 5);
 
 #ifdef UNICODE
-    wdir = evil_char_to_wchar(buf);
-    if (!wdir) return INVALID_HANDLE_VALUE;
+  wdir = evil_char_to_wchar(buf);
+  if (!wdir) return INVALID_HANDLE_VALUE;
 
-    h = FindFirstFileEx(wdir,
-                        FindExInfoBasic,
-                        fd,
-                        FindExSearchNameMatch,
-                        NULL,
-                        0);
-    free(wdir);
+  h =
+    FindFirstFileEx(wdir, FindExInfoBasic, fd, FindExSearchNameMatch, NULL, 0);
+  free(wdir);
 #else
-    h = FindFirstFileEx(buf,
-                        FindExInfoBasic,
-                        fd,
-                        FindExSearchNameMatch,
-                        NULL,
-                        0);
+  h = FindFirstFileEx(buf, FindExInfoBasic, fd, FindExSearchNameMatch, NULL, 0);
 #endif
 
-    if (!h) return INVALID_HANDLE_VALUE;
+  if (!h) return INVALID_HANDLE_VALUE;
 
-    while ((fd->cFileName[0] == '.') &&
-           ((fd->cFileName[1] == '\0') ||
-            ((fd->cFileName[1] == '.') && (fd->cFileName[2] == '\0'))))
+  while ((fd->cFileName[0] == '.') &&
+         ((fd->cFileName[1] == '\0') ||
+          ((fd->cFileName[1] == '.') && (fd->cFileName[2] == '\0'))))
+  {
+    if (!FindNextFile(h, fd))
     {
-        if (!FindNextFile(h, fd))
-        {
-            FindClose(h);
-            return INVALID_HANDLE_VALUE;
-        }
+      FindClose(h);
+      return INVALID_HANDLE_VALUE;
     }
+  }
 
-    return h;
+  return h;
 }
 
 static Efl_Bool
 _eina_file_win32_ls_iterator_next(Eina_File_Iterator *it, void **data)
 {
 #ifdef UNICODE
-    wchar_t *old_name;
+  wchar_t *old_name;
 #else
-    char *old_name;
+  char *old_name;
 #endif
-    char    *name;
-    char    *cname;
-    size_t   length;
-    Efl_Bool is_last;
-    Efl_Bool res = EFL_TRUE;
+  char    *name;
+  char    *cname;
+  size_t   length;
+  Efl_Bool is_last;
+  Efl_Bool res = EFL_TRUE;
 
-    if (it->handle == INVALID_HANDLE_VALUE)
+  if (it->handle == INVALID_HANDLE_VALUE)
+  {
+    if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
+    return EFL_FALSE;
+  }
+
+  is_last = it->is_last;
+#ifdef UNICODE
+  old_name = _wcsdup(it->data.cFileName);
+#else
+  old_name = _strdup(it->data.cFileName);
+#endif
+  if (!old_name) return EFL_FALSE;
+
+  do
+  {
+    if (!FindNextFile(it->handle, &it->data))
     {
-        if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
-        return EFL_FALSE;
+      if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
+      else res = EFL_FALSE;
     }
+  }
+  while ((it->data.cFileName[0] == '.') &&
+         ((it->data.cFileName[1] == '\0') ||
+          ((it->data.cFileName[1] == '.') &&
+           (it->data.cFileName[2] == '\0')))); /* FIXME: what about UNICODE ? */
 
-    is_last = it->is_last;
 #ifdef UNICODE
-    old_name = _wcsdup(it->data.cFileName);
+  cname = evil_wchar_to_char(old_name);
+  if (!cname) return EFL_FALSE;
 #else
-    old_name = _strdup(it->data.cFileName);
+  cname = old_name;
 #endif
-    if (!old_name) return EFL_FALSE;
 
-    do
-    {
-        if (!FindNextFile(it->handle, &it->data))
-        {
-            if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
-            else res = EFL_FALSE;
-        }
-    }
-    while (
-        (it->data.cFileName[0] == '.') &&
-        ((it->data.cFileName[1] == '\0') ||
-         ((it->data.cFileName[1] == '.') &&
-          (it->data.cFileName[2] == '\0')))); /* FIXME: what about UNICODE ? */
+  length = strlen(cname);
+  name   = alloca(length + 2 + it->length);
+
+  memcpy(name, it->dir, it->length);
+  memcpy(name + it->length, "\\", 1);
+  memcpy(name + it->length + 1, cname, length + 1);
+
+  *data = (char *)eina_stringshare_add(name);
 
 #ifdef UNICODE
-    cname = evil_wchar_to_char(old_name);
-    if (!cname) return EFL_FALSE;
-#else
-    cname = old_name;
+  free(cname);
 #endif
+  free(old_name);
 
-    length = strlen(cname);
-    name   = alloca(length + 2 + it->length);
+  if (is_last) res = EFL_FALSE;
 
-    memcpy(name, it->dir, it->length);
-    memcpy(name + it->length, "\\", 1);
-    memcpy(name + it->length + 1, cname, length + 1);
-
-    *data = (char *)eina_stringshare_add(name);
-
-#ifdef UNICODE
-    free(cname);
-#endif
-    free(old_name);
-
-    if (is_last) res = EFL_FALSE;
-
-    return res;
+  return res;
 }
 
 static HANDLE
 _eina_file_win32_ls_iterator_container(Eina_File_Iterator *it)
 {
-    return it->handle;
+  return it->handle;
 }
 
 static void
 _eina_file_win32_ls_iterator_free(Eina_File_Iterator *it)
 {
-    if (it->handle != INVALID_HANDLE_VALUE) FindClose(it->handle);
+  if (it->handle != INVALID_HANDLE_VALUE) FindClose(it->handle);
 
-    EINA_MAGIC_SET(&it->iterator, 0);
-    free(it);
+  EINA_MAGIC_SET(&it->iterator, 0);
+  free(it);
 }
 
 static Efl_Bool
@@ -251,148 +241,147 @@ _eina_file_win32_direct_ls_iterator_next(Eina_File_Direct_Iterator *it,
                                          void                     **data)
 {
 #ifdef UNICODE
-    wchar_t *old_name;
+  wchar_t *old_name;
 #else
-    char *old_name;
+  char *old_name;
 #endif
-    char    *cname;
-    size_t   length;
-    DWORD    attr;
-    Efl_Bool is_last;
-    Efl_Bool res = EFL_TRUE;
+  char    *cname;
+  size_t   length;
+  DWORD    attr;
+  Efl_Bool is_last;
+  Efl_Bool res = EFL_TRUE;
 
-    if (it->handle == INVALID_HANDLE_VALUE)
+  if (it->handle == INVALID_HANDLE_VALUE)
+  {
+    if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
+    return EFL_FALSE;
+  }
+
+  attr    = it->data.dwFileAttributes;
+  is_last = it->is_last;
+#ifdef UNICODE
+  old_name = _wcsdup(it->data.cFileName);
+#else
+  old_name = _strdup(it->data.cFileName);
+#endif
+  if (!old_name) return EFL_FALSE;
+
+  do
+  {
+    if (!FindNextFile(it->handle, &it->data))
     {
-        if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
-        return EFL_FALSE;
+      if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
+      else res = EFL_FALSE;
     }
 
-    attr    = it->data.dwFileAttributes;
-    is_last = it->is_last;
 #ifdef UNICODE
-    old_name = _wcsdup(it->data.cFileName);
+    length = wcslen(old_name);
 #else
-    old_name = _strdup(it->data.cFileName);
+    length = strlen(old_name);
 #endif
-    if (!old_name) return EFL_FALSE;
-
-    do
+    if (it->info.name_start + length + 1 >= PATH_MAX)
     {
-        if (!FindNextFile(it->handle, &it->data))
-        {
-            if (GetLastError() == ERROR_NO_MORE_FILES) it->is_last = EFL_TRUE;
-            else res = EFL_FALSE;
-        }
-
+      free(old_name);
 #ifdef UNICODE
-        length = wcslen(old_name);
+      old_name = _wcsdup(it->data.cFileName);
 #else
-        length = strlen(old_name);
+      old_name = _strdup(it->data.cFileName);
 #endif
-        if (it->info.name_start + length + 1 >= PATH_MAX)
-        {
-            free(old_name);
-#ifdef UNICODE
-            old_name = _wcsdup(it->data.cFileName);
-#else
-            old_name = _strdup(it->data.cFileName);
-#endif
-            continue;
-        }
+      continue;
     }
-    while (
-        (it->data.cFileName[0] == '.') &&
-        ((it->data.cFileName[1] == '\0') ||
-         ((it->data.cFileName[1] == '.') &&
-          (it->data.cFileName[2] == '\0')))); /* FIXME: what about UNICODE ? */
+  }
+  while ((it->data.cFileName[0] == '.') &&
+         ((it->data.cFileName[1] == '\0') ||
+          ((it->data.cFileName[1] == '.') &&
+           (it->data.cFileName[2] == '\0')))); /* FIXME: what about UNICODE ? */
 
 #ifdef UNICODE
-    cname = evil_wchar_to_char(old_name);
-    if (!cname) return EFL_FALSE;
+  cname = evil_wchar_to_char(old_name);
+  if (!cname) return EFL_FALSE;
 #else
-    cname = old_name;
+  cname = old_name;
 #endif
 
-    memcpy(it->info.path + it->info.name_start, cname, length);
-    it->info.name_length                = length;
-    it->info.path_length                = it->info.name_start + length;
-    it->info.path[it->info.path_length] = '\0';
+  memcpy(it->info.path + it->info.name_start, cname, length);
+  it->info.name_length                = length;
+  it->info.path_length                = it->info.name_start + length;
+  it->info.path[it->info.path_length] = '\0';
 
-    if (attr & FILE_ATTRIBUTE_DIRECTORY) it->info.type = EINA_FILE_DIR;
-    else if (attr & (FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_COMPRESSED |
-                     FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_NORMAL |
-                     FILE_ATTRIBUTE_SPARSE_FILE | FILE_ATTRIBUTE_TEMPORARY |
-                     FILE_ATTRIBUTE_REPARSE_POINT))
-        it->info.type = EINA_FILE_REG;
-    else it->info.type = EINA_FILE_UNKNOWN;
+  if (attr & FILE_ATTRIBUTE_DIRECTORY) it->info.type = EINA_FILE_DIR;
+  else if (attr & (FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_COMPRESSED |
+                   FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_NORMAL |
+                   FILE_ATTRIBUTE_SPARSE_FILE | FILE_ATTRIBUTE_TEMPORARY |
+                   FILE_ATTRIBUTE_REPARSE_POINT))
+    it->info.type = EINA_FILE_REG;
+  else it->info.type = EINA_FILE_UNKNOWN;
 
-    *data = &it->info;
+  *data = &it->info;
 
 #ifdef UNICODE
-    free(cname);
+  free(cname);
 #endif
 
-    free(old_name);
+  free(old_name);
 
-    if (is_last) res = EFL_FALSE;
+  if (is_last) res = EFL_FALSE;
 
-    return res;
+  return res;
 }
 
 static HANDLE
 _eina_file_win32_direct_ls_iterator_container(Eina_File_Direct_Iterator *it)
 {
-    return it->handle;
+  return it->handle;
 }
 
 static void
 _eina_file_win32_direct_ls_iterator_free(Eina_File_Direct_Iterator *it)
 {
-    if (it->handle != INVALID_HANDLE_VALUE) FindClose(it->handle);
+  if (it->handle != INVALID_HANDLE_VALUE) FindClose(it->handle);
 
-    EINA_MAGIC_SET(&it->iterator, 0);
-    free(it);
+  EINA_MAGIC_SET(&it->iterator, 0);
+  free(it);
 }
 
 void
 eina_file_real_close(Eina_File *file)
 {
-    Eina_File_Map *map;
+  Eina_File_Map *map;
 
-    EINA_LIST_FREE(file->dead_map, map)
-    {
-        UnmapViewOfFile(map->map);
-        free(map);
-    }
+  EINA_LIST_FREE(file->dead_map, map)
+  {
+    UnmapViewOfFile(map->map);
+    free(map);
+  }
 
-    if (file->handle != INVALID_HANDLE_VALUE)
-    {
-        if (!file->copied && file->global_map != MAP_FAILED)
-            UnmapViewOfFile(file->global_map);
-        CloseHandle(file->handle);
-    }
+  if (file->handle != INVALID_HANDLE_VALUE)
+  {
+    if (!file->copied && file->global_map != MAP_FAILED)
+      UnmapViewOfFile(file->global_map);
+    CloseHandle(file->handle);
+  }
 }
 
 static void
 _eina_file_map_close(Eina_File_Map *map)
 {
-    if (map->map != MAP_FAILED) UnmapViewOfFile(map->map);
-    free(map);
+  if (map->map != MAP_FAILED) UnmapViewOfFile(map->map);
+  free(map);
 }
 
 static char *
 _eina_file_sep_find(char *s)
 {
-    for (; *s != '\0'; ++s)
-        if ((*s == '\\') || (*s == '/')) return s;
+  for (; *s != '\0'; ++s)
+    if ((*s == '\\') || (*s == '/')) return s;
 
-    return NULL;
+  return NULL;
 }
 
 static unsigned char
 _eina_file_random_uchar(unsigned char *c)
 {
-    /*
+  /*
    * Helper function for mktemp.
    *
    * Only characters from 'a' to 'z' and '0' to '9' are considered
@@ -402,96 +391,96 @@ _eina_file_random_uchar(unsigned char *c)
    * within 255 : 7*36 = 252, that is, values from 0 to 251 and choose
    * a random value in this interval.
    */
-    do
-    {
-        BCryptGenRandom(_eina_bcrypt_provider, c, sizeof(UCHAR), 0);
-    }
-    while (*c > 251);
+  do
+  {
+    BCryptGenRandom(_eina_bcrypt_provider, c, sizeof(UCHAR), 0);
+  }
+  while (*c > 251);
 
-    *c = '0' + *c % 36;
-    if (*c > '9') *c += 'a' - '9' - 1;
+  *c = '0' + *c % 36;
+  if (*c > '9') *c += 'a' - '9' - 1;
 
-    return *c;
+  return *c;
 }
 
 static int
 _eina_file_mkstemp_init(char *__template, size_t *length, int suffixlen)
 {
-    if (!__template || (suffixlen < 0))
-    {
-        errno = EINVAL;
-        return 0;
-    }
+  if (!__template || (suffixlen < 0))
+  {
+    errno = EINVAL;
+    return 0;
+  }
 
-    *length = strlen(__template);
-    if ((*length < (6 + (size_t)suffixlen)) ||
-        (strncmp(__template + *length - 6 - suffixlen, "XXXXXX", 6) != 0))
-    {
-        errno = EINVAL;
-        return 0;
-    }
-    return 1;
+  *length = strlen(__template);
+  if ((*length < (6 + (size_t)suffixlen)) ||
+      (strncmp(__template + *length - 6 - suffixlen, "XXXXXX", 6) != 0))
+  {
+    errno = EINVAL;
+    return 0;
+  }
+  return 1;
 }
 
 static void
 _eina_file_tmpname(char *__template, size_t length, int suffixlen)
 {
-    unsigned char *suffix;
+  unsigned char *suffix;
 
-    suffix  = (unsigned char *)(__template + length - 6 - suffixlen);
-    *suffix = _eina_file_random_uchar(suffix);
-    suffix++;
-    *suffix = _eina_file_random_uchar(suffix);
-    suffix++;
-    *suffix = _eina_file_random_uchar(suffix);
-    suffix++;
-    *suffix = _eina_file_random_uchar(suffix);
-    suffix++;
-    *suffix = _eina_file_random_uchar(suffix);
-    suffix++;
-    *suffix = _eina_file_random_uchar(suffix);
-    suffix++;
+  suffix  = (unsigned char *)(__template + length - 6 - suffixlen);
+  *suffix = _eina_file_random_uchar(suffix);
+  suffix++;
+  *suffix = _eina_file_random_uchar(suffix);
+  suffix++;
+  *suffix = _eina_file_random_uchar(suffix);
+  suffix++;
+  *suffix = _eina_file_random_uchar(suffix);
+  suffix++;
+  *suffix = _eina_file_random_uchar(suffix);
+  suffix++;
+  *suffix = _eina_file_random_uchar(suffix);
+  suffix++;
 }
 
 static int
 _eina_file_mkstemps(char *__template, int suffixlen)
 {
-    size_t length;
-    int    i;
+  size_t length;
+  int    i;
 
-    if (!_eina_file_mkstemp_init(__template, &length, suffixlen)) return -1;
+  if (!_eina_file_mkstemp_init(__template, &length, suffixlen)) return -1;
 
-    for (i = 0; i < 32768; i++)
-    {
-        int fd;
+  for (i = 0; i < 32768; i++)
+  {
+    int fd;
 
-        _eina_file_tmpname(__template, length, suffixlen);
+    _eina_file_tmpname(__template, length, suffixlen);
 
-        fd = _open(__template,
-                   _O_RDWR | _O_BINARY | _O_CREAT | _O_EXCL,
-                   _S_IREAD | _S_IWRITE);
-        if (fd >= 0) return fd;
-    }
+    fd = _open(__template,
+               _O_RDWR | _O_BINARY | _O_CREAT | _O_EXCL,
+               _S_IREAD | _S_IWRITE);
+    if (fd >= 0) return fd;
+  }
 
-    errno = EEXIST;
-    return -1;
+  errno = EEXIST;
+  return -1;
 }
 
 static char *
 _eina_file_mkdtemp(char *__template)
 {
-    size_t length;
-    int    i;
+  size_t length;
+  int    i;
 
-    if (!_eina_file_mkstemp_init(__template, &length, 0)) return NULL;
+  if (!_eina_file_mkstemp_init(__template, &length, 0)) return NULL;
 
-    for (i = 0; i < 32768; i++)
-    {
-        _eina_file_tmpname(__template, length, 0);
-        if (CreateDirectory(__template, NULL) == TRUE) return __template;
-    }
+  for (i = 0; i < 32768; i++)
+  {
+    _eina_file_tmpname(__template, length, 0);
+    if (CreateDirectory(__template, NULL) == TRUE) return __template;
+  }
 
-    return NULL;
+  return NULL;
 }
 
 /**
@@ -505,40 +494,40 @@ _eina_file_mkdtemp(char *__template)
 Efl_Bool
 eina_file_path_relative(const char *path)
 {
-    return !evil_path_is_absolute(path);
+  return !evil_path_is_absolute(path);
 }
 
 Eina_Tmpstr *
 eina_file_current_directory_get(const char *path, size_t len)
 {
-    char *tmp;
-    DWORD l;
+  char *tmp;
+  DWORD l;
 
-    l = GetCurrentDirectory(0, NULL);
-    if (l == 0) return NULL;
+  l = GetCurrentDirectory(0, NULL);
+  if (l == 0) return NULL;
 
-    tmp    = alloca(sizeof(char) * (l + len + 2));
-    l      = GetCurrentDirectory(l + 1, tmp);
-    tmp[l] = '\\';
-    memcpy(tmp + l + 1, path, len);
-    tmp[l + len + 1] = '\0';
+  tmp    = alloca(sizeof(char) * (l + len + 2));
+  l      = GetCurrentDirectory(l + 1, tmp);
+  tmp[l] = '\\';
+  memcpy(tmp + l + 1, path, len);
+  tmp[l + len + 1] = '\0';
 
-    return eina_tmpstr_add_length(tmp, l + len + 1);
+  return eina_tmpstr_add_length(tmp, l + len + 1);
 }
 
 char *
 eina_file_cleanup(Eina_Tmpstr *path)
 {
-    char *result;
+  char *result;
 
-    result = strdup(path ? path : "");
-    eina_tmpstr_del(path);
+  result = strdup(path ? path : "");
+  eina_tmpstr_del(path);
 
-    if (!result) return NULL;
+  if (!result) return NULL;
 
-    EINA_PATH_TO_UNIX(result);
+  EINA_PATH_TO_UNIX(result);
 
-    return result;
+  return result;
 }
 
 /*============================================================================*
@@ -551,238 +540,238 @@ eina_file_dir_list(const char           *dir,
                    Eina_File_Dir_List_Cb cb,
                    void                 *data)
 {
-    WIN32_FIND_DATA file;
-    HANDLE          h;
+  WIN32_FIND_DATA file;
+  HANDLE          h;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(cb, EFL_FALSE);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(dir, EFL_FALSE);
-    EINA_SAFETY_ON_TRUE_RETURN_VAL(dir[0] == '\0', EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(cb, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(dir, EFL_FALSE);
+  EINA_SAFETY_ON_TRUE_RETURN_VAL(dir[0] == '\0', EFL_FALSE);
 
-    if (!_eina_file_win32_is_dir(dir)) return EFL_FALSE;
+  if (!_eina_file_win32_is_dir(dir)) return EFL_FALSE;
 
-    h = _eina_file_win32_first_file(dir, &file);
+  h = _eina_file_win32_first_file(dir, &file);
 
-    if (h == INVALID_HANDLE_VALUE) return EFL_FALSE;
+  if (h == INVALID_HANDLE_VALUE) return EFL_FALSE;
 
-    do
-    {
-        char *filename;
+  do
+  {
+    char *filename;
 
 #ifdef UNICODE
-        filename = evil_wchar_to_char(file.cFileName);
+    filename = evil_wchar_to_char(file.cFileName);
 #else
-        filename = file.cFileName;
+    filename = file.cFileName;
 #endif /* ! UNICODE */
-        if ((filename[0] == '.') &&
-            ((filename[1] == '\0') ||
-             ((filename[1] == '.') && (filename[2] == '\0'))))
-            continue;
+    if ((filename[0] == '.') &&
+        ((filename[1] == '\0') ||
+         ((filename[1] == '.') && (filename[2] == '\0'))))
+      continue;
 
-        cb(filename, dir, data);
+    cb(filename, dir, data);
 
-        if (recursive == EFL_TRUE)
-        {
-            char *path;
+    if (recursive == EFL_TRUE)
+    {
+      char *path;
 
-            path = alloca(strlen(dir) + strlen(filename) + 2);
-            strcpy(path, dir);
-            strcat(path, "/");
-            strcat(path, filename);
+      path = alloca(strlen(dir) + strlen(filename) + 2);
+      strcpy(path, dir);
+      strcat(path, "/");
+      strcat(path, filename);
 
-            if (!(file.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) continue;
+      if (!(file.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) continue;
 
-            eina_file_dir_list(path, recursive, cb, data);
-        }
+      eina_file_dir_list(path, recursive, cb, data);
+    }
 
 #ifdef UNICODE
-        free(filename);
+    free(filename);
 #endif /* UNICODE */
-    }
-    while (FindNextFile(h, &file));
-    FindClose(h);
+  }
+  while (FindNextFile(h, &file));
+  FindClose(h);
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 EINA_API Eina_Array *
 eina_file_split(char *path)
 {
-    Eina_Array *ea;
-    char       *current;
-    size_t      length;
+  Eina_Array *ea;
+  char       *current;
+  size_t      length;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(path, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(path, NULL);
 
-    ea = eina_array_new(16);
+  ea = eina_array_new(16);
 
-    if (!ea) return NULL;
+  if (!ea) return NULL;
 
-    for (current = _eina_file_sep_find(path); current;
-         path = current + 1, current = _eina_file_sep_find(path))
-    {
-        length = current - path;
+  for (current = _eina_file_sep_find(path); current;
+       path = current + 1, current = _eina_file_sep_find(path))
+  {
+    length = current - path;
 
-        if (length == 0) continue;
+    if (length == 0) continue;
 
-        eina_array_push(ea, path);
-        *current = '\0';
-    }
+    eina_array_push(ea, path);
+    *current = '\0';
+  }
 
-    if (*path != '\0') eina_array_push(ea, path);
+  if (*path != '\0') eina_array_push(ea, path);
 
-    return ea;
+  return ea;
 }
 
 EINA_API Eina_Iterator *
 eina_file_ls(const char *dir)
 {
-    Eina_File_Iterator *it;
-    size_t              length;
+  Eina_File_Iterator *it;
+  size_t              length;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(dir, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(dir, NULL);
 
-    if (!dir || !*dir) return NULL;
+  if (!dir || !*dir) return NULL;
 
-    if (!_eina_file_win32_is_dir(dir)) return NULL;
+  if (!_eina_file_win32_is_dir(dir)) return NULL;
 
-    length = strlen(dir);
+  length = strlen(dir);
 
-    it = calloc(1, sizeof(Eina_File_Iterator) + length);
-    if (!it) return NULL;
+  it = calloc(1, sizeof(Eina_File_Iterator) + length);
+  if (!it) return NULL;
 
-    EINA_MAGIC_SET(&it->iterator, EINA_MAGIC_ITERATOR);
+  EINA_MAGIC_SET(&it->iterator, EINA_MAGIC_ITERATOR);
 
-    it->handle = _eina_file_win32_first_file(dir, &it->data);
-    if ((it->handle == INVALID_HANDLE_VALUE) &&
-        (GetLastError() != ERROR_NO_MORE_FILES))
-        goto free_it;
+  it->handle = _eina_file_win32_first_file(dir, &it->data);
+  if ((it->handle == INVALID_HANDLE_VALUE) &&
+      (GetLastError() != ERROR_NO_MORE_FILES))
+    goto free_it;
 
-    memcpy(it->dir, dir, length + 1);
-    if ((dir[length - 1] != '\\') && (dir[length - 1] != '/'))
-        it->length = length;
-    else it->length = length - 1;
+  memcpy(it->dir, dir, length + 1);
+  if ((dir[length - 1] != '\\') && (dir[length - 1] != '/'))
+    it->length = length;
+  else it->length = length - 1;
 
-    it->iterator.version = EINA_ITERATOR_VERSION;
-    it->iterator.next = FUNC_ITERATOR_NEXT(_eina_file_win32_ls_iterator_next);
-    it->iterator.get_container =
-        FUNC_ITERATOR_GET_CONTAINER(_eina_file_win32_ls_iterator_container);
-    it->iterator.free = FUNC_ITERATOR_FREE(_eina_file_win32_ls_iterator_free);
+  it->iterator.version = EINA_ITERATOR_VERSION;
+  it->iterator.next    = FUNC_ITERATOR_NEXT(_eina_file_win32_ls_iterator_next);
+  it->iterator.get_container =
+    FUNC_ITERATOR_GET_CONTAINER(_eina_file_win32_ls_iterator_container);
+  it->iterator.free = FUNC_ITERATOR_FREE(_eina_file_win32_ls_iterator_free);
 
-    return &it->iterator;
+  return &it->iterator;
 
 free_it:
-    free(it);
+  free(it);
 
-    return NULL;
+  return NULL;
 }
 
 EINA_API Eina_Iterator *
 eina_file_direct_ls(const char *dir)
 {
-    Eina_File_Direct_Iterator *it;
-    size_t                     length;
+  Eina_File_Direct_Iterator *it;
+  size_t                     length;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(dir, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(dir, NULL);
 
-    if (!dir || !*dir) return NULL;
+  if (!dir || !*dir) return NULL;
 
-    length = strlen(dir);
+  length = strlen(dir);
 
-    if (length + 12 + 2 >= MAX_PATH) return NULL;
+  if (length + 12 + 2 >= MAX_PATH) return NULL;
 
-    it = calloc(1, sizeof(Eina_File_Direct_Iterator) + length);
-    if (!it) return NULL;
+  it = calloc(1, sizeof(Eina_File_Direct_Iterator) + length);
+  if (!it) return NULL;
 
-    EINA_MAGIC_SET(&it->iterator, EINA_MAGIC_ITERATOR);
+  EINA_MAGIC_SET(&it->iterator, EINA_MAGIC_ITERATOR);
 
-    it->handle = _eina_file_win32_first_file(dir, &it->data);
-    if ((it->handle == INVALID_HANDLE_VALUE) &&
-        (GetLastError() != ERROR_NO_MORE_FILES))
-        goto free_it;
+  it->handle = _eina_file_win32_first_file(dir, &it->data);
+  if ((it->handle == INVALID_HANDLE_VALUE) &&
+      (GetLastError() != ERROR_NO_MORE_FILES))
+    goto free_it;
 
-    memcpy(it->dir, dir, length + 1);
-    it->length = length;
+  memcpy(it->dir, dir, length + 1);
+  it->length = length;
 
-    memcpy(it->info.path, dir, length);
-    if ((dir[length - 1] == '\\') || (dir[length - 1] == '/'))
-        it->info.name_start = length;
-    else
-    {
-        it->info.path[length] = '\\';
-        it->info.name_start   = length + 1;
-    }
+  memcpy(it->info.path, dir, length);
+  if ((dir[length - 1] == '\\') || (dir[length - 1] == '/'))
+    it->info.name_start = length;
+  else
+  {
+    it->info.path[length] = '\\';
+    it->info.name_start   = length + 1;
+  }
 
-    it->iterator.version = EINA_ITERATOR_VERSION;
-    it->iterator.next =
-        FUNC_ITERATOR_NEXT(_eina_file_win32_direct_ls_iterator_next);
-    it->iterator.get_container = FUNC_ITERATOR_GET_CONTAINER(
-        _eina_file_win32_direct_ls_iterator_container);
-    it->iterator.free =
-        FUNC_ITERATOR_FREE(_eina_file_win32_direct_ls_iterator_free);
+  it->iterator.version = EINA_ITERATOR_VERSION;
+  it->iterator.next =
+    FUNC_ITERATOR_NEXT(_eina_file_win32_direct_ls_iterator_next);
+  it->iterator.get_container =
+    FUNC_ITERATOR_GET_CONTAINER(_eina_file_win32_direct_ls_iterator_container);
+  it->iterator.free =
+    FUNC_ITERATOR_FREE(_eina_file_win32_direct_ls_iterator_free);
 
-    return &it->iterator;
+  return &it->iterator;
 
 free_it:
-    free(it);
+  free(it);
 
-    return NULL;
+  return NULL;
 }
 
 EINA_API Eina_Iterator *
 eina_file_stat_ls(const char *dir)
 {
-    return eina_file_direct_ls(dir);
+  return eina_file_direct_ls(dir);
 }
 
 EINA_API Efl_Bool
 eina_file_refresh(Eina_File *file)
 {
-    WIN32_FILE_ATTRIBUTE_DATA fad;
-    ULARGE_INTEGER            length;
-    ULARGE_INTEGER            mtime;
-    Efl_Bool                  r = EFL_FALSE;
+  WIN32_FILE_ATTRIBUTE_DATA fad;
+  ULARGE_INTEGER            length;
+  ULARGE_INTEGER            mtime;
+  Efl_Bool                  r = EFL_FALSE;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(file, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(file, EFL_FALSE);
 
-    if (file->virtual) return EFL_FALSE;
+  if (file->virtual) return EFL_FALSE;
 
-    if (!GetFileAttributesEx(file->filename, GetFileExInfoStandard, &fad))
-        return EFL_FALSE;
+  if (!GetFileAttributesEx(file->filename, GetFileExInfoStandard, &fad))
+    return EFL_FALSE;
 
-    length.u.LowPart  = fad.nFileSizeLow;
-    length.u.HighPart = fad.nFileSizeHigh;
-    mtime.u.LowPart   = fad.ftLastWriteTime.dwLowDateTime;
-    mtime.u.HighPart  = fad.ftLastWriteTime.dwHighDateTime;
+  length.u.LowPart  = fad.nFileSizeLow;
+  length.u.HighPart = fad.nFileSizeHigh;
+  mtime.u.LowPart   = fad.ftLastWriteTime.dwLowDateTime;
+  mtime.u.HighPart  = fad.ftLastWriteTime.dwHighDateTime;
 
-    if (file->length != length.QuadPart)
-    {
-        eina_file_flush(file, length.QuadPart);
-        r = EFL_TRUE;
-    }
+  if (file->length != length.QuadPart)
+  {
+    eina_file_flush(file, length.QuadPart);
+    r = EFL_TRUE;
+  }
 
-    file->length = length.QuadPart;
-    file->mtime  = mtime.QuadPart;
+  file->length = length.QuadPart;
+  file->mtime  = mtime.QuadPart;
 
-    return r;
+  return r;
 }
 
 EINA_API Eina_File *
 eina_file_open(const char *path, Efl_Bool shared)
 {
-    Eina_File                *file;
-    Eina_File                *n;
-    Eina_Stringshare         *filename;
-    HANDLE                    handle;
-    WIN32_FILE_ATTRIBUTE_DATA fad;
-    ULARGE_INTEGER            length;
-    ULARGE_INTEGER            mtime;
+  Eina_File                *file;
+  Eina_File                *n;
+  Eina_Stringshare         *filename;
+  HANDLE                    handle;
+  WIN32_FILE_ATTRIBUTE_DATA fad;
+  ULARGE_INTEGER            length;
+  ULARGE_INTEGER            mtime;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(path, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(path, NULL);
 
-    filename = eina_file_sanitize(path);
-    if (!filename) return NULL;
+  filename = eina_file_sanitize(path);
+  if (!filename) return NULL;
 
-        /* FIXME: how to emulate shm_open ? Just OpenFileMapping ? */
+    /* FIXME: how to emulate shm_open ? Just OpenFileMapping ? */
 #if 0
    if (shared)
      handle = CreateFile(filename, GENERIC_READ, FILE_SHARE_READ,
@@ -790,144 +779,144 @@ eina_file_open(const char *path, Efl_Bool shared)
                          NULL);
    else
 #endif
-    handle = CreateFile(filename,
-                        GENERIC_READ,
-                        FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-                        NULL,
-                        OPEN_EXISTING,
-                        FILE_ATTRIBUTE_NORMAL,
-                        NULL);
+  handle = CreateFile(filename,
+                      GENERIC_READ,
+                      FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                      NULL,
+                      OPEN_EXISTING,
+                      FILE_ATTRIBUTE_NORMAL,
+                      NULL);
 
-    if (handle == INVALID_HANDLE_VALUE)
+  if (handle == INVALID_HANDLE_VALUE)
+  {
+    errno = GetLastError();
+    WRN("eina_file_open() failed with file %s: %s",
+        filename,
+        evil_format_message(errno));
+    goto free_file;
+  }
+
+  if (!GetFileAttributesEx(filename, GetFileExInfoStandard, &fad))
+  {
+    errno = GetLastError();
+    goto close_handle;
+  }
+
+  length.u.LowPart  = fad.nFileSizeLow;
+  length.u.HighPart = fad.nFileSizeHigh;
+  mtime.u.LowPart   = fad.ftLastWriteTime.dwLowDateTime;
+  mtime.u.HighPart  = fad.ftLastWriteTime.dwHighDateTime;
+
+  eina_lock_take(&_eina_file_lock_cache);
+
+  file = eina_hash_find(_eina_file_cache, filename);
+  if (file &&
+      (file->mtime != mtime.QuadPart || file->length != length.QuadPart))
+  {
+    file->delete_me = EFL_TRUE;
+    eina_hash_del(_eina_file_cache, file->filename, file);
+    file = NULL;
+  }
+
+  if (!file)
+  {
+    n = malloc(sizeof(Eina_File));
+    if (!n)
     {
-        errno = GetLastError();
-        WRN("eina_file_open() failed with file %s: %s",
-            filename,
-            evil_format_message(errno));
-        goto free_file;
+      eina_lock_release(&_eina_file_lock_cache);
+      goto close_handle;
     }
 
-    if (!GetFileAttributesEx(filename, GetFileExInfoStandard, &fad))
-    {
-        errno = GetLastError();
-        goto close_handle;
-    }
+    memset(n, 0, sizeof(Eina_File));
+    n->filename   = filename;
+    n->map        = eina_hash_new(EINA_KEY_LENGTH(eina_file_map_key_length),
+                           EINA_KEY_CMP(eina_file_map_key_cmp),
+                           EINA_KEY_HASH(eina_file_map_key_hash),
+                           EINA_FREE_CB(_eina_file_map_close),
+                           3);
+    n->rmap       = eina_hash_pointer_new(NULL);
+    n->global_map = MAP_FAILED;
+    n->length     = length.QuadPart;
+    n->mtime      = mtime.QuadPart;
+    n->handle     = handle;
+    n->shared     = shared;
+    eina_lock_new(&n->lock);
+    eina_hash_direct_add(_eina_file_cache, n->filename, n);
 
-    length.u.LowPart  = fad.nFileSizeLow;
-    length.u.HighPart = fad.nFileSizeHigh;
-    mtime.u.LowPart   = fad.ftLastWriteTime.dwLowDateTime;
-    mtime.u.HighPart  = fad.ftLastWriteTime.dwHighDateTime;
+    EINA_MAGIC_SET(n, EINA_FILE_MAGIC);
+  }
+  else
+  {
+    CloseHandle(handle);
 
-    eina_lock_take(&_eina_file_lock_cache);
+    n = file;
+  }
+  eina_lock_take(&n->lock);
+  n->refcount++;
+  eina_lock_release(&n->lock);
 
-    file = eina_hash_find(_eina_file_cache, filename);
-    if (file &&
-        (file->mtime != mtime.QuadPart || file->length != length.QuadPart))
-    {
-        file->delete_me = EFL_TRUE;
-        eina_hash_del(_eina_file_cache, file->filename, file);
-        file = NULL;
-    }
+  eina_lock_release(&_eina_file_lock_cache);
 
-    if (!file)
-    {
-        n = malloc(sizeof(Eina_File));
-        if (!n)
-        {
-            eina_lock_release(&_eina_file_lock_cache);
-            goto close_handle;
-        }
-
-        memset(n, 0, sizeof(Eina_File));
-        n->filename   = filename;
-        n->map        = eina_hash_new(EINA_KEY_LENGTH(eina_file_map_key_length),
-                               EINA_KEY_CMP(eina_file_map_key_cmp),
-                               EINA_KEY_HASH(eina_file_map_key_hash),
-                               EINA_FREE_CB(_eina_file_map_close),
-                               3);
-        n->rmap       = eina_hash_pointer_new(NULL);
-        n->global_map = MAP_FAILED;
-        n->length     = length.QuadPart;
-        n->mtime      = mtime.QuadPart;
-        n->handle     = handle;
-        n->shared     = shared;
-        eina_lock_new(&n->lock);
-        eina_hash_direct_add(_eina_file_cache, n->filename, n);
-
-        EINA_MAGIC_SET(n, EINA_FILE_MAGIC);
-    }
-    else
-    {
-        CloseHandle(handle);
-
-        n = file;
-    }
-    eina_lock_take(&n->lock);
-    n->refcount++;
-    eina_lock_release(&n->lock);
-
-    eina_lock_release(&_eina_file_lock_cache);
-
-    return n;
+  return n;
 
 close_handle:
-    CloseHandle(handle);
+  CloseHandle(handle);
 free_file:
-    WRN("Could not open file [%s].", filename);
-    eina_stringshare_del(filename);
+  WRN("Could not open file [%s].", filename);
+  eina_stringshare_del(filename);
 
-    return NULL;
+  return NULL;
 }
 
 EINA_API Efl_Bool
 eina_file_unlink(const char *pathname)
 {
-    Eina_Stringshare *unlink_path = eina_file_sanitize(pathname);
-    Eina_File        *file = eina_hash_find(_eina_file_cache, unlink_path);
-    Efl_Bool          r    = EFL_FALSE;
+  Eina_Stringshare *unlink_path = eina_file_sanitize(pathname);
+  Eina_File        *file        = eina_hash_find(_eina_file_cache, unlink_path);
+  Efl_Bool          r           = EFL_FALSE;
 
-    if (file)
+  if (file)
+  {
+    if (file->handle != INVALID_HANDLE_VALUE)
     {
-        if (file->handle != INVALID_HANDLE_VALUE)
-        {
-            CloseHandle(file->handle);
+      CloseHandle(file->handle);
 
-            file->handle = CreateFile(
-                unlink_path,
-                GENERIC_READ,
-                FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
-                NULL,
-                OPEN_EXISTING,
-                FILE_ATTRIBUTE_NORMAL | FILE_FLAG_DELETE_ON_CLOSE,
-                NULL);
+      file->handle =
+        CreateFile(unlink_path,
+                   GENERIC_READ,
+                   FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+                   NULL,
+                   OPEN_EXISTING,
+                   FILE_ATTRIBUTE_NORMAL | FILE_FLAG_DELETE_ON_CLOSE,
+                   NULL);
 
-            if (file->handle != INVALID_HANDLE_VALUE)
-            {
-                CloseHandle(file->handle);
-                file->handle = INVALID_HANDLE_VALUE;
-                r            = EFL_TRUE;
-                goto finish;
-            }
-        }
+      if (file->handle != INVALID_HANDLE_VALUE)
+      {
+        CloseHandle(file->handle);
+        file->handle = INVALID_HANDLE_VALUE;
+        r            = EFL_TRUE;
+        goto finish;
+      }
     }
+  }
 
-    if (unlink(unlink_path) >= 0) r = EFL_TRUE;
-    eina_stringshare_del(unlink_path);
+  if (unlink(unlink_path) >= 0) r = EFL_TRUE;
+  eina_stringshare_del(unlink_path);
 
 finish:
-    return r;
+  return r;
 }
 
 EINA_API Eina_Iterator *
 eina_file_xattr_get(Eina_File *file EFL_UNUSED)
 {
-    return NULL;
+  return NULL;
 }
 
 EINA_API Eina_Iterator *
 eina_file_xattr_value_get(Eina_File *file EFL_UNUSED)
 {
-    return NULL;
+  return NULL;
 }
 
 EINA_API void
@@ -941,45 +930,45 @@ eina_file_map_populate(Eina_File *file          EFL_UNUSED,
 EINA_API void *
 eina_file_map_all(Eina_File *file, Eina_File_Populate rule EFL_UNUSED)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(file, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(file, NULL);
 
-    if (file->virtual) return eina_file_virtual_map_all(file);
+  if (file->virtual) return eina_file_virtual_map_all(file);
 
-    eina_lock_take(&file->lock);
-    if (file->global_map == MAP_FAILED)
+  eina_lock_take(&file->lock);
+  if (file->global_map == MAP_FAILED)
+  {
+    DWORD  max_size_high;
+    DWORD  max_size_low;
+    HANDLE fm;
+
+    max_size_high = (DWORD)((file->length & 0xffffffff00000000ULL) >> 32);
+    max_size_low  = (DWORD)(file->length & 0x00000000ffffffffULL);
+    fm            = CreateFileMapping(file->handle,
+                           NULL,
+                           PAGE_READONLY,
+                           max_size_high,
+                           max_size_low,
+                           NULL);
+    if (!fm)
     {
-        DWORD  max_size_high;
-        DWORD  max_size_low;
-        HANDLE fm;
-
-        max_size_high = (DWORD)((file->length & 0xffffffff00000000ULL) >> 32);
-        max_size_low  = (DWORD)(file->length & 0x00000000ffffffffULL);
-        fm            = CreateFileMapping(file->handle,
-                               NULL,
-                               PAGE_READONLY,
-                               max_size_high,
-                               max_size_low,
-                               NULL);
-        if (!fm)
-        {
-            eina_lock_release(&file->lock);
-            return NULL;
-        }
-
-        file->global_map = MapViewOfFile(fm, FILE_MAP_READ, 0, 0, file->length);
-        CloseHandle(fm);
-        if (!file->global_map) file->global_map = MAP_FAILED;
+      eina_lock_release(&file->lock);
+      return NULL;
     }
 
-    if (file->global_map != MAP_FAILED)
-    {
-        file->global_refcount++;
-        eina_lock_release(&file->lock);
-        return file->global_map;
-    }
+    file->global_map = MapViewOfFile(fm, FILE_MAP_READ, 0, 0, file->length);
+    CloseHandle(fm);
+    if (!file->global_map) file->global_map = MAP_FAILED;
+  }
 
+  if (file->global_map != MAP_FAILED)
+  {
+    file->global_refcount++;
     eina_lock_release(&file->lock);
-    return NULL;
+    return file->global_map;
+  }
+
+  eina_lock_release(&file->lock);
+  return NULL;
 }
 
 EINA_API void *
@@ -988,129 +977,127 @@ eina_file_map_new(Eina_File         *file,
                   unsigned long int  offset,
                   unsigned long int  length)
 {
-    Eina_File_Map    *map;
-    unsigned long int key[2];
+  Eina_File_Map    *map;
+  unsigned long int key[2];
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(file, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(file, NULL);
 
-    if (offset > file->length) return NULL;
-    if (offset + length > file->length) return NULL;
+  if (offset > file->length) return NULL;
+  if (offset + length > file->length) return NULL;
 
-    if (offset == 0UL && length == file->length)
-        return eina_file_map_all(file, rule);
+  if (offset == 0UL && length == file->length)
+    return eina_file_map_all(file, rule);
 
-    if (file->virtual) return eina_file_virtual_map_new(file, offset, length);
+  if (file->virtual) return eina_file_virtual_map_new(file, offset, length);
 
-    key[0] = offset;
-    key[1] = length;
+  key[0] = offset;
+  key[1] = length;
 
-    eina_lock_take(&file->lock);
+  eina_lock_take(&file->lock);
 
-    map = eina_hash_find(file->map, &key);
-    if (!map)
-    {
-        SYSTEM_INFO si;
-        HANDLE      fm;
-        __int64     map_size;
-        DWORD       view_offset;
-        DWORD       view_length;
-        DWORD       granularity;
+  map = eina_hash_find(file->map, &key);
+  if (!map)
+  {
+    SYSTEM_INFO si;
+    HANDLE      fm;
+    __int64     map_size;
+    DWORD       view_offset;
+    DWORD       view_length;
+    DWORD       granularity;
 
-        map = malloc(sizeof(Eina_File_Map));
-        if (!map) goto on_error;
+    map = malloc(sizeof(Eina_File_Map));
+    if (!map) goto on_error;
 
-        /*
+    /*
          * the size of the mapping object is the offset plus the length,
          * which might be greater than a DWORD
          */
-        map_size = (__int64)offset + (__int64)length;
-        fm =
-            CreateFileMapping(file->handle,
-                              NULL,
-                              PAGE_READONLY,
-                              (DWORD)((map_size >> 32) & 0x00000000ffffffffULL),
-                              (DWORD)(map_size & 0x00000000ffffffffULL),
-                              NULL);
-        if (!fm) goto on_error;
+    map_size = (__int64)offset + (__int64)length;
+    fm       = CreateFileMapping(file->handle,
+                           NULL,
+                           PAGE_READONLY,
+                           (DWORD)((map_size >> 32) & 0x00000000ffffffffULL),
+                           (DWORD)(map_size & 0x00000000ffffffffULL),
+                           NULL);
+    if (!fm) goto on_error;
 
-        /*
+    /*
          * get the system allocation granularity as the
          * offset passed to MapViewOfFile() must be a
          * multiple of this granularity
          */
-        GetSystemInfo(&si);
-        granularity = si.dwAllocationGranularity;
+    GetSystemInfo(&si);
+    granularity = si.dwAllocationGranularity;
 
-        /*
+    /*
          * view_offset is the greatest multiple of granularity, less or equal
          * than offset (and can be stored in a DWORD)
          */
-        view_offset = (offset / granularity) * granularity;
-        view_length = (offset - view_offset) + length;
-        map->map =
-            MapViewOfFile(fm, FILE_MAP_READ, 0, view_offset, view_length);
-        CloseHandle(fm);
-        if (!map->map) goto on_error;
+    view_offset = (offset / granularity) * granularity;
+    view_length = (offset - view_offset) + length;
+    map->map    = MapViewOfFile(fm, FILE_MAP_READ, 0, view_offset, view_length);
+    CloseHandle(fm);
+    if (!map->map) goto on_error;
 
-        map->ret      = (unsigned char *)map->map + (offset - view_offset);
-        map->offset   = offset;
-        map->length   = length;
-        map->refcount = 0;
+    map->ret      = (unsigned char *)map->map + (offset - view_offset);
+    map->offset   = offset;
+    map->length   = length;
+    map->refcount = 0;
 
-        eina_hash_add(file->map, &key, map);
-        eina_hash_direct_add(file->rmap, map->map, map);
-    }
+    eina_hash_add(file->map, &key, map);
+    eina_hash_direct_add(file->rmap, map->map, map);
+  }
 
-    map->refcount++;
+  map->refcount++;
 
-    eina_lock_release(&file->lock);
+  eina_lock_release(&file->lock);
 
-    return map->ret;
+  return map->ret;
 
 on_error:
-    free(map);
-    eina_lock_release(&file->lock);
+  free(map);
+  eina_lock_release(&file->lock);
 
-    return NULL;
+  return NULL;
 }
 
 EINA_API void
 eina_file_map_free(Eina_File *file, void *map)
 {
-    EINA_SAFETY_ON_NULL_RETURN(file);
+  EINA_SAFETY_ON_NULL_RETURN(file);
 
-    if (file->virtual)
-    {
-        eina_file_virtual_map_free(file, map);
-        return;
-    }
+  if (file->virtual)
+  {
+    eina_file_virtual_map_free(file, map);
+    return;
+  }
 
-    eina_lock_take(&file->lock);
+  eina_lock_take(&file->lock);
 
-    if (file->global_map == map)
-    {
-        file->global_refcount--;
+  if (file->global_map == map)
+  {
+    file->global_refcount--;
 
-        if (file->global_refcount > 0) goto on_exit;
+    if (file->global_refcount > 0) goto on_exit;
 
-        UnmapViewOfFile(file->global_map);
-        file->global_map = MAP_FAILED;
-    }
-    else
-    {
-        eina_file_common_map_free(file, map, _eina_file_map_close);
-    }
+    UnmapViewOfFile(file->global_map);
+    file->global_map = MAP_FAILED;
+  }
+  else
+  {
+    eina_file_common_map_free(file, map, _eina_file_map_close);
+  }
 
 on_exit:
-    eina_lock_release(&file->lock);
+  eina_lock_release(&file->lock);
 }
 
 EINA_API Efl_Bool
 eina_file_map_faulted(Eina_File *file, void *map EFL_UNUSED)
 {
 #warning "We need to handle access to corrupted memory mapped file."
-    if (file->virtual) return EFL_FALSE;
-    /*
+  if (file->virtual) return EFL_FALSE;
+  /*
    * FIXME:
    * vc++ : http://msdn.microsoft.com/en-us/library/windows/desktop/aa366801%28v=vs.85%29.aspx
    *
@@ -1140,7 +1127,7 @@ eina_file_map_faulted(Eina_File *file, void *map EFL_UNUSED)
   return ret;
 }
    */
-    return EFL_FALSE;
+  return EFL_FALSE;
 }
 
 EINA_API int
@@ -1148,110 +1135,110 @@ eina_file_statat(void *container        EFL_UNUSED,
                  Eina_File_Direct_Info *info,
                  Eina_Stat             *st)
 {
-    struct __stat64 buf;
+  struct __stat64 buf;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(info, -1);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(st, -1);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(info, -1);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(st, -1);
 
-    if (stat64(info->path, &buf))
-    {
-        info->type = EINA_FILE_UNKNOWN;
-        return -1;
-    }
+  if (stat64(info->path, &buf))
+  {
+    info->type = EINA_FILE_UNKNOWN;
+    return -1;
+  }
 
-    if (info->type == EINA_FILE_UNKNOWN)
-    {
-        if (S_ISREG(buf.st_mode)) info->type = EINA_FILE_REG;
-        else if (S_ISDIR(buf.st_mode)) info->type = EINA_FILE_DIR;
-        else info->type = EINA_FILE_UNKNOWN;
-    }
+  if (info->type == EINA_FILE_UNKNOWN)
+  {
+    if (S_ISREG(buf.st_mode)) info->type = EINA_FILE_REG;
+    else if (S_ISDIR(buf.st_mode)) info->type = EINA_FILE_DIR;
+    else info->type = EINA_FILE_UNKNOWN;
+  }
 
-    st->dev       = buf.st_dev;
-    st->ino       = buf.st_ino;
-    st->mode      = buf.st_mode;
-    st->nlink     = buf.st_nlink;
-    st->uid       = buf.st_uid;
-    st->gid       = buf.st_gid;
-    st->rdev      = buf.st_rdev;
-    st->size      = buf.st_size;
-    st->blksize   = 0;
-    st->blocks    = 0;
-    st->atime     = buf.st_atime;
-    st->mtime     = buf.st_mtime;
-    st->ctime     = buf.st_ctime;
-    st->atimensec = 0;
-    st->mtimensec = 0;
-    st->ctimensec = 0;
+  st->dev       = buf.st_dev;
+  st->ino       = buf.st_ino;
+  st->mode      = buf.st_mode;
+  st->nlink     = buf.st_nlink;
+  st->uid       = buf.st_uid;
+  st->gid       = buf.st_gid;
+  st->rdev      = buf.st_rdev;
+  st->size      = buf.st_size;
+  st->blksize   = 0;
+  st->blocks    = 0;
+  st->atime     = buf.st_atime;
+  st->mtime     = buf.st_mtime;
+  st->ctime     = buf.st_ctime;
+  st->atimensec = 0;
+  st->mtimensec = 0;
+  st->ctimensec = 0;
 
-    return 0;
+  return 0;
 }
 
 EINA_API int
 eina_file_mkstemp(const char *templatename, Eina_Tmpstr **path)
 {
-    char        buffer[PATH_MAX];
-    const char *XXXXXX = NULL, *sep;
-    int         fd, len;
+  char        buffer[PATH_MAX];
+  const char *XXXXXX = NULL, *sep;
+  int         fd, len;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(templatename, -1);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(templatename, -1);
 
-    sep = strchr(templatename, '/');
-    if (!sep) sep = strchr(templatename, '\\');
-    if (sep)
-    {
-        len = eina_strlcpy(buffer, templatename, sizeof(buffer));
-    }
-    else
-    {
-        len = eina_file_path_join(buffer,
-                                  sizeof(buffer),
-                                  eina_environment_tmp_get(),
-                                  templatename);
-    }
+  sep = strchr(templatename, '/');
+  if (!sep) sep = strchr(templatename, '\\');
+  if (sep)
+  {
+    len = eina_strlcpy(buffer, templatename, sizeof(buffer));
+  }
+  else
+  {
+    len = eina_file_path_join(buffer,
+                              sizeof(buffer),
+                              eina_environment_tmp_get(),
+                              templatename);
+  }
 
-    if ((XXXXXX = strstr(buffer, "XXXXXX.")) != NULL)
-        fd = _eina_file_mkstemps(buffer, buffer + len - XXXXXX - 6);
-    else fd = _eina_file_mkstemps(buffer, 0);
+  if ((XXXXXX = strstr(buffer, "XXXXXX.")) != NULL)
+    fd = _eina_file_mkstemps(buffer, buffer + len - XXXXXX - 6);
+  else fd = _eina_file_mkstemps(buffer, 0);
 
-    if (fd < 0)
-    {
-        if (path) *path = NULL;
-        return -1;
-    }
+  if (fd < 0)
+  {
+    if (path) *path = NULL;
+    return -1;
+  }
 
-    if (path) *path = eina_tmpstr_add(buffer);
-    return fd;
+  if (path) *path = eina_tmpstr_add(buffer);
+  return fd;
 }
 
 EINA_API Efl_Bool
 eina_file_mkdtemp(const char *templatename, Eina_Tmpstr **path)
 {
-    char  buffer[PATH_MAX];
-    char *tmpdirname, *sep;
+  char  buffer[PATH_MAX];
+  char *tmpdirname, *sep;
 
-    EINA_SAFETY_ON_NULL_RETURN_VAL(templatename, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(templatename, EFL_FALSE);
 
-    sep = strchr(templatename, '/');
-    if (!sep) sep = strchr(templatename, '\\');
-    if (sep)
-    {
-        eina_strlcpy(buffer, templatename, sizeof(buffer));
-    }
-    else
-    {
-        eina_file_path_join(buffer,
-                            sizeof(buffer),
-                            eina_environment_tmp_get(),
-                            templatename);
-    }
+  sep = strchr(templatename, '/');
+  if (!sep) sep = strchr(templatename, '\\');
+  if (sep)
+  {
+    eina_strlcpy(buffer, templatename, sizeof(buffer));
+  }
+  else
+  {
+    eina_file_path_join(buffer,
+                        sizeof(buffer),
+                        eina_environment_tmp_get(),
+                        templatename);
+  }
 
-    tmpdirname = _eina_file_mkdtemp(buffer);
-    if (tmpdirname == NULL)
-    {
-        if (path) *path = NULL;
-        return EFL_FALSE;
-    }
+  tmpdirname = _eina_file_mkdtemp(buffer);
+  if (tmpdirname == NULL)
+  {
+    if (path) *path = NULL;
+    return EFL_FALSE;
+  }
 
-    if (path) *path = eina_tmpstr_add(tmpdirname);
-    return EFL_TRUE;
+  if (path) *path = eina_tmpstr_add(tmpdirname);
+  return EFL_TRUE;
 }

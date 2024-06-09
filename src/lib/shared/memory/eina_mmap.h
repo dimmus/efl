@@ -39,8 +39,7 @@
  *
  * @since 1.1.0
  */
-EINA_API Efl_Bool
-eina_mmap_safety_enabled_set(Efl_Bool enabled);
+EINA_API Efl_Bool eina_mmap_safety_enabled_set(Efl_Bool enabled);
 
 /**
  * @brief Gets the enabled state of mmap safety.
@@ -52,8 +51,7 @@ eina_mmap_safety_enabled_set(Efl_Bool enabled);
  *
  * @since 1.1.0
  */
-EINA_API Efl_Bool
-eina_mmap_safety_enabled_get(void);
+EINA_API Efl_Bool eina_mmap_safety_enabled_get(void);
 
 /**
  * @}

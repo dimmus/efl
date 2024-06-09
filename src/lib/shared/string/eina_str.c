@@ -58,15 +58,15 @@ eina_str_has_suffix_helper(const char *str,
                            const char *suffix,
                            int (*cmp)(const char *, const char *))
 {
-    size_t str_len;
-    size_t suffix_len;
+  size_t str_len;
+  size_t suffix_len;
 
-    if ((!str) || (!suffix)) return EFL_FALSE;
-    str_len    = strlen(str);
-    suffix_len = eina_strlen_bounded(suffix, str_len);
-    if (suffix_len == (size_t)-1) return EFL_FALSE;
+  if ((!str) || (!suffix)) return EFL_FALSE;
+  str_len    = strlen(str);
+  suffix_len = eina_strlen_bounded(suffix, str_len);
+  if (suffix_len == (size_t)-1) return EFL_FALSE;
 
-    return cmp(str + str_len - suffix_len, suffix) == 0;
+  return cmp(str + str_len - suffix_len, suffix) == 0;
 }
 
 static inline char **
@@ -75,219 +75,217 @@ eina_str_split_full_helper(const char   *str,
                            int           max_tokens,
                            unsigned int *elements)
 {
-    char        *s, *pos, **str_array;
-    const char  *src;
-    size_t       len, dlen;
-    unsigned int tokens   = 0, x;
-    const char  *idx[256] = { NULL };
+  char        *s, *pos, **str_array;
+  const char  *src;
+  size_t       len, dlen;
+  unsigned int tokens   = 0, x;
+  const char  *idx[256] = { NULL };
 
-    if ((!str) || (!delim))
-    {
-        if (elements) *elements = 0;
+  if ((!str) || (!delim))
+  {
+    if (elements) *elements = 0;
 
-        return NULL;
-    }
-    if (max_tokens < 0) max_tokens = 0;
-    if (max_tokens == 1)
-    {
-        str_array = malloc(sizeof(char *) * 2);
-        if (!str_array)
-        {
-            if (elements) *elements = 0;
-
-            return NULL;
-        }
-
-        s = strdup(str);
-        if (!s)
-        {
-            free(str_array);
-            if (elements) *elements = 0;
-
-            return NULL;
-        }
-        if (elements) *elements = 1;
-        str_array[0] = s;
-        str_array[1] = NULL;
-        return str_array;
-    }
-    dlen = strlen(delim);
-    if (dlen == 0)
-    {
-        if (elements) *elements = 0;
-
-        return NULL;
-    }
-
-    src = str;
-   /* count tokens and check strlen(str) */
-    while (*src != '\0')
-    {
-        const char *d = delim, *d_end = d + dlen;
-        const char *tmp = src;
-        for (; (d < d_end) && (*tmp != '\0'); d++, tmp++)
-        {
-            if (EINA_LIKELY(*d != *tmp)) break;
-        }
-        if (EINA_UNLIKELY(d == d_end))
-        {
-            src = tmp;
-            if (tokens < (sizeof(idx) / sizeof(idx[0])))
-            {
-                idx[tokens] = tmp;
-                //printf("token %d='%s'\n", tokens + 1, idx[tokens]);
-            }
-            tokens++;
-            if (tokens && (tokens == (unsigned int)max_tokens)) break;
-        }
-        else src++;
-    }
-    len = src - str + strlen(src);
-
-    str_array = malloc(sizeof(char *) * (tokens + 2));
+    return NULL;
+  }
+  if (max_tokens < 0) max_tokens = 0;
+  if (max_tokens == 1)
+  {
+    str_array = malloc(sizeof(char *) * 2);
     if (!str_array)
     {
-        if (elements) *elements = 0;
+      if (elements) *elements = 0;
 
-        return NULL;
+      return NULL;
     }
 
-    if (!tokens)
-    {
-        s = strdup(str);
-        if (!s)
-        {
-            free(str_array);
-            if (elements) *elements = 0;
-
-            return NULL;
-        }
-        str_array[0] = s;
-        str_array[1] = NULL;
-        if (elements) *elements = 1;
-        return str_array;
-    }
-
-    s = malloc(len + 1);
+    s = strdup(str);
     if (!s)
     {
-        free(str_array);
-        if (elements) *elements = 0;
+      free(str_array);
+      if (elements) *elements = 0;
 
-        return NULL;
+      return NULL;
     }
-
+    if (elements) *elements = 1;
     str_array[0] = s;
+    str_array[1] = NULL;
+    return str_array;
+  }
+  dlen = strlen(delim);
+  if (dlen == 0)
+  {
+    if (elements) *elements = 0;
 
-    if (len == tokens * dlen)
+    return NULL;
+  }
+
+  src = str;
+   /* count tokens and check strlen(str) */
+  while (*src != '\0')
+  {
+    const char *d = delim, *d_end = d + dlen;
+    const char *tmp = src;
+    for (; (d < d_end) && (*tmp != '\0'); d++, tmp++)
     {
+      if (EINA_LIKELY(*d != *tmp)) break;
+    }
+    if (EINA_UNLIKELY(d == d_end))
+    {
+      src = tmp;
+      if (tokens < (sizeof(idx) / sizeof(idx[0])))
+      {
+        idx[tokens] = tmp;
+                //printf("token %d='%s'\n", tokens + 1, idx[tokens]);
+      }
+      tokens++;
+      if (tokens && (tokens == (unsigned int)max_tokens)) break;
+    }
+    else src++;
+  }
+  len = src - str + strlen(src);
+
+  str_array = malloc(sizeof(char *) * (tokens + 2));
+  if (!str_array)
+  {
+    if (elements) *elements = 0;
+
+    return NULL;
+  }
+
+  if (!tokens)
+  {
+    s = strdup(str);
+    if (!s)
+    {
+      free(str_array);
+      if (elements) *elements = 0;
+
+      return NULL;
+    }
+    str_array[0] = s;
+    str_array[1] = NULL;
+    if (elements) *elements = 1;
+    return str_array;
+  }
+
+  s = malloc(len + 1);
+  if (!s)
+  {
+    free(str_array);
+    if (elements) *elements = 0;
+
+    return NULL;
+  }
+
+  str_array[0] = s;
+
+  if (len == tokens * dlen)
+  {
         /* someone's having a laugh somewhere */
-        memset(s, 0, len + 1);
-        for (x = 1; x < tokens + 1; x++)
-            str_array[x] = s + x;
-        str_array[x] = NULL;
-        if (elements) *elements = x;
-        return str_array;
-    }
+    memset(s, 0, len + 1);
+    for (x = 1; x < tokens + 1; x++)
+      str_array[x] = s + x;
+    str_array[x] = NULL;
+    if (elements) *elements = x;
+    return str_array;
+  }
     /* copy tokens and string */
-    if (idx[0] - str - dlen > len)
+  if (idx[0] - str - dlen > len)
+  {
+    /* FIXME: don't think this can happen but putting this here just in case */
+    abort();
+  }
+  pos = s;
+  for (x = 0; x < MIN(tokens, (sizeof(idx) / sizeof(idx[0]))); x++)
+  {
+    if (x + 1 < (sizeof(idx) / sizeof(idx[0])))
     {
-        /* FIXME: don't think this can happen but putting this here just in case */
-        abort();
-    }
-    pos = s;
-    for (x = 0; x < MIN(tokens, (sizeof(idx) / sizeof(idx[0]))); x++)
-    {
-        if (x + 1 < (sizeof(idx) / sizeof(idx[0])))
+      /* first one is special */
+      if (!x)
+      {
+        eina_strlcpy(pos, str, idx[x] - str - dlen + 1);
+        str_array[x] = pos;
+        //printf("str_array[%d] = '%s'\n", x, str_array[x]);
+        pos += idx[x] - str - dlen + 1;
+        if ((tokens == 1) && (idx[0]))
         {
-            /* first one is special */
-            if (!x)
-            {
-                eina_strlcpy(pos, str, idx[x] - str - dlen + 1);
-                str_array[x] = pos;
-                //printf("str_array[%d] = '%s'\n", x, str_array[x]);
-                pos += idx[x] - str - dlen + 1;
-                if ((tokens == 1) && (idx[0]))
-                {
-                    eina_strlcpy(pos, idx[x], len + 1 - (pos - s));
-                    x++, tokens++;
-                    str_array[x] = pos;
-                }
-            }
-            /* more tokens */
-            else if (idx[x + 1])
-            {
-                eina_strlcpy(pos, idx[x - 1], idx[x] - idx[x - 1] - dlen + 1);
-                str_array[x] = pos;
-                //printf("str_array[%d] = '%s'\n", x, str_array[x]);
-                pos += idx[x] - idx[x - 1] - dlen + 1;
-            }
-            /* last token */
-            else
-            {
-                if (max_tokens && ((unsigned int)max_tokens < tokens + 1))
-                    eina_strlcpy(pos, idx[x - 1], len + 1 - (pos - s));
-                else
-                {
-                    //printf("diff: %d\n", len + 1 - (pos - s));
-                    eina_strlcpy(pos,
-                                 idx[x - 1],
-                                 idx[x] - idx[x - 1] - dlen + 1);
-                    str_array[x] = pos;
-                    //printf("str_array[%d] = '%s'\n", x, str_array[x]);
-                    pos += idx[x] - idx[x - 1] - dlen + 1;
-                    x++, tokens++;
-                    eina_strlcpy(pos, idx[x - 1], len + 1 - (pos - s));
-                }
-                str_array[x] = pos;
-                //printf("str_array[%d] = '%s'\n", x, str_array[x]);
-            }
+          eina_strlcpy(pos, idx[x], len + 1 - (pos - s));
+          x++, tokens++;
+          str_array[x] = pos;
         }
-        /* no more tokens saved after this one */
+      }
+      /* more tokens */
+      else if (idx[x + 1])
+      {
+        eina_strlcpy(pos, idx[x - 1], idx[x] - idx[x - 1] - dlen + 1);
+        str_array[x] = pos;
+        //printf("str_array[%d] = '%s'\n", x, str_array[x]);
+        pos += idx[x] - idx[x - 1] - dlen + 1;
+      }
+      /* last token */
+      else
+      {
+        if (max_tokens && ((unsigned int)max_tokens < tokens + 1))
+          eina_strlcpy(pos, idx[x - 1], len + 1 - (pos - s));
         else
         {
-            eina_strlcpy(pos, idx[x - 1], idx[x] - idx[x - 1] - dlen + 1);
-            str_array[x] = pos;
-            //printf("str_array[%d] = '%s'\n", x, str_array[x]);
-            pos += idx[x] - idx[x - 1] - dlen + 1;
-            src  = idx[x];
-            x++, tokens++;
-            str_array[x] = s = pos;
-            break;
+          //printf("diff: %d\n", len + 1 - (pos - s));
+          eina_strlcpy(pos, idx[x - 1], idx[x] - idx[x - 1] - dlen + 1);
+          str_array[x] = pos;
+          //printf("str_array[%d] = '%s'\n", x, str_array[x]);
+          pos += idx[x] - idx[x - 1] - dlen + 1;
+          x++, tokens++;
+          eina_strlcpy(pos, idx[x - 1], len + 1 - (pos - s));
         }
+        str_array[x] = pos;
+        //printf("str_array[%d] = '%s'\n", x, str_array[x]);
+      }
     }
-    if ((x != tokens) && ((!max_tokens) || (x < tokens)))
+    /* no more tokens saved after this one */
+    else
     {
-        while (*src != '\0')
-        {
-            const char *d = delim, *d_end = d + dlen;
-            const char *tmp = src;
-            for (; (d < d_end) && (*tmp != '\0'); d++, tmp++)
-            {
-                if (EINA_LIKELY(*d != *tmp)) break;
-            }
-            if (((!max_tokens) ||
-                 (((tokens == (unsigned int)max_tokens) || x < tokens - 2))) &&
-                (EINA_UNLIKELY(d == d_end)))
-            {
-                src = tmp;
-                *s  = '\0';
-                s++, x++;
-                //printf("str_array[%d] = '%s'\n", x, str_array[x - 1]);
-                str_array[x] = s;
-            }
-            else
-            {
-                *s = *src;
-                s++, src++;
-            }
-        }
-        *s = 0;
+      eina_strlcpy(pos, idx[x - 1], idx[x] - idx[x - 1] - dlen + 1);
+      str_array[x] = pos;
+      //printf("str_array[%d] = '%s'\n", x, str_array[x]);
+      pos += idx[x] - idx[x - 1] - dlen + 1;
+      src  = idx[x];
+      x++, tokens++;
+      str_array[x] = s = pos;
+      break;
     }
-    str_array[tokens] = NULL;
-    if (elements) *elements = tokens;
+  }
+  if ((x != tokens) && ((!max_tokens) || (x < tokens)))
+  {
+    while (*src != '\0')
+    {
+      const char *d = delim, *d_end = d + dlen;
+      const char *tmp = src;
+      for (; (d < d_end) && (*tmp != '\0'); d++, tmp++)
+      {
+        if (EINA_LIKELY(*d != *tmp)) break;
+      }
+      if (((!max_tokens) ||
+           (((tokens == (unsigned int)max_tokens) || x < tokens - 2))) &&
+          (EINA_UNLIKELY(d == d_end)))
+      {
+        src = tmp;
+        *s  = '\0';
+        s++, x++;
+        //printf("str_array[%d] = '%s'\n", x, str_array[x - 1]);
+        str_array[x] = s;
+      }
+      else
+      {
+        *s = *src;
+        s++, src++;
+      }
+    }
+    *s = 0;
+  }
+  str_array[tokens] = NULL;
+  if (elements) *elements = tokens;
 
-    return str_array;
+  return str_array;
 }
 
 /**
@@ -306,7 +304,7 @@ EINA_API size_t
 eina_strlcpy(char *dst, const char *src, size_t siz)
 {
 #ifdef HAVE_STRLCPY
-    return strlcpy(dst, src, siz);
+  return strlcpy(dst, src, siz);
 #else
 #  if 0
     char       *d = dst;
@@ -331,105 +329,105 @@ eina_strlcpy(char *dst, const char *src, size_t siz)
 
     return (s - src - 1); /* count does not include NUL */
 #  endif
-    static_assert(sizeof(dst) >= sizeof(src));
-    /* if strcpy is not easily replaced with memcpy then the code is fundamentally wrong */
-    memcpy(dst, src, siz);
-    return 0;
+  static_assert(sizeof(dst) >= sizeof(src));
+  /* if strcpy is not easily replaced with memcpy then the code is fundamentally wrong */
+  memcpy(dst, src, siz);
+  return 0;
 #endif
 }
 
 EINA_API size_t
 eina_strlcat(char *dst, const char *src, size_t siz)
 {
-    char       *d = dst;
-    const char *s = src;
-    size_t      n = siz;
-    size_t      dlen;
+  char       *d = dst;
+  const char *s = src;
+  size_t      n = siz;
+  size_t      dlen;
 
-    /* Find the end of dst and adjust bytes left but don't go past end */
-    while (n-- != 0 && *d != '\0')
-        d++;
-    dlen = d - dst;
-    n    = siz - dlen;
+  /* Find the end of dst and adjust bytes left but don't go past end */
+  while (n-- != 0 && *d != '\0')
+    d++;
+  dlen = d - dst;
+  n    = siz - dlen;
 
-    if (n == 0) return (dlen + (s ? strlen(s) : 0));
+  if (n == 0) return (dlen + (s ? strlen(s) : 0));
 
-    if (s != NULL)
+  if (s != NULL)
+  {
+    while (*s != '\0')
     {
-        while (*s != '\0')
-        {
-            if (n != 1)
-            {
-                *d++ = *s;
-                n--;
-            }
+      if (n != 1)
+      {
+        *d++ = *s;
+        n--;
+      }
 
-            s++;
-        }
+      s++;
     }
-    *d = '\0';
+  }
+  *d = '\0';
 
-    return (dlen + (s - src)); /* count does not include NUL */
+  return (dlen + (s - src)); /* count does not include NUL */
 }
 
 EINA_API char *
 eina_strftime(const char *format, const struct tm *tm)
 {
-    const size_t flen   = strlen(format);
-    size_t       buflen = 16;  // An arbitrary starting size
-    char        *buf    = NULL;
+  const size_t flen   = strlen(format);
+  size_t       buflen = 16;  // An arbitrary starting size
+  char        *buf    = NULL;
 
-    do
+  do
+  {
+    char  *tmp;
+    size_t len;
+
+    tmp = realloc(buf, buflen * sizeof(char));
+    if (!tmp) goto on_error;
+    buf = tmp;
+
+    len = strftime(buf, buflen, format, tm);
+    // Check if we have the expected result and return it.
+    if ((len > 0 && len < buflen) || (len == 0 && flen == 0))
     {
-        char  *tmp;
-        size_t len;
-
-        tmp = realloc(buf, buflen * sizeof(char));
-        if (!tmp) goto on_error;
-        buf = tmp;
-
-        len = strftime(buf, buflen, format, tm);
-        // Check if we have the expected result and return it.
-        if ((len > 0 && len < buflen) || (len == 0 && flen == 0))
-        {
-            tmp = realloc(buf, ((len + 1) * sizeof(char)));
-            buf = tmp;
-            return buf;
-        }
-
-        /* Possibly buf overflowed - try again with a bigger buffer */
-        buflen <<= 1;  // multiply buffer size by 2
+      tmp = realloc(buf, ((len + 1) * sizeof(char)));
+      buf = tmp;
+      return buf;
     }
-    while (buflen < 128 * flen);
+
+    /* Possibly buf overflowed - try again with a bigger buffer */
+    buflen <<= 1;  // multiply buffer size by 2
+  }
+  while (buflen < 128 * flen);
 
 on_error:
-    free(buf);
-    return NULL;
+  free(buf);
+  return NULL;
 }
 
 EINA_API Efl_Bool
 eina_str_has_prefix(const char *str, const char *prefix)
 {
-    size_t str_len;
-    size_t prefix_len;
+  size_t str_len;
+  size_t prefix_len;
 
-    str_len    = strlen(str);
-    prefix_len = eina_strlen_bounded(prefix, str_len);
-    if (prefix_len == (size_t)-1) return EFL_FALSE;
+  str_len    = strlen(str);
+  prefix_len = eina_strlen_bounded(prefix, str_len);
+  if (prefix_len == (size_t)-1) return EFL_FALSE;
 
-    return (strncmp(str, prefix, prefix_len) == 0);
+  return (strncmp(str, prefix, prefix_len) == 0);
 }
 
 EINA_API Efl_Bool
 eina_str_has_suffix(const char *str, const char *suffix)
 {
-    return eina_str_has_suffix_helper(str, suffix, strcmp);
+  return eina_str_has_suffix_helper(str, suffix, strcmp);
 }
 
 EINA_API Efl_Bool
 eina_str_has_extension(const char *str, const char *ext)
 {
-    return eina_str_has_suffix_helper(str, ext, strcasecmp);
+  return eina_str_has_suffix_helper(str, ext, strcasecmp);
 }
 
 EINA_API char **
@@ -438,13 +436,13 @@ eina_str_split_full(const char   *str,
                     int           max_tokens,
                     unsigned int *elements)
 {
-    return eina_str_split_full_helper(str, delim, max_tokens, elements);
+  return eina_str_split_full_helper(str, delim, max_tokens, elements);
 }
 
 EINA_API char **
 eina_str_split(const char *str, const char *delim, int max_tokens)
 {
-    return eina_str_split_full_helper(str, delim, max_tokens, NULL);
+  return eina_str_split_full_helper(str, delim, max_tokens, NULL);
 }
 
 EINA_API size_t
@@ -456,99 +454,99 @@ eina_str_join_len(char       *dst,
                   const char *b,
                   size_t      b_len)
 {
-    size_t ret = a_len + b_len + 1;
-    size_t off;
+  size_t ret = a_len + b_len + 1;
+  size_t off;
 
-    if (size < 1) return ret;
+  if (size < 1) return ret;
 
-    if (size <= a_len)
-    {
-        memcpy(dst, a, size - 1);
-        dst[size - 1] = '\0';
-        return ret;
-    }
-
-    memcpy(dst, a, a_len);
-    off = a_len;
-
-    if (size <= off + 1)
-    {
-        dst[size - 1] = '\0';
-        return ret;
-    }
-
-    dst[off] = sep;
-    off++;
-
-    if (size <= off + b_len + 1)
-    {
-        memcpy(dst + off, b, size - off - 1);
-        dst[size - 1] = '\0';
-        return ret;
-    }
-
-    memcpy(dst + off, b, b_len);
-    dst[off + b_len] = '\0';
+  if (size <= a_len)
+  {
+    memcpy(dst, a, size - 1);
+    dst[size - 1] = '\0';
     return ret;
+  }
+
+  memcpy(dst, a, a_len);
+  off = a_len;
+
+  if (size <= off + 1)
+  {
+    dst[size - 1] = '\0';
+    return ret;
+  }
+
+  dst[off] = sep;
+  off++;
+
+  if (size <= off + b_len + 1)
+  {
+    memcpy(dst + off, b, size - off - 1);
+    dst[size - 1] = '\0';
+    return ret;
+  }
+
+  memcpy(dst + off, b, b_len);
+  dst[off + b_len] = '\0';
+  return ret;
 }
 
 #ifdef HAVE_ICONV
 EINA_API char *
 eina_str_convert(const char *enc_from, const char *enc_to, const char *text)
 {
-    iconv_t     ic;
-    char       *new_txt, *outp;
-    const char *inp;
-    size_t      inb, outb, outlen, tob, outalloc;
+  iconv_t     ic;
+  char       *new_txt, *outp;
+  const char *inp;
+  size_t      inb, outb, outlen, tob, outalloc;
 
-    if (!text) return NULL;
+  if (!text) return NULL;
 
-    ic = iconv_open(enc_to, enc_from);
-    if (ic == (iconv_t)(-1)) return NULL;
+  ic = iconv_open(enc_to, enc_from);
+  if (ic == (iconv_t)(-1)) return NULL;
 
-    new_txt  = malloc(64);
-    inb      = strlen(text);
-    outb     = 64;
-    inp      = text;
-    outp     = new_txt;
-    outalloc = 64;
-    outlen   = 0;
+  new_txt  = malloc(64);
+  inb      = strlen(text);
+  outb     = 64;
+  inp      = text;
+  outp     = new_txt;
+  outalloc = 64;
+  outlen   = 0;
 
-    for (;;)
+  for (;;)
+  {
+    size_t count;
+
+    tob     = outb;
+    count   = iconv(ic, (char **)&inp, &inb, &outp, &outb);
+    outlen += tob - outb;
+    if (count == (size_t)(-1))
     {
-        size_t count;
+      if (errno == E2BIG)
+      {
+        new_txt   = realloc(new_txt, outalloc + 64);
+        outp      = new_txt + outlen;
+        outalloc += 64;
+        outb     += 64;
+      }
+      else
+      {
+        if (new_txt) free(new_txt);
 
-        tob     = outb;
-        count   = iconv(ic, (char **)&inp, &inb, &outp, &outb);
-        outlen += tob - outb;
-        if (count == (size_t)(-1))
-        {
-            if (errno == E2BIG)
-            {
-                new_txt   = realloc(new_txt, outalloc + 64);
-                outp      = new_txt + outlen;
-                outalloc += 64;
-                outb     += 64;
-            }
-            else
-            {
-                if (new_txt) free(new_txt);
-
-                new_txt = NULL;
-                break;
-            }
-        }
-
-        if (inb == 0)
-        {
-            if (outalloc == outlen) new_txt = realloc(new_txt, outalloc + 1);
-
-            new_txt[outlen] = 0;
-            break;
-        }
+        new_txt = NULL;
+        break;
+      }
     }
-    iconv_close(ic);
-    return new_txt;
+
+    if (inb == 0)
+    {
+      if (outalloc == outlen) new_txt = realloc(new_txt, outalloc + 1);
+
+      new_txt[outlen] = 0;
+      break;
+    }
+  }
+  iconv_close(ic);
+  return new_txt;
 }
 #else
 EINA_API char *
@@ -556,7 +554,7 @@ eina_str_convert(const char *enc_from EFL_UNUSED,
                  const char *enc_to   EFL_UNUSED,
                  const char *text     EFL_UNUSED)
 {
-    return NULL;
+  return NULL;
 }
 #endif
 
@@ -568,61 +566,61 @@ eina_str_convert_len(const char *enc_from,
                      size_t      len,
                      size_t     *retlen)
 {
-    iconv_t     ic;
-    char       *new_txt, *outp;
-    const char *inp;
-    size_t      inb, outb, outlen, tob, outalloc;
+  iconv_t     ic;
+  char       *new_txt, *outp;
+  const char *inp;
+  size_t      inb, outb, outlen, tob, outalloc;
 
-    if (retlen) *retlen = 0;
-    if (!text) return NULL;
+  if (retlen) *retlen = 0;
+  if (!text) return NULL;
 
-    ic = iconv_open(enc_to, enc_from);
-    if (ic == (iconv_t)(-1)) return NULL;
+  ic = iconv_open(enc_to, enc_from);
+  if (ic == (iconv_t)(-1)) return NULL;
 
-    new_txt  = malloc(64);
-    inb      = len;
-    outb     = 64;
-    inp      = text;
-    outp     = new_txt;
-    outalloc = 64;
-    outlen   = 0;
+  new_txt  = malloc(64);
+  inb      = len;
+  outb     = 64;
+  inp      = text;
+  outp     = new_txt;
+  outalloc = 64;
+  outlen   = 0;
 
-    for (;;)
+  for (;;)
+  {
+    size_t count;
+
+    tob     = outb;
+    count   = iconv(ic, (char **)&inp, &inb, &outp, &outb);
+    outlen += tob - outb;
+    if (count == (size_t)(-1))
     {
-        size_t count;
+      if (errno == E2BIG)
+      {
+        new_txt   = realloc(new_txt, outalloc + 64);
+        outp      = new_txt + outlen;
+        outalloc += 64;
+        outb     += 64;
+      }
+      else
+      {
+        if (new_txt) free(new_txt);
 
-        tob     = outb;
-        count   = iconv(ic, (char **)&inp, &inb, &outp, &outb);
-        outlen += tob - outb;
-        if (count == (size_t)(-1))
-        {
-            if (errno == E2BIG)
-            {
-                new_txt   = realloc(new_txt, outalloc + 64);
-                outp      = new_txt + outlen;
-                outalloc += 64;
-                outb     += 64;
-            }
-            else
-            {
-                if (new_txt) free(new_txt);
-
-                new_txt = NULL;
-                break;
-            }
-        }
-
-        if (inb == 0)
-        {
-            if (outalloc == outlen) new_txt = realloc(new_txt, outalloc + 1);
-
-            new_txt[outlen] = 0;
-            break;
-        }
+        new_txt = NULL;
+        break;
+      }
     }
-    iconv_close(ic);
-    if (retlen) *retlen = outlen;
-    return new_txt;
+
+    if (inb == 0)
+    {
+      if (outalloc == outlen) new_txt = realloc(new_txt, outalloc + 1);
+
+      new_txt[outlen] = 0;
+      break;
+    }
+  }
+  iconv_close(ic);
+  if (retlen) *retlen = outlen;
+  return new_txt;
 }
 #else
 EINA_API char *
@@ -632,93 +630,93 @@ eina_str_convert_len(const char *enc_from EFL_UNUSED,
                      size_t len           EFL_UNUSED,
                      size_t              *retlen)
 {
-    if (retlen) *retlen = 0;
-    return NULL;
+  if (retlen) *retlen = 0;
+  return NULL;
 }
 #endif
 
 EINA_API char *
 eina_str_escape(const char *str)
 {
-    char       *s2, *d;
-    const char *s;
+  char       *s2, *d;
+  const char *s;
 
-    if (!str) return NULL;
+  if (!str) return NULL;
 
-    s2 = malloc((strlen(str) * 2) + 1);
-    if (!s2) return NULL;
+  s2 = malloc((strlen(str) * 2) + 1);
+  if (!s2) return NULL;
 
-    for (s = str, d = s2; *s != 0; s++, d++)
+  for (s = str, d = s2; *s != 0; s++, d++)
+  {
+    switch (*s)
     {
-        switch (*s)
+      case ' ':
+      case '\\':
+      case '\'':
+      case '\"':
         {
-            case ' ':
-            case '\\':
-            case '\'':
-            case '\"':
-                {
-                    *d = '\\';
-                    d++;
-                    *d = *s;
-                    break;
-                }
-            case '\n':
-                {
-                    *d = '\\';
-                    d++;
-                    *d = 'n';
-                    break;
-                }
-            case '\t':
-                {
-                    *d = '\\';
-                    d++;
-                    *d = 't';
-                    break;
-                }
-            default:
-                {
-                    *d = *s;
-                    break;
-                }
+          *d = '\\';
+          d++;
+          *d = *s;
+          break;
+        }
+      case '\n':
+        {
+          *d = '\\';
+          d++;
+          *d = 'n';
+          break;
+        }
+      case '\t':
+        {
+          *d = '\\';
+          d++;
+          *d = 't';
+          break;
+        }
+      default:
+        {
+          *d = *s;
+          break;
         }
     }
-    *d = 0;
-    return s2;
+  }
+  *d = 0;
+  return s2;
 }
 
 EINA_API void
 eina_str_tolower(char **str)
 {
-    char *p;
-    if ((!str) || (!(*str))) return;
+  char *p;
+  if ((!str) || (!(*str))) return;
 
-    for (p = *str; (*p); p++)
-        *p = tolower((unsigned char)(*p));
+  for (p = *str; (*p); p++)
+    *p = tolower((unsigned char)(*p));
 }
 
 EINA_API void
 eina_str_toupper(char **str)
 {
-    char *p;
-    if ((!str) || (!(*str))) return;
+  char *p;
+  if ((!str) || (!(*str))) return;
 
-    for (p = *str; (*p); p++)
-        *p = toupper((unsigned char)(*p));
+  for (p = *str; (*p); p++)
+    *p = toupper((unsigned char)(*p));
 }
 
 EINA_API unsigned char *
 eina_memdup(unsigned char *mem, size_t size, Efl_Bool terminate)
 {
-    unsigned char *ret;
+  unsigned char *ret;
 
-    if (!mem) return NULL;
+  if (!mem) return NULL;
 
-    terminate = !!terminate;
-    ret       = malloc(size + terminate);
-    if (!ret) return NULL;
+  terminate = !!terminate;
+  ret       = malloc(size + terminate);
+  if (!ret) return NULL;
 
-    memcpy(ret, mem, size);
-    if (terminate) ret[size] = 0;
-    return ret;
+  memcpy(ret, mem, size);
+  if (terminate) ret[size] = 0;
+  return ret;
 }

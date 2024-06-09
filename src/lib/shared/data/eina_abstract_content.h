@@ -1,7 +1,6 @@
 #ifndef EINA_ABSTRACT_CONTENT_H
 #define EINA_ABSTRACT_CONTENT_H
 
-
 /**
  * @typedef Eina_Content
  * Container for any type of content.
@@ -23,7 +22,8 @@ typedef struct _Eina_Content Eina_Content;
  * The to type is also passed in the callback here.
  * The type of the from pointer does not need to be checked.
  */
-typedef Eina_Content* (*Eina_Content_Conversion_Callback)(Eina_Content *from, const char *to_type);
+typedef Eina_Content *(*Eina_Content_Conversion_Callback)(Eina_Content *from,
+                                                          const char *to_type);
 
 /**
  * Get the path to a file, containing the slice memory as content.
@@ -33,7 +33,7 @@ typedef Eina_Content* (*Eina_Content_Conversion_Callback)(Eina_Content *from, co
  * @return The path to the file. Do not free this.
  *
  */
-EINA_API const char* eina_content_as_file(Eina_Content *content);
+EINA_API const char *eina_content_as_file(Eina_Content *content);
 
 /**
  * Convert the content of the object to another type.
@@ -45,7 +45,8 @@ EINA_API const char* eina_content_as_file(Eina_Content *content);
  *
  * @return A new content object. The caller of this function is owning this.
  */
-EINA_API Eina_Content* eina_content_convert(Eina_Content *content, const char *new_type);
+EINA_API Eina_Content *eina_content_convert(Eina_Content *content,
+                                            const char   *new_type);
 
 /**
  * Get the type of the passed content.
@@ -54,7 +55,7 @@ EINA_API Eina_Content* eina_content_convert(Eina_Content *content, const char *n
  *
  * @return The type of this content. Do no free this.
  */
-EINA_API const char* eina_content_type_get(Eina_Content *content);
+EINA_API const char *eina_content_type_get(Eina_Content *content);
 
 /**
  * Get the Eina_Slice of the passed content.
@@ -73,7 +74,7 @@ EINA_API Eina_Slice eina_content_data_get(Eina_Content *content);
  *
  * @return The new content object. The caller owns this object.
  */
-EINA_API Eina_Content* eina_content_new(Eina_Slice data, const char *type);
+EINA_API Eina_Content *eina_content_new(Eina_Slice data, const char *type);
 
 /**
  * Free the content object.
@@ -90,7 +91,10 @@ EINA_API void eina_content_free(Eina_Content *content);
  *
  * @return True if the callback was successfully registered.
  */
-EINA_API Efl_Bool eina_content_converter_conversion_register(const char *from, const char *to, Eina_Content_Conversion_Callback convertion);
+EINA_API Efl_Bool eina_content_converter_conversion_register(
+  const char                      *from,
+  const char                      *to,
+  Eina_Content_Conversion_Callback convertion);
 
 /**
  * Check if a specific conversion can be performed.
@@ -102,7 +106,8 @@ EINA_API Efl_Bool eina_content_converter_conversion_register(const char *from, c
  *
  * @return True if the conversion can be performed.
  */
-EINA_API Efl_Bool eina_content_converter_convert_can(const char *from, const char *to);
+EINA_API Efl_Bool eina_content_converter_convert_can(const char *from,
+                                                     const char *to);
 
 /**
  * Returns an iterator containing all the target types that the provided source type can be converted to.
@@ -111,7 +116,8 @@ EINA_API Efl_Bool eina_content_converter_convert_can(const char *from, const cha
  *
  * @return An Iterator containing MIME type strings. Free this via eina_iterator_free.
  */
-EINA_API Eina_Iterator* eina_content_converter_possible_conversions(const char *from);
+EINA_API Eina_Iterator *
+eina_content_converter_possible_conversions(const char *from);
 
 EINA_API extern const Eina_Value_Type *EINA_VALUE_TYPE_CONTENT;
 
@@ -122,7 +128,7 @@ EINA_API extern const Eina_Value_Type *EINA_VALUE_TYPE_CONTENT;
  *
  * @return An newly-allocated Eina_Value. Caller owns it.
  */
-EINA_API Eina_Value* eina_value_content_new(Eina_Content *content);
+EINA_API Eina_Value *eina_value_content_new(Eina_Content *content);
 
 /**
  * Creates an Eina_Value from an Eina_Content.
@@ -142,13 +148,13 @@ EINA_API Eina_Value eina_value_content_init(Eina_Content *content);
  *
  * @return A newly-allocated Eina_Content. Caller owns it.
  */
-EINA_API Eina_Content* eina_value_to_content(const Eina_Value *value);
+EINA_API Eina_Content *eina_value_to_content(const Eina_Value *value);
 
-
-static inline Eina_Iterator*
+static inline Eina_Iterator *
 eina_content_possible_conversions(Eina_Content *content)
 {
-   return eina_content_converter_possible_conversions(eina_content_type_get(content));
+  return eina_content_converter_possible_conversions(
+    eina_content_type_get(content));
 }
 
 #endif

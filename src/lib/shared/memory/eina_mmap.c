@@ -81,83 +81,83 @@ static struct sigaction _eina_mmap_prev_sigaction;
 static void
 _eina_mmap_safe_sigbus(int sig, siginfo_t *siginfo, void *ptr)
 {
-    unsigned char *addr = (unsigned char *)(siginfo->si_addr);
-    int            perrno;
+  unsigned char *addr = (unsigned char *)(siginfo->si_addr);
+  int            perrno;
 
    /* save previous errno */
-    perrno = errno;
-    /* if problems was an unaligned access - complain accordingly and abort */
-    if (siginfo->si_code != BUS_ADRERR)
-    {
-        if (siginfo->si_code == BUS_ADRALN)
-            ERR("Unaligned memory access - BUS_ADRALN. SIGBUS!!!");
-        else if (siginfo->si_code == BUS_OBJERR)
-            ERR("Invalid object - BUS_OBJERR. SIGBUS!!!");
+  perrno = errno;
+  /* if problems was an unaligned access - complain accordingly and abort */
+  if (siginfo->si_code != BUS_ADRERR)
+  {
+    if (siginfo->si_code == BUS_ADRALN)
+      ERR("Unaligned memory access - BUS_ADRALN. SIGBUS!!!");
+    else if (siginfo->si_code == BUS_OBJERR)
+      ERR("Invalid object - BUS_OBJERR. SIGBUS!!!");
 #  ifdef BUS_MCEERR_AR
-        else if (siginfo->si_code == BUS_MCEERR_AR)
-            ERR("Memory Fault - BUS_MCEERR_AR. SIGBUS!!!");
+    else if (siginfo->si_code == BUS_MCEERR_AR)
+      ERR("Memory Fault - BUS_MCEERR_AR. SIGBUS!!!");
 #  endif
 #  ifdef BUS_MCEERR_AO
-        else if (siginfo->si_code == BUS_MCEERR_AO)
-            ERR("Memory Fault - BUS_MCEERR_AO. SIGBUS!!!");
+    else if (siginfo->si_code == BUS_MCEERR_AO)
+      ERR("Memory Fault - BUS_MCEERR_AO. SIGBUS!!!");
 #  endif
-        else ERR("Memory Fault - Unknown. SIGBUS!!!");
-        errno = perrno;
-        if (_eina_mmap_prev_sigaction.sa_flags & SA_SIGINFO)
-        {
-            if (_eina_mmap_prev_sigaction.sa_sigaction)
-            {
-                _eina_mmap_prev_sigaction.sa_sigaction(sig, siginfo, ptr);
-                if (_eina_mmap_prev_sigaction.sa_flags & SA_RESETHAND)
-                    _eina_mmap_prev_sigaction.sa_sigaction = NULL;
-                if (_eina_mmap_prev_sigaction.sa_flags & SA_RESTART) return;
-            }
-            abort();
-        }
-        else
-        {
-            if (_eina_mmap_prev_sigaction.sa_handler == SIG_IGN) return;
-            else if (_eina_mmap_prev_sigaction.sa_handler == SIG_DFL) abort();
-            else if (_eina_mmap_prev_sigaction.sa_handler)
-            {
-                _eina_mmap_prev_sigaction.sa_handler(sig);
-                abort();
-            }
-        }
-    }
-    // Look into mmaped Eina_File if it was one of them, mark it as having
-    // I/O errors and then mmap a zero page in place here
-    if (eina_file_mmap_faulty(addr, _eina_mmap_pagesize))
+    else ERR("Memory Fault - Unknown. SIGBUS!!!");
+    errno = perrno;
+    if (_eina_mmap_prev_sigaction.sa_flags & SA_SIGINFO)
     {
-        // Send this to stderr not eina_log. Specifically want this on stderr
-        fprintf(stderr,
-                "EINA: Data at address 0x%lx is invalid. "
-                "Replacing with zero page.\n",
-                (unsigned long)addr);
-        /* align address to the lower page boundary */
-        addr = (unsigned char *)((long)addr & (~(_eina_mmap_pagesize - 1)));
-        /* mmap a pzge of zero's from /dev/zero in there */
-        if (mmap(addr,
-                 _eina_mmap_pagesize,
-                 PROT_READ | PROT_WRITE | PROT_EXEC,
-                 MAP_PRIVATE | MAP_FIXED,
-                 _eina_mmap_zero_fd,
-                 0) == MAP_FAILED)
-        {
-            /* mmap of /dev/zero failed :( */
-            perror("mmap");
-            ERR("Failed to mmap() /dev/zero in place of page. SIGBUS!!!");
-            errno = perrno;
-            abort();
-        }
+      if (_eina_mmap_prev_sigaction.sa_sigaction)
+      {
+        _eina_mmap_prev_sigaction.sa_sigaction(sig, siginfo, ptr);
+        if (_eina_mmap_prev_sigaction.sa_flags & SA_RESETHAND)
+          _eina_mmap_prev_sigaction.sa_sigaction = NULL;
+        if (_eina_mmap_prev_sigaction.sa_flags & SA_RESTART) return;
+      }
+      abort();
     }
     else
     {
-        ERR("Regular SIGBUS not in an eina_file mmaped file");
+      if (_eina_mmap_prev_sigaction.sa_handler == SIG_IGN) return;
+      else if (_eina_mmap_prev_sigaction.sa_handler == SIG_DFL) abort();
+      else if (_eina_mmap_prev_sigaction.sa_handler)
+      {
+        _eina_mmap_prev_sigaction.sa_handler(sig);
         abort();
+      }
     }
-    /* restore previous errno */
-    errno = perrno;
+  }
+  // Look into mmaped Eina_File if it was one of them, mark it as having
+  // I/O errors and then mmap a zero page in place here
+  if (eina_file_mmap_faulty(addr, _eina_mmap_pagesize))
+  {
+    // Send this to stderr not eina_log. Specifically want this on stderr
+    fprintf(stderr,
+            "EINA: Data at address 0x%lx is invalid. "
+            "Replacing with zero page.\n",
+            (unsigned long)addr);
+    /* align address to the lower page boundary */
+    addr = (unsigned char *)((long)addr & (~(_eina_mmap_pagesize - 1)));
+    /* mmap a pzge of zero's from /dev/zero in there */
+    if (mmap(addr,
+             _eina_mmap_pagesize,
+             PROT_READ | PROT_WRITE | PROT_EXEC,
+             MAP_PRIVATE | MAP_FIXED,
+             _eina_mmap_zero_fd,
+             0) == MAP_FAILED)
+    {
+      /* mmap of /dev/zero failed :( */
+      perror("mmap");
+      ERR("Failed to mmap() /dev/zero in place of page. SIGBUS!!!");
+      errno = perrno;
+      abort();
+    }
+  }
+  else
+  {
+    ERR("Regular SIGBUS not in an eina_file mmaped file");
+    abort();
+  }
+  /* restore previous errno */
+  errno = perrno;
 }
 #endif
 
@@ -169,72 +169,72 @@ EINA_API Efl_Bool
 eina_mmap_safety_enabled_set(Efl_Bool enabled)
 {
 #ifndef HAVE_SIGINFO_T
-    (void)enabled;
-    return EFL_FALSE;
+  (void)enabled;
+  return EFL_FALSE;
 #else
+  if (_eina_mmap_log_dom < 0)
+  {
+    _eina_mmap_log_dom =
+      eina_log_domain_register("eina_mmap", EINA_LOG_COLOR_DEFAULT);
     if (_eina_mmap_log_dom < 0)
     {
-        _eina_mmap_log_dom =
-            eina_log_domain_register("eina_mmap", EINA_LOG_COLOR_DEFAULT);
-        if (_eina_mmap_log_dom < 0)
-        {
-            EINA_LOG_ERR("Could not register log domain: eina_mmap");
-            return EFL_FALSE;
-        }
+      EINA_LOG_ERR("Could not register log domain: eina_mmap");
+      return EFL_FALSE;
     }
+  }
 
-    enabled = !!enabled;
+  enabled = !!enabled;
 
-    if (mmap_safe == enabled) return mmap_safe;
-    if (enabled)
-    {
-        struct sigaction sa;
+  if (mmap_safe == enabled) return mmap_safe;
+  if (enabled)
+  {
+    struct sigaction sa;
 
         /* find out system page size the cleanest way we can */
-        _eina_mmap_pagesize = eina_cpu_page_size();
+    _eina_mmap_pagesize = eina_cpu_page_size();
 
         /* no zero page device - open it */
-        if (_eina_mmap_zero_fd < 0)
-        {
-#  ifdef HAVE_OPEN_CLOEXEC
-            _eina_mmap_zero_fd = open("/dev/zero", O_RDWR | O_CLOEXEC);
-            /* if we don;'t have one - fail to set up mmap safety */
-            if (_eina_mmap_zero_fd < 0) return EFL_FALSE;
-#  else
-            _eina_mmap_zero_fd = open("/dev/zero", O_RDWR);
-            /* if we don;'t have one - fail to set up mmap safety */
-            if (_eina_mmap_zero_fd < 0) return EFL_FALSE;
-            eina_file_close_on_exec(_eina_mmap_zero_fd, EFL_TRUE);
-#  endif
-        }
-        /* set up signal handler for SIGBUS */
-        sa.sa_sigaction = _eina_mmap_safe_sigbus;
-        sa.sa_flags     = SA_RESTART | SA_SIGINFO;
-        sigemptyset(&sa.sa_mask);
-        if (sigaction(SIGBUS, &sa, &_eina_mmap_prev_sigaction) == 0) goto done;
-        /* setup of SIGBUS handler failed, lets close zero page dev and fail */
-        close(_eina_mmap_zero_fd);
-        _eina_mmap_zero_fd = -1;
-        return EFL_FALSE;
-    }
-    else
+    if (_eina_mmap_zero_fd < 0)
     {
-        /* reset signal handler to default for SIGBUS */
-        if (_eina_mmap_zero_fd >= 0)
-        {
-            close(_eina_mmap_zero_fd);
-            _eina_mmap_zero_fd = -1;
-        }
-        signal(SIGBUS, SIG_DFL);
+#  ifdef HAVE_OPEN_CLOEXEC
+      _eina_mmap_zero_fd = open("/dev/zero", O_RDWR | O_CLOEXEC);
+            /* if we don;'t have one - fail to set up mmap safety */
+      if (_eina_mmap_zero_fd < 0) return EFL_FALSE;
+#  else
+      _eina_mmap_zero_fd = open("/dev/zero", O_RDWR);
+            /* if we don;'t have one - fail to set up mmap safety */
+      if (_eina_mmap_zero_fd < 0) return EFL_FALSE;
+      eina_file_close_on_exec(_eina_mmap_zero_fd, EFL_TRUE);
+#  endif
     }
+        /* set up signal handler for SIGBUS */
+    sa.sa_sigaction = _eina_mmap_safe_sigbus;
+    sa.sa_flags     = SA_RESTART | SA_SIGINFO;
+    sigemptyset(&sa.sa_mask);
+    if (sigaction(SIGBUS, &sa, &_eina_mmap_prev_sigaction) == 0) goto done;
+    /* setup of SIGBUS handler failed, lets close zero page dev and fail */
+    close(_eina_mmap_zero_fd);
+    _eina_mmap_zero_fd = -1;
+    return EFL_FALSE;
+  }
+  else
+  {
+    /* reset signal handler to default for SIGBUS */
+    if (_eina_mmap_zero_fd >= 0)
+    {
+      close(_eina_mmap_zero_fd);
+      _eina_mmap_zero_fd = -1;
+    }
+    signal(SIGBUS, SIG_DFL);
+  }
 done:
-    mmap_safe = enabled;
-    return mmap_safe;
+  mmap_safe = enabled;
+  return mmap_safe;
 #endif
 }
 
 EINA_API Efl_Bool
 eina_mmap_safety_enabled_get(void)
 {
-    return mmap_safe;
+  return mmap_safe;
 }

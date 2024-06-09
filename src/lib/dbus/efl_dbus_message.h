@@ -14,7 +14,8 @@
  * @param msg The Efl_Dbus_Message object.
  * @return The previous Efl_Dbus_Message with incremented refcount.
  */
-EAPI Efl_Dbus_Message        *efl_dbus_message_ref(Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1);
+EAPI Efl_Dbus_Message *efl_dbus_message_ref(Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Decrease message reference.
@@ -24,7 +25,7 @@ EAPI Efl_Dbus_Message        *efl_dbus_message_ref(Efl_Dbus_Message *msg) EINA_A
  *
  * @param msg The Efl_Dbus_Message object.
  */
-EAPI void                  efl_dbus_message_unref(Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1);
+EAPI void efl_dbus_message_unref(Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1);
 
 /**
  * Get the Eldbus message path.
@@ -32,7 +33,8 @@ EAPI void                  efl_dbus_message_unref(Efl_Dbus_Message *msg) EINA_AR
  * @param msg The Efl_Dbus_Message object.
  * @return A string containing the dbus message path.
  */
-EAPI const char           *efl_dbus_message_path_get(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_message_path_get(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the Eldbus message interface.
@@ -40,7 +42,8 @@ EAPI const char           *efl_dbus_message_path_get(const Efl_Dbus_Message *msg
  * @param msg The Efl_Dbus_Message object.
  * @return A string containing the dbus message interface.
  */
-EAPI const char           *efl_dbus_message_interface_get(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_message_interface_get(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the Eldbus message member.
@@ -48,7 +51,8 @@ EAPI const char           *efl_dbus_message_interface_get(const Efl_Dbus_Message
  * @param msg The Efl_Dbus_Message object.
  * @return A string containing the dbus message member.
  */
-EAPI const char           *efl_dbus_message_member_get(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_message_member_get(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the Eldbus message destination.
@@ -56,7 +60,8 @@ EAPI const char           *efl_dbus_message_member_get(const Efl_Dbus_Message *m
  * @param msg The Efl_Dbus_Message object.
  * @return A string containing the dbus message destination.
  */
-EAPI const char           *efl_dbus_message_destination_get(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_message_destination_get(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the Eldbus message sender.
@@ -64,7 +69,8 @@ EAPI const char           *efl_dbus_message_destination_get(const Efl_Dbus_Messa
  * @param msg The Efl_Dbus_Message object.
  * @return A string containing the dbus message sender.
  */
-EAPI const char           *efl_dbus_message_sender_get(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_message_sender_get(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the Eldbus message signature.
@@ -72,7 +78,8 @@ EAPI const char           *efl_dbus_message_sender_get(const Efl_Dbus_Message *m
  * @param msg The Efl_Dbus_Message object.
  * @return A string containing the dbus message signature.
  */
-EAPI const char           *efl_dbus_message_signature_get(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_message_signature_get(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Create a new message to invoke a method on a remote object.
@@ -84,7 +91,11 @@ EAPI const char           *efl_dbus_message_signature_get(const Efl_Dbus_Message
  *
  * @return a new Efl_Dbus_Message, free with efl_dbus_message_unref()
  */
-EAPI Efl_Dbus_Message        *efl_dbus_message_method_call_new(const char *dest, const char *path, const char *iface, const char *method) EINA_ARG_NONNULL(1, 2, 3, 4) EFL_WARN_UNUSED_RESULT EINA_MALLOC;
+EAPI Efl_Dbus_Message *efl_dbus_message_method_call_new(const char *dest,
+                                                        const char *path,
+                                                        const char *iface,
+                                                        const char *method)
+  EINA_ARG_NONNULL(1, 2, 3, 4) EFL_WARN_UNUSED_RESULT EINA_MALLOC;
 
 /**
  * @brief Create a new signal message.
@@ -97,7 +108,10 @@ EAPI Efl_Dbus_Message        *efl_dbus_message_method_call_new(const char *dest,
  *
  * @since 1.16
  */
-EAPI Efl_Dbus_Message *efl_dbus_message_signal_new(const char *path, const char *interface, const char *name) EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Message *efl_dbus_message_signal_new(const char *path,
+                                                   const char *interface,
+                                                   const char *name)
+  EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Create a new message that is an error reply to another message.
@@ -108,7 +122,10 @@ EAPI Efl_Dbus_Message *efl_dbus_message_signal_new(const char *path, const char 
  *
  * @return a new Efl_Dbus_Message, free with efl_dbus_message_unref()
  */
-EAPI Efl_Dbus_Message        *efl_dbus_message_error_new(const Efl_Dbus_Message *msg, const char *error_name, const char *error_msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Message *efl_dbus_message_error_new(const Efl_Dbus_Message *msg,
+                                                  const char *error_name,
+                                                  const char *error_msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Create a message that is a reply to a method call.
@@ -117,8 +134,9 @@ EAPI Efl_Dbus_Message        *efl_dbus_message_error_new(const Efl_Dbus_Message 
  *
  * @return new Efl_Dbus_Message, free with efl_dbus_message_unref()
  */
-EAPI Efl_Dbus_Message        *efl_dbus_message_method_return_new(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
-
+EAPI Efl_Dbus_Message *
+efl_dbus_message_method_return_new(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Get the error text and name from a Efl_Dbus_Message.
@@ -133,7 +151,9 @@ EAPI Efl_Dbus_Message        *efl_dbus_message_method_return_new(const Efl_Dbus_
  * desired.
  * @return EFL_TRUE on success, else EFL_FALSE.
  */
-EAPI Efl_Bool             efl_dbus_message_error_get(const Efl_Dbus_Message *msg, const char **name, const char **text) EINA_ARG_NONNULL(1);
+EAPI Efl_Bool efl_dbus_message_error_get(const Efl_Dbus_Message *msg,
+                                         const char            **name,
+                                         const char **text) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Get the arguments from an Efl_Dbus_Message
@@ -152,7 +172,10 @@ EAPI Efl_Bool             efl_dbus_message_error_get(const Efl_Dbus_Message *msg
  * @return EFL_TRUE if the arguments were read successfully and stored in the
  * respective pointer arguments.
  */
-EAPI Efl_Bool             efl_dbus_message_arguments_get(const Efl_Dbus_Message *msg, const char *signature, ...) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Bool efl_dbus_message_arguments_get(const Efl_Dbus_Message *msg,
+                                             const char             *signature,
+                                             ...)
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Get the arguments from an Efl_Dbus_Message using a va_list.
@@ -166,7 +189,10 @@ EAPI Efl_Bool             efl_dbus_message_arguments_get(const Efl_Dbus_Message 
  * @return EFL_TRUE if the arguments were read successfully and stored in the
  * respective pointer arguments.
  */
-EAPI Efl_Bool             efl_dbus_message_arguments_vget(const Efl_Dbus_Message *msg, const char *signature, va_list ap) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Bool efl_dbus_message_arguments_vget(const Efl_Dbus_Message *msg,
+                                              const char             *signature,
+                                              va_list                 ap)
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Append arguments into an Efl_Dbus_Message
@@ -184,7 +210,9 @@ EAPI Efl_Bool             efl_dbus_message_arguments_vget(const Efl_Dbus_Message
  *
  * @return EFL_TRUE on success, EFL_FALSE otherwise.
  */
-EAPI Efl_Bool             efl_dbus_message_arguments_append(Efl_Dbus_Message *msg, const char *signature, ...) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool efl_dbus_message_arguments_append(Efl_Dbus_Message *msg,
+                                                const char       *signature,
+                                                ...) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Append arguments into an Efl_Dbus_Message using a va_list.
@@ -197,7 +225,10 @@ EAPI Efl_Bool             efl_dbus_message_arguments_append(Efl_Dbus_Message *ms
  *
  * @return EFL_TRUE on success, EFL_FALSE otherwise.
  */
-EAPI Efl_Bool             efl_dbus_message_arguments_vappend(Efl_Dbus_Message *msg, const char *signature, va_list ap) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool efl_dbus_message_arguments_vappend(Efl_Dbus_Message *msg,
+                                                 const char       *signature,
+                                                 va_list           ap)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @defgroup Efl_Dbus_Message_Iter Iterator
@@ -222,7 +253,11 @@ EAPI Efl_Bool             efl_dbus_message_arguments_vappend(Efl_Dbus_Message *m
  *
  * @return the new iterator
  */
-EAPI Efl_Dbus_Message_Iter *efl_dbus_message_iter_container_new(Efl_Dbus_Message_Iter *iter, int type, const char* contained_signature) EINA_ARG_NONNULL(1, 3) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Message_Iter *
+efl_dbus_message_iter_container_new(Efl_Dbus_Message_Iter *iter,
+                                    int                    type,
+                                    const char            *contained_signature)
+  EINA_ARG_NONNULL(1, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Append a basic type into an Efl_Dbus_Iterator.
@@ -233,7 +268,9 @@ EAPI Efl_Dbus_Message_Iter *efl_dbus_message_iter_container_new(Efl_Dbus_Message
  *
  * @return EFL_TRUE on success, else EFL_FALSE.
  */
-EAPI Efl_Bool               efl_dbus_message_iter_basic_append(Efl_Dbus_Message_Iter *iter, int type, ...) EINA_ARG_NONNULL(1, 3);
+EAPI Efl_Bool efl_dbus_message_iter_basic_append(Efl_Dbus_Message_Iter *iter,
+                                                 int                    type,
+                                                 ...) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Append an argument into an Efl_Dbus_Message_Iter. For each complete type
@@ -258,7 +295,10 @@ EAPI Efl_Bool               efl_dbus_message_iter_basic_append(Efl_Dbus_Message_
  * efl_dbus_message_iter_container_new() instead to create the variant, fill
  * with data and close it.
  */
-EAPI Efl_Bool               efl_dbus_message_iter_arguments_append(Efl_Dbus_Message_Iter *iter, const char *signature, ...) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool
+efl_dbus_message_iter_arguments_append(Efl_Dbus_Message_Iter *iter,
+                                       const char            *signature,
+                                       ...) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Set data to Efl_Dbus_Message_Iter. For each complete in signature
@@ -279,8 +319,10 @@ EAPI Efl_Bool               efl_dbus_message_iter_arguments_append(Efl_Dbus_Mess
  * efl_dbus_message_iter_container_new() to create the variant fill
  * data and close it.
  */
-EAPI Efl_Bool               efl_dbus_message_iter_arguments_vappend(Efl_Dbus_Message_Iter *iter, const char *signature, va_list ap) EINA_ARG_NONNULL(1, 2, 3);
-
+EAPI Efl_Bool
+efl_dbus_message_iter_arguments_vappend(Efl_Dbus_Message_Iter *iter,
+                                        const char            *signature,
+                                        va_list ap) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * Append a array of basic type with fixed size to Efl_Dbus_Message_Iter.
@@ -291,7 +333,11 @@ EAPI Efl_Bool               efl_dbus_message_iter_arguments_vappend(Efl_Dbus_Mes
  * @param size of array
  * @return EFL_TRUE on success, else EFL_FALSE
  */
-EAPI Efl_Bool               efl_dbus_message_iter_fixed_array_append(Efl_Dbus_Message_Iter *iter, int type, const void *array, unsigned int size) EINA_ARG_NONNULL(1, 3);
+EAPI Efl_Bool efl_dbus_message_iter_fixed_array_append(
+  Efl_Dbus_Message_Iter *iter,
+  int                    type,
+  const void            *array,
+  unsigned int           size) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Closes a container-typed value appended to the message.
@@ -301,7 +347,9 @@ EAPI Efl_Bool               efl_dbus_message_iter_fixed_array_append(Efl_Dbus_Me
  *
  * @return EFL_FALSE if iterator was already close or if not enough memory
  */
-EAPI Efl_Bool               efl_dbus_message_iter_container_close(Efl_Dbus_Message_Iter *iter, Efl_Dbus_Message_Iter *sub) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool efl_dbus_message_iter_container_close(Efl_Dbus_Message_Iter *iter,
+                                                    Efl_Dbus_Message_Iter *sub)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Get the main Efl_Dbus_Message_Iter from the Efl_Dbus_Message.
@@ -310,7 +358,9 @@ EAPI Efl_Bool               efl_dbus_message_iter_container_close(Efl_Dbus_Messa
  *
  * @return The iterator of the message.
  */
-EAPI Efl_Dbus_Message_Iter *efl_dbus_message_iter_get(const Efl_Dbus_Message *msg) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Message_Iter *
+efl_dbus_message_iter_get(const Efl_Dbus_Message *msg)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Get a basic type from Efl_Dbus_Iterator.
@@ -318,7 +368,8 @@ EAPI Efl_Dbus_Message_Iter *efl_dbus_message_iter_get(const Efl_Dbus_Message *ms
  * @param iter The iterator to get the basic type from.
  * @param value The basic type of the iterator.
  */
-EAPI void                    efl_dbus_message_iter_basic_get(Efl_Dbus_Message_Iter *iter, void *value) EINA_ARG_NONNULL(1, 2);
+EAPI void efl_dbus_message_iter_basic_get(Efl_Dbus_Message_Iter *iter,
+                                          void *value) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Returns the current signature of a message iterator.
@@ -328,7 +379,8 @@ EAPI void                    efl_dbus_message_iter_basic_get(Efl_Dbus_Message_It
  *
  * @note The returned string must be freed.
  */
-EAPI char                   *efl_dbus_message_iter_signature_get(Efl_Dbus_Message_Iter *iter) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI char *efl_dbus_message_iter_signature_get(Efl_Dbus_Message_Iter *iter)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves the iterator to the next field, if any.
@@ -336,7 +388,8 @@ EAPI char                   *efl_dbus_message_iter_signature_get(Efl_Dbus_Messag
  *
  * @return if iterator was reach to end return EFL_FALSE
  */
-EAPI Efl_Bool               efl_dbus_message_iter_next(Efl_Dbus_Message_Iter *iter) EINA_ARG_NONNULL(1);
+EAPI Efl_Bool efl_dbus_message_iter_next(Efl_Dbus_Message_Iter *iter)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Get a complete type from Efl_Dbus_Message_Iter if is not at the end
@@ -351,7 +404,9 @@ EAPI Efl_Bool               efl_dbus_message_iter_next(Efl_Dbus_Message_Iter *it
  * iterator points return EFL_FALSE
  *
  */
-EAPI Efl_Bool               efl_dbus_message_iter_get_and_next(Efl_Dbus_Message_Iter *iter, char signature, ...) EINA_ARG_NONNULL(1, 2, 3);
+EAPI Efl_Bool efl_dbus_message_iter_get_and_next(Efl_Dbus_Message_Iter *iter,
+                                                 char signature,
+                                                 ...) EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Reads a block of fixed-length values from the message iterator.
@@ -376,7 +431,11 @@ EAPI Efl_Bool               efl_dbus_message_iter_get_and_next(Efl_Dbus_Message_
  * @param n_elements
  * @return EFL_TRUE on success, else EFL_FALSE.
  */
-EAPI Efl_Bool efl_dbus_message_iter_fixed_array_get(Efl_Dbus_Message_Iter *iter, int signature, void *value, int *n_elements) EINA_ARG_NONNULL(1, 3, 4);
+EAPI Efl_Bool efl_dbus_message_iter_fixed_array_get(Efl_Dbus_Message_Iter *iter,
+                                                    int   signature,
+                                                    void *value,
+                                                    int  *n_elements)
+  EINA_ARG_NONNULL(1, 3, 4);
 
 /**
  * @brief Get data from Efl_Dbus_Message_Iter, for each complete type must have
@@ -389,7 +448,9 @@ EAPI Efl_Bool efl_dbus_message_iter_fixed_array_get(Efl_Dbus_Message_Iter *iter,
  *
  * @return EFL_FALSE if signature different from signature in iterator
  */
-EAPI Efl_Bool               efl_dbus_message_iter_arguments_get(Efl_Dbus_Message_Iter *iter, const char *signature, ...) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool efl_dbus_message_iter_arguments_get(Efl_Dbus_Message_Iter *iter,
+                                                  const char *signature,
+                                                  ...) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Get data from Efl_Dbus_Message_Iter, for each complete type must have
@@ -402,7 +463,10 @@ EAPI Efl_Bool               efl_dbus_message_iter_arguments_get(Efl_Dbus_Message
  *
  * @return EFL_FALSE if signature different from signature in iterator
  */
-EAPI Efl_Bool               efl_dbus_message_iter_arguments_vget(Efl_Dbus_Message_Iter *iter, const char *signature, va_list ap) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Bool efl_dbus_message_iter_arguments_vget(Efl_Dbus_Message_Iter *iter,
+                                                   const char *signature,
+                                                   va_list     ap)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Manually delete the iterator.
@@ -418,7 +482,8 @@ EAPI Efl_Bool               efl_dbus_message_iter_arguments_vget(Efl_Dbus_Messag
  *
  * @param iter the iterator to be deleted.
  */
-EAPI void                  efl_dbus_message_iter_del(Efl_Dbus_Message_Iter *iter) EINA_ARG_NONNULL(1);
+EAPI void efl_dbus_message_iter_del(Efl_Dbus_Message_Iter *iter)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @}

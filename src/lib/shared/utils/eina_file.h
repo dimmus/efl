@@ -109,14 +109,17 @@ typedef struct _Eina_File_Line Eina_File_Line;
  * @param[in] path The path passed to eina_file_dir_list()
  * @param[in] data The data passed to eina_file_dir_list()
  */
-typedef void (*Eina_File_Dir_List_Cb)(const char *name, const char *path, void *data);
+typedef void (*Eina_File_Dir_List_Cb)(const char *name,
+                                      const char *path,
+                                      void       *data);
 
 /**
  * @typedef Eina_File_Type
  * @brief Type for enumeration of a file type.
  * @details This type is used in #Eina_File_Direct_Info.
  */
-typedef enum {
+typedef enum
+{
   EINA_FILE_UNKNOWN, /**< Unknown file type */
   EINA_FILE_FIFO,    /**< Named pipe (FIFO) type (unused on Windows) */
   EINA_FILE_CHR,     /**< Character device type (unused on Windows) */
@@ -139,13 +142,14 @@ typedef struct _Eina_File Eina_File;
  * @brief Type for enumeration of a file access type.
  * @details This type is used in #Eina_File_Direct_Info.
  */
-typedef enum {
-  EINA_FILE_RANDOM,     /**< Advise random memory access to the mapped memory */
+typedef enum
+{
+  EINA_FILE_RANDOM, /**< Advise random memory access to the mapped memory */
   EINA_FILE_SEQUENTIAL, /**< Advise sequential memory access to the mapped memory */
-  EINA_FILE_WILLNEED,   /**< Advise need for all the mapped memory */
-  EINA_FILE_POPULATE,   /**< Request for all the mapped memory */
-  EINA_FILE_DONTNEED,   /**< Indicate that the memory is no longer needed. This may result in the memory being removed from any caches if applicable. @since 1.8 */
-  EINA_FILE_REMOVE      /**< This memory is to be released and any content will be lost. Subsequent accesses will succeed but return fresh memory as if accessed for the first time. This may not succeed if the filesystem does not support it. @since 1.8 */
+  EINA_FILE_WILLNEED, /**< Advise need for all the mapped memory */
+  EINA_FILE_POPULATE, /**< Request for all the mapped memory */
+  EINA_FILE_DONTNEED, /**< Indicate that the memory is no longer needed. This may result in the memory being removed from any caches if applicable. @since 1.8 */
+  EINA_FILE_REMOVE /**< This memory is to be released and any content will be lost. Subsequent accesses will succeed but return fresh memory as if accessed for the first time. This may not succeed if the filesystem does not support it. @since 1.8 */
 } Eina_File_Populate;
 
 /* Why do this? Well PATH_MAX may vary from when eina itself is compiled
@@ -178,11 +182,11 @@ typedef enum {
  * @since 1.16
  */
 #ifdef _WIN32
-# define EINA_PATH_SEP_C '\\'
-# define EINA_PATH_SEP_S "\\"
+#  define EINA_PATH_SEP_C '\\'
+#  define EINA_PATH_SEP_S "\\"
 #else
-# define EINA_PATH_SEP_C '/'
-# define EINA_PATH_SEP_S "/"
+#  define EINA_PATH_SEP_C '/'
+#  define EINA_PATH_SEP_S "/"
 #endif
 
 /**
@@ -191,11 +195,11 @@ typedef enum {
  */
 struct _Eina_File_Direct_Info
 {
-   size_t               path_length;         /**< Size of the whole path */
-   size_t               name_length;         /**< Size of the filename/basename component */
-   size_t               name_start;          /**< Start position of the filename/basename component */
-   Eina_File_Type       type;                /**< File type */
-   char                 path[EINA_PATH_MAX]; /**< The path */
+  size_t path_length; /**< Size of the whole path */
+  size_t name_length; /**< Size of the filename/basename component */
+  size_t name_start; /**< Start position of the filename/basename component */
+  Eina_File_Type type; /**< File type */
+  char           path[EINA_PATH_MAX]; /**< The path */
 };
 
 /**
@@ -205,22 +209,25 @@ struct _Eina_File_Direct_Info
  */
 struct _Eina_Stat
 {
-   unsigned long int    dev;       /**< The device where this file is located */
-   unsigned long int    ino;       /**< The inode */
-   unsigned int         mode;      /**< The mode */
-   unsigned int         nlink;     /**< The link number */
-   unsigned int         uid;       /**< The owner user id */
-   unsigned int         gid;       /**< The owner group id */
-   unsigned long int    rdev;      /**< The remote device */
-   unsigned long int    size;      /**< The file size in bytes */
-   unsigned long int    blksize;   /**< The block size in bytes */
-   unsigned long int    blocks;    /**< The number of blocks allocated */
-   unsigned long int    atime;     /**< The timestamp when the file was last accessed */
-   unsigned long int    atimensec; /**< The nano version of the timestamp when the file was last accessed */
-   unsigned long int    mtime;     /**< The timestamp when the file was last modified */
-   unsigned long int    mtimensec; /**< The nano version of the timestamp when the file was modified */
-   unsigned long int    ctime;     /**< The timestamp when the file was created */
-   unsigned long int    ctimensec; /**< The nano version of the timestamp when the file was created */
+  unsigned long int dev; /**< The device where this file is located */
+  unsigned long int ino; /**< The inode */
+  unsigned int      mode; /**< The mode */
+  unsigned int      nlink; /**< The link number */
+  unsigned int      uid; /**< The owner user id */
+  unsigned int      gid; /**< The owner group id */
+  unsigned long int rdev; /**< The remote device */
+  unsigned long int size; /**< The file size in bytes */
+  unsigned long int blksize; /**< The block size in bytes */
+  unsigned long int blocks; /**< The number of blocks allocated */
+  unsigned long int atime; /**< The timestamp when the file was last accessed */
+  unsigned long int
+    atimensec; /**< The nano version of the timestamp when the file was last accessed */
+  unsigned long int mtime; /**< The timestamp when the file was last modified */
+  unsigned long int
+    mtimensec; /**< The nano version of the timestamp when the file was modified */
+  unsigned long int ctime; /**< The timestamp when the file was created */
+  unsigned long int
+    ctimensec; /**< The nano version of the timestamp when the file was created */
 };
 
 /**
@@ -230,9 +237,9 @@ struct _Eina_Stat
  */
 struct _Eina_File_Line
 {
-  const char *start;         /**< The start of the line */
-  const char *end;           /**< The end of the line */
-  unsigned int index;        /**< The line number */
+  const char        *start; /**< The start of the line */
+  const char        *end; /**< The end of the line */
+  unsigned int       index; /**< The line number */
   unsigned long long length; /**< The number of characters in the line */
 };
 
@@ -244,7 +251,6 @@ struct _Eina_File_Line
  *
  */
 #define EINA_FILE_DIR_LIST_CB(function) ((Eina_File_Dir_List_Cb)function)
-
 
 /**
  * @brief Lists all the files on the directory by calling the function for every file found.
@@ -265,9 +271,9 @@ struct _Eina_File_Line
  * @return #EFL_TRUE on success, otherwise #EFL_FALSE
  */
 EINA_API Efl_Bool eina_file_dir_list(const char           *dir,
-                                  Efl_Bool             recursive,
-                                  Eina_File_Dir_List_Cb cb,
-                                  void                 *data) EINA_ARG_NONNULL(1, 3);
+                                     Efl_Bool              recursive,
+                                     Eina_File_Dir_List_Cb cb,
+                                     void *data) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Splits a path according to the delimiter of the filesystem.
@@ -280,7 +286,8 @@ EINA_API Efl_Bool eina_file_dir_list(const char           *dir,
  * @return An array of the parts of the path to split
  *
  */
-EINA_API Eina_Array    *eina_file_split(char *path) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Array *eina_file_split(char *path) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Gets an iterator to list the content of a directory.
@@ -300,7 +307,8 @@ EINA_API Eina_Array    *eina_file_split(char *path) EFL_WARN_UNUSED_RESULT EINA_
  *
  * @see eina_file_direct_ls()
  */
-EINA_API Eina_Iterator *eina_file_ls(const char *dir) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Iterator *eina_file_ls(const char *dir) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Gets an iterator to list the content of a directory, with direct
@@ -327,7 +335,9 @@ EINA_API Eina_Iterator *eina_file_ls(const char *dir) EFL_WARN_UNUSED_RESULT EIN
  *
  * @see eina_file_direct_ls()
  */
-EINA_API Eina_Iterator *eina_file_stat_ls(const char *dir) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Iterator *
+eina_file_stat_ls(const char *dir) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Uses information provided by #Eina_Iterator of eina_file_stat_ls() or eina_file_direct_ls()
@@ -345,7 +355,10 @@ EINA_API Eina_Iterator *eina_file_stat_ls(const char *dir) EFL_WARN_UNUSED_RESUL
  *
  * @since 1.2
  */
-EINA_API int eina_file_statat(void *container, Eina_File_Direct_Info *info, Eina_Stat *buf) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1, 2, 3);
+EINA_API int eina_file_statat(void                  *container,
+                              Eina_File_Direct_Info *info,
+                              Eina_Stat             *buf) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Close all file descriptors that are open at or above the given fd
@@ -393,7 +406,8 @@ EINA_API void eina_file_close_from(int fd, int *except_fd);
  * @see eina_file_mkdtemp()
  * @since 1.8
  */
-EINA_API int eina_file_mkstemp(const char *templatename, Eina_Tmpstr **path) EINA_ARG_NONNULL(1);
+EINA_API int eina_file_mkstemp(const char *templatename, Eina_Tmpstr **path)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Generates and creates a uniquely named temporary directory from a template name.
@@ -417,7 +431,8 @@ EINA_API int eina_file_mkstemp(const char *templatename, Eina_Tmpstr **path) EIN
  * @see eina_file_mkstemp()
  * @since 1.8
  */
-EINA_API Efl_Bool eina_file_mkdtemp(const char *templatename, Eina_Tmpstr **path) EINA_ARG_NONNULL(1,2);
+EINA_API Efl_Bool eina_file_mkdtemp(const char   *templatename,
+                                    Eina_Tmpstr **path) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Gets an iterator to list the content of a directory, with direct
@@ -446,7 +461,9 @@ EINA_API Efl_Bool eina_file_mkdtemp(const char *templatename, Eina_Tmpstr **path
  *
  * @see eina_file_ls()
  */
-EINA_API Eina_Iterator *eina_file_direct_ls(const char *dir) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_Iterator *
+eina_file_direct_ls(const char *dir) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Sanitizes the file path.
@@ -470,13 +487,16 @@ EINA_API char *eina_file_path_sanitize(const char *path);
  *
  * @note If it returns #EFL_FALSE, it will stop the copy.
  */
-typedef Efl_Bool (*Eina_File_Copy_Progress)(void *data, unsigned long long done, unsigned long long total);
+typedef Efl_Bool (*Eina_File_Copy_Progress)(void              *data,
+                                            unsigned long long done,
+                                            unsigned long long total);
 
 /**
  * @typedef Eina_File_Copy_Flags
  * @brief Enumeration for a flag what to copy from file.
  */
-typedef enum {
+typedef enum
+{
   EINA_FILE_COPY_DATA       = 0,
   EINA_FILE_COPY_PERMISSION = (1 << 0),
   EINA_FILE_COPY_XATTR      = (1 << 1)
@@ -497,7 +517,11 @@ typedef enum {
  *
  * @note During the progress it may call back @p cb with the progress summary.
  */
-EINA_API Efl_Bool eina_file_copy(const char *src, const char *dst, Eina_File_Copy_Flags flags, Eina_File_Copy_Progress cb, const void *cb_data) EINA_ARG_NONNULL(1, 2);
+EINA_API Efl_Bool eina_file_copy(const char             *src,
+                                 const char             *dst,
+                                 Eina_File_Copy_Flags    flags,
+                                 Eina_File_Copy_Progress cb,
+                                 const void *cb_data) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Gets a read-only handler to a file.
@@ -512,7 +536,9 @@ EINA_API Efl_Bool eina_file_copy(const char *src, const char *dst, Eina_File_Cop
  *
  * @since 1.1
  */
-EINA_API Eina_File *eina_file_open(const char *name, Efl_Bool shared) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1) EINA_MALLOC;
+EINA_API Eina_File *eina_file_open(const char *name,
+                                   Efl_Bool    shared) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1) EINA_MALLOC;
 
 /**
  * @brief Creates a virtual file from a memory pointer.
@@ -525,8 +551,11 @@ EINA_API Eina_File *eina_file_open(const char *name, Efl_Bool shared) EFL_WARN_U
  *
  * @since 1.8
  */
-EINA_API Eina_File *
-eina_file_virtualize(const char *virtual_name, const void *data, unsigned long long length, Efl_Bool copy) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Eina_File *eina_file_virtualize(const char        *virtual_name,
+                                         const void        *data,
+                                         unsigned long long length,
+                                         Efl_Bool copy) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Tells if a file is a real file or only exists in memory.
@@ -536,8 +565,8 @@ eina_file_virtualize(const char *virtual_name, const void *data, unsigned long l
  *
  * @since 1.8
  */
-EINA_API Efl_Bool
-eina_file_virtual(Eina_File *file) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API Efl_Bool eina_file_virtual(Eina_File *file) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Refreshes file information.
@@ -561,7 +590,7 @@ EINA_API Efl_Bool eina_file_refresh(Eina_File *file);
  *
  * @since 1.8
  */
-EINA_API Eina_File * eina_file_dup(const Eina_File *file);
+EINA_API Eina_File *eina_file_dup(const Eina_File *file);
 
 /**
  * @brief Unrefs the file handler.
@@ -656,8 +685,10 @@ EINA_API void *eina_file_map_all(Eina_File *file, Eina_File_Populate rule);
  *
  * @since 1.1
  */
-EINA_API void *eina_file_map_new(Eina_File *file, Eina_File_Populate rule,
-                             unsigned long int offset, unsigned long int length);
+EINA_API void *eina_file_map_new(Eina_File         *file,
+                                 Eina_File_Populate rule,
+                                 unsigned long int  offset,
+                                 unsigned long int  length);
 
 /**
  * @brief Unrefs and unmaps memory if possible.
@@ -683,9 +714,11 @@ EINA_API void eina_file_map_free(Eina_File *file, void *map);
  *
  * @since 1.8
  */
-EINA_API void
-eina_file_map_populate(Eina_File *file, Eina_File_Populate rule, const void *map,
-                       unsigned long int offset, unsigned long int length);
+EINA_API void eina_file_map_populate(Eina_File         *file,
+                                     Eina_File_Populate rule,
+                                     const void        *map,
+                                     unsigned long int  offset,
+                                     unsigned long int  length);
 
 /**
  * @brief Maps line by line in the memory efficiently using an #Eina_Iterator.
@@ -729,12 +762,12 @@ EINA_API Efl_Bool eina_file_map_faulted(Eina_File *file, void *map);
  *
  * @since 1.16
  */
-static inline size_t eina_file_path_join_len(char *dst,
-                                             size_t size,
+static inline size_t eina_file_path_join_len(char       *dst,
+                                             size_t      size,
                                              const char *a,
-                                             size_t a_len,
+                                             size_t      a_len,
                                              const char *b,
-                                             size_t b_len);
+                                             size_t      b_len);
 
 /**
  * @brief Joins two paths of known length.
@@ -752,11 +785,8 @@ static inline size_t eina_file_path_join_len(char *dst,
  *
  * @since 1.16
  */
-static inline size_t eina_file_path_join(char *dst,
-                                         size_t size,
-                                         const char *a,
-                                         const char *b);
-
+static inline size_t
+eina_file_path_join(char *dst, size_t size, const char *a, const char *b);
 
 /**
  * @brief Unlinks file.
@@ -796,7 +826,7 @@ typedef unsigned int Eina_Statgen;
  * @brief Force the stat generation counter to tick over so any following i/o does real i/o and stat calls
  * @since 1.23
  */
-EINA_API void         eina_file_statgen_next(void);
+EINA_API void eina_file_statgen_next(void);
 
 /**
  * @brief Get the current stat generation counter value
@@ -809,13 +839,13 @@ EINA_API Eina_Statgen eina_file_statgen_get(void);
  * @brief Enable stat generation count optimiziing to only stat/do file i/o between generation counts changing
  * @since 1.23
  */
-EINA_API void         eina_file_statgen_enable(void);
+EINA_API void eina_file_statgen_enable(void);
 
 /**
  * @brief Disable stat generation count optimiziing to only stat/do file i/o between generation counts changing
  * @since 1.23
  */
-EINA_API void         eina_file_statgen_disable(void);
+EINA_API void eina_file_statgen_disable(void);
 
 /**
  * @}

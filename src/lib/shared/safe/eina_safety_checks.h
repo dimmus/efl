@@ -17,7 +17,7 @@
  */
 
 #ifndef EINA_SAFETY_CHECKS_H_
-#define EINA_SAFETY_CHECKS_H_
+#  define EINA_SAFETY_CHECKS_H_
 
 /**
  * @addtogroup Eina_Tools_Group Tools
@@ -84,16 +84,16 @@
  * @{
  */
 
-#include "shared_config.h"
-#include "eina_error.h"
+#  include "shared_config.h"
+#  include "eina_error.h"
 
 EINA_API extern Eina_Error EINA_ERROR_SAFETY_FAILED;
 
-#ifdef EINA_SAFETY_CHECKS
+#  ifdef EINA_SAFETY_CHECKS
 
-#include "eina_log.h"
+#    include "eina_log.h"
 
-# ifdef EFL_BETA_API_SUPPORT
+#    ifdef EFL_BETA_API_SUPPORT
 /**
  * Log entry-point called every time an eina safety check fails.
  *
@@ -104,13 +104,16 @@ EINA_API extern Eina_Error EINA_ERROR_SAFETY_FAILED;
  * @since 1.17
  * @internal
  */
-EINA_API void _eina_safety_error(const char *file, const char *func, int line, const char *str);
-#  define EINA_SAFETY_ERROR(msg) _eina_safety_error(__FILE__, __func__, __LINE__, msg)
-# else
-#  define EINA_SAFETY_ERROR(msg) EINA_LOG_ERR("%s", msg)
-# endif
+EINA_API void _eina_safety_error(const char *file,
+                                 const char *func,
+                                 int         line,
+                                 const char *str);
+#      define EINA_SAFETY_ERROR(msg) _eina_safety_error(__FILE__, __func__, __LINE__, msg)
+#    else
+#      define EINA_SAFETY_ERROR(msg) EINA_LOG_ERR("%s", msg)
+#    endif
 
-#define EINA_SAFETY_ON_NULL_RETURN(exp)                                   \
+#    define EINA_SAFETY_ON_NULL_RETURN(exp)                                   \
   do                                                                      \
     {                                                                     \
        if (EINA_UNLIKELY((exp) == NULL))                                  \
@@ -121,7 +124,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                     \
   while (0)
 
-#define EINA_SAFETY_ON_NULL_RETURN_VAL(exp, val)                          \
+#    define EINA_SAFETY_ON_NULL_RETURN_VAL(exp, val)                          \
   do                                                                      \
     {                                                                     \
        if (EINA_UNLIKELY((exp) == NULL))                                  \
@@ -132,7 +135,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                     \
   while (0)
 
-#define EINA_SAFETY_ON_NULL_GOTO(exp, label)                              \
+#    define EINA_SAFETY_ON_NULL_GOTO(exp, label)                              \
   do                                                                      \
     {                                                                     \
        if (EINA_UNLIKELY((exp) == NULL))                                  \
@@ -143,7 +146,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                     \
   while (0)
 
-#define EINA_SAFETY_ON_TRUE_RETURN(exp)                                   \
+#    define EINA_SAFETY_ON_TRUE_RETURN(exp)                                   \
   do                                                                      \
     {                                                                     \
        if (EINA_UNLIKELY(exp))                                            \
@@ -154,7 +157,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                     \
   while (0)
 
-#define EINA_SAFETY_ON_TRUE_RETURN_VAL(exp, val)                          \
+#    define EINA_SAFETY_ON_TRUE_RETURN_VAL(exp, val)                          \
   do                                                                      \
     {                                                                     \
        if (EINA_UNLIKELY(exp))                                            \
@@ -165,7 +168,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                     \
   while (0)
 
-#define EINA_SAFETY_ON_TRUE_GOTO(exp, label)                              \
+#    define EINA_SAFETY_ON_TRUE_GOTO(exp, label)                              \
   do                                                                      \
     {                                                                     \
        if (EINA_UNLIKELY(exp))                                            \
@@ -176,7 +179,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                     \
   while (0)
 
-#define EINA_SAFETY_ON_FALSE_RETURN(exp)                                   \
+#    define EINA_SAFETY_ON_FALSE_RETURN(exp)                                   \
   do                                                                       \
     {                                                                      \
        if (EINA_UNLIKELY(!(exp)))                                          \
@@ -187,7 +190,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                      \
   while (0)
 
-#define EINA_SAFETY_ON_FALSE_RETURN_VAL(exp, val)                          \
+#    define EINA_SAFETY_ON_FALSE_RETURN_VAL(exp, val)                          \
   do                                                                       \
     {                                                                      \
        if (EINA_UNLIKELY(!(exp)))                                          \
@@ -198,7 +201,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                      \
   while (0)
 
-#define EINA_SAFETY_ON_FALSE_GOTO(exp, label)                              \
+#    define EINA_SAFETY_ON_FALSE_GOTO(exp, label)                              \
   do                                                                       \
     {                                                                      \
        if (EINA_UNLIKELY(!(exp)))                                          \
@@ -209,20 +212,20 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
     }                                                                      \
   while (0)
 
-#ifdef EINA_ARG_NONNULL
+#    ifdef EINA_ARG_NONNULL
 /* make EINA_ARG_NONNULL void so GCC does not optimize safety checks */
-#undef EINA_ARG_NONNULL
-#define EINA_ARG_NONNULL(...)
-#endif
+#      undef EINA_ARG_NONNULL
+#      define EINA_ARG_NONNULL(...)
+#    endif
 
-#else /* no safety checks */
+#  else /* no safety checks */
 
 /**
  * @def EINA_SAFETY_ON_NULL_RETURN
  * @brief The macro doesn't do anything unless EINA_SAFETY_CHECKS is defined.
  * @param[in] exp The expression to be evaluated.
  */
-#define EINA_SAFETY_ON_NULL_RETURN(exp) \
+#    define EINA_SAFETY_ON_NULL_RETURN(exp) \
   do { (void)(!(exp)); } while (0)
 
 /**
@@ -231,7 +234,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @param[in] exp The expression to be evaluated.
  * @param[in] val The value to be returned.
  */
-#define EINA_SAFETY_ON_NULL_RETURN_VAL(exp, val) \
+#    define EINA_SAFETY_ON_NULL_RETURN_VAL(exp, val) \
   do { if (0 && !(exp)) { (void)val; } } while (0)
 
 /**
@@ -240,7 +243,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @param[in] exp The expression to be evaluated.
  * @param[in] label The label to jump to.
  */
-#define EINA_SAFETY_ON_NULL_GOTO(exp, label) \
+#    define EINA_SAFETY_ON_NULL_GOTO(exp, label) \
   do { if (0 && (exp) == NULL) { goto label; } } while (0)
 
 /**
@@ -248,7 +251,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @brief The macro doesn't do anything unless EINA_SAFETY_CHECKS is defined.
  * @param[in] exp The expression to be evaluated.
  */
-#define EINA_SAFETY_ON_TRUE_RETURN(exp) \
+#    define EINA_SAFETY_ON_TRUE_RETURN(exp) \
   do { (void)(exp); } while (0)
 
 /**
@@ -257,7 +260,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @param[in] exp The expression to be evaluated.
  * @param[in] val The value to be returned.
  */
-#define EINA_SAFETY_ON_TRUE_RETURN_VAL(exp, val) \
+#    define EINA_SAFETY_ON_TRUE_RETURN_VAL(exp, val) \
   do { if (0 && (exp)) { (void)val; } } while (0)
 
 /**
@@ -266,7 +269,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @param[in] exp The expression to be evaluated.
  * @param[in] label The label to jump to.
  */
-#define EINA_SAFETY_ON_TRUE_GOTO(exp, label) \
+#    define EINA_SAFETY_ON_TRUE_GOTO(exp, label) \
   do { if (0 && (exp)) { goto label; } } while (0)
 
 /**
@@ -274,7 +277,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @brief The macro doesn't do anything unless EINA_SAFETY_CHECKS is defined.
  * @param[in] exp The expression to be evaluated.
  */
-#define EINA_SAFETY_ON_FALSE_RETURN(exp) \
+#    define EINA_SAFETY_ON_FALSE_RETURN(exp) \
   do { (void)(!(exp)); } while (0)
 
 /**
@@ -283,7 +286,7 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @param[in] exp The expression to be evaluated.
  * @param[in] val The value to be returned.
  */
-#define EINA_SAFETY_ON_FALSE_RETURN_VAL(exp, val) \
+#    define EINA_SAFETY_ON_FALSE_RETURN_VAL(exp, val) \
   do { if (0 && !(exp)) { (void)val; } } while (0)
 
 /**
@@ -292,10 +295,10 @@ EINA_API void _eina_safety_error(const char *file, const char *func, int line, c
  * @param[in] exp The expression to be evaluated.
  * @param[in] label The label to jump to.
  */
-#define EINA_SAFETY_ON_FALSE_GOTO(exp, label) \
+#    define EINA_SAFETY_ON_FALSE_GOTO(exp, label) \
   do { if (0 && !(exp)) { goto label; } } while (0)
 
-#endif /* safety checks macros */
+#  endif /* safety checks macros */
 #endif /* EINA_SAFETY_CHECKS_H_ */
 
 /**

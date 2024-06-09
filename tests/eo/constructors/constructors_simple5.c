@@ -11,20 +11,20 @@
 static void
 _destructor(Eo *obj, void *class_data EFL_UNUSED, va_list *list EFL_UNUSED)
 {
-    (void)obj;
+  (void)obj;
 }
 
 static Efl_Bool
 _class_initializer(Efl_Class *klass)
 {
-    EFL_OPS_DEFINE(ops, EFL_OBJECT_OP_FUNC(efl_destructor, _destructor), );
+  EFL_OPS_DEFINE(ops, EFL_OBJECT_OP_FUNC(efl_destructor, _destructor), );
 
-    return efl_class_functions_set(klass, &ops, NULL);
+  return efl_class_functions_set(klass, &ops, NULL);
 }
 
 static const Efl_Class_Description class_desc = {
-    EO_VERSION, "Simple5", EFL_CLASS_TYPE_REGULAR, 0, _class_initializer,
-    NULL,       NULL
+  EO_VERSION, "Simple5", EFL_CLASS_TYPE_REGULAR, 0, _class_initializer,
+  NULL,       NULL
 };
 
 EFL_DEFINE_CLASS(simple5_class_get, &class_desc, EO_CLASS, NULL);

@@ -5,30 +5,30 @@
 #ifdef _WIN32
 // There is no support for quicklaunch on windows, so no needs
 // to export the efl_main symbol
-# define EAPI_MAIN
-#else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EAPI_MAIN __attribute__ ((visibility("default")))
-#  else
-#   define EAPI_MAIN
-#  endif
-# else
 #  define EAPI_MAIN
-# endif
+#else
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EAPI_MAIN __attribute__ ((visibility("default")))
+#    else
+#      define EAPI_MAIN
+#    endif
+#  else
+#    define EAPI_MAIN
+#  endif
 #endif /* ! _WIN32 */
 
 #ifdef __EFL_UI_IS_REQUIRED
-# define __EFL_UI(...) __VA_ARGS__
-# define __EFL_UI_IS_DEFINED
+#  define __EFL_UI(...) __VA_ARGS__
+#  define __EFL_UI_IS_DEFINED
 #else
-# define __EFL_UI(...)
+#  define __EFL_UI(...)
 #endif
 
 #ifdef __EFL_NET_IS_REQUIRED
-# define __EFL_NET(...) __VA_ARGS__
+#  define __EFL_NET(...) __VA_ARGS__
 #else
-# define __EFL_NET(...)
+#  define __EFL_NET(...)
 #endif
 
 // This file is designed to be included again and again
@@ -44,27 +44,27 @@
 #undef EFL_MAIN_EX
 
 #ifdef EFL_VERSION_MICRO
-# define _EFL_VERSION_MICRO EFL_VERSION_MICRO
+#  define _EFL_VERSION_MICRO EFL_VERSION_MICRO
 #else
-# define _EFL_VERSION_MICRO 0
+#  define _EFL_VERSION_MICRO 0
 #endif
 
 #ifdef EFL_VERSION_REVISION
-# define _EFL_VERSION_REVISION EFL_VERSION_REVISION
+#  define _EFL_VERSION_REVISION EFL_VERSION_REVISION
 #else
-# define _EFL_VERSION_REVISION 0
+#  define _EFL_VERSION_REVISION 0
 #endif
 
 #ifdef EFL_VERSION_FLAVOR
-# define _EFL_VERSION_FLAVOR EFL_VERSION_FLAVOR
+#  define _EFL_VERSION_FLAVOR EFL_VERSION_FLAVOR
 #else
-# define _EFL_VERSION_FLAVOR NULL
+#  define _EFL_VERSION_FLAVOR NULL
 #endif
 
 #ifdef EFL_BUILD_ID
-# define _EFL_BUILD_ID EFL_BUILD_ID
+#  define _EFL_BUILD_ID EFL_BUILD_ID
 #else
-# define _EFL_BUILD_ID NULL
+#  define _EFL_BUILD_ID NULL
 #endif
 
 #define __EFL_MAIN_CONSTRUCTOR                  \

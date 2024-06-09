@@ -33,18 +33,18 @@
 
 typedef struct _Eina_Value_Util_Struct_Desc
 {
-    Eina_Value_Struct_Desc base;
-    int                    refcount;
+  Eina_Value_Struct_Desc base;
+  int                    refcount;
 } Eina_Value_Util_Struct_Desc;
 
 static void *
 _ops_malloc(const Eina_Value_Struct_Operations *ops EFL_UNUSED,
             const Eina_Value_Struct_Desc           *desc)
 {
-    Eina_Value_Util_Struct_Desc *edesc = (Eina_Value_Util_Struct_Desc *)desc;
-    edesc->refcount++;
+  Eina_Value_Util_Struct_Desc *edesc = (Eina_Value_Util_Struct_Desc *)desc;
+  edesc->refcount++;
    //DBG("%p refcount=%d", edesc, edesc->refcount);
-    return malloc(desc->size);
+  return malloc(desc->size);
 }
 
 static void
@@ -52,51 +52,46 @@ _ops_free(const Eina_Value_Struct_Operations *ops EFL_UNUSED,
           const Eina_Value_Struct_Desc           *desc,
           void                                   *memory)
 {
-    Eina_Value_Util_Struct_Desc *edesc = (Eina_Value_Util_Struct_Desc *)desc;
-    edesc->refcount--;
-    free(memory);
+  Eina_Value_Util_Struct_Desc *edesc = (Eina_Value_Util_Struct_Desc *)desc;
+  edesc->refcount--;
+  free(memory);
    //DBG("%p refcount=%d", edesc, edesc->refcount);
-    if (edesc->refcount <= 0)
-    {
-        unsigned i;
-        for (i = 0; i < edesc->base.member_count; i++)
-            eina_stringshare_del((char *)edesc->base.members[i].name);
-        free((Eina_Value_Struct_Member *)edesc->base.members);
-        free(edesc);
-    }
+  if (edesc->refcount <= 0)
+  {
+    unsigned i;
+    for (i = 0; i < edesc->base.member_count; i++)
+      eina_stringshare_del((char *)edesc->base.members[i].name);
+    free((Eina_Value_Struct_Member *)edesc->base.members);
+    free(edesc);
+  }
 }
 
 static Eina_Value_Struct_Operations operations = {
-    EINA_VALUE_STRUCT_OPERATIONS_VERSION,
-    _ops_malloc,
-    _ops_free,
-    NULL,
-    NULL,
-    NULL
+  EINA_VALUE_STRUCT_OPERATIONS_VERSION, _ops_malloc, _ops_free, NULL, NULL, NULL
 };
 
 EINA_API Eina_Value_Struct_Desc *
 eina_value_util_struct_desc_new(void)
 {
-    Eina_Value_Util_Struct_Desc *st_desc;
+  Eina_Value_Util_Struct_Desc *st_desc;
 
-    st_desc = calloc(1, sizeof(Eina_Value_Util_Struct_Desc));
-    EINA_SAFETY_ON_NULL_RETURN_VAL(st_desc, NULL);
-    st_desc->base.version = EINA_VALUE_STRUCT_DESC_VERSION;
-    st_desc->base.ops     = &operations;
-    return (Eina_Value_Struct_Desc *)st_desc;
+  st_desc = calloc(1, sizeof(Eina_Value_Util_Struct_Desc));
+  EINA_SAFETY_ON_NULL_RETURN_VAL(st_desc, NULL);
+  st_desc->base.version = EINA_VALUE_STRUCT_DESC_VERSION;
+  st_desc->base.ops     = &operations;
+  return (Eina_Value_Struct_Desc *)st_desc;
 }
 
 EINA_API Eina_Value *
 eina_value_util_time_string_new(const char *timestr)
 {
-    Eina_Value *v;
-    struct tm   tm;
-    time_t      t;
+  Eina_Value *v;
+  struct tm   tm;
+  time_t      t;
 
-    if (!strptime(timestr, "%Y%m%dT%H:%M:%S", &tm)) return NULL;
-    t = mktime(&tm);
-    v = eina_value_new(EINA_VALUE_TYPE_TIMESTAMP);
-    if (v) eina_value_set(v, t);
-    return v;
+  if (!strptime(timestr, "%Y%m%dT%H:%M:%S", &tm)) return NULL;
+  t = mktime(&tm);
+  v = eina_value_new(EINA_VALUE_TYPE_TIMESTAMP);
+  if (v) eina_value_set(v, t);
+  return v;
 }

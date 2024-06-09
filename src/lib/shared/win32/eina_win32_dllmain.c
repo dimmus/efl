@@ -11,7 +11,7 @@ void free_thread(void);
 BOOL WINAPI
 DllMain(HINSTANCE inst EFL_UNUSED, WORD reason, PVOID reserved EFL_UNUSED)
 {
-    if (DLL_THREAD_DETACH == reason) free_thread();
+  if (DLL_THREAD_DETACH == reason) free_thread();
 
-    return TRUE;
+  return TRUE;
 }

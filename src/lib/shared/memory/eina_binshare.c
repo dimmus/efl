@@ -86,31 +86,31 @@ static const char  EINA_MAGIC_BINSHARE_NODE_STR[] = "Eina Binshare Node";
 Efl_Bool
 eina_binshare_init(void)
 {
-    Efl_Bool ret;
+  Efl_Bool ret;
+
+  if (_eina_share_binshare_log_dom < 0)
+  {
+    _eina_share_binshare_log_dom =
+      eina_log_domain_register("eina_binshare", EINA_LOG_COLOR_DEFAULT);
 
     if (_eina_share_binshare_log_dom < 0)
     {
-        _eina_share_binshare_log_dom =
-            eina_log_domain_register("eina_binshare", EINA_LOG_COLOR_DEFAULT);
-
-        if (_eina_share_binshare_log_dom < 0)
-        {
-            EINA_LOG_ERR("Could not register log domain: eina_binshare");
-            return EFL_FALSE;
-        }
+      EINA_LOG_ERR("Could not register log domain: eina_binshare");
+      return EFL_FALSE;
     }
+  }
 
-    ret = eina_share_common_init(&binshare_share,
-                                 EINA_MAGIC_BINSHARE_NODE,
-                                 EINA_MAGIC_BINSHARE_NODE_STR);
+  ret = eina_share_common_init(&binshare_share,
+                               EINA_MAGIC_BINSHARE_NODE,
+                               EINA_MAGIC_BINSHARE_NODE_STR);
 
-    if (!ret)
-    {
-        eina_log_domain_unregister(_eina_share_binshare_log_dom);
-        _eina_share_binshare_log_dom = -1;
-    }
+  if (!ret)
+  {
+    eina_log_domain_unregister(_eina_share_binshare_log_dom);
+    _eina_share_binshare_log_dom = -1;
+  }
 
-    return ret;
+  return ret;
 }
 
 /**
@@ -127,16 +127,16 @@ eina_binshare_init(void)
 Efl_Bool
 eina_binshare_shutdown(void)
 {
-    Efl_Bool ret;
-    ret = eina_share_common_shutdown(&binshare_share);
+  Efl_Bool ret;
+  ret = eina_share_common_shutdown(&binshare_share);
 
-    if (_eina_share_binshare_log_dom > 0)
-    {
-        eina_log_domain_unregister(_eina_share_binshare_log_dom);
-        _eina_share_binshare_log_dom = -1;
-    }
+  if (_eina_share_binshare_log_dom > 0)
+  {
+    eina_log_domain_unregister(_eina_share_binshare_log_dom);
+    _eina_share_binshare_log_dom = -1;
+  }
 
-    return ret;
+  return ret;
 }
 
 /*============================================================================*
@@ -146,35 +146,35 @@ eina_binshare_shutdown(void)
 EINA_API void
 eina_binshare_del(const void *obj)
 {
-    if (!obj) return;
+  if (!obj) return;
 
-    if (!eina_share_common_del(binshare_share, obj))
-        CRI("EEEK trying to del non-shared binshare %p", obj);
+  if (!eina_share_common_del(binshare_share, obj))
+    CRI("EEEK trying to del non-shared binshare %p", obj);
 }
 
 EINA_API const void *
 eina_binshare_add_length(const void *obj, unsigned int olen)
 {
-    return eina_share_common_add_length(binshare_share,
-                                        obj,
-                                        (olen) * sizeof(char),
-                                        0);
+  return eina_share_common_add_length(binshare_share,
+                                      obj,
+                                      (olen) * sizeof(char),
+                                      0);
 }
 
 EINA_API const void *
 eina_binshare_ref(const void *obj)
 {
-    return eina_share_common_ref(binshare_share, obj);
+  return eina_share_common_ref(binshare_share, obj);
 }
 
 EINA_API int
 eina_binshare_length(const void *obj)
 {
-    return eina_share_common_length(binshare_share, obj);
+  return eina_share_common_length(binshare_share, obj);
 }
 
 EINA_API void
 eina_binshare_dump(void)
 {
-    eina_share_common_dump(binshare_share, NULL, 0);
+  eina_share_common_dump(binshare_share, NULL, 0);
 }

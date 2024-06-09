@@ -39,42 +39,42 @@
 static void *
 _thread_run(void *arg EFL_UNUSED, Eina_Thread tid EFL_UNUSED)
 {
-    int niceval = getpriority(PRIO_PROCESS, 0);
-    int niceval2;
-    eina_sched_prio_drop();
+  int niceval = getpriority(PRIO_PROCESS, 0);
+  int niceval2;
+  eina_sched_prio_drop();
 
-    niceval2 = getpriority(PRIO_PROCESS, 0);
-    if (niceval + 5 >= 19) ck_assert_int_eq(niceval2, 19);
-    else ck_assert_int_eq(niceval2, (niceval + 5));
+  niceval2 = getpriority(PRIO_PROCESS, 0);
+  if (niceval + 5 >= 19) ck_assert_int_eq(niceval2, 19);
+  else ck_assert_int_eq(niceval2, (niceval + 5));
 
-    return NULL;
+  return NULL;
 }
 
 EFL_START_TEST(efl_shared_test_sched_prio_drop)
 {
-    int         niceval = getpriority(PRIO_PROCESS, 0);
-    int         niceval2;
-    Eina_Thread tid;
-    Efl_Bool    r;
+  int         niceval = getpriority(PRIO_PROCESS, 0);
+  int         niceval2;
+  Eina_Thread tid;
+  Efl_Bool    r;
 
-    r = eina_thread_create(&tid, EINA_THREAD_NORMAL, -1, _thread_run, NULL);
-    fail_unless(r);
+  r = eina_thread_create(&tid, EINA_THREAD_NORMAL, -1, _thread_run, NULL);
+  fail_unless(r);
 
-    niceval2 = getpriority(PRIO_PROCESS, 0);
+  niceval2 = getpriority(PRIO_PROCESS, 0);
     /* niceness of main thread should not have changed */
-    ck_assert_int_eq(niceval2, niceval);
+  ck_assert_int_eq(niceval2, niceval);
 
-    eina_thread_join(tid);
+  eina_thread_join(tid);
     /* niceness of main thread should not have changed */
-    ck_assert_int_eq(niceval2, niceval);
+  ck_assert_int_eq(niceval2, niceval);
 }
 
 EFL_END_TEST
 #else
 EFL_START_TEST(efl_shared_test_sched_prio_drop)
 {
-    fprintf(stderr,
-            "scheduler priority is not supported by your configuration.\n");
+  fprintf(stderr,
+          "scheduler priority is not supported by your configuration.\n");
 }
 
 EFL_END_TEST
@@ -83,5 +83,5 @@ EFL_END_TEST
 void
 eina_test_sched(TCase *tc)
 {
-    tcase_add_test(tc, efl_shared_test_sched_prio_drop);
+  tcase_add_test(tc, efl_shared_test_sched_prio_drop);
 }

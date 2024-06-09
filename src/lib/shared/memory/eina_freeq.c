@@ -224,32 +224,31 @@ typedef struct _Eina_FreeQ_Block Eina_FreeQ_Block;
 // a lot or not in keeping size down in addition to delta + leb128.
 struct _Eina_FreeQ_Item
 {
-    void *ptr;
-    void (*free_func)(void *ptr);
-    size_t size;
+  void *ptr;
+  void (*free_func)(void *ptr);
+  size_t size;
 };
 
 struct _Eina_FreeQ_Block
 {
-    int               start;
-    int               end;
-    Eina_FreeQ_Block *next;
-    Eina_FreeQ_Item   items[ITEM_BLOCK_COUNT];
+  int               start;
+  int               end;
+  Eina_FreeQ_Block *next;
+  Eina_FreeQ_Item   items[ITEM_BLOCK_COUNT];
 };
 
 struct _Eina_FreeQ
 {
-    Eina_Lock
-           lock;  // recursive lock, unused for postponed queues (thread-local)
-    int    count;  // number of item slots used
-    int    count_max;  // maximum number of slots allowed to be used or -1
-    size_t mem_max;  // the maximum amount of memory allowed to be used
-    size_t mem_total;  // current total memory known about in the queue
-    Eina_FreeQ_Block *blocks;  // the list of blocks of free items
-    Eina_FreeQ_Block *block_last;  // the last block to append items to
-    Efl_Bool          bypass;  // 0 if not to bypass, 1 if we should bypass
-    Efl_Bool postponed;  // 1 if postponed type of freeq (eg. temp strings)
-    Efl_Bool unlocked;  // 0 by default, 1 if thread-local (lock not used)
+  Eina_Lock lock;  // recursive lock, unused for postponed queues (thread-local)
+  int       count;  // number of item slots used
+  int       count_max;  // maximum number of slots allowed to be used or -1
+  size_t    mem_max;  // the maximum amount of memory allowed to be used
+  size_t    mem_total;  // current total memory known about in the queue
+  Eina_FreeQ_Block *blocks;  // the list of blocks of free items
+  Eina_FreeQ_Block *block_last;  // the last block to append items to
+  Efl_Bool          bypass;  // 0 if not to bypass, 1 if we should bypass
+  Efl_Bool postponed;  // 1 if postponed type of freeq (eg. temp strings)
+  Efl_Bool unlocked;  // 0 by default, 1 if thread-local (lock not used)
 };
 
 // ========================================================================= //
@@ -300,89 +299,88 @@ static int            _max_seen = 0;
 static inline void
 _eina_freeq_fill_do(void *ptr, size_t size)
 {
-    if (ptr) memset(ptr, _eina_freeq_fillpat_val, size);
+  if (ptr) memset(ptr, _eina_freeq_fillpat_val, size);
 }
 
 static inline void
 _eina_freeq_freed_fill_do(void *ptr, size_t size)
 {
-    if (_eina_freeq_fillpat_freed_val == 0) return;
-    if (ptr) memset(ptr, _eina_freeq_fillpat_freed_val, size);
+  if (_eina_freeq_fillpat_freed_val == 0) return;
+  if (ptr) memset(ptr, _eina_freeq_fillpat_freed_val, size);
 }
 
 static void
 _eina_freeq_fill_check(void *ptr, void (*free_func)(void *ptr), size_t size)
 {
-    unsigned char *p0 = ptr, *p = p0, *pe = p + size;
-    for (; p < pe; p++)
-    {
-        if (*p != _eina_freeq_fillpat_val) goto err;
-    }
-    return;
+  unsigned char *p0 = ptr, *p = p0, *pe = p + size;
+  for (; p < pe; p++)
+  {
+    if (*p != _eina_freeq_fillpat_val) goto err;
+  }
+  return;
 err:
-    EINA_LOG_ERR(
-        "Pointer %p size %lu freed by %p has fill error %x != %x @ %lu",
-        p0,
-        (unsigned long)size,
-        free_func,
-        (unsigned int)*p,
-        (unsigned int)_eina_freeq_fillpat_val,
-        (unsigned long)(p - p0));
+  EINA_LOG_ERR("Pointer %p size %lu freed by %p has fill error %x != %x @ %lu",
+               p0,
+               (unsigned long)size,
+               free_func,
+               (unsigned int)*p,
+               (unsigned int)_eina_freeq_fillpat_val,
+               (unsigned long)(p - p0));
 }
 
 static void
 _eina_freeq_free_do(void *ptr, void (*free_func)(void *ptr), size_t size)
 {
-    if (EINA_LIKELY((size > 0) && (size < _eina_freeq_fillpat_max)))
-    {
-        _eina_freeq_fill_check(ptr, free_func, size);
-        _eina_freeq_freed_fill_do(ptr, size);
-    }
-    free_func(ptr);
-    return;
+  if (EINA_LIKELY((size > 0) && (size < _eina_freeq_fillpat_max)))
+  {
+    _eina_freeq_fill_check(ptr, free_func, size);
+    _eina_freeq_freed_fill_do(ptr, size);
+  }
+  free_func(ptr);
+  return;
 }
 
 static Efl_Bool
 _eina_freeq_block_append(Eina_FreeQ *fq)
 {
-    Eina_FreeQ_Block *fb = malloc(sizeof(Eina_FreeQ_Block));
-    if (!fb) return EFL_FALSE;
-    fb->start = 0;
-    fb->end   = 0;
-    fb->next  = NULL;
-    if (!fq->blocks) fq->blocks = fb;
-    else fq->block_last->next = fb;
-    fq->block_last = fb;
-    return EFL_TRUE;
+  Eina_FreeQ_Block *fb = malloc(sizeof(Eina_FreeQ_Block));
+  if (!fb) return EFL_FALSE;
+  fb->start = 0;
+  fb->end   = 0;
+  fb->next  = NULL;
+  if (!fq->blocks) fq->blocks = fb;
+  else fq->block_last->next = fb;
+  fq->block_last = fb;
+  return EFL_TRUE;
 }
 
 static void
 _eina_freeq_process(Eina_FreeQ *fq)
 {
-    Eina_FreeQ_Block *fb = fq->blocks;
-    if (!fb) return;
-    _eina_freeq_free_do(fb->items[fb->start].ptr,
-                        fb->items[fb->start].free_func,
-                        fb->items[fb->start].size);
-    fq->mem_total -= fb->items[fb->start].size;
-    fb->start++;
-    fq->count--;
-    if (fb->start == fb->end)
-    {
-        fq->blocks = fb->next;
-        if (!fq->blocks) fq->block_last = NULL;
-        free(fb);
-    }
+  Eina_FreeQ_Block *fb = fq->blocks;
+  if (!fb) return;
+  _eina_freeq_free_do(fb->items[fb->start].ptr,
+                      fb->items[fb->start].free_func,
+                      fb->items[fb->start].size);
+  fq->mem_total -= fb->items[fb->start].size;
+  fb->start++;
+  fq->count--;
+  if (fb->start == fb->end)
+  {
+    fq->blocks = fb->next;
+    if (!fq->blocks) fq->block_last = NULL;
+    free(fb);
+  }
 }
 
 static void
 _eina_freeq_flush_nolock(Eina_FreeQ *fq)
 {
-    if (fq->postponed) return;
+  if (fq->postponed) return;
 
-    FQMAX(fq);
-    while ((fq->count > fq->count_max) || (fq->mem_total > fq->mem_max))
-        _eina_freeq_process(fq);
+  FQMAX(fq);
+  while ((fq->count > fq->count_max) || (fq->mem_total > fq->mem_max))
+    _eina_freeq_process(fq);
 }
 
 // ========================================================================= //
@@ -390,193 +388,193 @@ _eina_freeq_flush_nolock(Eina_FreeQ *fq)
 static Eina_FreeQ *
 _eina_freeq_new_default(void)
 {
-    Eina_FreeQ *fq;
+  Eina_FreeQ *fq;
 
-    if (EINA_UNLIKELY(_eina_freeq_bypass == -1))
+  if (EINA_UNLIKELY(_eina_freeq_bypass == -1))
+  {
+    const char *s;
+    int         v;
+
+    s = getenv("EINA_FREEQ_BYPASS");
+    if (s)
     {
-        const char *s;
-        int         v;
-
-        s = getenv("EINA_FREEQ_BYPASS");
-        if (s)
-        {
-            v = atoi(s);
-            if (v == 0) _eina_freeq_bypass = 0;
-            else _eina_freeq_bypass = 1;
-        }
-        if (_eina_freeq_bypass == -1)
-        {
-#ifdef HAVE_VALGRIND
-            if (RUNNING_ON_VALGRIND) _eina_freeq_bypass = 1;
-            else
-#endif
-                _eina_freeq_bypass = 0;
-        }
-        s = getenv("EINA_FREEQ_FILL_MAX");
-        if (s) _eina_freeq_fillpat_max = atoi(s);
-        s = getenv("EINA_FREEQ_TOTAL_MAX");
-        if (s) _eina_freeq_total_max = atoi(s);
-        s = getenv("EINA_FREEQ_MEM_MAX");
-        if (s) _eina_freeq_mem_max = atoi(s) * 1024;
-        s = getenv("EINA_FREEQ_FILL");
-        if (s) _eina_freeq_fillpat_val = atoi(s);
-        s = getenv("EINA_FREEQ_FILL_FREED");
-        if (s) _eina_freeq_fillpat_freed_val = atoi(s);
+      v = atoi(s);
+      if (v == 0) _eina_freeq_bypass = 0;
+      else _eina_freeq_bypass = 1;
     }
-    fq = calloc(1, sizeof(Eina_FreeQ));
-    if (!fq) return NULL;
-    eina_lock_recursive_new(&(fq->lock));
-    fq->count_max = _eina_freeq_total_max;
-    fq->mem_max   = _eina_freeq_mem_max;
-    fq->bypass    = _eina_freeq_bypass;
-    return fq;
+    if (_eina_freeq_bypass == -1)
+    {
+#ifdef HAVE_VALGRIND
+      if (RUNNING_ON_VALGRIND) _eina_freeq_bypass = 1;
+      else
+#endif
+        _eina_freeq_bypass = 0;
+    }
+    s = getenv("EINA_FREEQ_FILL_MAX");
+    if (s) _eina_freeq_fillpat_max = atoi(s);
+    s = getenv("EINA_FREEQ_TOTAL_MAX");
+    if (s) _eina_freeq_total_max = atoi(s);
+    s = getenv("EINA_FREEQ_MEM_MAX");
+    if (s) _eina_freeq_mem_max = atoi(s) * 1024;
+    s = getenv("EINA_FREEQ_FILL");
+    if (s) _eina_freeq_fillpat_val = atoi(s);
+    s = getenv("EINA_FREEQ_FILL_FREED");
+    if (s) _eina_freeq_fillpat_freed_val = atoi(s);
+  }
+  fq = calloc(1, sizeof(Eina_FreeQ));
+  if (!fq) return NULL;
+  eina_lock_recursive_new(&(fq->lock));
+  fq->count_max = _eina_freeq_total_max;
+  fq->mem_max   = _eina_freeq_mem_max;
+  fq->bypass    = _eina_freeq_bypass;
+  return fq;
 }
 
 static Eina_FreeQ *
 _eina_freeq_new_postponed(void)
 {
-    Eina_FreeQ *fq;
+  Eina_FreeQ *fq;
 
-    fq = calloc(1, sizeof(*fq));
-    if (!fq) return NULL;
-    fq->mem_max   = 0;
-    fq->count_max = -1;
-    fq->postponed = EFL_TRUE;
-    fq->unlocked  = EFL_TRUE;
-    return fq;
+  fq = calloc(1, sizeof(*fq));
+  if (!fq) return NULL;
+  fq->mem_max   = 0;
+  fq->count_max = -1;
+  fq->postponed = EFL_TRUE;
+  fq->unlocked  = EFL_TRUE;
+  return fq;
 }
 
 EINA_API Eina_FreeQ *
 eina_freeq_new(Eina_FreeQ_Type type)
 {
-    switch (type)
-    {
-        case EINA_FREEQ_DEFAULT:
-            return _eina_freeq_new_default();
-        case EINA_FREEQ_POSTPONED:
-            return _eina_freeq_new_postponed();
-        default:
-            return NULL;
-    }
+  switch (type)
+  {
+    case EINA_FREEQ_DEFAULT:
+      return _eina_freeq_new_default();
+    case EINA_FREEQ_POSTPONED:
+      return _eina_freeq_new_postponed();
+    default:
+      return NULL;
+  }
 }
 
 EINA_API void
 eina_freeq_free(Eina_FreeQ *fq)
 {
-    if (!fq) return;
-    if (fq == _eina_freeq_main) _eina_freeq_main = NULL;
-    eina_freeq_clear(fq);
-    if (!fq->unlocked) eina_lock_free(&(fq->lock));
-    free(fq);
+  if (!fq) return;
+  if (fq == _eina_freeq_main) _eina_freeq_main = NULL;
+  eina_freeq_clear(fq);
+  if (!fq->unlocked) eina_lock_free(&(fq->lock));
+  free(fq);
 }
 
 EINA_API Eina_FreeQ_Type
 eina_freeq_type_get(Eina_FreeQ *fq)
 {
-    if (fq && fq->postponed) return EINA_FREEQ_POSTPONED;
-    return EINA_FREEQ_DEFAULT;
+  if (fq && fq->postponed) return EINA_FREEQ_POSTPONED;
+  return EINA_FREEQ_DEFAULT;
 }
 
 void
 eina_freeq_main_set(Eina_FreeQ *fq)
 {
-    if (!fq) return;
-    _eina_freeq_main = fq;
+  if (!fq) return;
+  _eina_freeq_main = fq;
 }
 
 EINA_API Eina_FreeQ *
 eina_freeq_main_get(void)
 {
-    return _eina_freeq_main;
+  return _eina_freeq_main;
 }
 
 EINA_API void
 eina_freeq_count_max_set(Eina_FreeQ *fq, int count)
 {
-    if (!fq) return;
-    if (fq->postponed) return;
-    if (count < 0) count = -1;
-    LOCK_FQ(fq);
-    fq->bypass    = 0;
-    fq->count_max = count;
-    _eina_freeq_flush_nolock(fq);
-    UNLOCK_FQ(fq);
+  if (!fq) return;
+  if (fq->postponed) return;
+  if (count < 0) count = -1;
+  LOCK_FQ(fq);
+  fq->bypass    = 0;
+  fq->count_max = count;
+  _eina_freeq_flush_nolock(fq);
+  UNLOCK_FQ(fq);
 }
 
 EINA_API int
 eina_freeq_count_max_get(Eina_FreeQ *fq)
 {
-    int count;
+  int count;
 
-    if (!fq) return 0;
-    LOCK_FQ(fq);
-    if (fq->bypass) count = 0;
-    else count = fq->count_max;
-    UNLOCK_FQ(fq);
-    return count;
+  if (!fq) return 0;
+  LOCK_FQ(fq);
+  if (fq->bypass) count = 0;
+  else count = fq->count_max;
+  UNLOCK_FQ(fq);
+  return count;
 }
 
 EINA_API void
 eina_freeq_mem_max_set(Eina_FreeQ *fq, size_t mem)
 {
-    if (!fq) return;
-    if (fq->postponed) return;
-    LOCK_FQ(fq);
-    fq->bypass  = 0;
-    fq->mem_max = mem;
-    _eina_freeq_flush_nolock(fq);
-    UNLOCK_FQ(fq);
+  if (!fq) return;
+  if (fq->postponed) return;
+  LOCK_FQ(fq);
+  fq->bypass  = 0;
+  fq->mem_max = mem;
+  _eina_freeq_flush_nolock(fq);
+  UNLOCK_FQ(fq);
 }
 
 EINA_API size_t
 eina_freeq_mem_max_get(Eina_FreeQ *fq)
 {
-    size_t mem;
+  size_t mem;
 
-    if (!fq) return 0;
-    LOCK_FQ(fq);
-    if (fq->bypass) mem = 0;
-    else mem = fq->mem_max;
-    UNLOCK_FQ(fq);
-    return mem;
+  if (!fq) return 0;
+  LOCK_FQ(fq);
+  if (fq->bypass) mem = 0;
+  else mem = fq->mem_max;
+  UNLOCK_FQ(fq);
+  return mem;
 }
 
 EINA_API void
 eina_freeq_clear(Eina_FreeQ *fq)
 {
-    if (!fq) return;
-    LOCK_FQ(fq);
-    FQMAX(fq);
-    while (fq->count > 0)
-        _eina_freeq_process(fq);
-    UNLOCK_FQ(fq);
+  if (!fq) return;
+  LOCK_FQ(fq);
+  FQMAX(fq);
+  while (fq->count > 0)
+    _eina_freeq_process(fq);
+  UNLOCK_FQ(fq);
 }
 
 EINA_API void
 eina_freeq_reduce(Eina_FreeQ *fq, int count)
 {
-    if (!fq) return;
-    LOCK_FQ(fq);
-    FQMAX(fq);
-    while ((fq->count > 0) && (count > 0))
-    {
-        _eina_freeq_process(fq);
-        count--;
-    }
-    UNLOCK_FQ(fq);
+  if (!fq) return;
+  LOCK_FQ(fq);
+  FQMAX(fq);
+  while ((fq->count > 0) && (count > 0))
+  {
+    _eina_freeq_process(fq);
+    count--;
+  }
+  UNLOCK_FQ(fq);
 }
 
 EINA_API Efl_Bool
 eina_freeq_ptr_pending(Eina_FreeQ *fq)
 {
-    Efl_Bool pending;
+  Efl_Bool pending;
 
-    if (!fq) return EFL_FALSE;
-    LOCK_FQ(fq);
-    if (fq->blocks) pending = EFL_TRUE;
-    else pending = EFL_FALSE;
-    UNLOCK_FQ(fq);
-    return pending;
+  if (!fq) return EFL_FALSE;
+  LOCK_FQ(fq);
+  if (fq->blocks) pending = EFL_TRUE;
+  else pending = EFL_FALSE;
+  UNLOCK_FQ(fq);
+  return pending;
 }
 
 EINA_API void
@@ -585,41 +583,41 @@ eina_freeq_ptr_add(Eina_FreeQ *fq,
                    void (*free_func)(void *ptr),
                    size_t size)
 {
-    Eina_FreeQ_Block *fb;
+  Eina_FreeQ_Block *fb;
 
-    if (!ptr) return;
-    if (!free_func) free_func = free;
-    if ((((fq) && !fq->postponed) || (!fq)) &&
-        (size < _eina_freeq_fillpat_max) && (size > 0))
-        _eina_freeq_fill_do(ptr, size);
+  if (!ptr) return;
+  if (!free_func) free_func = free;
+  if ((((fq) && !fq->postponed) || (!fq)) && (size < _eina_freeq_fillpat_max) &&
+      (size > 0))
+    _eina_freeq_fill_do(ptr, size);
 
-    if (!fq || fq->bypass)
+  if (!fq || fq->bypass)
+  {
+    _eina_freeq_free_do(ptr, free_func, size);
+    return;
+  }
+
+  LOCK_FQ(fq);
+  if ((!fq->block_last) || (fq->block_last->end == ITEM_BLOCK_COUNT))
+  {
+    if (!_eina_freeq_block_append(fq))
     {
-        _eina_freeq_free_do(ptr, free_func, size);
-        return;
+      UNLOCK_FQ(fq);
+      if (!fq->postponed) _eina_freeq_free_do(ptr, free_func, size);
+      else
+        EINA_LOG_ERR("Could not add a pointer to the free queue! This "
+                     "program will leak resources!");
+      return;
     }
+  }
 
-    LOCK_FQ(fq);
-    if ((!fq->block_last) || (fq->block_last->end == ITEM_BLOCK_COUNT))
-    {
-        if (!_eina_freeq_block_append(fq))
-        {
-            UNLOCK_FQ(fq);
-            if (!fq->postponed) _eina_freeq_free_do(ptr, free_func, size);
-            else
-                EINA_LOG_ERR("Could not add a pointer to the free queue! This "
-                             "program will leak resources!");
-            return;
-        }
-    }
-
-    fb                           = fq->block_last;
-    fb->items[fb->end].ptr       = ptr;
-    fb->items[fb->end].free_func = free_func;
-    fb->items[fb->end].size      = size;
-    fb->end++;
-    fq->count++;
-    fq->mem_total += size;
-    _eina_freeq_flush_nolock(fq);
-    UNLOCK_FQ(fq);
+  fb                           = fq->block_last;
+  fb->items[fb->end].ptr       = ptr;
+  fb->items[fb->end].free_func = free_func;
+  fb->items[fb->end].size      = size;
+  fb->end++;
+  fq->count++;
+  fq->mem_total += size;
+  _eina_freeq_flush_nolock(fq);
+  UNLOCK_FQ(fq);
 }

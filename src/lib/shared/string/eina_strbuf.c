@@ -77,55 +77,55 @@ static const char __STRBUF_MAGIC_STR[] = "Eina Strbuf";
 EINA_API Efl_Bool
 eina_strbuf_append_printf(Efl_Strbuf *buf, const char *fmt, ...)
 {
-    va_list  args;
-    char    *str;
-    size_t   len;
-    Efl_Bool ret;
+  va_list  args;
+  char    *str;
+  size_t   len;
+  Efl_Bool ret;
 
-    va_start(args, fmt);
-    len = vasprintf(&str, fmt, args);
-    va_end(args);
+  va_start(args, fmt);
+  len = vasprintf(&str, fmt, args);
+  va_end(args);
 
-    if (len == 0 || !str) return EFL_FALSE;
+  if (len == 0 || !str) return EFL_FALSE;
 
-    ret = eina_strbuf_append_length(buf, str, len);
-    free(str);
-    return ret;
+  ret = eina_strbuf_append_length(buf, str, len);
+  free(str);
+  return ret;
 }
 
 EINA_API Efl_Bool
 eina_strbuf_append_vprintf(Efl_Strbuf *buf, const char *fmt, va_list args)
 {
-    char    *str;
-    size_t   len;
-    Efl_Bool ret;
+  char    *str;
+  size_t   len;
+  Efl_Bool ret;
 
-    len = vasprintf(&str, fmt, args);
+  len = vasprintf(&str, fmt, args);
 
-    if (len == 0 || !str) return EFL_FALSE;
+  if (len == 0 || !str) return EFL_FALSE;
 
-    ret = eina_strbuf_append_length(buf, str, len);
-    free(str);
-    return ret;
+  ret = eina_strbuf_append_length(buf, str, len);
+  free(str);
+  return ret;
 }
 
 EINA_API Efl_Bool
 eina_strbuf_insert_printf(Efl_Strbuf *buf, const char *fmt, size_t pos, ...)
 {
-    va_list  args;
-    char    *str;
-    size_t   len;
-    Efl_Bool ret;
+  va_list  args;
+  char    *str;
+  size_t   len;
+  Efl_Bool ret;
 
-    va_start(args, pos);
-    len = vasprintf(&str, fmt, args);
-    va_end(args);
+  va_start(args, pos);
+  len = vasprintf(&str, fmt, args);
+  va_end(args);
 
-    if (len == 0 || !str) return EFL_FALSE;
+  if (len == 0 || !str) return EFL_FALSE;
 
-    ret = eina_strbuf_insert(buf, str, pos);
-    free(str);
-    return ret;
+  ret = eina_strbuf_insert(buf, str, pos);
+  free(str);
+  return ret;
 }
 
 EINA_API Efl_Bool
@@ -134,77 +134,77 @@ eina_strbuf_insert_vprintf(Efl_Strbuf *buf,
                            size_t      pos,
                            va_list     args)
 {
-    char    *str;
-    size_t   len;
-    Efl_Bool ret;
+  char    *str;
+  size_t   len;
+  Efl_Bool ret;
 
-    len = vasprintf(&str, fmt, args);
+  len = vasprintf(&str, fmt, args);
 
-    if (len == 0 || !str) return EFL_FALSE;
+  if (len == 0 || !str) return EFL_FALSE;
 
-    ret = eina_strbuf_insert(buf, str, pos);
-    free(str);
-    return ret;
+  ret = eina_strbuf_insert(buf, str, pos);
+  free(str);
+  return ret;
 }
 
 EINA_API void
 eina_strbuf_trim(Efl_Strbuf *buf)
 {
-    unsigned char *c = buf->buf;
+  unsigned char *c = buf->buf;
 
-    while (buf->len > 0 && isspace(c[buf->len - 1]))
-        buf->len--;
-    while (buf->len > 0 && isspace(*c))
-    {
-        c++;
-        buf->len--;
-    }
-    memmove(buf->buf, c, buf->len);
-    ((unsigned char *)buf->buf)[buf->len] = '\0';
+  while (buf->len > 0 && isspace(c[buf->len - 1]))
+    buf->len--;
+  while (buf->len > 0 && isspace(*c))
+  {
+    c++;
+    buf->len--;
+  }
+  memmove(buf->buf, c, buf->len);
+  ((unsigned char *)buf->buf)[buf->len] = '\0';
 }
 
 EINA_API void
 eina_strbuf_ltrim(Efl_Strbuf *buf)
 {
-    unsigned char *c = buf->buf;
+  unsigned char *c = buf->buf;
 
-    while (buf->len > 0 && isspace(*c))
-    {
-        c++;
-        buf->len--;
-    }
-    memmove(buf->buf, c, buf->len);
-    ((unsigned char *)buf->buf)[buf->len] = '\0';
+  while (buf->len > 0 && isspace(*c))
+  {
+    c++;
+    buf->len--;
+  }
+  memmove(buf->buf, c, buf->len);
+  ((unsigned char *)buf->buf)[buf->len] = '\0';
 }
 
 EINA_API void
 eina_strbuf_rtrim(Efl_Strbuf *buf)
 {
-    while (buf->len > 0 && isspace(((unsigned char *)(buf->buf))[buf->len - 1]))
-        buf->len--;
-    ((unsigned char *)buf->buf)[buf->len] = '\0';
+  while (buf->len > 0 && isspace(((unsigned char *)(buf->buf))[buf->len - 1]))
+    buf->len--;
+  ((unsigned char *)buf->buf)[buf->len] = '\0';
 }
 
 EINA_API void
 eina_strbuf_tolower(Efl_Strbuf *buf)
 {
-    if (!buf || !(buf->buf)) return;
+  if (!buf || !(buf->buf)) return;
 
-    eina_str_tolower((char **)&(buf->buf));
+  eina_str_tolower((char **)&(buf->buf));
 }
 
 EINA_API Efl_Strbuf *
 eina_strbuf_substr_get(Efl_Strbuf *buf, size_t pos, size_t len)
 {
-    char *str;
+  char *str;
 
-    if ((!buf) || ((pos + len) > buf->len)) return NULL;
+  if ((!buf) || ((pos + len) > buf->len)) return NULL;
 
-    str = calloc(1, len + 1);
+  str = calloc(1, len + 1);
 
-    eina_strlcpy(str, ((char *)(buf->buf)) + pos, len + 1);
+  eina_strlcpy(str, ((char *)(buf->buf)) + pos, len + 1);
 
-    return eina_strbuf_manage_new(str);
+  return eina_strbuf_manage_new(str);
 }
 
 EINA_API Efl_Bool
@@ -212,15 +212,15 @@ eina_strbuf_append_strftime(Efl_Strbuf      *buf,
                             const char      *format,
                             const struct tm *tm)
 {
-    char *outputbuf;
+  char *outputbuf;
 
-    outputbuf = eina_strftime(format, tm);
-    if (!outputbuf) return EFL_FALSE;
+  outputbuf = eina_strftime(format, tm);
+  if (!outputbuf) return EFL_FALSE;
 
-    eina_strbuf_append(buf, outputbuf);
-    free(outputbuf);
+  eina_strbuf_append(buf, outputbuf);
+  free(outputbuf);
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 EINA_API Efl_Bool
@@ -229,15 +229,15 @@ eina_strbuf_insert_strftime(Efl_Strbuf      *buf,
                             const struct tm *tm,
                             size_t           pos)
 {
-    char *outputbuf;
+  char *outputbuf;
 
-    outputbuf = eina_strftime(format, tm);
-    if (!outputbuf) return EFL_FALSE;
+  outputbuf = eina_strftime(format, tm);
+  if (!outputbuf) return EFL_FALSE;
 
-    eina_strbuf_insert_length(buf, outputbuf, strlen(outputbuf), pos);
-    free(outputbuf);
+  eina_strbuf_insert_length(buf, outputbuf, strlen(outputbuf), pos);
+  free(outputbuf);
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 /* Unicode */

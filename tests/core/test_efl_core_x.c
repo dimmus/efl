@@ -17,35 +17,35 @@
 
 EFL_START_TEST(core_test_core_x_init)
 {
-    int ret;
+  int ret;
 
-    ret = core_x_init(NULL);
-    fail_if(ret != 1);
+  ret = core_x_init(NULL);
+  fail_if(ret != 1);
 
-    ret = core_x_shutdown();
-    fail_if(ret != 0);
+  ret = core_x_shutdown();
+  fail_if(ret != 0);
 }
 
 EFL_END_TEST
 
 EFL_START_TEST(core_test_core_x_bell)
 {
-    int i;
-    int ret;
+  int i;
+  int ret;
 
-    ret = core_x_init(NULL);
-    fail_if(ret != 1);
+  ret = core_x_init(NULL);
+  fail_if(ret != 1);
 
-    printf("You should hear 3 beeps now.\n");
-    for (i = 0; i < 3; i++)
-    {
-        ret = core_x_bell(0);
-        fail_if(ret != EFL_TRUE);
-        core_x_sync();
-        sleep(1);
-    }
+  printf("You should hear 3 beeps now.\n");
+  for (i = 0; i < 3; i++)
+  {
+    ret = core_x_bell(0);
+    fail_if(ret != EFL_TRUE);
+    core_x_sync();
+    sleep(1);
+  }
 
-    core_x_shutdown();
+  core_x_shutdown();
 }
 
 EFL_END_TEST
@@ -56,7 +56,7 @@ void
 core_test_core_x(TCase *tc EFL_UNUSED)
 {
 #ifdef HAVE_CORE_X_XLIB
-    tcase_add_test(tc, core_test_core_x_init);
-    tcase_add_test(tc, core_test_core_x_bell);
+  tcase_add_test(tc, core_test_core_x_init);
+  tcase_add_test(tc, core_test_core_x_bell);
 #endif
 }

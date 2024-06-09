@@ -12,21 +12,21 @@ typedef struct _Efl_Dbus_Model_Connection_Data Efl_Dbus_Model_Connection_Data;
  */
 struct _Efl_Dbus_Model_Connection_Data
 {
-   Eo *obj;
+  Eo *obj;
 
-   Efl_Dbus_Connection *connection;
-   Efl_Dbus_Pending *pending;
-   Efl_Dbus_Connection_Type type;
+  Efl_Dbus_Connection     *connection;
+  Efl_Dbus_Pending        *pending;
+  Efl_Dbus_Connection_Type type;
 
-   Eina_List *childrens;
-   Eina_List *requests;
+  Eina_List *childrens;
+  Eina_List *requests;
 
-   Eina_Stringshare *address;
-   char *unique_name;
+  Eina_Stringshare *address;
+  char             *unique_name;
 
-   bool private;
+  bool private;
 
-   Efl_Bool is_listed : 1;
+  Efl_Bool is_listed : 1;
 };
 
 #endif

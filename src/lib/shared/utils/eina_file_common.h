@@ -17,7 +17,7 @@
  */
 
 #ifndef EINA_FILE_COMMON_H_
-# define EINA_FILE_COMMON_H_
+#define EINA_FILE_COMMON_H_
 
 #include "eina_file.h"
 #include "eina_tmpstr.h"
@@ -68,43 +68,50 @@ typedef struct _Eina_Lines_Iterator Eina_Lines_Iterator;
  */
 struct _Eina_File
 {
-   EINA_MAGIC;            /**< Indicates whether Eina Magic should be used. */
-   const char *filename;  /**< The absolute path of the file. Note that the path given when calling @ref eina_file_open will be run through @ref eina_file_path_sanitize before it is stored here. */
-   Eina_Hash *map;        /**< Tracks portions of a file that have been mapped with mmap(2).  The key is a tuple offset/length and the data is a pointer to the mapped region. */
-   Eina_Hash *rmap;       /**< Similar function to #map, but used to look up mapped areas by pointer rather than offset/length. */
-   void *global_map;      /**< A pointer to the entire contents of the file that have been mapped with mmap(2).  This is the common case, and EFL and is optimized for it. */
-   Eina_Lock lock;        /**< A file locking mechanism. */
+  EINA_MAGIC; /**< Indicates whether Eina Magic should be used. */
+  const char *
+    filename; /**< The absolute path of the file. Note that the path given when calling @ref eina_file_open will be run through @ref eina_file_path_sanitize before it is stored here. */
+  Eina_Hash *
+    map; /**< Tracks portions of a file that have been mapped with mmap(2).  The key is a tuple offset/length and the data is a pointer to the mapped region. */
+  Eina_Hash *
+    rmap; /**< Similar function to #map, but used to look up mapped areas by pointer rather than offset/length. */
+  void *
+    global_map; /**< A pointer to the entire contents of the file that have been mapped with mmap(2).  This is the common case, and EFL and is optimized for it. */
+  Eina_Lock lock; /**< A file locking mechanism. */
 
 #ifndef _WIN32
-   unsigned long long length;  /**< The length of the file in bytes. */
-   time_t mtime;               /**< The last modified time. */
-   ino_t inode;                /**< The inode. */
-#ifdef _STAT_VER_LINUX
-   unsigned long int mtime_nsec; /**< The nano version of the last modified time. */
-#endif
+  unsigned long long length; /**< The length of the file in bytes. */
+  time_t             mtime; /**< The last modified time. */
+  ino_t              inode; /**< The inode. */
+#  ifdef _STAT_VER_LINUX
+  unsigned long int
+    mtime_nsec; /**< The nano version of the last modified time. */
+#  endif
 #else
-   ULONGLONG length;  /**< The length of the file in bytes. */
-   ULONGLONG mtime;   /**< The last modified time. */
+  ULONGLONG length;  /**< The length of the file in bytes. */
+  ULONGLONG mtime;   /**< The last modified time. */
 #endif
 
-   int refcount;        /**< Keeps track of references to #map. */
-   int global_refcount; /**< Keeps track of references to #global_map. */
-   Eina_Statgen statgen;/**< For inexact stats a stat gen count to rate limit syscalls to stat file */
+  int refcount; /**< Keeps track of references to #map. */
+  int global_refcount; /**< Keeps track of references to #global_map. */
+  Eina_Statgen
+    statgen; /**< For inexact stats a stat gen count to rate limit syscalls to stat file */
 
 #ifndef _WIN32
-   int fd; /**< The file descriptor. */
+  int fd; /**< The file descriptor. */
 #else
-   HANDLE handle;  /**< A Win32 file handle for this file. */
+  HANDLE handle;  /**< A Win32 file handle for this file. */
 #endif
 
-   Eina_List *dead_map;          /**< Tracks regions that get a failure from mmap(2). */
+  Eina_List *dead_map; /**< Tracks regions that get a failure from mmap(2). */
 
-   Efl_Bool shared : 1;         /**< Indicates whether this file can be shared */
-   Efl_Bool delete_me : 1;      /**< Indicates that this file should be deleted */
-   Efl_Bool global_faulty : 1;  /**< Indicates whether #global_map is bad */
-   Efl_Bool global_hugetlb : 1; /**< Indicates whether #global_map uses HugeTLB */
-   Efl_Bool virtual : 1;        /**< Indicates that this is a virtual file */
-   Efl_Bool copied : 1;         /**< Indicates whether this file has copied data */
+  Efl_Bool shared        : 1; /**< Indicates whether this file can be shared */
+  Efl_Bool delete_me     : 1; /**< Indicates that this file should be deleted */
+  Efl_Bool global_faulty : 1; /**< Indicates whether #global_map is bad */
+  Efl_Bool
+    global_hugetlb : 1; /**< Indicates whether #global_map uses HugeTLB */
+  Efl_Bool virtual : 1; /**< Indicates that this is a virtual file */
+  Efl_Bool copied  : 1; /**< Indicates whether this file has copied data */
 };
 
 /**
@@ -115,17 +122,18 @@ struct _Eina_File
  */
 struct _Eina_File_Map
 {
-   void *map;  /**< A pointer to the mapped region */
+  void *map; /**< A pointer to the mapped region */
 
-   unsigned long int offset;  /**< The offset in the file */
-   unsigned long int length;  /**< The length of the region */
+  unsigned long int offset; /**< The offset in the file */
+  unsigned long int length; /**< The length of the region */
 
-   int refcount;  /**< Tracks references to this region */
+  int refcount; /**< Tracks references to this region */
 
-   Efl_Bool hugetlb : 1;  /**< Indicates if we are using HugeTLB */
-   Efl_Bool faulty : 1;   /**< Indicates if this region was not mapped correctly (i.e. the call to mmap(2) failed). */
+  Efl_Bool hugetlb : 1; /**< Indicates if we are using HugeTLB */
+  Efl_Bool
+    faulty : 1; /**< Indicates if this region was not mapped correctly (i.e. the call to mmap(2) failed). */
 #ifdef _WIN32
-   void *ret;  /**< A pointer to the mapped region */
+  void *ret; /**< A pointer to the mapped region */
 #endif
 };
 
@@ -137,43 +145,44 @@ struct _Eina_File_Map
  */
 struct _Eina_Lines_Iterator
 {
-   Eina_Iterator iterator;  /**< The iterator itself */
+  Eina_Iterator iterator; /**< The iterator itself */
 
-   Eina_File *fp;   /**< The file this iterator is associated with */
-   const char *map; /**< A pointer to the head of the file that has been mapped with mmap(2). */
-   const char *end; /**< A pointer to the end of the file that has been mapped with mmap(2). */
+  Eina_File *fp; /**< The file this iterator is associated with */
+  const char *
+    map; /**< A pointer to the head of the file that has been mapped with mmap(2). */
+  const char *
+    end; /**< A pointer to the end of the file that has been mapped with mmap(2). */
 
-   int boundary;    /**< Currently hard coded to 4096. */
+  int boundary; /**< Currently hard coded to 4096. */
 
-   Eina_File_Line current;  /**< The current line */
+  Eina_File_Line current; /**< The current line */
 };
-
 
 #ifndef EINA_LOG_COLOR_DEFAULT
 /** Set the color for Eina log entries */
-#define EINA_LOG_COLOR_DEFAULT EINA_COLOR_CYAN
+#  define EINA_LOG_COLOR_DEFAULT EINA_COLOR_CYAN
 #endif
 
 #ifdef ERR
-#undef ERR
+#  undef ERR
 #endif
 /** Macro for logging Eina errors */
 #define ERR(...) EINA_LOG_DOM_ERR(_eina_file_log_dom, __VA_ARGS__)
 
 #ifdef WRN
-#undef WRN
+#  undef WRN
 #endif
 /** Macro for logging Eina warnings */
 #define WRN(...) EINA_LOG_DOM_WARN(_eina_file_log_dom, __VA_ARGS__)
 
 #ifdef INF
-#undef INF
+#  undef INF
 #endif
 /** Macro for logging Eina info messages */
 #define INF(...) EINA_LOG_DOM_INFO(_eina_file_log_dom, __VA_ARGS__)
 
 #ifdef DBG
-#undef DBG
+#  undef DBG
 #endif
 /** Macro for logging Eina debug messages */
 #define DBG(...) EINA_LOG_DOM_DBG(_eina_file_log_dom, __VA_ARGS__)
@@ -257,7 +266,8 @@ void eina_file_flush(Eina_File *file, unsigned long int length);
  *            free up the resources used by the map.
  *
  */
-void eina_file_common_map_free(Eina_File *file, void *map,
+void eina_file_common_map_free(Eina_File *file,
+                               void      *map,
                                void (*free_func)(Eina_File_Map *map));
 
 /** A pointer to the global Eina file cache. */
@@ -286,8 +296,9 @@ void *eina_file_virtual_map_all(Eina_File *file);
  * @param[in] length The length of the region to map
  * @return The buffer
  */
-void *eina_file_virtual_map_new(Eina_File *file,
-                                unsigned long int offset, unsigned long int length);
+void *eina_file_virtual_map_new(Eina_File        *file,
+                                unsigned long int offset,
+                                unsigned long int length);
 
 /**
  * @brief Unref and unmap memory if possible.
@@ -325,8 +336,10 @@ unsigned int eina_file_map_key_length(const void *key);
  * zero if both elements of the key are exactly the same.
  *
  */
-int eina_file_map_key_cmp(const unsigned long long int *key1, int key1_length,
-                          const unsigned long long int *key2, int key2_length);
+int eina_file_map_key_cmp(const unsigned long long int *key1,
+                          int                           key1_length,
+                          const unsigned long long int *key2,
+                          int                           key2_length);
 
 /**
  * @brief Creates a hash from a map key.

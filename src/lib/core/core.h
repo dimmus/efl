@@ -245,7 +245,6 @@
  *
  */
 
-
 /**
  * @page Core_Config_Page The Enlightened Property Library
  * The Enlightened Property Library (Core_Config) is an abstraction
@@ -259,7 +258,6 @@
  * @li @link config_basic_example.c config_basic_example.c @endlink
  * @li @link config_listener_example.c config_listener_example.c @endlink
  */
-
 
 /**
  * @page X_Window_System_Page X Window System
@@ -276,45 +274,45 @@
 #include <Efl_Eo_Interfaces.h>
 
 #ifdef EAPI
-# undef EAPI
+#  undef EAPI
 #endif
 
 #ifdef _WIN32
-# ifdef EFL_BUILD
-#  ifdef DLL_EXPORT
-#   define EAPI __declspec(dllexport)
+#  ifdef EFL_BUILD
+#    ifdef DLL_EXPORT
+#      define EAPI __declspec(dllexport)
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI __declspec(dllimport)
 #  endif
-# else
-#  define EAPI __declspec(dllimport)
-# endif
 #else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EAPI __attribute__ ((visibility("default")))
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EAPI __attribute__ ((visibility("default")))
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI
 #  endif
-# else
-#  define EAPI
-# endif
 #endif
 
 #ifdef _WIN32
-# define WIN32_LEAN_AND_MEAN
-# include <winsock2.h>
-# undef WIN32_LEAN_AND_MEAN
-#elif defined (__FreeBSD__) || defined (__OpenBSD__)
-# include <sys/select.h>
-# include <signal.h>
-#elif defined (__ANDROID__)
-# include <sys/select.h>
-#elif defined (__sun)
-# include <sys/siginfo.h>
+#  define WIN32_LEAN_AND_MEAN
+#  include <winsock2.h>
+#  undef WIN32_LEAN_AND_MEAN
+#elif defined(__FreeBSD__) || defined(__OpenBSD__)
+#  include <sys/select.h>
+#  include <signal.h>
+#elif defined(__ANDROID__)
+#  include <sys/select.h>
+#elif defined(__sun)
+#  include <sys/siginfo.h>
 #else
-# include <sys/time.h>
-# include <signal.h>
+#  include <sys/time.h>
+#  include <signal.h>
 #endif
 
 #include <sys/types.h>
@@ -325,15 +323,15 @@ extern "C" {
 
 #include "Efl_Core_Common.h"
 #ifndef EFL_NOLEGACY_API_SUPPORT
-# include "core_legacy.h"
+#  include "core_legacy.h"
 #endif
 #include "Efl_Core_Eo.h"
 
-EAPI double _core_main_loop_wakeup_time_get(void);
+EAPI double   _core_main_loop_wakeup_time_get(void);
 EAPI Efl_Bool bs_mod_get(char       *path,
-                    size_t      maxlen,
-                    const char *subsystem,
-                    const char *mod_name);
+                         size_t      maxlen,
+                         const char *subsystem,
+                         const char *mod_name);
 
 #ifdef __cplusplus
 }

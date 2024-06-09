@@ -37,24 +37,32 @@
  *
  * @since 1.1
  */
-typedef enum {
-  EINA_XATTR_INSERT = 0, /**< This is the default behavior, it will either create or replace the extended attribute */
-  EINA_XATTR_REPLACE = 1, /**< This will only succeed if the extended attribute previously existed */
-  EINA_XATTR_CREATED = 2, /**< This will only succeed if the extended attribute wasn't previously set */
+typedef enum
+{
+  EINA_XATTR_INSERT =
+    0, /**< This is the default behavior, it will either create or replace the extended attribute */
+  EINA_XATTR_REPLACE =
+    1, /**< This will only succeed if the extended attribute previously existed */
+  EINA_XATTR_CREATED =
+    2, /**< This will only succeed if the extended attribute wasn't previously set */
   //The definitions below are required in order to have symbols available for the enum definition in eina_types.eot
-  EINA_XATTR_FLAGS_INSERT = 0, /**< This is the default behavior, it will either create or replace the extended attribute */
-  EINA_XATTR_FLAGS_REPLACE = 1, /**< This will only succeed if the extended attribute previously existed */
-  EINA_XATTR_FLAGS_CREATED = 2 /**< This will only succeed if the extended attribute wasn't previously set */
+  EINA_XATTR_FLAGS_INSERT =
+    0, /**< This is the default behavior, it will either create or replace the extended attribute */
+  EINA_XATTR_FLAGS_REPLACE =
+    1, /**< This will only succeed if the extended attribute previously existed */
+  EINA_XATTR_FLAGS_CREATED =
+    2 /**< This will only succeed if the extended attribute wasn't previously set */
 
 } Eina_Xattr_Flags;
 
 typedef struct _Eina_Xattr Eina_Xattr;
+
 struct _Eina_Xattr
 {
-   const char *name; /**< The extended attribute name @since 1.2 */
-   const char *value; /**< The extended attribute value @since 1.2 */
+  const char *name; /**< The extended attribute name @since 1.2 */
+  const char *value; /**< The extended attribute value @since 1.2 */
 
-   size_t length; /**< The length of the extended attribute value @since 1.2 */
+  size_t length; /**< The length of the extended attribute value @since 1.2 */
 };
 
 /**
@@ -68,7 +76,8 @@ struct _Eina_Xattr
  *
  * @since 1.1
  */
-EINA_API Eina_Iterator *eina_xattr_ls(const char *file) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_xattr_ls(const char *file)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets an iterator that list all extended attribute value related to a fd.
@@ -81,7 +90,8 @@ EINA_API Eina_Iterator *eina_xattr_ls(const char *file) EINA_ARG_NONNULL(1) EFL_
  *
  * @since 1.2
  */
-EINA_API Eina_Iterator *eina_xattr_value_ls(const char *file) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_xattr_value_ls(const char *file)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets an iterator that list all extended attribute related to a fd.
@@ -120,7 +130,8 @@ EINA_API Eina_Iterator *eina_xattr_value_fd_ls(int fd) EFL_WARN_UNUSED_RESULT;
  *
  * @since 1.8
  */
-EINA_API Efl_Bool eina_xattr_copy(const char *src, const char *dst) EINA_ARG_NONNULL(1, 2);
+EINA_API Efl_Bool eina_xattr_copy(const char *src, const char *dst)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Copies the extended attribute from one file descriptor to another.
@@ -147,7 +158,9 @@ EINA_API Efl_Bool eina_xattr_fd_copy(int src, int dst);
  *
  * @since 1.1
  */
-EINA_API void *eina_xattr_get(const char *file, const char *attribute, ssize_t *size) EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
+EINA_API void *
+eina_xattr_get(const char *file, const char *attribute, ssize_t *size)
+  EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Retrieves an extended attribute from a file descriptor.
@@ -161,7 +174,8 @@ EINA_API void *eina_xattr_get(const char *file, const char *attribute, ssize_t *
  *
  * @since 1.8
  */
-EINA_API void *eina_xattr_fd_get(int fd, const char *attribute, ssize_t *size) EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
+EINA_API void *eina_xattr_fd_get(int fd, const char *attribute, ssize_t *size)
+  EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets an extended attribute on a file.
@@ -175,7 +189,12 @@ EINA_API void *eina_xattr_fd_get(int fd, const char *attribute, ssize_t *size) E
  *
  * @since 1.1
  */
-EINA_API Efl_Bool eina_xattr_set(const char *file, const char *attribute, const void *data, ssize_t length, Eina_Xattr_Flags flags) EINA_ARG_NONNULL(1, 2, 3);
+EINA_API Efl_Bool eina_xattr_set(const char      *file,
+                                 const char      *attribute,
+                                 const void      *data,
+                                 ssize_t          length,
+                                 Eina_Xattr_Flags flags)
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Sets an extended attribute on a file descriptor.
@@ -189,8 +208,12 @@ EINA_API Efl_Bool eina_xattr_set(const char *file, const char *attribute, const 
  *
  * @since 1.8
  */
-EINA_API Efl_Bool eina_xattr_fd_set(int fd, const char *attribute, const void *data, ssize_t length, Eina_Xattr_Flags flags) EINA_ARG_NONNULL(2, 3);
-
+EINA_API Efl_Bool eina_xattr_fd_set(int              fd,
+                                    const char      *attribute,
+                                    const void      *data,
+                                    ssize_t          length,
+                                    Eina_Xattr_Flags flags)
+  EINA_ARG_NONNULL(2, 3);
 
 /**
  * @brief Deletes (removes) an extended attribute from a file.
@@ -201,7 +224,8 @@ EINA_API Efl_Bool eina_xattr_fd_set(int fd, const char *attribute, const void *d
  *
  * @since 1.8
  */
-EINA_API Efl_Bool eina_xattr_del(const char *file, const char *attribute) EINA_ARG_NONNULL(1, 2);
+EINA_API Efl_Bool eina_xattr_del(const char *file, const char *attribute)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Deletes (removes) an extended attribute from a file descriptor.
@@ -212,7 +236,8 @@ EINA_API Efl_Bool eina_xattr_del(const char *file, const char *attribute) EINA_A
  *
  * @since 1.8
  */
-EINA_API Efl_Bool eina_xattr_fd_del(int fd, const char *attribute) EINA_ARG_NONNULL(2);
+EINA_API Efl_Bool eina_xattr_fd_del(int fd, const char *attribute)
+  EINA_ARG_NONNULL(2);
 
 /**
  * @brief Sets a string as a extended attribute properties.
@@ -225,7 +250,10 @@ EINA_API Efl_Bool eina_xattr_fd_del(int fd, const char *attribute) EINA_ARG_NONN
  *
  * @since 1.1
  */
-EINA_API Efl_Bool eina_xattr_string_set(const char *file, const char *attribute, const char *data, Eina_Xattr_Flags flags);
+EINA_API Efl_Bool eina_xattr_string_set(const char      *file,
+                                        const char      *attribute,
+                                        const char      *data,
+                                        Eina_Xattr_Flags flags);
 
 /**
  * @brief Gets a string from an extended attribute properties.
@@ -251,7 +279,10 @@ EINA_API char *eina_xattr_string_get(const char *file, const char *attribute);
  *
  * @since 1.1
  */
-EINA_API Efl_Bool eina_xattr_double_set(const char *file, const char *attribute, double value, Eina_Xattr_Flags flags);
+EINA_API Efl_Bool eina_xattr_double_set(const char      *file,
+                                        const char      *attribute,
+                                        double           value,
+                                        Eina_Xattr_Flags flags);
 
 /**
  * @brief Gets a double from an extended attribute properties.
@@ -265,7 +296,9 @@ EINA_API Efl_Bool eina_xattr_double_set(const char *file, const char *attribute,
  *
  * @since 1.1
  */
-EINA_API Efl_Bool eina_xattr_double_get(const char *file, const char *attribute, double *value);
+EINA_API Efl_Bool eina_xattr_double_get(const char *file,
+                                        const char *attribute,
+                                        double     *value);
 
 /**
  * @brief Sets an int as a extended attribute properties.
@@ -278,7 +311,10 @@ EINA_API Efl_Bool eina_xattr_double_get(const char *file, const char *attribute,
  *
  * @since 1.1
  */
-EINA_API Efl_Bool eina_xattr_int_set(const char *file, const char *attribute, int value, Eina_Xattr_Flags flags);
+EINA_API Efl_Bool eina_xattr_int_set(const char      *file,
+                                     const char      *attribute,
+                                     int              value,
+                                     Eina_Xattr_Flags flags);
 
 /**
  * @brief Gets a int from an extended attribute properties.
@@ -292,7 +328,9 @@ EINA_API Efl_Bool eina_xattr_int_set(const char *file, const char *attribute, in
  *
  * @since 1.1
  */
-EINA_API Efl_Bool eina_xattr_int_get(const char *file, const char *attribute, int *value);
+EINA_API Efl_Bool eina_xattr_int_get(const char *file,
+                                     const char *attribute,
+                                     int        *value);
 
 /**
  * @}

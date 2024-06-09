@@ -17,10 +17,10 @@
  */
 
 #ifndef EINA_ALLOCA_H
-# define EINA_ALLOCA_H
+#define EINA_ALLOCA_H
 
-# include <stdlib.h>
-# include <stddef.h>
+#include <stdlib.h>
+#include <stddef.h>
 
 /**
  * @file eina_alloca.h
@@ -28,20 +28,20 @@
  * define alloca to that spelling.
  */
 
-# ifdef EINA_HAVE_ALLOCA_H
+#ifdef EINA_HAVE_ALLOCA_H
 #  include <alloca.h>
-# elif !defined alloca
+#elif !defined alloca
 #  ifdef __GNUC__
-#   define alloca __builtin_alloca
+#    define alloca __builtin_alloca
 #  elif defined _AIX
-#   define alloca __alloca
+#    define alloca __alloca
 #  elif defined _MSC_VER
-#   include <malloc.h>
-#   define alloca _alloca
+#    include <malloc.h>
+#    define alloca _alloca
 #  elif !defined EINA_HAVE_ALLOCA
-#   ifdef  __cplusplus
+#    ifdef __cplusplus
 extern "C"
-#   endif
+#    endif
 
 /**
  * @brief Allocates memory in the stack frame of the caller, so that it
@@ -52,8 +52,9 @@ extern "C"
  *
  * @see alloca(3) for more details.
  */
-void *alloca(size_t size);
+  void *
+  alloca(size_t size);
 #  endif
-# endif
+#endif
 
 #endif /* EINA_HAVE_ALLOCA_H */

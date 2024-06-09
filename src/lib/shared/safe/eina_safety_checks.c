@@ -43,13 +43,13 @@ static int initcnt                = 0;
 Efl_Bool
 eina_safety_checks_shutdown(void)
 {
-    if (!initcnt) return EFL_FALSE;
-    if (!(--initcnt))
-    {
-        eina_log_domain_unregister(EINA_SAFETY_LOG_DOMAIN);
-        EINA_SAFETY_LOG_DOMAIN = 0;
-    }
-    return EFL_TRUE;
+  if (!initcnt) return EFL_FALSE;
+  if (!(--initcnt))
+  {
+    eina_log_domain_unregister(EINA_SAFETY_LOG_DOMAIN);
+    EINA_SAFETY_LOG_DOMAIN = 0;
+  }
+  return EFL_TRUE;
 }
 
 /**
@@ -66,14 +66,14 @@ eina_safety_checks_shutdown(void)
 Efl_Bool
 eina_safety_checks_init(void)
 {
-    if (!(initcnt++))
-    {
-        EINA_SAFETY_LOG_DOMAIN =
-            eina_log_domain_register("eina_safety", EINA_COLOR_RED);
-        EINA_ERROR_SAFETY_FAILED =
-            eina_error_msg_static_register("Safety check failed");
-    }
-    return EFL_TRUE;
+  if (!(initcnt++))
+  {
+    EINA_SAFETY_LOG_DOMAIN =
+      eina_log_domain_register("eina_safety", EINA_COLOR_RED);
+    EINA_ERROR_SAFETY_FAILED =
+      eina_error_msg_static_register("Safety check failed");
+  }
+  return EFL_TRUE;
 }
 
 EINA_API void
@@ -82,25 +82,25 @@ _eina_safety_error(const char *file,
                    int         line,
                    const char *str)
 {
-    eina_error_set(EINA_ERROR_SAFETY_FAILED);
-    if (EINA_SAFETY_LOG_DOMAIN)
-    {
-        eina_log_print(EINA_SAFETY_LOG_DOMAIN,
-                       EINA_LOG_LEVEL_ERR,
-                       file,
-                       func,
-                       line,
-                       "%s",
-                       str);
-    }
-    else
-    {
-        eina_log_print(EINA_LOG_DOMAIN_DEFAULT,
-                       EINA_LOG_LEVEL_ERR,
-                       file,
-                       func,
-                       line,
-                       "%s",
-                       str);
-    }
+  eina_error_set(EINA_ERROR_SAFETY_FAILED);
+  if (EINA_SAFETY_LOG_DOMAIN)
+  {
+    eina_log_print(EINA_SAFETY_LOG_DOMAIN,
+                   EINA_LOG_LEVEL_ERR,
+                   file,
+                   func,
+                   line,
+                   "%s",
+                   str);
+  }
+  else
+  {
+    eina_log_print(EINA_LOG_DOMAIN_DEFAULT,
+                   EINA_LOG_LEVEL_ERR,
+                   file,
+                   func,
+                   line,
+                   "%s",
+                   str);
+  }
 }

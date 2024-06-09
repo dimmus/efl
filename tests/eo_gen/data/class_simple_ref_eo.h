@@ -2,25 +2,24 @@
 #define _EOLIAN_CLASS_SIMPLE_EO_H_
 
 #ifndef _CLASS_SIMPLE_EO_CLASS_TYPE
-#define _CLASS_SIMPLE_EO_CLASS_TYPE
+#  define _CLASS_SIMPLE_EO_CLASS_TYPE
 
 typedef Eo Class_Simple;
 
 #endif
 
 #ifndef _CLASS_SIMPLE_EO_TYPES
-#define _CLASS_SIMPLE_EO_TYPES
+#  define _CLASS_SIMPLE_EO_TYPES
 
-#ifndef FOO
+#  ifndef FOO
 /** doc for constant
  *
  * @since 1.66
  *
  * @ingroup Foo
  */
-#define FOO 5
-#endif
-
+#    define FOO 5
+#  endif
 
 #endif
 /** Class Desc Simple
@@ -82,7 +81,8 @@ EAPI EAPI_WEAK int efl_canvas_object_simple_a_get(const Eo *obj);
  *
  * @ingroup Class_Simple
  */
-EAPI EAPI_WEAK char *efl_canvas_object_simple_foo(Eo *obj, int a, char *b, double *c, int *d);
+EAPI EAPI_WEAK char *
+efl_canvas_object_simple_foo(Eo *obj, int a, char *b, double *c, int *d);
 #endif /* EFL_BETA_API_SUPPORT */
 
 #endif

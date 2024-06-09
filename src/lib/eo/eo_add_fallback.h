@@ -6,7 +6,7 @@
 
 typedef struct _Eo_Stack_Frame
 {
-   Eo *obj;
+  Eo *obj;
 } Eo_Stack_Frame;
 
 Efl_Bool _efl_add_fallback_init(void);

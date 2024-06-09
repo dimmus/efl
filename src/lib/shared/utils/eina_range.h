@@ -31,10 +31,9 @@
 /** @brief A Int range */
 typedef struct _Eina_Range
 {
-   size_t start;
-   size_t length;
+  size_t start;
+  size_t length;
 } Eina_Range;
-
 
 /**
  * @brief convenience macro for comparing two Eina_Range structs
@@ -65,8 +64,8 @@ static inline size_t eina_range_end(const Eina_Range *range);
  *
  * @since 1.24
  * */
-static inline Eina_Range eina_range_intersect(const Eina_Range *range, const Eina_Range *range2);
-
+static inline Eina_Range eina_range_intersect(const Eina_Range *range,
+                                              const Eina_Range *range2);
 
 /**
  * @brief Union between two ranges.
@@ -77,7 +76,8 @@ static inline Eina_Range eina_range_intersect(const Eina_Range *range, const Ein
  *
  * @since 1.24
  * */
-static inline Eina_Range eina_range_union(const Eina_Range *range, const Eina_Range *range2);
+static inline Eina_Range eina_range_union(const Eina_Range *range,
+                                          const Eina_Range *range2);
 
 /**
  * @brief Check if value is set in a range.
@@ -87,7 +87,8 @@ static inline Eina_Range eina_range_union(const Eina_Range *range, const Eina_Ra
  *
  * @since 1.24
  * */
-static inline Efl_Bool eina_range_contains(const Eina_Range *range, size_t value);
+static inline Efl_Bool eina_range_contains(const Eina_Range *range,
+                                           size_t            value);
 
 /**
  * @brief Check if two ranges are equal.
@@ -98,7 +99,8 @@ static inline Efl_Bool eina_range_contains(const Eina_Range *range, size_t value
  *
  * @since 1.24
  * */
-static inline Efl_Bool eina_range_equal(const Eina_Range *range, const Eina_Range *range2);
+static inline Efl_Bool eina_range_equal(const Eina_Range *range,
+                                        const Eina_Range *range2);
 
 /**
  * @brief Check if two ranges are equal.

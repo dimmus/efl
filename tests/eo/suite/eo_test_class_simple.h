@@ -3,17 +3,17 @@
 
 typedef struct
 {
-   int a;
+  int a;
 } Simple_Public_Data;
 
-void simple_a_set(Eo *obj, int a);
-int simple_a_get(const Eo *obj);
+void     simple_a_set(Eo *obj, int a);
+int      simple_a_get(const Eo *obj);
 Efl_Bool simple_a_print(Eo *obj);
 Efl_Bool simple_class_hi_print(const Eo *obj);
-void simple_recursive(Eo *obj, int n);
-void simple_pure_virtual(Eo *obj);
-void simple_no_implementation(Eo *obj);
-Eo *simple_part_get(Eo *obj, const char *name);
+void     simple_recursive(Eo *obj, int n);
+void     simple_pure_virtual(Eo *obj);
+void     simple_no_implementation(Eo *obj);
+Eo      *simple_part_get(Eo *obj, const char *name);
 
 extern const Efl_Event_Description _EV_A_CHANGED;
 #define EV_A_CHANGED (&(_EV_A_CHANGED))

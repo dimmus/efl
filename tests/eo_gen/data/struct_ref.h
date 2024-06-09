@@ -2,14 +2,14 @@
 #define _EOLIAN_TYPEDEF_EO_H_
 
 #ifndef _STRUCT_EO_CLASS_TYPE
-#define _STRUCT_EO_CLASS_TYPE
+#  define _STRUCT_EO_CLASS_TYPE
 
 typedef Eo Struct;
 
 #endif
 
 #ifndef _STRUCT_EO_TYPES
-#define _STRUCT_EO_TYPES
+#  define _STRUCT_EO_TYPES
 
 /** Docs for struct Named.
  *
@@ -19,7 +19,7 @@ typedef Eo Struct;
  */
 typedef struct _Named
 {
-  int *field;
+  int        *field;
   const char *something;
 } Named;
 
@@ -42,7 +42,6 @@ typedef struct _Another
  */
 typedef struct _Opaque Opaque;
 
-
 #endif
 /** Docs for class Struct.
  *
@@ -64,7 +63,8 @@ EAPI EAPI_WEAK const Efl_Class *struct_class_get(void) EINA_CONST;
  *
  * @ingroup Struct
  */
-EAPI EAPI_WEAK char *struct_foo(Eo *obj, int idx) EFL_TRANSFER_OWNERSHIP EFL_WARN_UNUSED_RESULT;
+EAPI EAPI_WEAK char *
+struct_foo(Eo *obj, int idx) EFL_TRANSFER_OWNERSHIP EFL_WARN_UNUSED_RESULT;
 
 EAPI EAPI_WEAK Named *struct_bar(Eo *obj);
 

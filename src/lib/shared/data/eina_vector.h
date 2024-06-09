@@ -42,10 +42,11 @@ typedef struct _Eina_Vector2 Eina_Vector2;
 typedef struct _Eina_Vector3 Eina_Vector3;
 
 #define EINA_VECTOR2(x, y) ((Eina_Vector2) {(x), (y)})
+
 struct _Eina_Vector2
 {
-   double x;
-   double y;
+  double x;
+  double y;
 };
 
 /**
@@ -79,7 +80,8 @@ static inline void eina_vector2_array_set(Eina_Vector2 *dst, const double *v);
  *
  * @since 1.17
  */
-static inline void eina_vector2_copy(Eina_Vector2 *dst, const Eina_Vector2 *src);
+static inline void eina_vector2_copy(Eina_Vector2       *dst,
+                                     const Eina_Vector2 *src);
 
 /**
  * @brief Make negative vector.
@@ -89,7 +91,8 @@ static inline void eina_vector2_copy(Eina_Vector2 *dst, const Eina_Vector2 *src)
  *
  * @since 1.17
  */
-static inline void eina_vector2_negate(Eina_Vector2 *out, const Eina_Vector2 *v);
+static inline void eina_vector2_negate(Eina_Vector2       *out,
+                                       const Eina_Vector2 *v);
 
 /**
  * @brief Add two vectors.
@@ -100,7 +103,9 @@ static inline void eina_vector2_negate(Eina_Vector2 *out, const Eina_Vector2 *v)
  *
  * @since 1.17
  */
-static inline void eina_vector2_add(Eina_Vector2 *out, const Eina_Vector2 *a, const Eina_Vector2 *b);
+static inline void eina_vector2_add(Eina_Vector2       *out,
+                                    const Eina_Vector2 *a,
+                                    const Eina_Vector2 *b);
 
 /**
  * @brief Subtract two vectors
@@ -111,7 +116,9 @@ static inline void eina_vector2_add(Eina_Vector2 *out, const Eina_Vector2 *a, co
  *
  * @since 1.17
  */
-static inline void eina_vector2_subtract(Eina_Vector2 *out, const Eina_Vector2 *a, const Eina_Vector2 *b);
+static inline void eina_vector2_subtract(Eina_Vector2       *out,
+                                         const Eina_Vector2 *a,
+                                         const Eina_Vector2 *b);
 
 /**
  * @brief Scale vector.
@@ -122,7 +129,8 @@ static inline void eina_vector2_subtract(Eina_Vector2 *out, const Eina_Vector2 *
  *
  * @since 1.17
  */
-static inline void eina_vector2_scale(Eina_Vector2 *out, const Eina_Vector2 *v, double scale);
+static inline void
+eina_vector2_scale(Eina_Vector2 *out, const Eina_Vector2 *v, double scale);
 
 /**
  * @brief Return the dot product of the two vectors.
@@ -133,7 +141,8 @@ static inline void eina_vector2_scale(Eina_Vector2 *out, const Eina_Vector2 *v, 
  *
  * @since 1.17
  */
-static inline double eina_vector2_dot_product(const Eina_Vector2 *a, const Eina_Vector2 *b);
+static inline double eina_vector2_dot_product(const Eina_Vector2 *a,
+                                              const Eina_Vector2 *b);
 
 /**
  * @brief Return the length of the given vector.
@@ -164,7 +173,8 @@ static inline double eina_vector2_length_square_get(const Eina_Vector2 *v);
  *
  * @since 1.17
  */
-static inline double eina_vector2_distance_get(const Eina_Vector2 *a, const Eina_Vector2 *b);
+static inline double eina_vector2_distance_get(const Eina_Vector2 *a,
+                                               const Eina_Vector2 *b);
 
 /**
  * @brief Return the distance in square between of two vectors.
@@ -175,7 +185,8 @@ static inline double eina_vector2_distance_get(const Eina_Vector2 *a, const Eina
  *
  * @since 1.17
  */
-static inline double eina_vector2_distance_square_get(const Eina_Vector2 *a, const Eina_Vector2 *b);
+static inline double eina_vector2_distance_square_get(const Eina_Vector2 *a,
+                                                      const Eina_Vector2 *b);
 
 /**
  * @brief normalize vector.
@@ -185,7 +196,8 @@ static inline double eina_vector2_distance_square_get(const Eina_Vector2 *a, con
  *
  * @since 1.17
  */
-static inline void eina_vector2_normalize(Eina_Vector2 *out, const Eina_Vector2 *v);
+static inline void eina_vector2_normalize(Eina_Vector2       *out,
+                                          const Eina_Vector2 *v);
 
 /**
  * @brief Transform vector.
@@ -196,7 +208,9 @@ static inline void eina_vector2_normalize(Eina_Vector2 *out, const Eina_Vector2 
  *
  * @since 1.17
  */
-static inline void eina_vector2_transform(Eina_Vector2 *out, const Eina_Matrix2 *m, const Eina_Vector2 *v);
+static inline void eina_vector2_transform(Eina_Vector2       *out,
+                                          const Eina_Matrix2 *m,
+                                          const Eina_Vector2 *v);
 
 /**
  * @brief Homogeneous position transform vector.
@@ -207,7 +221,10 @@ static inline void eina_vector2_transform(Eina_Vector2 *out, const Eina_Matrix2 
  *
  * @since 1.17
  */
-static inline void eina_vector2_homogeneous_position_transform(Eina_Vector2 *out, const Eina_Matrix3 *m, const Eina_Vector2 *v);
+static inline void
+eina_vector2_homogeneous_position_transform(Eina_Vector2       *out,
+                                            const Eina_Matrix3 *m,
+                                            const Eina_Vector2 *v);
 
 /**
  * @brief Homogeneous direction transform vector.
@@ -218,7 +235,10 @@ static inline void eina_vector2_homogeneous_position_transform(Eina_Vector2 *out
  *
  * @since 1.17
  */
-static inline void eina_vector2_homogeneous_direction_transform(Eina_Vector2 *out, const Eina_Matrix3 *m, const Eina_Vector2 *v);
+static inline void
+eina_vector2_homogeneous_direction_transform(Eina_Vector2       *out,
+                                             const Eina_Matrix3 *m,
+                                             const Eina_Vector2 *v);
 
 /** @} */
 
@@ -229,9 +249,9 @@ static inline void eina_vector2_homogeneous_direction_transform(Eina_Vector2 *ou
  */
 struct _Eina_Vector3
 {
-   double x;
-   double y;
-   double z;
+  double x;
+  double y;
+  double z;
 };
 
 /**
@@ -244,7 +264,8 @@ struct _Eina_Vector3
  *
  * @since 1.18
  */
-static inline void eina_vector3_set(Eina_Vector3 *dst, double x, double y, double z);
+static inline void
+eina_vector3_set(Eina_Vector3 *dst, double x, double y, double z);
 
 /**
  * @brief Set array to vector.
@@ -266,7 +287,8 @@ static inline void eina_vector3_array_set(Eina_Vector3 *dst, const double *v);
  *
  * @since 1.18
  */
-static inline void eina_vector3_copy(Eina_Vector3 *dst, const Eina_Vector3 *src);
+static inline void eina_vector3_copy(Eina_Vector3       *dst,
+                                     const Eina_Vector3 *src);
 
 /**
  * @brief Make negative vector.
@@ -276,7 +298,8 @@ static inline void eina_vector3_copy(Eina_Vector3 *dst, const Eina_Vector3 *src)
  *
  * @since 1.18
  */
-static inline void eina_vector3_negate(Eina_Vector3 *out, const Eina_Vector3 *v);
+static inline void eina_vector3_negate(Eina_Vector3       *out,
+                                       const Eina_Vector3 *v);
 
 /**
  * @brief Add two vectors.
@@ -287,8 +310,9 @@ static inline void eina_vector3_negate(Eina_Vector3 *out, const Eina_Vector3 *v)
  *
  * @since 1.18
  */
-static inline void eina_vector3_add(Eina_Vector3 *out, const Eina_Vector3 *a,
-                           const Eina_Vector3 *b);
+static inline void eina_vector3_add(Eina_Vector3       *out,
+                                    const Eina_Vector3 *a,
+                                    const Eina_Vector3 *b);
 
 /**
  * @brief Subtract two vectors
@@ -299,8 +323,9 @@ static inline void eina_vector3_add(Eina_Vector3 *out, const Eina_Vector3 *a,
  *
  * @since 1.18
  */
-static inline void eina_vector3_subtract(Eina_Vector3 *out, const Eina_Vector3 *a,
-                                const Eina_Vector3 *b);
+static inline void eina_vector3_subtract(Eina_Vector3       *out,
+                                         const Eina_Vector3 *a,
+                                         const Eina_Vector3 *b);
 
 /**
  * @brief Scale vector.
@@ -311,7 +336,8 @@ static inline void eina_vector3_subtract(Eina_Vector3 *out, const Eina_Vector3 *
  *
  * @since 1.18
  */
-static inline void eina_vector3_scale(Eina_Vector3 *out, const Eina_Vector3 *v, double scale);
+static inline void
+eina_vector3_scale(Eina_Vector3 *out, const Eina_Vector3 *v, double scale);
 
 /**
  * @brief Multiply two vectors
@@ -322,8 +348,9 @@ static inline void eina_vector3_scale(Eina_Vector3 *out, const Eina_Vector3 *v, 
  *
  * @since 1.18
  */
-static inline void eina_vector3_multiply(Eina_Vector3 *out, const Eina_Vector3 *a,
-                                const Eina_Vector3 *b);
+static inline void eina_vector3_multiply(Eina_Vector3       *out,
+                                         const Eina_Vector3 *a,
+                                         const Eina_Vector3 *b);
 
 /**
  * @brief Return the dot product of the two vectors.
@@ -334,7 +361,8 @@ static inline void eina_vector3_multiply(Eina_Vector3 *out, const Eina_Vector3 *
  *
  * @since 1.18
  */
-static inline double eina_vector3_dot_product(const Eina_Vector3 *a, const Eina_Vector3 *b);
+static inline double eina_vector3_dot_product(const Eina_Vector3 *a,
+                                              const Eina_Vector3 *b);
 
 /**
  * @brief Create the cross product of the two vectors.
@@ -345,8 +373,9 @@ static inline double eina_vector3_dot_product(const Eina_Vector3 *a, const Eina_
  *
  * @since 1.18
  */
-static inline void eina_vector3_cross_product(Eina_Vector3 *out, const Eina_Vector3 *a,
-                                     const Eina_Vector3 *b);
+static inline void eina_vector3_cross_product(Eina_Vector3       *out,
+                                              const Eina_Vector3 *a,
+                                              const Eina_Vector3 *b);
 
 /**
  * @brief Return the length of the given vector.
@@ -377,7 +406,8 @@ static inline double eina_vector3_length_square_get(const Eina_Vector3 *v);
  *
  * @since 1.18
  */
-static inline double eina_vector3_distance_get(const Eina_Vector3 *a, const Eina_Vector3 *b);
+static inline double eina_vector3_distance_get(const Eina_Vector3 *a,
+                                               const Eina_Vector3 *b);
 
 /**
  * @brief Return the distance in square between of two vectors.
@@ -389,7 +419,7 @@ static inline double eina_vector3_distance_get(const Eina_Vector3 *a, const Eina
  * @since 1.18
  */
 static inline double eina_vector3_distance_square_get(const Eina_Vector3 *a,
-                                             const Eina_Vector3 *b);
+                                                      const Eina_Vector3 *b);
 
 /**
  * @brief Return the angle between of two vectors.
@@ -400,7 +430,8 @@ static inline double eina_vector3_distance_square_get(const Eina_Vector3 *a,
  *
  * @since 1.18
  */
-static inline double eina_vector3_angle_get(const Eina_Vector3 *a, const Eina_Vector3 *b);
+static inline double eina_vector3_angle_get(const Eina_Vector3 *a,
+                                            const Eina_Vector3 *b);
 
 /**
  * @brief normalize vector.
@@ -410,7 +441,8 @@ static inline double eina_vector3_angle_get(const Eina_Vector3 *a, const Eina_Ve
  *
  * @since 1.18
  */
-static inline void eina_vector3_normalize(Eina_Vector3 *out, const Eina_Vector3 *v);
+static inline void eina_vector3_normalize(Eina_Vector3       *out,
+                                          const Eina_Vector3 *v);
 
 /**
  * @brief Transform vector.
@@ -421,8 +453,9 @@ static inline void eina_vector3_normalize(Eina_Vector3 *out, const Eina_Vector3 
  *
  * @since 1.18
  */
-static inline void eina_vector3_transform(Eina_Vector3 *out, const Eina_Matrix3 *m,
-                                 const Eina_Vector3 *v);
+static inline void eina_vector3_transform(Eina_Vector3       *out,
+                                          const Eina_Matrix3 *m,
+                                          const Eina_Vector3 *v);
 
 /**
  * @brief Homogeneous direction transform vector.
@@ -433,8 +466,10 @@ static inline void eina_vector3_transform(Eina_Vector3 *out, const Eina_Matrix3 
  *
  * @since 1.18
  */
-static inline void eina_vector3_homogeneous_direction_transform(Eina_Vector3 *out, const Eina_Matrix4 *m,
-                                                               const Eina_Vector3 *v);
+static inline void
+eina_vector3_homogeneous_direction_transform(Eina_Vector3       *out,
+                                             const Eina_Matrix4 *m,
+                                             const Eina_Vector3 *v);
 
 /**
  * @brief Homogeneous position transform vector.
@@ -445,9 +480,10 @@ static inline void eina_vector3_homogeneous_direction_transform(Eina_Vector3 *ou
  *
  * @since 1.18
  */
-static inline void eina_vector3_homogeneous_position_transform(Eina_Vector3 *out, const Eina_Matrix4 *m,
-                                                               const Eina_Vector3 *v);
-
+static inline void
+eina_vector3_homogeneous_position_transform(Eina_Vector3       *out,
+                                            const Eina_Matrix4 *m,
+                                            const Eina_Vector3 *v);
 
 /**
  * @brief Rotate vector.
@@ -458,7 +494,8 @@ static inline void eina_vector3_homogeneous_position_transform(Eina_Vector3 *out
  *
  * @since 1.18
  */
-static inline void eina_vector3_quaternion_rotate(Eina_Vector3 *out, const Eina_Vector3 *v,
+static inline void eina_vector3_quaternion_rotate(Eina_Vector3          *out,
+                                                  const Eina_Vector3    *v,
                                                   const Eina_Quaternion *q);
 
 /**
@@ -470,8 +507,10 @@ static inline void eina_vector3_quaternion_rotate(Eina_Vector3 *out, const Eina_
  *
  * @since 1.18
  */
-static inline void eina_vector3_orthogonal_projection_on_plane(Eina_Vector3 *out, const Eina_Vector3 *v,
-                                                               const Eina_Vector3 *normal);
+static inline void
+eina_vector3_orthogonal_projection_on_plane(Eina_Vector3       *out,
+                                            const Eina_Vector3 *v,
+                                            const Eina_Vector3 *normal);
 
 /**
  * @brief Plane by points between three vectors.
@@ -483,8 +522,10 @@ static inline void eina_vector3_orthogonal_projection_on_plane(Eina_Vector3 *out
  *
  * @since 1.18
  */
-static inline void eina_vector3_plane_by_points(Eina_Quaternion *out, const Eina_Vector3 *a,
-                                                const Eina_Vector3 *b, const Eina_Vector3 *c);
+static inline void eina_vector3_plane_by_points(Eina_Quaternion    *out,
+                                                const Eina_Vector3 *a,
+                                                const Eina_Vector3 *b,
+                                                const Eina_Vector3 *c);
 
 /**
  * @brief Homogeneous position set.
@@ -494,7 +535,9 @@ static inline void eina_vector3_plane_by_points(Eina_Quaternion *out, const Eina
  *
  * @since 1.18
  */
-static inline void eina_vector3_homogeneous_position_set(Eina_Vector3 *out, const Eina_Quaternion *v);
+static inline void
+eina_vector3_homogeneous_position_set(Eina_Vector3          *out,
+                                      const Eina_Quaternion *v);
 
 /**
  * @brief Homogeneous direction set.
@@ -504,7 +547,9 @@ static inline void eina_vector3_homogeneous_position_set(Eina_Vector3 *out, cons
  *
  * @since 1.18
  */
-static inline void eina_vector3_homogeneous_direction_set(Eina_Vector3 *out, const Eina_Quaternion *v);
+static inline void
+eina_vector3_homogeneous_direction_set(Eina_Vector3          *out,
+                                       const Eina_Quaternion *v);
 
 /**
  * @brief Check the equivalent between of two vectors.
@@ -515,7 +560,8 @@ static inline void eina_vector3_homogeneous_direction_set(Eina_Vector3 *out, con
  *
  * @since 1.18
  */
-static inline Efl_Bool eina_vector3_equivalent(Eina_Vector3 *a, const Eina_Vector3 *b);
+static inline Efl_Bool eina_vector3_equivalent(Eina_Vector3       *a,
+                                               const Eina_Vector3 *b);
 
 /**
  * @brief Check the equivalent between of two triangles of vectors.
@@ -530,9 +576,12 @@ static inline Efl_Bool eina_vector3_equivalent(Eina_Vector3 *a, const Eina_Vecto
  *
  * @since 1.18
  */
-static inline Efl_Bool eina_vector3_triangle_equivalent(Eina_Vector3 *v0, Eina_Vector3 *v1,
-                                                         Eina_Vector3 *v2, Eina_Vector3 *w0,
-                                                         Eina_Vector3 *w1, Eina_Vector3 *w2);
+static inline Efl_Bool eina_vector3_triangle_equivalent(Eina_Vector3 *v0,
+                                                        Eina_Vector3 *v1,
+                                                        Eina_Vector3 *v2,
+                                                        Eina_Vector3 *w0,
+                                                        Eina_Vector3 *w1,
+                                                        Eina_Vector3 *w2);
 
 /** @} */
 

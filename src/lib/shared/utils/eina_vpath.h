@@ -84,7 +84,7 @@
  * @note on Windows, vpath like ~bob/foo is not supported.
  *
  */
-typedef const char * Eina_Vpath;
+typedef const char *Eina_Vpath;
 
 /**
  * Translate a virtual path into a normal path.
@@ -113,6 +113,7 @@ EINA_API char *eina_vpath_resolve(Eina_Vpath path);
  * @since 1.21
  *
  */
-EINA_API int eina_vpath_resolve_snprintf(char *str, size_t size, const char *format, ...);
+EINA_API int
+eina_vpath_resolve_snprintf(char *str, size_t size, const char *format, ...);
 #endif
 #endif

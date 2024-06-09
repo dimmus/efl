@@ -36,11 +36,11 @@ ColumnLimit: 80
 
 # Note: TabWidth and IndentWidth must be the same, or strange things happen.
 UseTab: Never
-TabWidth: 4
-IndentWidth: 4
+TabWidth: 2
+IndentWidth: 2
 
 PPIndentWidth: 2
-ContinuationIndentWidth: 4
+ContinuationIndentWidth: 2
 
 LineEnding: LF
 InsertNewlineAtEOF: true
@@ -204,6 +204,8 @@ IncludeCategories:
 AttributeMacros: ["__capability"]
 StatementAttributeLikeMacros: []
 StatementMacros: []
+
+SkipMacroDefinitionBody: true # clang-fromat >= 18
 
 ForEachMacros:
     - EINA_LIST_FOREACH

@@ -8,8 +8,8 @@
 
 typedef struct
 {
-    Simple_Protected_Data protected;
-    int a;
+  Simple_Protected_Data protected;
+  int a;
 } Private_Data;
 
 const Efl_Event_Description _EV_A_CHANGED = EFL_EVENT_DESCRIPTION("a,changed");
@@ -19,14 +19,14 @@ const Efl_Event_Description _EV_A_CHANGED = EFL_EVENT_DESCRIPTION("a,changed");
 static void
 _a_set(Eo *obj, void *class_data, int a)
 {
-    Private_Data *pd = class_data;
-    pd->a            = a;
-    printf("%s %d\n", __func__, pd->a);
+  Private_Data *pd = class_data;
+  pd->a            = a;
+  printf("%s %d\n", __func__, pd->a);
 
-    pd->protected.protected_x1     = a + 1;
-    pd->protected.public.public_x2 = a + 2;
+  pd->protected.protected_x1     = a + 1;
+  pd->protected.public.public_x2 = a + 2;
 
-    efl_event_callback_legacy_call(obj, EV_A_CHANGED, &pd->a);
+  efl_event_callback_legacy_call(obj, EV_A_CHANGED, &pd->a);
 }
 
 EFL_VOID_FUNC_BODYV(simple_a_set, EFL_FUNC_CALL(a), int a);
@@ -34,9 +34,9 @@ EFL_VOID_FUNC_BODYV(simple_a_set, EFL_FUNC_CALL(a), int a);
 static Efl_Bool
 _class_initializer(Efl_Class *klass)
 {
-    EFL_OPS_DEFINE(ops, EFL_OBJECT_OP_FUNC(simple_a_set, _a_set), );
+  EFL_OPS_DEFINE(ops, EFL_OBJECT_OP_FUNC(simple_a_set, _a_set), );
 
-    return efl_class_functions_set(klass, &ops, NULL);
+  return efl_class_functions_set(klass, &ops, NULL);
 }
 
 static const Efl_Class_Description class_desc = { EO_VERSION,

@@ -51,7 +51,7 @@ typedef Efl_Bool (*Eina_Lalloc_Alloc)(void *user_data, int num);
  * Type definition for the callback used to allocate new items in a lazy allocator.
  *
  */
-typedef void      (*Eina_Lalloc_Free)(void *user_data);
+typedef void (*Eina_Lalloc_Free)(void *user_data);
 /**
  * @def EINA_LALLOC_FREE
  * @param[in] function The function to free.
@@ -77,9 +77,9 @@ typedef struct _Eina_Lalloc Eina_Lalloc;
  *
  */
 EINA_API Eina_Lalloc *eina_lalloc_new(void             *data,
-                                  Eina_Lalloc_Alloc alloc_cb,
-                                  Eina_Lalloc_Free  free_cb,
-                                  int               num_init) EINA_ARG_NONNULL(2, 3);
+                                      Eina_Lalloc_Alloc alloc_cb,
+                                      Eina_Lalloc_Free  free_cb,
+                                      int num_init) EINA_ARG_NONNULL(2, 3);
 
 /**
  * @brief Frees the resources for a lazy allocator.
@@ -87,7 +87,7 @@ EINA_API Eina_Lalloc *eina_lalloc_new(void             *data,
  * @param[in,out] a The lazy allocator to free.
  *
  */
-EINA_API void      eina_lalloc_free(Eina_Lalloc *a) EINA_ARG_NONNULL(1);
+EINA_API void eina_lalloc_free(Eina_Lalloc *a) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Adds several elements to a lazy allocator.
@@ -98,8 +98,8 @@ EINA_API void      eina_lalloc_free(Eina_Lalloc *a) EINA_ARG_NONNULL(1);
  * @return #EFL_TRUE on success, else #EFL_FALSE.
  *
  */
-EINA_API Efl_Bool eina_lalloc_elements_add(Eina_Lalloc *a,
-                                        int          num) EINA_ARG_NONNULL(1);
+EINA_API Efl_Bool eina_lalloc_elements_add(Eina_Lalloc *a, int num)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Allocates one more of whatever the lazy allocator is allocating.

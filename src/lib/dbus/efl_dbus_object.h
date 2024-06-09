@@ -16,7 +16,10 @@
  * @param path object path of this object
  * @return The corresponding Efl_Dbus_Object.
  */
-EAPI Efl_Dbus_Object *efl_dbus_object_get(Efl_Dbus_Connection *conn, const char *bus, const char *path) EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Object *efl_dbus_object_get(Efl_Dbus_Connection *conn,
+                                          const char          *bus,
+                                          const char          *path)
+  EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Increase object reference.
@@ -24,7 +27,8 @@ EAPI Efl_Dbus_Object *efl_dbus_object_get(Efl_Dbus_Connection *conn, const char 
  * @param obj An Efl_Dbus_Object.
  * @return The same Efl_Dbus_Object with an increased refcount.
  */
-EAPI Efl_Dbus_Object *efl_dbus_object_ref(Efl_Dbus_Object *obj) EINA_ARG_NONNULL(1);
+EAPI Efl_Dbus_Object *efl_dbus_object_ref(Efl_Dbus_Object *obj)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Decrease object reference.
@@ -32,7 +36,7 @@ EAPI Efl_Dbus_Object *efl_dbus_object_ref(Efl_Dbus_Object *obj) EINA_ARG_NONNULL
  *
  * @param obj An Efl_Dbus_Object.
  */
-EAPI void          efl_dbus_object_unref(Efl_Dbus_Object *obj) EINA_ARG_NONNULL(1);
+EAPI void efl_dbus_object_unref(Efl_Dbus_Object *obj) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Add a callback function to be called when object will be freed.
@@ -41,7 +45,9 @@ EAPI void          efl_dbus_object_unref(Efl_Dbus_Object *obj) EINA_ARG_NONNULL(
  * @param cb callback that will be executed
  * @param data passed to callback
  */
-EAPI void          efl_dbus_object_free_cb_add(Efl_Dbus_Object *obj, Efl_Dbus_Free_Cb cb, const void *data) EINA_ARG_NONNULL(1, 2);
+EAPI void efl_dbus_object_free_cb_add(Efl_Dbus_Object *obj,
+                                      Efl_Dbus_Free_Cb cb,
+                                      const void *data) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Remove callback registered in efl_dbus_object_free_cb_add().
@@ -50,7 +56,9 @@ EAPI void          efl_dbus_object_free_cb_add(Efl_Dbus_Object *obj, Efl_Dbus_Fr
  * @param cb Callback that was registered.
  * @param data Data that was passed to callback.
  */
-EAPI void          efl_dbus_object_free_cb_del(Efl_Dbus_Object *obj, Efl_Dbus_Free_Cb cb, const void *data) EINA_ARG_NONNULL(1, 2);
+EAPI void efl_dbus_object_free_cb_del(Efl_Dbus_Object *obj,
+                                      Efl_Dbus_Free_Cb cb,
+                                      const void *data) EINA_ARG_NONNULL(1, 2);
 
 /**
  * @typedef Efl_Dbus_Object_Event_Type
@@ -59,12 +67,13 @@ EAPI void          efl_dbus_object_free_cb_del(Efl_Dbus_Object *obj, Efl_Dbus_Fr
  */
 typedef enum
 {
-   EFL_DBUS_OBJECT_EVENT_IFACE_ADDED = 0, /**< a parent path must have a ObjectManager interface */
-   EFL_DBUS_OBJECT_EVENT_IFACE_REMOVED, /**< a parent path must have a ObjectManager interface */
-   EFL_DBUS_OBJECT_EVENT_PROPERTY_CHANGED, /**< a property has changes */
-   EFL_DBUS_OBJECT_EVENT_PROPERTY_REMOVED, /**< a property was removed */
-   EFL_DBUS_OBJECT_EVENT_DEL,
-   EFL_DBUS_OBJECT_EVENT_LAST    /**< sentinel, not a real event type */
+  EFL_DBUS_OBJECT_EVENT_IFACE_ADDED =
+    0, /**< a parent path must have a ObjectManager interface */
+  EFL_DBUS_OBJECT_EVENT_IFACE_REMOVED, /**< a parent path must have a ObjectManager interface */
+  EFL_DBUS_OBJECT_EVENT_PROPERTY_CHANGED, /**< a property has changes */
+  EFL_DBUS_OBJECT_EVENT_PROPERTY_REMOVED, /**< a property was removed */
+  EFL_DBUS_OBJECT_EVENT_DEL,
+  EFL_DBUS_OBJECT_EVENT_LAST /**< sentinel, not a real event type */
 } Efl_Dbus_Object_Event_Type;
 
 /**
@@ -74,8 +83,8 @@ typedef enum
  */
 typedef struct _Efl_Dbus_Object_Event_Interface_Added
 {
-   const char  *interface; /**< The interface name */
-   Efl_Dbus_Proxy *proxy; /**< The proxy object */
+  const char     *interface; /**< The interface name */
+  Efl_Dbus_Proxy *proxy; /**< The proxy object */
 } Efl_Dbus_Object_Event_Interface_Added;
 
 /**
@@ -85,7 +94,7 @@ typedef struct _Efl_Dbus_Object_Event_Interface_Added
  */
 typedef struct _Efl_Dbus_Object_Event_Interface_Removed
 {
-   const char *interface; /**< The interface name */
+  const char *interface; /**< The interface name */
 } Efl_Dbus_Object_Event_Interface_Removed;
 
 /**
@@ -95,10 +104,10 @@ typedef struct _Efl_Dbus_Object_Event_Interface_Removed
  */
 typedef struct _Efl_Dbus_Object_Event_Property_Changed
 {
-   const char       *interface; /**< The interface name */
-   Efl_Dbus_Proxy      *proxy; /**< The proxy object */
-   const char       *name; /**< The name of the property */
-   const Eina_Value *value; /**< The value of the property */
+  const char       *interface; /**< The interface name */
+  Efl_Dbus_Proxy   *proxy; /**< The proxy object */
+  const char       *name; /**< The name of the property */
+  const Eina_Value *value; /**< The value of the property */
 } Efl_Dbus_Object_Event_Property_Changed;
 
 /**
@@ -108,9 +117,9 @@ typedef struct _Efl_Dbus_Object_Event_Property_Changed
  */
 typedef struct _Efl_Dbus_Object_Event_Property_Removed
 {
-   const char  *interface; /**< The interface name */
-   Efl_Dbus_Proxy *proxy; /**< The proxy object */
-   const char  *name; /**< The name of the property */
+  const char     *interface; /**< The interface name */
+  Efl_Dbus_Proxy *proxy; /**< The proxy object */
+  const char     *name; /**< The name of the property */
 } Efl_Dbus_Object_Event_Property_Removed;
 
 /**
@@ -122,7 +131,9 @@ typedef struct _Efl_Dbus_Object_Event_Property_Removed
  * @param obj The Efl_Dbus_Object.
  * @param event_info Information about the event that triggered the callback.
  */
-typedef void (*Efl_Dbus_Object_Event_Cb)(void *data, Efl_Dbus_Object *obj, void *event_info);
+typedef void (*Efl_Dbus_Object_Event_Cb)(void            *data,
+                                         Efl_Dbus_Object *obj,
+                                         void            *event_info);
 
 /**
  * @brief Add a callback function to be called when an event of the specified
@@ -133,7 +144,11 @@ typedef void (*Efl_Dbus_Object_Event_Cb)(void *data, Efl_Dbus_Object *obj, void 
  * @param cb The callback to call.
  * @param cb_data The data to pass to the callback.
  */
-EAPI void                  efl_dbus_object_event_callback_add(Efl_Dbus_Object *obj, Efl_Dbus_Object_Event_Type type, Efl_Dbus_Object_Event_Cb cb, const void *cb_data) EINA_ARG_NONNULL(1, 3);
+EAPI void efl_dbus_object_event_callback_add(Efl_Dbus_Object           *obj,
+                                             Efl_Dbus_Object_Event_Type type,
+                                             Efl_Dbus_Object_Event_Cb   cb,
+                                             const void                *cb_data)
+  EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Remove callback registered in efl_dbus_object_event_callback_add().
@@ -143,7 +158,11 @@ EAPI void                  efl_dbus_object_event_callback_add(Efl_Dbus_Object *o
  * @param cb The callback to call.
  * @param cb_data The data to pass to the callback.
  */
-EAPI void                  efl_dbus_object_event_callback_del(Efl_Dbus_Object *obj, Efl_Dbus_Object_Event_Type type, Efl_Dbus_Object_Event_Cb cb, const void *cb_data) EINA_ARG_NONNULL(1, 3);
+EAPI void efl_dbus_object_event_callback_del(Efl_Dbus_Object           *obj,
+                                             Efl_Dbus_Object_Event_Type type,
+                                             Efl_Dbus_Object_Event_Cb   cb,
+                                             const void                *cb_data)
+  EINA_ARG_NONNULL(1, 3);
 
 /**
  * Get the Efl_Dbus_Connection object associated with a Efl_Dbus_Object.
@@ -151,7 +170,9 @@ EAPI void                  efl_dbus_object_event_callback_del(Efl_Dbus_Object *o
  * @param obj The Efl_Dbus_Object.
  * @return The corresponding Efl_Dbus_Connection object.
  */
-EAPI Efl_Dbus_Connection     *efl_dbus_object_connection_get(const Efl_Dbus_Object *obj) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Connection *
+efl_dbus_object_connection_get(const Efl_Dbus_Object *obj)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the name associated with a Efl_Dbus_Object.
@@ -159,7 +180,8 @@ EAPI Efl_Dbus_Connection     *efl_dbus_object_connection_get(const Efl_Dbus_Obje
  * @param obj The Efl_Dbus_Object.
  * @return A string corresponding to the Efl_Dbus_Object name.
  */
-EAPI const char           *efl_dbus_object_bus_name_get(const Efl_Dbus_Object *obj) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_object_bus_name_get(const Efl_Dbus_Object *obj)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * Get the path associated with a Efl_Dbus_Object.
@@ -167,7 +189,8 @@ EAPI const char           *efl_dbus_object_bus_name_get(const Efl_Dbus_Object *o
  * @param obj The Efl_Dbus_Object.
  * @return A string corresponding to the Efl_Dbus_Object path.
  */
-EAPI const char           *efl_dbus_object_path_get(const Efl_Dbus_Object *obj) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *efl_dbus_object_path_get(const Efl_Dbus_Object *obj)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Send a message.
@@ -181,7 +204,12 @@ EAPI const char           *efl_dbus_object_path_get(const Efl_Dbus_Object *obj) 
  * ELDBUS_TIMEOUT_INFINITE for no timeout
  * @return A Efl_Dbus_Pending object.
  */
-EAPI Efl_Dbus_Pending        *efl_dbus_object_send(Efl_Dbus_Object *obj, Efl_Dbus_Message *msg, Efl_Dbus_Message_Cb cb, const void *cb_data, double timeout) EINA_ARG_NONNULL(1, 2);
+EAPI Efl_Dbus_Pending *efl_dbus_object_send(Efl_Dbus_Object    *obj,
+                                            Efl_Dbus_Message   *msg,
+                                            Efl_Dbus_Message_Cb cb,
+                                            const void         *cb_data,
+                                            double              timeout)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Add a signal handler.
@@ -193,7 +221,12 @@ EAPI Efl_Dbus_Pending        *efl_dbus_object_send(Efl_Dbus_Object *obj, Efl_Dbu
  * @param cb_data data that will be passed to callback
  * @return A listener to the desired signal.
  */
-EAPI Efl_Dbus_Signal_Handler *efl_dbus_object_signal_handler_add(Efl_Dbus_Object *obj, const char *interface, const char *member, Efl_Dbus_Signal_Cb cb, const void *cb_data) EINA_ARG_NONNULL(1, 4);
+EAPI Efl_Dbus_Signal_Handler *
+efl_dbus_object_signal_handler_add(Efl_Dbus_Object   *obj,
+                                   const char        *interface,
+                                   const char        *member,
+                                   Efl_Dbus_Signal_Cb cb,
+                                   const void *cb_data) EINA_ARG_NONNULL(1, 4);
 
 /**
  * @brief Call a dbus method on the Efl_Dbus_Object.
@@ -204,7 +237,10 @@ EAPI Efl_Dbus_Signal_Handler *efl_dbus_object_signal_handler_add(Efl_Dbus_Object
  *
  * @return a new Efl_Dbus_Message, free with efl_dbus_message_unref()
  */
-EAPI Efl_Dbus_Message *efl_dbus_object_method_call_new(Efl_Dbus_Object *obj, const char *interface, const char *member) EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Message *efl_dbus_object_method_call_new(Efl_Dbus_Object *obj,
+                                                       const char *interface,
+                                                       const char *member)
+  EINA_ARG_NONNULL(1, 2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @}

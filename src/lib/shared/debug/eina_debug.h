@@ -17,10 +17,10 @@
  */
 
 #ifndef EINA_DEBUG_H_
-# define EINA_DEBUG_H_
+#define EINA_DEBUG_H_
 
 #include "shared_config.h"
-# include "eina_list.h"
+#include "eina_list.h"
 
 #ifdef EFL_BETA_API_SUPPORT
 
@@ -37,9 +37,10 @@
 
 enum
 {
-   EINA_DEBUG_OPCODE_INVALID = -1, /**< Invalid opcode value */
-   EINA_DEBUG_OPCODE_REGISTER = 0, /**< Opcode used to register other opcodes */
-   EINA_DEBUG_OPCODE_HELLO = 1 /**< Opcode used to send greetings to the daemon */
+  EINA_DEBUG_OPCODE_INVALID  = -1, /**< Invalid opcode value */
+  EINA_DEBUG_OPCODE_REGISTER = 0, /**< Opcode used to register other opcodes */
+  EINA_DEBUG_OPCODE_HELLO =
+    1 /**< Opcode used to send greetings to the daemon */
 };
 
 /**
@@ -63,7 +64,10 @@ typedef struct _Eina_Debug_Session Eina_Debug_Session;
  *
  * @return True on success, false if the connection seems compromised.
  */
-typedef Efl_Bool (*Eina_Debug_Cb)(Eina_Debug_Session *session, int srcid, void *buffer, int size);
+typedef Efl_Bool (*Eina_Debug_Cb)(Eina_Debug_Session *session,
+                                  int                 srcid,
+                                  void               *buffer,
+                                  int                 size);
 
 /**
  * @typedef Eina_Debug_Opcode_Status_Cb
@@ -93,7 +97,8 @@ typedef void (*Eina_Debug_Opcode_Status_Cb)(void *data, Efl_Bool status);
  *
  * @return The return result of the invoked callback.
  */
-typedef Efl_Bool (*Eina_Debug_Dispatch_Cb)(Eina_Debug_Session *session, void *buffer);
+typedef Efl_Bool (*Eina_Debug_Dispatch_Cb)(Eina_Debug_Session *session,
+                                           void               *buffer);
 
 /**
  * @typedef Eina_Debug_Timer_Cb
@@ -114,13 +119,13 @@ typedef struct _Eina_Debug_Timer Eina_Debug_Timer;
  */
 typedef struct
 {
-   unsigned int size; /**< Packet size including this element */
-   /**<
+  unsigned int size; /**< Packet size including this element */
+  /**<
     * During sending, it corresponds to the id of the destination. During reception, it is the id of the source
     * The daemon is in charge of swapping the id before forwarding the packet to the destination.
     */
-   int cid;
-   int opcode; /**< Opcode of the packet */
+  int cid;
+  int opcode; /**< Opcode of the packet */
 } Eina_Debug_Packet_Header;
 
 /**
@@ -128,7 +133,7 @@ typedef struct
  * The problem is on windows where you can't declare a static array with
  * external symbols in it, because the addresses are only known at runtime.
  */
-#define EINA_DEBUG_OPCODES_ARRAY_DEFINE(Name, ...)                           \
+#  define EINA_DEBUG_OPCODES_ARRAY_DEFINE(Name, ...)                           \
   static Eina_Debug_Opcode *                                      \
   Name(void)                                                            \
   {                                                                     \
@@ -150,9 +155,12 @@ typedef struct
  */
 typedef struct
 {
-   char *opcode_name; /**< Opcode string. On registration, the daemon uses it to calculate an opcode id */
-   int *opcode_id; /**< A pointer to store the opcode id received from the daemon */
-   Eina_Debug_Cb cb; /**< Callback to call when a packet corresponding to the opcode is received */
+  char *
+    opcode_name; /**< Opcode string. On registration, the daemon uses it to calculate an opcode id */
+  int *
+    opcode_id; /**< A pointer to store the opcode id received from the daemon */
+  Eina_Debug_Cb
+    cb; /**< Callback to call when a packet corresponding to the opcode is received */
 } Eina_Debug_Opcode;
 
 /**
@@ -201,7 +209,9 @@ EINA_API void eina_debug_session_terminate(Eina_Debug_Session *session);
  * @param[in,out] session the session
  * @param[in] disp_cb the new dispatcher for the given session
  */
-EINA_API void eina_debug_session_dispatch_override(Eina_Debug_Session *session, Eina_Debug_Dispatch_Cb disp_cb);
+EINA_API void
+eina_debug_session_dispatch_override(Eina_Debug_Session    *session,
+                                     Eina_Debug_Dispatch_Cb disp_cb);
 
 /**
  * @brief Get the dispatcher of a specific session
@@ -210,7 +220,8 @@ EINA_API void eina_debug_session_dispatch_override(Eina_Debug_Session *session, 
  *
  * @return The session dispatcher.
  */
-EINA_API Eina_Debug_Dispatch_Cb eina_debug_session_dispatch_get(Eina_Debug_Session *session);
+EINA_API Eina_Debug_Dispatch_Cb
+eina_debug_session_dispatch_get(Eina_Debug_Session *session);
 
 /**
  * @brief Dispatch a given packet according to its header.
@@ -224,7 +235,8 @@ EINA_API Eina_Debug_Dispatch_Cb eina_debug_session_dispatch_get(Eina_Debug_Sessi
  *
  * @return True on success, false if the connection seems compromised.
  */
-EINA_API Efl_Bool eina_debug_dispatch(Eina_Debug_Session *session, void *buffer);
+EINA_API Efl_Bool eina_debug_dispatch(Eina_Debug_Session *session,
+                                      void               *buffer);
 
 /**
  * @brief Set data to a session
@@ -232,7 +244,8 @@ EINA_API Efl_Bool eina_debug_dispatch(Eina_Debug_Session *session, void *buffer)
  * @param[in,out] session the session
  * @param[in] data the data to set
  */
-EINA_API void eina_debug_session_data_set(Eina_Debug_Session *session, void *data);
+EINA_API void eina_debug_session_data_set(Eina_Debug_Session *session,
+                                          void               *data);
 
 /**
  * @brief Get the data attached to a session
@@ -257,9 +270,10 @@ EINA_API void *eina_debug_session_data_get(Eina_Debug_Session *session);
  * @param[in] status_cb a function to call when the opcodes are received
  * @param[in] status_data the data to give to status_cb
  */
-EINA_API void eina_debug_opcodes_register(Eina_Debug_Session *session,
-      const Eina_Debug_Opcode ops[],
-      Eina_Debug_Opcode_Status_Cb status_cb, void *status_data);
+EINA_API void eina_debug_opcodes_register(Eina_Debug_Session         *session,
+                                          const Eina_Debug_Opcode     ops[],
+                                          Eina_Debug_Opcode_Status_Cb status_cb,
+                                          void *status_data);
 
 /**
  * @brief Send a packet to the given destination
@@ -274,7 +288,11 @@ EINA_API void eina_debug_opcodes_register(Eina_Debug_Session *session,
  *
  * @return The number of sent bytes.
  */
-EINA_API int eina_debug_session_send(Eina_Debug_Session *session, int dest_id, int op, void *data, int size);
+EINA_API int eina_debug_session_send(Eina_Debug_Session *session,
+                                     int                 dest_id,
+                                     int                 op,
+                                     void               *data,
+                                     int                 size);
 
 /**
  * @brief Add a timer
@@ -285,7 +303,9 @@ EINA_API int eina_debug_session_send(Eina_Debug_Session *session, int dest_id, i
  *
  * @return The timer handle, NULL on error.
  */
-EINA_API Eina_Debug_Timer *eina_debug_timer_add(unsigned int timeout_ms, Eina_Debug_Timer_Cb cb, void *data);
+EINA_API Eina_Debug_Timer *eina_debug_timer_add(unsigned int        timeout_ms,
+                                                Eina_Debug_Timer_Cb cb,
+                                                void               *data);
 
 /**
  * @brief Delete a timer

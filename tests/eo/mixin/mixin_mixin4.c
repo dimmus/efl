@@ -12,7 +12,7 @@
 #define MY_CLASS MIXIN4_CLASS
 
 static const Efl_Class_Description class_desc = {
-    EO_VERSION, "Mixin4", EFL_CLASS_TYPE_MIXIN, 0, NULL, NULL, NULL
+  EO_VERSION, "Mixin4", EFL_CLASS_TYPE_MIXIN, 0, NULL, NULL, NULL
 };
 
 EFL_DEFINE_CLASS(mixin4_class_get, &class_desc, NULL, NULL);

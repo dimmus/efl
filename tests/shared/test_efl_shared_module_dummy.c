@@ -9,7 +9,7 @@
 Efl_Bool
 dummy_module_init(void)
 {
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 void

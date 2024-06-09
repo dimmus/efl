@@ -17,40 +17,36 @@
  */
 
 #ifndef EINA_INLINE_PRIVATE_H_
-# define EINA_INLINE_PRIVATE_H_
+#define EINA_INLINE_PRIVATE_H_
 
-# include <time.h>
-# include <sys/time.h>
+#include <time.h>
+#include <sys/time.h>
 
 typedef struct timespec Eina_Nano_Time;
 
 static inline int
 _eina_time_get(Eina_Nano_Time *tp)
 {
-# if defined(CLOCK_PROCESS_CPUTIME_ID)
-   if (!clock_gettime(CLOCK_PROCESS_CPUTIME_ID, tp))
-     return 0;
-# endif
-# if defined(CLOCK_PROF)
-   if (!clock_gettime(CLOCK_PROF, tp))
-     return 0;
-# endif
-# if defined(CLOCK_REALTIME)
-   if (!clock_gettime(CLOCK_REALTIME, tp))
-     return 0;
-# endif
+#if defined(CLOCK_PROCESS_CPUTIME_ID)
+  if (!clock_gettime(CLOCK_PROCESS_CPUTIME_ID, tp)) return 0;
+#endif
+#if defined(CLOCK_PROF)
+  if (!clock_gettime(CLOCK_PROF, tp)) return 0;
+#endif
+#if defined(CLOCK_REALTIME)
+  if (!clock_gettime(CLOCK_REALTIME, tp)) return 0;
+#endif
 
 /* FIXME: Have a look if and how we can support CLOCK_MONOTONIC */
 
-   struct timeval tv;
+  struct timeval tv;
 
-   if (gettimeofday(&tv, NULL))
-     return -1;
+  if (gettimeofday(&tv, NULL)) return -1;
 
-   tp->tv_sec = tv.tv_sec;
-   tp->tv_nsec = tv.tv_usec * 1000L;
+  tp->tv_sec  = tv.tv_sec;
+  tp->tv_nsec = tv.tv_usec * 1000L;
 
-   return 0;
+  return 0;
 }
 
 static inline long int
@@ -68,8 +64,8 @@ _eina_time_delta(Eina_Nano_Time *start, Eina_Nano_Time *end)
 {
   long int r;
 
-  r = (end->tv_sec - start->tv_sec) * 1000000000 +
-    end->tv_nsec - start->tv_nsec;
+  r =
+    (end->tv_sec - start->tv_sec) * 1000000000 + end->tv_nsec - start->tv_nsec;
 
   return r;
 }

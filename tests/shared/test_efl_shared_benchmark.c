@@ -30,45 +30,45 @@ static int global_test = 0;
 static void
 _eina_benchmark_specimens(int request)
 {
-    int i;
-    int a = 0;
+  int i;
+  int a = 0;
 
-    for (i = 0; i < request; ++i)
-        a += i;
+  for (i = 0; i < request; ++i)
+    a += i;
 
-    global_test = a;
+  global_test = a;
 }
 
 EFL_START_TEST(efl_shared_benchmark_simple)
 {
-    Eina_Benchmark     *eb;
-    Eina_Array_Iterator it;
-    Eina_Array         *ea;
-    char               *tmp;
-    unsigned int        i;
+  Eina_Benchmark     *eb;
+  Eina_Array_Iterator it;
+  Eina_Array         *ea;
+  char               *tmp;
+  unsigned int        i;
 
-    eb = eina_benchmark_new("benchmark", "test");
-    fail_if(!eb);
+  eb = eina_benchmark_new("benchmark", "test");
+  fail_if(!eb);
 
-    eina_benchmark_register(eb,
-                            "specimens_check",
-                            EINA_BENCHMARK(_eina_benchmark_specimens),
-                            1000,
-                            1100,
-                            100);
+  eina_benchmark_register(eb,
+                          "specimens_check",
+                          EINA_BENCHMARK(_eina_benchmark_specimens),
+                          1000,
+                          1100,
+                          100);
 
-    ea = eina_benchmark_run(eb);
-    fail_if(!ea);
+  ea = eina_benchmark_run(eb);
+  fail_if(!ea);
 
-    EINA_ARRAY_ITER_NEXT(ea, i, tmp, it)
-    {
-        fail_if(!tmp);
-        fail_if(unlink(tmp));
-    }
+  EINA_ARRAY_ITER_NEXT(ea, i, tmp, it)
+  {
+    fail_if(!tmp);
+    fail_if(unlink(tmp));
+  }
 
-    fail_if(global_test != 499500);
+  fail_if(global_test != 499500);
 
-    eina_benchmark_free(eb);
+  eina_benchmark_free(eb);
 }
 
 EFL_END_TEST
@@ -76,5 +76,5 @@ EFL_END_TEST
 void
 eina_test_benchmark(TCase *tc)
 {
-    tcase_add_test(tc, efl_shared_benchmark_simple);
+  tcase_add_test(tc, efl_shared_benchmark_simple);
 }

@@ -5,7 +5,7 @@ void simple_a_set(Eo *obj, int a);
 
 typedef struct
 {
-   int public_x2;
+  int public_x2;
 } Simple_Public_Data;
 
 extern const Efl_Event_Description _EV_A_CHANGED;

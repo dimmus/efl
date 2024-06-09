@@ -17,11 +17,11 @@ EFL_CALLBACKS_ARRAY_DEFINE(core_idle_exiter_callbacks,
 EAPI Core_Idle_Exiter *
 core_idle_exiter_add(Core_Task_Cb func, const void *data)
 {
-    return _core_factorized_idle_add(core_idle_exiter_callbacks(), func, data);
+  return _core_factorized_idle_add(core_idle_exiter_callbacks(), func, data);
 }
 
 EAPI void *
 core_idle_exiter_del(Core_Idle_Exiter *idle_exiter)
 {
-    return _core_factorized_idle_del(idle_exiter);
+  return _core_factorized_idle_del(idle_exiter);
 }

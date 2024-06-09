@@ -24,7 +24,6 @@
 
 #include "eina_fp.h"
 
-
 /**
  * @addtogroup Eina_Convert_Group Convert
  *
@@ -158,9 +157,12 @@
  * @{
  */
 
-EINA_API extern Eina_Error EINA_ERROR_CONVERT_P_NOT_FOUND; /**< Not used, perhaps a placeholder?  Defined as 0 in eina_convert.c*/
-EINA_API extern Eina_Error EINA_ERROR_CONVERT_0X_NOT_FOUND; /**< Not used, perhaps a placeholder?  Defined as 0 in eina_convert.c*/
-EINA_API extern Eina_Error EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH; /**< Not used, perhaps a placeholder?  Defined as 0 in eina_convert.c*/
+EINA_API extern Eina_Error
+  EINA_ERROR_CONVERT_P_NOT_FOUND; /**< Not used, perhaps a placeholder?  Defined as 0 in eina_convert.c*/
+EINA_API extern Eina_Error
+  EINA_ERROR_CONVERT_0X_NOT_FOUND; /**< Not used, perhaps a placeholder?  Defined as 0 in eina_convert.c*/
+EINA_API extern Eina_Error
+  EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH; /**< Not used, perhaps a placeholder?  Defined as 0 in eina_convert.c*/
 
 /**
  * @brief Converts an integer number to a string in decimal base.
@@ -177,7 +179,7 @@ EINA_API extern Eina_Error EINA_ERROR_CONVERT_OUTRUN_STRING_LENGTH; /**< Not use
  * The returned value is the length of the string, including the null
  * terminated character.
  */
-EINA_API int       eina_convert_itoa(int n, char *s)  EINA_ARG_NONNULL(2);
+EINA_API int eina_convert_itoa(int n, char *s) EINA_ARG_NONNULL(2);
 
 /**
  * @brief Converts an integer number to a string in hexadecimal base.
@@ -195,8 +197,7 @@ EINA_API int       eina_convert_itoa(int n, char *s)  EINA_ARG_NONNULL(2);
  * The returned value is the length of the string, including the nul
  * terminated character.
  */
-EINA_API int       eina_convert_xtoa(unsigned int n, char *s) EINA_ARG_NONNULL(2);
-
+EINA_API int eina_convert_xtoa(unsigned int n, char *s) EINA_ARG_NONNULL(2);
 
 /**
  * @brief Converts a double to a string.
@@ -220,7 +221,7 @@ EINA_API int       eina_convert_xtoa(unsigned int n, char *s) EINA_ARG_NONNULL(2
  * The returned value is the length of the string, including the null
  * character.
  */
-EINA_API int       eina_convert_dtoa(double d, char *des) EINA_ARG_NONNULL(2);
+EINA_API int eina_convert_dtoa(double d, char *des) EINA_ARG_NONNULL(2);
 
 /**
  * @brief Converts a string to a double.
@@ -258,9 +259,9 @@ EINA_API int       eina_convert_dtoa(double d, char *des) EINA_ARG_NONNULL(2);
  * returned.
  */
 EINA_API Efl_Bool eina_convert_atod(const char *src,
-                                 int         length,
-                                 long long  *m,
-                                 long       *e) EINA_ARG_NONNULL(1, 3, 4);
+                                    int         length,
+                                    long long  *m,
+                                    long       *e) EINA_ARG_NONNULL(1, 3, 4);
 
 /**
  * @brief Converts a 32.32 fixed point number to a string.
@@ -289,8 +290,7 @@ EINA_API Efl_Bool eina_convert_atod(const char *src,
  * implements the frexp() function for fixed point numbers and does
  * some optimization.
  */
-EINA_API int       eina_convert_fptoa(Eina_F32p32 fp,
-                                  char       *des) EINA_ARG_NONNULL(2);
+EINA_API int eina_convert_fptoa(Eina_F32p32 fp, char *des) EINA_ARG_NONNULL(2);
 
 /**
  * @brief Converts a string to a 32.32 fixed point number.
@@ -330,8 +330,8 @@ EINA_API int       eina_convert_fptoa(Eina_F32p32 fp,
  * shift to compute the fixed point number.
  */
 EINA_API Efl_Bool eina_convert_atofp(const char  *src,
-                                  int          length,
-                                  Eina_F32p32 *fp) EINA_ARG_NONNULL(1, 3);
+                                     int          length,
+                                     Eina_F32p32 *fp) EINA_ARG_NONNULL(1, 3);
 
 /**
  * @brief Converts a string to a floating point number.

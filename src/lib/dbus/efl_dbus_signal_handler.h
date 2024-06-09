@@ -21,7 +21,14 @@
  *
  * @return signal handler
  */
-EAPI Efl_Dbus_Signal_Handler *efl_dbus_signal_handler_add(Efl_Dbus_Connection *conn, const char *sender, const char *path, const char *interface, const char *member, Efl_Dbus_Signal_Cb cb, const void *cb_data) EINA_ARG_NONNULL(1, 6);
+EAPI Efl_Dbus_Signal_Handler *
+efl_dbus_signal_handler_add(Efl_Dbus_Connection *conn,
+                            const char          *sender,
+                            const char          *path,
+                            const char          *interface,
+                            const char          *member,
+                            Efl_Dbus_Signal_Cb   cb,
+                            const void *cb_data) EINA_ARG_NONNULL(1, 6);
 
 /**
  * @brief Increase signal handler reference.
@@ -30,7 +37,9 @@ EAPI Efl_Dbus_Signal_Handler *efl_dbus_signal_handler_add(Efl_Dbus_Connection *c
  *
  * @return the same signal handler, @p handler
  */
-EAPI Efl_Dbus_Signal_Handler *efl_dbus_signal_handler_ref(Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1);
+EAPI Efl_Dbus_Signal_Handler *
+efl_dbus_signal_handler_ref(Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Decrease signal handler reference.
@@ -38,7 +47,8 @@ EAPI Efl_Dbus_Signal_Handler *efl_dbus_signal_handler_ref(Efl_Dbus_Signal_Handle
  *
  * @param handler signal handler
  */
-EAPI void                  efl_dbus_signal_handler_unref(Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1);
+EAPI void efl_dbus_signal_handler_unref(Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Decrease signal handler reference like efl_dbus_signal_handler_unref()
@@ -47,7 +57,8 @@ EAPI void                  efl_dbus_signal_handler_unref(Efl_Dbus_Signal_Handler
  *
  * @param handler signal handler to delete
  */
-EAPI void                  efl_dbus_signal_handler_del(Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1);
+EAPI void efl_dbus_signal_handler_del(Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Add extra argument in match of signal handler to obtain specifics signals.
@@ -67,7 +78,9 @@ EAPI void                  efl_dbus_signal_handler_del(Efl_Dbus_Signal_Handler *
  * @note For more information:
  * http://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-routing-match-rules
  */
-EAPI Efl_Bool             efl_dbus_signal_handler_match_extra_set(Efl_Dbus_Signal_Handler *sh, ...) EINA_ARG_NONNULL(1) EINA_SENTINEL;
+EAPI Efl_Bool
+efl_dbus_signal_handler_match_extra_set(Efl_Dbus_Signal_Handler *sh, ...)
+  EINA_ARG_NONNULL(1) EINA_SENTINEL;
 
 /**
  * @brief Add extra argument in match of signal handler to obtain specifics signals.
@@ -87,7 +100,9 @@ EAPI Efl_Bool             efl_dbus_signal_handler_match_extra_set(Efl_Dbus_Signa
  * @note To information:
  * http://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-routing-match-rules
  */
-EAPI Efl_Bool             efl_dbus_signal_handler_match_extra_vset(Efl_Dbus_Signal_Handler *sh, va_list ap) EINA_ARG_NONNULL(1);
+EAPI Efl_Bool
+efl_dbus_signal_handler_match_extra_vset(Efl_Dbus_Signal_Handler *sh,
+                                         va_list ap) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Add a callback function to be called when signal handler will be freed.
@@ -96,7 +111,10 @@ EAPI Efl_Bool             efl_dbus_signal_handler_match_extra_vset(Efl_Dbus_Sign
  * @param cb callback that will be called when this signal handler is freed
  * @param data data that will be passed to callback
  */
-EAPI void                  efl_dbus_signal_handler_free_cb_add(Efl_Dbus_Signal_Handler *handler, Efl_Dbus_Free_Cb cb, const void *data) EINA_ARG_NONNULL(1, 2);
+EAPI void efl_dbus_signal_handler_free_cb_add(Efl_Dbus_Signal_Handler *handler,
+                                              Efl_Dbus_Free_Cb         cb,
+                                              const void              *data)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Remove callback registered in efl_dbus_signal_handler_free_cb_add().
@@ -105,15 +123,30 @@ EAPI void                  efl_dbus_signal_handler_free_cb_add(Efl_Dbus_Signal_H
  * @param cb registered callback to remove
  * @param data data that will be passed to callback
  */
-EAPI void                  efl_dbus_signal_handler_free_cb_del(Efl_Dbus_Signal_Handler *handler, Efl_Dbus_Free_Cb cb, const void *data) EINA_ARG_NONNULL(1, 2);
+EAPI void efl_dbus_signal_handler_free_cb_del(Efl_Dbus_Signal_Handler *handler,
+                                              Efl_Dbus_Free_Cb         cb,
+                                              const void              *data)
+  EINA_ARG_NONNULL(1, 2);
 
-EAPI const char           *efl_dbus_signal_handler_sender_get(const Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
-EAPI const char           *efl_dbus_signal_handler_path_get(const Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
-EAPI const char           *efl_dbus_signal_handler_interface_get(const Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
-EAPI const char           *efl_dbus_signal_handler_member_get(const Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
-EAPI const char           *efl_dbus_signal_handler_match_get(const Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *
+efl_dbus_signal_handler_sender_get(const Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *
+efl_dbus_signal_handler_path_get(const Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *
+efl_dbus_signal_handler_interface_get(const Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *
+efl_dbus_signal_handler_member_get(const Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI const char *
+efl_dbus_signal_handler_match_get(const Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
-EAPI Efl_Dbus_Connection     *efl_dbus_signal_handler_connection_get(const Efl_Dbus_Signal_Handler *handler) EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
+EAPI Efl_Dbus_Connection *
+efl_dbus_signal_handler_connection_get(const Efl_Dbus_Signal_Handler *handler)
+  EINA_ARG_NONNULL(1) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @}

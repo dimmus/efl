@@ -95,11 +95,13 @@ typedef struct _Eina_Rw_Slice Eina_Rw_Slice;
  */
 struct _Eina_Slice
 {
-   size_t len; /**< size of memory pointed by @c mem */
-   union {
-      const void *mem; /**< memory pointed by this slice. Just read, never modify it. */
-      const uint8_t *bytes; /**< memory as uint8_t pointer */
-   };
+  size_t len; /**< size of memory pointed by @c mem */
+
+  union {
+    const void
+      *mem; /**< memory pointed by this slice. Just read, never modify it. */
+    const uint8_t *bytes; /**< memory as uint8_t pointer */
+  };
 };
 
 /**
@@ -115,11 +117,12 @@ struct _Eina_Slice
  */
 struct _Eina_Rw_Slice
 {
-   size_t len; /**< size of memory pointed by @c mem */
-   union {
-      void *mem; /**< memory pointed by this slice. It's write able. */
-      uint8_t *bytes; /**< memory as uint8_t pointer */
-   };
+  size_t len; /**< size of memory pointed by @c mem */
+
+  union {
+    void    *mem; /**< memory pointed by this slice. It's write able. */
+    uint8_t *bytes; /**< memory as uint8_t pointer */
+  };
 };
 
 /**
@@ -143,7 +146,8 @@ static inline Eina_Slice eina_rw_slice_slice_get(const Eina_Rw_Slice rw_slice);
  *
  * @since 1.19
  */
-static inline Eina_Rw_Slice eina_slice_dup(const Eina_Slice slice) EFL_WARN_UNUSED_RESULT;
+static inline Eina_Rw_Slice
+eina_slice_dup(const Eina_Slice slice) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates a duplicate of slice's memory.
@@ -158,7 +162,8 @@ static inline Eina_Rw_Slice eina_slice_dup(const Eina_Slice slice) EFL_WARN_UNUS
  *
  * @since 1.19
  */
-static inline Eina_Rw_Slice eina_rw_slice_dup(const Eina_Rw_Slice rw_slice) EFL_WARN_UNUSED_RESULT;
+static inline Eina_Rw_Slice
+eina_rw_slice_dup(const Eina_Rw_Slice rw_slice) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Compare two slices, similar to memcmp()
@@ -180,7 +185,8 @@ static inline int eina_slice_compare(const Eina_Slice a, const Eina_Slice b);
  *
  * @since 1.19
  */
-static inline int eina_rw_slice_compare(const Eina_Rw_Slice a, const Eina_Rw_Slice b);
+static inline int eina_rw_slice_compare(const Eina_Rw_Slice a,
+                                        const Eina_Rw_Slice b);
 
 /**
  * @brief Copy a read-only slice to a read-write one, similar to memcpy().
@@ -196,7 +202,8 @@ static inline int eina_rw_slice_compare(const Eina_Rw_Slice a, const Eina_Rw_Sli
  *
  * @since 1.19
  */
-static inline Eina_Rw_Slice eina_rw_slice_copy(const Eina_Rw_Slice dest, const Eina_Slice src);
+static inline Eina_Rw_Slice eina_rw_slice_copy(const Eina_Rw_Slice dest,
+                                               const Eina_Slice    src);
 
 /**
  * @brief Seek within a slice, similar to fseek().
@@ -214,7 +221,8 @@ static inline Eina_Rw_Slice eina_rw_slice_copy(const Eina_Rw_Slice dest, const E
  *
  * @since 1.19
  */
-static inline Eina_Slice eina_slice_seek(const Eina_Slice slice, ssize_t offset, int whence);
+static inline Eina_Slice
+eina_slice_seek(const Eina_Slice slice, ssize_t offset, int whence);
 
 /**
  * @brief Seek within a read-write slice, similar to fseek().
@@ -232,8 +240,8 @@ static inline Eina_Slice eina_slice_seek(const Eina_Slice slice, ssize_t offset,
  *
  * @since 1.19
  */
-static inline Eina_Rw_Slice eina_rw_slice_seek(const Eina_Rw_Slice rw_slice, ssize_t offset, int whence);
-
+static inline Eina_Rw_Slice
+eina_rw_slice_seek(const Eina_Rw_Slice rw_slice, ssize_t offset, int whence);
 
 /**
  * @brief Find a character inside the slice, similar to memchr().
@@ -255,7 +263,8 @@ static inline const void *eina_slice_strchr(const Eina_Slice slice, int c);
  *
  * @since 1.19
  */
-static inline const void *eina_slice_find(const Eina_Slice slice, const Eina_Slice needle);
+static inline const void *eina_slice_find(const Eina_Slice slice,
+                                          const Eina_Slice needle);
 
 /**
  * @brief Checks if the slice starts with a prefix.
@@ -266,7 +275,8 @@ static inline const void *eina_slice_find(const Eina_Slice slice, const Eina_Sli
  *
  * @since 1.19
  */
-static inline Efl_Bool eina_slice_startswith(const Eina_Slice slice, const Eina_Slice prefix);
+static inline Efl_Bool eina_slice_startswith(const Eina_Slice slice,
+                                             const Eina_Slice prefix);
 
 /**
  * @brief Checks if the slice ends with a suffix.
@@ -277,7 +287,8 @@ static inline Efl_Bool eina_slice_startswith(const Eina_Slice slice, const Eina_
  *
  * @since 1.19
  */
-static inline Efl_Bool eina_slice_endswith(const Eina_Slice slice, const Eina_Slice suffix);
+static inline Efl_Bool eina_slice_endswith(const Eina_Slice slice,
+                                           const Eina_Slice suffix);
 
 /**
  * @brief Find a character inside the slice, similar to memchr().
@@ -299,7 +310,8 @@ static inline void *eina_rw_slice_strchr(const Eina_Rw_Slice rw_slice, int c);
  *
  * @since 1.19
  */
-static inline void *eina_rw_slice_find(const Eina_Rw_Slice rw_slice, const Eina_Slice needle);
+static inline void *eina_rw_slice_find(const Eina_Rw_Slice rw_slice,
+                                       const Eina_Slice    needle);
 
 /**
  * @brief Checks if the slice starts with a prefix.
@@ -310,7 +322,8 @@ static inline void *eina_rw_slice_find(const Eina_Rw_Slice rw_slice, const Eina_
  *
  * @since 1.19
  */
-static inline Efl_Bool eina_rw_slice_startswith(const Eina_Rw_Slice slice, const Eina_Slice prefix);
+static inline Efl_Bool eina_rw_slice_startswith(const Eina_Rw_Slice slice,
+                                                const Eina_Slice    prefix);
 
 /**
  * @brief Checks if the slice ends with a suffix.
@@ -321,7 +334,8 @@ static inline Efl_Bool eina_rw_slice_startswith(const Eina_Rw_Slice slice, const
  *
  * @since 1.19
  */
-static inline Efl_Bool eina_rw_slice_endswith(const Eina_Rw_Slice slice, const Eina_Slice suffix);
+static inline Efl_Bool eina_rw_slice_endswith(const Eina_Rw_Slice slice,
+                                              const Eina_Slice    suffix);
 
 /**
  * @brief The memory position where the slice ends.
@@ -391,11 +405,10 @@ static inline char *eina_rw_slice_strdup(const Eina_Rw_Slice rw_slice);
  * @since 1.19
  */
 #ifdef __cplusplus
-#define EINA_SLICE_ARRAY(buf) {((sizeof(buf) / sizeof((buf)[0])) * sizeof((buf)[0])), (buf)}
+#  define EINA_SLICE_ARRAY(buf) {((sizeof(buf) / sizeof((buf)[0])) * sizeof((buf)[0])), (buf)}
 #else
-#define EINA_SLICE_ARRAY(buf) {.len = ((sizeof(buf) / sizeof((buf)[0])) * sizeof((buf)[0])), .mem = (buf)}
+#  define EINA_SLICE_ARRAY(buf) {.len = ((sizeof(buf) / sizeof((buf)[0])) * sizeof((buf)[0])), .mem = (buf)}
 #endif
-
 
 /**
  * @def EINA_RW_SLICE_DECLARE(name, length)
@@ -436,9 +449,9 @@ static inline char *eina_rw_slice_strdup(const Eina_Rw_Slice rw_slice);
  * @since 1.19
  */
 #ifdef __cplusplus
-#define EINA_SLICE_STR_LITERAL(buf) {(sizeof("" buf) - 1), (buf)}
+#  define EINA_SLICE_STR_LITERAL(buf) {(sizeof("" buf) - 1), (buf)}
 #else
-#define EINA_SLICE_STR_LITERAL(buf) {.len = (sizeof("" buf) - 1), .mem = (buf)}
+#  define EINA_SLICE_STR_LITERAL(buf) {.len = (sizeof("" buf) - 1), .mem = (buf)}
 #endif
 
 /**
@@ -460,9 +473,9 @@ static inline char *eina_rw_slice_strdup(const Eina_Rw_Slice rw_slice);
  * @since 1.19
  */
 #ifdef __cplusplus
-#define EINA_SLICE_STR(str) {strlen((str)), (str)}
+#  define EINA_SLICE_STR(str) {strlen((str)), (str)}
 #else
-#define EINA_SLICE_STR(str) {.len = strlen((str)), .mem = (str)}
+#  define EINA_SLICE_STR(str) {.len = strlen((str)), .mem = (str)}
 #endif
 /**
  * @def EINA_SLICE_STR_FULL(str)
@@ -483,11 +496,10 @@ static inline char *eina_rw_slice_strdup(const Eina_Rw_Slice rw_slice);
  * @since 1.24
  */
 #ifdef __cplusplus
-#define EINA_SLICE_STR_FULL(str) {strlen((str)) + 1, (str)}
+#  define EINA_SLICE_STR_FULL(str) {strlen((str)) + 1, (str)}
 #else
-#define EINA_SLICE_STR_FULL(str) {.len = strlen((str)) + 1, .mem = (str)}
+#  define EINA_SLICE_STR_FULL(str) {.len = strlen((str)) + 1, .mem = (str)}
 #endif
-
 
 /**
  * @def EINA_SLICE_STR_FMT
@@ -592,12 +604,12 @@ static inline char *eina_rw_slice_strdup(const Eina_Rw_Slice rw_slice);
  * @since 1.19
  */
 #ifdef __cplusplus
-#define EINA_SLICE_FOREACH(s, itr) \
+#  define EINA_SLICE_FOREACH(s, itr) \
   for ((itr) = static_cast<__typeof__(itr)>((s).mem); \
        (itr) < static_cast<__typeof__(itr)>(static_cast<void *>((s).bytes + (s).len)); \
        (itr)++)
 #else
-#define EINA_SLICE_FOREACH(s, itr) \
+#  define EINA_SLICE_FOREACH(s, itr) \
   for ((itr) = (s).mem; \
        (void *)(itr) < (void *)((s).bytes + (s).len); \
        (itr)++)

@@ -48,8 +48,7 @@ typedef const char Eina_Slstr;
  *
  * @since 1.19
  */
-EINA_API Eina_Slstr *
-eina_slstr_copy_new(const char *string);
+EINA_API Eina_Slstr *eina_slstr_copy_new(const char *string);
 
 /**
  * @brief Create a new short lived string by duplicating another string.
@@ -67,8 +66,7 @@ eina_slstr_copy_new(const char *string);
  *
  * @since 1.19
  */
-EINA_API Eina_Slstr *
-eina_slstr_copy_new_length(const char *string, size_t len);
+EINA_API Eina_Slstr *eina_slstr_copy_new_length(const char *string, size_t len);
 
 /**
  * @brief Create a new short lived string by taking ownership of a string.
@@ -84,8 +82,7 @@ eina_slstr_copy_new_length(const char *string, size_t len);
  *
  * @since 1.19
  */
-EINA_API Eina_Slstr *
-eina_slstr_steal_new(char *string);
+EINA_API Eina_Slstr *eina_slstr_steal_new(char *string);
 
 /**
  * @brief Create a new short lived string by taking ownership of a stringshare.
@@ -101,8 +98,7 @@ eina_slstr_steal_new(char *string);
  *
  * @since 1.19
  */
-EINA_API Eina_Slstr *
-eina_slstr_stringshare_new(Eina_Stringshare *string);
+EINA_API Eina_Slstr *eina_slstr_stringshare_new(Eina_Stringshare *string);
 
 /**
  * @brief Create a new short lived string by taking ownership of a tmpstr.
@@ -118,8 +114,7 @@ eina_slstr_stringshare_new(Eina_Stringshare *string);
  *
  * @since 1.19
  */
-EINA_API Eina_Slstr *
-eina_slstr_tmpstr_new(Eina_Tmpstr *string);
+EINA_API Eina_Slstr *eina_slstr_tmpstr_new(Eina_Tmpstr *string);
 
 /**
  * @brief Create a new short lived string by taking ownership of a strbuf.
@@ -139,8 +134,7 @@ eina_slstr_tmpstr_new(Eina_Tmpstr *string);
  *
  * @since 1.19
  */
-EINA_API Eina_Slstr *
-eina_slstr_strbuf_new(Efl_Strbuf *string);
+EINA_API Eina_Slstr *eina_slstr_strbuf_new(Efl_Strbuf *string);
 
 /**
  * @brief Create a new short lived string using sprintf.
@@ -151,8 +145,7 @@ eina_slstr_strbuf_new(Efl_Strbuf *string);
  *
  * @since 1.19
  */
-EINA_API Eina_Slstr *
-eina_slstr_vasprintf_new(const char *fmt, va_list args);
+EINA_API Eina_Slstr *eina_slstr_vasprintf_new(const char *fmt, va_list args);
 
 /**
  * @brief Create a new short lived string using sprintf.
@@ -171,14 +164,14 @@ eina_slstr_vasprintf_new(const char *fmt, va_list args);
 static inline Eina_Slstr *
 eina_slstr_printf(const char *fmt, ...)
 {
-   Eina_Slstr *str;
-   va_list args;
+  Eina_Slstr *str;
+  va_list     args;
 
-   va_start(args, fmt);
-   str = eina_slstr_vasprintf_new(fmt, args);
-   va_end(args);
+  va_start(args, fmt);
+  str = eina_slstr_vasprintf_new(fmt, args);
+  va_end(args);
 
-   return str;
+  return str;
 }
 
 #ifdef EINA_SLSTR_INTERNAL
@@ -191,8 +184,7 @@ eina_slstr_printf(const char *fmt, ...)
  *
  * @since 1.19
  */
-EINA_API void
-eina_slstr_local_clear(void);
+EINA_API void eina_slstr_local_clear(void);
 #endif
 
 #endif

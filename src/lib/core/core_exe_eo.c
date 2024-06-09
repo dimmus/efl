@@ -1,7 +1,7 @@
 EWAPI const Efl_Event_Description _CORE_EXE_EVENT_DATA_GET =
-    EFL_EVENT_DESCRIPTION("data,get");
+  EFL_EVENT_DESCRIPTION("data,get");
 EWAPI const Efl_Event_Description _CORE_EXE_EVENT_DATA_ERROR =
-    EFL_EVENT_DESCRIPTION("data,error");
+  EFL_EVENT_DESCRIPTION("data,error");
 
 void _core_exe_command_set(Eo            *obj,
                            Core_Exe_Data *pd,
@@ -33,36 +33,36 @@ _core_exe_efl_control_suspend_set(Eo *obj, Core_Exe_Data *pd, Efl_Bool suspend);
 static Efl_Bool
 _core_exe_class_initializer(Efl_Class *klass)
 {
-    const Efl_Object_Ops *opsp = NULL;
+  const Efl_Object_Ops *opsp = NULL;
 
-    const Efl_Object_Property_Reflection_Ops *ropsp = NULL;
+  const Efl_Object_Property_Reflection_Ops *ropsp = NULL;
 
 #ifndef CORE_EXE_EXTRA_OPS
 #  define CORE_EXE_EXTRA_OPS
 #endif
 
-    EFL_OPS_DEFINE(
-        ops,
-        EFL_OBJECT_OP_FUNC(Core_obj_exe_command_set, _core_exe_command_set),
-        EFL_OBJECT_OP_FUNC(Core_obj_exe_command_get, _core_exe_command_get),
-        EFL_OBJECT_OP_FUNC(efl_destructor, _core_exe_efl_object_destructor),
-        EFL_OBJECT_OP_FUNC(efl_finalize, _core_exe_efl_object_finalize),
-        EFL_OBJECT_OP_FUNC(efl_control_suspend_set,
-                           _core_exe_efl_control_suspend_set),
-        CORE_EXE_EXTRA_OPS);
-    opsp = &ops;
+  EFL_OPS_DEFINE(
+    ops,
+    EFL_OBJECT_OP_FUNC(Core_obj_exe_command_set, _core_exe_command_set),
+    EFL_OBJECT_OP_FUNC(Core_obj_exe_command_get, _core_exe_command_get),
+    EFL_OBJECT_OP_FUNC(efl_destructor, _core_exe_efl_object_destructor),
+    EFL_OBJECT_OP_FUNC(efl_finalize, _core_exe_efl_object_finalize),
+    EFL_OBJECT_OP_FUNC(efl_control_suspend_set,
+                       _core_exe_efl_control_suspend_set),
+    CORE_EXE_EXTRA_OPS);
+  opsp = &ops;
 
-    return efl_class_functions_set(klass, opsp, ropsp);
+  return efl_class_functions_set(klass, opsp, ropsp);
 }
 
 static const Efl_Class_Description _core_exe_class_desc = {
-    EO_VERSION,
-    "Ecore.Exe",
-    EFL_CLASS_TYPE_REGULAR,
-    sizeof(Core_Exe_Data),
-    _core_exe_class_initializer,
-    NULL,
-    NULL
+  EO_VERSION,
+  "Ecore.Exe",
+  EFL_CLASS_TYPE_REGULAR,
+  sizeof(Core_Exe_Data),
+  _core_exe_class_initializer,
+  NULL,
+  NULL
 };
 
 EFL_DEFINE_CLASS(core_exe_class_get,

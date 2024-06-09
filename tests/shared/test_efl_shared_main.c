@@ -33,16 +33,16 @@ EFL_END_TEST
 
 EFL_START_TEST(efl_shared_cpu)
 {
-    fail_if(eina_cpu_count() <= 0);
+  fail_if(eina_cpu_count() <= 0);
 
-    eina_cpu_features_get();
+  eina_cpu_features_get();
 }
 
 EFL_END_TEST
 
 EFL_START_TEST(efl_shared_hamster)
 {
-    fail_if(eina_hamster_count() <= 0);
+  fail_if(eina_hamster_count() <= 0);
 }
 
 EFL_END_TEST
@@ -50,7 +50,7 @@ EFL_END_TEST
 void
 eina_test_main(TCase *tc)
 {
-    tcase_add_test(tc, efl_shared_simple);
-    tcase_add_test(tc, efl_shared_cpu);
-    tcase_add_test(tc, efl_shared_hamster);
+  tcase_add_test(tc, efl_shared_simple);
+  tcase_add_test(tc, efl_shared_cpu);
+  tcase_add_test(tc, efl_shared_hamster);
 }

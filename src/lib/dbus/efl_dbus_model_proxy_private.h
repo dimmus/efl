@@ -12,22 +12,22 @@ typedef struct _Efl_Dbus_Model_Proxy_Data Efl_Dbus_Model_Proxy_Data;
  */
 struct _Efl_Dbus_Model_Proxy_Data
 {
-   Eo *obj;
+  Eo *obj;
 
-   const Efl_Dbus_Introspection_Interface *interface;
+  const Efl_Dbus_Introspection_Interface *interface;
 
-   Efl_Dbus_Object *object;
-   Efl_Dbus_Proxy *proxy;
-   Eina_Hash *properties;
-   Eina_List *childrens;
-   Eina_List *pendings;
-   Eina_List *promises;
+  Efl_Dbus_Object *object;
+  Efl_Dbus_Proxy  *proxy;
+  Eina_Hash       *properties;
+  Eina_List       *childrens;
+  Eina_List       *pendings;
+  Eina_List       *promises;
 
-   Eina_Stringshare *name;
+  Eina_Stringshare *name;
 
-   Efl_Bool monitoring : 1;
-   Efl_Bool is_listed : 1;
-   Efl_Bool is_loaded : 1;
+  Efl_Bool monitoring : 1;
+  Efl_Bool is_listed  : 1;
+  Efl_Bool is_loaded  : 1;
 };
 
 #endif

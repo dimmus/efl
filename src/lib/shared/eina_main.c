@@ -175,9 +175,9 @@ S(abstract_content);
 
 struct eina_desc_setup
 {
-    const char *name;
-    Efl_Bool (*init)(void);
-    Efl_Bool (*shutdown)(void);
+  const char *name;
+  Efl_Bool (*init)(void);
+  Efl_Bool (*shutdown)(void);
 };
 
 static const struct eina_desc_setup _eina_desc_setup[] = {
@@ -186,70 +186,70 @@ static const struct eina_desc_setup _eina_desc_setup[] = {
         #x, eina_##x##_init, eina_##x##_shutdown \
     }
    /* log is a special case as it needs printf */
-    S(module),          S(mempool),      S(list),
-    S(stringshare),     S(vpath),        S(debug),
-    S(evlog),           S(error),        S(safety_checks),
-    S(magic_string),    S(iterator),     S(accessor),
-    S(inarray),         S(array),        S(binshare),
-    S(ustringshare),    S(matrixsparse), S(convert),
-    S(benchmark),       S(rectangle),    S(strbuf),
-    S(ustrbuf),         S(quadtree),     S(simple_xml),
-    S(prefix),          S(value),        S(tmpstr),
-    S(thread),          S(cow),          S(cpu),
-    S(thread_queue),    S(rbtree),       S(file),
-    S(safepointer),     S(slstr),        S(promise),
-    S(abstract_content)
+  S(module),          S(mempool),      S(list),
+  S(stringshare),     S(vpath),        S(debug),
+  S(evlog),           S(error),        S(safety_checks),
+  S(magic_string),    S(iterator),     S(accessor),
+  S(inarray),         S(array),        S(binshare),
+  S(ustringshare),    S(matrixsparse), S(convert),
+  S(benchmark),       S(rectangle),    S(strbuf),
+  S(ustrbuf),         S(quadtree),     S(simple_xml),
+  S(prefix),          S(value),        S(tmpstr),
+  S(thread),          S(cow),          S(cpu),
+  S(thread_queue),    S(rbtree),       S(file),
+  S(safepointer),     S(slstr),        S(promise),
+  S(abstract_content)
 #undef S
 };
 static const size_t _eina_desc_setup_len =
-    sizeof(_eina_desc_setup) / sizeof(_eina_desc_setup[0]);
+  sizeof(_eina_desc_setup) / sizeof(_eina_desc_setup[0]);
 
 static void
 _eina_shutdown_from_desc(const struct eina_desc_setup *itr)
 {
-    for (itr--; itr >= _eina_desc_setup; itr--)
-    {
-        if (!itr->shutdown())
-            ERR("Problems shutting down eina module '%s', ignored.", itr->name);
-    }
+  for (itr--; itr >= _eina_desc_setup; itr--)
+  {
+    if (!itr->shutdown())
+      ERR("Problems shutting down eina module '%s', ignored.", itr->name);
+  }
 
-    eina_log_domain_unregister(_eina_log_dom);
-    _eina_log_dom = -1;
-    eina_log_shutdown();
+  eina_log_domain_unregister(_eina_log_dom);
+  _eina_log_dom = -1;
+  eina_log_shutdown();
 }
 
 static void
 _eina_threads_do_shutdown(void)
 {
 #ifdef EINA_HAVE_DEBUG_THREADS
-    const Eina_Lock *lk;
+  const Eina_Lock *lk;
 
-    pthread_mutex_lock(&_eina_tracking_lock);
-    if (_eina_tracking)
+  pthread_mutex_lock(&_eina_tracking_lock);
+  if (_eina_tracking)
+  {
+    if (((Eina_Lock *)_eina_tracking != (&_sysmon_lock)) ||
+        (_eina_tracking->next))
     {
-        if (((Eina_Lock *)_eina_tracking != (&_sysmon_lock)) ||
-            (_eina_tracking->next))
-        {
-            fprintf(stderr, "*************************\n");
-            fprintf(stderr, "* The IMPOSSIBLE HAPPEN *\n");
-            fprintf(stderr, "* LOCK STILL TAKEN :    *\n");
-            fprintf(stderr, "*************************\n");
-            EINA_INLIST_FOREACH(_eina_tracking, lk)
-            {
-                fprintf(stderr, "=======\n");
-                eina_lock_debug(lk);
-            }
-            fprintf(stderr, "*************************\n");
-            abort();
-        }
+      fprintf(stderr, "*************************\n");
+      fprintf(stderr, "* The IMPOSSIBLE HAPPEN *\n");
+      fprintf(stderr, "* LOCK STILL TAKEN :    *\n");
+      fprintf(stderr, "*************************\n");
+      EINA_INLIST_FOREACH(_eina_tracking, lk)
+      {
+        fprintf(stderr, "=======\n");
+        eina_lock_debug(lk);
+      }
+      fprintf(stderr, "*************************\n");
+      abort();
     }
-    pthread_mutex_unlock(&_eina_tracking_lock);
+  }
+  pthread_mutex_unlock(&_eina_tracking_lock);
 #endif
 
-    eina_share_common_threads_shutdown();
-    eina_log_threads_shutdown();
+  eina_share_common_threads_shutdown();
+  eina_log_threads_shutdown();
 
-    _eina_threads_activated = EFL_FALSE;
+  _eina_threads_activated = EFL_FALSE;
 }
 
 /**
@@ -273,155 +273,155 @@ EINA_API Eina_Version *eina_version = &_version;
 EINA_API int
 eina_init(void)
 {
-    const struct eina_desc_setup *itr, *itr_end;
+  const struct eina_desc_setup *itr, *itr_end;
 
-    if (EINA_LIKELY(_eina_main_count > 0)) return ++_eina_main_count;
+  if (EINA_LIKELY(_eina_main_count > 0)) return ++_eina_main_count;
 
 #ifdef _WIN32
-    if (!BCRYPT_SUCCESS(BCryptOpenAlgorithmProvider(&_eina_bcrypt_provider,
-                                                    BCRYPT_RNG_ALGORITHM,
-                                                    NULL,
-                                                    0)))
-        return 0;
+  if (!BCRYPT_SUCCESS(BCryptOpenAlgorithmProvider(&_eina_bcrypt_provider,
+                                                  BCRYPT_RNG_ALGORITHM,
+                                                  NULL,
+                                                  0)))
+    return 0;
 #else
-    int fd = open("/dev/urandom", O_RDONLY);
-    if (fd >= 0)
-    {
-        unsigned int val;
+  int fd = open("/dev/urandom", O_RDONLY);
+  if (fd >= 0)
+  {
+    unsigned int val;
 
-        if (read(fd, &val, sizeof(val)) == sizeof(val)) srand(val);
-        else srand(time(NULL));
-        close(fd);
-    }
-    else
+    if (read(fd, &val, sizeof(val)) == sizeof(val)) srand(val);
+    else srand(time(NULL));
+    close(fd);
+  }
+  else
 #endif
-    srand(time(NULL));
-    while (eina_seed == 0)
-        eina_seed = rand();
+  srand(time(NULL));
+  while (eina_seed == 0)
+    eina_seed = rand();
 
 #ifdef MT
-    if ((getenv("EINA_MTRACE")) && (getenv("MALLOC_TRACE")))
-    {
-        _mt_enabled = 1;
-        mtrace();
-    }
+  if ((getenv("EINA_MTRACE")) && (getenv("MALLOC_TRACE")))
+  {
+    _mt_enabled = 1;
+    mtrace();
+  }
 #endif
 
 #ifdef EFL_HAVE_THREADS
-    _eina_main_loop = pthread_self();
+  _eina_main_loop = pthread_self();
 #endif
 
-    eina_freeq_main_set(eina_freeq_new(EINA_FREEQ_DEFAULT));
+  eina_freeq_main_set(eina_freeq_new(EINA_FREEQ_DEFAULT));
 
-    if (!eina_log_init())
-    {
-        fprintf(stderr, "Could not initialize eina logging system.\n");
-        return 0;
-    }
+  if (!eina_log_init())
+  {
+    fprintf(stderr, "Could not initialize eina logging system.\n");
+    return 0;
+  }
 
-    _eina_log_dom = eina_log_domain_register("eina", EINA_LOG_COLOR_DEFAULT);
-    if (_eina_log_dom < 0)
-    {
-        EINA_LOG_ERR("Could not register log domain: eina");
-        eina_log_shutdown();
-        return 0;
-    }
+  _eina_log_dom = eina_log_domain_register("eina", EINA_LOG_COLOR_DEFAULT);
+  if (_eina_log_dom < 0)
+  {
+    EINA_LOG_ERR("Could not register log domain: eina");
+    eina_log_shutdown();
+    return 0;
+  }
 
 #ifdef EINA_HAVE_DEBUG_THREADS
-    pthread_mutex_init(&_eina_tracking_lock, NULL);
+  pthread_mutex_init(&_eina_tracking_lock, NULL);
 
-    if (getenv("EINA_DEBUG_THREADS"))
-        _eina_threads_debug = atoi(getenv("EINA_DEBUG_THREADS"));
+  if (getenv("EINA_DEBUG_THREADS"))
+    _eina_threads_debug = atoi(getenv("EINA_DEBUG_THREADS"));
 #endif
 
-    itr     = _eina_desc_setup;
-    itr_end = itr + _eina_desc_setup_len;
-    for (; itr < itr_end; itr++)
+  itr     = _eina_desc_setup;
+  itr_end = itr + _eina_desc_setup_len;
+  for (; itr < itr_end; itr++)
+  {
+    if (!itr->init())
     {
-        if (!itr->init())
-        {
-            ERR("Could not initialize eina module '%s'.", itr->name);
-            _eina_shutdown_from_desc(itr);
-            return 0;
-        }
+      ERR("Could not initialize eina module '%s'.", itr->name);
+      _eina_shutdown_from_desc(itr);
+      return 0;
     }
+  }
 
-    eina_cpu_count_internal();
+  eina_cpu_count_internal();
 
-    EINA_ERROR_NOT_MAIN_LOOP =
-        eina_error_msg_static_register("Not in main loop.");
-    EINA_ERROR_NOT_IMPLEMENTED =
-        eina_error_msg_static_register("Functionality not implemented.");
+  EINA_ERROR_NOT_MAIN_LOOP =
+    eina_error_msg_static_register("Not in main loop.");
+  EINA_ERROR_NOT_IMPLEMENTED =
+    eina_error_msg_static_register("Functionality not implemented.");
 
-    eina_log_timing(_eina_log_dom, EINA_LOG_STATE_STOP, EINA_LOG_STATE_INIT);
+  eina_log_timing(_eina_log_dom, EINA_LOG_STATE_STOP, EINA_LOG_STATE_INIT);
 
-    _eina_main_count = 1;
-    eina_evlog("-eina_init", NULL, 0.0, NULL);
-    return 1;
+  _eina_main_count = 1;
+  eina_evlog("-eina_init", NULL, 0.0, NULL);
+  return 1;
 }
 
 EINA_API int
 eina_shutdown(void)
 {
-    printf("%d", _eina_main_count);
-    if (_eina_main_count <= 0)
-    {
-        ERR("Init count not greater than 0 in shutdown.");
-        return 0;
-    }
-    _eina_main_count--;
-    if (EINA_UNLIKELY(_eina_main_count == 0))
-    {
-        eina_log_timing(_eina_log_dom,
-                        EINA_LOG_STATE_START,
-                        EINA_LOG_STATE_SHUTDOWN);
+  printf("%d", _eina_main_count);
+  if (_eina_main_count <= 0)
+  {
+    ERR("Init count not greater than 0 in shutdown.");
+    return 0;
+  }
+  _eina_main_count--;
+  if (EINA_UNLIKELY(_eina_main_count == 0))
+  {
+    eina_log_timing(_eina_log_dom,
+                    EINA_LOG_STATE_START,
+                    EINA_LOG_STATE_SHUTDOWN);
 
-        _eina_shutdown_from_desc(_eina_desc_setup + _eina_desc_setup_len);
+    _eina_shutdown_from_desc(_eina_desc_setup + _eina_desc_setup_len);
 
-        if (_eina_threads_activated && (!_eina_main_thread_count))
-            _eina_threads_do_shutdown();
+    if (_eina_threads_activated && (!_eina_main_thread_count))
+      _eina_threads_do_shutdown();
 #ifdef EINA_HAVE_DEBUG_THREADS
-        pthread_mutex_destroy(&_eina_tracking_lock);
+    pthread_mutex_destroy(&_eina_tracking_lock);
 #endif
-        eina_freeq_free(eina_freeq_main_get());
+    eina_freeq_free(eina_freeq_main_get());
 #ifdef MT
-        if (_mt_enabled)
-        {
-            muntrace();
-            _mt_enabled = 0;
-        }
+    if (_mt_enabled)
+    {
+      muntrace();
+      _mt_enabled = 0;
+    }
 #endif
 
 #ifdef _WIN32
-        BCryptCloseAlgorithmProvider(_eina_bcrypt_provider, 0);
+    BCryptCloseAlgorithmProvider(_eina_bcrypt_provider, 0);
 #endif
-    }
+  }
 
-    return _eina_main_count;
+  return _eina_main_count;
 }
 
 EINA_API int
 eina_threads_init(void)
 {
 #ifdef EFL_HAVE_THREADS
-    int ret;
+  int ret;
 
 #  ifdef EINA_HAVE_DEBUG_THREADS
-    assert(pthread_equal(_eina_main_loop, pthread_self()));
+  assert(pthread_equal(_eina_main_loop, pthread_self()));
 #  endif
 
-    ++_eina_main_thread_count;
-    ret = _eina_main_thread_count;
+  ++_eina_main_thread_count;
+  ret = _eina_main_thread_count;
 
-    if (_eina_main_thread_count > 1) return ret;
+  if (_eina_main_thread_count > 1) return ret;
 
-    eina_share_common_threads_init();
-    eina_log_threads_init();
-    _eina_threads_activated = EFL_TRUE;
+  eina_share_common_threads_init();
+  eina_log_threads_init();
+  _eina_threads_activated = EFL_TRUE;
 
-    return ret;
+  return ret;
 #else
-    return 0;
+  return 0;
 #endif
 }
 
@@ -429,21 +429,21 @@ EINA_API int
 eina_threads_shutdown(void)
 {
 #ifdef EFL_HAVE_THREADS
-    int ret;
+  int ret;
 
 #  ifdef EINA_HAVE_DEBUG_THREADS
-    assert(pthread_equal(_eina_main_loop, pthread_self()));
-    assert(_eina_main_thread_count > 0);
+  assert(pthread_equal(_eina_main_loop, pthread_self()));
+  assert(_eina_main_thread_count > 0);
 #  endif
 
-    ret = --_eina_main_thread_count;
-    if (_eina_main_thread_count > 0) return ret;
+  ret = --_eina_main_thread_count;
+  if (_eina_main_thread_count > 0) return ret;
 
-    if (!_eina_main_count) _eina_threads_do_shutdown();
+  if (!_eina_main_count) _eina_threads_do_shutdown();
 
-    return ret;
+  return ret;
 #else
-    return 0;
+  return 0;
 #endif
 }
 
@@ -453,14 +453,14 @@ eina_main_loop_is(void)
 #ifdef EFL_HAVE_THREADS
 #  ifdef __GNUC__
    /* pthread_self() can't be optimized, it's a single asm "movl" */
-    if (__builtin_types_compatible_p(pthread_t, unsigned long int))
-        return (pthread_self() == _eina_main_loop);
-    else
+  if (__builtin_types_compatible_p(pthread_t, unsigned long int))
+    return (pthread_self() == _eina_main_loop);
+  else
 #  endif
-        if (pthread_equal(_eina_main_loop, pthread_self()))
-        return EFL_TRUE;
+    if (pthread_equal(_eina_main_loop, pthread_self()))
+    return EFL_TRUE;
 #endif
-    return EFL_FALSE;
+  return EFL_FALSE;
 }
 
 /** The purpose of this API should not be documented, it is used only by the one who know what they are doing. */
@@ -468,7 +468,7 @@ EINA_API void
 eina_main_loop_define(void)
 {
 #ifdef EFL_HAVE_THREADS
-    _eina_main_loop = pthread_self();
+  _eina_main_loop = pthread_self();
 #endif
 }
 

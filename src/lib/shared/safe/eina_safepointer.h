@@ -88,7 +88,7 @@ EINA_API const Eina_Safepointer *eina_safepointer_register(const void *target);
  *
  * @since 1.18
  */
-EINA_API void  eina_safepointer_unregister(const Eina_Safepointer *safe);
+EINA_API void eina_safepointer_unregister(const Eina_Safepointer *safe);
 
 /**
  * @brief Get the associated pointer from an Eina_Safepointer mapping.
@@ -113,7 +113,6 @@ static inline void *eina_safepointer_get(const Eina_Safepointer *safe);
  * @}
  */
 
-
-# include "eina_inline_safepointer.x"
+#include "eina_inline_safepointer.x"
 
 #endif

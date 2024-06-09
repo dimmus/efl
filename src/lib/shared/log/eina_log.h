@@ -39,7 +39,6 @@
 #define EINA_COLOR_RESET     "\033[0m"
 #define EINA_COLOR_HIGH      "\033[1m"
 
-
 /**
  * @page tutorial_log_page Log Tutorial
  *
@@ -281,7 +280,7 @@ EINA_API extern int EINA_LOG_DOMAIN_GLOBAL;
  * @endcode
  *
  */
-# define EINA_LOG_DOMAIN_DEFAULT EINA_LOG_DOMAIN_GLOBAL
+#  define EINA_LOG_DOMAIN_DEFAULT EINA_LOG_DOMAIN_GLOBAL
 
 #endif /* EINA_LOG_DOMAIN_DEFAULT */
 
@@ -300,15 +299,15 @@ EINA_API extern int EINA_LOG_DOMAIN_GLOBAL;
  *       header files.
  */
 #ifdef EINA_ENABLE_LOG
-# ifdef EINA_LOG_LEVEL_MAXIMUM
-# define EINA_LOG(DOM, LEVEL, fmt, ...)					\
+#  ifdef EINA_LOG_LEVEL_MAXIMUM
+#    define EINA_LOG(DOM, LEVEL, fmt, ...)					\
   do {									\
      if (LEVEL <= EINA_LOG_LEVEL_MAXIMUM) {				\
         eina_log_print(DOM, LEVEL, __FILE__, __func__, __LINE__,	\
                        fmt, ## __VA_ARGS__); }				\
   } while (0)
-# else
-# define EINA_LOG(DOM, LEVEL, fmt, ...) \
+#  else
+#    define EINA_LOG(DOM, LEVEL, fmt, ...) \
   eina_log_print(DOM,                   \
                  LEVEL,                 \
                  __FILE__,              \
@@ -316,9 +315,9 @@ EINA_API extern int EINA_LOG_DOMAIN_GLOBAL;
                  __LINE__,              \
                  fmt,                   \
                  ## __VA_ARGS__)
-# endif
+#  endif
 #else
-#define EINA_LOG(DOM, LEVEL, fmt, ...)          \
+#  define EINA_LOG(DOM, LEVEL, fmt, ...)          \
   do { (void) DOM; (void) LEVEL; (void) fmt; } while (0)
 #endif
 
@@ -412,16 +411,16 @@ typedef struct _Eina_Log_Domain Eina_Log_Domain;
  */
 struct _Eina_Log_Domain
 {
-   int         level; /**< Max level to log */
-   const char *domain_str; /**< Formatted string with color to print */
-   const char *name; /**< Domain name */
-   size_t      namelen; /**< strlen(name) */
+  int         level; /**< Max level to log */
+  const char *domain_str; /**< Formatted string with color to print */
+  const char *name; /**< Domain name */
+  size_t      namelen; /**< strlen(name) */
 
    /* Private */
-   Efl_Bool   deleted : 1; /**< Flags deletion of domain, a free slot */
+  Efl_Bool deleted : 1; /**< Flags deletion of domain, a free slot */
 
    /* Add new members here. */
-   const char *color; /**< Color to use when printing in this domain */
+  const char *color; /**< Color to use when printing in this domain */
 };
 
 /**
@@ -443,7 +442,6 @@ struct _Eina_Log_Domain
  */
 EINA_API void eina_log_threads_enable(void);
 
-
 /**
  * @typedef Eina_Log_Level
  * List of available logging levels.
@@ -454,13 +452,13 @@ EINA_API void eina_log_threads_enable(void);
  */
 typedef enum _Eina_Log_Level
 {
-   EINA_LOG_LEVEL_CRITICAL, /**< Critical log level */
-   EINA_LOG_LEVEL_ERR, /**< Error log level */
-   EINA_LOG_LEVEL_WARN, /**< Warning log level */
-   EINA_LOG_LEVEL_INFO, /**< Information log level */
-   EINA_LOG_LEVEL_DBG, /**< Debug log level */
-   EINA_LOG_LEVELS, /**< Count of default log levels */
-   EINA_LOG_LEVEL_UNKNOWN = (-2147483647 - 1) /**< Unknown level */
+  EINA_LOG_LEVEL_CRITICAL, /**< Critical log level */
+  EINA_LOG_LEVEL_ERR, /**< Error log level */
+  EINA_LOG_LEVEL_WARN, /**< Warning log level */
+  EINA_LOG_LEVEL_INFO, /**< Information log level */
+  EINA_LOG_LEVEL_DBG, /**< Debug log level */
+  EINA_LOG_LEVELS, /**< Count of default log levels */
+  EINA_LOG_LEVEL_UNKNOWN = (-2147483647 - 1) /**< Unknown level */
 } Eina_Log_Level;
 
 /**
@@ -468,9 +466,13 @@ typedef enum _Eina_Log_Level
  * Type for print callbacks.
  */
 typedef void (*Eina_Log_Print_Cb)(const Eina_Log_Domain *d,
-                                  Eina_Log_Level level,
-                                  const char *file, const char *fnc, int line,
-                                  const char *fmt, void *data, va_list args);
+                                  Eina_Log_Level         level,
+                                  const char            *file,
+                                  const char            *fnc,
+                                  int                    line,
+                                  const char            *fmt,
+                                  void                  *data,
+                                  va_list                args);
 
 /**
  * @typedef Eina_Log_State
@@ -504,8 +506,8 @@ typedef enum _Eina_Log_State
  *       This means you're safe from other calls but you should never
  *       call eina_log_print(), directly or indirectly.
  */
-EINA_API void eina_log_print_cb_set(Eina_Log_Print_Cb cb, void *data) EINA_ARG_NONNULL(1);
-
+EINA_API void eina_log_print_cb_set(Eina_Log_Print_Cb cb, void *data)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Sets the default log level.
@@ -528,7 +530,7 @@ EINA_API void eina_log_level_set(int level);
  *
  * @see eina_log_level_set()
  */
-EINA_API int  eina_log_level_get(void) EFL_WARN_UNUSED_RESULT;
+EINA_API int eina_log_level_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Determines if a given @p level should be logged.
@@ -553,8 +555,8 @@ static inline Efl_Bool eina_log_level_check(int level);
  * @return #EFL_TRUE if the current thread is the one that called
  * eina_log_threads_init(), otherwise #EFL_FALSE.
  */
-EINA_API Efl_Bool          eina_log_main_thread_check(void) EINA_CONST EFL_WARN_UNUSED_RESULT;
-
+EINA_API Efl_Bool eina_log_main_thread_check(void)
+  EINA_CONST EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Enables or disables colored text in the logs.
@@ -565,7 +567,7 @@ EINA_API Efl_Bool          eina_log_main_thread_check(void) EINA_CONST EFL_WARN_
  *
  * @see eina_log_color_disable_get()
  */
-EINA_API void               eina_log_color_disable_set(Efl_Bool disabled);
+EINA_API void eina_log_color_disable_set(Efl_Bool disabled);
 
 /**
  * @brief Determines if color logging is enabled or disabled.
@@ -574,7 +576,7 @@ EINA_API void               eina_log_color_disable_set(Efl_Bool disabled);
  *
  * @see eina_log_color_disable_set()
  */
-EINA_API Efl_Bool          eina_log_color_disable_get(void) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_log_color_disable_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets if originating file name logging should be disabled.
@@ -585,7 +587,7 @@ EINA_API Efl_Bool          eina_log_color_disable_get(void) EFL_WARN_UNUSED_RESU
  *
  * @see eina_log_file_disable_get()
  */
-EINA_API void               eina_log_file_disable_set(Efl_Bool disabled);
+EINA_API void eina_log_file_disable_set(Efl_Bool disabled);
 
 /**
  * @brief Gets if originating file name logging should be disabled.
@@ -594,7 +596,7 @@ EINA_API void               eina_log_file_disable_set(Efl_Bool disabled);
  *
  * @see eina_log_file_disable_set()
  */
-EINA_API Efl_Bool          eina_log_file_disable_get(void) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_log_file_disable_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets if originating function name logging should be disabled.
@@ -606,7 +608,7 @@ EINA_API Efl_Bool          eina_log_file_disable_get(void) EFL_WARN_UNUSED_RESUL
  *
  * @see eina_log_function_disable_get()
  */
-EINA_API void               eina_log_function_disable_set(Efl_Bool disabled);
+EINA_API void eina_log_function_disable_set(Efl_Bool disabled);
 
 /**
  * @brief Gets if originating function name logging should be disabled.
@@ -615,7 +617,7 @@ EINA_API void               eina_log_function_disable_set(Efl_Bool disabled);
  *
  * @see eina_log_function_disable_set()
  */
-EINA_API Efl_Bool          eina_log_function_disable_get(void) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_log_function_disable_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets if critical messages should abort the program.
@@ -630,7 +632,7 @@ EINA_API Efl_Bool          eina_log_function_disable_get(void) EFL_WARN_UNUSED_R
  * @see eina_log_abort_on_critical_get()
  * @see eina_log_abort_on_critical_level_set()
  */
-EINA_API void               eina_log_abort_on_critical_set(Efl_Bool abort_on_critical);
+EINA_API void eina_log_abort_on_critical_set(Efl_Bool abort_on_critical);
 
 /**
  * @brief Gets if critical messages should abort the program.
@@ -642,7 +644,7 @@ EINA_API void               eina_log_abort_on_critical_set(Efl_Bool abort_on_cri
  * @see eina_log_abort_on_critical_set()
  * @see eina_log_abort_on_critical_level_set()
  */
-EINA_API Efl_Bool          eina_log_abort_on_critical_get(void) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_log_abort_on_critical_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets level that triggers abort if abort-on-critical is set.
@@ -657,7 +659,7 @@ EINA_API Efl_Bool          eina_log_abort_on_critical_get(void) EFL_WARN_UNUSED_
  * @see eina_log_abort_on_critical_level_get()
  * @see eina_log_abort_on_critical_get()
  */
-EINA_API void               eina_log_abort_on_critical_level_set(int critical_level);
+EINA_API void eina_log_abort_on_critical_level_set(int critical_level);
 
 /**
  * @brief Gets level that triggers abort if abort-on-critical is set.
@@ -669,8 +671,7 @@ EINA_API void               eina_log_abort_on_critical_level_set(int critical_le
  * @see eina_log_abort_on_critical_level_set()
  * @see eina_log_abort_on_critical_get()
  */
-EINA_API int                eina_log_abort_on_critical_level_get(void) EFL_WARN_UNUSED_RESULT;
-
+EINA_API int eina_log_abort_on_critical_level_get(void) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets the domain level given its name.
@@ -684,7 +685,8 @@ EINA_API int                eina_log_abort_on_critical_level_get(void) EFL_WARN_
  *        registration.
  * @param[in] level Level to use to limit eina_log_print() for given domain.
  */
-EINA_API void               eina_log_domain_level_set(const char *domain_name, int level) EINA_ARG_NONNULL(1);
+EINA_API void eina_log_domain_level_set(const char *domain_name, int level)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the domain level given its name.
@@ -704,7 +706,9 @@ EINA_API void               eina_log_domain_level_set(const char *domain_name, i
  * @see eina_log_domain_level_set()
  * @see eina_log_domain_registered_level_get()
  */
-EINA_API int                eina_log_domain_level_get(const char *domain_name) EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+EINA_API int
+eina_log_domain_level_get(const char *domain_name) EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Gets the domain level given its identifier.
@@ -717,7 +721,8 @@ EINA_API int                eina_log_domain_level_get(const char *domain_name) E
  * @return #EFL_TRUE if level should be printed, #EFL_FALSE if not.
  *         (domain's level is greater or equal @a level).
  */
-EINA_API int                eina_log_domain_registered_level_get(int domain) EFL_WARN_UNUSED_RESULT;
+EINA_API int
+eina_log_domain_registered_level_get(int domain) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Sets the domain level given its identifier.
@@ -729,7 +734,7 @@ EINA_API int                eina_log_domain_registered_level_get(int domain) EFL
  * @param[in] level Level to use to limit eina_log_print() for given domain.
  * @since 1.10
  */
-EINA_API void                eina_log_domain_registered_level_set(int domain, int level);
+EINA_API void eina_log_domain_registered_level_set(int domain, int level);
 
 static inline Efl_Bool eina_log_domain_level_check(int domain, int level);
 
@@ -746,7 +751,8 @@ static inline Efl_Bool eina_log_domain_level_check(int domain, int level);
  *
  * @note MT: Safe to call from any thread.
  */
-EINA_API int  eina_log_domain_register(const char *name, const char *color) EINA_ARG_NONNULL(1);
+EINA_API int eina_log_domain_register(const char *name, const char *color)
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Forgets about a logging domain registered by eina_log_domain_register()
@@ -786,12 +792,13 @@ EINA_API void eina_log_domain_unregister(int domain);
  *       eina_log_threads_enable() was called before.
  */
 EINA_API void eina_log_print(int            domain,
-                         Eina_Log_Level level,
-                         const char    *file,
-                         const char    *function,
-                         int            line,
-                         const char    *fmt,
-                         ...) EINA_ARG_NONNULL(3, 4, 6) EINA_PRINTF(6, 7) EINA_NOINSTRUMENT;
+                             Eina_Log_Level level,
+                             const char    *file,
+                             const char    *function,
+                             int            line,
+                             const char    *fmt,
+                             ...) EINA_ARG_NONNULL(3, 4, 6)
+  EINA_PRINTF(6, 7) EINA_NOINSTRUMENT;
 
 /**
  * @brief Prints out log message using given domain and level.
@@ -819,12 +826,13 @@ EINA_API void eina_log_print(int            domain,
  * @see eina_log_print()
  */
 EINA_API void eina_log_vprint(int            domain,
-                          Eina_Log_Level level,
-                          const char    *file,
-                          const char    *fnc,
-                          int            line,
-                          const char    *fmt,
-                          va_list        args) EINA_ARG_NONNULL(3, 4, 6) EINA_NOINSTRUMENT;
+                              Eina_Log_Level level,
+                              const char    *file,
+                              const char    *fnc,
+                              int            line,
+                              const char    *fmt,
+                              va_list        args)
+  EINA_ARG_NONNULL(3, 4, 6) EINA_NOINSTRUMENT;
 
 /*
  * Logging methods (change how logging is done).
@@ -857,13 +865,13 @@ EINA_API void eina_log_vprint(int            domain,
  *       appended to domain name.
  */
 EINA_API void eina_log_print_cb_stdout(const Eina_Log_Domain *d,
-                                   Eina_Log_Level         level,
-                                   const char            *file,
-                                   const char            *fnc,
-                                   int                    line,
-                                   const char            *fmt,
-                                   void                  *data,
-                                   va_list                args) EINA_ARG_NONNULL(1);
+                                       Eina_Log_Level         level,
+                                       const char            *file,
+                                       const char            *fnc,
+                                       int                    line,
+                                       const char            *fmt,
+                                       void                  *data,
+                                       va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Default logging method, this will output to standard error stream.
@@ -899,13 +907,13 @@ EINA_API void eina_log_print_cb_stdout(const Eina_Log_Domain *d,
  *       appended to domain name.
  */
 EINA_API void eina_log_print_cb_stderr(const Eina_Log_Domain *d,
-                                   Eina_Log_Level         level,
-                                   const char            *file,
-                                   const char            *fnc,
-                                   int                    line,
-                                   const char            *fmt,
-                                   void                  *data,
-                                   va_list                args) EINA_ARG_NONNULL(1);
+                                       Eina_Log_Level         level,
+                                       const char            *file,
+                                       const char            *fnc,
+                                       int                    line,
+                                       const char            *fmt,
+                                       void                  *data,
+                                       va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Alternative logging method, this will output to given file stream.
@@ -926,14 +934,13 @@ EINA_API void eina_log_print_cb_stderr(const Eina_Log_Domain *d,
  *       appended to domain name.
  */
 EINA_API void eina_log_print_cb_file(const Eina_Log_Domain *d,
-                                 Eina_Log_Level         level,
-                                 const char            *file,
-                                 const char            *fnc,
-                                 int                    line,
-                                 const char            *fmt,
-                                 void                  *data,
-                                 va_list                args) EINA_ARG_NONNULL(1);
-
+                                     Eina_Log_Level         level,
+                                     const char            *file,
+                                     const char            *fnc,
+                                     int                    line,
+                                     const char            *fmt,
+                                     void                  *data,
+                                     va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Alternative logging method, this will output to systemd journal.
@@ -955,13 +962,13 @@ EINA_API void eina_log_print_cb_file(const Eina_Log_Domain *d,
  * @since 1.8
  */
 EINA_API void eina_log_print_cb_journald(const Eina_Log_Domain *d,
-				     Eina_Log_Level level,
-				     const char *file,
-				     const char *fnc,
-				     int line,
-				     const char *fmt,
-				     void *data,
-				     va_list args) EINA_ARG_NONNULL(1);
+                                         Eina_Log_Level         level,
+                                         const char            *file,
+                                         const char            *fnc,
+                                         int                    line,
+                                         const char            *fmt,
+                                         void                  *data,
+                                         va_list args) EINA_ARG_NONNULL(1);
 
 /**
  * @brief Configures console color of given file.
@@ -975,8 +982,8 @@ EINA_API void eina_log_print_cb_journald(const Eina_Log_Domain *d,
  *
  * @since 1.7
  */
-EINA_API void eina_log_console_color_set(FILE *fp,
-                                     const char *color) EINA_ARG_NONNULL(1, 2);
+EINA_API void eina_log_console_color_set(FILE *fp, const char *color)
+  EINA_ARG_NONNULL(1, 2);
 
 /** String that indicates the log system is initializing. */
 extern EINA_API const char *_eina_log_state_init;
@@ -1006,9 +1013,9 @@ extern EINA_API const char *_eina_log_state_shutdown;
  * @note The phase name should be available for all the life of the timing.
  * @since 1.8
  */
-EINA_API void eina_log_timing(int domain,
-                          Eina_Log_State state,
-                          const char *phase) EINA_ARG_NONNULL(1, 3);
+EINA_API void eina_log_timing(int            domain,
+                              Eina_Log_State state,
+                              const char    *phase) EINA_ARG_NONNULL(1, 3);
 
 #include "eina_inline_log.x"
 

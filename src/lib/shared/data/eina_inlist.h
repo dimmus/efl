@@ -403,19 +403,18 @@ typedef struct _Eina_Inlist_Sorted_State Eina_Inlist_Sorted_State;
  */
 struct _Eina_Inlist
 {
-   Eina_Inlist *next; /**< next node */
-   Eina_Inlist *prev; /**< previous node */
-   Eina_Inlist *last; /**< last node */
+  Eina_Inlist *next; /**< next node */
+  Eina_Inlist *prev; /**< previous node */
+  Eina_Inlist *last; /**< last node */
 };
+
 /** Used for declaring an inlist member in a struct */
 #define EINA_INLIST Eina_Inlist __in_list
 /** Utility macro to get the inlist object of a struct */
 #define EINA_INLIST_GET(Inlist)         (& ((Inlist)->__in_list))
 /** Utility macro to get the container object of an inlist */
-#define EINA_INLIST_CONTAINER_GET(ptr,                          \
-                                  type) ((type *)(void *)((char *)ptr - \
+#define EINA_INLIST_CONTAINER_GET(ptr, type) ((type *)(void *)((char *)ptr - \
                                                   offsetof(type, __in_list)))
-
 
 /**
  * @brief Adds a new node to end of a list.
@@ -434,7 +433,8 @@ struct _Eina_Inlist
  * @return The new list head. Use it and not @a in_list anymore.
  */
 EINA_API Eina_Inlist *eina_inlist_append(Eina_Inlist *in_list,
-                                     Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
+                                         Eina_Inlist *in_item)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new node to beginning of list.
@@ -453,7 +453,8 @@ EINA_API Eina_Inlist *eina_inlist_append(Eina_Inlist *in_list,
  * @return The new list head. Use it and not @a in_list anymore.
  */
 EINA_API Eina_Inlist *eina_inlist_prepend(Eina_Inlist *in_list,
-                                      Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
+                                          Eina_Inlist *in_item)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new node after the given relative item in list.
@@ -478,8 +479,9 @@ EINA_API Eina_Inlist *eina_inlist_prepend(Eina_Inlist *in_list,
  * @return The new list head. Use it and not @a list anymore.
  */
 EINA_API Eina_Inlist *eina_inlist_append_relative(Eina_Inlist *in_list,
-                                              Eina_Inlist *in_item,
-                                              Eina_Inlist *in_relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
+                                                  Eina_Inlist *in_item,
+                                                  Eina_Inlist *in_relative)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Adds a new node before the given relative item in list.
@@ -504,8 +506,9 @@ EINA_API Eina_Inlist *eina_inlist_append_relative(Eina_Inlist *in_list,
  * @return The new list head. Use it and not @a in_list anymore.
  */
 EINA_API Eina_Inlist *eina_inlist_prepend_relative(Eina_Inlist *in_list,
-                                               Eina_Inlist *in_item,
-                                               Eina_Inlist *in_relative) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
+                                                   Eina_Inlist *in_item,
+                                                   Eina_Inlist *in_relative)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Removes node from list.
@@ -524,8 +527,9 @@ EINA_API Eina_Inlist *eina_inlist_prepend_relative(Eina_Inlist *in_list,
  *
  * @return The new list head. Use it and not @a list anymore.
  */
-EINA_API Eina_Inlist   *eina_inlist_remove(Eina_Inlist *in_list,
-                                       Eina_Inlist *in_item) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Inlist *eina_inlist_remove(Eina_Inlist *in_list,
+                                         Eina_Inlist *in_item)
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Finds given node in list, returns itself if found, NULL if not.
@@ -538,8 +542,9 @@ EINA_API Eina_Inlist   *eina_inlist_remove(Eina_Inlist *in_list,
  *
  * @return @a in_item if found, @c NULL if not.
  */
-EINA_API Eina_Inlist   *eina_inlist_find(Eina_Inlist *in_list,
-                                     Eina_Inlist *in_item) EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Inlist *eina_inlist_find(Eina_Inlist *in_list,
+                                       Eina_Inlist *in_item)
+  EINA_ARG_NONNULL(2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves existing node to beginning of list.
@@ -556,8 +561,8 @@ EINA_API Eina_Inlist   *eina_inlist_find(Eina_Inlist *in_list,
  *
  * @return The new list head. Use it and not @a list anymore.
  */
-EINA_API Eina_Inlist   *eina_inlist_promote(Eina_Inlist *list,
-                                        Eina_Inlist *item) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Inlist *eina_inlist_promote(Eina_Inlist *list, Eina_Inlist *item)
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Moves existing node to end of list.
@@ -574,8 +579,8 @@ EINA_API Eina_Inlist   *eina_inlist_promote(Eina_Inlist *list,
  *
  * @return The new list head. Use it and not @a list anymore.
  */
-EINA_API Eina_Inlist   *eina_inlist_demote(Eina_Inlist *list,
-                                       Eina_Inlist *item) EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Inlist *eina_inlist_demote(Eina_Inlist *list, Eina_Inlist *item)
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the first list node in the list.
@@ -591,7 +596,8 @@ EINA_API Eina_Inlist   *eina_inlist_demote(Eina_Inlist *list,
  *
  * @since 1.8
  */
-static inline Eina_Inlist *eina_inlist_first(const Eina_Inlist *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
+static inline Eina_Inlist *
+eina_inlist_first(const Eina_Inlist *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the last list node in the list.
@@ -607,7 +613,8 @@ static inline Eina_Inlist *eina_inlist_first(const Eina_Inlist *list) EINA_PURE 
  *
  * @since 1.8
  */
-static inline Eina_Inlist *eina_inlist_last(const Eina_Inlist *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
+static inline Eina_Inlist *
+eina_inlist_last(const Eina_Inlist *list) EINA_PURE EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Gets the count of the number of items in a list.
@@ -622,8 +629,8 @@ static inline Eina_Inlist *eina_inlist_last(const Eina_Inlist *list) EINA_PURE E
  *    on the number of elements on the list, so, it might become
  *    slow for big lists!
  */
-EINA_API unsigned int   eina_inlist_count(const Eina_Inlist *list) EFL_WARN_UNUSED_RESULT;
-
+EINA_API unsigned int
+eina_inlist_count(const Eina_Inlist *list) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new iterator associated to @a list.
@@ -644,7 +651,8 @@ EINA_API unsigned int   eina_inlist_count(const Eina_Inlist *list) EFL_WARN_UNUS
  *    invalid, and if you add or remove nodes iterator
  *    behavior is undefined, and your program may crash!
  */
-EINA_API Eina_Iterator *eina_inlist_iterator_new(const Eina_Inlist *in_list) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Iterator *eina_inlist_iterator_new(const Eina_Inlist *in_list)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Returns a new accessor associated to a list.
@@ -658,7 +666,8 @@ EINA_API Eina_Iterator *eina_inlist_iterator_new(const Eina_Inlist *in_list) EIN
  * not be allocated, @c NULL is returned and Otherwise, a valid accessor is
  * returned.
  */
-EINA_API Eina_Accessor *eina_inlist_accessor_new(const Eina_Inlist *in_list) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Accessor *eina_inlist_accessor_new(const Eina_Inlist *in_list)
+  EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Inserts a new node into a sorted list.
@@ -682,7 +691,10 @@ EINA_API Eina_Accessor *eina_inlist_accessor_new(const Eina_Inlist *in_list) EIN
  *
  * @since 1.1.0
  */
-EINA_API Eina_Inlist *eina_inlist_sorted_insert(Eina_Inlist *list, Eina_Inlist *item, Eina_Compare_Cb func) EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
+EINA_API Eina_Inlist *eina_inlist_sorted_insert(Eina_Inlist    *list,
+                                                Eina_Inlist    *item,
+                                                Eina_Compare_Cb func)
+  EINA_ARG_NONNULL(2, 3) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Creates state with valid data in it.
@@ -708,7 +720,8 @@ EINA_API Eina_Inlist_Sorted_State *eina_inlist_sorted_state_new(void);
  * useful if you didn't use eina_inlist_sorted_state_insert() at some point, but
  * still think you have a sorted list. It will only correctly work on a sorted list.
  */
-EINA_API int eina_inlist_sorted_state_init(Eina_Inlist_Sorted_State *state, Eina_Inlist *list);
+EINA_API int eina_inlist_sorted_state_init(Eina_Inlist_Sorted_State *state,
+                                           Eina_Inlist              *list);
 
 /**
  * @brief Frees an Eina_Inlist_Sorted_State.
@@ -749,10 +762,11 @@ EINA_API void eina_inlist_sorted_state_free(Eina_Inlist_Sorted_State *state);
  * linear cost again. Consider worst case to be almost O(n) pointer
  * dereference (list walk).
  */
-EINA_API Eina_Inlist *eina_inlist_sorted_state_insert(Eina_Inlist *list,
-						  Eina_Inlist *item,
-						  Eina_Compare_Cb func,
-						  Eina_Inlist_Sorted_State *state);
+EINA_API Eina_Inlist *
+eina_inlist_sorted_state_insert(Eina_Inlist              *list,
+                                Eina_Inlist              *item,
+                                Eina_Compare_Cb           func,
+                                Eina_Inlist_Sorted_State *state);
 /**
  * @brief Sorts a list according to the ordering func will return.
  *
@@ -812,14 +826,14 @@ EINA_API Eina_Inlist *eina_inlist_sort(Eina_Inlist *head, Eina_Compare_Cb func);
  * @param[in,out] ref The reference to be used.
  * @param[out] ptr The pointer to be used.
  */
-#define _EINA_INLIST_CONTAINER(ref, ptr) (void *)((char *)(ptr) - \
+#  define _EINA_INLIST_CONTAINER(ref, ptr) (void *)((char *)(ptr) - \
                                                   _EINA_INLIST_OFFSET(ref))
 #else
 /*
  * In C++ we can't assign a "type*" pointer to void* so we rely on GCC's typeof
  * operator.
  */
-# define _EINA_INLIST_CONTAINER(ref, ptr) (__typeof__(ref))((char *)(ptr) - \
+#  define _EINA_INLIST_CONTAINER(ref, ptr) (__typeof__(ref))((char *)(ptr) - \
 							    _EINA_INLIST_OFFSET(ref))
 #endif
 

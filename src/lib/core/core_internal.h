@@ -3,60 +3,59 @@
 #define _Core_INTERNAL_H
 
 #ifdef EAPI
-# undef EAPI
+#  undef EAPI
 #endif
 
 #ifdef _WIN32
-# ifdef EFL_BUILD
-#  ifdef DLL_EXPORT
-#   define EAPI __declspec(dllexport)
+#  ifdef EFL_BUILD
+#    ifdef DLL_EXPORT
+#      define EAPI __declspec(dllexport)
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI __declspec(dllimport)
 #  endif
-# else
-#  define EAPI __declspec(dllimport)
-# endif
 #else
-# ifdef __GNUC__
-#  if __GNUC__ >= 4
-#   define EAPI __attribute__ ((visibility("default")))
+#  ifdef __GNUC__
+#    if __GNUC__ >= 4
+#      define EAPI __attribute__ ((visibility("default")))
+#    else
+#      define EAPI
+#    endif
 #  else
-#   define EAPI
+#    define EAPI
 #  endif
-# else
-#  define EAPI
-# endif
 #endif
 
-EAPI void core_loop_arguments_send(int argc, const char **argv);
+EAPI void     core_loop_arguments_send(int argc, const char **argv);
 EAPI Efl_Bool efl_loop_message_process(Eo *obj);
 
 static inline Eina_Value
-efl_model_list_value_get(Eina_List *childrens,
+efl_model_list_value_get(Eina_List   *childrens,
                          unsigned int start,
                          unsigned int count)
 {
-   Eina_Value v = EINA_VALUE_EMPTY;
-   Eina_List *l;
-   Eo *child;
+  Eina_Value v = EINA_VALUE_EMPTY;
+  Eina_List *l;
+  Eo        *child;
 
-   if (eina_list_count(childrens) < start + count)
-     return eina_value_error_init(EFL_MODEL_ERROR_INCORRECT_VALUE);
+  if (eina_list_count(childrens) < start + count)
+    return eina_value_error_init(EFL_MODEL_ERROR_INCORRECT_VALUE);
 
-   eina_value_array_setup(&v, EINA_VALUE_TYPE_OBJECT, 4);
+  eina_value_array_setup(&v, EINA_VALUE_TYPE_OBJECT, 4);
 
-   childrens = eina_list_nth_list(childrens, start);
+  childrens = eina_list_nth_list(childrens, start);
 
-   EINA_LIST_FOREACH(childrens, l, child)
-     {
-        if (count == 0)
-          break;
-        count--;
+  EINA_LIST_FOREACH(childrens, l, child)
+  {
+    if (count == 0) break;
+    count--;
 
-        eina_value_array_append(&v, child);
-     }
+    eina_value_array_append(&v, child);
+  }
 
-   return v;
+  return v;
 }
 
 #define EFL_COMPOSITE_MODEL_CHILD_INDEX "child.index"
@@ -78,24 +77,29 @@ efl_model_list_value_get(Eina_List *childrens,
     }                                                                          \
   while (0)
 
-
 static inline Eina_Iterator *
-_efl_composite_model_properties_mix(Eina_Iterator *super, Eina_Iterator *dyn, Eina_Iterator *sta)
+_efl_composite_model_properties_mix(Eina_Iterator *super,
+                                    Eina_Iterator *dyn,
+                                    Eina_Iterator *sta)
 {
-   Eina_Iterator *its[3];
-   int i = 0;
+  Eina_Iterator *its[3];
+  int            i = 0;
 
-   if (sta)   its[i++] = sta;
-   if (dyn)   its[i++] = dyn;
-   if (super) its[i++] = super;
+  if (sta) its[i++] = sta;
+  if (dyn) its[i++] = dyn;
+  if (super) its[i++] = super;
 
-   switch (i)
-     {
-      case 1: return its[0];
-      case 2: return eina_multi_iterator_new(its[0], its[1]);
-      case 3: return eina_multi_iterator_new(its[0], its[1], its[2]);
-      default: return NULL;
-     };
+  switch (i)
+  {
+    case 1:
+      return its[0];
+    case 2:
+      return eina_multi_iterator_new(its[0], its[1]);
+    case 3:
+      return eina_multi_iterator_new(its[0], its[1], its[2]);
+    default:
+      return NULL;
+  };
 }
 
 #define EFL_COMPOSITE_LOOKUP_RETURN(Remember, Parent, View, Base)       \
@@ -114,19 +118,22 @@ _efl_composite_model_properties_mix(Eina_Iterator *super, Eina_Iterator *dyn, Ei
   efl_key_wref_set(View, buf, Remember);               \
   return Remember;
 
-
 static inline Efl_Model *
-_efl_composite_lookup(const Efl_Class *self, Eo *parent, Efl_Model *view, unsigned int index)
+_efl_composite_lookup(const Efl_Class *self,
+                      Eo              *parent,
+                      Efl_Model       *view,
+                      unsigned int     index)
 {
-   EFL_COMPOSITE_LOOKUP_RETURN(remember, parent, view, "_efl.composite_model");
+  EFL_COMPOSITE_LOOKUP_RETURN(remember, parent, view, "_efl.composite_model");
 
-   remember = efl_add_ref(self, parent,
-                          efl_ui_view_model_set(efl_added, view),
-                          efl_composite_model_index_set(efl_added, index),
-                          efl_loop_model_volatile_make(efl_added));
-   if (!remember) return NULL;
+  remember = efl_add_ref(self,
+                         parent,
+                         efl_ui_view_model_set(efl_added, view),
+                         efl_composite_model_index_set(efl_added, index),
+                         efl_loop_model_volatile_make(efl_added));
+  if (!remember) return NULL;
 
-   EFL_COMPOSITE_REMEMBER_RETURN(remember, view);
+  EFL_COMPOSITE_REMEMBER_RETURN(remember, view);
 }
 
 /* Result from eina_future_all_* is an EINA_VALUE_TYPE_ARRAY that contain Eina_Value of
@@ -134,32 +141,33 @@ _efl_composite_lookup(const Efl_Class *self, Eo *parent, Efl_Model *view, unsign
    contain Eo Model directly.
 */
 static inline Eina_Value
-_efl_future_all_repack(Eo *o EFL_UNUSED, void *data EFL_UNUSED, const Eina_Value v)
+_efl_future_all_repack(Eo *o            EFL_UNUSED,
+                       void *data       EFL_UNUSED,
+                       const Eina_Value v)
 {
-   unsigned int i, len;
-   Eina_Value created = EINA_VALUE_EMPTY;
-   Eina_Value r = EINA_VALUE_EMPTY;
+  unsigned int i, len;
+  Eina_Value   created = EINA_VALUE_EMPTY;
+  Eina_Value   r       = EINA_VALUE_EMPTY;
 
-   eina_value_array_setup(&r, EINA_VALUE_TYPE_OBJECT, 4);
+  eina_value_array_setup(&r, EINA_VALUE_TYPE_OBJECT, 4);
 
-   EINA_VALUE_ARRAY_FOREACH(&v, len, i, created)
-     {
-        Eo *target = NULL;
+  EINA_VALUE_ARRAY_FOREACH(&v, len, i, created)
+  {
+    Eo *target = NULL;
 
-        if (eina_value_type_get(&created) != EINA_VALUE_TYPE_OBJECT)
-          goto on_error;
+    if (eina_value_type_get(&created) != EINA_VALUE_TYPE_OBJECT) goto on_error;
 
-        target = eina_value_object_get(&created);
-        if (!target) goto on_error;
+    target = eina_value_object_get(&created);
+    if (!target) goto on_error;
 
-        eina_value_array_append(&r, target);
-     }
+    eina_value_array_append(&r, target);
+  }
 
-   return r;
+  return r;
 
- on_error:
-   eina_value_flush(&r);
-   return eina_value_error_init(EFL_MODEL_ERROR_UNKNOWN);
+on_error:
+  eina_value_flush(&r);
+  return eina_value_error_init(EFL_MODEL_ERROR_UNKNOWN);
 }
 
 #undef EAPI

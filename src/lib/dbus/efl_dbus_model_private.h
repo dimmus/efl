@@ -11,27 +11,27 @@
 #include "core_internal.h"
 
 typedef struct _Efl_Dbus_Children_Slice_Promise Efl_Dbus_Children_Slice_Promise;
-typedef struct _Efl_Dbus_Model_Data Efl_Dbus_Model_Data;
+typedef struct _Efl_Dbus_Model_Data             Efl_Dbus_Model_Data;
 
 struct _Efl_Dbus_Children_Slice_Promise
 {
-   Eina_Promise *p;
+  Eina_Promise *p;
 
-   unsigned int start;
-   unsigned int count;
+  unsigned int start;
+  unsigned int count;
 };
 
 struct _Efl_Dbus_Model_Data
 {
-   Efl_Dbus_Connection *connection;
-   Efl_Dbus_Connection_Type type;
+  Efl_Dbus_Connection     *connection;
+  Efl_Dbus_Connection_Type type;
 
-   Eina_Stringshare *address;
-   Eina_Stringshare *unique_name;
+  Eina_Stringshare *address;
+  Eina_Stringshare *unique_name;
 
-   Efl_Bool private : 1;
+  Efl_Bool private : 1;
 
-   Efl_Bool is_listed : 1;
+  Efl_Bool is_listed : 1;
 };
 
 #define UNIQUE_NAME_PROPERTY "unique_name"
@@ -51,27 +51,27 @@ extern int efl_dbus_model_log_dom;
   while(0)
 
 #ifdef CRI
-# undef CRI
+#  undef CRI
 #endif
 #define CRI(...) EINA_LOG_DOM_CRIT(efl_dbus_model_log_dom, __VA_ARGS__)
 
 #ifdef ERR
-# undef ERR
+#  undef ERR
 #endif
 #define ERR(...) EINA_LOG_DOM_ERR(efl_dbus_model_log_dom, __VA_ARGS__)
 
 #ifdef WRN
-# undef WRN
+#  undef WRN
 #endif
 #define WRN(...) EINA_LOG_DOM_WARN(efl_dbus_model_log_dom, __VA_ARGS__)
 
 #ifdef INF
-# undef INF
+#  undef INF
 #endif
 #define INF(...) EINA_LOG_DOM_INFO(efl_dbus_model_log_dom, __VA_ARGS__)
 
 #ifdef DBG
-# undef DBG
+#  undef DBG
 #endif
 #define DBG(...) EINA_LOG_DOM_DBG(efl_dbus_model_log_dom, __VA_ARGS__)
 

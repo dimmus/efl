@@ -30,63 +30,63 @@ _eina_mempool_test(Eina_Mempool *mp,
                    Efl_Bool      with_gc,
                    Efl_Bool      accurate_from)
 {
-    Eina_Iterator *it;
-    int           *tbl[512];
-    int           *ptr;
-    int            i;
+  Eina_Iterator *it;
+  int           *tbl[512];
+  int           *ptr;
+  int            i;
 
-    fail_if(!mp);
+  fail_if(!mp);
 
-    for (i = 0; i < 512; ++i)
-    {
-        tbl[i] = eina_mempool_malloc(mp, sizeof(int));
-        fail_if(!tbl[i]);
-        if (accurate_from) fail_if(eina_mempool_from(mp, tbl[i]) != EFL_TRUE);
-        *tbl[i] = i;
-    }
+  for (i = 0; i < 512; ++i)
+  {
+    tbl[i] = eina_mempool_malloc(mp, sizeof(int));
+    fail_if(!tbl[i]);
+    if (accurate_from) fail_if(eina_mempool_from(mp, tbl[i]) != EFL_TRUE);
+    *tbl[i] = i;
+  }
 
-    for (i = 0; i < 512; ++i)
-        fail_if(*tbl[i] != i);
+  for (i = 0; i < 512; ++i)
+    fail_if(*tbl[i] != i);
 
-    for (i = 0; i < 256; ++i)
-    {
-        eina_mempool_free(mp, tbl[i]);
-        if (accurate_from) fail_if(eina_mempool_from(mp, tbl[i]) != EFL_FALSE);
-    }
+  for (i = 0; i < 256; ++i)
+  {
+    eina_mempool_free(mp, tbl[i]);
+    if (accurate_from) fail_if(eina_mempool_from(mp, tbl[i]) != EFL_FALSE);
+  }
 
-    it = eina_mempool_iterator_new(mp);
-    EINA_ITERATOR_FOREACH(it, ptr)
-    {
-        ck_assert_int_gt(*ptr, 255);
-        *ptr = 0;
-    }
-    eina_iterator_free(it);
+  it = eina_mempool_iterator_new(mp);
+  EINA_ITERATOR_FOREACH(it, ptr)
+  {
+    ck_assert_int_gt(*ptr, 255);
+    *ptr = 0;
+  }
+  eina_iterator_free(it);
 
-    if (it) // Only check if the mempool support iterator
-    {
-        for (; i < 512; ++i)
-            ck_assert_int_eq(*tbl[i], 0);
-    }
+  if (it) // Only check if the mempool support iterator
+  {
+    for (; i < 512; ++i)
+      ck_assert_int_eq(*tbl[i], 0);
+  }
 
-    if (with_realloc) fail_if(eina_mempool_realloc(mp, tbl[500], 25) == NULL);
-    else fail_if(eina_mempool_realloc(mp, tbl[500], 25) != NULL);
+  if (with_realloc) fail_if(eina_mempool_realloc(mp, tbl[500], 25) == NULL);
+  else fail_if(eina_mempool_realloc(mp, tbl[500], 25) != NULL);
 
-    if (with_gc)
-    {
-        eina_mempool_gc(mp);
-        eina_mempool_statistics(mp);
-    }
+  if (with_gc)
+  {
+    eina_mempool_gc(mp);
+    eina_mempool_statistics(mp);
+  }
 
-    eina_mempool_del(mp);
+  eina_mempool_del(mp);
 }
 
 #ifdef EINA_BUILD_CHAINED_POOL
 EFL_START_TEST(efl_shared_mempool_chained_mempool)
 {
-    Eina_Mempool *mp;
+  Eina_Mempool *mp;
 
-    mp = eina_mempool_add("chained_mempool", "test", NULL, sizeof(int), 256);
-    _eina_mempool_test(mp, EFL_FALSE, EFL_FALSE, EFL_TRUE);
+  mp = eina_mempool_add("chained_mempool", "test", NULL, sizeof(int), 256);
+  _eina_mempool_test(mp, EFL_FALSE, EFL_FALSE, EFL_TRUE);
 }
 
 EFL_END_TEST
@@ -95,10 +95,10 @@ EFL_END_TEST
 #ifdef EINA_BUILD_PASS_THROUGH
 EFL_START_TEST(efl_shared_mempool_pass_through)
 {
-    Eina_Mempool *mp;
+  Eina_Mempool *mp;
 
-    mp = eina_mempool_add("pass_through", "test", NULL, sizeof(int), 8, 0);
-    _eina_mempool_test(mp, EFL_TRUE, EFL_FALSE, EFL_FALSE);
+  mp = eina_mempool_add("pass_through", "test", NULL, sizeof(int), 8, 0);
+  _eina_mempool_test(mp, EFL_TRUE, EFL_FALSE, EFL_FALSE);
 }
 
 EFL_END_TEST
@@ -107,10 +107,10 @@ EFL_END_TEST
 #ifdef EINA_BUILD_ONE_BIG
 EFL_START_TEST(efl_shared_mempool_one_big)
 {
-    Eina_Mempool *mp;
+  Eina_Mempool *mp;
 
-    mp = eina_mempool_add("one_big", "test", NULL, sizeof(int), 384);
-    _eina_mempool_test(mp, EFL_FALSE, EFL_FALSE, EFL_TRUE);
+  mp = eina_mempool_add("one_big", "test", NULL, sizeof(int), 384);
+  _eina_mempool_test(mp, EFL_FALSE, EFL_FALSE, EFL_TRUE);
 }
 
 EFL_END_TEST
@@ -120,12 +120,12 @@ void
 eina_test_mempool(TCase *tc)
 {
 #ifdef EINA_BUILD_CHAINED_POOL
-    tcase_add_test(tc, efl_shared_mempool_chained_mempool);
+  tcase_add_test(tc, efl_shared_mempool_chained_mempool);
 #endif
 #ifdef EINA_BUILD_PASS_THROUGH
-    tcase_add_test(tc, efl_shared_mempool_pass_through);
+  tcase_add_test(tc, efl_shared_mempool_pass_through);
 #endif
 #ifdef EINA_BUILD_ONE_BIG
-    tcase_add_test(tc, efl_shared_mempool_one_big);
+  tcase_add_test(tc, efl_shared_mempool_one_big);
 #endif
 }

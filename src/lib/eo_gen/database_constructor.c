@@ -8,8 +8,8 @@
 void
 database_constructor_del(Eolian_Constructor *ctor)
 {
-    if (!ctor) return;
-    eina_stringshare_del(ctor->base.file);
-    eina_stringshare_del(ctor->base.name);
-    free(ctor);
+  if (!ctor) return;
+  eina_stringshare_del(ctor->base.file);
+  eina_stringshare_del(ctor->base.name);
+  free(ctor);
 }

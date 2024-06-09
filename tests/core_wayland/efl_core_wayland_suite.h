@@ -1,8 +1,8 @@
 #ifndef _EFL_CORE_WAYLAND_SUITE_H
-# define _EFL_CORE_WAYLAND_SUITE_H
+#define _EFL_CORE_WAYLAND_SUITE_H
 
 #ifdef HAVE_CONFIG_H
-#include "efl_config.h"
+#  include "efl_config.h"
 #endif
 
 #include <stdio.h>

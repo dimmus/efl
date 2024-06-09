@@ -101,7 +101,8 @@
  * ensures @p dst is NULL-terminated even if no @c NULL byte is found in the first
  * @p siz bytes of src.
  */
-EINA_API size_t          eina_strlcpy(char *dst, const char *src, size_t siz) EINA_ARG_NONNULL(1, 2);
+EINA_API size_t eina_strlcpy(char *dst, const char *src, size_t siz)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Appends a c-string.
@@ -118,8 +119,8 @@ EINA_API size_t          eina_strlcpy(char *dst, const char *src, size_t siz) EI
  * MIN(siz, strlen(initial dst)). If the returned value is greater or
  * equal than @p siz, truncation occurred.
  */
-EINA_API size_t          eina_strlcat(char *dst, const char *src, size_t siz) EINA_ARG_NONNULL(1, 2);
-
+EINA_API size_t eina_strlcat(char *dst, const char *src, size_t siz)
+  EINA_ARG_NONNULL(1, 2);
 
 /**
  * @brief Checks if the given string has the given prefix.
@@ -132,7 +133,9 @@ EINA_API size_t          eina_strlcat(char *dst, const char *src, size_t siz) EI
  * @p prefix, #EFL_FALSE otherwise. If the length of @p prefix is
  * greater than @p str, #EFL_FALSE is returned.
  */
-EINA_API Efl_Bool       eina_str_has_prefix(const char *str, const char *prefix) EINA_PURE EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_str_has_prefix(const char *str,
+                                      const char *prefix) EINA_PURE
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Checks if the given string has the given suffix.
@@ -145,7 +148,9 @@ EINA_API Efl_Bool       eina_str_has_prefix(const char *str, const char *prefix)
  * @p suffix, #EFL_FALSE otherwise. If the length of @p suffix is
  * greater than @p str, #EFL_FALSE is returned.
  */
-EINA_API Efl_Bool       eina_str_has_suffix(const char *str, const char *suffix) EINA_PURE EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_str_has_suffix(const char *str,
+                                      const char *suffix) EINA_PURE
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Checks if the given string has the given extension.
@@ -157,7 +162,9 @@ EINA_API Efl_Bool       eina_str_has_suffix(const char *str, const char *suffix)
  * This function does the same as eina_str_has_suffix(), except it's case
  * insensitive.
  */
-EINA_API Efl_Bool       eina_str_has_extension(const char *str, const char *ext) EINA_PURE EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
+EINA_API Efl_Bool eina_str_has_extension(const char *str,
+                                         const char *ext) EINA_PURE
+  EINA_ARG_NONNULL(1, 2) EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Splits a string using a delimiter.
@@ -183,7 +190,9 @@ EINA_API Efl_Bool       eina_str_has_extension(const char *str, const char *ext)
  * @note If you need the number of elements in the returned array see
  * eina_str_split_full().
  */
-EINA_API char          **eina_str_split(const char *string, const char *delimiter, int max_tokens) EINA_ARG_NONNULL(1, 2) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
+EINA_API char **
+eina_str_split(const char *string, const char *delimiter, int max_tokens)
+  EINA_ARG_NONNULL(1, 2) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Splits a string using a delimiter and returns number of elements.
@@ -216,8 +225,11 @@ EINA_API char          **eina_str_split(const char *string, const char *delimite
  *
  * @see eina_str_split()
  */
-EINA_API char          **eina_str_split_full(const char *string, const char *delimiter, int max_tokens, unsigned int *elements) EINA_ARG_NONNULL(1, 2, 4) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
-
+EINA_API char **eina_str_split_full(const char   *string,
+                                    const char   *delimiter,
+                                    int           max_tokens,
+                                    unsigned int *elements)
+  EINA_ARG_NONNULL(1, 2, 4) EINA_MALLOC EFL_WARN_UNUSED_RESULT;
 
 /**
  * @brief Joins two strings of known length.
@@ -245,8 +257,13 @@ EINA_API char          **eina_str_split_full(const char *string, const char *del
  * @see eina_str_join()
  * @see eina_str_join_static()
  */
-EINA_API size_t          eina_str_join_len(char *dst, size_t size, char sep, const char *a, size_t a_len, const char *b, size_t b_len) EINA_ARG_NONNULL(1, 4, 6);
-
+EINA_API size_t eina_str_join_len(char       *dst,
+                                  size_t      size,
+                                  char        sep,
+                                  const char *a,
+                                  size_t      a_len,
+                                  const char *b,
+                                  size_t      b_len) EINA_ARG_NONNULL(1, 4, 6);
 
 /**
  * @brief Uses Iconv to convert a text string from one encoding to another.
@@ -265,7 +282,11 @@ EINA_API size_t          eina_str_join_len(char *dst, size_t size, char sep, con
  * @warning This function is guaranteed to break when '\0' characters are in @p text.
  * DO NOT USE THIS FUNCTION IF YOUR TEXT CONTAINS NON-TERMINATING '\0' CHARACTERS.
  */
-EINA_API char           *eina_str_convert(const char *enc_from, const char *enc_to, const char *text) EFL_WARN_UNUSED_RESULT EINA_MALLOC EINA_ARG_NONNULL(1, 2, 3);
+EINA_API char *
+eina_str_convert(const char *enc_from,
+                 const char *enc_to,
+                 const char *text) EFL_WARN_UNUSED_RESULT EINA_MALLOC
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Uses Iconv to convert a text string from one encoding to another.
@@ -285,8 +306,13 @@ EINA_API char           *eina_str_convert(const char *enc_from, const char *enc_
  *
  * @since 1.8
  */
-EINA_API char           *eina_str_convert_len(const char *enc_from, const char *enc_to, const char *text, size_t len, size_t *retlen) EFL_WARN_UNUSED_RESULT EINA_MALLOC EINA_ARG_NONNULL(1, 2, 3);
-
+EINA_API char *
+eina_str_convert_len(const char *enc_from,
+                     const char *enc_to,
+                     const char *text,
+                     size_t      len,
+                     size_t     *retlen) EFL_WARN_UNUSED_RESULT EINA_MALLOC
+  EINA_ARG_NONNULL(1, 2, 3);
 
 /**
  * @brief Escapes slashes, spaces and apostrophes in strings.
@@ -300,8 +326,9 @@ EINA_API char           *eina_str_convert_len(const char *enc_from, const char *
  * failure. When not used anymore, the
  * returned value must be freed.
  */
-EINA_API char           *eina_str_escape(const char *str) EFL_WARN_UNUSED_RESULT EINA_MALLOC EINA_ARG_NONNULL(1);
-
+EINA_API char *
+eina_str_escape(const char *str) EFL_WARN_UNUSED_RESULT EINA_MALLOC
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Lowercases all the characters in range [A-Z] in the given string.
@@ -312,7 +339,7 @@ EINA_API char           *eina_str_escape(const char *str) EFL_WARN_UNUSED_RESULT
  * in [A-Z] to lowercase. If @p str is @c NULL or is an empty string,
  * this function does nothing.
  */
-EINA_API void            eina_str_tolower(char **str);
+EINA_API void eina_str_tolower(char **str);
 
 /**
  * @brief Uppercases all the characters in range [a-z] in the given string.
@@ -323,9 +350,11 @@ EINA_API void            eina_str_tolower(char **str);
  * in [a-z] to uppercase. If @p str is @c NULL or is an empty string,
  * this function does nothing.
  */
-EINA_API void            eina_str_toupper(char **str);
+EINA_API void eina_str_toupper(char **str);
 
-static inline size_t eina_str_join(char *dst, size_t size, char sep, const char *a, const char *b) EINA_ARG_NONNULL(1, 4, 5);
+static inline size_t
+eina_str_join(char *dst, size_t size, char sep, const char *a, const char *b)
+  EINA_ARG_NONNULL(1, 4, 5);
 
 /**
  * @def eina_str_join_static(dst, sep, a, b)
@@ -345,7 +374,10 @@ static inline size_t eina_str_join(char *dst, size_t size, char sep, const char 
  */
 #define eina_str_join_static(dst, sep, a, b) eina_str_join_len(dst, sizeof(dst), sep, a, (sizeof(a) > 0) ? sizeof(a) - 1 : 0, b, (sizeof(b) > 0) ? sizeof(b) - 1 : 0)
 
-static inline size_t eina_strlen_bounded(const char *str, size_t maxlen) EINA_PURE EFL_WARN_UNUSED_RESULT EINA_ARG_NONNULL(1);
+static inline size_t
+eina_strlen_bounded(const char *str,
+                    size_t      maxlen) EINA_PURE EFL_WARN_UNUSED_RESULT
+  EINA_ARG_NONNULL(1);
 
 /**
  * @brief Memory duplication function with optional termination for strings
@@ -355,7 +387,8 @@ static inline size_t eina_strlen_bounded(const char *str, size_t maxlen) EINA_PU
  * @return The copied memory, must be freed
  * @since 1.13
  */
-EINA_API unsigned char *eina_memdup(unsigned char *mem, size_t size, Efl_Bool terminate);
+EINA_API unsigned char *
+eina_memdup(unsigned char *mem, size_t size, Efl_Bool terminate);
 
 /**
  * @brief Creates and update the buffer based on strftime output.
@@ -385,7 +418,8 @@ EINA_API char *eina_strftime(const char *format, const struct tm *tm);
 
 static inline size_t eina_strlen_bounded(const char *str, size_t maxlen);
 
-static inline size_t eina_str_join(char *dst, size_t size, char sep, const char *a, const char *b);
+static inline size_t
+eina_str_join(char *dst, size_t size, char sep, const char *a, const char *b);
 
 static inline char *eina_strdup(const char *str);
 

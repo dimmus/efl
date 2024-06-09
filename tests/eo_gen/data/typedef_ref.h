@@ -2,14 +2,14 @@
 #define _EOLIAN_TYPEDEF_EO_H_
 
 #ifndef _TYPEDEF_EO_CLASS_TYPE
-#define _TYPEDEF_EO_CLASS_TYPE
+#  define _TYPEDEF_EO_CLASS_TYPE
 
 typedef Eo Typedef;
 
 #endif
 
 #ifndef _TYPEDEF_EO_TYPES
-#define _TYPEDEF_EO_TYPES
+#  define _TYPEDEF_EO_TYPES
 
 /** Docs for typedef Evas.Coord.
  *
@@ -58,7 +58,6 @@ typedef enum
   ELM_OBJECT_SELECT_MODE_MAX
 } Elm_Object_Select_Mode;
 
-
 #endif
 /** Docs for class Typedef.
  *
@@ -70,6 +69,7 @@ typedef enum
 
 EAPI EAPI_WEAK const Efl_Class *typedef_class_get(void) EINA_CONST;
 
-EAPI EAPI_WEAK char *typedef_foo(Eo *obj, int idx) EFL_TRANSFER_OWNERSHIP EFL_WARN_UNUSED_RESULT;
+EAPI EAPI_WEAK char *
+typedef_foo(Eo *obj, int idx) EFL_TRANSFER_OWNERSHIP EFL_WARN_UNUSED_RESULT;
 
 #endif

@@ -16,7 +16,6 @@
  * if not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef EINA_INLINE_VALUE_UTIL_H_
 #define EINA_INLINE_VALUE_UTIL_H_
 

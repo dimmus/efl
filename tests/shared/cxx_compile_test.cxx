@@ -28,8 +28,8 @@ using namespace std;
 int
 main()
 {
-    eina_init();
-    cout << "Eina compiles with C++!";
-    eina_shutdown();
-    return 0;
+  eina_init();
+  cout << "Eina compiles with C++!";
+  eina_shutdown();
+  return 0;
 }

@@ -87,9 +87,10 @@
  */
 typedef enum
 {
-   EINA_LOCK_FAIL     = EFL_FALSE, /**< Indicates that the lock operation failed. */
-   EINA_LOCK_SUCCEED  = EFL_TRUE,  /**< Indicates that the lock operation succeeded. */
-   EINA_LOCK_DEADLOCK               /**< Indicates that the lock is deadlocked. */
+  EINA_LOCK_FAIL = EFL_FALSE, /**< Indicates that the lock operation failed. */
+  EINA_LOCK_SUCCEED =
+    EFL_TRUE, /**< Indicates that the lock operation succeeded. */
+  EINA_LOCK_DEADLOCK /**< Indicates that the lock is deadlocked. */
 } Eina_Lock_Result;
 
 /**
@@ -226,7 +227,8 @@ EINA_API void eina_lock_debug(const Eina_Lock *mutex);
  *
  * @see eina_condition_free()
  */
-static inline Efl_Bool eina_condition_new(Eina_Condition *cond, Eina_Lock *mutex);
+static inline Efl_Bool eina_condition_new(Eina_Condition *cond,
+                                          Eina_Lock      *mutex);
 
 /**
  * @brief Deallocates a condition variable.
@@ -297,7 +299,6 @@ static inline Efl_Bool eina_condition_broadcast(Eina_Condition *cond);
  * @see eina_condition_broadcast()
  */
 static inline Efl_Bool eina_condition_signal(Eina_Condition *cond);
-
 
 /**
  * @brief Initializes a new #Eina_RWLock.
@@ -403,7 +404,8 @@ static inline Efl_Bool eina_tls_new(Eina_TLS *key);
  * @see eina_tls_new()
  * @see eina_tls_free()
  */
-static inline Efl_Bool eina_tls_cb_new(Eina_TLS *key, Eina_TLS_Delete_Cb delete_cb);
+static inline Efl_Bool eina_tls_cb_new(Eina_TLS          *key,
+                                       Eina_TLS_Delete_Cb delete_cb);
 
 /**
  * @brief Frees an allocated #Eina_TLS.
@@ -496,7 +498,8 @@ static inline Efl_Bool eina_semaphore_lock(Eina_Semaphore *sem);
  *
  * @see eina_semaphore_lock()
  */
-static inline Efl_Bool eina_semaphore_release(Eina_Semaphore *sem, int count_release);
+static inline Efl_Bool eina_semaphore_release(Eina_Semaphore *sem,
+                                              int             count_release);
 
 /**
  * @brief Initializes a new #Eina_Barrier.
@@ -533,7 +536,6 @@ static inline void eina_barrier_free(Eina_Barrier *barrier);
  *
  */
 static inline Efl_Bool eina_barrier_wait(Eina_Barrier *barrier);
-
 
 /**
  * @brief Initializes a new #Eina_Spinlock.
@@ -612,7 +614,7 @@ static inline Eina_Lock_Result eina_spinlock_release(Eina_Spinlock *spinlock);
 static inline void eina_spinlock_free(Eina_Spinlock *spinlock);
 
 #ifdef EINA_HAVE_DEBUG_THREADS
-# define EINA_MAIN_LOOP_CHECK_RETURN_VAL(val)				\
+#  define EINA_MAIN_LOOP_CHECK_RETURN_VAL(val)				\
   do {									\
     if (EINA_UNLIKELY(!eina_main_loop_is()))				\
       {									\
@@ -624,7 +626,7 @@ static inline void eina_spinlock_free(Eina_Spinlock *spinlock);
 	return val;							\
       }									\
   } while (0)
-# define EINA_MAIN_LOOP_CHECK_RETURN					\
+#  define EINA_MAIN_LOOP_CHECK_RETURN					\
   do {									\
     if (EINA_UNLIKELY(!eina_main_loop_is()))				\
       {									\
@@ -642,12 +644,12 @@ static inline void eina_spinlock_free(Eina_Spinlock *spinlock);
  * @brief Definition for the macro that doesn't do anything unless @c EINA_HAVE_DEBUG_THREADS is defined.
  * @param[in] val The value to be returned
  */
-# define EINA_MAIN_LOOP_CHECK_RETURN_VAL(val) do {} while(0)
+#  define EINA_MAIN_LOOP_CHECK_RETURN_VAL(val) do {} while(0)
 /**
  * @def EINA_MAIN_LOOP_CHECK_RETURN
  * @brief Definition for the macro that doesn't do anything unless @c EINA_HAVE_DEBUG_THREADS is defined.
  */
-# define EINA_MAIN_LOOP_CHECK_RETURN do {} while(0)
+#  define EINA_MAIN_LOOP_CHECK_RETURN do {} while(0)
 #endif
 
 /**

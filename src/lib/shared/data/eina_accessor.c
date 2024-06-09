@@ -71,7 +71,7 @@ static const char EINA_MAGIC_ACCESSOR_STR[] = "Eina Accessor";
 Efl_Bool
 eina_accessor_init(void)
 {
-    return eina_magic_string_set(EINA_MAGIC_ACCESSOR, EINA_MAGIC_ACCESSOR_STR);
+  return eina_magic_string_set(EINA_MAGIC_ACCESSOR, EINA_MAGIC_ACCESSOR_STR);
 }
 
 /**
@@ -88,7 +88,7 @@ eina_accessor_init(void)
 Efl_Bool
 eina_accessor_shutdown(void)
 {
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 /*============================================================================*
@@ -98,20 +98,20 @@ eina_accessor_shutdown(void)
 EINA_API void
 eina_accessor_free(Eina_Accessor *accessor)
 {
-    if (!accessor) return;
+  if (!accessor) return;
 
-    EINA_MAGIC_CHECK_ACCESSOR(accessor);
-    EINA_SAFETY_ON_NULL_RETURN(accessor->free);
-    accessor->free(accessor);
+  EINA_MAGIC_CHECK_ACCESSOR(accessor);
+  EINA_SAFETY_ON_NULL_RETURN(accessor->free);
+  accessor->free(accessor);
 }
 
 EINA_API void *
 eina_accessor_container_get(Eina_Accessor *accessor)
 {
-    EINA_MAGIC_CHECK_ACCESSOR(accessor);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, NULL);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(accessor->get_container, NULL);
-    return accessor->get_container(accessor);
+  EINA_MAGIC_CHECK_ACCESSOR(accessor);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, NULL);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(accessor->get_container, NULL);
+  return accessor->get_container(accessor);
 }
 
 EINA_API Efl_Bool
@@ -119,11 +119,11 @@ eina_accessor_data_get(Eina_Accessor *accessor,
                        unsigned int   position,
                        void         **data)
 {
-    EINA_MAGIC_CHECK_ACCESSOR(accessor);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, EFL_FALSE);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(accessor->get_at, EFL_FALSE);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(data, EFL_FALSE);
-    return accessor->get_at(accessor, position, data);
+  EINA_MAGIC_CHECK_ACCESSOR(accessor);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(accessor->get_at, EFL_FALSE);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(data, EFL_FALSE);
+  return accessor->get_at(accessor, position, data);
 }
 
 EINA_API void
@@ -133,70 +133,70 @@ eina_accessor_over(Eina_Accessor *accessor,
                    unsigned int   end,
                    const void    *fdata)
 {
-    const void  *container;
-    void        *data;
-    unsigned int i;
+  const void  *container;
+  void        *data;
+  unsigned int i;
 
-    if (!accessor) return;
+  if (!accessor) return;
 
-    EINA_MAGIC_CHECK_ACCESSOR(accessor);
-    EINA_SAFETY_ON_NULL_RETURN(accessor->get_container);
-    EINA_SAFETY_ON_NULL_RETURN(accessor->get_at);
-    EINA_SAFETY_ON_NULL_RETURN(cb);
-    EINA_SAFETY_ON_FALSE_RETURN(start < end);
+  EINA_MAGIC_CHECK_ACCESSOR(accessor);
+  EINA_SAFETY_ON_NULL_RETURN(accessor->get_container);
+  EINA_SAFETY_ON_NULL_RETURN(accessor->get_at);
+  EINA_SAFETY_ON_NULL_RETURN(cb);
+  EINA_SAFETY_ON_FALSE_RETURN(start < end);
 
-    if (!eina_accessor_lock(accessor)) return;
+  if (!eina_accessor_lock(accessor)) return;
 
-    container = accessor->get_container(accessor);
-    for (i = start; i < end && accessor->get_at(accessor, i, &data) == EFL_TRUE;
-         ++i)
-        if (cb(container, data, (void *)fdata) != EFL_TRUE) goto on_exit;
+  container = accessor->get_container(accessor);
+  for (i = start; i < end && accessor->get_at(accessor, i, &data) == EFL_TRUE;
+       ++i)
+    if (cb(container, data, (void *)fdata) != EFL_TRUE) goto on_exit;
 
 on_exit:
-    (void)eina_accessor_unlock(accessor);
+  (void)eina_accessor_unlock(accessor);
 }
 
 EINA_API Efl_Bool
 eina_accessor_lock(Eina_Accessor *accessor)
 {
-    EINA_MAGIC_CHECK_ACCESSOR(accessor);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, EFL_FALSE);
+  EINA_MAGIC_CHECK_ACCESSOR(accessor);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, EFL_FALSE);
 
-    if (accessor->lock) return accessor->lock(accessor);
-    return EFL_TRUE;
+  if (accessor->lock) return accessor->lock(accessor);
+  return EFL_TRUE;
 }
 
 EINA_API Eina_Accessor *
 eina_accessor_clone(Eina_Accessor *accessor)
 {
-    EINA_MAGIC_CHECK_ACCESSOR(accessor);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, NULL);
+  EINA_MAGIC_CHECK_ACCESSOR(accessor);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, NULL);
 
-    if (accessor->clone) return accessor->clone(accessor);
+  if (accessor->clone) return accessor->clone(accessor);
 
-    return NULL;
+  return NULL;
 }
 
 EINA_API Efl_Bool
 eina_accessor_unlock(Eina_Accessor *accessor)
 {
-    EINA_MAGIC_CHECK_ACCESSOR(accessor);
-    EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, EFL_FALSE);
+  EINA_MAGIC_CHECK_ACCESSOR(accessor);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(accessor, EFL_FALSE);
 
-    if (accessor->unlock) return accessor->unlock(accessor);
-    return EFL_TRUE;
+  if (accessor->unlock) return accessor->unlock(accessor);
+  return EFL_TRUE;
 }
 
 typedef struct _Eina_Accessor_CArray_Length Eina_Accessor_CArray_Length;
 
 struct _Eina_Accessor_CArray_Length
 {
-    Eina_Accessor accessor;
+  Eina_Accessor accessor;
 
-    void **array;
+  void **array;
 
-    void       **end;
-    unsigned int step;
+  void       **end;
+  unsigned int step;
 };
 
 static Efl_Bool
@@ -204,14 +204,12 @@ eina_carray_length_accessor_get_at(Eina_Accessor_CArray_Length *accessor,
                                    unsigned int                 idx,
                                    void                       **data)
 {
-    if ((char *)accessor->array + idx * accessor->step >= (char *)accessor->end)
-        return EFL_FALSE;
+  if ((char *)accessor->array + idx * accessor->step >= (char *)accessor->end)
+    return EFL_FALSE;
 
-    memcpy(data,
-           (char *)accessor->array + idx * accessor->step,
-           accessor->step);
+  memcpy(data, (char *)accessor->array + idx * accessor->step, accessor->step);
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 static Efl_Bool
@@ -219,24 +217,24 @@ eina_carray_length_accessor_ptr_get_at(Eina_Accessor_CArray_Length *accessor,
                                        unsigned int                 idx,
                                        void                       **data)
 {
-    if ((char *)accessor->array + idx * accessor->step >= (char *)accessor->end)
-        return EFL_FALSE;
+  if ((char *)accessor->array + idx * accessor->step >= (char *)accessor->end)
+    return EFL_FALSE;
 
-    *data = (((char *)accessor->array) + idx * accessor->step);
+  *data = (((char *)accessor->array) + idx * accessor->step);
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 static void **
 eina_carray_length_accessor_get_container(Eina_Accessor_CArray_Length *accessor)
 {
-    return accessor->array;
+  return accessor->array;
 }
 
 static void
 eina_carray_length_accessor_free(Eina_Accessor_CArray_Length *accessor)
 {
-    free(accessor);
+  free(accessor);
 }
 
 EINA_API Eina_Accessor *
@@ -244,26 +242,26 @@ eina_carray_length_accessor_new(void       **array,
                                 unsigned int step,
                                 unsigned int length)
 {
-    Eina_Accessor_CArray_Length *accessor;
+  Eina_Accessor_CArray_Length *accessor;
 
-    accessor = calloc(1, sizeof(Eina_Accessor_CArray_Length));
-    if (!accessor) return NULL;
+  accessor = calloc(1, sizeof(Eina_Accessor_CArray_Length));
+  if (!accessor) return NULL;
 
-    EINA_MAGIC_SET(&accessor->accessor, EINA_MAGIC_ACCESSOR);
+  EINA_MAGIC_SET(&accessor->accessor, EINA_MAGIC_ACCESSOR);
 
-    accessor->array = array;
-    accessor->end   = (void **)((char *)accessor->array + length * step);
-    accessor->step  = step;
+  accessor->array = array;
+  accessor->end   = (void **)((char *)accessor->array + length * step);
+  accessor->step  = step;
 
-    accessor->accessor.version = EINA_ACCESSOR_VERSION;
-    accessor->accessor.get_at =
-        FUNC_ACCESSOR_GET_AT(eina_carray_length_accessor_get_at);
-    accessor->accessor.get_container =
-        FUNC_ACCESSOR_GET_CONTAINER(eina_carray_length_accessor_get_container);
-    accessor->accessor.free =
-        FUNC_ACCESSOR_FREE(eina_carray_length_accessor_free);
+  accessor->accessor.version = EINA_ACCESSOR_VERSION;
+  accessor->accessor.get_at =
+    FUNC_ACCESSOR_GET_AT(eina_carray_length_accessor_get_at);
+  accessor->accessor.get_container =
+    FUNC_ACCESSOR_GET_CONTAINER(eina_carray_length_accessor_get_container);
+  accessor->accessor.free =
+    FUNC_ACCESSOR_FREE(eina_carray_length_accessor_free);
 
-    return &accessor->accessor;
+  return &accessor->accessor;
 }
 
 EINA_API Eina_Accessor *
@@ -271,24 +269,24 @@ eina_carray_length_ptr_accessor_new(void       **array,
                                     unsigned int step,
                                     unsigned int length)
 {
-    Eina_Accessor_CArray_Length *accessor;
+  Eina_Accessor_CArray_Length *accessor;
 
-    accessor = calloc(1, sizeof(Eina_Accessor_CArray_Length));
-    if (!accessor) return NULL;
+  accessor = calloc(1, sizeof(Eina_Accessor_CArray_Length));
+  if (!accessor) return NULL;
 
-    EINA_MAGIC_SET(&accessor->accessor, EINA_MAGIC_ACCESSOR);
+  EINA_MAGIC_SET(&accessor->accessor, EINA_MAGIC_ACCESSOR);
 
-    accessor->array = array;
-    accessor->end   = (void **)((char *)accessor->array + length * step);
-    accessor->step  = step;
+  accessor->array = array;
+  accessor->end   = (void **)((char *)accessor->array + length * step);
+  accessor->step  = step;
 
-    accessor->accessor.version = EINA_ACCESSOR_VERSION;
-    accessor->accessor.get_at =
-        FUNC_ACCESSOR_GET_AT(eina_carray_length_accessor_ptr_get_at);
-    accessor->accessor.get_container =
-        FUNC_ACCESSOR_GET_CONTAINER(eina_carray_length_accessor_get_container);
-    accessor->accessor.free =
-        FUNC_ACCESSOR_FREE(eina_carray_length_accessor_free);
+  accessor->accessor.version = EINA_ACCESSOR_VERSION;
+  accessor->accessor.get_at =
+    FUNC_ACCESSOR_GET_AT(eina_carray_length_accessor_ptr_get_at);
+  accessor->accessor.get_container =
+    FUNC_ACCESSOR_GET_CONTAINER(eina_carray_length_accessor_get_container);
+  accessor->accessor.free =
+    FUNC_ACCESSOR_FREE(eina_carray_length_accessor_free);
 
-    return &accessor->accessor;
+  return &accessor->accessor;
 }

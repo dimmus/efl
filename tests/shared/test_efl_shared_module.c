@@ -29,56 +29,56 @@
 static Efl_Bool
 list_cb(Eina_Module *m, void *data EFL_UNUSED)
 {
-    int        *sym;
-    const char *file;
+  int        *sym;
+  const char *file;
 
    /* the reference count */
-    fail_if(!eina_module_load(m));
+  fail_if(!eina_module_load(m));
    /* get */
-    sym = eina_module_symbol_get(m, "dummy_symbol");
-    fail_if(!sym);
-    fail_if(*sym != 0xbad);
-    file = eina_module_file_get(m);
-    fail_if(!file);
-    fail_if(eina_module_unload(m));
+  sym = eina_module_symbol_get(m, "dummy_symbol");
+  fail_if(!sym);
+  fail_if(*sym != 0xbad);
+  file = eina_module_file_get(m);
+  fail_if(!file);
+  fail_if(eina_module_unload(m));
 
-    return EFL_TRUE;
+  return EFL_TRUE;
 }
 
 EFL_START_TEST(efl_shared_module_load_unload)
 {
-    Eina_Array         *_modules;
-    unsigned int        i;
-    Eina_Array_Iterator it;
-    Eina_Module        *module;
+  Eina_Array         *_modules;
+  unsigned int        i;
+  Eina_Array_Iterator it;
+  Eina_Module        *module;
 
-    _modules = eina_module_list_get(NULL,
-                                    EFL_BUILD_DIR "/src/tests/eina",
-                                    EFL_TRUE,
-                                    &list_cb,
-                                    NULL);
-    fail_if(!_modules);
-    eina_module_list_load(_modules);
-    eina_module_list_unload(_modules);
-    eina_module_list_free(_modules);
-    EINA_ARRAY_ITER_NEXT(_modules, i, module, it)
-    free(module);
-    eina_array_free(_modules);
+  _modules = eina_module_list_get(NULL,
+                                  EFL_BUILD_DIR "/src/tests/eina",
+                                  EFL_TRUE,
+                                  &list_cb,
+                                  NULL);
+  fail_if(!_modules);
+  eina_module_list_load(_modules);
+  eina_module_list_unload(_modules);
+  eina_module_list_free(_modules);
+  EINA_ARRAY_ITER_NEXT(_modules, i, module, it)
+  free(module);
+  eina_array_free(_modules);
 }
 
 EFL_END_TEST
 
 EFL_START_TEST(efl_shared_module_find_test)
 {
-    Eina_Array *_modules;
+  Eina_Array *_modules;
 
-    _modules = eina_module_list_get(NULL,
-                                    EFL_BUILD_DIR "/src/tests/eina",
-                                    EFL_TRUE,
-                                    &list_cb,
-                                    NULL);
-    fail_if(!_modules);
-    fail_if(eina_module_find(_modules, NULL) != NULL);
+  _modules = eina_module_list_get(NULL,
+                                  EFL_BUILD_DIR "/src/tests/eina",
+                                  EFL_TRUE,
+                                  &list_cb,
+                                  NULL);
+  fail_if(!_modules);
+  fail_if(eina_module_find(_modules, NULL) != NULL);
 }
 
 EFL_END_TEST
@@ -86,6 +86,6 @@ EFL_END_TEST
 void
 eina_test_module(TCase *tc)
 {
-    tcase_add_test(tc, efl_shared_module_load_unload);
-    tcase_add_test(tc, efl_shared_module_find_test);
+  tcase_add_test(tc, efl_shared_module_load_unload);
+  tcase_add_test(tc, efl_shared_module_find_test);
 }

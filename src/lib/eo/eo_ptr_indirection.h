@@ -6,7 +6,12 @@
 
 /* Macro used to obtain the object pointer and return if fails. */
 
-void _eo_pointer_error(const Eo *obj_id, const char *func_name, const char *file, int line, const char *fmt, ...);
+void _eo_pointer_error(const Eo   *obj_id,
+                       const char *func_name,
+                       const char *file,
+                       int         line,
+                       const char *fmt,
+                       ...);
 
 #define _EO_POINTER_ERR(obj_id, fmt, ...) \
   _eo_pointer_error(obj_id, __func__, __FILE__, __LINE__, fmt, __VA_ARGS__)
@@ -143,8 +148,7 @@ extern Eina_TLS _eo_table_data;
 
 #include "eo_ptr_indirection.x"
 
-extern Eo_Id_Data *_eo_table_data_shared;
+extern Eo_Id_Data       *_eo_table_data_shared;
 extern Eo_Id_Table_Data *_eo_table_data_shared_data;
 
 #endif
-
