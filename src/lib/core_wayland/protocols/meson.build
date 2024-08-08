@@ -1,6 +1,6 @@
 inc_wayland_protocol  = include_directories('.')
 bin_wayland_scanner   = find_program('wayland-scanner', native: true)
-dep_wayland_protocols = dependency('wayland-protocols', version: '>= 1.32',
+dep_wayland_protocols = dependency('wayland-protocols', version: '>= 1.25',
                                     fallback: 'wayland-protocols',
 	                                  default_options: ['tests=false'])
 
