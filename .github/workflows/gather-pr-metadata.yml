@@ -20,7 +20,7 @@ jobs:
 
       - id: metadata
         name: Gather Pull Request Metadata
-        uses: redhat-plumbers-in-action/gather-pull-request-metadata@20e4138b5a1a6c46112f2b5dac328171b0307279
+        uses: redhat-plumbers-in-action/gather-pull-request-metadata@5da2967931dd7c4b9ccd22f49b045e2c1f05165b
 
       - name: Upload Pull Request Metadata artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
