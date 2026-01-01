@@ -16,7 +16,7 @@ jobs:
   build-meson-gcc:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.1
         with:
           submodules: recursive
       - uses: ./.github/actions/setup
@@ -26,7 +26,7 @@ jobs:
   build-meson-clang:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.1
         with:
           submodules: recursive
       - uses: ./.github/actions/setup
@@ -36,7 +36,7 @@ jobs:
   # build-autotools-gcc:
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v6.0.1
   #       with:
   #         submodules: recursive
   #     - uses: ./.github/actions/setup
@@ -47,7 +47,7 @@ jobs:
   # build-autotools-gcc-no-window:
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v6.0.1
   #       with:
   #         submodules: recursive
   #     - uses: ./.github/actions/setup
@@ -58,7 +58,7 @@ jobs:
   # build-autotools-clang:
   #   runs-on: ubuntu-latest
   #   steps:
-  #     - uses: actions/checkout@v6
+  #     - uses: actions/checkout@v6.0.1
   #       with:
   #         submodules: recursive
   #     - uses: ./.github/actions/setup

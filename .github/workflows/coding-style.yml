@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v6.0.1
       with:
         fetch-depth: 2
     - uses: yshui/git-clang-format-lint@master
