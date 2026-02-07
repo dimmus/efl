@@ -20,7 +20,7 @@ jobs:
         template: [ bug_report.yml, feature_request.yml ]
 
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
 
       - name: Parse issue form
         uses: stefanbuck/github-issue-parser@1e5bdee70d4b3e066a33aa0669ab782943825f94
