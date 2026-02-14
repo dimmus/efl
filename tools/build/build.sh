@@ -72,9 +72,16 @@ install_deps_show_header()
     echo_header "Installing EFL dependencies for" $OS $VER
 }
 
+install_deps_arch()
+{
+    sudo pacman -S meson ninja pkgconf gcc binutils python2 avahi bullet curl fontconfig harfbuzz fribidi gst-plugins-base-libs luajit libexif libgl libinput libpulse libspectre libraw librsvg libwebp libxcomposite libxcursor libxinerama libxkbcommon libxp libxrandr libxss libunwind mesa openjpeg2 poppler shared-mime-info ttf-font scim libibus glib2 pulseaudio gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-libav libreoffice check
+}
+
 install_deps()
 {
     get_os
+
+    install_deps_show_header
     
     if [ $OS = "Ubuntu" ]; then
         install_deps_debian
@@ -95,6 +102,10 @@ install_deps()
             install_deps_show_header
             sudo apt-get install -y libavif-dev libhwy-dev
         fi
+    fi
+
+    if [ $OS = "Archlinux" ]; then
+        install_deps_arch
     fi
 }
 
