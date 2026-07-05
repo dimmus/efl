@@ -30,11 +30,11 @@ jobs:
 
     steps:
     - name: Repository checkout
-      uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
       if: github.event_name == 'pull_request'
 
     - name: Label PR based on policy in labeler.yml
-      uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b
+      uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213
       if: startsWith(github.event_name, 'pull_request') && github.event.action != 'closed'
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
@@ -42,7 +42,7 @@ jobs:
         sync-labels: false
 
     - name: Set or remove labels based on systemd development workflow
-      uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
       if: startsWith(github.event_name, 'pull_request') && github.event.action != 'closed' && !github.event.pull_request.draft
       with:
         script: |
@@ -87,7 +87,7 @@ jobs:
           }
 
     - name: Add please-review label on command in issue comment
-      uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
       if: github.event_name == 'issue_comment' && github.event.issue.pull_request && startsWith(github.event.comment.body, '/please-review')
       with:
         script: |
@@ -99,7 +99,7 @@ jobs:
           })
 
     - name: Remove specific labels when PR is closed or merged
-      uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3
       if: startsWith(github.event_name, 'pull_request') && github.event.action == 'closed'
       with:
         script: |
